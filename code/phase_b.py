@@ -169,6 +169,8 @@ def process_combo(ctx, X, fam_name, link, s, seed, true_states):
 
 
 def main():
+    ext_only = "--ext-only" in sys.argv  # FLAGSHIP_DEAD path (spec §7-A3):
+    # only the extended regime-mapping table is run for the downgraded paper
     os.makedirs(RESULTS, exist_ok=True)
     t0 = time.time()
     cpu0 = time.process_time()
@@ -188,10 +190,12 @@ def main():
     done_core = done_combos(meta)
     done_ext = done_core  # single completion registry covers both tables
 
+    meta["ext_only"] = ext_only
     for fam_name in FAMS:
-        for seed in C.SEEDS_B:
-            todo_core = [(lk, s) for lk in CORE_LINKS for s in C.PHOTONS_B
-                         if (fam_name, seed, lk, s) not in done_core]
+        for seed in (C.SEEDS_EXT if ext_only else C.SEEDS_B):
+            todo_core = [] if ext_only else [
+                (lk, s) for lk in CORE_LINKS for s in C.PHOTONS_B
+                if (fam_name, seed, lk, s) not in done_core]
             todo_ext = []
             if seed in C.SEEDS_EXT:
                 todo_ext = [(lk, 1e4) for lk in EXT_LINKS

@@ -14,12 +14,24 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 PY = sys.executable
 
 
-def run(script, tag):
+def run(script, tag, extra=()):
     t0 = time.time()
     print("\n===== %s =====" % tag, flush=True)
-    r = subprocess.call([PY, os.path.join(HERE, script)])
+    r = subprocess.call([PY, os.path.join(HERE, script)] + list(extra))
     print("===== %s done rc=%d (%.1fs) =====" % (tag, r, time.time() - t0), flush=True)
     return r
+
+
+def a3_flagship_dead():
+    import json
+
+    p = os.path.join(os.path.dirname(HERE), "results", "phaseA_gates.json")
+    if not os.path.exists(p):
+        return False
+    with open(p) as f:
+        g = json.load(f)
+    a3 = g.get("A3")
+    return bool(a3) and not a3.get("A3_PASS", True)
 
 
 def main():
@@ -41,7 +53,12 @@ def main():
             return 2
     budget_abort = False
     if args.phase in ("b", "all"):
-        rc = run("phase_b.py", "PHASE B")
+        extra = []
+        if a3_flagship_dead():
+            extra = ["--ext-only"]
+            print("A3 = FLAGSHIP_DEAD -> Phase B runs the EXTENDED TABLE ONLY "
+                  "(spec §7-A3 downgraded-paper path).", flush=True)
+        rc = run("phase_b.py", "PHASE B", extra)
         if rc == 2:
             budget_abort = True
             print("PHASE B budget abort — gates will be evaluated on the "

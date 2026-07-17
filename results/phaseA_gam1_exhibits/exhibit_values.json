@@ -1,0 +1,16 @@
+{
+  "cat": {
+    "centered_max_abs": 1.0200128933677997e-16,
+    "centered_is_exact_zero_map": false,
+    "uncentered_std_over_mean": 1.110302170388798e-16,
+    "uncentered_mean": 0.9999287169153116,
+    "bucket_mean": 0.9999287169153129
+  },
+  "airplane": {
+    "centered_max_abs": 3.110445325753664e-17,
+    "centered_is_exact_zero_map": false,
+    "uncentered_std_over_mean": 0.0,
+    "uncentered_mean": 0.9997133626426429,
+    "bucket_mean": 0.999713362642635
+  }
+}

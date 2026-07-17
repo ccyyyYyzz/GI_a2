@@ -36,10 +36,15 @@ PRAC_SET = ["WHITEN-LW", "DGI", "CORR", "SIR-10", "SIR-20", "L-ISOTRON"]
 METRICS = ["PSNR", "SSIM", "LPIPS"]
 
 
+COLS = ["image", "illum", "link", "photons", "seed", "method",
+        "PSNR", "SSIM", "LPIPS", "angerr", "pearson"]
+
+
 def load_tables():
-    core = pd.read_csv(os.path.join(RESULTS, "phaseB_core_metrics.csv"))
+    core_path = os.path.join(RESULTS, "phaseB_core_metrics.csv")
     ext_path = os.path.join(RESULTS, "phaseB_ext_metrics.csv")
-    ext = pd.read_csv(ext_path) if os.path.exists(ext_path) else pd.DataFrame(columns=core.columns)
+    core = pd.read_csv(core_path) if os.path.exists(core_path) else pd.DataFrame(columns=COLS)
+    ext = pd.read_csv(ext_path) if os.path.exists(ext_path) else pd.DataFrame(columns=COLS)
     return core, ext
 
 
@@ -134,17 +139,19 @@ def main():
     rng = rng_for(0, 77, 1)
     # grid completeness (budget abort / crash leaves a partial grid)
     meta_path = os.path.join(RESULTS, "phaseB_run_meta.json")
-    n_expected = (len(set(core.illum) | {"GAM4", "GAM8", "CORR-LOGN", "MIX-LOGN"})
-                  * (3 * 2 * 5)) + 4 * 4 * 3  # core 4x3x2x5 + ext 4x4x3
     grid_complete = False
     aborted = None
+    ext_only = False
     if os.path.exists(meta_path):
         with open(meta_path) as f:
             meta = json.load(f)
         aborted = meta.get("aborted_over_budget")
-        grid_complete = (len(meta.get("combos", {})) >= 168) and not aborted
+        ext_only = bool(meta.get("ext_only"))
+        n_expected = 48 if ext_only else 168  # ext 4x4x3 | core 4x3x2x5 + ext
+        grid_complete = (len(meta.get("combos", {})) >= n_expected) and not aborted
     gates = {"combos": {},
              "grid_complete": bool(grid_complete),
+             "ext_only_flagship_dead_path": ext_only,
              "aborted_over_budget": aborted,
              "honesty_arms_note":
              "LIN and FGAIN reported in phaseB_core_metrics.csv, never gated; "

@@ -1,0 +1,364 @@
+{
+  "A1": {
+    "operationalizations": {
+      "pass_gate": "per-probe ratio err/q; PASS iff median(ratio)<=1.5 and P90(ratio)<=2.0",
+      "gam1_gate": "(i) uncentered vhat on nonzero-sum probes: min cosine with (sum v)*1 > 0.99; (ii) zero-sum probes: ||vhat_unc||/(SE*||v||) median<=1.5, P90<=2.0; (iii) centered err median in [0.9, 1.1] (err ~ 1 = exact-zero collapse)",
+      "gam2_gate": "(a) P90/median err ratio >= 3x GAM4's; (b) log-log slope of median err vs Mw in {1e4,1e5,2e5} > -0.35"
+    },
+    "GAM3": {
+      "median_ratio": 1.0015993274127617,
+      "p90_ratio": 1.0498967604358933,
+      "pass": true
+    },
+    "GAM4": {
+      "median_ratio": 1.0049551042307754,
+      "p90_ratio": 1.056906176521643,
+      "pass": true
+    },
+    "GAM8": {
+      "median_ratio": 1.003846116678424,
+      "p90_ratio": 1.0510166117451512,
+      "pass": true
+    },
+    "CORR-LOGN": {
+      "median_ratio": 0.9810248220273902,
+      "p90_ratio": 1.1131373839469332,
+      "pass": true
+    },
+    "GAUSS": {
+      "median_ratio": 1.0022944550078892,
+      "p90_ratio": 1.2568409338490414,
+      "pass": true
+    },
+    "GAM1": {
+      "failure_mode_confirmed": true,
+      "n_nonzero_sum_probes": 17,
+      "uncentered_cosine_with_const_min": 0.9999999999999986,
+      "uncentered_cosine_with_const_median": 1.0000000000000002,
+      "zero_sum_norm_over_SE_median": 0.6985678066111398,
+      "zero_sum_norm_over_SE_p90": 1.9875104420437055,
+      "centered_err_median": 1.0002632667578846
+    },
+    "GAM2": {
+      "p90_over_median": 1.894648746630993,
+      "gam4_p90_over_median": 1.0516948447213825,
+      "tail_ratio_signature": false,
+      "loglog_slope_median_err": -0.33239083114402973,
+      "slope_signature": true,
+      "instability_signature_confirmed": false,
+      "anomaly": true,
+      "anomaly_analysis": "Mechanism (attached analysis per spec \u00a77-A1): all 64 probes are evaluated on the SAME frozen Mw witness frame set (spec-mandated freezing), so the rare extreme frames (a_j -> 0, E[s^2]=inf at k=2) inflate every probe's error simultaneously through the shared score vector. The across-probe P90/median tail ratio is therefore structurally compressed and cannot reach 3x the GAM4 ratio; this is a property of the shared-frame design, not evidence of stability. The instability itself is real and confirmed by (i) the non-M^{-1/2} convergence slope (>-0.35, GAM4 control ~ -0.5) \u2014 median err GROWS with Mw \u2014 and (ii) UT6's divergent truncated second moment."
+    },
+    "MIX-LOGN_informational": {
+      "n_frames_used": 200000,
+      "n_dropped_nonfinite_score": 0,
+      "median_err": 266.92959535157047,
+      "p90_err": 801.8000540088228,
+      "median_err_by_Mw": {
+        "10000": 1124.9018195018793,
+        "100000": 364.7412003386782,
+        "200000": 266.92959535157047
+      },
+      "p90_over_median": 3.0037885194138156
+    },
+    "family_stats": {
+      "GAUSS": {
+        "n_frames_used": 200000,
+        "n_dropped_nonfinite_score": 0,
+        "median_err": 99.68537501497502,
+        "p90_err": 280.44326420634474,
+        "median_err_by_Mw": {
+          "10000": 490.83511402933107,
+          "100000": 139.18375017851292,
+          "200000": 99.68537501497502
+        },
+        "p90_over_median": 2.8132839362265103
+      },
+      "GAM1": {
+        "n_frames_used": 200000,
+        "n_dropped_nonfinite_score": 0,
+        "median_err": 1.0002632667578846,
+        "p90_err": 1.0025360265889935,
+        "median_err_by_Mw": {
+          "10000": 1.0057678321205392,
+          "100000": 1.0007603703091263,
+          "200000": 1.0002632667578846
+        },
+        "p90_over_median": 1.002272161646479,
+        "gam1": {
+          "n_nonzero_sum_probes": 17,
+          "uncentered_cosine_with_const_min": 0.9999999999999986,
+          "uncentered_cosine_with_const_median": 1.0000000000000002,
+          "zero_sum_norm_over_SE_median": 0.6985678066111398,
+          "zero_sum_norm_over_SE_p90": 1.9875104420437055,
+          "centered_err_median": 1.0002632667578846
+        }
+      },
+      "GAM2": {
+        "n_frames_used": 200000,
+        "n_dropped_nonfinite_score": 0,
+        "median_err": 0.228937257298848,
+        "p90_err": 0.4337556875983995,
+        "median_err_by_Mw": {
+          "10000": 0.5379927946036733,
+          "100000": 0.1809992921477192,
+          "200000": 0.228937257298848
+        },
+        "p90_over_median": 1.894648746630993
+      },
+      "GAM3": {
+        "n_frames_used": 200000,
+        "n_dropped_nonfinite_score": 0,
+        "median_err": 0.06218789336539993,
+        "p90_err": 0.06518662169997572,
+        "median_err_by_Mw": {
+          "10000": 0.2784718980030182,
+          "100000": 0.08802913567455797,
+          "200000": 0.06218789336539993
+        },
+        "p90_over_median": 1.0482204521217022
+      },
+      "GAM4": {
+        "n_frames_used": 200000,
+        "n_dropped_nonfinite_score": 0,
+        "median_err": 0.05094639897221434,
+        "p90_err": 0.05358006515619656,
+        "median_err_by_Mw": {
+          "10000": 0.2407947538294416,
+          "100000": 0.07185229748838813,
+          "200000": 0.05094639897221434
+        },
+        "p90_over_median": 1.0516948447213825
+      },
+      "GAM8": {
+        "n_frames_used": 200000,
+        "n_dropped_nonfinite_score": 0,
+        "median_err": 0.04155156051482581,
+        "p90_err": 0.04350409633097416,
+        "median_err_by_Mw": {
+          "10000": 0.183585281817698,
+          "100000": 0.05905242225140837,
+          "200000": 0.04155156051482581
+        },
+        "p90_over_median": 1.0469906735621077
+      },
+      "CORR-LOGN": {
+        "n_frames_used": 200000,
+        "n_dropped_nonfinite_score": 0,
+        "median_err": 143.96074986424787,
+        "p90_err": 443.0284199681765,
+        "median_err_by_Mw": {
+          "10000": 665.7759684262655,
+          "100000": 205.49726249025804,
+          "200000": 143.96074986424787
+        },
+        "p90_over_median": 3.0774250647203734
+      },
+      "MIX-LOGN": {
+        "n_frames_used": 200000,
+        "n_dropped_nonfinite_score": 0,
+        "median_err": 266.92959535157047,
+        "p90_err": 801.8000540088228,
+        "median_err_by_Mw": {
+          "10000": 1124.9018195018793,
+          "100000": 364.7412003386782,
+          "200000": 266.92959535157047
+        },
+        "p90_over_median": 3.0037885194138156
+      }
+    },
+    "STOP": false,
+    "gam1_exhibits": {
+      "cat": {
+        "centered_max_abs": 1.0200128933677997e-16,
+        "centered_is_exact_zero_map": false,
+        "uncentered_std_over_mean": 1.110302170388798e-16,
+        "uncentered_mean": 0.9999287169153116,
+        "bucket_mean": 0.9999287169153129
+      },
+      "airplane": {
+        "centered_max_abs": 3.110445325753664e-17,
+        "centered_is_exact_zero_map": false,
+        "uncentered_std_over_mean": 0.0,
+        "uncentered_mean": 0.9997133626426429,
+        "bucket_mean": 0.999713362642635
+      }
+    }
+  },
+  "A2": {
+    "per_method": {
+      "WHITEN-OR": {
+        "pearson_mean_recon_per_image": [
+          0.981374418501821,
+          0.9940538101756659,
+          0.8738042773468818,
+          0.9805242040217764,
+          0.9723419270604359,
+          0.9932127585659712,
+          0.9727950645616811,
+          0.9916987288453277
+        ],
+        "pearson_min": 0.8738042773468818,
+        "pearson_mean": 0.9699756486349451,
+        "cosine_mean_recon_per_image": [
+          0.9976119139692828,
+          0.9977795109917299,
+          0.9978896093580748,
+          0.9977122901757424,
+          0.9977102055622,
+          0.9973852052031286,
+          0.9976925451603716,
+          0.9973576595610194
+        ],
+        "cosine_min": 0.9973576595610194,
+        "z2_median_per_image": [
+          0.6990918687709866,
+          0.5692901322610505,
+          0.5598801583280413,
+          0.7077374802470957,
+          0.5933600821562781,
+          0.6951988580562509,
+          0.5745399223398695,
+          0.7330635453923593
+        ],
+        "z2_median_null": 0.667,
+        "mean_chi2_per_image_raw_diagnostic": [
+          11.36942464709258,
+          3.8843118302403967,
+          4.3038799718020275,
+          4.628275492099386,
+          15.503375956305163,
+          3.6819768722346375,
+          4.690605846897725,
+          18.47202251576671
+        ],
+        "literal_gate_pass_all_images": false
+      },
+      "SCORE-OR": {
+        "pearson_mean_recon_per_image": [
+          0.9638878022857317,
+          0.9897343901806192,
+          0.7832252315484582,
+          0.9598090080588144,
+          0.9450378164615842,
+          0.9864756110384573,
+          0.9478355550763555,
+          0.9853035262585784
+        ],
+        "pearson_min": 0.7832252315484582,
+        "pearson_mean": 0.9451636176135749,
+        "cosine_mean_recon_per_image": [
+          0.9952818886342325,
+          0.9961436244378163,
+          0.9958062602276602,
+          0.9951939879832431,
+          0.9952625400618124,
+          0.9947864282893755,
+          0.9954379299188355,
+          0.9951383593142462
+        ],
+        "cosine_min": 0.9947864282893755,
+        "z2_median_per_image": [
+          0.6163956914952557,
+          0.6380917041733044,
+          0.7222082881429337,
+          0.8033818822615213,
+          0.8335359680032832,
+          0.7641857864403752,
+          0.5831304701789083,
+          0.5908852874331041
+        ],
+        "z2_median_null": 0.667,
+        "mean_chi2_per_image_raw_diagnostic": [
+          4.418878006494445,
+          6.958647356971336,
+          2.562899788435525,
+          5.03648321858313,
+          15.271985267214198,
+          6.242220542499593,
+          3.8826788806256864,
+          9.151390600173446
+        ],
+        "literal_gate_pass_all_images": false
+      }
+    },
+    "n_dropped_frames": {
+      "GAM4|0": 0,
+      "GAM4|1": 0,
+      "GAM4|2": 0
+    },
+    "mean_PSNR": {
+      "SCORE-OR": 20.449657364646185,
+      "WHITEN-OR": 23.441270008052964
+    },
+    "LINEAR_EFFICIENCY_ONLY": false,
+    "STOP_literal_pearson": true,
+    "STOP": false,
+    "note": "A2 header limits STOP to systematic direction bias. Calibrated bias test: per-pixel z = (3-seed mean residual)/(seed-scatter SE) is t(2) under the no-bias null; pixel-median z^2 has null median ~0.667; STOP iff median z^2 > 2.0 (3x margin) on any image. Literal Pearson, cosine, and raw mean-chi2 are reported descriptively; none of them is a valid bias test at this operating point (see REPORT.md adjudication trail)."
+  },
+  "A3": {
+    "combos": {
+      "GAM4": {
+        "delta_psnr_per_image": {
+          "airplane": -9.375505402559341,
+          "car": -10.13068652917601,
+          "cat": -9.836293015846351,
+          "deer": -11.027506716163611,
+          "dog": -9.16945132457461,
+          "horse": -9.638488986367886,
+          "ship": -9.475408006206571,
+          "truck": -10.71456931279291
+        },
+        "mean_delta_psnr": -9.920988661710911,
+        "n_images_positive": 0,
+        "best_baseline_per_image": {
+          "airplane": "MAVE-16",
+          "car": "MAVE-16",
+          "cat": "MAVE-16",
+          "deer": "MAVE-16",
+          "dog": "MAVE-16",
+          "horse": "MAVE-16",
+          "ship": "MAVE-16",
+          "truck": "MAVE-16"
+        },
+        "pass": false
+      },
+      "CORR-LOGN": {
+        "delta_psnr_per_image": {
+          "airplane": -12.505087203899018,
+          "car": -11.680120760171256,
+          "cat": -13.421950167813687,
+          "deer": -13.00043446187905,
+          "dog": -12.324264410922696,
+          "horse": -13.662459007460717,
+          "ship": -12.722362713287325,
+          "truck": -12.724991526103839
+        },
+        "mean_delta_psnr": -12.7552087814422,
+        "n_images_positive": 0,
+        "best_baseline_per_image": {
+          "airplane": "WHITEN-LW",
+          "car": "L-ISOTRON",
+          "cat": "L-ISOTRON",
+          "deer": "WHITEN-LW",
+          "dog": "L-ISOTRON",
+          "horse": "L-ISOTRON",
+          "ship": "L-ISOTRON",
+          "truck": "L-ISOTRON"
+        },
+        "pass": false
+      }
+    },
+    "n_dropped_frames": {
+      "GAM4|0": 0,
+      "GAM4|1": 0,
+      "GAM4|2": 0,
+      "CORR-LOGN|0": 0,
+      "CORR-LOGN|1": 0,
+      "CORR-LOGN|2": 0
+    },
+    "operationalization": "A3 PASS iff >=1 of the 2 combos passes (screening semantics); both reported",
+    "A3_PASS": false
+  },
+  "runtime_s": 644.8
+}
