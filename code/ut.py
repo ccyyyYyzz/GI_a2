@@ -178,20 +178,23 @@ def ut6():
 
 def ut7():
     """Main vs LS-diagnostic metric pipelines: both produced, key-disjoint,
-    gates read only main keys (structural non-contamination check)."""
-    n = C.N_A
-    truths = load_truths(16)
+    gates read only main keys (structural non-contamination check).
+    Run at 64x64 — the scale at which LPIPS actually enters gates (AlexNet
+    LPIPS is undefined at 16x16 and recorded as NaN there)."""
+    truths = load_truths(64)
     x = truths["cat"]
+    n = x.size
     rng = rng_for(0, UT_STREAM, 7)
     xhat = x + 0.05 * rng.standard_normal(n) * x.std()
-    main = MET.main_metrics(xhat, x, 16, with_lpips=True)
-    diag = MET.diagnostic_metrics(xhat, x, 16)
+    main = MET.main_metrics(xhat, x, 64, with_lpips=True)
+    diag = MET.diagnostic_metrics(xhat, x, 64)
     disjoint = len(set(main) & set(diag)) == 0
     main_keys_ok = set(main) == {"PSNR", "SSIM", "LPIPS"}
-    scale_dep = MET.main_metrics(3.0 * xhat, x, 16, with_lpips=False)
+    scale_dep = MET.main_metrics(3.0 * xhat, x, 64, with_lpips=False)
     flux_invariant = abs(scale_dep["PSNR"] - main["PSNR"]) < 1e-9
-    return {"pass": bool(disjoint and main_keys_ok and flux_invariant),
-            "main": main, "diagnostic": diag,
+    lpips_finite = bool(np.isfinite(main["LPIPS"]))
+    return {"pass": bool(disjoint and main_keys_ok and flux_invariant and lpips_finite),
+            "main": main, "diagnostic": diag, "lpips_finite_at_64": lpips_finite,
             "key_disjoint": disjoint, "flux_scale_invariant": flux_invariant}
 
 

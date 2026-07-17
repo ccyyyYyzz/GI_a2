@@ -62,7 +62,10 @@ def main_metrics(xhat, x_true, side, with_lpips=True):
         "PSNR": float(psnr(xs, x_true, dr)),
         "SSIM": float(structural_similarity(img_t, img_r, data_range=dr)),
     }
-    if with_lpips:
+    # AlexNet-LPIPS is undefined below ~32px (conv stack collapses to 0 size);
+    # Phase A (16x16) LPIPS is recorded as NaN/UNAVAILABLE — its gates are
+    # PSNR-only. Phase B (64x64) computes LPIPS normally.
+    if with_lpips and side >= 32:
         out["LPIPS"] = float(lpips_batch(img_r[None], img_t[None], dr)[0])
     else:
         out["LPIPS"] = float("nan")
