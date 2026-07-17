@@ -134,6 +134,7 @@ def tv_fista(f_grad, x0, lam_tv, n_iter=200, L0=None, nonneg=True, side=None,
     def obj_tv(z):
         return lam_tv * tv_value(z, side)
 
+    x_init = x.copy()
     L = float(L0) if L0 is not None else 1.0
     f_x, _ = f_grad(x)
     F_x = f_x + obj_tv(x)
@@ -168,11 +169,15 @@ def tv_fista(f_grad, x0, lam_tv, n_iter=200, L0=None, nonneg=True, side=None,
         if abs(hist[-2] - hist[-1]) <= tol * max(1.0, abs(hist[-2])):
             break
 
-    f_x, g_x = f_grad(x)
-    gmap = L * (x - prox(x - (1.0 / L) * g_x, (1.0 / L) * lam_tv))
+    def _gmap_norm(z):
+        _, gz = f_grad(z)
+        return float(np.linalg.norm(
+            L * (z - prox(z - (1.0 / L) * gz, (1.0 / L) * lam_tv))))
+
     info = {"obj_hist": hist, "n_iter": len(hist) - 1, "L": float(L),
             "final_obj": float(hist[-1]),
-            "grad_map_norm": float(np.linalg.norm(gmap))}
+            "grad_map_norm": _gmap_norm(x),          # stationarity at solution
+            "grad_map_norm_x0": _gmap_norm(x_init)}  # same L, for a ratio
     return x, info
 
 
@@ -242,35 +247,31 @@ def _precorrect_rates_paralyzable(b, T, tau):
     return y / tau
 
 
-def precorrect_wls(A, b, T, tau, Phi, dark, lam_tv, side, x0=None,
-                   paralyzable=False, n_iter=200, nonneg=True, w_floor=1e-8,
-                   **fista_kw):
-    """Liu-2021-style arm: per-frame counts -> corrected arrival-rate estimate
-    lam_hat -> a WEIGHTED least-squares data term solved with the SAME tv_fista.
+def precorrect_data_term(A, b, T, tau, Phi, dark, paralyzable=False,
+                         w_floor=1e-8):
+    """Build the Liu-2021-style variance-weighted-LS data term (f_grad) on
+    (A, b). Returns (f_grad, aux) where aux carries lam_hat and the weights W.
 
       data term:  0.5 * (1/M) * sum_i W_i * (Phi*(A x)_i + dark - lam_hat_i)^2
 
-    Weights come from delta-method error propagation of lam_hat:
+    Weights = delta-method error propagation of lam_hat:
         Var[lam_hat] ~ Var[N] * (d lam_hat / d N)^2,
-    with Var[N] from physics.qmle_mean_var evaluated at lam_hat and the count
-    derivative
+    Var[N] from physics.qmle_mean_var(lam_hat), count derivative
         non-paralyzable  lam_hat = r/(1-r*tau),  d lam_hat/dN = 1/(T (1-r*tau)^2)
         paralyzable      lam_hat = -W0(-r*tau)/tau,
                          d lam_hat/dN = lam_hat / (N (1 - lam_hat*tau))   (r=N/T)
-    W_i = 1/Var[lam_hat_i] (floored), then NORMALIZED to mean 1 so the residual
-    scale matches the per-frame-normalized likelihood arms and one shared lam_tv
-    grid applies. Saturated frames (r*tau -> 1) get huge Var -> ~0 weight, as they
-    should. (The paralyzable branch reuses qmle_mean_var for Var[N] as a documented
-    ablation approximation — the exact paralyzable count variance is not modeled.)
-    """
+    W_i = 1/Var[lam_hat_i] (floored), NORMALIZED to mean 1 so the residual scale
+    matches the per-frame-normalized likelihood arms and one shared lam_tv grid
+    applies. Saturated frames (r*tau -> 1) get huge Var -> ~0 weight, as they
+    should. (The paralyzable branch reuses qmle_mean_var for Var[N] as a
+    documented ablation approximation — exact paralyzable count variance is not
+    modeled.)"""
     A = np.asarray(A, dtype=np.float64)
     b = np.asarray(b, dtype=np.float64)
     M = A.shape[0]
     r = np.maximum(b, 0.0) / T
-
     if paralyzable:
         lam_hat = _precorrect_rates_paralyzable(b, T, tau)
-        # d lam_hat / dN = lam_hat / (N (1 - lam_hat*tau)); guard N->0, denom->0
         n_safe = np.maximum(b, 1e-6)
         denom = np.maximum(1.0 - lam_hat * tau, 1e-6)
         dlam_dN = lam_hat / (n_safe * denom)
@@ -278,12 +279,11 @@ def precorrect_wls(A, b, T, tau, Phi, dark, lam_tv, side, x0=None,
         lam_hat = precorrect_rates(b, T, tau)
         denom = np.maximum(1.0 - r * tau, 1.0 / (1.0 + 1e4))
         dlam_dN = 1.0 / (T * denom ** 2)
-
     _, varN = qmle_mean_var(lam_hat, T, tau)
     var_lam = np.maximum(varN * dlam_dN ** 2, 1e-300)
     W = 1.0 / var_lam
     W = np.maximum(W, w_floor * W.max())
-    W = W / W.mean()                       # per-frame-normalized weight scale
+    W = W / W.mean()
 
     def f_grad(x):
         pred = Phi * (A @ x) + dark
@@ -293,12 +293,22 @@ def precorrect_wls(A, b, T, tau, Phi, dark, lam_tv, side, x0=None,
         g = Phi * (A.T @ wr) / M
         return f, g
 
+    return f_grad, {"lam_hat": lam_hat, "W": W}
+
+
+def precorrect_wls(A, b, T, tau, Phi, dark, lam_tv, side, x0=None,
+                   paralyzable=False, n_iter=200, nonneg=True, w_floor=1e-8,
+                   **fista_kw):
+    """Fit the pre-correction + variance-weighted-LS arm with tv_fista (same
+    solver / prior as every other iterative arm)."""
+    f_grad, aux = precorrect_data_term(A, b, T, tau, Phi, dark,
+                                       paralyzable=paralyzable, w_floor=w_floor)
     if x0 is None:
         x0 = init_gi_flux(A, b, Phi, dark, T, tau)
     x, info = tv_fista(f_grad, x0, lam_tv, n_iter=n_iter, side=side,
                        nonneg=nonneg, **fista_kw)
-    info["lam_hat_mean"] = float(np.mean(lam_hat))
-    info["weight_cv"] = float(np.std(W) / max(np.mean(W), 1e-30))
+    info["lam_hat_mean"] = float(np.mean(aux["lam_hat"]))
+    info["weight_cv"] = float(np.std(aux["W"]) / max(np.mean(aux["W"]), 1e-30))
     return x, info
 
 
@@ -321,7 +331,7 @@ def init_gi_flux(A, b, Phi, dark, T, tau):
     return x
 
 
-def select_lam_tv(f_grad_factory, A, b, x0, side, scale=1.0,
+def select_lam_tv(f_grad_factory, A, b, x0, side, scale=None,
                   grid=(1e-4, 3e-4, 1e-3, 3e-3, 1e-2), n_iter=120, nonneg=True,
                   **fista_kw):
     """Truth-free lam_tv selection (spec §4). For each lam on `grid`*`scale`:
@@ -329,8 +339,11 @@ def select_lam_tv(f_grad_factory, A, b, x0, side, scale=1.0,
     NLL on the held-out last 10% (deterministic split). Pick the minimizer.
 
     `f_grad_factory(A_sub, b_sub) -> f_grad` builds the arm's data term on a frame
-    subset (so held-out scoring uses the identical likelihood). Returns
-    (lam_best, info) where info carries the grid, held-out NLLs and the best fit.
+    subset (so held-out scoring uses the identical likelihood). `scale` calibrates
+    the grid; when None it defaults to the L2 norm of the arm's OWN data-term
+    gradient at x0 (||grad f_data(x0)||_2), which puts the fixed multiplier grid
+    into the regime where TV competes with the data misfit — arm-relative and
+    problem-adaptive, no truth used. Returns (lam_best, info).
     """
     A = np.asarray(A, dtype=np.float64)
     b = np.asarray(b, dtype=np.float64)
@@ -341,6 +354,9 @@ def select_lam_tv(f_grad_factory, A, b, x0, side, scale=1.0,
     A_val, b_val = A[n_tr:], b[n_tr:]
     fg_val = f_grad_factory(A_val, b_val)
 
+    if scale is None:
+        _, g0 = f_grad_factory(A, b)(np.asarray(x0, dtype=np.float64).ravel())
+        scale = float(np.linalg.norm(g0)) + 1e-30
     lams = np.asarray(grid, dtype=np.float64) * float(scale)
     val_nll, fits = [], []
     for lam in lams:
@@ -352,7 +368,8 @@ def select_lam_tv(f_grad_factory, A, b, x0, side, scale=1.0,
         fits.append(x)
     k = int(np.argmin(val_nll))
     return float(lams[k]), {"grid": lams.tolist(), "val_nll": val_nll,
-                            "lam_best": float(lams[k]), "x_best": fits[k]}
+                            "lam_best": float(lams[k]), "x_best": fits[k],
+                            "scale": float(scale)}
 
 
 # ----------------------------------------------------------------------
@@ -372,8 +389,9 @@ class ArmContext:
     pattern_kind: str = "bernoulli"     # "bernoulli" | "hadpair" | "gam4" ...
     meta: dict = None                   # e.g. {"pairs": (P,2)} for hadpair
     x0: np.ndarray = None
-    lam_grid_scale: float = 1.0
+    lam_grid_scale: float = None        # None -> ||grad f_data(x0)||_2 per arm
     select_grid: tuple = (1e-4, 3e-4, 1e-3, 3e-3, 1e-2)
+    select_iter: int = 120
     exact_maxiter: int = 60
 
 
@@ -394,6 +412,19 @@ def _phys_factory(arm_name, ctx):
                       sigma_b=ctx.sigma_b)
         return f_grad
     return factory
+
+
+def _arm_factory(arm_name, ctx):
+    """Unified f_grad_factory for any iterative arm (count-likelihood or the
+    PRECORRECT weighted-LS), so lam_tv selection is identical across arms."""
+    if arm_name == "PRECORRECT":
+        def factory(A_sub, b_sub):
+            fg, _ = precorrect_data_term(A_sub, b_sub, ctx.T, ctx.det.tau,
+                                         ctx.Phi, ctx.det.dark,
+                                         paralyzable=ctx.det.paralyzable)
+            return fg
+        return factory
+    return _phys_factory(arm_name, ctx)
 
 
 def run_arm(arm_name, A, b, ctx):
@@ -446,21 +477,14 @@ def run_arm(arm_name, A, b, ctx):
     if arm_name not in _ITER_ARMS:
         raise ValueError("unknown arm %r" % (arm_name,))
 
-    # lam_tv (truth-free selection if not pinned) -----------------------
-    if arm_name == "PRECORRECT":
-        factory = None  # built below via precorrect_wls's own data term
-    else:
-        factory = _phys_factory(arm_name, ctx)
-
+    # lam_tv: truth-free held-out-predictive-NLL selection (same path all arms)
+    factory = _arm_factory(arm_name, ctx)
     lam_tv = ctx.lam_tv
     sel_info = None
     if lam_tv is None:
-        if arm_name == "PRECORRECT":
-            lam_tv, sel_info = _select_precorrect(A, b, x0, ctx)
-        else:
-            lam_tv, sel_info = select_lam_tv(
-                factory, A, b, x0, side, scale=ctx.lam_grid_scale,
-                grid=ctx.select_grid)
+        lam_tv, sel_info = select_lam_tv(
+            factory, A, b, x0, side, scale=ctx.lam_grid_scale,
+            grid=ctx.select_grid, n_iter=ctx.select_iter)
 
     # fit on all frames -------------------------------------------------
     if arm_name == "PRECORRECT":
@@ -469,53 +493,12 @@ def run_arm(arm_name, A, b, ctx):
                                  paralyzable=ctx.det.paralyzable,
                                  n_iter=ctx.n_iter)
     else:
-        fg = factory(A, b)
-        x, info = tv_fista(fg, x0, lam_tv, n_iter=ctx.n_iter, side=side)
+        x, info = tv_fista(factory(A, b), x0, lam_tv, n_iter=ctx.n_iter,
+                           side=side)
 
     info.update({"arm": arm_name, "lam_tv": float(lam_tv)})
     if sel_info is not None:
         info["lam_select"] = {"grid": sel_info["grid"],
-                              "val_nll": sel_info["val_nll"]}
+                              "val_nll": sel_info["val_nll"],
+                              "scale": sel_info.get("scale")}
     return x, info
-
-
-def _select_precorrect(A, b, x0, ctx):
-    """lam_tv selection for the PRECORRECT arm: the held-out score is its own
-    weighted-LS data term (the arm's predictive objective). 90/10 deterministic
-    split; lam_hat / weights are recomputed on each subset (as at deployment)."""
-    M = A.shape[0]
-    n_tr = min(max(int(round(0.9 * M)), 1), M - 1)
-    A_tr, b_tr = A[:n_tr], b[:n_tr]
-    A_val, b_val = A[n_tr:], b[n_tr:]
-    lams = np.asarray(ctx.select_grid, dtype=np.float64) * ctx.lam_grid_scale
-    val_nll = []
-    for lam in lams:
-        x, _ = precorrect_wls(A_tr, b_tr, ctx.T, ctx.det.tau, ctx.Phi,
-                              ctx.det.dark, lam, ctx.side, x0=x0,
-                              paralyzable=ctx.det.paralyzable, n_iter=120)
-        v = _precorrect_val_nll(A_val, b_val, x, ctx)
-        val_nll.append(float(v))
-    k = int(np.argmin(val_nll))
-    return float(lams[k]), {"grid": lams.tolist(), "val_nll": val_nll}
-
-
-def _precorrect_val_nll(A, b, x, ctx):
-    """Held-out weighted-LS residual of the PRECORRECT arm (its own data term)."""
-    tau, T = ctx.det.tau, ctx.T
-    r = np.maximum(b, 0.0) / T
-    if ctx.det.paralyzable:
-        lam_hat = _precorrect_rates_paralyzable(b, T, tau)
-        n_safe = np.maximum(b, 1e-6)
-        denom = np.maximum(1.0 - lam_hat * tau, 1e-6)
-        dlam_dN = lam_hat / (n_safe * denom)
-    else:
-        lam_hat = precorrect_rates(b, T, tau)
-        denom = np.maximum(1.0 - r * tau, 1.0 / (1.0 + 1e4))
-        dlam_dN = 1.0 / (T * denom ** 2)
-    _, varN = qmle_mean_var(lam_hat, T, tau)
-    var_lam = np.maximum(varN * dlam_dN ** 2, 1e-300)
-    W = 1.0 / var_lam
-    W = W / W.mean()
-    pred = ctx.Phi * (A @ x) + ctx.det.dark
-    res = pred - lam_hat
-    return 0.5 * float(np.dot(res, W * res)) / A.shape[0]
