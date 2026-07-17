@@ -43,12 +43,41 @@ HEADER = ["image", "illum", "link", "photons", "seed", "method",
           "PSNR", "SSIM", "LPIPS", "angerr", "pearson"]
 
 
-def done_combos(path):
+def combo_key(fam, seed, link, s):
+    return "%s|%d|%s|%g" % (fam, seed, link, s)
+
+
+def sanitize_csv(path, meta):
+    """Source of truth for combo completion is META_JSON (written only AFTER a
+    combo's rows are fully appended). Rows from combos not marked complete
+    (crash mid-append) are dropped here, so a restart recomputes them cleanly
+    and pivot means are never biased by partial/duplicate rows."""
+    if not os.path.exists(path):
+        return
+    complete = set(meta.get("combos", {}))
+    kept, dropped = [], 0
+    with open(path) as f:
+        rd = csv.reader(f)
+        header = next(rd)
+        for r in rd:
+            key = combo_key(r[1], int(r[4]), r[2], float(r[3]))
+            if key in complete:
+                kept.append(r)
+            else:
+                dropped += 1
+    if dropped:
+        print("[sanitize] %s: dropped %d orphan rows" % (path, dropped), flush=True)
+        with open(path, "w", newline="") as f:
+            w = csv.writer(f)
+            w.writerow(header)
+            w.writerows(kept)
+
+
+def done_combos(meta):
     done = set()
-    if os.path.exists(path):
-        with open(path) as f:
-            for r in csv.DictReader(f):
-                done.add((r["illum"], int(r["seed"]), r["link"], float(r["photons"])))
+    for key in meta.get("combos", {}):
+        fam, seed, link, s = key.split("|")
+        done.add((fam, int(seed), link, float(s)))
     return done
 
 
@@ -59,9 +88,11 @@ def append_rows(path, rows):
         if new:
             w.writerow(HEADER)
         w.writerows(rows)
+        f.flush()
+        os.fsync(f.fileno())
 
 
-def run_estimators(ctx, B, fam_name, link, s, true_states):
+def run_estimators(ctx, B, fam_name, link, s, seed, true_states):
     out = {}
     out["GI"] = E.gi(ctx, B)
     out["DGI"] = E.dgi(ctx, B)
@@ -72,7 +103,10 @@ def run_estimators(ctx, B, fam_name, link, s, true_states):
     out["WHITEN-OR"] = E.whiten_or(ctx, B)
     out["SCORE-OR"] = E.score_or(ctx, B)
     out["RANKG"] = E.rankg(ctx, B)
-    out["L-ISOTRON"] = E.l_isotron(ctx, B)
+    # per-(link, photon)-derived stream: combo-order / resume independent
+    iso_rng = rng_for(seed, C.FAMILY_IDS[fam_name], C.STREAM_ESTIMATOR,
+                      C.LINK_IDS[link], int(s), 1)
+    out["L-ISOTRON"] = E.l_isotron(ctx, B, rng=iso_rng)
     out["MLE-OR"] = E.mle_or(ctx, B, link if link != "FGAIN" else "LIN", s)
     acc = None
     if fam_name == "MIX-LOGN":
@@ -111,7 +145,7 @@ def process_combo(ctx, X, fam_name, link, s, seed, true_states):
                           rng_for(seed, C.FAMILY_IDS[fam_name], C.STREAM_NOISE,
                                   C.LINK_IDS[link], int(s), k))
         for k in range(8)], axis=1)
-    ests, acc = run_estimators(ctx, B, fam_name, link, s, true_states)
+    ests, acc = run_estimators(ctx, B, fam_name, link, s, seed, true_states)
     names, lp = combo_rows(ests, X)
     rows = []
     j = 0
@@ -140,12 +174,19 @@ def main():
     cpu0 = time.process_time()
     truths = load_truths(SIDE)
     X = np.stack([truths[k] for k in C.IMAGES], axis=1)
-    done_core = done_combos(CORE_CSV)
-    done_ext = done_combos(EXT_CSV)
-    meta = {"combos": {}, "cluster_acc": {}, "aborted_over_budget": False}
+    meta = {"combos": {}, "cluster_acc": {}, "n_dropped": {},
+            "aborted_over_budget": False, "wall_accum_s": 0.0}
     if os.path.exists(META_JSON):
         with open(META_JSON) as f:
             meta = json.load(f)
+        meta.setdefault("n_dropped", {})
+        meta.setdefault("wall_accum_s", meta.get("wall_s", 0.0))
+        meta["aborted_over_budget"] = False
+    sanitize_csv(CORE_CSV, meta)
+    sanitize_csv(EXT_CSV, meta)
+    wall_prev = float(meta["wall_accum_s"])
+    done_core = done_combos(meta)
+    done_ext = done_core  # single completion registry covers both tables
 
     for fam_name in FAMS:
         for seed in C.SEEDS_B:
@@ -161,21 +202,23 @@ def main():
             fam = make_family(fam_name, N)
             ctx = E.RunContext(fam, seed, with_rankg=True)
             true_states = getattr(fam, "last_states", None)
+            meta["n_dropped"]["%s|%d" % (fam_name, seed)] = ctx.n_dropped
             print("[ctx] %s seed %d built in %.1fs (dropped=%d)"
                   % (fam_name, seed, time.time() - t_ctx, ctx.n_dropped), flush=True)
             for (lk, s), is_ext in ([(c, False) for c in todo_core]
                                     + [(c, True) for c in todo_ext]):
-                if time.time() - t0 > BUDGET_WALL_S:
+                if wall_prev + (time.time() - t0) > BUDGET_WALL_S:
                     meta["aborted_over_budget"] = True
                     print("BUDGET EXCEEDED - aborting per spec §0.7", flush=True)
                     break
                 t_c = time.time()
                 rows, acc = process_combo(ctx, X, fam_name, lk, s, seed, true_states)
                 append_rows(EXT_CSV if is_ext else CORE_CSV, rows)
-                key = "%s|%d|%s|%g" % (fam_name, seed, lk, s)
+                key = combo_key(fam_name, seed, lk, s)
                 meta["combos"][key] = round(time.time() - t_c, 1)
                 if acc is not None:
                     meta["cluster_acc"]["%s|%d" % (fam_name, seed)] = acc
+                meta["wall_accum_s"] = round(wall_prev + time.time() - t0, 1)
                 with open(META_JSON, "w") as f:
                     json.dump(meta, f, indent=2)
                 print("[combo] %s seed%d %s s=%g: %.1fs" %
@@ -189,6 +232,7 @@ def main():
         break
 
     meta["wall_s"] = round(time.time() - t0, 1)
+    meta["wall_accum_s"] = round(wall_prev + time.time() - t0, 1)
     meta["process_cpu_s"] = round(time.process_time() - cpu0, 1)
     with open(META_JSON, "w") as f:
         json.dump(meta, f, indent=2)

@@ -51,11 +51,16 @@ class RunContext:
         self.tr_lw = float(np.trace(self.lw_cov))
         self.true_cov_op = family.true_cov_op()
 
-        # frozen 10% held-out frame split for L-Isotron (spec §4.8)
-        perm = self.est_rng.permutation(self.M)
+        # frozen 10% held-out frame split for L-Isotron (spec §4.8) — from a
+        # dedicated derived stream so it never depends on call order
+        from .utils import rng_for as _rng_for
+
+        split_rng = _rng_for(seed, fam_id, C.STREAM_ESTIMATOR, 0)
+        perm = split_rng.permutation(self.M)
         n_val = self.M // 10
         self.val_idx = perm[:n_val]
         self.tr_idx = perm[n_val:]
+        self._fam_id = fam_id
 
         self.G_rank = self._rank_gaussianize(A) if with_rankg else None
         self._cluster_cache = None
@@ -156,18 +161,22 @@ def sir(ctx, B, H):
     return out
 
 
-def l_isotron(ctx, B, max_iter=200, tol=1e-6):
+def l_isotron(ctx, B, max_iter=200, tol=1e-6, rng=None):
     """L-Isotron, frozen protocol (spec §4.8): eta = 1/tr(Sigma_LW), PAV link fit,
     10% held-out frames, 3 inits (WHITEN-LW, SIR-10, random) chosen by held-out
-    likelihood (Gaussian, i.e. held-out MSE). Truth never used."""
+    likelihood (Gaussian, i.e. held-out MSE). Truth never used.
+    rng: a per-(link,photon)-derived stream so results never depend on the
+    order in which combos are processed (checkpoint-resume determinism)."""
     A_tr, A_val = ctx.A[ctx.tr_idx], ctx.A[ctx.val_idx]
     B_tr, B_val = B[ctx.tr_idx], B[ctx.val_idx]
     eta = 1.0 / ctx.tr_lw
     K = B.shape[1]
+    if rng is None:
+        rng = ctx.est_rng
 
     x_lw = whiten_lw(ctx, B)
     x_sir = sir(ctx, B, 10)
-    x_rand = ctx.est_rng.standard_normal((ctx.n, K))
+    x_rand = rng.standard_normal((ctx.n, K))
     x_rand /= np.linalg.norm(x_rand, axis=0, keepdims=True)
     # scale-match non-LW inits to the LW norm so eta is comparable
     for X0 in (x_sir, x_rand):
@@ -246,9 +255,13 @@ def cluster_whiten(ctx, B, true_states=None):
     if ctx._cluster_cache is None:
         from sklearn.cluster import KMeans
 
+        from .utils import rng_for as _rng_for
+
         feats = np.log(ctx.A)
+        # dedicated derived stream: independent of combo processing order
+        km_rng = _rng_for(ctx.seed, ctx._fam_id, C.STREAM_ESTIMATOR, 99)
         km = KMeans(n_clusters=2, n_init=4,
-                    random_state=int(ctx.est_rng.integers(2 ** 31)))
+                    random_state=int(km_rng.integers(2 ** 31)))
         labels = km.fit_predict(feats)
         from sklearn.covariance import LedoitWolf
 

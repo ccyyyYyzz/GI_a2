@@ -39,16 +39,19 @@ def main():
             print("PHASE A STOP - aborting Phase B per spec.", flush=True)
             run("figures.py", "FIGURES (partial)")
             return 2
+    budget_abort = False
     if args.phase in ("b", "all"):
         rc = run("phase_b.py", "PHASE B")
         if rc == 2:
-            print("PHASE B budget abort.", flush=True)
+            budget_abort = True
+            print("PHASE B budget abort — gates will be evaluated on the "
+                  "PARTIAL grid and flagged grid_complete=false.", flush=True)
     if args.phase in ("gates", "b", "all"):
         run("gates_b.py", "B GATES")
     if args.phase in ("figures", "b", "all", "gates"):
         run("figures.py", "FIGURES")
     print("TOTAL wall %.1fs" % (time.time() - t0), flush=True)
-    return 0
+    return 3 if budget_abort else 0
 
 
 if __name__ == "__main__":

@@ -36,6 +36,10 @@ def to_gray64(img_hwc_uint8):
 
 def main():
     os.makedirs(DATA, exist_ok=True)
+    if os.path.exists(os.path.join(DATA, "sha256.txt")):
+        print("data already fetched (sha256.txt exists) - not overwriting; "
+              "delete data/sha256.txt to refetch", flush=True)
+        return 0
     provenance = {"source": None, "images": []}
     try:
         import torchvision

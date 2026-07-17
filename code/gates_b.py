@@ -56,17 +56,24 @@ def combo_eval(df, illum, link, photons, base_set, rng):
     sub = df[(df.illum == illum) & (df.link == link) & (df.photons == photons)]
     if sub.empty or "SCORE-OR" not in set(sub.method):
         return None
+    # control-set completeness: a silently shrunken control set would make the
+    # gate easier — that is a hard error, not a soft skip
+    missing = sorted(set(base_set) - set(sub.method))
+    if missing:
+        raise RuntimeError("combo %s|%s|%g missing control methods %s"
+                           % (illum, link, photons, missing))
     out = {"images": {}, "per_seed_mean_delta_psnr": {}}
-    lpips_ok = np.isfinite(sub["LPIPS"]).all()
+    lpips_ok = bool(np.isfinite(sub["LPIPS"]).all())
+    metrics_here = METRICS if lpips_ok else ["PSNR", "SSIM"]
     # per-image seed-means
     piv = {m: sub.pivot_table(index="method", columns="image", values=m,
-                              aggfunc="mean") for m in METRICS}
+                              aggfunc="mean") for m in metrics_here}
     base_choice = {}
-    deltas = {m: {} for m in METRICS}
+    deltas = {m: {} for m in metrics_here}
     for img in C.IMAGES:
-        for m in METRICS:
+        for m in metrics_here:
             col = piv[m][img]
-            base_vals = col.loc[[b for b in base_set if b in col.index]]
+            base_vals = col.loc[base_set]
             if m == "LPIPS":
                 bmeth = base_vals.idxmin()
                 deltas[m][img] = float(base_vals.min() - col.loc["SCORE-OR"])  # benefit
@@ -74,16 +81,16 @@ def combo_eval(df, illum, link, photons, base_set, rng):
                 bmeth = base_vals.idxmax()
                 deltas[m][img] = float(col.loc["SCORE-OR"] - base_vals.max())
             base_choice[(m, img)] = bmeth
-    mean_d = {m: float(np.mean(list(deltas[m].values()))) for m in METRICS}
+    mean_d = {m: float(np.mean(list(deltas[m].values()))) for m in metrics_here}
     n_all3 = sum(1 for img in C.IMAGES
-                 if all(deltas[m][img] > 0 for m in METRICS))
+                 if all(deltas[m][img] > 0 for m in metrics_here))
     # paired per-(image, seed) gains with frozen per-image baseline method
     seeds = sorted(sub.seed.unique())
-    gains = {m: np.full((len(C.IMAGES), len(seeds)), np.nan) for m in METRICS}
+    gains = {m: np.full((len(C.IMAGES), len(seeds)), np.nan) for m in metrics_here}
     for i, img in enumerate(C.IMAGES):
         for j, sd in enumerate(seeds):
             cell = sub[(sub.image == img) & (sub.seed == sd)].set_index("method")
-            for m in METRICS:
+            for m in metrics_here:
                 b = base_choice[(m, img)]
                 if m == "LPIPS":
                     gains[m][i, j] = cell.loc[b, m] - cell.loc["SCORE-OR", m]
@@ -95,7 +102,7 @@ def combo_eval(df, illum, link, photons, base_set, rng):
     # hierarchical bootstrap: resample images, then seeds within image
     lb90 = {}
     nI, nS = len(C.IMAGES), len(seeds)
-    for m in METRICS:
+    for m in metrics_here:
         stats = np.empty(C.BOOT_N)
         img_idx = rng.integers(0, nI, size=(C.BOOT_N, nI))
         seed_idx = rng.integers(0, nS, size=(C.BOOT_N, nI, nS))
@@ -105,12 +112,16 @@ def combo_eval(df, illum, link, photons, base_set, rng):
             stats[t] = sel.mean()
         lb90[m] = float(np.quantile(stats, C.BOOT_LB_Q))
     thresholds = {"PSNR": C.B1_PSNR_DB, "SSIM": C.B1_SSIM, "LPIPS": C.B1_LPIPS}
-    mean_gate = all(mean_d[m] >= thresholds[m] for m in METRICS)
+    mean_gate = all(mean_d[m] >= thresholds[m] for m in metrics_here)
     combo_pass = bool(mean_gate and n_all3 >= C.B1_MIN_POS and lb90["PSNR"] > 0)
+    if not lpips_ok:
+        # spec §1: LPIPS unavailable -> related gates are PENDING, never a pass
+        combo_pass = False
+        out["lpips_pending"] = "LPIPS UNAVAILABLE - combo cannot PASS until filled"
     out.update({
         "mean_delta": mean_d, "n_images_all3_improved": int(n_all3),
-        "lb90": lb90, "lpips_available": bool(lpips_ok),
-        "delta_per_image": {m: deltas[m] for m in METRICS},
+        "lb90": lb90, "lpips_available": lpips_ok,
+        "delta_per_image": {m: deltas[m] for m in metrics_here},
         "baseline_choice": {"%s|%s" % k: v for k, v in base_choice.items()},
         "pass": combo_pass,
     })
@@ -121,7 +132,21 @@ def main():
     core, ext = load_tables()
     combos = eligible_combos(core, ext)
     rng = rng_for(0, 77, 1)
-    gates = {"combos": {}, "honesty_arms_note":
+    # grid completeness (budget abort / crash leaves a partial grid)
+    meta_path = os.path.join(RESULTS, "phaseB_run_meta.json")
+    n_expected = (len(set(core.illum) | {"GAM4", "GAM8", "CORR-LOGN", "MIX-LOGN"})
+                  * (3 * 2 * 5)) + 4 * 4 * 3  # core 4x3x2x5 + ext 4x4x3
+    grid_complete = False
+    aborted = None
+    if os.path.exists(meta_path):
+        with open(meta_path) as f:
+            meta = json.load(f)
+        aborted = meta.get("aborted_over_budget")
+        grid_complete = (len(meta.get("combos", {})) >= 168) and not aborted
+    gates = {"combos": {},
+             "grid_complete": bool(grid_complete),
+             "aborted_over_budget": aborted,
+             "honesty_arms_note":
              "LIN and FGAIN reported in phaseB_core_metrics.csv, never gated; "
              "MLE-OR reported as information upper bound, never a control."}
     for gate_name, base_set in (("RELATION_HEADROOM", REL_SET),
@@ -166,6 +191,10 @@ def main():
     gates["B2_REGIME"] = regime
     gates["STAGE0_KILL"] = stage0_kill
     gates["VERDICT"] = verdict
+    if not grid_complete:
+        gates["VERDICT_NOTE"] = ("PARTIAL GRID (budget abort or incomplete run): "
+                                 "verdict is provisional and must not be quoted "
+                                 "as a full-grid result")
     with open(os.path.join(RESULTS, "phaseB_gates.json"), "w") as f:
         json.dump(gates, f, indent=2)
     print("B1 RELATION:", "KILL" if rel["KILL"] else

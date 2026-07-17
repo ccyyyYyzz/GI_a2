@@ -13,26 +13,36 @@ import numpy as np
 from .utils import pearson, psnr
 
 _LPIPS_NET = None
+_LPIPS_FAILED = False
 
 
 def lpips_net():
-    global _LPIPS_NET
-    if _LPIPS_NET is None:
-        import lpips as lpips_mod
-        import torch
+    """Spec §1 degradation path: if lpips/torch is unavailable, PSNR/SSIM still
+    run and LPIPS is recorded NaN (UNAVAILABLE); gates_b marks affected combos
+    pending, never passed."""
+    global _LPIPS_NET, _LPIPS_FAILED
+    if _LPIPS_NET is None and not _LPIPS_FAILED:
+        try:
+            import lpips as lpips_mod
+            import torch
 
-        torch.set_num_threads(4)
-        _LPIPS_NET = lpips_mod.LPIPS(net="alex", verbose=False)
-        _LPIPS_NET.eval()
+            torch.set_num_threads(4)
+            _LPIPS_NET = lpips_mod.LPIPS(net="alex", verbose=False)
+            _LPIPS_NET.eval()
+        except Exception as e:
+            print("LPIPS UNAVAILABLE (%r) - recording NaN, gates pending" % (e,),
+                  flush=True)
+            _LPIPS_FAILED = True
     return _LPIPS_NET
 
 
 def lpips_batch(recs, refs, data_range):
     """recs, refs: (B, side, side) arrays on the sum=1 scale. Mapped to [-1, 1]
     via division by data_range (truth max); recon clipped into range."""
-    import torch
-
     net = lpips_net()
+    if net is None:
+        return np.full(len(np.atleast_3d(recs)), np.nan)
+    import torch
     r = np.clip(np.asarray(recs) / data_range, 0.0, 1.0) * 2.0 - 1.0
     g = np.clip(np.asarray(refs) / data_range, 0.0, 1.0) * 2.0 - 1.0
     with torch.no_grad():

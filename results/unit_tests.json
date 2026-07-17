@@ -2,7 +2,7 @@
   "UT1": {
     "pass": true,
     "max_pixel_rel_diff": 1.3049687086753098e-05,
-    "runtime_s": 2.74
+    "runtime_s": 2.48
   },
   "UT2": {
     "families": {
@@ -73,7 +73,7 @@
       }
     },
     "pass": true,
-    "runtime_s": 8.0
+    "runtime_s": 9.71
   },
   "UT3": {
     "links": {
@@ -133,7 +133,7 @@
       }
     },
     "pass": true,
-    "runtime_s": 11.72
+    "runtime_s": 13.38
   },
   "UT4": {
     "families": {
@@ -208,7 +208,7 @@
       }
     },
     "pass": true,
-    "runtime_s": 1.34
+    "runtime_s": 1.75
   },
   "UT5": {
     "k": {
@@ -232,7 +232,7 @@
       }
     },
     "pass": true,
-    "runtime_s": 3.84
+    "runtime_s": 4.18
   },
   "UT6": {
     "pass": true,
@@ -256,7 +256,7 @@
     ],
     "monotone": true,
     "no_saturation": true,
-    "runtime_s": 276.69
+    "runtime_s": 322.39
   },
   "UT7": {
     "pass": true,
@@ -274,8 +274,8 @@
     "lpips_finite_at_64": true,
     "key_disjoint": true,
     "flux_scale_invariant": true,
-    "runtime_s": 7.78
+    "runtime_s": 15.68
   },
   "ALL_PASS": true,
-  "total_runtime_s": 312.11
+  "total_runtime_s": 369.58
 }
