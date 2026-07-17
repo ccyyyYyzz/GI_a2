@@ -1,0 +1,47 @@
+{
+  "ridge": {
+    "20": {
+      "rho_star": 4.533269392866054,
+      "I_at_peak": 0.7432511906311869,
+      "I_asymptote_CLT": 1.0,
+      "qmle_trust_rho_ratio0.9": 4.966428051464585
+    },
+    "50": {
+      "rho_star": 6.158937596398956,
+      "I_at_peak": 0.7979685241422887,
+      "I_asymptote_CLT": 1.0,
+      "qmle_trust_rho_ratio0.9": 8.588758603964937
+    },
+    "100": {
+      "rho_star": 7.865366353033655,
+      "I_at_peak": 0.8334517658658727,
+      "I_asymptote_CLT": 1.0,
+      "qmle_trust_rho_ratio0.9": 12.374316756777032
+    },
+    "200": {
+      "rho_star": 9.991695064900318,
+      "I_at_peak": 0.8655153082905239,
+      "I_asymptote_CLT": 1.0,
+      "qmle_trust_rho_ratio0.9": 17.828387344169222
+    },
+    "500": {
+      "rho_star": 13.770412005178148,
+      "I_at_peak": 0.8986217003262402,
+      "I_asymptote_CLT": 1.0,
+      "qmle_trust_rho_ratio0.9": 25.68637942128446
+    },
+    "1000": {
+      "rho_star": 17.45286017774791,
+      "I_at_peak": 0.919153540741788,
+      "I_asymptote_CLT": 1.0,
+      "qmle_trust_rho_ratio0.9": 37.00783896138373
+    },
+    "2000": {
+      "rho_star": 22.15503546089851,
+      "I_at_peak": 0.9353615833281874,
+      "I_asymptote_CLT": 1.0,
+      "qmle_trust_rho_ratio0.9": 53.31931457248657
+    }
+  },
+  "definition": "I about log-lambda per unit time, tau units; CLT proxy = rho/(1+rho)"
+}
