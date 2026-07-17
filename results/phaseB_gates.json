@@ -1,0 +1,2563 @@
+{
+  "combos": {
+    "RELATION_HEADROOM": {
+      "CORR-LOGN|GAMMA07|10000": {
+        "images": {},
+        "per_seed_mean_delta_psnr": {
+          "0": -4.36050275,
+          "1": -4.43194375,
+          "2": -4.4663312500000005
+        },
+        "mean_delta": {
+          "PSNR": -4.419592583333333,
+          "SSIM": -0.09499722058333332,
+          "LPIPS": -0.28959166666666664
+        },
+        "n_images_all3_improved": 0,
+        "lb90": {
+          "PSNR": -4.639631925,
+          "SSIM": -0.12802585379166667,
+          "LPIPS": -0.3212076375
+        },
+        "lpips_available": true,
+        "delta_per_image": {
+          "PSNR": {
+            "cat": -4.255026666666667,
+            "deer": -5.126550000000001,
+            "dog": -3.8713933333333332,
+            "horse": -4.14299,
+            "airplane": -4.010303333333334,
+            "car": -5.093353333333334,
+            "ship": -4.110594,
+            "truck": -4.746530000000001
+          },
+          "SSIM": {
+            "cat": -0.088178944,
+            "deer": -0.12280099933333334,
+            "dog": -0.010207390666666667,
+            "horse": -0.07639761333333332,
+            "airplane": -0.04380705933333333,
+            "car": -0.15345261466666668,
+            "ship": -0.02326033666666667,
+            "truck": -0.24187280666666663
+          },
+          "LPIPS": {
+            "cat": -0.3441753333333335,
+            "deer": -0.2948356666666665,
+            "dog": -0.21300666666666634,
+            "horse": -0.22585966666666646,
+            "airplane": -0.3035,
+            "car": -0.32722700000000005,
+            "ship": -0.2160833333333334,
+            "truck": -0.3920456666666666
+          }
+        },
+        "baseline_choice": {
+          "PSNR|cat": "L-ISOTRON",
+          "SSIM|cat": "L-ISOTRON",
+          "LPIPS|cat": "WHITEN-OR",
+          "PSNR|deer": "L-ISOTRON",
+          "SSIM|deer": "L-ISOTRON",
+          "LPIPS|deer": "WHITEN-OR",
+          "PSNR|dog": "L-ISOTRON",
+          "SSIM|dog": "L-ISOTRON",
+          "LPIPS|dog": "WHITEN-OR",
+          "PSNR|horse": "L-ISOTRON",
+          "SSIM|horse": "L-ISOTRON",
+          "LPIPS|horse": "WHITEN-OR",
+          "PSNR|airplane": "L-ISOTRON",
+          "SSIM|airplane": "L-ISOTRON",
+          "LPIPS|airplane": "WHITEN-OR",
+          "PSNR|car": "L-ISOTRON",
+          "SSIM|car": "L-ISOTRON",
+          "LPIPS|car": "WHITEN-OR",
+          "PSNR|ship": "L-ISOTRON",
+          "SSIM|ship": "L-ISOTRON",
+          "LPIPS|ship": "WHITEN-OR",
+          "PSNR|truck": "L-ISOTRON",
+          "SSIM|truck": "L-ISOTRON",
+          "LPIPS|truck": "WHITEN-OR"
+        },
+        "pass": false
+      },
+      "CORR-LOGN|LOG|10000": {
+        "images": {},
+        "per_seed_mean_delta_psnr": {
+          "0": -3.8289505,
+          "1": -3.9363574999999997,
+          "2": -3.9342242499999998
+        },
+        "mean_delta": {
+          "PSNR": -3.899844083333334,
+          "SSIM": -0.07907211312500001,
+          "LPIPS": -0.2742955
+        },
+        "n_images_all3_improved": 0,
+        "lb90": {
+          "PSNR": -4.077481908333334,
+          "SSIM": -0.10545113837083334,
+          "LPIPS": -0.3078562166666666
+        },
+        "lpips_available": true,
+        "delta_per_image": {
+          "PSNR": {
+            "cat": -3.7369933333333334,
+            "deer": -4.55126,
+            "dog": -3.5674213333333333,
+            "horse": -3.69397,
+            "airplane": -3.5956866666666674,
+            "car": -4.425400000000001,
+            "ship": -3.574828,
+            "truck": -4.0531933333333345
+          },
+          "SSIM": {
+            "cat": -0.08094260600000001,
+            "deer": -0.09922033366666666,
+            "dog": -0.010345878666666666,
+            "horse": -0.06942687333333333,
+            "airplane": -0.03513702666666667,
+            "car": -0.12598379766666667,
+            "ship": -0.019536357666666667,
+            "truck": -0.19198403133333333
+          },
+          "LPIPS": {
+            "cat": -0.32753,
+            "deer": -0.27099800000000007,
+            "dog": -0.1530733333333334,
+            "horse": -0.2448203333333333,
+            "airplane": -0.2895926666666667,
+            "car": -0.32177533333333364,
+            "ship": -0.2057266666666666,
+            "truck": -0.3808476666666667
+          }
+        },
+        "baseline_choice": {
+          "PSNR|cat": "L-ISOTRON",
+          "SSIM|cat": "L-ISOTRON",
+          "LPIPS|cat": "WHITEN-OR",
+          "PSNR|deer": "L-ISOTRON",
+          "SSIM|deer": "L-ISOTRON",
+          "LPIPS|deer": "WHITEN-OR",
+          "PSNR|dog": "L-ISOTRON",
+          "SSIM|dog": "SIR-20",
+          "LPIPS|dog": "WHITEN-OR",
+          "PSNR|horse": "L-ISOTRON",
+          "SSIM|horse": "L-ISOTRON",
+          "LPIPS|horse": "WHITEN-OR",
+          "PSNR|airplane": "L-ISOTRON",
+          "SSIM|airplane": "L-ISOTRON",
+          "LPIPS|airplane": "WHITEN-OR",
+          "PSNR|car": "L-ISOTRON",
+          "SSIM|car": "L-ISOTRON",
+          "LPIPS|car": "WHITEN-OR",
+          "PSNR|ship": "L-ISOTRON",
+          "SSIM|ship": "L-ISOTRON",
+          "LPIPS|ship": "WHITEN-OR",
+          "PSNR|truck": "L-ISOTRON",
+          "SSIM|truck": "L-ISOTRON",
+          "LPIPS|truck": "WHITEN-OR"
+        },
+        "pass": false
+      },
+      "CORR-LOGN|SAT30|10000": {
+        "images": {},
+        "per_seed_mean_delta_psnr": {
+          "0": -3.7069712500000005,
+          "1": -3.816831625,
+          "2": -3.870423625
+        },
+        "mean_delta": {
+          "PSNR": -3.7980755,
+          "SSIM": -0.0777499915,
+          "LPIPS": -0.26987454166666663
+        },
+        "n_images_all3_improved": 0,
+        "lb90": {
+          "PSNR": -3.982559362500001,
+          "SSIM": -0.105818613275,
+          "LPIPS": -0.29899580000000003
+        },
+        "lpips_available": true,
+        "delta_per_image": {
+          "PSNR": {
+            "cat": -3.5996899999999994,
+            "deer": -4.389796666666666,
+            "dog": -3.414955,
+            "horse": -3.5090200000000005,
+            "airplane": -3.5362366666666665,
+            "car": -4.345583333333332,
+            "ship": -3.482285666666667,
+            "truck": -4.107036666666668
+          },
+          "SSIM": {
+            "cat": -0.075179607,
+            "deer": -0.09982810999999998,
+            "dog": -0.007889678333333334,
+            "horse": -0.06242280333333333,
+            "airplane": -0.027367838,
+            "car": -0.13170057066666668,
+            "ship": -0.016585542666666668,
+            "truck": -0.201025782
+          },
+          "LPIPS": {
+            "cat": -0.3058256666666668,
+            "deer": -0.2648999999999999,
+            "dog": -0.16699333333333333,
+            "horse": -0.2612986666666667,
+            "airplane": -0.2245503333333334,
+            "car": -0.3349099999999997,
+            "ship": -0.24384666666666654,
+            "truck": -0.3566716666666666
+          }
+        },
+        "baseline_choice": {
+          "PSNR|cat": "L-ISOTRON",
+          "SSIM|cat": "L-ISOTRON",
+          "LPIPS|cat": "WHITEN-OR",
+          "PSNR|deer": "L-ISOTRON",
+          "SSIM|deer": "L-ISOTRON",
+          "LPIPS|deer": "WHITEN-OR",
+          "PSNR|dog": "L-ISOTRON",
+          "SSIM|dog": "L-ISOTRON",
+          "LPIPS|dog": "WHITEN-OR",
+          "PSNR|horse": "L-ISOTRON",
+          "SSIM|horse": "L-ISOTRON",
+          "LPIPS|horse": "WHITEN-OR",
+          "PSNR|airplane": "L-ISOTRON",
+          "SSIM|airplane": "L-ISOTRON",
+          "LPIPS|airplane": "WHITEN-OR",
+          "PSNR|car": "L-ISOTRON",
+          "SSIM|car": "L-ISOTRON",
+          "LPIPS|car": "WHITEN-OR",
+          "PSNR|ship": "L-ISOTRON",
+          "SSIM|ship": "L-ISOTRON",
+          "LPIPS|ship": "WHITEN-OR",
+          "PSNR|truck": "L-ISOTRON",
+          "SSIM|truck": "L-ISOTRON",
+          "LPIPS|truck": "WHITEN-OR"
+        },
+        "pass": false
+      },
+      "CORR-LOGN|SAT50|10000": {
+        "images": {},
+        "per_seed_mean_delta_psnr": {
+          "0": -2.2970701250000003,
+          "1": -2.4289750000000003,
+          "2": -2.4146535
+        },
+        "mean_delta": {
+          "PSNR": -2.3802328750000004,
+          "SSIM": -0.04249592633333333,
+          "LPIPS": -0.29542820833333333
+        },
+        "n_images_all3_improved": 0,
+        "lb90": {
+          "PSNR": -2.4733019166666668,
+          "SSIM": -0.057192324850000004,
+          "LPIPS": -0.3239820666666667
+        },
+        "lpips_available": true,
+        "delta_per_image": {
+          "PSNR": {
+            "cat": -2.3291766666666667,
+            "deer": -2.73836,
+            "dog": -2.077512333333333,
+            "horse": -2.4050400000000005,
+            "airplane": -2.3005066666666667,
+            "car": -2.561466666666667,
+            "ship": -2.2018906666666664,
+            "truck": -2.4279100000000025
+          },
+          "SSIM": {
+            "cat": -0.044319816666666664,
+            "deer": -0.05242774333333333,
+            "dog": -0.004383412333333333,
+            "horse": -0.03426542666666667,
+            "airplane": -0.015634162333333333,
+            "car": -0.0729595,
+            "ship": -0.010505484333333332,
+            "truck": -0.105471865
+          },
+          "LPIPS": {
+            "cat": -0.3314843333333336,
+            "deer": -0.2936063333333334,
+            "dog": -0.18076000000000003,
+            "horse": -0.29794200000000015,
+            "airplane": -0.31659633333333315,
+            "car": -0.2993420000000001,
+            "ship": -0.2553466666666664,
+            "truck": -0.3883479999999999
+          }
+        },
+        "baseline_choice": {
+          "PSNR|cat": "L-ISOTRON",
+          "SSIM|cat": "L-ISOTRON",
+          "LPIPS|cat": "WHITEN-OR",
+          "PSNR|deer": "L-ISOTRON",
+          "SSIM|deer": "L-ISOTRON",
+          "LPIPS|deer": "WHITEN-OR",
+          "PSNR|dog": "L-ISOTRON",
+          "SSIM|dog": "SIR-10",
+          "LPIPS|dog": "WHITEN-OR",
+          "PSNR|horse": "L-ISOTRON",
+          "SSIM|horse": "L-ISOTRON",
+          "LPIPS|horse": "WHITEN-OR",
+          "PSNR|airplane": "L-ISOTRON",
+          "SSIM|airplane": "SIR-20",
+          "LPIPS|airplane": "WHITEN-OR",
+          "PSNR|car": "L-ISOTRON",
+          "SSIM|car": "L-ISOTRON",
+          "LPIPS|car": "WHITEN-OR",
+          "PSNR|ship": "L-ISOTRON",
+          "SSIM|ship": "SIR-20",
+          "LPIPS|ship": "WHITEN-OR",
+          "PSNR|truck": "L-ISOTRON",
+          "SSIM|truck": "L-ISOTRON",
+          "LPIPS|truck": "WHITEN-OR"
+        },
+        "pass": false
+      },
+      "GAM4|GAMMA07|10000": {
+        "images": {},
+        "per_seed_mean_delta_psnr": {
+          "0": -1.6285125000000003,
+          "1": -1.6945675,
+          "2": -1.66841625
+        },
+        "mean_delta": {
+          "PSNR": -1.6638320833333333,
+          "SSIM": -0.053386604166666664,
+          "LPIPS": -0.08453091666666665
+        },
+        "n_images_all3_improved": 0,
+        "lb90": {
+          "PSNR": -1.7187275833333333,
+          "SSIM": -0.06670987708333334,
+          "LPIPS": -0.10520373749999999
+        },
+        "lpips_available": true,
+        "delta_per_image": {
+          "PSNR": {
+            "cat": -1.6038566666666654,
+            "deer": -1.7596333333333334,
+            "dog": -1.5139233333333333,
+            "horse": -1.62061,
+            "airplane": -1.5738566666666678,
+            "car": -1.835866666666666,
+            "ship": -1.593010000000001,
+            "truck": -1.809899999999999
+          },
+          "SSIM": {
+            "cat": -0.06413933333333335,
+            "deer": -0.06197633333333333,
+            "dog": -0.009207733333333334,
+            "horse": -0.052942433333333344,
+            "airplane": -0.03626516666666666,
+            "car": -0.07323233333333337,
+            "ship": -0.020854833333333333,
+            "truck": -0.10847466666666661
+          },
+          "LPIPS": {
+            "cat": -0.0944906666666665,
+            "deer": -0.08167366666666664,
+            "dog": -0.024196666666666644,
+            "horse": -0.06157866666666667,
+            "airplane": -0.052889333333333344,
+            "car": -0.1258326666666667,
+            "ship": -0.08384666666666662,
+            "truck": -0.15173900000000007
+          }
+        },
+        "baseline_choice": {
+          "PSNR|cat": "WHITEN-OR",
+          "SSIM|cat": "WHITEN-OR",
+          "LPIPS|cat": "SIR-20",
+          "PSNR|deer": "WHITEN-OR",
+          "SSIM|deer": "WHITEN-OR",
+          "LPIPS|deer": "WHITEN-OR",
+          "PSNR|dog": "L-ISOTRON",
+          "SSIM|dog": "L-ISOTRON",
+          "LPIPS|dog": "WHITEN-OR",
+          "PSNR|horse": "L-ISOTRON",
+          "SSIM|horse": "L-ISOTRON",
+          "LPIPS|horse": "SIR-20",
+          "PSNR|airplane": "L-ISOTRON",
+          "SSIM|airplane": "L-ISOTRON",
+          "LPIPS|airplane": "L-ISOTRON",
+          "PSNR|car": "L-ISOTRON",
+          "SSIM|car": "L-ISOTRON",
+          "LPIPS|car": "SIR-20",
+          "PSNR|ship": "L-ISOTRON",
+          "SSIM|ship": "L-ISOTRON",
+          "LPIPS|ship": "SIR-20",
+          "PSNR|truck": "L-ISOTRON",
+          "SSIM|truck": "L-ISOTRON",
+          "LPIPS|truck": "L-ISOTRON"
+        },
+        "pass": false
+      },
+      "GAM4|LOG|10000": {
+        "images": {},
+        "per_seed_mean_delta_psnr": {
+          "0": -1.523715,
+          "1": -1.5094699999999999,
+          "2": -1.51926375
+        },
+        "mean_delta": {
+          "PSNR": -1.5174829166666661,
+          "SSIM": -0.04830765000000001,
+          "LPIPS": -0.0715692916666666
+        },
+        "n_images_all3_improved": 0,
+        "lb90": {
+          "PSNR": -1.5926637916666668,
+          "SSIM": -0.06224442374999999,
+          "LPIPS": -0.09926951249999996
+        },
+        "lpips_available": true,
+        "delta_per_image": {
+          "PSNR": {
+            "cat": -1.4381399999999989,
+            "deer": -1.7293633333333336,
+            "dog": -1.3695833333333332,
+            "horse": -1.3673099999999998,
+            "airplane": -1.3946466666666666,
+            "car": -1.7401666666666635,
+            "ship": -1.4196199999999997,
+            "truck": -1.6810333333333336
+          },
+          "SSIM": {
+            "cat": -0.052467033333333316,
+            "deer": -0.05973066666666668,
+            "dog": -0.00837026666666667,
+            "horse": -0.04456636666666669,
+            "airplane": -0.0250221,
+            "car": -0.07775033333333334,
+            "ship": -0.01508576666666667,
+            "truck": -0.10346866666666671
+          },
+          "LPIPS": {
+            "cat": -0.0898876666666667,
+            "deer": -0.06710099999999986,
+            "dog": -0.027476666666666594,
+            "horse": -0.04356133333333323,
+            "airplane": -0.03912666666666653,
+            "car": -0.13149633333333333,
+            "ship": 0.00279000000000007,
+            "truck": -0.17669466666666667
+          }
+        },
+        "baseline_choice": {
+          "PSNR|cat": "L-ISOTRON",
+          "SSIM|cat": "L-ISOTRON",
+          "LPIPS|cat": "SIR-20",
+          "PSNR|deer": "L-ISOTRON",
+          "SSIM|deer": "L-ISOTRON",
+          "LPIPS|deer": "L-ISOTRON",
+          "PSNR|dog": "L-ISOTRON",
+          "SSIM|dog": "L-ISOTRON",
+          "LPIPS|dog": "SIR-20",
+          "PSNR|horse": "WHITEN-OR",
+          "SSIM|horse": "WHITEN-OR",
+          "LPIPS|horse": "WHITEN-OR",
+          "PSNR|airplane": "L-ISOTRON",
+          "SSIM|airplane": "L-ISOTRON",
+          "LPIPS|airplane": "SIR-10",
+          "PSNR|car": "L-ISOTRON",
+          "SSIM|car": "L-ISOTRON",
+          "LPIPS|car": "SIR-10",
+          "PSNR|ship": "L-ISOTRON",
+          "SSIM|ship": "SIR-20",
+          "LPIPS|ship": "SIR-10",
+          "PSNR|truck": "L-ISOTRON",
+          "SSIM|truck": "L-ISOTRON",
+          "LPIPS|truck": "SIR-20"
+        },
+        "pass": false
+      },
+      "GAM4|SAT30|10000": {
+        "images": {},
+        "per_seed_mean_delta_psnr": {
+          "0": -1.5018287499999998,
+          "1": -1.5191712500000003,
+          "2": -1.4834862499999997
+        },
+        "mean_delta": {
+          "PSNR": -1.5014954166666663,
+          "SSIM": -0.04561788749999999,
+          "LPIPS": -0.052227041666666724
+        },
+        "n_images_all3_improved": 0,
+        "lb90": {
+          "PSNR": -1.5796605,
+          "SSIM": -0.059097656666666665,
+          "LPIPS": -0.073413125
+        },
+        "lpips_available": true,
+        "delta_per_image": {
+          "PSNR": {
+            "cat": -1.3539533333333322,
+            "deer": -1.606399999999999,
+            "dog": -1.36146,
+            "horse": -1.357053333333333,
+            "airplane": -1.4393700000000011,
+            "car": -1.774799999999999,
+            "ship": -1.4106933333333327,
+            "truck": -1.7082333333333342
+          },
+          "SSIM": {
+            "cat": -0.041007333333333326,
+            "deer": -0.06029000000000001,
+            "dog": -0.006638500000000002,
+            "horse": -0.039152733333333314,
+            "airplane": -0.028150466666666665,
+            "car": -0.07370866666666667,
+            "ship": -0.015291066666666662,
+            "truck": -0.10070433333333328
+          },
+          "LPIPS": {
+            "cat": -0.061655666666666664,
+            "deer": -0.040709666666666755,
+            "dog": -0.007023333333333381,
+            "horse": -0.04759133333333332,
+            "airplane": -0.030593333333333472,
+            "car": -0.11291999999999991,
+            "ship": 0.007693333333333108,
+            "truck": -0.1250163333333334
+          }
+        },
+        "baseline_choice": {
+          "PSNR|cat": "L-ISOTRON",
+          "SSIM|cat": "L-ISOTRON",
+          "LPIPS|cat": "WHITEN-OR",
+          "PSNR|deer": "L-ISOTRON",
+          "SSIM|deer": "L-ISOTRON",
+          "LPIPS|deer": "SIR-10",
+          "PSNR|dog": "L-ISOTRON",
+          "SSIM|dog": "L-ISOTRON",
+          "LPIPS|dog": "SIR-20",
+          "PSNR|horse": "L-ISOTRON",
+          "SSIM|horse": "L-ISOTRON",
+          "LPIPS|horse": "SIR-20",
+          "PSNR|airplane": "L-ISOTRON",
+          "SSIM|airplane": "L-ISOTRON",
+          "LPIPS|airplane": "SIR-10",
+          "PSNR|car": "WHITEN-OR",
+          "SSIM|car": "WHITEN-OR",
+          "LPIPS|car": "WHITEN-OR",
+          "PSNR|ship": "L-ISOTRON",
+          "SSIM|ship": "L-ISOTRON",
+          "LPIPS|ship": "SIR-20",
+          "PSNR|truck": "L-ISOTRON",
+          "SSIM|truck": "L-ISOTRON",
+          "LPIPS|truck": "L-ISOTRON"
+        },
+        "pass": false
+      },
+      "GAM4|SAT50|10000": {
+        "images": {},
+        "per_seed_mean_delta_psnr": {
+          "0": -1.0449745,
+          "1": -1.0715241825,
+          "2": -1.029808875
+        },
+        "mean_delta": {
+          "PSNR": -1.0487691858333328,
+          "SSIM": -0.02902339541666667,
+          "LPIPS": -0.027308374999999926
+        },
+        "n_images_all3_improved": 0,
+        "lb90": {
+          "PSNR": -1.1105875432499999,
+          "SSIM": -0.03841192583333334,
+          "LPIPS": -0.04315447083333333
+        },
+        "lpips_available": true,
+        "delta_per_image": {
+          "PSNR": {
+            "cat": -0.9359599999999997,
+            "deer": -1.2323666666666657,
+            "dog": -0.9348734866666668,
+            "horse": -0.9661466666666669,
+            "airplane": -0.9587833333333329,
+            "car": -1.229639999999999,
+            "ship": -0.9936266666666664,
+            "truck": -1.1387566666666658
+          },
+          "SSIM": {
+            "cat": -0.025720600000000017,
+            "deer": -0.04090196666666668,
+            "dog": -0.004285896666666666,
+            "horse": -0.029718100000000004,
+            "airplane": -0.012592599999999999,
+            "car": -0.04320343333333333,
+            "ship": -0.006637899999999999,
+            "truck": -0.06912666666666667
+          },
+          "LPIPS": {
+            "cat": -0.0544570000000002,
+            "deer": -0.04293233333333313,
+            "dog": -0.022686666666666522,
+            "horse": -0.00844099999999992,
+            "airplane": -0.04258666666666655,
+            "car": -0.020490666666666657,
+            "ship": 0.02978000000000014,
+            "truck": -0.056652666666666573
+          }
+        },
+        "baseline_choice": {
+          "PSNR|cat": "L-ISOTRON",
+          "SSIM|cat": "L-ISOTRON",
+          "LPIPS|cat": "WHITEN-OR",
+          "PSNR|deer": "L-ISOTRON",
+          "SSIM|deer": "L-ISOTRON",
+          "LPIPS|deer": "L-ISOTRON",
+          "PSNR|dog": "WHITEN-OR",
+          "SSIM|dog": "WHITEN-OR",
+          "LPIPS|dog": "WHITEN-OR",
+          "PSNR|horse": "L-ISOTRON",
+          "SSIM|horse": "L-ISOTRON",
+          "LPIPS|horse": "SIR-10",
+          "PSNR|airplane": "L-ISOTRON",
+          "SSIM|airplane": "L-ISOTRON",
+          "LPIPS|airplane": "WHITEN-OR",
+          "PSNR|car": "WHITEN-OR",
+          "SSIM|car": "WHITEN-OR",
+          "LPIPS|car": "WHITEN-OR",
+          "PSNR|ship": "L-ISOTRON",
+          "SSIM|ship": "L-ISOTRON",
+          "LPIPS|ship": "SIR-20",
+          "PSNR|truck": "L-ISOTRON",
+          "SSIM|truck": "L-ISOTRON",
+          "LPIPS|truck": "L-ISOTRON"
+        },
+        "pass": false
+      },
+      "GAM8|GAMMA07|10000": {
+        "images": {},
+        "per_seed_mean_delta_psnr": {
+          "0": -0.6245624999999999,
+          "1": -0.6151737499999995,
+          "2": -0.6432287499999996
+        },
+        "mean_delta": {
+          "PSNR": -0.6276550000000001,
+          "SSIM": -0.02034748708333333,
+          "LPIPS": -0.02527833333333336
+        },
+        "n_images_all3_improved": 0,
+        "lb90": {
+          "PSNR": -0.6673861249999995,
+          "SSIM": -0.026055087874999997,
+          "LPIPS": -0.04123547916666667
+        },
+        "lpips_available": true,
+        "delta_per_image": {
+          "PSNR": {
+            "cat": -0.6465933333333327,
+            "deer": -0.6926000000000005,
+            "dog": -0.4908066666666666,
+            "horse": -0.6058099999999991,
+            "airplane": -0.5761566666666678,
+            "car": -0.7538833333333326,
+            "ship": -0.5474566666666667,
+            "truck": -0.7079333333333349
+          },
+          "SSIM": {
+            "cat": -0.02107866666666665,
+            "deer": -0.02508166666666667,
+            "dog": -0.0028438300000000003,
+            "horse": -0.021217133333333346,
+            "airplane": -0.013628533333333338,
+            "car": -0.031911999999999996,
+            "ship": -0.005242733333333333,
+            "truck": -0.04177533333333333
+          },
+          "LPIPS": {
+            "cat": -0.007380000000000164,
+            "deer": -0.0199379999999999,
+            "dog": -0.033726666666666905,
+            "horse": 0.004410333333333294,
+            "airplane": -0.027649999999999952,
+            "car": -0.09725266666666676,
+            "ship": -0.01546000000000003,
+            "truck": -0.005229666666666466
+          }
+        },
+        "baseline_choice": {
+          "PSNR|cat": "L-ISOTRON",
+          "SSIM|cat": "L-ISOTRON",
+          "LPIPS|cat": "SIR-10",
+          "PSNR|deer": "L-ISOTRON",
+          "SSIM|deer": "L-ISOTRON",
+          "LPIPS|deer": "L-ISOTRON",
+          "PSNR|dog": "L-ISOTRON",
+          "SSIM|dog": "L-ISOTRON",
+          "LPIPS|dog": "L-ISOTRON",
+          "PSNR|horse": "L-ISOTRON",
+          "SSIM|horse": "L-ISOTRON",
+          "LPIPS|horse": "SIR-10",
+          "PSNR|airplane": "L-ISOTRON",
+          "SSIM|airplane": "L-ISOTRON",
+          "LPIPS|airplane": "SIR-20",
+          "PSNR|car": "L-ISOTRON",
+          "SSIM|car": "L-ISOTRON",
+          "LPIPS|car": "L-ISOTRON",
+          "PSNR|ship": "L-ISOTRON",
+          "SSIM|ship": "L-ISOTRON",
+          "LPIPS|ship": "SIR-10",
+          "PSNR|truck": "L-ISOTRON",
+          "SSIM|truck": "L-ISOTRON",
+          "LPIPS|truck": "L-ISOTRON"
+        },
+        "pass": false
+      },
+      "GAM8|LOG|10000": {
+        "images": {},
+        "per_seed_mean_delta_psnr": {
+          "0": -0.5459515000000004,
+          "1": -0.5746612499999999,
+          "2": -0.49526874999999987
+        },
+        "mean_delta": {
+          "PSNR": -0.5386271666666668,
+          "SSIM": -0.01612396833333333,
+          "LPIPS": -0.015526749999999992
+        },
+        "n_images_all3_improved": 0,
+        "lb90": {
+          "PSNR": -0.5779317083333333,
+          "SSIM": -0.02191742625,
+          "LPIPS": -0.028007937499999948
+        },
+        "lpips_available": true,
+        "delta_per_image": {
+          "PSNR": {
+            "cat": -0.5308099999999998,
+            "deer": -0.59375,
+            "dog": -0.5373373333333333,
+            "horse": -0.4637666666666673,
+            "airplane": -0.4764833333333325,
+            "car": -0.5921499999999984,
+            "ship": -0.4442200000000005,
+            "truck": -0.6705000000000023
+          },
+          "SSIM": {
+            "cat": -0.015388699999999991,
+            "deer": -0.015872666666666674,
+            "dog": -0.00173448,
+            "horse": -0.01518676666666667,
+            "airplane": -0.00812616666666667,
+            "car": -0.021825333333333335,
+            "ship": -0.006414633333333329,
+            "truck": -0.04444299999999998
+          },
+          "LPIPS": {
+            "cat": -0.007237666666666476,
+            "deer": -0.03918199999999994,
+            "dog": -0.025926666666666653,
+            "horse": -0.002809999999999868,
+            "airplane": -0.0068870000000000875,
+            "car": -0.007589999999999986,
+            "ship": 0.007319999999999771,
+            "truck": -0.0419006666666667
+          }
+        },
+        "baseline_choice": {
+          "PSNR|cat": "L-ISOTRON",
+          "SSIM|cat": "L-ISOTRON",
+          "LPIPS|cat": "SIR-10",
+          "PSNR|deer": "WHITEN-OR",
+          "SSIM|deer": "WHITEN-OR",
+          "LPIPS|deer": "SIR-20",
+          "PSNR|dog": "L-ISOTRON",
+          "SSIM|dog": "SIR-20",
+          "LPIPS|dog": "L-ISOTRON",
+          "PSNR|horse": "L-ISOTRON",
+          "SSIM|horse": "L-ISOTRON",
+          "LPIPS|horse": "L-ISOTRON",
+          "PSNR|airplane": "L-ISOTRON",
+          "SSIM|airplane": "L-ISOTRON",
+          "LPIPS|airplane": "SIR-10",
+          "PSNR|car": "L-ISOTRON",
+          "SSIM|car": "L-ISOTRON",
+          "LPIPS|car": "SIR-20",
+          "PSNR|ship": "L-ISOTRON",
+          "SSIM|ship": "WHITEN-OR",
+          "LPIPS|ship": "WHITEN-OR",
+          "PSNR|truck": "WHITEN-OR",
+          "SSIM|truck": "WHITEN-OR",
+          "LPIPS|truck": "WHITEN-OR"
+        },
+        "pass": false
+      },
+      "GAM8|SAT30|10000": {
+        "images": {},
+        "per_seed_mean_delta_psnr": {
+          "0": -0.5565182499999999,
+          "1": -0.5891625000000001,
+          "2": -0.5369999999999998
+        },
+        "mean_delta": {
+          "PSNR": -0.5608935833333331,
+          "SSIM": -0.01768395875000001,
+          "LPIPS": -0.02417275000000005
+        },
+        "n_images_all3_improved": 0,
+        "lb90": {
+          "PSNR": -0.5946505916666666,
+          "SSIM": -0.023609990333333337,
+          "LPIPS": -0.037901724999999976
+        },
+        "lpips_available": true,
+        "delta_per_image": {
+          "PSNR": {
+            "cat": -0.5395366666666659,
+            "deer": -0.6229833333333321,
+            "dog": -0.5363120000000002,
+            "horse": -0.4974400000000001,
+            "airplane": -0.505726666666666,
+            "car": -0.6444600000000005,
+            "ship": -0.4825233333333334,
+            "truck": -0.6581666666666663
+          },
+          "SSIM": {
+            "cat": -0.018402966666666673,
+            "deer": -0.02208600000000001,
+            "dog": -0.003605370000000002,
+            "horse": -0.014585600000000004,
+            "airplane": -0.009040533333333337,
+            "car": -0.027134666666666696,
+            "ship": -0.003938199999999999,
+            "truck": -0.042678333333333346
+          },
+          "LPIPS": {
+            "cat": -0.034343333333333614,
+            "deer": -0.058997666666666615,
+            "dog": -0.011410000000000142,
+            "horse": 0.02172766666666681,
+            "airplane": -0.03821999999999992,
+            "car": -0.006778333333333331,
+            "ship": -0.002280000000000282,
+            "truck": -0.0630803333333333
+          }
+        },
+        "baseline_choice": {
+          "PSNR|cat": "WHITEN-OR",
+          "SSIM|cat": "WHITEN-OR",
+          "LPIPS|cat": "WHITEN-OR",
+          "PSNR|deer": "L-ISOTRON",
+          "SSIM|deer": "L-ISOTRON",
+          "LPIPS|deer": "SIR-20",
+          "PSNR|dog": "L-ISOTRON",
+          "SSIM|dog": "L-ISOTRON",
+          "LPIPS|dog": "SIR-10",
+          "PSNR|horse": "L-ISOTRON",
+          "SSIM|horse": "L-ISOTRON",
+          "LPIPS|horse": "SIR-20",
+          "PSNR|airplane": "L-ISOTRON",
+          "SSIM|airplane": "L-ISOTRON",
+          "LPIPS|airplane": "SIR-10",
+          "PSNR|car": "L-ISOTRON",
+          "SSIM|car": "L-ISOTRON",
+          "LPIPS|car": "L-ISOTRON",
+          "PSNR|ship": "WHITEN-OR",
+          "SSIM|ship": "WHITEN-OR",
+          "LPIPS|ship": "WHITEN-OR",
+          "PSNR|truck": "L-ISOTRON",
+          "SSIM|truck": "L-ISOTRON",
+          "LPIPS|truck": "L-ISOTRON"
+        },
+        "pass": false
+      },
+      "GAM8|SAT50|10000": {
+        "images": {},
+        "per_seed_mean_delta_psnr": {
+          "0": -0.3442439750000001,
+          "1": -0.3530824874999999,
+          "2": -0.3778221875000002
+        },
+        "mean_delta": {
+          "PSNR": -0.35838288333333324,
+          "SSIM": -0.009625909583333337,
+          "LPIPS": -0.015072041666666688
+        },
+        "n_images_all3_improved": 0,
+        "lb90": {
+          "PSNR": -0.38804232166666675,
+          "SSIM": -0.013102804125000004,
+          "LPIPS": -0.02764185416666666
+        },
+        "lpips_available": true,
+        "delta_per_image": {
+          "PSNR": {
+            "cat": -0.3890400000000005,
+            "deer": -0.4499533333333332,
+            "dog": -0.3049964,
+            "horse": -0.26619333333333417,
+            "airplane": -0.3331066666666658,
+            "car": -0.4279233333333332,
+            "ship": -0.3183800000000001,
+            "truck": -0.37746999999999886
+          },
+          "SSIM": {
+            "cat": -0.009635400000000002,
+            "deer": -0.012838033333333332,
+            "dog": -0.0005589100000000001,
+            "horse": -0.00618316666666667,
+            "airplane": -0.005568833333333332,
+            "car": -0.014767133333333335,
+            "ship": -0.002684133333333335,
+            "truck": -0.024771666666666692
+          },
+          "LPIPS": {
+            "cat": -0.020094000000000056,
+            "deer": -0.012599333333333518,
+            "dog": -0.0009266666666665202,
+            "horse": 0.007538333333333314,
+            "airplane": -0.035327666666666646,
+            "car": -0.05652333333333326,
+            "ship": 0.012163333333333304,
+            "truck": -0.014807000000000126
+          }
+        },
+        "baseline_choice": {
+          "PSNR|cat": "L-ISOTRON",
+          "SSIM|cat": "L-ISOTRON",
+          "LPIPS|cat": "SIR-10",
+          "PSNR|deer": "L-ISOTRON",
+          "SSIM|deer": "L-ISOTRON",
+          "LPIPS|deer": "L-ISOTRON",
+          "PSNR|dog": "L-ISOTRON",
+          "SSIM|dog": "L-ISOTRON",
+          "LPIPS|dog": "SIR-20",
+          "PSNR|horse": "WHITEN-OR",
+          "SSIM|horse": "WHITEN-OR",
+          "LPIPS|horse": "SIR-10",
+          "PSNR|airplane": "L-ISOTRON",
+          "SSIM|airplane": "L-ISOTRON",
+          "LPIPS|airplane": "SIR-20",
+          "PSNR|car": "WHITEN-OR",
+          "SSIM|car": "WHITEN-OR",
+          "LPIPS|car": "SIR-10",
+          "PSNR|ship": "L-ISOTRON",
+          "SSIM|ship": "WHITEN-OR",
+          "LPIPS|ship": "WHITEN-OR",
+          "PSNR|truck": "L-ISOTRON",
+          "SSIM|truck": "L-ISOTRON",
+          "LPIPS|truck": "L-ISOTRON"
+        },
+        "pass": false
+      },
+      "MIX-LOGN|GAMMA07|10000": {
+        "images": {},
+        "per_seed_mean_delta_psnr": {
+          "0": -3.6102345,
+          "1": -3.6198981249999997,
+          "2": -3.680222
+        },
+        "mean_delta": {
+          "PSNR": -3.6367848749999996,
+          "SSIM": -0.07226047722916666,
+          "LPIPS": -0.41396124999999995
+        },
+        "n_images_all3_improved": 0,
+        "lb90": {
+          "PSNR": -3.8313130875,
+          "SSIM": -0.09865265083541666,
+          "LPIPS": -0.4778565791666667
+        },
+        "lpips_available": true,
+        "delta_per_image": {
+          "PSNR": {
+            "cat": -3.3945400000000006,
+            "deer": -4.259813333333333,
+            "dog": -3.258868666666667,
+            "horse": -3.3666166666666673,
+            "airplane": -3.276486666666666,
+            "car": -4.251249999999998,
+            "ship": -3.297247,
+            "truck": -3.9894566666666664
+          },
+          "SSIM": {
+            "cat": -0.07065413999999999,
+            "deer": -0.09224356866666666,
+            "dog": -0.007284656733333332,
+            "horse": -0.05119207666666666,
+            "airplane": -0.02573388743333333,
+            "car": -0.127430233,
+            "ship": -0.01683938533333333,
+            "truck": -0.18670587000000002
+          },
+          "LPIPS": {
+            "cat": -0.4606623333333332,
+            "deer": -0.49406533333333336,
+            "dog": -0.20296666666666652,
+            "horse": -0.33677199999999996,
+            "airplane": -0.39756,
+            "car": -0.4933819999999999,
+            "ship": -0.25634,
+            "truck": -0.6699416666666668
+          }
+        },
+        "baseline_choice": {
+          "PSNR|cat": "L-ISOTRON",
+          "SSIM|cat": "L-ISOTRON",
+          "LPIPS|cat": "WHITEN-OR",
+          "PSNR|deer": "L-ISOTRON",
+          "SSIM|deer": "L-ISOTRON",
+          "LPIPS|deer": "WHITEN-OR",
+          "PSNR|dog": "L-ISOTRON",
+          "SSIM|dog": "L-ISOTRON",
+          "LPIPS|dog": "WHITEN-OR",
+          "PSNR|horse": "L-ISOTRON",
+          "SSIM|horse": "L-ISOTRON",
+          "LPIPS|horse": "WHITEN-OR",
+          "PSNR|airplane": "L-ISOTRON",
+          "SSIM|airplane": "L-ISOTRON",
+          "LPIPS|airplane": "WHITEN-OR",
+          "PSNR|car": "L-ISOTRON",
+          "SSIM|car": "L-ISOTRON",
+          "LPIPS|car": "WHITEN-OR",
+          "PSNR|ship": "L-ISOTRON",
+          "SSIM|ship": "L-ISOTRON",
+          "LPIPS|ship": "WHITEN-OR",
+          "PSNR|truck": "L-ISOTRON",
+          "SSIM|truck": "L-ISOTRON",
+          "LPIPS|truck": "WHITEN-OR"
+        },
+        "pass": false
+      },
+      "MIX-LOGN|LOG|10000": {
+        "images": {},
+        "per_seed_mean_delta_psnr": {
+          "0": -3.082691625,
+          "1": -3.123859,
+          "2": -3.1560555
+        },
+        "mean_delta": {
+          "PSNR": -3.120868708333333,
+          "SSIM": -0.06169405095833334,
+          "LPIPS": -0.4245377916666667
+        },
+        "n_images_all3_improved": 0,
+        "lb90": {
+          "PSNR": -3.2751061708333333,
+          "SSIM": -0.08274542488749999,
+          "LPIPS": -0.4824706833333333
+        },
+        "lpips_available": true,
+        "delta_per_image": {
+          "PSNR": {
+            "cat": -2.982823333333333,
+            "deer": -3.691026666666665,
+            "dog": -2.7483256666666667,
+            "horse": -3.022376666666667,
+            "airplane": -2.8186166666666663,
+            "car": -3.5839133333333333,
+            "ship": -2.8457806666666663,
+            "truck": -3.2740866666666664
+          },
+          "SSIM": {
+            "cat": -0.058799176666666675,
+            "deer": -0.07871868033333333,
+            "dog": -0.005289078333333333,
+            "horse": -0.05124862000000001,
+            "airplane": -0.029566540000000002,
+            "car": -0.10586994666666669,
+            "ship": -0.015223068999999999,
+            "truck": -0.14883729666666665
+          },
+          "LPIPS": {
+            "cat": -0.45766166666666674,
+            "deer": -0.4828153333333334,
+            "dog": -0.2434200000000002,
+            "horse": -0.3479956666666667,
+            "airplane": -0.3966333333333335,
+            "car": -0.47732166666666676,
+            "ship": -0.30991666666666684,
+            "truck": -0.680538
+          }
+        },
+        "baseline_choice": {
+          "PSNR|cat": "L-ISOTRON",
+          "SSIM|cat": "L-ISOTRON",
+          "LPIPS|cat": "WHITEN-OR",
+          "PSNR|deer": "L-ISOTRON",
+          "SSIM|deer": "L-ISOTRON",
+          "LPIPS|deer": "WHITEN-OR",
+          "PSNR|dog": "L-ISOTRON",
+          "SSIM|dog": "L-ISOTRON",
+          "LPIPS|dog": "WHITEN-OR",
+          "PSNR|horse": "L-ISOTRON",
+          "SSIM|horse": "L-ISOTRON",
+          "LPIPS|horse": "WHITEN-OR",
+          "PSNR|airplane": "L-ISOTRON",
+          "SSIM|airplane": "L-ISOTRON",
+          "LPIPS|airplane": "WHITEN-OR",
+          "PSNR|car": "L-ISOTRON",
+          "SSIM|car": "L-ISOTRON",
+          "LPIPS|car": "WHITEN-OR",
+          "PSNR|ship": "L-ISOTRON",
+          "SSIM|ship": "L-ISOTRON",
+          "LPIPS|ship": "WHITEN-OR",
+          "PSNR|truck": "L-ISOTRON",
+          "SSIM|truck": "L-ISOTRON",
+          "LPIPS|truck": "WHITEN-OR"
+        },
+        "pass": false
+      },
+      "MIX-LOGN|SAT30|10000": {
+        "images": {},
+        "per_seed_mean_delta_psnr": {
+          "0": -3.004511,
+          "1": -3.092563125,
+          "2": -3.060122625
+        },
+        "mean_delta": {
+          "PSNR": -3.0523989166666663,
+          "SSIM": -0.059859539999999996,
+          "LPIPS": -0.42042904166666667
+        },
+        "n_images_all3_improved": 0,
+        "lb90": {
+          "PSNR": -3.204194575,
+          "SSIM": -0.0814656335625,
+          "LPIPS": -0.48815281666666666
+        },
+        "lpips_available": true,
+        "delta_per_image": {
+          "PSNR": {
+            "cat": -2.9183633333333328,
+            "deer": -3.5783333333333323,
+            "dog": -2.7358079999999996,
+            "horse": -2.79664,
+            "airplane": -2.7633999999999994,
+            "car": -3.4540300000000004,
+            "ship": -2.82585,
+            "truck": -3.346766666666668
+          },
+          "SSIM": {
+            "cat": -0.05556551333333334,
+            "deer": -0.08104464533333335,
+            "dog": -0.006136991,
+            "horse": -0.04715568333333333,
+            "airplane": -0.020279904,
+            "car": -0.09940471233333333,
+            "ship": -0.014791020666666667,
+            "truck": -0.15449785
+          },
+          "LPIPS": {
+            "cat": -0.47397600000000006,
+            "deer": -0.4964183333333334,
+            "dog": -0.21003999999999978,
+            "horse": -0.34493399999999996,
+            "airplane": -0.3668193333333333,
+            "car": -0.5087130000000001,
+            "ship": -0.27153666666666676,
+            "truck": -0.6909950000000001
+          }
+        },
+        "baseline_choice": {
+          "PSNR|cat": "L-ISOTRON",
+          "SSIM|cat": "L-ISOTRON",
+          "LPIPS|cat": "WHITEN-OR",
+          "PSNR|deer": "L-ISOTRON",
+          "SSIM|deer": "L-ISOTRON",
+          "LPIPS|deer": "WHITEN-OR",
+          "PSNR|dog": "L-ISOTRON",
+          "SSIM|dog": "L-ISOTRON",
+          "LPIPS|dog": "WHITEN-OR",
+          "PSNR|horse": "L-ISOTRON",
+          "SSIM|horse": "L-ISOTRON",
+          "LPIPS|horse": "WHITEN-OR",
+          "PSNR|airplane": "L-ISOTRON",
+          "SSIM|airplane": "L-ISOTRON",
+          "LPIPS|airplane": "WHITEN-OR",
+          "PSNR|car": "L-ISOTRON",
+          "SSIM|car": "L-ISOTRON",
+          "LPIPS|car": "WHITEN-OR",
+          "PSNR|ship": "L-ISOTRON",
+          "SSIM|ship": "L-ISOTRON",
+          "LPIPS|ship": "WHITEN-OR",
+          "PSNR|truck": "L-ISOTRON",
+          "SSIM|truck": "L-ISOTRON",
+          "LPIPS|truck": "WHITEN-OR"
+        },
+        "pass": false
+      },
+      "MIX-LOGN|SAT50|10000": {
+        "images": {},
+        "per_seed_mean_delta_psnr": {
+          "0": -1.7602437499999999,
+          "1": -1.8770281249999998,
+          "2": -1.8584372500000002
+        },
+        "mean_delta": {
+          "PSNR": -1.8319030416666666,
+          "SSIM": -0.0318271834625,
+          "LPIPS": -0.40852137499999996
+        },
+        "n_images_all3_improved": 0,
+        "lb90": {
+          "PSNR": -1.9096480166666667,
+          "SSIM": -0.043889953325,
+          "LPIPS": -0.4684789083333333
+        },
+        "lpips_available": true,
+        "delta_per_image": {
+          "PSNR": {
+            "cat": -1.638523333333334,
+            "deer": -2.05189,
+            "dog": -1.750203333333333,
+            "horse": -1.6894466666666668,
+            "airplane": -1.7487266666666663,
+            "car": -2.04457,
+            "ship": -1.7187643333333333,
+            "truck": -2.013099999999999
+          },
+          "SSIM": {
+            "cat": -0.0295064,
+            "deer": -0.04226942603333333,
+            "dog": -0.003189969333333334,
+            "horse": -0.017685573333333333,
+            "airplane": -0.012159053333333331,
+            "car": -0.059315933333333334,
+            "ship": -0.007821828999999999,
+            "truck": -0.08266928333333333
+          },
+          "LPIPS": {
+            "cat": -0.5006999999999998,
+            "deer": -0.46662499999999996,
+            "dog": -0.2073966666666669,
+            "horse": -0.3691393333333336,
+            "airplane": -0.3415026666666666,
+            "car": -0.45933833333333307,
+            "ship": -0.27358666666666664,
+            "truck": -0.6498823333333333
+          }
+        },
+        "baseline_choice": {
+          "PSNR|cat": "SIR-20",
+          "SSIM|cat": "SIR-20",
+          "LPIPS|cat": "WHITEN-OR",
+          "PSNR|deer": "L-ISOTRON",
+          "SSIM|deer": "L-ISOTRON",
+          "LPIPS|deer": "WHITEN-OR",
+          "PSNR|dog": "L-ISOTRON",
+          "SSIM|dog": "L-ISOTRON",
+          "LPIPS|dog": "WHITEN-OR",
+          "PSNR|horse": "L-ISOTRON",
+          "SSIM|horse": "SIR-20",
+          "LPIPS|horse": "WHITEN-OR",
+          "PSNR|airplane": "L-ISOTRON",
+          "SSIM|airplane": "SIR-10",
+          "LPIPS|airplane": "WHITEN-OR",
+          "PSNR|car": "L-ISOTRON",
+          "SSIM|car": "L-ISOTRON",
+          "LPIPS|car": "WHITEN-OR",
+          "PSNR|ship": "L-ISOTRON",
+          "SSIM|ship": "L-ISOTRON",
+          "LPIPS|ship": "WHITEN-OR",
+          "PSNR|truck": "L-ISOTRON",
+          "SSIM|truck": "L-ISOTRON",
+          "LPIPS|truck": "WHITEN-OR"
+        },
+        "pass": false
+      }
+    },
+    "PRACTICAL_HEADROOM": {
+      "CORR-LOGN|GAMMA07|10000": {
+        "images": {},
+        "per_seed_mean_delta_psnr": {
+          "0": -15.400099,
+          "1": -15.45907,
+          "2": -15.319757500000001
+        },
+        "mean_delta": {
+          "PSNR": -15.392975500000002,
+          "SSIM": -0.403888746,
+          "LPIPS": -0.585439625
+        },
+        "n_images_all3_improved": 0,
+        "lb90": {
+          "PSNR": -16.46841000833333,
+          "SSIM": -0.4469371116875,
+          "LPIPS": -0.6520659333333333
+        },
+        "lpips_available": true,
+        "delta_per_image": {
+          "PSNR": {
+            "cat": -15.798360000000002,
+            "deer": -13.523083333333336,
+            "dog": -18.937473333333333,
+            "horse": -15.193873333333334,
+            "airplane": -16.65954333333334,
+            "car": -14.058666666666664,
+            "ship": -17.893074,
+            "truck": -11.079730000000001
+          },
+          "SSIM": {
+            "cat": -0.5732578106666666,
+            "deer": -0.4285129993333333,
+            "dog": -0.2817495273333333,
+            "horse": -0.3868836133333334,
+            "airplane": -0.3176141593333333,
+            "car": -0.48661461466666667,
+            "ship": -0.2975134366666667,
+            "truck": -0.45896380666666664
+          },
+          "LPIPS": {
+            "cat": -0.6407223333333334,
+            "deer": -0.3173406666666666,
+            "dog": -0.8251146666666664,
+            "horse": -0.5116143333333333,
+            "airplane": -0.5129346666666666,
+            "car": -0.6837513333333334,
+            "ship": -0.6789183333333334,
+            "truck": -0.5131206666666666
+          }
+        },
+        "baseline_choice": {
+          "PSNR|cat": "CORR",
+          "SSIM|cat": "CORR",
+          "LPIPS|cat": "DGI",
+          "PSNR|deer": "CORR",
+          "SSIM|deer": "CORR",
+          "LPIPS|deer": "CORR",
+          "PSNR|dog": "CORR",
+          "SSIM|dog": "CORR",
+          "LPIPS|dog": "CORR",
+          "PSNR|horse": "CORR",
+          "SSIM|horse": "CORR",
+          "LPIPS|horse": "CORR",
+          "PSNR|airplane": "CORR",
+          "SSIM|airplane": "CORR",
+          "LPIPS|airplane": "DGI",
+          "PSNR|car": "CORR",
+          "SSIM|car": "CORR",
+          "LPIPS|car": "DGI",
+          "PSNR|ship": "CORR",
+          "SSIM|ship": "CORR",
+          "LPIPS|ship": "CORR",
+          "PSNR|truck": "CORR",
+          "SSIM|truck": "CORR",
+          "LPIPS|truck": "DGI"
+        },
+        "pass": false
+      },
+      "CORR-LOGN|LOG|10000": {
+        "images": {},
+        "per_seed_mean_delta_psnr": {
+          "0": -15.3496155,
+          "1": -15.44526625,
+          "2": -15.299407500000001
+        },
+        "mean_delta": {
+          "PSNR": -15.364763083333333,
+          "SSIM": -0.3999615922916666,
+          "LPIPS": -0.5807322916666666
+        },
+        "n_images_all3_improved": 0,
+        "lb90": {
+          "PSNR": -16.448242458333333,
+          "SSIM": -0.44658381535416664,
+          "LPIPS": -0.6484446875000001
+        },
+        "lpips_available": true,
+        "delta_per_image": {
+          "PSNR": {
+            "cat": -15.874939999999999,
+            "deer": -13.439066666666665,
+            "dog": -18.89316,
+            "horse": -15.095276666666667,
+            "airplane": -16.492596666666664,
+            "car": -14.135296666666669,
+            "ship": -17.90667466666667,
+            "truck": -11.081093333333332
+          },
+          "SSIM": {
+            "cat": -0.5803291059999999,
+            "deer": -0.41864603366666664,
+            "dog": -0.28256567866666665,
+            "horse": -0.37555987333333335,
+            "airplane": -0.29720416000000005,
+            "car": -0.49076779766666667,
+            "ship": -0.29711872433333336,
+            "truck": -0.45750136466666663
+          },
+          "LPIPS": {
+            "cat": -0.6683539999999999,
+            "deer": -0.2912486666666667,
+            "dog": -0.8289040000000001,
+            "horse": -0.5120720000000001,
+            "airplane": -0.51059,
+            "car": -0.6703220000000003,
+            "ship": -0.6415546666666666,
+            "truck": -0.5228130000000001
+          }
+        },
+        "baseline_choice": {
+          "PSNR|cat": "CORR",
+          "SSIM|cat": "CORR",
+          "LPIPS|cat": "DGI",
+          "PSNR|deer": "CORR",
+          "SSIM|deer": "CORR",
+          "LPIPS|deer": "CORR",
+          "PSNR|dog": "CORR",
+          "SSIM|dog": "CORR",
+          "LPIPS|dog": "CORR",
+          "PSNR|horse": "CORR",
+          "SSIM|horse": "CORR",
+          "LPIPS|horse": "CORR",
+          "PSNR|airplane": "CORR",
+          "SSIM|airplane": "CORR",
+          "LPIPS|airplane": "DGI",
+          "PSNR|car": "CORR",
+          "SSIM|car": "CORR",
+          "LPIPS|car": "DGI",
+          "PSNR|ship": "CORR",
+          "SSIM|ship": "CORR",
+          "LPIPS|ship": "CORR",
+          "PSNR|truck": "CORR",
+          "SSIM|truck": "CORR",
+          "LPIPS|truck": "DGI"
+        },
+        "pass": false
+      },
+      "CORR-LOGN|SAT30|10000": {
+        "images": {},
+        "per_seed_mean_delta_psnr": {
+          "0": -15.295055000000001,
+          "1": -15.355365875,
+          "2": -15.181771249999999
+        },
+        "mean_delta": {
+          "PSNR": -15.277397375000001,
+          "SSIM": -0.3986705660833333,
+          "LPIPS": -0.5636209583333333
+        },
+        "n_images_all3_improved": 0,
+        "lb90": {
+          "PSNR": -16.294211208333333,
+          "SSIM": -0.44713879747499996,
+          "LPIPS": -0.6320933375
+        },
+        "lpips_available": true,
+        "delta_per_image": {
+          "PSNR": {
+            "cat": -15.783133333333332,
+            "deer": -13.455923333333335,
+            "dog": -18.50673666666667,
+            "horse": -15.020976666666668,
+            "airplane": -16.551653333333334,
+            "car": -14.020003333333332,
+            "ship": -17.78208233333333,
+            "truck": -11.098670000000002
+          },
+          "SSIM": {
+            "cat": -0.5872617736666668,
+            "deer": -0.4172392433333333,
+            "dog": -0.2558879416666666,
+            "horse": -0.38328380333333334,
+            "airplane": -0.3076898713333333,
+            "car": -0.48299957066666666,
+            "ship": -0.28996854266666666,
+            "truck": -0.465033782
+          },
+          "LPIPS": {
+            "cat": -0.6275013333333335,
+            "deer": -0.28509833333333323,
+            "dog": -0.7890696666666666,
+            "horse": -0.5339553333333334,
+            "airplane": -0.43320233333333336,
+            "car": -0.6893329999999998,
+            "ship": -0.6630039999999998,
+            "truck": -0.48780366666666664
+          }
+        },
+        "baseline_choice": {
+          "PSNR|cat": "CORR",
+          "SSIM|cat": "CORR",
+          "LPIPS|cat": "CORR",
+          "PSNR|deer": "CORR",
+          "SSIM|deer": "CORR",
+          "LPIPS|deer": "CORR",
+          "PSNR|dog": "CORR",
+          "SSIM|dog": "CORR",
+          "LPIPS|dog": "CORR",
+          "PSNR|horse": "CORR",
+          "SSIM|horse": "CORR",
+          "LPIPS|horse": "DGI",
+          "PSNR|airplane": "CORR",
+          "SSIM|airplane": "CORR",
+          "LPIPS|airplane": "DGI",
+          "PSNR|car": "CORR",
+          "SSIM|car": "CORR",
+          "LPIPS|car": "DGI",
+          "PSNR|ship": "CORR",
+          "SSIM|ship": "CORR",
+          "LPIPS|ship": "CORR",
+          "PSNR|truck": "CORR",
+          "SSIM|truck": "CORR",
+          "LPIPS|truck": "DGI"
+        },
+        "pass": false
+      },
+      "CORR-LOGN|SAT50|10000": {
+        "images": {},
+        "per_seed_mean_delta_psnr": {
+          "0": -15.032695,
+          "1": -15.185639,
+          "2": -15.09614875
+        },
+        "mean_delta": {
+          "PSNR": -15.104827583333332,
+          "SSIM": -0.38227314091666664,
+          "LPIPS": -0.5665226666666667
+        },
+        "n_images_all3_improved": 0,
+        "lb90": {
+          "PSNR": -16.124837550000002,
+          "SSIM": -0.43051464138749995,
+          "LPIPS": -0.6332304333333333
+        },
+        "lpips_available": true,
+        "delta_per_image": {
+          "PSNR": {
+            "cat": -15.582253333333332,
+            "deer": -13.320853333333332,
+            "dog": -18.35887,
+            "horse": -14.913899999999998,
+            "airplane": -16.20419,
+            "car": -13.958906666666667,
+            "ship": -17.498480666666666,
+            "truck": -11.001166666666666
+          },
+          "SSIM": {
+            "cat": -0.5596269833333334,
+            "deer": -0.39958904333333334,
+            "dog": -0.246971329,
+            "horse": -0.35940126,
+            "airplane": -0.2818899556666667,
+            "car": -0.48227353333333334,
+            "ship": -0.2733301576666667,
+            "truck": -0.4551028650000001
+          },
+          "LPIPS": {
+            "cat": -0.647983666666667,
+            "deer": -0.32255633333333344,
+            "dog": -0.8302253333333334,
+            "horse": -0.5146103333333334,
+            "airplane": -0.42495499999999986,
+            "car": -0.6384343333333333,
+            "ship": -0.6447416666666664,
+            "truck": -0.5086746666666666
+          }
+        },
+        "baseline_choice": {
+          "PSNR|cat": "CORR",
+          "SSIM|cat": "CORR",
+          "LPIPS|cat": "CORR",
+          "PSNR|deer": "CORR",
+          "SSIM|deer": "CORR",
+          "LPIPS|deer": "CORR",
+          "PSNR|dog": "CORR",
+          "SSIM|dog": "CORR",
+          "LPIPS|dog": "CORR",
+          "PSNR|horse": "CORR",
+          "SSIM|horse": "CORR",
+          "LPIPS|horse": "CORR",
+          "PSNR|airplane": "CORR",
+          "SSIM|airplane": "CORR",
+          "LPIPS|airplane": "CORR",
+          "PSNR|car": "CORR",
+          "SSIM|car": "CORR",
+          "LPIPS|car": "DGI",
+          "PSNR|ship": "CORR",
+          "SSIM|ship": "CORR",
+          "LPIPS|ship": "CORR",
+          "PSNR|truck": "CORR",
+          "SSIM|truck": "CORR",
+          "LPIPS|truck": "CORR"
+        },
+        "pass": false
+      },
+      "GAM4|GAMMA07|10000": {
+        "images": {},
+        "per_seed_mean_delta_psnr": {
+          "0": -1.6285125000000003,
+          "1": -1.6946362500000003,
+          "2": -1.66841625
+        },
+        "mean_delta": {
+          "PSNR": -1.6638549999999999,
+          "SSIM": -0.053387562499999985,
+          "LPIPS": -0.1117732083333333
+        },
+        "n_images_all3_improved": 0,
+        "lb90": {
+          "PSNR": -1.7204917499999999,
+          "SSIM": -0.06698828625,
+          "LPIPS": -0.1403394375
+        },
+        "lpips_available": true,
+        "delta_per_image": {
+          "PSNR": {
+            "cat": -1.6039399999999997,
+            "deer": -1.7597333333333314,
+            "dog": -1.5139233333333333,
+            "horse": -1.62061,
+            "airplane": -1.5738566666666678,
+            "car": -1.835866666666666,
+            "ship": -1.593010000000001,
+            "truck": -1.809899999999999
+          },
+          "SSIM": {
+            "cat": -0.06414266666666665,
+            "deer": -0.06198066666666663,
+            "dog": -0.009207733333333334,
+            "horse": -0.052942433333333344,
+            "airplane": -0.03626516666666666,
+            "car": -0.07323233333333337,
+            "ship": -0.020854833333333333,
+            "truck": -0.10847466666666661
+          },
+          "LPIPS": {
+            "cat": -0.11644133333333329,
+            "deer": -0.12064533333333327,
+            "dog": -0.024196666666666644,
+            "horse": -0.10079966666666673,
+            "airplane": -0.06411466666666654,
+            "car": -0.1869276666666666,
+            "ship": -0.08384666666666662,
+            "truck": -0.19721366666666673
+          }
+        },
+        "baseline_choice": {
+          "PSNR|cat": "WHITEN-LW",
+          "SSIM|cat": "WHITEN-LW",
+          "LPIPS|cat": "DGI",
+          "PSNR|deer": "WHITEN-LW",
+          "SSIM|deer": "WHITEN-LW",
+          "LPIPS|deer": "DGI",
+          "PSNR|dog": "L-ISOTRON",
+          "SSIM|dog": "L-ISOTRON",
+          "LPIPS|dog": "WHITEN-LW",
+          "PSNR|horse": "L-ISOTRON",
+          "SSIM|horse": "L-ISOTRON",
+          "LPIPS|horse": "DGI",
+          "PSNR|airplane": "L-ISOTRON",
+          "SSIM|airplane": "L-ISOTRON",
+          "LPIPS|airplane": "DGI",
+          "PSNR|car": "WHITEN-LW",
+          "SSIM|car": "WHITEN-LW",
+          "LPIPS|car": "DGI",
+          "PSNR|ship": "WHITEN-LW",
+          "SSIM|ship": "WHITEN-LW",
+          "LPIPS|ship": "SIR-20",
+          "PSNR|truck": "L-ISOTRON",
+          "SSIM|truck": "L-ISOTRON",
+          "LPIPS|truck": "DGI"
+        },
+        "pass": false
+      },
+      "GAM4|LOG|10000": {
+        "images": {},
+        "per_seed_mean_delta_psnr": {
+          "0": -1.523715,
+          "1": -1.5094925,
+          "2": -1.51926375
+        },
+        "mean_delta": {
+          "PSNR": -1.517490416666666,
+          "SSIM": -0.04830785833333334,
+          "LPIPS": -0.10082974999999993
+        },
+        "n_images_all3_improved": 0,
+        "lb90": {
+          "PSNR": -1.5917458749999995,
+          "SSIM": -0.06261560125,
+          "LPIPS": -0.13673295833333332
+        },
+        "lpips_available": true,
+        "delta_per_image": {
+          "PSNR": {
+            "cat": -1.4381399999999989,
+            "deer": -1.7293633333333336,
+            "dog": -1.3695833333333332,
+            "horse": -1.3673700000000002,
+            "airplane": -1.3946466666666666,
+            "car": -1.7401666666666635,
+            "ship": -1.4196199999999997,
+            "truck": -1.6810333333333336
+          },
+          "SSIM": {
+            "cat": -0.052467033333333316,
+            "deer": -0.05973066666666668,
+            "dog": -0.00837026666666667,
+            "horse": -0.04456803333333334,
+            "airplane": -0.0250221,
+            "car": -0.07775033333333334,
+            "ship": -0.01508576666666667,
+            "truck": -0.10346866666666671
+          },
+          "LPIPS": {
+            "cat": -0.11553500000000005,
+            "deer": -0.12946633333333335,
+            "dog": -0.027476666666666594,
+            "horse": -0.043564333333333316,
+            "airplane": -0.07237066666666658,
+            "car": -0.2174989999999999,
+            "ship": -0.019276666666666387,
+            "truck": -0.18144933333333324
+          }
+        },
+        "baseline_choice": {
+          "PSNR|cat": "L-ISOTRON",
+          "SSIM|cat": "L-ISOTRON",
+          "LPIPS|cat": "DGI",
+          "PSNR|deer": "L-ISOTRON",
+          "SSIM|deer": "L-ISOTRON",
+          "LPIPS|deer": "DGI",
+          "PSNR|dog": "L-ISOTRON",
+          "SSIM|dog": "L-ISOTRON",
+          "LPIPS|dog": "SIR-20",
+          "PSNR|horse": "WHITEN-LW",
+          "SSIM|horse": "WHITEN-LW",
+          "LPIPS|horse": "WHITEN-LW",
+          "PSNR|airplane": "L-ISOTRON",
+          "SSIM|airplane": "L-ISOTRON",
+          "LPIPS|airplane": "DGI",
+          "PSNR|car": "L-ISOTRON",
+          "SSIM|car": "L-ISOTRON",
+          "LPIPS|car": "DGI",
+          "PSNR|ship": "WHITEN-LW",
+          "SSIM|ship": "SIR-20",
+          "LPIPS|ship": "DGI",
+          "PSNR|truck": "WHITEN-LW",
+          "SSIM|truck": "WHITEN-LW",
+          "LPIPS|truck": "DGI"
+        },
+        "pass": false
+      },
+      "GAM4|SAT30|10000": {
+        "images": {},
+        "per_seed_mean_delta_psnr": {
+          "0": -1.5018287499999998,
+          "1": -1.5192087500000002,
+          "2": -1.4834862499999997
+        },
+        "mean_delta": {
+          "PSNR": -1.5015079166666667,
+          "SSIM": -0.04561826249999999,
+          "LPIPS": -0.08065104166666667
+        },
+        "n_images_all3_improved": 0,
+        "lb90": {
+          "PSNR": -1.57673825,
+          "SSIM": -0.059572746249999996,
+          "LPIPS": -0.10477589999999998
+        },
+        "lpips_available": true,
+        "delta_per_image": {
+          "PSNR": {
+            "cat": -1.3539533333333322,
+            "deer": -1.606399999999999,
+            "dog": -1.36146,
+            "horse": -1.357053333333333,
+            "airplane": -1.4393700000000011,
+            "car": -1.7749000000000006,
+            "ship": -1.4106933333333327,
+            "truck": -1.7082333333333342
+          },
+          "SSIM": {
+            "cat": -0.041007333333333326,
+            "deer": -0.06029000000000001,
+            "dog": -0.006638500000000002,
+            "horse": -0.039152733333333314,
+            "airplane": -0.028150466666666665,
+            "car": -0.07371166666666668,
+            "ship": -0.015291066666666662,
+            "truck": -0.10070433333333328
+          },
+          "LPIPS": {
+            "cat": -0.06165333333333334,
+            "deer": -0.09704133333333342,
+            "dog": -0.007023333333333381,
+            "horse": -0.054941999999999824,
+            "airplane": -0.07827666666666655,
+            "car": -0.14992566666666673,
+            "ship": -0.04130333333333347,
+            "truck": -0.15504266666666666
+          }
+        },
+        "baseline_choice": {
+          "PSNR|cat": "WHITEN-LW",
+          "SSIM|cat": "WHITEN-LW",
+          "LPIPS|cat": "WHITEN-LW",
+          "PSNR|deer": "L-ISOTRON",
+          "SSIM|deer": "L-ISOTRON",
+          "LPIPS|deer": "DGI",
+          "PSNR|dog": "WHITEN-LW",
+          "SSIM|dog": "WHITEN-LW",
+          "LPIPS|dog": "SIR-20",
+          "PSNR|horse": "L-ISOTRON",
+          "SSIM|horse": "L-ISOTRON",
+          "LPIPS|horse": "DGI",
+          "PSNR|airplane": "L-ISOTRON",
+          "SSIM|airplane": "L-ISOTRON",
+          "LPIPS|airplane": "DGI",
+          "PSNR|car": "WHITEN-LW",
+          "SSIM|car": "WHITEN-LW",
+          "LPIPS|car": "DGI",
+          "PSNR|ship": "WHITEN-LW",
+          "SSIM|ship": "WHITEN-LW",
+          "LPIPS|ship": "DGI",
+          "PSNR|truck": "L-ISOTRON",
+          "SSIM|truck": "L-ISOTRON",
+          "LPIPS|truck": "DGI"
+        },
+        "pass": false
+      },
+      "GAM4|SAT50|10000": {
+        "images": {},
+        "per_seed_mean_delta_psnr": {
+          "0": -1.0449745,
+          "1": -1.0715379325,
+          "2": -1.029808875
+        },
+        "mean_delta": {
+          "PSNR": -1.0487737691666663,
+          "SSIM": -0.029023516250000006,
+          "LPIPS": -0.05038212499999992
+        },
+        "n_images_all3_improved": 0,
+        "lb90": {
+          "PSNR": -1.1088088333333332,
+          "SSIM": -0.03862321291666667,
+          "LPIPS": -0.06973039583333333
+        },
+        "lpips_available": true,
+        "delta_per_image": {
+          "PSNR": {
+            "cat": -0.9359599999999997,
+            "deer": -1.2323666666666657,
+            "dog": -0.9348834866666667,
+            "horse": -0.9661466666666669,
+            "airplane": -0.9587833333333329,
+            "car": -1.2296666666666658,
+            "ship": -0.9936266666666664,
+            "truck": -1.1387566666666658
+          },
+          "SSIM": {
+            "cat": -0.025720600000000017,
+            "deer": -0.04090196666666668,
+            "dog": -0.004285863333333333,
+            "horse": -0.029718100000000004,
+            "airplane": -0.012592599999999999,
+            "car": -0.04320443333333336,
+            "ship": -0.006637899999999999,
+            "truck": -0.06912666666666667
+          },
+          "LPIPS": {
+            "cat": -0.09179033333333342,
+            "deer": -0.06863299999999983,
+            "dog": -0.06346666666666656,
+            "horse": -0.031862666666666595,
+            "airplane": -0.04258666666666655,
+            "car": -0.04348833333333346,
+            "ship": 0.02238000000000029,
+            "truck": -0.0836093333333332
+          }
+        },
+        "baseline_choice": {
+          "PSNR|cat": "L-ISOTRON",
+          "SSIM|cat": "L-ISOTRON",
+          "LPIPS|cat": "DGI",
+          "PSNR|deer": "WHITEN-LW",
+          "SSIM|deer": "WHITEN-LW",
+          "LPIPS|deer": "DGI",
+          "PSNR|dog": "WHITEN-LW",
+          "SSIM|dog": "WHITEN-LW",
+          "LPIPS|dog": "DGI",
+          "PSNR|horse": "WHITEN-LW",
+          "SSIM|horse": "WHITEN-LW",
+          "LPIPS|horse": "DGI",
+          "PSNR|airplane": "L-ISOTRON",
+          "SSIM|airplane": "L-ISOTRON",
+          "LPIPS|airplane": "WHITEN-LW",
+          "PSNR|car": "WHITEN-LW",
+          "SSIM|car": "WHITEN-LW",
+          "LPIPS|car": "DGI",
+          "PSNR|ship": "WHITEN-LW",
+          "SSIM|ship": "WHITEN-LW",
+          "LPIPS|ship": "DGI",
+          "PSNR|truck": "WHITEN-LW",
+          "SSIM|truck": "WHITEN-LW",
+          "LPIPS|truck": "DGI"
+        },
+        "pass": false
+      },
+      "GAM8|GAMMA07|10000": {
+        "images": {},
+        "per_seed_mean_delta_psnr": {
+          "0": -0.6245624999999999,
+          "1": -0.6151737499999995,
+          "2": -0.6432287499999996
+        },
+        "mean_delta": {
+          "PSNR": -0.6276550000000001,
+          "SSIM": -0.02034748708333333,
+          "LPIPS": -0.06247020833333332
+        },
+        "n_images_all3_improved": 0,
+        "lb90": {
+          "PSNR": -0.6674247916666661,
+          "SSIM": -0.026056619166666666,
+          "LPIPS": -0.07842629166666666
+        },
+        "lpips_available": true,
+        "delta_per_image": {
+          "PSNR": {
+            "cat": -0.6465933333333327,
+            "deer": -0.6926000000000005,
+            "dog": -0.4908066666666666,
+            "horse": -0.6058099999999991,
+            "airplane": -0.5761566666666678,
+            "car": -0.7538833333333326,
+            "ship": -0.5474566666666667,
+            "truck": -0.7079333333333349
+          },
+          "SSIM": {
+            "cat": -0.02107866666666665,
+            "deer": -0.02508166666666667,
+            "dog": -0.0028438300000000003,
+            "horse": -0.021217133333333346,
+            "airplane": -0.013628533333333338,
+            "car": -0.031911999999999996,
+            "ship": -0.005242733333333333,
+            "truck": -0.04177533333333333
+          },
+          "LPIPS": {
+            "cat": -0.0498913333333334,
+            "deer": -0.08424399999999999,
+            "dog": -0.033726666666666905,
+            "horse": -0.01903100000000002,
+            "airplane": -0.06458333333333321,
+            "car": -0.11184299999999991,
+            "ship": -0.04350333333333323,
+            "truck": -0.09293899999999988
+          }
+        },
+        "baseline_choice": {
+          "PSNR|cat": "L-ISOTRON",
+          "SSIM|cat": "L-ISOTRON",
+          "LPIPS|cat": "DGI",
+          "PSNR|deer": "WHITEN-LW",
+          "SSIM|deer": "WHITEN-LW",
+          "LPIPS|deer": "DGI",
+          "PSNR|dog": "L-ISOTRON",
+          "SSIM|dog": "L-ISOTRON",
+          "LPIPS|dog": "WHITEN-LW",
+          "PSNR|horse": "WHITEN-LW",
+          "SSIM|horse": "WHITEN-LW",
+          "LPIPS|horse": "CORR",
+          "PSNR|airplane": "L-ISOTRON",
+          "SSIM|airplane": "L-ISOTRON",
+          "LPIPS|airplane": "DGI",
+          "PSNR|car": "L-ISOTRON",
+          "SSIM|car": "L-ISOTRON",
+          "LPIPS|car": "DGI",
+          "PSNR|ship": "L-ISOTRON",
+          "SSIM|ship": "L-ISOTRON",
+          "LPIPS|ship": "DGI",
+          "PSNR|truck": "L-ISOTRON",
+          "SSIM|truck": "L-ISOTRON",
+          "LPIPS|truck": "DGI"
+        },
+        "pass": false
+      },
+      "GAM8|LOG|10000": {
+        "images": {},
+        "per_seed_mean_delta_psnr": {
+          "0": -0.5459515000000004,
+          "1": -0.57471125,
+          "2": -0.4952937499999998
+        },
+        "mean_delta": {
+          "PSNR": -0.5386521666666667,
+          "SSIM": -0.01613682375,
+          "LPIPS": -0.0378878333333333
+        },
+        "n_images_all3_improved": 0,
+        "lb90": {
+          "PSNR": -0.57913785,
+          "SSIM": -0.02200154416666666,
+          "LPIPS": -0.055368316666666695
+        },
+        "lpips_available": true,
+        "delta_per_image": {
+          "PSNR": {
+            "cat": -0.5308099999999998,
+            "deer": -0.5938499999999998,
+            "dog": -0.5373373333333333,
+            "horse": -0.4637666666666673,
+            "airplane": -0.4764833333333325,
+            "car": -0.5921499999999984,
+            "ship": -0.4442200000000005,
+            "truck": -0.6706000000000021
+          },
+          "SSIM": {
+            "cat": -0.015388699999999991,
+            "deer": -0.015875666666666677,
+            "dog": -0.0018269899999999988,
+            "horse": -0.01518676666666667,
+            "airplane": -0.00812616666666667,
+            "car": -0.021825333333333335,
+            "ship": -0.006414633333333329,
+            "truck": -0.04445033333333334
+          },
+          "LPIPS": {
+            "cat": -0.03589566666666655,
+            "deer": -0.08255366666666664,
+            "dog": -0.039556666666666684,
+            "horse": -0.002809999999999868,
+            "airplane": -0.03474966666666668,
+            "car": -0.03990899999999997,
+            "ship": 0.007323333333333348,
+            "truck": -0.07495133333333337
+          }
+        },
+        "baseline_choice": {
+          "PSNR|cat": "L-ISOTRON",
+          "SSIM|cat": "L-ISOTRON",
+          "LPIPS|cat": "DGI",
+          "PSNR|deer": "WHITEN-LW",
+          "SSIM|deer": "WHITEN-LW",
+          "LPIPS|deer": "DGI",
+          "PSNR|dog": "WHITEN-LW",
+          "SSIM|dog": "CORR",
+          "LPIPS|dog": "DGI",
+          "PSNR|horse": "WHITEN-LW",
+          "SSIM|horse": "WHITEN-LW",
+          "LPIPS|horse": "WHITEN-LW",
+          "PSNR|airplane": "L-ISOTRON",
+          "SSIM|airplane": "L-ISOTRON",
+          "LPIPS|airplane": "DGI",
+          "PSNR|car": "L-ISOTRON",
+          "SSIM|car": "L-ISOTRON",
+          "LPIPS|car": "DGI",
+          "PSNR|ship": "L-ISOTRON",
+          "SSIM|ship": "WHITEN-LW",
+          "LPIPS|ship": "WHITEN-LW",
+          "PSNR|truck": "WHITEN-LW",
+          "SSIM|truck": "WHITEN-LW",
+          "LPIPS|truck": "DGI"
+        },
+        "pass": false
+      },
+      "GAM8|SAT30|10000": {
+        "images": {},
+        "per_seed_mean_delta_psnr": {
+          "0": -0.5565182499999999,
+          "1": -0.5891962500000001,
+          "2": -0.5370149999999998
+        },
+        "mean_delta": {
+          "PSNR": -0.5609098333333331,
+          "SSIM": -0.017684250416666675,
+          "LPIPS": -0.04593700000000006
+        },
+        "n_images_all3_improved": 0,
+        "lb90": {
+          "PSNR": -0.5946709583333333,
+          "SSIM": -0.023352947041666676,
+          "LPIPS": -0.060960833333333346
+        },
+        "lpips_available": true,
+        "delta_per_image": {
+          "PSNR": {
+            "cat": -0.5395999999999992,
+            "deer": -0.6229833333333321,
+            "dog": -0.5363120000000002,
+            "horse": -0.4974400000000001,
+            "airplane": -0.505726666666666,
+            "car": -0.6444600000000005,
+            "ship": -0.4825900000000005,
+            "truck": -0.6581666666666663
+          },
+          "SSIM": {
+            "cat": -0.018404966666666675,
+            "deer": -0.02208600000000001,
+            "dog": -0.003605370000000002,
+            "horse": -0.014585600000000004,
+            "airplane": -0.009040533333333337,
+            "car": -0.027134666666666696,
+            "ship": -0.003938533333333331,
+            "truck": -0.042678333333333346
+          },
+          "LPIPS": {
+            "cat": -0.08277800000000013,
+            "deer": -0.07362700000000011,
+            "dog": -0.0346833333333334,
+            "horse": 0.010437666666666678,
+            "airplane": -0.042589999999999906,
+            "car": -0.03460300000000016,
+            "ship": -0.03247666666666671,
+            "truck": -0.07717566666666675
+          }
+        },
+        "baseline_choice": {
+          "PSNR|cat": "WHITEN-LW",
+          "SSIM|cat": "WHITEN-LW",
+          "LPIPS|cat": "DGI",
+          "PSNR|deer": "WHITEN-LW",
+          "SSIM|deer": "WHITEN-LW",
+          "LPIPS|deer": "DGI",
+          "PSNR|dog": "L-ISOTRON",
+          "SSIM|dog": "WHITEN-LW",
+          "LPIPS|dog": "CORR",
+          "PSNR|horse": "L-ISOTRON",
+          "SSIM|horse": "L-ISOTRON",
+          "LPIPS|horse": "DGI",
+          "PSNR|airplane": "L-ISOTRON",
+          "SSIM|airplane": "L-ISOTRON",
+          "LPIPS|airplane": "DGI",
+          "PSNR|car": "L-ISOTRON",
+          "SSIM|car": "L-ISOTRON",
+          "LPIPS|car": "DGI",
+          "PSNR|ship": "WHITEN-LW",
+          "SSIM|ship": "WHITEN-LW",
+          "LPIPS|ship": "DGI",
+          "PSNR|truck": "L-ISOTRON",
+          "SSIM|truck": "L-ISOTRON",
+          "LPIPS|truck": "DGI"
+        },
+        "pass": false
+      },
+      "GAM8|SAT50|10000": {
+        "images": {},
+        "per_seed_mean_delta_psnr": {
+          "0": -0.3442439750000001,
+          "1": -0.3530912375,
+          "2": -0.3778271875000001
+        },
+        "mean_delta": {
+          "PSNR": -0.35838746666666643,
+          "SSIM": -0.009660110000000003,
+          "LPIPS": -0.02467075000000002
+        },
+        "n_images_all3_improved": 0,
+        "lb90": {
+          "PSNR": -0.3880753933333333,
+          "SSIM": -0.013177202833333335,
+          "LPIPS": -0.03825815833333332
+        },
+        "lpips_available": true,
+        "delta_per_image": {
+          "PSNR": {
+            "cat": -0.3890400000000005,
+            "deer": -0.4499533333333332,
+            "dog": -0.3049964,
+            "horse": -0.2661966666666671,
+            "airplane": -0.3331066666666658,
+            "car": -0.4279566666666659,
+            "ship": -0.3183800000000001,
+            "truck": -0.37746999999999886
+          },
+          "SSIM": {
+            "cat": -0.009635400000000002,
+            "deer": -0.012838033333333332,
+            "dog": -0.0008318133333333338,
+            "horse": -0.0061832,
+            "airplane": -0.005568933333333331,
+            "car": -0.01476786666666667,
+            "ship": -0.0026839666666666675,
+            "truck": -0.024771666666666692
+          },
+          "LPIPS": {
+            "cat": -0.020094000000000056,
+            "deer": -0.03604933333333349,
+            "dog": -0.0009266666666665202,
+            "horse": -0.009182000000000023,
+            "airplane": -0.035327666666666646,
+            "car": -0.07290533333333338,
+            "ship": 0.007376666666666809,
+            "truck": -0.03025766666666685
+          }
+        },
+        "baseline_choice": {
+          "PSNR|cat": "L-ISOTRON",
+          "SSIM|cat": "L-ISOTRON",
+          "LPIPS|cat": "SIR-10",
+          "PSNR|deer": "L-ISOTRON",
+          "SSIM|deer": "L-ISOTRON",
+          "LPIPS|deer": "DGI",
+          "PSNR|dog": "WHITEN-LW",
+          "SSIM|dog": "CORR",
+          "LPIPS|dog": "SIR-20",
+          "PSNR|horse": "WHITEN-LW",
+          "SSIM|horse": "WHITEN-LW",
+          "LPIPS|horse": "DGI",
+          "PSNR|airplane": "L-ISOTRON",
+          "SSIM|airplane": "WHITEN-LW",
+          "LPIPS|airplane": "SIR-20",
+          "PSNR|car": "WHITEN-LW",
+          "SSIM|car": "WHITEN-LW",
+          "LPIPS|car": "DGI",
+          "PSNR|ship": "WHITEN-LW",
+          "SSIM|ship": "WHITEN-LW",
+          "LPIPS|ship": "CORR",
+          "PSNR|truck": "L-ISOTRON",
+          "SSIM|truck": "L-ISOTRON",
+          "LPIPS|truck": "DGI"
+        },
+        "pass": false
+      },
+      "MIX-LOGN|GAMMA07|10000": {
+        "images": {},
+        "per_seed_mean_delta_psnr": {
+          "0": -14.527555999999999,
+          "1": -14.794336874999999,
+          "2": -14.6951285
+        },
+        "mean_delta": {
+          "PSNR": -14.672340458333334,
+          "SSIM": -0.37329649347916666,
+          "LPIPS": -0.671105
+        },
+        "n_images_all3_improved": 0,
+        "lb90": {
+          "PSNR": -15.810976545833334,
+          "SSIM": -0.4098141972491667,
+          "LPIPS": -0.7266388916666666
+        },
+        "lpips_available": true,
+        "delta_per_image": {
+          "PSNR": {
+            "cat": -14.889123333333332,
+            "deer": -12.644680000000001,
+            "dog": -18.335996666666666,
+            "horse": -14.323196666666664,
+            "airplane": -16.16124,
+            "car": -13.255469999999995,
+            "ship": -17.524927,
+            "truck": -10.24409
+          },
+          "SSIM": {
+            "cat": -0.5210857066666668,
+            "deer": -0.3968199353333333,
+            "dog": -0.2832704534,
+            "horse": -0.32316461,
+            "airplane": -0.31773795410000005,
+            "car": -0.46329456633333327,
+            "ship": -0.3068021853333333,
+            "truck": -0.37419653666666663
+          },
+          "LPIPS": {
+            "cat": -0.7187009999999998,
+            "deer": -0.45099999999999996,
+            "dog": -0.8386453333333332,
+            "horse": -0.5950333333333333,
+            "airplane": -0.535789,
+            "car": -0.7916033333333332,
+            "ship": -0.675706,
+            "truck": -0.7623620000000002
+          }
+        },
+        "baseline_choice": {
+          "PSNR|cat": "CORR",
+          "SSIM|cat": "CORR",
+          "LPIPS|cat": "CORR",
+          "PSNR|deer": "CORR",
+          "SSIM|deer": "CORR",
+          "LPIPS|deer": "CORR",
+          "PSNR|dog": "CORR",
+          "SSIM|dog": "CORR",
+          "LPIPS|dog": "CORR",
+          "PSNR|horse": "CORR",
+          "SSIM|horse": "CORR",
+          "LPIPS|horse": "DGI",
+          "PSNR|airplane": "CORR",
+          "SSIM|airplane": "CORR",
+          "LPIPS|airplane": "DGI",
+          "PSNR|car": "CORR",
+          "SSIM|car": "CORR",
+          "LPIPS|car": "DGI",
+          "PSNR|ship": "CORR",
+          "SSIM|ship": "CORR",
+          "LPIPS|ship": "CORR",
+          "PSNR|truck": "CORR",
+          "SSIM|truck": "CORR",
+          "LPIPS|truck": "DGI"
+        },
+        "pass": false
+      },
+      "MIX-LOGN|LOG|10000": {
+        "images": {},
+        "per_seed_mean_delta_psnr": {
+          "0": -14.53677025,
+          "1": -14.8263555,
+          "2": -14.663469500000001
+        },
+        "mean_delta": {
+          "PSNR": -14.675531750000001,
+          "SSIM": -0.37344929387500003,
+          "LPIPS": -0.6837876666666667
+        },
+        "n_images_all3_improved": 0,
+        "lb90": {
+          "PSNR": -15.839959858333334,
+          "SSIM": -0.4098617421166667,
+          "LPIPS": -0.7374584083333334
+        },
+        "lpips_available": true,
+        "delta_per_image": {
+          "PSNR": {
+            "cat": -14.874833333333335,
+            "deer": -12.670646666666663,
+            "dog": -18.466036666666664,
+            "horse": -14.353553333333334,
+            "airplane": -16.072070000000004,
+            "car": -13.247393333333335,
+            "ship": -17.489217333333333,
+            "truck": -10.230503333333331
+          },
+          "SSIM": {
+            "cat": -0.5179752766666667,
+            "deer": -0.39597431366666663,
+            "dog": -0.29323522166666666,
+            "horse": -0.31986068666666667,
+            "airplane": -0.31551137333333334,
+            "car": -0.4671949466666667,
+            "ship": -0.30563356899999994,
+            "truck": -0.3722089633333333
+          },
+          "LPIPS": {
+            "cat": -0.7492723333333333,
+            "deer": -0.452742,
+            "dog": -0.8462576666666668,
+            "horse": -0.5999276666666665,
+            "airplane": -0.5810583333333333,
+            "car": -0.7765113333333333,
+            "ship": -0.7020093333333336,
+            "truck": -0.7625226666666667
+          }
+        },
+        "baseline_choice": {
+          "PSNR|cat": "CORR",
+          "SSIM|cat": "CORR",
+          "LPIPS|cat": "DGI",
+          "PSNR|deer": "CORR",
+          "SSIM|deer": "CORR",
+          "LPIPS|deer": "CORR",
+          "PSNR|dog": "CORR",
+          "SSIM|dog": "CORR",
+          "LPIPS|dog": "CORR",
+          "PSNR|horse": "CORR",
+          "SSIM|horse": "CORR",
+          "LPIPS|horse": "DGI",
+          "PSNR|airplane": "CORR",
+          "SSIM|airplane": "CORR",
+          "LPIPS|airplane": "DGI",
+          "PSNR|car": "CORR",
+          "SSIM|car": "CORR",
+          "LPIPS|car": "DGI",
+          "PSNR|ship": "CORR",
+          "SSIM|ship": "CORR",
+          "LPIPS|ship": "CORR",
+          "PSNR|truck": "CORR",
+          "SSIM|truck": "CORR",
+          "LPIPS|truck": "DGI"
+        },
+        "pass": false
+      },
+      "MIX-LOGN|SAT30|10000": {
+        "images": {},
+        "per_seed_mean_delta_psnr": {
+          "0": -14.47039775,
+          "1": -14.79257975,
+          "2": -14.66625625
+        },
+        "mean_delta": {
+          "PSNR": -14.643077916666668,
+          "SSIM": -0.3716066929166667,
+          "LPIPS": -0.6739012083333333
+        },
+        "n_images_all3_improved": 0,
+        "lb90": {
+          "PSNR": -15.770555125,
+          "SSIM": -0.4087103539166667,
+          "LPIPS": -0.7282384666666666
+        },
+        "lpips_available": true,
+        "delta_per_image": {
+          "PSNR": {
+            "cat": -14.873813333333334,
+            "deer": -12.596156666666666,
+            "dog": -18.371000000000002,
+            "horse": -14.281966666666666,
+            "airplane": -16.083306666666665,
+            "car": -13.235833333333332,
+            "ship": -17.44249,
+            "truck": -10.26005666666667
+          },
+          "SSIM": {
+            "cat": -0.5157513133333333,
+            "deer": -0.39365741200000004,
+            "dog": -0.28562601433333334,
+            "horse": -0.3188231833333333,
+            "airplane": -0.31050263733333333,
+            "car": -0.46777124566666667,
+            "ship": -0.30491355400000003,
+            "truck": -0.3758081833333333
+          },
+          "LPIPS": {
+            "cat": -0.7343036666666667,
+            "deer": -0.4713266666666668,
+            "dog": -0.8290176666666667,
+            "horse": -0.5859003333333332,
+            "airplane": -0.5430246666666666,
+            "car": -0.8065286666666667,
+            "ship": -0.663393,
+            "truck": -0.7577150000000001
+          }
+        },
+        "baseline_choice": {
+          "PSNR|cat": "CORR",
+          "SSIM|cat": "CORR",
+          "LPIPS|cat": "CORR",
+          "PSNR|deer": "CORR",
+          "SSIM|deer": "CORR",
+          "LPIPS|deer": "CORR",
+          "PSNR|dog": "CORR",
+          "SSIM|dog": "CORR",
+          "LPIPS|dog": "CORR",
+          "PSNR|horse": "CORR",
+          "SSIM|horse": "CORR",
+          "LPIPS|horse": "DGI",
+          "PSNR|airplane": "CORR",
+          "SSIM|airplane": "CORR",
+          "LPIPS|airplane": "DGI",
+          "PSNR|car": "CORR",
+          "SSIM|car": "CORR",
+          "LPIPS|car": "DGI",
+          "PSNR|ship": "CORR",
+          "SSIM|ship": "CORR",
+          "LPIPS|ship": "CORR",
+          "PSNR|truck": "CORR",
+          "SSIM|truck": "CORR",
+          "LPIPS|truck": "DGI"
+        },
+        "pass": false
+      },
+      "MIX-LOGN|SAT50|10000": {
+        "images": {},
+        "per_seed_mean_delta_psnr": {
+          "0": -14.4378365,
+          "1": -14.688117750000002,
+          "2": -14.5950895
+        },
+        "mean_delta": {
+          "PSNR": -14.57368125,
+          "SSIM": -0.3656108122125,
+          "LPIPS": -0.6607875833333332
+        },
+        "n_images_all3_improved": 0,
+        "lb90": {
+          "PSNR": -15.725390358333332,
+          "SSIM": -0.40177280972,
+          "LPIPS": -0.7186670666666666
+        },
+        "lpips_available": true,
+        "delta_per_image": {
+          "PSNR": {
+            "cat": -14.779233333333336,
+            "deer": -12.613,
+            "dog": -18.16989,
+            "horse": -14.214166666666667,
+            "airplane": -16.033440000000002,
+            "car": -13.095916666666664,
+            "ship": -17.530916666666666,
+            "truck": -10.152886666666667
+          },
+          "SSIM": {
+            "cat": -0.5131555,
+            "deer": -0.39067835936666667,
+            "dog": -0.273946386,
+            "horse": -0.31779330666666666,
+            "airplane": -0.30222565333333334,
+            "car": -0.44957996666666666,
+            "ship": -0.30672890899999994,
+            "truck": -0.3707784166666667
+          },
+          "LPIPS": {
+            "cat": -0.748795333333333,
+            "deer": -0.43605133333333324,
+            "dog": -0.8374866666666667,
+            "horse": -0.5860023333333336,
+            "airplane": -0.5102726666666667,
+            "car": -0.7779869999999998,
+            "ship": -0.6786753333333333,
+            "truck": -0.71103
+          }
+        },
+        "baseline_choice": {
+          "PSNR|cat": "CORR",
+          "SSIM|cat": "CORR",
+          "LPIPS|cat": "CORR",
+          "PSNR|deer": "CORR",
+          "SSIM|deer": "CORR",
+          "LPIPS|deer": "CORR",
+          "PSNR|dog": "CORR",
+          "SSIM|dog": "CORR",
+          "LPIPS|dog": "CORR",
+          "PSNR|horse": "CORR",
+          "SSIM|horse": "CORR",
+          "LPIPS|horse": "CORR",
+          "PSNR|airplane": "CORR",
+          "SSIM|airplane": "CORR",
+          "LPIPS|airplane": "CORR",
+          "PSNR|car": "CORR",
+          "SSIM|car": "CORR",
+          "LPIPS|car": "DGI",
+          "PSNR|ship": "CORR",
+          "SSIM|ship": "CORR",
+          "LPIPS|ship": "CORR",
+          "PSNR|truck": "CORR",
+          "SSIM|truck": "CORR",
+          "LPIPS|truck": "CORR"
+        },
+        "pass": false
+      }
+    }
+  },
+  "grid_complete": true,
+  "ext_only_flagship_dead_path": true,
+  "aborted_over_budget": false,
+  "honesty_arms_note": "LIN and FGAIN reported in phaseB_core_metrics.csv, never gated; MLE-OR reported as information upper bound, never a control.",
+  "RELATION_HEADROOM": {
+    "passing_combos": [],
+    "n_passing": 0,
+    "n_evaluated": 16,
+    "n_illum": 0,
+    "n_links": 0,
+    "contains_DT30": false,
+    "KILL": true,
+    "FULL_PASS": false
+  },
+  "PRACTICAL_HEADROOM": {
+    "passing_combos": [],
+    "n_passing": 0,
+    "n_evaluated": 16,
+    "n_illum": 0,
+    "n_links": 0,
+    "contains_DT30": false,
+    "KILL": true,
+    "FULL_PASS": false
+  },
+  "B2_REGIME": "KILL",
+  "STAGE0_KILL": true,
+  "VERDICT": "KILL"
+}
