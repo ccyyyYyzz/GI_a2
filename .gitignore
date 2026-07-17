@@ -7,3 +7,4 @@ __pycache__/
 # raw dataset downloads (only the 8 derived PNGs + sha256 are committed)
 data/stl10_raw/
 *.tar.gz
+results/round63_s1_smoke/

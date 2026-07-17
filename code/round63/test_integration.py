@@ -19,7 +19,10 @@ printed as a report only. The PASS gates are STRUCTURAL:
     bug cannot hide again.
   * complete row schema (exact key set) on every row.
 
-Fast: < 90 s. Run:
+~2 min: the default select_rule='discrepancy' now routes the iterative arms
+(POISSON-LIN, RQL) through select_eta.select_eta_and_fit (spec D2 §4), so this
+test also covers the production lam_TV selection path on all three pattern kinds
+(including hadpair fold co-location). Run:
   D:/Anacondar/anaconda3/python.exe code/round63/test_integration.py
 """
 import os
@@ -52,6 +55,8 @@ EXPECTED_KEYS = {
     "side", "pattern", "rho_bar", "nu", "M", "seed", "image", "arm",
     "PSNR", "SSIM", "LPIPS", "rad_nrmse", "flux_dev", "lam_tv",
     "mean_counts", "optical_time_s", "dark_frac", "tau_err", "runtime_s",
+    # D2 §4 selection-routing columns (campaign.run_cell now emits these):
+    "select_runtime_s", "MODEL_FAIL", "eta_star", "PSNR_rad",
 }
 
 PASS = []
