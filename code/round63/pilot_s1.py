@@ -159,6 +159,11 @@ def parse_args(argv):
                     help="output dir (default results/round63_s1)")
     ap.add_argument("--analyze-only", action="store_true",
                     help="skip the sweep, (re)build summaries from existing CSV")
+    ap.add_argument("--no-analysis", action="store_true",
+                    help="sweep only (parallel worker mode: a single-cell "
+                         "worker CSV cannot support the S_j analysis, which "
+                         "needs the full grid — run_s1_parallel.py merges the "
+                         "workers and analyzes once)")
     return ap.parse_args(argv)
 
 
@@ -579,7 +584,8 @@ def main(argv=None):
              len(cfg.seeds)), flush=True)
     if not a.analyze_only:
         sweep(cfg)
-    analyze(cfg)
+    if not a.no_analysis:
+        analyze(cfg)
     print("[s1] DONE", flush=True)
     return 0
 

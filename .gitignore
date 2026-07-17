@@ -8,3 +8,4 @@ __pycache__/
 data/stl10_raw/
 *.tar.gz
 results/round63_s1_smoke/
+results/round63_s1_workers/
