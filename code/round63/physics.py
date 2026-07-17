@@ -92,7 +92,8 @@ def _counts_general_eventloop(lam, T, det, rng):
     lam = np.asarray(lam, dtype=np.float64)
     M = lam.shape[0]
     N = np.zeros(M, dtype=np.int64)
-    carry = 0.0  # detector not-ready time carried across frames (continuous)
+    carry = 0.0       # detector not-ready time carried across frames (continuous)
+    carry_ap = []     # afterpulse arrival times carried into the next frame
     for i in range(M):
         lam_i = float(lam[i])
         if det.start_mode == "continuous":
@@ -103,6 +104,15 @@ def _counts_general_eventloop(lam, T, det, rng):
             ready = 0.0
         n_arr = rng.poisson(lam_i * T) if lam_i > 0 else 0
         arrivals = list(np.sort(rng.uniform(0.0, T, size=n_arr)))
+        if carry_ap:
+            import bisect
+
+            pending, carry_ap = carry_ap, []
+            for t_ap in pending:
+                if 0.0 <= t_ap < T:
+                    bisect.insort(arrivals, t_ap)
+                elif t_ap >= T:
+                    carry_ap.append(t_ap - T - det.guard)
         j = 0
         while j < len(arrivals):
             t = arrivals[j]
@@ -127,7 +137,16 @@ def _counts_general_eventloop(lam, T, det, rng):
                         import bisect
 
                         bisect.insort(arrivals, t_ap)
-        carry = ready - T + det.guard if det.start_mode == "continuous" else 0.0
+                    elif det.start_mode == "continuous":
+                        # afterpulse beyond the frame is carried into the next
+                        # frame's event queue (GPT round-3 fix)
+                        carry_ap.append(t_ap - T - det.guard)
+        if det.start_mode == "continuous":
+            # detector not-ready time remaining at the START of the next frame:
+            # the guard interval g elapses between frames (round-3 sign fix)
+            carry = max(0.0, ready - T - det.guard)
+        else:
+            carry = 0.0
     return N
 
 
@@ -219,6 +238,26 @@ def qmle_wls_f_grad(x, A, b, Phi, det, T, w, sigma_b=0.0):
     return f, g
 
 
+def rql_f_grad(x, A, b, Phi, det, T, **_):
+    """RQL — renewal quasi-likelihood data fidelity (GPT round-3 final form).
+
+    Integrated Wedderburn quasi-score for the non-paralyzable renewal count
+    model (sigma_b = 0 main model): the quasi-score U_lam = N/lam - (T - N*tau)
+    integrates to the CONVEX per-frame objective
+        Q(lam; N) = (T - N*tau)*lam - N*log(lam),
+    convex in lam (linear minus log) and hence in x through the affine map
+    lam = Phi*(A@x) + dark. No IRLS, no log-det, no frozen weights.
+    Identifiability boundary: frames with N*tau >= T lose the linear term
+    (true saturation boundary) — they are counted and reported upstream;
+    the objective keeps them via the -N log lam term only."""
+    M = A.shape[0]
+    lam = np.maximum(Phi * (A @ x) + det.dark, LAM_FLOOR_REL * Phi)
+    w_lin = np.maximum(T - b * det.tau, 0.0)
+    f = float(np.sum(w_lin * lam - b * np.log(lam))) / M
+    g = Phi * (A.T @ (w_lin - b / lam)) / M
+    return f, g
+
+
 def poisson_lin_f_grad(x, A, b, Phi, det, T, **_):
     """Ignore dead time entirely: N ~ Poisson(lam*T)."""
     M = A.shape[0]
@@ -255,29 +294,89 @@ def precorrect_rates(b, T, tau):
 # ----------------------------------------------------------------------
 # exact renewal count likelihood (reference; log-CDF-difference stable)
 # ----------------------------------------------------------------------
+def _log_G(m, lam, T, tau, off):
+    """log P(N >= m) via the Poisson representation, numerically stable:
+    P(Gamma(m, lam) <= t) = P(Pois(lam*t) >= m) = poisson.sf(m-1, lam*t).
+    m: int array (>=1 handled; m<=0 -> log 1 = 0); t = T - (m - off)*tau."""
+    from scipy.stats import poisson
+
+    m = np.asarray(m)
+    lam = np.asarray(lam, dtype=np.float64)
+    out = np.full(np.broadcast(m, lam).shape, -np.inf)
+    m_b, lam_b = np.broadcast_arrays(m, lam)
+    zero = m_b <= 0
+    out[zero] = 0.0
+    tt = T - (m_b - off) * tau
+    ok = (~zero) & (tt > 0) & (lam_b > 0)
+    if ok.any():
+        out[ok] = poisson.logsf(m_b[ok] - 1, lam_b[ok] * tt[ok])
+    return out
+
+
+def _logdiffexp(la, lb):
+    """log(exp(la) - exp(lb)) for la >= lb, elementwise, stable."""
+    la = np.asarray(la, dtype=np.float64)
+    lb = np.asarray(lb, dtype=np.float64)
+    with np.errstate(invalid="ignore"):
+        d = lb - la
+        out = la + np.log1p(-np.exp(np.minimum(d, -1e-300)))
+    out[~np.isfinite(la)] = -np.inf
+    out[d >= 0] = -np.inf
+    return out
+
+
 def exact_logpmf(N, lam, T, tau, start_mode="active"):
     """log P(N = m) under exact non-paralyzable renewal counting.
     active:  S_m = (m-1)*tau + Gamma(m, lam) -> P(N>=m) = GammaCDF(T-(m-1)tau; m, lam)
     delayed: S_m = m*tau + Gamma(m, lam)     -> P(N>=m) = GammaCDF(T-m*tau; m, lam)
-    """
-    from scipy.stats import gamma as gd
-
+    Publication-grade path (GPT round-3): Poisson logsf representation +
+    logdiffexp — no linear-domain CDF subtraction, no 1e-300 clamps."""
     N = np.asarray(N)
     lam = np.asarray(lam, dtype=np.float64)
     off = 1.0 if start_mode == "active" else 0.0
+    lG = _log_G(N, lam, T, tau, off)
+    lG1 = _log_G(N + 1, lam, T, tau, off)
+    return _logdiffexp(lG, lG1)
 
-    def p_ge(m):
-        out = np.ones_like(lam)
-        pos = m > 0
-        tt = T - (m - off) * tau
-        ok = pos & (tt > 0)
-        out[pos & ~ok] = 0.0
+
+def exact_fisher_analytic(lam, T, tau, start_mode="active"):
+    """Exact count-only Fisher information about theta = log(lam) per frame,
+    using the ANALYTIC derivative (GPT round-3, no finite differences):
+      G_m = P(Pois(z_m) >= m),  z_m = lam*(T - (m-1)tau)   [active start]
+      dG_m/dtheta = e^{-z_m} z_m^m / (m-1)!  = m * PoisPMF(m; z_m)
+      I_theta = sum_m (Gdot_m - Gdot_{m+1})^2 / p_m .
+    Returns information about log-lam (scale-free)."""
+    from scipy.stats import poisson
+
+    off = 1.0 if start_mode == "active" else 0.0
+    m_max = int(np.floor(T / tau)) + 2
+    m = np.arange(0, m_max + 2)
+    tt = T - (m - off) * tau
+    z = lam * np.maximum(tt, 0.0)
+
+    def gdot(mm, zz):
+        out = np.zeros_like(zz)
+        ok = (mm >= 1) & (zz > 0)
         if ok.any():
-            out[ok] = gd.cdf(tt[ok], a=m[ok], scale=1.0 / np.maximum(lam[ok], 1e-300))
+            out[ok] = np.exp(poisson.logpmf(mm[ok], zz[ok])
+                             + np.log(mm[ok].astype(np.float64)))
         return out
 
-    p = p_ge(N) - p_ge(N + 1)
-    return np.log(np.maximum(p, 1e-300))
+    Gd = gdot(m, z)
+    lG = _log_G(m, np.full_like(m, lam, dtype=float), T, tau, off)
+    lG1 = _log_G(m + 1, np.full_like(m, lam, dtype=float), T, tau, off)
+    lp = _logdiffexp(lG, lG1)
+    num = (Gd - np.roll(Gd, -1))[:-1]
+    lp = lp[:-1]
+    ok = np.isfinite(lp) & (np.abs(num) > 0)
+    with np.errstate(divide="ignore"):
+        log_terms = 2.0 * np.log(np.abs(num[ok])) - lp[ok]
+    # log-domain summation avoids 0*inf when p_m underflows while num^2 -> 0
+    keep = log_terms > -745.0
+    if not keep.any():
+        return 0.0
+    lmax = float(np.max(log_terms[keep]))
+    return float(np.exp(lmax) * np.sum(np.exp(log_terms[keep] - lmax)))
 
 
 def exact_nll(x, A, N, Phi, det, T):

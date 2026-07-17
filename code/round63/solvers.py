@@ -28,7 +28,7 @@ import numpy as np
 from dataclasses import dataclass
 
 from physics import (qmle_f_grad, poisson_lin_f_grad, poisson_satmean_f_grad,
-                     qmle_mean_var, qmle_weights, qmle_wls_f_grad,
+                     qmle_mean_var, qmle_weights, qmle_wls_f_grad, rql_f_grad,
                      precorrect_rates, exact_nll, Detector, LAM_FLOOR_REL)
 
 
@@ -397,11 +397,16 @@ class ArmContext:
 
 
 _LINEAR_ARMS = {"GI", "DGI"}
-_ITER_ARMS = {"POISSON-LIN", "SAT-POISSON", "QMLE", "QMLE-FULLGAUSS", "PRECORRECT"}
-# QMLE = Wedderburn quasi-score IRLS (frozen weights per round, no log-det);
-# QMLE-FULLGAUSS = full Gaussian NLL incl. log-det (kept as an ablation arm:
-# its variance-shrinking incentive flips sign at rho=1/2 — see physics.py note)
-_PHYS_FG = {"QMLE-FULLGAUSS": qmle_f_grad, "POISSON-LIN": poisson_lin_f_grad,
+_ITER_ARMS = {"POISSON-LIN", "SAT-POISSON", "RQL", "QMLE", "QMLE-FULLGAUSS",
+              "PRECORRECT"}
+# RQL = renewal quasi-likelihood, DIRECT convex objective (GPT round-3 final
+#       form; main production arm at sigma_b = 0);
+# QMLE = Wedderburn quasi-score IRLS (retained for sigma_b > 0 / moment-model
+#        extensions only);
+# QMLE-FULLGAUSS = full Gaussian NLL incl. log-det (ablation arm: variance-
+#        collapse non-coercivity at ceiling counts — see physics.py notes)
+_PHYS_FG = {"RQL": rql_f_grad, "QMLE-FULLGAUSS": qmle_f_grad,
+            "POISSON-LIN": poisson_lin_f_grad,
             "SAT-POISSON": poisson_satmean_f_grad}
 
 
