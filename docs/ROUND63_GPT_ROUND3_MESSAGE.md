@@ -11,3 +11,7 @@
 请你：(a) 从精确 renewal 似然出发解析推导 rho*(nu) 的标度与常数（大 nu 渐近；信息峰的正确判据是什么——是 Var N ~ O(1) 还是别的量，比如 pmf 支撑宽度与均值灵敏度 dmu/dlogrho 的竞争？dmu/dlogrho = nu*rho/(1+rho)^2，pmf 宽度 ~ sqrt(rho*nu)/(1+rho)^{3/2}，信噪 = 灵敏度/宽度 => I_log ≈ nu*rho/(1+rho) ... 检验：这个比值平方 = nu*rho/(1+rho)（正是 CLT 公式），峰值来自离散性/边界效应的修正项——请把修正项算出来）；(b) 判断这个标度律 + 脊线图作为论文的一个理论小节（或独立短文？）的价值与最贴近先例（dead-time 计数统计的 Fisher 信息文献：Müller、Rapp&Goyal 等有没有已给出 count-only Fisher 信息的内点峰/标度律？若有请给出与我们的差异）；(c) QMLE 信任边界（exact/CLT 比值 0.9）数值在 rho=5(nu=20) 到 53(nu=2000)，全部高于部署区 rho in [0.3,1]——把"QMLE 有效区/exact 专属区"的分区写法给一个你认为审稿人最舒服的表述。
 
 顺带：物理核心冒烟数据（均值/方差与 CLT 公式 0.2% 内、pmf TV 距离 0.003、paralyzable 均值符合 lam*T*exp(-lam*tau)、active/delayed 恰差 0.5 计数@rho=1）在 REPORT 之外的 commit 信息里，可信其已验证。
+
+【3. 追加：S1 试点冒烟暴露的两个方法学问题（需要你裁决）】
+(a) 我们发现并修复了一个理论上有趣的病灶：全高斯 NLL 的 0.5*log v(lam) 项，因 v=lam*T/(1+rho)^3 在 rho>1/2 随 lam 递减，符号翻转后奖励抬亮度压方差，在信息贫方向上把重建拉向过亮错解（rho=1 实测 PSNR 掉到 0.9 dB）。已改为 Wedderburn quasi-score 的 IRLS 冻权形式（无 log-det；色散只进权重）。请确认：(i) 这与你说的 "Gaussian-renewal quasi-likelihood" 的正确形式一致？(ii) "log-det 激励在 rho=1/2 翻转"值不值得作为论文的实现注记（甚至一小节）？
+(b) 更深的问题：TV 强度 lambda 的部署合法选择。我们用"留出帧预测 NLL"选 lambda——但在欠定+平滑图像区（M/n=0.25，自然图 u 波动仅 1.6%），预测 NLL 最优的 lambda 远小于重建质量最优的 lambda（重 TV 改善 PSNR 但恶化数据拟合）；而错模型的 POISSON-LIN 反因模型偏差导致大梯度尺度、自动网格给了它重 TV，"意外"在平滑图上占优——这会污染臂间公平比较。请给出你认为审稿人能接受的、无真值的 lambda 选择准则（候选：SURE/GSURE 在异方差计数模型的形式？差异原则（数据项达到期望值 chi^2~M）？分裂预测但以加权残差白化后的尺度？）以及"所有臂共用同一准则"的公平性表述。附：PRECORRECT 臂的梯度尺度在 lam 物理单位下爆炸（1e9 量级）导致自动网格失效——我们会把它的残差改写为计数单位并重新归一，此为实现层修复。

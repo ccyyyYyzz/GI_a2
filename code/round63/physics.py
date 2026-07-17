@@ -171,11 +171,16 @@ def _qmle_derivs(lam, T, tau):
     return dmu, dv
 
 
+LAM_FLOOR_REL = 1e-6  # model floor: lam >= 1e-6*Phi (documented; keeps the
+                      # boundary x->0 numerically graceful without changing
+                      # any physically reachable operating point)
+
+
 def qmle_f_grad(x, A, b, Phi, det, T, sigma_b=0.0):
     """Normalized (per-frame) QMLE objective and gradient in x.
     lam = Phi*(A@x) + dark. Returns (f, grad)."""
     M = A.shape[0]
-    lam = Phi * (A @ x) + det.dark
+    lam = np.maximum(Phi * (A @ x) + det.dark, LAM_FLOOR_REL * Phi)
     mu, v = qmle_mean_var(lam, T, det.tau, sigma_b)
     dmu, dv = _qmle_derivs(lam, T, det.tau)
     r = b - mu
@@ -185,10 +190,39 @@ def qmle_f_grad(x, A, b, Phi, det, T, sigma_b=0.0):
     return f, g
 
 
+def qmle_weights(lam, T, tau, sigma_b=0.0):
+    """Quasi-likelihood weights w = 1/Var[N] at rates lam (frozen per IRLS round)."""
+    _, v = qmle_mean_var(lam, T, tau, sigma_b)
+    return 1.0 / v
+
+
+def qmle_wls_f_grad(x, A, b, Phi, det, T, w, sigma_b=0.0):
+    """Wedderburn quasi-score form of the renewal QMLE: weighted least squares
+    with FROZEN weights w (updated between IRLS rounds), NO log-det term.
+
+    Rationale (implementation note for the paper): the full Gaussian NLL's
+    0.5*log v(lam) term has d(log v)/d(lam) proportional to (1-2*lam*tau) —
+    its sign FLIPS at rho = lam*tau = 1/2, so at high load it rewards
+    inflating lam to shrink the modeled variance, a perverse incentive that
+    corrupts reconstructions in information-poor directions. The proper
+    quasi-score U = dmu^T V^{-1} (b - mu) has no such term; variance enters
+    only as weights. Dispersion information is retained through the weights'
+    (1+rho)^3/lam frame weighting."""
+    M = A.shape[0]
+    lam = np.maximum(Phi * (A @ x) + det.dark, LAM_FLOOR_REL * Phi)
+    den = 1.0 + lam * det.tau
+    mu = lam * T / den
+    dmu = T / den ** 2
+    r = b - mu
+    f = float(np.sum(w * r * r)) / (2.0 * M)
+    g = -Phi * (A.T @ (w * dmu * r)) / M
+    return f, g
+
+
 def poisson_lin_f_grad(x, A, b, Phi, det, T, **_):
     """Ignore dead time entirely: N ~ Poisson(lam*T)."""
     M = A.shape[0]
-    lam = np.maximum(Phi * (A @ x) + det.dark, 1e-300)
+    lam = np.maximum(Phi * (A @ x) + det.dark, LAM_FLOOR_REL * Phi)
     mu = lam * T
     f = float(np.sum(mu - b * np.log(mu))) / M
     g = Phi * (A.T @ (T * (1.0 - b / mu))) / M
@@ -199,7 +233,7 @@ def poisson_satmean_f_grad(x, A, b, Phi, det, T, **_):
     """Mean-only correction: N ~ Poisson(lam*T/(1+lam*tau)) — corrects the
     compression but ignores sub-Poisson dispersion (key mechanism ablation)."""
     M = A.shape[0]
-    lam = np.maximum(Phi * (A @ x) + det.dark, 1e-300)
+    lam = np.maximum(Phi * (A @ x) + det.dark, LAM_FLOOR_REL * Phi)
     den = 1.0 + lam * det.tau
     mu = np.maximum(lam * T / den, 1e-300)
     f = float(np.sum(mu - b * np.log(mu))) / M
@@ -247,7 +281,7 @@ def exact_logpmf(N, lam, T, tau, start_mode="active"):
 
 
 def exact_nll(x, A, N, Phi, det, T):
-    lam = Phi * (A @ x) + det.dark
+    lam = np.maximum(Phi * (A @ x) + det.dark, LAM_FLOOR_REL * Phi)
     return -float(np.sum(exact_logpmf(N, lam, T, det.tau, det.start_mode))) / A.shape[0]
 
 

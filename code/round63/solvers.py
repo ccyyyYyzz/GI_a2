@@ -28,7 +28,8 @@ import numpy as np
 from dataclasses import dataclass
 
 from physics import (qmle_f_grad, poisson_lin_f_grad, poisson_satmean_f_grad,
-                     qmle_mean_var, precorrect_rates, exact_nll, Detector)
+                     qmle_mean_var, qmle_weights, qmle_wls_f_grad,
+                     precorrect_rates, exact_nll, Detector, LAM_FLOOR_REL)
 
 
 # ----------------------------------------------------------------------
@@ -332,8 +333,8 @@ def init_gi_flux(A, b, Phi, dark, T, tau):
 
 
 def select_lam_tv(f_grad_factory, A, b, x0, side, scale=None,
-                  grid=(1e-4, 3e-4, 1e-3, 3e-3, 1e-2), n_iter=120, nonneg=True,
-                  **fista_kw):
+                  grid=(1e-4, 3e-4, 1e-3, 3e-3, 1e-2, 3e-2, 1e-1, 3e-1),
+                  n_iter=120, nonneg=True, **fista_kw):
     """Truth-free lam_tv selection (spec §4). For each lam on `grid`*`scale`:
     fit the arm on the first 90% of frames, then score the arm's OWN data-term
     NLL on the held-out last 10% (deterministic split). Pick the minimizer.
@@ -390,15 +391,35 @@ class ArmContext:
     meta: dict = None                   # e.g. {"pairs": (P,2)} for hadpair
     x0: np.ndarray = None
     lam_grid_scale: float = None        # None -> ||grad f_data(x0)||_2 per arm
-    select_grid: tuple = (1e-4, 3e-4, 1e-3, 3e-3, 1e-2)
+    select_grid: tuple = (1e-4, 3e-4, 1e-3, 3e-3, 1e-2, 3e-2, 1e-1, 3e-1)
     select_iter: int = 120
     exact_maxiter: int = 60
 
 
 _LINEAR_ARMS = {"GI", "DGI"}
-_ITER_ARMS = {"POISSON-LIN", "SAT-POISSON", "QMLE", "PRECORRECT"}
-_PHYS_FG = {"QMLE": qmle_f_grad, "POISSON-LIN": poisson_lin_f_grad,
+_ITER_ARMS = {"POISSON-LIN", "SAT-POISSON", "QMLE", "QMLE-FULLGAUSS", "PRECORRECT"}
+# QMLE = Wedderburn quasi-score IRLS (frozen weights per round, no log-det);
+# QMLE-FULLGAUSS = full Gaussian NLL incl. log-det (kept as an ablation arm:
+# its variance-shrinking incentive flips sign at rho=1/2 — see physics.py note)
+_PHYS_FG = {"QMLE-FULLGAUSS": qmle_f_grad, "POISSON-LIN": poisson_lin_f_grad,
             "SAT-POISSON": poisson_satmean_f_grad}
+
+
+def _qmle_irls_factory(ctx, x_ref):
+    """QMLE quasi-score factory: weights frozen at lam(x_ref) (truth-free)."""
+
+    def factory(A_sub, b_sub):
+        lam_ref = np.maximum(ctx.Phi * (A_sub @ np.maximum(x_ref, 0.0))
+                             + ctx.det.dark, LAM_FLOOR_REL * ctx.Phi)
+        w = qmle_weights(lam_ref, ctx.T, ctx.det.tau, ctx.sigma_b)
+
+        def f_grad(x):
+            return qmle_wls_f_grad(x, A_sub, b_sub, ctx.Phi, ctx.det, ctx.T,
+                                   w, ctx.sigma_b)
+
+        return f_grad
+
+    return factory
 
 
 def _phys_factory(arm_name, ctx):
@@ -478,7 +499,10 @@ def run_arm(arm_name, A, b, ctx):
         raise ValueError("unknown arm %r" % (arm_name,))
 
     # lam_tv: truth-free held-out-predictive-NLL selection (same path all arms)
-    factory = _arm_factory(arm_name, ctx)
+    if arm_name == "QMLE":
+        factory = _qmle_irls_factory(ctx, x0)   # round-1 weights at lam(x0)
+    else:
+        factory = _arm_factory(arm_name, ctx)
     lam_tv = ctx.lam_tv
     sel_info = None
     if lam_tv is None:
@@ -492,6 +516,17 @@ def run_arm(arm_name, A, b, ctx):
                                  ctx.det.dark, lam_tv, side, x0=x0,
                                  paralyzable=ctx.det.paralyzable,
                                  n_iter=ctx.n_iter)
+    elif arm_name == "QMLE":
+        # Wedderburn quasi-score via IRLS: 4 rounds of frozen-weight WLS+TV,
+        # weights re-evaluated at the current iterate between rounds.
+        n_rounds = 4
+        per = max(25, ctx.n_iter // n_rounds)
+        x = x0
+        info = {}
+        for _ in range(n_rounds):
+            fg = _qmle_irls_factory(ctx, x)(A, b)
+            x, info = tv_fista(fg, x, lam_tv, n_iter=per, side=side)
+        info["irls_rounds"] = n_rounds
     else:
         x, info = tv_fista(factory(A, b), x0, lam_tv, n_iter=ctx.n_iter,
                            side=side)
