@@ -7,7 +7,7 @@ Returns a signed direction; scale handled by the metric protocol.
 import numpy as np
 
 
-def _opg_direction(A, b, rng, n_anchor=150, n_loc=1500, ridge=1e-3):
+def _opg_direction(A, b, rng, n_anchor=150, n_loc=1500, ridge=1e-3, bw_scale=1.0):
     M, n = A.shape
     anchors = rng.choice(M, size=min(n_anchor, M), replace=False)
     grads = np.zeros((anchors.size, n))
@@ -16,7 +16,7 @@ def _opg_direction(A, b, rng, n_anchor=150, n_loc=1500, ridge=1e-3):
     for j, ai in enumerate(anchors):
         d2 = norms - 2.0 * (A @ A[ai]) + norms[ai]
         idx = np.argpartition(d2, n_loc)[:n_loc]
-        h2 = np.median(d2[idx]) + 1e-12
+        h2 = (np.median(d2[idx]) + 1e-12) * bw_scale ** 2
         w = np.exp(-d2[idx] / (2.0 * h2))
         Xc = A[idx] - A[ai]
         Xd = np.concatenate([np.ones((idx.size, 1)), Xc], axis=1)
@@ -30,18 +30,29 @@ def _opg_direction(A, b, rng, n_anchor=150, n_loc=1500, ridge=1e-3):
     return Vt[0]
 
 
-def rmave_single_index(A, b, rng, n_anchor=150, n_loc=400, n_iter=10, ridge=1e-4):
-    """Returns direction beta (n,), sign-fixed so corr(A beta, b) > 0."""
+def rmave_single_index(A, b, rng, n_anchor=150, n_loc=400, n_iter=10, ridge=1e-4,
+                       bw_scale=1.0, ridge_scale=1.0,
+                       opg_n_anchor=150, opg_n_loc=1500, opg_ridge=1e-3,
+                       return_opg=False):
+    """Returns direction beta (n,), sign-fixed so corr(A beta, b) > 0.
+
+    Default arguments reproduce the Phase A pipeline exactly (bw_scale and
+    ridge_scale are neutral 1.0 multipliers). The extra knobs exist for the
+    ROUND62 G0 sensitivity audit and G1 scale map; every non-default value
+    used in a run is logged to that run's JSON."""
     M, n = A.shape
-    beta = _opg_direction(A, b, rng)
+    beta = _opg_direction(A, b, rng, n_anchor=opg_n_anchor,
+                          n_loc=min(opg_n_loc, M),
+                          ridge=opg_ridge * ridge_scale, bw_scale=bw_scale)
     beta = beta / np.linalg.norm(beta)
+    beta_opg = beta.copy()
     anchors = rng.choice(M, size=min(n_anchor, M), replace=False)
     for _ in range(n_iter):
         u = A @ beta
         H = np.zeros((n, n))
         rhs = np.zeros(n)
         # 1-d kernel bandwidth: Silverman on the current index
-        h = 1.06 * u.std() * M ** (-0.2) + 1e-12
+        h = (1.06 * u.std() * M ** (-0.2) + 1e-12) * bw_scale
         for ai in anchors:
             du = u - u[ai]
             idx = np.argpartition(np.abs(du), n_loc)[:n_loc]
@@ -66,7 +77,7 @@ def rmave_single_index(A, b, rng, n_anchor=150, n_loc=400, n_iter=10, ridge=1e-4
             Xw = Xc * (w * d_j ** 2)[:, None]
             H += Xw.T @ Xc
             rhs += Xc.T @ (w * d_j * (b[idx] - c_j))
-        H[np.diag_indices_from(H)] += ridge * np.trace(H) / n
+        H[np.diag_indices_from(H)] += ridge * ridge_scale * np.trace(H) / n
         beta_new = np.linalg.solve(H, rhs)
         nrm = np.linalg.norm(beta_new)
         if nrm < 1e-30:
@@ -81,4 +92,8 @@ def rmave_single_index(A, b, rng, n_anchor=150, n_loc=400, n_iter=10, ridge=1e-4
     u = A @ beta
     if np.corrcoef(u, b)[0, 1] < 0:
         beta = -beta
+    if return_opg:
+        if np.corrcoef(A @ beta_opg, b)[0, 1] < 0:
+            beta_opg = -beta_opg
+        return beta, beta_opg
     return beta
