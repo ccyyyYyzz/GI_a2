@@ -317,7 +317,9 @@ def _logdiffexp(la, lb):
     """log(exp(la) - exp(lb)) for la >= lb, elementwise, stable."""
     la = np.asarray(la, dtype=np.float64)
     lb = np.asarray(lb, dtype=np.float64)
-    with np.errstate(invalid="ignore"):
+    with np.errstate(invalid="ignore", divide="ignore"):
+        # d -> 0-: exp(d) -> 1, log1p(-1) = -inf = log of a zero-probability
+        # difference — the intended value, so the divide warning is silenced.
         d = lb - la
         out = la + np.log1p(-np.exp(np.minimum(d, -1e-300)))
     out[~np.isfinite(la)] = -np.inf

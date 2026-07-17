@@ -41,7 +41,12 @@ from solvers import ArmContext, run_arm
 
 PILOT8 = ["stl_00", "stl_01", "stl_02", "stl_03",
           "text", "usaf_bars", "fine_lines", "low_contrast"]
-PHYSICAL_ARMS = {"POISSON-LIN", "SAT-POISSON", "PRECORRECT", "QMLE", "EXACT"}
+PHYSICAL_ARMS = {"RQL", "POISSON-LIN", "SAT-POISSON", "PRECORRECT", "QMLE",
+                 "EXACT"}
+# RQL (the sigma_b=0 main production arm) reconstructs physical arrival rates
+# like the other count-likelihood arms, so its radiometric NRMSE is meaningful
+# and must be reported (it was previously omitted -> blank rad_nrmse for the
+# flagship arm; fixed round-3).
 
 _IMG_CACHE = {}
 _PAT_CACHE = {}

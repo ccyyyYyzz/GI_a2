@@ -212,15 +212,25 @@ def dgi(A, b):
 def hadamard_pair_combine(A, b, meta):
     """For the "hadpair" pattern kind: difference each complementary row pair
     (a_+, a_-) into one SIGNED measurement BEFORE estimation, so the downstream
-    system is linear-signed and any arm can run on it. `meta["pairs"]` is a
-    (P, 2) int array of (i_plus, i_minus) frame indices.
+    system is linear-signed and any arm can run on it. The pair table is a
+    (P, 2) int array of (i_plus, i_minus) physical-row indices.
+
+    Pair-table key: `patterns.make_patterns` emits it under "pair_indices"; this
+    reader accepts that REAL key first and falls back to the legacy "pairs" key
+    (used only by the hand-built round-trip unit test). Reading the wrong key was
+    a latent bug that KeyError'd whenever run_arm ran a linear arm on the real
+    hadpair meta — the integration test now exercises the real path.
 
     Returns (A_signed, b_signed) with A_signed = a_+ - a_-, b_signed = b_+ - b_-.
     For a Hadamard +/-1 row h realized as a_+ = (h+1)/2 and a_- = 1 - a_+, this
     recovers A_signed = h. Exposure/photon accounting for the two exposures stays
     with the CALLER (this only differences)."""
-    pairs = np.asarray(meta["pairs"], dtype=np.int64)
-    assert pairs.ndim == 2 and pairs.shape[1] == 2, "meta['pairs'] must be (P,2)"
+    pair_key = meta.get("pair_indices", meta.get("pairs"))
+    if pair_key is None:
+        raise KeyError("hadpair meta has neither 'pair_indices' nor 'pairs'")
+    pairs = np.asarray(pair_key, dtype=np.int64)
+    assert pairs.ndim == 2 and pairs.shape[1] == 2, \
+        "pair table must be (P,2) (from meta['pair_indices'] or 'pairs')"
     ip, im = pairs[:, 0], pairs[:, 1]
     A = np.asarray(A, dtype=np.float64)
     b = np.asarray(b, dtype=np.float64)

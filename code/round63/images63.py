@@ -33,11 +33,14 @@ from gi_core.utils import rng_for
 ROOT = os.path.dirname(os.path.dirname(HERE))
 DATA = os.path.join(ROOT, "data")
 STL_TEST = os.path.join(DATA, "stl10_raw", "stl10_binary", "test_X.bin")
+STL_TRAIN = os.path.join(DATA, "stl10_raw", "stl10_binary", "train_X.bin")
 IMG_ROOT = os.path.join(DATA, "r63_images")
+DEV_IMG_ROOT = os.path.join(DATA, "r63_images_dev")
 
 R63 = 63
 IMG_SUBSTREAM = 2          # image layer sub-stream (patterns use sub-stream 1)
 N_NATURAL = 24
+N_DEV_NATURAL = 16         # STL-10 TRAIN split indices 0..15 (S1 development set)
 SYNTH = ["usaf_bars", "fine_lines", "text", "sparse_dots", "low_contrast",
          "gray_staircase"]
 SYNTH_IDS = {name: i for i, name in enumerate(SYNTH)}
@@ -61,6 +64,27 @@ def _stl10_one(idx, side):
     # column-major 3x96x96 per image -> (n, 96, 96, 3) HWC (canonical STL-10 read)
     img = raw.reshape(-1, 3, 96, 96).transpose(0, 3, 2, 1)[idx]
     g = rgb2gray(img)                                       # float64 [0,1]
+    g = resize(g, (side, side), order=3, anti_aliasing=True, mode="reflect")
+    return np.clip(g, 0.0, 1.0)
+
+
+def _stl10_train_one(idx, side):
+    """Grayscale side x side float64 [0,1] truth of STL-10 TRAIN image `idx`
+    (S1 development set). Identical parse/read to _stl10_one but from the TRAIN
+    split, which is DISJOINT from the test split used by build_image_set — so the
+    S1 pilot images never intersect the S2 confirmatory set (digest §1.5A)."""
+    from skimage.color import rgb2gray
+    from skimage.transform import resize
+
+    need = (idx + 1) * 3 * 96 * 96
+    raw = np.fromfile(STL_TRAIN, dtype=np.uint8, count=need)
+    if raw.size < need:
+        raise RuntimeError(
+            "STL-10 train split too short/missing at %s (need >=%d bytes, got %d);"
+            " expected raw binary already on disk (do NOT re-download)."
+            % (STL_TRAIN, need, raw.size))
+    img = raw.reshape(-1, 3, 96, 96).transpose(0, 3, 2, 1)[idx]
+    g = rgb2gray(img)
     g = resize(g, (side, side), order=3, anti_aliasing=True, mode="reflect")
     return np.clip(g, 0.0, 1.0)
 
@@ -214,6 +238,78 @@ def build_image_set(side):
         s = x.sum()
         if s <= 0:
             raise RuntimeError("image %s has non-positive sum %g" % (name, s))
+        out[name] = x / s
+        with open(png, "rb") as f:
+            sha_lines.append("%s  %s.png"
+                             % (hashlib.sha256(f.read()).hexdigest(), name))
+    with open(os.path.join(cache, "sha256.txt"), "w") as f:
+        f.write("\n".join(sha_lines) + "\n")
+    return out
+
+
+# --------------------------------------------------------------------------- #
+# S1 development image set (STL-10 TRAIN split + reused synthetic targets)
+# --------------------------------------------------------------------------- #
+def _generate01_dev(name, side):
+    """Generate one DEVELOPMENT image as float64 [0,1] side x side.
+
+    dev_stl_NN -> STL-10 TRAIN image NN (disjoint from the test split).
+    dev_<synth> -> the SAME procedural synthetic target as build_image_set
+    (the 6 structural targets are not drawn from any split, so reusing them
+    under dev_ names is exact and carries no test-set leakage)."""
+    if name.startswith("dev_stl_"):
+        return _stl10_train_one(int(name.split("_")[2]), side)
+    if not name.startswith("dev_"):
+        raise ValueError("dev image name %r must start with 'dev_'" % name)
+    base = name[len("dev_"):]
+    if base == "usaf_bars":
+        return _syn_usaf_bars(side)
+    if base == "fine_lines":
+        return _syn_fine_lines(side)
+    if base == "text":
+        return _syn_text(side)
+    rng = rng_for(0, R63, IMG_SUBSTREAM, SYNTH_IDS.get(base, 0))
+    if base == "sparse_dots":
+        return _syn_sparse_dots(side, rng)
+    if base == "low_contrast":
+        return _syn_low_contrast(side, rng)
+    if base == "gray_staircase":
+        return _syn_gray_staircase(side)
+    raise ValueError("unknown dev image name %r" % name)
+
+
+def build_dev_image_set(side):
+    """Ordered dict name -> flattened float64 sum-normalized truth for the S1
+    DEVELOPMENT set (digest §1.5A): 16 natural images from the STL-10 TRAIN split
+    (indices 0..15) named dev_stl_00..dev_stl_15, then the 6 synthetic structural
+    targets reused under dev_ names. These are S1-pilot-only and DISJOINT from the
+    confirmatory build_image_set (which uses the STL-10 TEST split) — protocol
+    tuning on this set never touches the frozen S2 test images.
+
+    PNGs + sha256.txt are cached under data/r63_images_dev/<side>/; existing PNGs
+    are treated as canonical and reused. build_image_set is not touched."""
+    from imageio.v2 import imread, imwrite
+
+    side = int(side)
+    cache = os.path.join(DEV_IMG_ROOT, str(side))
+    os.makedirs(cache, exist_ok=True)
+    names = (["dev_stl_%02d" % i for i in range(N_DEV_NATURAL)]
+             + ["dev_" + s for s in SYNTH])
+
+    out = collections.OrderedDict()
+    sha_lines = []
+    for name in names:
+        png = os.path.join(cache, name + ".png")
+        if not os.path.exists(png):
+            imwrite(png, _to_uint8(_generate01_dev(name, side)))
+        u8 = imread(png)
+        if u8.shape != (side, side):
+            raise RuntimeError("cached dev PNG %s has shape %s, expected (%d,%d)"
+                               % (png, u8.shape, side, side))
+        x = (u8.astype(np.float64) / 255.0).ravel()
+        s = x.sum()
+        if s <= 0:
+            raise RuntimeError("dev image %s has non-positive sum %g" % (name, s))
         out[name] = x / s
         with open(png, "rb") as f:
             sha_lines.append("%s  %s.png"

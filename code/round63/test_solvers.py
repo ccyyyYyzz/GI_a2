@@ -126,7 +126,7 @@ def simulate_cell():
 def check_fista_converges(cell):
     ctx = S.ArmContext(Phi=cell["Phi"], det=cell["det"], T=T, side=SIDE)
     x0 = S.init_gi_flux(cell["A"], cell["b"], cell["Phi"], 0.0, T, TAU)
-    fg = S._phys_factory("QMLE", ctx)(cell["A"], cell["b"])
+    fg = S._phys_factory("RQL", ctx)(cell["A"], cell["b"])
     # meaningful regularization (grid-max of the auto-scaled selection grid)
     _, g0 = fg(x0)
     lam = 1e-2 * float(np.linalg.norm(g0))
