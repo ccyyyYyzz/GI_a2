@@ -298,13 +298,65 @@ def _bootstrap_band(lam_hat, ctx, seed, B=200):
     return D_band, mr_band, float(np.mean(D_boot))
 
 
+def _bootstrap_band_refit(arm_name, A, ctx, folds, K, lam_max, eta_min,
+                          lam_hat_min, seed, B=30, n_iter=60):
+    """Refit-per-replicate parametric bootstrap at eta_min (candidate-A GOF,
+    round-4 adjudication).
+
+    The fixed-lam_hat band above tests 'lam_hat == lam' (counting noise only);
+    but the cross-fitted D additionally carries the held-out estimation error
+    sum_i (mu(lam_i)-mu(lam_hat_i))^2 / V_i — Theta(M)-scale on underdetermined
+    cells — so the fixed band under-covers and MODEL_FAILs the CORRECT model
+    (observed: D=1881 vs band ~1604 at M=1500 on a same-model smoke). Here each
+    replicate re-simulates exact-renewal counts from lam_hat(eta_min) AND reruns
+    the SAME K-fold cross-fit at eta_min, so the null distribution of D*
+    includes estimation variance + smoothing bias by construction. B is small
+    (each replicate costs K fits): the gate widens the raw quantiles with a
+    moment band (mean +/- 2.5 sd) to de-noise the small-B tail; both recorded.
+    Caveat (probe-checked): the generator is the SMOOTHED lam_hat, so replicate
+    reconstruction error can understate the true-lam error — coverage is
+    verified end-to-end by probe_gof_coverage.py, not assumed.
+    """
+    u_boot = np.maximum((lam_hat_min - ctx.det.dark) / ctx.Phi, 0.0)
+    rng = rng_for(seed, 63, BOOT_SUBSTREAM, 7001, lam_hat_min.size)
+    D_b = np.empty(B, dtype=np.float64)
+    mr_b = np.empty(B, dtype=np.float64)
+    for j in range(B):
+        b_j, _ = simulate_counts(u_boot, ctx.Phi, ctx.T, ctx.det, rng,
+                                 sigma_b=ctx.sigma_b)
+        _, Dj, mrj, _, _, _ = _cross_fit(arm_name, A, b_j, ctx, folds, K,
+                                         lam_max, eta_min, n_iter)
+        D_b[j] = Dj
+        mr_b[j] = mrj
+
+    def _band(v):
+        q = [float(np.quantile(v, 0.025)), float(np.quantile(v, 0.975))]
+        m, s = float(np.mean(v)), float(np.std(v, ddof=1))
+        return {"q": q, "mean": m, "sd": s, "B": int(B),
+                "gate": [min(q[0], m - 2.5 * s), max(q[1], m + 2.5 * s)]}
+
+    return _band(D_b), _band(mr_b)
+
+
 # ----------------------------------------------------------------------
 # driver: the full six-step rule
 # ----------------------------------------------------------------------
 def select_eta_and_fit(arm_name, A, b, ctx, K=5, seed=0, B=200,
-                       eta_grid=ETA_GRID):
+                       eta_grid=ETA_GRID, gof_mode="refit", B_refit=30):
     """Choose lam_TV by the cross-fitted common renewal discrepancy rule and
     refit on all frames at the frozen choice (digest §4).
+
+    gof_mode (round-4 adjudication; final rule frozen at F1):
+      "fixed" — literal digest §4: gate band from the fixed-lam_hat bootstrap.
+                KNOWN DEFECT: band covers counting noise only -> correct-model
+                MODEL_FAIL misfire on underdetermined cells (see
+                _bootstrap_band_refit docstring + probe_gof_coverage.py).
+      "refit" — candidate A: gate band from the refit-per-replicate bootstrap
+                at eta_min (B_refit replicates x K fits). The fixed band is
+                still computed and recorded; D_obs BELOW its lower edge raises
+                the 'overfit_flag' diagnostic (leakage), never MODEL_FAIL.
+      "off"   — candidate C: no absolute band; E from the one-SE rule alone
+                (selection unaffected); bands recorded as diagnostics only.
 
     Parameters
     ----------
@@ -364,12 +416,29 @@ def select_eta_and_fit(arm_name, A, b, ctx, K=5, seed=0, B=200,
     else:
         SE_min = 0.0
 
-    # step 5b: exact renewal parametric bootstrap GOF band (at eta_min)
+    # step 5b: exact renewal parametric bootstrap GOF band (at eta_min).
+    # The fixed-lam_hat band is ALWAYS computed (cheap, B sims, no refits): in
+    # "fixed" mode it is the gate; otherwise it is the overfit/leakage floor.
     D_band, mr_band, D_boot_mean = _bootstrap_band(lam_hats[i_min], ctx, seed, B)
 
+    refit_band = None
+    if gof_mode == "refit":
+        refit_band = _bootstrap_band_refit(
+            arm_name, A, ctx, folds, K, lam_max, etas[i_min], lam_hats[i_min],
+            seed, B=B_refit, n_iter=n_sel)
+        gate_D, gate_mr = refit_band[0]["gate"], refit_band[1]["gate"]
+    elif gof_mode == "fixed":
+        gate_D, gate_mr = D_band, mr_band
+    elif gof_mode == "off":
+        gate_D = gate_mr = None
+    else:
+        raise ValueError("unknown gof_mode %r" % (gof_mode,))
+
     def gof_pass(i):
-        return (D_band[0] <= D[i] <= D_band[1]
-                and mr_band[0] <= mean_r[i] <= mr_band[1])
+        if gate_D is None:
+            return True
+        return (gate_D[0] <= D[i] <= gate_D[1]
+                and gate_mr[0] <= mean_r[i] <= gate_mr[1])
 
     gof = [bool(gof_pass(i)) for i in range(len(etas))]
 
@@ -402,8 +471,13 @@ def select_eta_and_fit(arm_name, A, b, ctx, K=5, seed=0, B=200,
         "corr_r_rho_curve": [float(x) for x in corr],
         "SE_min": SE_min, "one_se_threshold": float(thresh),
         "gof_pass": gof, "accept_set_E": [int(i) for i in E],
+        "gof_mode": gof_mode,
+        # D at the CHOSEN eta below the counting-noise floor => held-out
+        # residuals are too good to be true (leakage/overfit) — diagnostic only
+        "overfit_flag": bool(D[i_star] < D_band[0]),
         "gof": {"D_band": D_band, "mean_r_band": mr_band,
                 "D_boot_mean": D_boot_mean,
+                "refit": refit_band,
                 "D_at_eta_min": float(D[i_min]),
                 "mean_r_at_eta_min": float(mean_r[i_min])},
         "fold_spec": {"K": K, "seed": seed, "substream": FOLD_SUBSTREAM,

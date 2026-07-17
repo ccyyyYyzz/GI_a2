@@ -1,0 +1,498 @@
+{
+ "config": {
+  "side": 32,
+  "tau": 1.0,
+  "nu": 500.0,
+  "rho": 0.6,
+  "M_list": [
+   1500,
+   512
+  ],
+  "B_refit": 25,
+  "select_iter": 40,
+  "R_correct": 5,
+  "R_contrast": 2
+ },
+ "rows": [
+  {
+   "arm": "RQL",
+   "M": 1500,
+   "dataset": 0,
+   "runtime_s": 19.9,
+   "D_at_eta_min": 1951.1322055423552,
+   "fixed_band": [
+    1415.2,
+    1614.9
+   ],
+   "refit_gate": [
+    1507.0,
+    1744.8
+   ],
+   "refit_D_mean": 1625.9,
+   "refit_D_sd": 47.6,
+   "MODEL_FAIL_fixed": true,
+   "MODEL_FAIL_refit": true,
+   "eta_star_refit": 0.1,
+   "eta_star_fixed": 0.1,
+   "overfit_flag": false,
+   "mean_r_at_eta_min": 0.0046,
+   "mean_r_fixed_band": [
+    -0.0398,
+    0.0615
+   ],
+   "mean_r_refit_gate": [
+    -0.004,
+    0.01
+   ],
+   "corr_r_rho_at_eta_min": 0.2043,
+   "D_ratio_refit": 1.2
+  },
+  {
+   "arm": "RQL",
+   "M": 1500,
+   "dataset": 1,
+   "runtime_s": 20.3,
+   "D_at_eta_min": 1941.714840171687,
+   "fixed_band": [
+    1395.2,
+    1603.5
+   ],
+   "refit_gate": [
+    1604.7,
+    1997.0
+   ],
+   "refit_D_mean": 1800.8,
+   "refit_D_sd": 78.5,
+   "MODEL_FAIL_fixed": true,
+   "MODEL_FAIL_refit": false,
+   "eta_star_refit": 0.1,
+   "eta_star_fixed": 0.03,
+   "overfit_flag": false,
+   "mean_r_at_eta_min": 0.0044,
+   "mean_r_fixed_band": [
+    -0.0443,
+    0.0607
+   ],
+   "mean_r_refit_gate": [
+    -0.0064,
+    0.0136
+   ],
+   "corr_r_rho_at_eta_min": 0.1166,
+   "D_ratio_refit": 1.078
+  },
+  {
+   "arm": "RQL",
+   "M": 1500,
+   "dataset": 2,
+   "runtime_s": 20.3,
+   "D_at_eta_min": 1883.9385462230234,
+   "fixed_band": [
+    1403.3,
+    1607.5
+   ],
+   "refit_gate": [
+    1494.0,
+    1749.7
+   ],
+   "refit_D_mean": 1621.8,
+   "refit_D_sd": 51.1,
+   "MODEL_FAIL_fixed": true,
+   "MODEL_FAIL_refit": true,
+   "eta_star_refit": 0.1,
+   "eta_star_fixed": 0.1,
+   "overfit_flag": false,
+   "mean_r_at_eta_min": 0.0111,
+   "mean_r_fixed_band": [
+    -0.0473,
+    0.0555
+   ],
+   "mean_r_refit_gate": [
+    -0.0031,
+    0.0098
+   ],
+   "corr_r_rho_at_eta_min": 0.2059,
+   "D_ratio_refit": 1.162
+  },
+  {
+   "arm": "RQL",
+   "M": 1500,
+   "dataset": 3,
+   "runtime_s": 20.3,
+   "D_at_eta_min": 1908.0598752709216,
+   "fixed_band": [
+    1396.5,
+    1610.5
+   ],
+   "refit_gate": [
+    1457.8,
+    1791.6
+   ],
+   "refit_D_mean": 1624.7,
+   "refit_D_sd": 66.8,
+   "MODEL_FAIL_fixed": true,
+   "MODEL_FAIL_refit": true,
+   "eta_star_refit": 0.1,
+   "eta_star_fixed": 0.1,
+   "overfit_flag": false,
+   "mean_r_at_eta_min": 0.0044,
+   "mean_r_fixed_band": [
+    -0.0357,
+    0.0596
+   ],
+   "mean_r_refit_gate": [
+    -0.0036,
+    0.0108
+   ],
+   "corr_r_rho_at_eta_min": 0.197,
+   "D_ratio_refit": 1.174
+  },
+  {
+   "arm": "RQL",
+   "M": 1500,
+   "dataset": 4,
+   "runtime_s": 20.2,
+   "D_at_eta_min": 1933.6650636405316,
+   "fixed_band": [
+    1388.4,
+    1598.8
+   ],
+   "refit_gate": [
+    1460.3,
+    1743.3
+   ],
+   "refit_D_mean": 1601.8,
+   "refit_D_sd": 56.6,
+   "MODEL_FAIL_fixed": true,
+   "MODEL_FAIL_refit": true,
+   "eta_star_refit": 0.1,
+   "eta_star_fixed": 0.1,
+   "overfit_flag": false,
+   "mean_r_at_eta_min": 0.0058,
+   "mean_r_fixed_band": [
+    -0.044,
+    0.0634
+   ],
+   "mean_r_refit_gate": [
+    -0.0049,
+    0.0106
+   ],
+   "corr_r_rho_at_eta_min": 0.1796,
+   "D_ratio_refit": 1.207
+  },
+  {
+   "arm": "POISSON-LIN",
+   "M": 1500,
+   "dataset": 0,
+   "runtime_s": 20.6,
+   "D_at_eta_min": 56246.95783846223,
+   "fixed_band": [
+    1397.1,
+    1598.5
+   ],
+   "refit_gate": [
+    21258.8,
+    21582.1
+   ],
+   "refit_D_mean": 21420.5,
+   "refit_D_sd": 64.7,
+   "MODEL_FAIL_fixed": true,
+   "MODEL_FAIL_refit": true,
+   "eta_star_refit": 0.0001,
+   "eta_star_fixed": 0.0001,
+   "overfit_flag": false,
+   "mean_r_at_eta_min": 6.0032,
+   "mean_r_fixed_band": [
+    -0.0455,
+    0.0521
+   ],
+   "mean_r_refit_gate": [
+    3.574,
+    3.6144
+   ],
+   "corr_r_rho_at_eta_min": 0.0393,
+   "D_ratio_refit": 2.626
+  },
+  {
+   "arm": "POISSON-LIN",
+   "M": 1500,
+   "dataset": 1,
+   "runtime_s": 20.3,
+   "D_at_eta_min": 56066.44709303105,
+   "fixed_band": [
+    1407.7,
+    1612.6
+   ],
+   "refit_gate": [
+    20945.7,
+    21753.1
+   ],
+   "refit_D_mean": 21349.4,
+   "refit_D_sd": 161.5,
+   "MODEL_FAIL_fixed": true,
+   "MODEL_FAIL_refit": true,
+   "eta_star_refit": 0.0001,
+   "eta_star_fixed": 0.0001,
+   "overfit_flag": false,
+   "mean_r_at_eta_min": 5.9947,
+   "mean_r_fixed_band": [
+    -0.0516,
+    0.0497
+   ],
+   "mean_r_refit_gate": [
+    3.5592,
+    3.6134
+   ],
+   "corr_r_rho_at_eta_min": 0.0327,
+   "D_ratio_refit": 2.626
+  },
+  {
+   "arm": "RQL",
+   "M": 512,
+   "dataset": 0,
+   "runtime_s": 17.2,
+   "D_at_eta_min": 759.5314173393217,
+   "fixed_band": [
+    450.4,
+    567.8
+   ],
+   "refit_gate": [
+    498.5,
+    653.9
+   ],
+   "refit_D_mean": 576.2,
+   "refit_D_sd": 31.1,
+   "MODEL_FAIL_fixed": true,
+   "MODEL_FAIL_refit": true,
+   "eta_star_refit": 0.1,
+   "eta_star_fixed": 0.1,
+   "overfit_flag": false,
+   "mean_r_at_eta_min": 0.0005,
+   "mean_r_fixed_band": [
+    -0.08,
+    0.0899
+   ],
+   "mean_r_refit_gate": [
+    -0.0108,
+    0.0174
+   ],
+   "corr_r_rho_at_eta_min": 0.1046,
+   "D_ratio_refit": 1.318
+  },
+  {
+   "arm": "RQL",
+   "M": 512,
+   "dataset": 1,
+   "runtime_s": 16.7,
+   "D_at_eta_min": 741.4170844059087,
+   "fixed_band": [
+    446.3,
+    575.3
+   ],
+   "refit_gate": [
+    516.2,
+    676.1
+   ],
+   "refit_D_mean": 596.2,
+   "refit_D_sd": 32.0,
+   "MODEL_FAIL_fixed": true,
+   "MODEL_FAIL_refit": true,
+   "eta_star_refit": 0.1,
+   "eta_star_fixed": 0.1,
+   "overfit_flag": false,
+   "mean_r_at_eta_min": 0.0029,
+   "mean_r_fixed_band": [
+    -0.0879,
+    0.0831
+   ],
+   "mean_r_refit_gate": [
+    -0.0113,
+    0.0253
+   ],
+   "corr_r_rho_at_eta_min": 0.0985,
+   "D_ratio_refit": 1.244
+  },
+  {
+   "arm": "RQL",
+   "M": 512,
+   "dataset": 2,
+   "runtime_s": 17.0,
+   "D_at_eta_min": 705.1992140011239,
+   "fixed_band": [
+    448.5,
+    584.2
+   ],
+   "refit_gate": [
+    486.1,
+    726.2
+   ],
+   "refit_D_mean": 606.1,
+   "refit_D_sd": 48.0,
+   "MODEL_FAIL_fixed": true,
+   "MODEL_FAIL_refit": false,
+   "eta_star_refit": 0.3,
+   "eta_star_fixed": 0.1,
+   "overfit_flag": false,
+   "mean_r_at_eta_min": 0.013,
+   "mean_r_fixed_band": [
+    -0.0731,
+    0.1026
+   ],
+   "mean_r_refit_gate": [
+    -0.0097,
+    0.0207
+   ],
+   "corr_r_rho_at_eta_min": 0.0865,
+   "D_ratio_refit": 1.163
+  },
+  {
+   "arm": "RQL",
+   "M": 512,
+   "dataset": 3,
+   "runtime_s": 17.1,
+   "D_at_eta_min": 697.6405412050126,
+   "fixed_band": [
+    458.5,
+    572.3
+   ],
+   "refit_gate": [
+    448.2,
+    640.9
+   ],
+   "refit_D_mean": 544.5,
+   "refit_D_sd": 38.5,
+   "MODEL_FAIL_fixed": true,
+   "MODEL_FAIL_refit": true,
+   "eta_star_refit": 0.3,
+   "eta_star_fixed": 0.3,
+   "overfit_flag": false,
+   "mean_r_at_eta_min": 0.0084,
+   "mean_r_fixed_band": [
+    -0.0749,
+    0.0758
+   ],
+   "mean_r_refit_gate": [
+    -0.0038,
+    0.0047
+   ],
+   "corr_r_rho_at_eta_min": 0.1389,
+   "D_ratio_refit": 1.281
+  },
+  {
+   "arm": "RQL",
+   "M": 512,
+   "dataset": 4,
+   "runtime_s": 18.2,
+   "D_at_eta_min": 695.7964554214069,
+   "fixed_band": [
+    456.1,
+    569.4
+   ],
+   "refit_gate": [
+    442.4,
+    613.5
+   ],
+   "refit_D_mean": 527.9,
+   "refit_D_sd": 34.2,
+   "MODEL_FAIL_fixed": true,
+   "MODEL_FAIL_refit": true,
+   "eta_star_refit": 0.3,
+   "eta_star_fixed": 0.3,
+   "overfit_flag": false,
+   "mean_r_at_eta_min": 0.0084,
+   "mean_r_fixed_band": [
+    -0.073,
+    0.0995
+   ],
+   "mean_r_refit_gate": [
+    -0.0027,
+    0.0034
+   ],
+   "corr_r_rho_at_eta_min": 0.0602,
+   "D_ratio_refit": 1.318
+  },
+  {
+   "arm": "POISSON-LIN",
+   "M": 512,
+   "dataset": 0,
+   "runtime_s": 18.7,
+   "D_at_eta_min": 19314.075024429025,
+   "fixed_band": [
+    455.4,
+    571.1
+   ],
+   "refit_gate": [
+    7108.1,
+    7576.2
+   ],
+   "refit_D_mean": 7342.2,
+   "refit_D_sd": 93.6,
+   "MODEL_FAIL_fixed": true,
+   "MODEL_FAIL_refit": true,
+   "eta_star_refit": 0.03,
+   "eta_star_fixed": 0.03,
+   "overfit_flag": false,
+   "mean_r_at_eta_min": 6.0112,
+   "mean_r_fixed_band": [
+    -0.0939,
+    0.1029
+   ],
+   "mean_r_refit_gate": [
+    3.5607,
+    3.6575
+   ],
+   "corr_r_rho_at_eta_min": 0.0761,
+   "D_ratio_refit": 2.631
+  },
+  {
+   "arm": "POISSON-LIN",
+   "M": 512,
+   "dataset": 1,
+   "runtime_s": 20.4,
+   "D_at_eta_min": 19314.627722297715,
+   "fixed_band": [
+    460.3,
+    583.3
+   ],
+   "refit_gate": [
+    7124.0,
+    7605.2
+   ],
+   "refit_D_mean": 7364.6,
+   "refit_D_sd": 96.3,
+   "MODEL_FAIL_fixed": true,
+   "MODEL_FAIL_refit": true,
+   "eta_star_refit": 0.0001,
+   "eta_star_fixed": 0.0001,
+   "overfit_flag": false,
+   "mean_r_at_eta_min": 6.0101,
+   "mean_r_fixed_band": [
+    -0.0929,
+    0.0889
+   ],
+   "mean_r_refit_gate": [
+    3.5504,
+    3.6472
+   ],
+   "corr_r_rho_at_eta_min": -0.0154,
+   "D_ratio_refit": 2.623
+  }
+ ],
+ "summary": {
+  "RQL_M1500": {
+   "false_alarm_fixed": "5/5",
+   "false_alarm_refit": "4/5"
+  },
+  "PLIN_M1500": {
+   "detect_fixed": "2/2",
+   "detect_refit": "2/2"
+  },
+  "RQL_M512": {
+   "false_alarm_fixed": "5/5",
+   "false_alarm_refit": "4/5"
+  },
+  "PLIN_M512": {
+   "detect_fixed": "2/2",
+   "detect_refit": "2/2"
+  }
+ }
+}
