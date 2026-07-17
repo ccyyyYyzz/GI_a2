@@ -1,0 +1,9 @@
+# pattern-matrix caches and other large regenerables (spec §0.1: exclude caches and >50MB files)
+cache/
+*.npz
+*.npy
+__pycache__/
+*.pyc
+# raw dataset downloads (only the 8 derived PNGs + sha256 are committed)
+data/stl10_raw/
+*.tar.gz
