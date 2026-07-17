@@ -57,6 +57,8 @@ EXPECTED_KEYS = {
     "mean_counts", "optical_time_s", "dark_frac", "tau_err", "runtime_s",
     # D2 §4 selection-routing columns (campaign.run_cell now emits these):
     "select_runtime_s", "MODEL_FAIL", "eta_star", "PSNR_rad",
+    # F1 cell-level adequacy audit columns (RQL rows only; '' elsewhere):
+    "gof_status", "gof_p", "leak_suspect",
 }
 
 PASS = []

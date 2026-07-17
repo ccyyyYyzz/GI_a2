@@ -1,7 +1,7 @@
-# ROUND63 战役规范 D2（冻结候选版）：Dead-time-aware high-flux single-pixel imaging
+# ROUND63 战役规范 D2.1（冻结候选版）：Dead-time-aware high-flux single-pixel imaging
 
-**日期**: 2026-07-18
-**状态**: D2 — 按 GPT Pro 第三轮审计（docs/ROUND63_GPT_ROUND3_DIGEST.md）全部阻断项修订；S1 试点后经一次不可变 commit 冻结为 F1
+**日期**: 2026-07-18（D2.1 修订同日）
+**状态**: D2.1 — D2 基础上按 GPT Pro 第四轮裁决（docs/ROUND63_GPT_ROUND4_DIGEST.md）替换 λ_TV/GOF 规则（旧"六步规则+GOF 进接受集"作废）；S1 试点后经一次不可变 commit 冻结为 F1
 **取代**: docs/ROUND63_HIGHFLUX_CAMPAIGN_SPEC_DRAFT.md（作废存档）
 **产出**: Optics Express 投稿论文 *Dead-time-aware high-flux single-pixel imaging: operating beyond the conventional photon-counting regime with renewal-statistical reconstruction*
 
@@ -59,14 +59,14 @@
 **S2-A 主战役（不可砍）**：64²，Bernoulli-50%，M/n=0.5（M=2048），ρ̄∈{0.05, 0.3, 0.6, 1, 2}，**ν∈{20, 50, 100, 200, 500, 1000, 2000}（time-to-quality = 固定 M 扫 dwell T=ντ）**，24 张确认自然图（STL-10 **test** split 索引 0..23，S1 不得接触），5 seeds。RQL 全网格；POISSON-LIN/SAT-POISSON/PRECORRECT 至少在 ρ̄∈{0.05, 0.6, 1}×全 ν；GI/DGI 选点+展示。M 扫描降级为次级"系统资源曲线"（附录）。
 **S2-B 欠采样稳健**：M/n∈{0.25, 0.5, 1}×ρ̄∈{0.05, 0.6, 1}×ν∈{100, 500, 2000}，12 图、3 seeds。
 **S2-C 图样/尺度锚点**：hadpair 与 gam4：ρ̄∈{0.05, 0.6, 1}×ν∈{100, 500, 2000}，M/n=0.5，8–12 图、3 seeds（互补对 M_physical=2M_signed 计费）；128²：Bernoulli，同锚点，仅 RQL/SAT/PRECORRECT/PnP-BM3D，**matrix-free 算子实现为前置硬门**；**PnP 冻结 = PnP-BM3D**。
-**S3 失配（OAT + 三交互）**：固定 64²/bern50/M-n=0.5/ν=500；ρ̄∈{0.3, 0.6, 1}+参考 0.05；12 图、3 seeds。轴：τ 误差{−20,−10,0,+10,+20}%（+flat-field 标定部署版；联合 profile 只在 2 代表点）；暗{0,.05,.1,.25,.5}（已知/±10%/联合估计）；afterpulse{0,1,2,5,10}%；start modes{active,delayed,continuous}；guard{0,1,5}τ；jitter{0,5,10}% 附录。交互仅 ρ×τ-err、ρ×p_ap、continuous×afterpulse。
+**S3 失配（OAT + 三交互）**：固定 64²/bern50/M-n=0.5/ν=500；ρ̄∈{0.3, 0.6, 1}+参考 0.05；12 图、3 seeds。轴：τ 误差{−20,−10,0,+10,+20}%（+flat-field 标定部署版；联合 profile 只在 2 代表点）；暗{0,.05,.1,.25,.5}（已知/±10%/联合估计）；afterpulse{0,1,2,5,10}%；start modes{active,delayed,continuous}；guard{0,1,5}τ；jitter{0,5,10}% 附录。交互仅 ρ×τ-err、ρ×p_ap、continuous×afterpulse。**continuous 格子无独立 AUDIT（afterpulse 无界尾）：η\* 继承同 arm/image/seed/ρ/ν/A 的 active-start 格子，GOF_STATUS=GOF_NA_DEPENDENT，MODEL_FAIL_PREDICTIVE=NA（F1 冻结条款）。**
 **S4 双拆**：(i) 标量 exact-Fisher map：ν=20..2000，ρ 自适应至 max(64, 2ρ\*(ν))（解析导数版）；(ii) 图像 exact-vs-RQL：8²/16²，ρ∈{.03,.1,.3,.6,1,2}×ν∈{20,100,500,2000}，3 seeds，**exact 与 RQL 同 TV 同选择器**。
 
 ## 4. 指标、图像与 λ_TV
 
 - **主指标 = radiometric PSNR（PSNR_rad，不重标度）** + radiometric NRMSE + flux bias；flux-matched 改名 **shape-PSNR** 降为次级；SSIM/LPIPS 次级
 - 图像：S1 开发集 = STL-10 **train** 0..15 + dev 结构靶（data/r63_images_dev/）；S2 确认集 = test 0..23 + 6 结构靶（结构靶只展示不进推断）；主图图名与 crop 坐标在冻结 commit 中登记
-- **λ_TV 规则 = 六步 cross-fitted common renewal discrepancy**（K=5 冻结 hash folds；无量纲 η=λ/λ_max,arm 路径；各臂自 fidelity 拟合；共同 NP 标定评审器 r_i=(N_i−μ_NP)/√V_NP；exact renewal parametric bootstrap 定接受区；one-SE 最大相容 η\*；E=∅→MODEL_FAIL 禁 PSNR 补救；冻结 η\* 全数据重拟合）；truth-oracle λ 只作诊断，标 ORACLE—NOT DEPLOYABLE
+- **λ_TV/GOF 规则（F1 冻结，GPT 第四轮裁决，取代旧六步规则）= "外层 AUDIT 拆分 + coherent refit bootstrap"**（全部常数见 docs/ROUND63_GPT_ROUND4_DIGEST.md；实现 = code/round63/select_eta.py）：每 cell 逻辑组（hadpair 对原子）冻结 hash 拆 80% DEV / 20% AUDIT（AUDIT<128 组→GOF_UNDERPOWERED/NA）；η\* 逐臂在 **DEV 内**做 grouped K=5 交叉拟合（λ_max 仅用 DEV；逐折均值 d̄(η)；one-SE fold-dispersion 启发式；η\*=最大相容；**GOF 完全不进接受集**）；模型充分性 = **MODEL_FAIL_PREDICTIVE**，每 cell 一次由 RQL 承担：η_min 的 coherent plugin 场景（25 iters）预测 AUDIT，B=39 coherent refit bootstrap 得**精确 MC p 值**，p≤0.025 置旗；**旗标不改 η\*、不删 cell、不看 PSNR**；固定-λ̂ bootstrap 仅作下尾 LEAKAGE_SUSPECT 诊断（B₀=199, p_low≤0.01）；r̄/corr 只作独立 warning；RNG 键全整数 (cell_key, seed, 63, 4, tag)；语义诚实条款：M<n 时不可严格区分 detector 错配与 null-space 欠恢复（论文写明，不称纯 likelihood-class test）；truth-oracle λ 只作诊断，标 ORACLE—NOT DEPLOYABLE。覆盖率证据链：字面六步 10/10 误报 → 候选 A 8/10 → F1 规则见 results/round63_gof_probe/PROBE_F1_SUMMARY.md
 - 公平性表述（论文逐字）：见 GPT 第三轮 REPLY §3.5 存档段落
 
 ## 5. 理论节（论文骨架）
@@ -74,7 +74,7 @@
 - 主命题：**ρ\*(ν) ∼ 6^{1/3}ν^{1/3}**；formal second-order：**ρ\* = (6ν)^{1/3} − 2/3 + O(ν^{−1/3})**（"supported by exact numerical evaluation"）；峰值信息 J(ρ\*) = 1 − 0.8255·ν^{−1/3}
 - 机制：missing-information identity **I_N = E[N] − ρ²·E[Var(R_ν|N)]**；边际平衡 1/ρ² = ρ/(6ν)；ridge 处 VarN 仍发散（禁用"方差 O(1)"表述）
 - 分区：RQL deployment（逐 pattern ρ_95≤1）/ transition / exact-reference（"short-window & extreme-saturation reference mode"）/ information-decreasing（ρ≥ρ\*）；CLT 10% 信任边界 ρ_0.9 ≍ √(1.2ν)
-- 表述纪律：**"We derive a finite-window count-information ridge…"**；无 "first"；冻结 novelty 前逐式核对 **Grönberg–Danielsson–Sjölin 2018** 全文（S5 论文阶段硬项）
+- 表述纪律：**"We derive a finite-window count-information ridge…"**；无 "first"。**Grönberg 2018 逐式核对已完成（GPT 第四轮 Q2）：无 ridge/ν^{1/3}/identity——novelty "高置信可守"，但必须窄限定**（ideal nonparalyzable + active-start + scalar integrated count + exact finite-window FI + principal ridge + (ρ,ν) 渐近）；宽泛"最优通量"故事已拥挤（Wang 2011 / Bécares 2012 / Gupta / Rapp / Jorgensen 2026 / 2025 dToF——全部须防御性引用）；论文 novelty 段采用第四轮 digest 的安全版本文本；S5 残留硬项 = 对 2018 正文 PDF/KTH thesis 的最后人工关键词 sign-off
 - Supplement 半页：*Why a full heteroscedastic Gaussian likelihood fails at high load*（ρ=1/2 符号翻转 + ceiling-row variance-collapse 非强制性 + radial objective 曲线 + 失败/修复图对）
 
 ## 6. 四联主图（修订版）

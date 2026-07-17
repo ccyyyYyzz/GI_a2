@@ -69,7 +69,7 @@ FIELDNAMES = ["side", "pattern", "rho_bar", "nu", "M", "seed", "image", "arm",
               "PSNR", "SSIM", "LPIPS", "rad_nrmse", "flux_dev", "lam_tv",
               "mean_counts", "optical_time_s", "dark_frac", "tau_err",
               "runtime_s", "select_runtime_s", "MODEL_FAIL", "eta_star",
-              "PSNR_rad"]
+              "PSNR_rad", "gof_status", "gof_p", "leak_suspect"]
 
 _KEY_COLS = ("side", "pattern", "rho_bar", "nu", "M", "seed", "image", "arm")
 

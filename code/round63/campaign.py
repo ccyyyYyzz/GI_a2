@@ -117,17 +117,20 @@ def run_cell(cell):
     A, meta = pat["A"], pat["meta"]
     imgs = _images(side, cell.get("images", "pilot8"),
                    dev=bool(cell.get("dev", False)))
-    # production lam_TV selection: "discrepancy" (default; six-step cross-fitted
-    # common renewal discrepancy rule in select_eta) or "legacy" (the deprecated
-    # own-NLL rule inside run_arm, retained for ablation / back-compat). Legacy
-    # keeps ALL arms on the run_arm path.
+    # production lam_TV selection: "discrepancy" (default; the F1-frozen
+    # AUDIT-split rule in select_eta — GPT round-4 ruling) or "legacy" (the
+    # deprecated own-NLL rule inside run_arm, retained for ablation only).
+    # Legacy keeps ALL arms on the run_arm path.
     select_rule = cell.get("select_rule", "discrepancy")
-    sel_K = int(cell.get("sel_K", 5))
-    gof_mode = cell.get("gof_mode", "refit")
+    # frozen integer cell key for the split / fold / bootstrap RNG streams
+    kind_id = {"bern50": 1, "hadpair": 2, "gam4": 3}[cell["pattern"]]
+    cell_key = (kind_id, int(round(rho * 1000)), int(round(nu)), M, side)
+    # the DEV/AUDIT split is pattern-level: identical for every image and arm
+    # of this cell (computed lazily once, on the first selected arm)
+    cell_split = None
     rows = []
     for img_name, x in imgs.items():
         u = A @ x
-        kind_id = {"bern50": 1, "hadpair": 2, "gam4": 3}[cell["pattern"]]
         rng_noise = rng_for(seed, 63, 3, kind_id, int(rho * 1000), int(nu), M,
                             list(imgs).index(img_name))
         b, N = simulate_counts(u, Phi, T, det_true, rng_noise, sigma_b=sigma_b)
@@ -139,26 +142,30 @@ def run_cell(cell):
             t0 = time.time()
             use_select = (select_rule == "discrepancy" and arm in _ITER_ARMS)
             if use_select:
-                # production rule: six-step discrepancy selection + refit
-                # (spec D2 §4). One forward-compat shim: if this build of
-                # select_eta_and_fit predates the gof_mode kwarg, retry without.
+                # F1-frozen rule (select_eta docstring): DEV-only eta*, and —
+                # on the RQL arm only — the once-per-cell adequacy audit
+                # (MODEL_FAIL_PREDICTIVE, flag-only, never alters eta*).
                 t_sel = time.time()
-                try:
-                    xh, info = select_eta.select_eta_and_fit(
-                        arm, A, b, ctx, K=sel_K, seed=seed, gof_mode=gof_mode)
-                except TypeError as e:
-                    if "gof_mode" not in str(e):
-                        raise
-                    xh, info = select_eta.select_eta_and_fit(
-                        arm, A, b, ctx, K=sel_K, seed=seed)
+                if cell_split is None:
+                    cell_split = select_eta.split_dev_audit(
+                        A.shape[0], meta, cell_key, seed)
+                xh, info = select_eta.select_eta_and_fit(
+                    arm, A, b, ctx, cell_key=cell_key, seed=seed,
+                    split=cell_split)
                 sel_dt = time.time() - t_sel
-                model_fail = bool(info.get("MODEL_FAIL", False))
+                mf = info.get("MODEL_FAIL")
+                model_fail = "" if mf is None else bool(mf)
+                audit = info.get("audit") or {}
+                gof_status = audit.get("GOF_STATUS", "")
+                gof_p = audit.get("p_value", "")
+                leak = audit.get("LEAKAGE_SUSPECT", "")
                 es = info.get("eta_star", None)
                 eta_out = round(float(es), 6) if es is not None else ""
                 sel_out = round(sel_dt, 3)
             else:
                 xh, info = run_arm(arm, A, b, ctx)
                 model_fail, eta_out, sel_out = "", "", ""
+                gof_status, gof_p, leak = "", "", ""
             lam_tv = float(info.get("lam_tv", np.nan)) if isinstance(info, dict) \
                 else np.nan
             m = MET.main_metrics(xh, x, side,
@@ -193,5 +200,10 @@ def run_cell(cell):
                 "MODEL_FAIL": model_fail,
                 "eta_star": eta_out,
                 "PSNR_rad": psnr_rad_out,
+                # cell-level adequacy audit (RQL rows only; '' elsewhere)
+                "gof_status": gof_status,
+                "gof_p": (round(float(gof_p), 5)
+                          if isinstance(gof_p, float) else gof_p),
+                "leak_suspect": leak,
             })
     return rows

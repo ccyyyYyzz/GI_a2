@@ -1,23 +1,24 @@
-"""ROUND63 outcome-blind GOF-coverage probe (round-4 adjudication evidence).
+"""ROUND63 outcome-blind coverage probe for the F1-FROZEN adequacy audit
+(select_eta.py, GPT round-4 rule: AUDIT split + coherent refit bootstrap).
 
-Question: does the digest-§4 MODEL_FAIL gate have honest coverage? Two gates
-are compared on data whose generator IS the assumed model (non-paralyzable
-renewal, exact detector params — so MODEL_FAIL firing is by definition a
-false alarm), plus a misspecified-arm contrast (POISSON-LIN, dead time
-ignored at rho=0.6 — MODEL_FAIL SHOULD fire; the repaired gate must not have
-bought coverage by giving up power):
+Two questions, both outcome-blind (x_true only ever SIMULATES data; no PSNR or
+truth-based quantity enters any verdict):
 
-  fixed — literal digest §4: parametric bootstrap band at the FIXED
-          cross-fitted lam_hat (counting noise only);
-  refit — candidate A: refit-per-replicate bootstrap at eta_min (null includes
-          estimation variance + smoothing bias).
+  NULL      generator == the calibrated model (non-paralyzable renewal, exact
+            same detector params). MODEL_FAIL_PREDICTIVE is an exact MC test at
+            level 1/40 = 0.025, so over R null runs we expect ~R/40 false
+            alarms (0-1 at R=10 per regime).
+  DETECT    generator violates the calibrated model in the two S3-relevant
+            ways: (a) paralyzable true detector audited as non-paralyzable
+            (~12% per-slot mean shift at rho=0.6); (b) tau_err: true tau 20%
+            larger than calibrated. The flag SHOULD fire.
 
-Outcome-blind: no PSNR, no truth-based quantity enters any verdict; x_true is
-used only to SIMULATE the data. One select_eta_and_fit(gof_mode="refit") call
-per (dataset, arm) — its info carries both bands, so the fixed-gate verdict is
-re-derived post hoc from the same D-curve (identical fits, no double compute).
+History: the round-3 literal rule failed this probe 10/10 (fixed band), our
+candidate-A refit failed 8/10 (results/round63_gof_probe/probe_results.json @
+commit 109b718); the F1 rule is the round-4 repair. M regimes chosen so the
+AUDIT split stays powered (M=1500 -> 300 audit groups; M=768 -> 154 >= 128).
 
-Writes results/round63_gof_probe/probe_results.json + PROBE_SUMMARY.md.
+Writes results/round63_gof_probe/probe_f1_results.json + PROBE_F1_SUMMARY.md.
 """
 import json
 import os
@@ -35,18 +36,16 @@ from physics import Detector, simulate_counts
 from solvers import ArmContext
 from select_eta import select_eta_and_fit
 
-OUT = os.path.join(os.path.dirname(HERE), "..", "results", "round63_gof_probe")
-OUT = os.path.abspath(OUT)
+OUT = os.path.abspath(os.path.join(os.path.dirname(HERE), "..",
+                                   "results", "round63_gof_probe"))
 
 SIDE = 32
 N = SIDE * SIDE
 TAU, NU, RHO = 1.0, 500.0, 0.6
 T = NU * TAU
-R_CORRECT = 5          # correct-model datasets per M regime
-R_CONTRAST = 2         # misspecified-arm (POISSON-LIN) datasets per M regime
-M_LIST = (1500, 512)   # over- and under-determined (M/n = 1.46 / 0.5)
-B_REFIT = 25
-SELECT_ITER = 40
+M_LIST = (1500, 768)
+R_NULL = 10
+R_DETECT = 5
 
 
 def phantom():
@@ -58,67 +57,50 @@ def phantom():
     return img.ravel() / img.sum()
 
 
-def fixed_gate_verdict(info):
-    """Re-derive the literal-§4 (fixed-band) MODEL_FAIL from a refit-mode info:
-    same D-curve/one-SE threshold, gate = the recorded fixed-lam_hat band."""
-    Db, mrb = info["gof"]["D_band"], info["gof"]["mean_r_band"]
-    D = info["D_curve"]
-    mr = info["mean_r_curve"]
-    thr = info["one_se_threshold"]
-    E = [i for i in range(len(D))
-         if D[i] <= thr and Db[0] <= D[i] <= Db[1] and mrb[0] <= mr[i] <= mrb[1]]
-    return (not E), E
-
-
-def run_one(arm, x_true, M, ds):
-    rng_p = rng_for(0, 63, 1, 1, M, ds)             # per-dataset pattern stream
+def run_one(scenario, x_true, M, ds):
+    """scenario: 'null' | 'paralyzable' | 'tau_err'. Estimator/audit always
+    calibrated NP with tau=TAU; the TRUE generator varies per scenario."""
+    rng_p = rng_for(0, 63, 1, 1, M, ds)
     A = 2.0 * (rng_p.random((M, N)) < 0.5)
     u = A @ x_true
-    det = Detector(tau=TAU, dark=0.0, start_mode="active")
+    if scenario == "paralyzable":
+        det_true = Detector(tau=TAU, dark=0.0, start_mode="active",
+                            paralyzable=True)
+    elif scenario == "tau_err":
+        det_true = Detector(tau=1.2 * TAU, dark=0.0, start_mode="active")
+    else:
+        det_true = Detector(tau=TAU, dark=0.0, start_mode="active")
+    det_est = Detector(tau=TAU, dark=0.0, start_mode="active")
     Phi = RHO / (TAU * float(u.mean()))
-    b, _ = simulate_counts(u, Phi, T, det, rng_for(0, 63, 3, 9, M, ds))
-    ctx = ArmContext(Phi=Phi, det=det, T=T, side=SIDE, n_iter=150,
-                     select_iter=SELECT_ITER, pattern_kind="bern50",
-                     meta={"kind": "bern50"})
+    scen_id = {"null": 0, "paralyzable": 1, "tau_err": 2}[scenario]
+    b, _ = simulate_counts(u, Phi, T, det_true,
+                           rng_for(0, 63, 3, 9, scen_id, M, ds))
+    ctx = ArmContext(Phi=Phi, det=det_est, T=T, side=SIDE, n_iter=150,
+                     pattern_kind="bern50", meta={"kind": "bern50"})
+    cell_key = (1, int(RHO * 1000), int(NU), M, SIDE)
     t0 = time.time()
-    _, info = select_eta_and_fit(arm, A, b, ctx, K=5, seed=ds,
-                                 gof_mode="refit", B_refit=B_REFIT)
+    _, info = select_eta_and_fit("RQL", A, b, ctx, cell_key=cell_key, seed=ds)
     dt = time.time() - t0
-    fail_fixed, E_fixed = fixed_gate_verdict(info)
-    rb = info["gof"]["refit"]
-    row = {
-        "arm": arm, "M": M, "dataset": ds, "runtime_s": round(dt, 1),
-        "D_at_eta_min": info["gof"]["D_at_eta_min"],
-        "fixed_band": [round(v, 1) for v in info["gof"]["D_band"]],
-        "refit_gate": [round(v, 1) for v in rb[0]["gate"]],
-        "refit_D_mean": round(rb[0]["mean"], 1),
-        "refit_D_sd": round(rb[0]["sd"], 1),
-        "MODEL_FAIL_fixed": bool(fail_fixed),
-        "MODEL_FAIL_refit": bool(info["MODEL_FAIL"]),
-        "eta_star_refit": info["eta_star"],
-        "eta_star_fixed": (info["eta_grid"][max(E_fixed)] if E_fixed
-                           else info["eta_min"]),
-        "overfit_flag": info["overfit_flag"],
-        # candidate-B evidence: is the MEAN residual honest under the null and
-        # displaced under misspecification (the D band's power without its
-        # estimation-variance fragility)?
-        "mean_r_at_eta_min": round(info["gof"]["mean_r_at_eta_min"], 4),
-        "mean_r_fixed_band": [round(v, 4) for v in info["gof"]["mean_r_band"]],
-        "mean_r_refit_gate": [round(v, 4) for v in rb[1]["gate"]],
-        "corr_r_rho_at_eta_min": round(
-            info["corr_r_rho_curve"][info["i_min"]], 4),
-        # candidate-D evidence: discrepancy RATIO D_obs / refit-null mean
-        "D_ratio_refit": round(
-            info["gof"]["D_at_eta_min"] / rb[0]["mean"], 3),
-    }
-    print("  %-11s M=%-5d ds=%d D=%.0f fixed=[%.0f,%.0f]->%s "
-          "refit_gate=[%.0f,%.0f]->%s eta*=%.3g (%.0fs)"
-          % (arm, M, ds, row["D_at_eta_min"], row["fixed_band"][0],
-             row["fixed_band"][1],
-             "FAIL" if fail_fixed else "pass",
-             row["refit_gate"][0], row["refit_gate"][1],
-             "FAIL" if row["MODEL_FAIL_refit"] else "pass",
-             row["eta_star_refit"], dt), flush=True)
+    au = info["audit"]
+    row = {"scenario": scenario, "M": M, "dataset": ds,
+           "runtime_s": round(dt, 1), "eta_star": info["eta_star"],
+           "GOF_STATUS": au["GOF_STATUS"],
+           "MODEL_FAIL_PREDICTIVE": au["MODEL_FAIL_PREDICTIVE"],
+           "p_value": round(au.get("p_value", float("nan")), 5),
+           "B_used": au.get("B_used"),
+           "D_obs": round(au.get("D_obs", float("nan")), 1),
+           "D_star_mean": round(au.get("D_star_mean", float("nan")), 1),
+           "D_star_max": round(au.get("D_star_max", float("nan")), 1),
+           "LEAKAGE_SUSPECT": au.get("LEAKAGE_SUSPECT"),
+           "MEAN_RESIDUAL_WARN": au.get("MEAN_RESIDUAL_WARN"),
+           "LOAD_CORR_WARN": au.get("LOAD_CORR_WARN"),
+           "mean_r_obs": round(au.get("mean_r_obs", float("nan")), 4)}
+    print("  %-12s M=%-5d ds=%d fail=%-5s p=%-7s D=%.0f null[mean=%.0f "
+          "max=%.0f] B=%s leak=%s warn=%s (%.0fs)"
+          % (scenario, M, ds, row["MODEL_FAIL_PREDICTIVE"], row["p_value"],
+             row["D_obs"], row["D_star_mean"], row["D_star_max"],
+             row["B_used"], row["LEAKAGE_SUSPECT"],
+             row["MEAN_RESIDUAL_WARN"], dt), flush=True)
     return row
 
 
@@ -127,48 +109,42 @@ def main():
     x_true = phantom()
     rows = []
     for M in M_LIST:
-        print("[probe] correct-model RQL, M=%d (M/n=%.2f)" % (M, M / N),
-              flush=True)
-        for ds in range(R_CORRECT):
-            rows.append(run_one("RQL", x_true, M, ds))
-        print("[probe] misspecified contrast POISSON-LIN, M=%d" % M, flush=True)
-        for ds in range(R_CONTRAST):
-            rows.append(run_one("POISSON-LIN", x_true, M, ds))
+        print("[probe-F1] NULL (correct model), M=%d" % M, flush=True)
+        for ds in range(R_NULL):
+            rows.append(run_one("null", x_true, M, ds))
+    for scen in ("paralyzable", "tau_err"):
+        print("[probe-F1] DETECT %s, M=%d" % (scen, M_LIST[0]), flush=True)
+        for ds in range(R_DETECT):
+            rows.append(run_one(scen, x_true, M_LIST[0], ds))
 
-    def rate(arm, key, M=None):
-        sel = [r for r in rows if r["arm"] == arm and (M is None or r["M"] == M)]
-        return (sum(r[key] for r in sel), len(sel))
+    def rate(scen, M=None):
+        sel = [r for r in rows if r["scenario"] == scen
+               and (M is None or r["M"] == M)]
+        return "%d/%d" % (sum(bool(r["MODEL_FAIL_PREDICTIVE"]) for r in sel),
+                          len(sel))
 
-    summary = {}
-    for M in M_LIST:
-        summary["RQL_M%d" % M] = {
-            "false_alarm_fixed": "%d/%d" % rate("RQL", "MODEL_FAIL_fixed", M),
-            "false_alarm_refit": "%d/%d" % rate("RQL", "MODEL_FAIL_refit", M),
-        }
-        summary["PLIN_M%d" % M] = {
-            "detect_fixed": "%d/%d" % rate("POISSON-LIN", "MODEL_FAIL_fixed", M),
-            "detect_refit": "%d/%d" % rate("POISSON-LIN", "MODEL_FAIL_refit", M),
-        }
+    summary = {"false_alarm_null_M1500": rate("null", 1500),
+               "false_alarm_null_M768": rate("null", 768),
+               "detect_paralyzable": rate("paralyzable"),
+               "detect_tau_err_+20%": rate("tau_err"),
+               "expected_null_level": "0.025 exact (about %d/40 per regime)"
+                                      % R_NULL}
     out = {"config": {"side": SIDE, "tau": TAU, "nu": NU, "rho": RHO,
-                      "M_list": list(M_LIST), "B_refit": B_REFIT,
-                      "select_iter": SELECT_ITER, "R_correct": R_CORRECT,
-                      "R_contrast": R_CONTRAST},
+                      "M_list": list(M_LIST), "R_null": R_NULL,
+                      "R_detect": R_DETECT, "rule":
+                      "f1_audit_split_coherent_bootstrap"},
            "rows": rows, "summary": summary}
-    with open(os.path.join(OUT, "probe_results.json"), "w") as f:
+    with open(os.path.join(OUT, "probe_f1_results.json"), "w") as f:
         json.dump(out, f, indent=1)
-
-    lines = ["# GOF coverage probe (outcome-blind, round-4 adjudication)", "",
-             "Correct-model false-alarm rate (MODEL_FAIL on data whose",
-             "generator IS the assumed renewal model) and misspecified-arm",
-             "detection rate (POISSON-LIN at rho=0.6, dead time ignored):", ""]
-    for k, v in summary.items():
-        lines.append("- **%s**: %s" % (k, json.dumps(v)))
-    lines += ["", "Full rows in probe_results.json. Verdict logic: the honest",
-              "gate must have LOW false alarm on the first block and HIGH",
-              "detection on the second, in BOTH M regimes."]
-    with open(os.path.join(OUT, "PROBE_SUMMARY.md"), "w") as f:
+    lines = ["# F1 adequacy-audit coverage probe (outcome-blind)", "",
+             "Exact MC level 0.025; null false alarms should be ~R/40.", ""]
+    lines += ["- **%s**: %s" % (k, v) for k, v in summary.items()]
+    lines += ["", "History: literal round-3 rule 10/10 false alarms; "
+              "candidate-A refit 8/10 (probe_results.json). Full rows in "
+              "probe_f1_results.json."]
+    with open(os.path.join(OUT, "PROBE_F1_SUMMARY.md"), "w") as f:
         f.write("\n".join(lines) + "\n")
-    print("[probe] summary:", json.dumps(summary), flush=True)
+    print("[probe-F1] summary:", json.dumps(summary), flush=True)
     return 0
 
 
