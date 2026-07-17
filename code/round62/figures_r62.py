@@ -342,6 +342,8 @@ def _g1_headroom():
     df.columns = [c.strip().lower() for c in df.columns]
     if "illum" not in df.columns and "family" in df.columns:
         df = df.rename(columns={"family": "illum"})
+    if "arm" not in df.columns and "method" in df.columns:
+        df = df.rename(columns={"method": "arm"})  # g1 schema uses 'method'
     needed = {"illum", "link", "n", "m", "arm", "psnr"}
     if not needed.issubset(df.columns):
         print("figure skip: g1_scale_map.csv missing columns; have %s need %s"
