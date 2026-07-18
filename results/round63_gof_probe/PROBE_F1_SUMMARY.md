@@ -1,11 +1,11 @@
-# F1 adequacy-audit coverage probe (outcome-blind)
+# F1 audit-statistic distribution probe (outcome-blind)
 
-Exact MC level 0.025; null false alarms should be ~R/40.
+Round-5: NO binary gate; these are descriptive distributions.
 
-- **false_alarm_null_M1500**: 3/10
-- **false_alarm_null_M768**: 4/10
-- **detect_paralyzable**: 0/5
-- **detect_tau_err_+20%**: 0/5
-- **expected_null_level**: 0.025 exact (about 10/40 per regime)
+- **null_M1500**: {"n": 10, "D_ratio_med": 1.1307, "extreme_rank_qd": "3/10", "mean_warn": "0/10"}
+- **null_M768**: {"n": 10, "D_ratio_med": 1.2739, "extreme_rank_qd": "4/10", "mean_warn": "1/10"}
+- **paralyzable**: {"n": 5, "D_ratio_med": 0.9018, "extreme_rank_qd": "0/5", "mean_warn": "0/5"}
+- **tau_err_+20%**: {"n": 5, "D_ratio_med": 0.9314, "extreme_rank_qd": "0/5", "mean_warn": "0/5"}
+- **note**: "descriptive distributions only (round-5: no gate); extreme_rank_qd is the incidence the DELETED gate would have flagged"
 
-History: literal round-3 rule 10/10 false alarms; candidate-A refit 8/10 (probe_results.json). Full rows in probe_f1_results.json.
+History: literal round-3 rule 10/10 false alarms; candidate-A refit 8/10 (probe_results.json); round-4 gate 7/20 null + 0/10 detection -> gate deleted (round-5 ruling).
