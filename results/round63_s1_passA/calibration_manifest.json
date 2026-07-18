@@ -1,0 +1,49 @@
+{
+  "generated_utc": "2026-07-18T05:18:18.154219+00:00",
+  "mode": "pass_a",
+  "side": 64,
+  "M": 4096,
+  "pattern": "bern50",
+  "tau": 5e-08,
+  "nu_list": [
+    5.0,
+    10.0,
+    20.0,
+    50.0,
+    100.0,
+    200.0,
+    500.0,
+    1000.0,
+    2000.0
+  ],
+  "rho_list": [
+    0.05,
+    0.6
+  ],
+  "images": [
+    "dev_stl_00",
+    "dev_stl_01",
+    "dev_stl_02",
+    "dev_stl_03",
+    "dev_text",
+    "dev_fine_lines"
+  ],
+  "seeds": [
+    0,
+    1
+  ],
+  "arm": "RQL",
+  "c_endpoints": [
+    0.25,
+    0.5
+  ],
+  "C0_star": "inf",
+  "sha256": {
+    "pilot_s1.py": "2fdd835ecb696b0b3bd10fe6f5690b64f5b22cda52fbf67f9e92892bb5cb2874",
+    "select_eta.py": "e927b07d508c953427ec08d623eed932612678bdcf87d09b877295c8dad30def",
+    "physics.py": "29f7f6093f31523b0b1c981c404a01e8bf3f91fb43b31e572bc17d1550b7489d",
+    "campaign.py": "90f07e667029866040569d17bac5ed6f5836f8f1376d92b827ad8534a8498358",
+    "dev_images_sha_file": "dd6db9c0afa57f60ff36592c18b5e0b5b0dc93250f5c697ed5423e85bcf168a3"
+  },
+  "dev_images_sha_file_path": "D:\\GI_another\\data\\r63_images_dev\\64\\sha256.txt"
+}
