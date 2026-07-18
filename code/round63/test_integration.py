@@ -55,8 +55,12 @@ EXPECTED_KEYS = {
     "side", "pattern", "rho_bar", "nu", "M", "seed", "image", "arm",
     "PSNR", "SSIM", "LPIPS", "rad_nrmse", "flux_dev", "lam_tv",
     "mean_counts", "optical_time_s", "dark_frac", "tau_err", "runtime_s",
-    # D2 §4 selection-routing columns (campaign.run_cell now emits these):
-    "select_runtime_s", "eta_star", "PSNR_rad",
+    # round-6 selection-routing columns (campaign.run_cell now emits these;
+    # eta_star is GONE — the analytic score-concentration rule has no eta):
+    "select_runtime_s", "PSNR_rad",
+    # round-6 analytic-rule ledger (per-cell, on selected iterative-arm rows):
+    "C_hat", "S_N2", "V0_exact", "muprime0_exact", "omega_A",
+    "c_used", "sigma_grad_arm", "lambda_tv_arm",
     # F1 cell-level DESCRIPTIVE audit columns (round-5 ruling: continuous
     # diagnostics only, RQL rows only; '' elsewhere):
     "audit_status", "d_ratio", "q_d", "q_mean", "leak_suspect",
@@ -103,8 +107,11 @@ def check_meta_contract():
 
 def check_kind(kind):
     """Drive campaign.run_cell for one pattern kind on one image, 3 arms."""
+    # C0=4.0 is a placeholder until Pass A freezes the concentration threshold;
+    # run_cell -> select_eta now REQUIRES a C0 (it refuses to guess), and this
+    # test is structural — any valid C0 exercises the same routing path.
     cell = dict(side=SIDE, pattern=kind, rho_bar=RHO, nu=NU, M=M, seed=SEED,
-                arms=ARMS, images=["text"], fista_iters=FISTA, tau=TAU)
+                arms=ARMS, images=["text"], fista_iters=FISTA, tau=TAU, C0=4.0)
     t0 = time.time()
     rows = run_cell(cell)                       # <- REAL pipeline (would KeyError
     dt = time.time() - t0                       #    on hadpair+GI if bug present)

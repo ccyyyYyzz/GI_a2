@@ -26,18 +26,18 @@ PY = sys.executable
 OUT_FINAL = os.path.join(REPO, "results", "round63_s1")
 
 RHO_LIST = [0.05, 0.6]
-NU_LIST = [20, 50, 100, 200, 500, 1000, 2000]
+NU_LIST = [5, 10, 20, 50, 100, 200, 500, 1000, 2000]
 
 
-def build_jobs():
-    """One job per (rho, nu) cell pair — 14 jobs, each its own out dir."""
+def build_jobs(worker_root="round63_s1_workers"):
+    """One job per (rho, nu) cell pair, each its own out dir."""
     jobs = []
     for rho in RHO_LIST:
         for nu in NU_LIST:
             tag = "r%s_n%d" % (str(rho).replace(".", "p"), nu)
             jobs.append({
                 "tag": tag, "rho": rho, "nu": nu,
-                "out": os.path.join(REPO, "results", "round63_s1_workers", tag),
+                "out": os.path.join(REPO, "results", worker_root, tag),
             })
     return jobs
 
@@ -101,9 +101,15 @@ def main():
     ap.add_argument("--workers", type=int, default=6)
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--merge-only", action="store_true")
+    ap.add_argument("--worker-root", type=str, default="round63_s1_workers",
+                    help="results/<name> root for worker out dirs")
+    ap.add_argument("--final-out", type=str, default="round63_s1",
+                    help="results/<name> for the merged CSV + analysis")
     args, extra = ap.parse_known_args()
 
-    jobs = build_jobs()
+    global OUT_FINAL
+    OUT_FINAL = os.path.join(REPO, "results", args.final_out)
+    jobs = build_jobs(args.worker_root)
     if args.dry_run:
         for j in jobs:
             print(j["tag"], "->", j["out"])

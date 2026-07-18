@@ -154,7 +154,9 @@ def run_cell(cell):
                 xh, info = select_eta.select_eta_and_fit(
                     arm, A, b, ctx, cell_key=cell_key, seed=seed,
                     split=cell_split, C0=cell.get("C0"),
-                    c_force=cell.get("c_force"))
+                    c_force=cell.get("c_force"),
+                    run_audit=(arm == "RQL"
+                               and bool(cell.get("audit", True))))
                 sel_dt = time.time() - t_sel
                 audit = info.get("audit") or {}
                 audit_status = audit.get("AUDIT_STATUS", "")
