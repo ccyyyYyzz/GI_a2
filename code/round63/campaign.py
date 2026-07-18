@@ -50,6 +50,7 @@ sys.path.insert(0, os.path.dirname(HERE))
 from gi_core import metrics as MET
 from gi_core.utils import rng_for
 from images63 import build_image_set, build_dev_image_set
+from detail24 import build_detail24_set, build_detail24_dev_set
 from patterns import make_patterns
 from physics import Detector, simulate_counts
 from solvers import ArmContext, run_arm, _ITER_ARMS
@@ -68,15 +69,27 @@ _IMG_CACHE = {}
 _PAT_CACHE = {}
 
 
-def _images(side, spec, dev=False):
-    """Build (and cache) the image set for a cell. dev=True routes to the S1
-    DEVELOPMENT set (images63.build_dev_image_set: STL-10 TRAIN split + dev_*
-    structural targets), which is DISJOINT from the S2 confirmatory set — the S1
-    pilot passes dev=True + an explicit list of dev_* names so it runs the same
-    run_cell code path as S2 without ever touching a confirmatory image."""
-    key = ("dev" if dev else "conf", side)
+_IMG_BUILDERS = {
+    "conf": build_image_set,                # S2 confirmatory naturals (STL test)
+    "dev": build_dev_image_set,             # S1 development (STL train + dev_*)
+    "detail24": build_detail24_set,         # F1 primary confirmatory cohort (24)
+    "detail24_dev": build_detail24_dev_set, # DETAIL-24 dev instances (6)
+}
+
+
+def _images(side, spec, dev=False, imageset="conf"):
+    """Build (and cache) the image set for a cell. Routing (imageset cell key):
+    'conf' (default; S2 confirmatory naturals), 'dev' (S1 development set:
+    images63.build_dev_image_set, STL-10 TRAIN split + dev_* structural targets,
+    DISJOINT from S2), 'detail24' (the 24 F1 confirmatory DETAIL-24 targets) or
+    'detail24_dev' (the 6 DETAIL-24 dev instances). Back-compat: the legacy
+    dev=True flag still selects 'dev' when imageset is left at its 'conf' default,
+    so the S1 pilot keeps running the same run_cell code path without touching a
+    confirmatory image."""
+    route = imageset if imageset != "conf" else ("dev" if dev else "conf")
+    key = (route, side)
     if key not in _IMG_CACHE:
-        _IMG_CACHE[key] = build_dev_image_set(side) if dev else build_image_set(side)
+        _IMG_CACHE[key] = _IMG_BUILDERS[route](side)
     imgs = _IMG_CACHE[key]
     if spec == "pilot8":
         return {k: imgs[k] for k in PILOT8}
@@ -117,7 +130,8 @@ def run_cell(cell):
     pat = _patterns(cell["pattern"], M, n, seed)
     A, meta = pat["A"], pat["meta"]
     imgs = _images(side, cell.get("images", "pilot8"),
-                   dev=bool(cell.get("dev", False)))
+                   dev=bool(cell.get("dev", False)),
+                   imageset=cell.get("imageset", "conf"))
     # production lam_TV selection: "discrepancy" (default; the F1-frozen
     # AUDIT-split rule in select_eta — GPT round-4 ruling) or "legacy" (the
     # deprecated own-NLL rule inside run_arm, retained for ablation only).

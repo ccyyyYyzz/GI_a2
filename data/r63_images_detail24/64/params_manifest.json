@@ -1,0 +1,314 @@
+{
+  "families_order": [
+    "glyph",
+    "chirp",
+    "spokes",
+    "maze",
+    "contour",
+    "microtexture"
+  ],
+  "params": {
+    "chirp": {
+      "bg_level": 0.0,
+      "fg_level": 1.0,
+      "gap_range": [
+        1,
+        4
+      ],
+      "grid_choices": [
+        2,
+        3,
+        4
+      ],
+      "orientations": [
+        "h",
+        "v",
+        "d",
+        "ad"
+      ],
+      "width_range": [
+        1,
+        4
+      ]
+    },
+    "contour": {
+      "bg_level_range": [
+        0.05,
+        0.15
+      ],
+      "center_frac_range": [
+        0.28,
+        0.72
+      ],
+      "curve_freq_range": [
+        1.0,
+        3.0
+      ],
+      "fg_level": 1.0,
+      "n_shapes_range": [
+        4,
+        7
+      ],
+      "outline_width_choices": [
+        1,
+        2
+      ],
+      "polygon_vertices_range": [
+        3,
+        6
+      ],
+      "radius_frac_range": [
+        0.14,
+        0.42
+      ],
+      "shape_types": [
+        "ellipse",
+        "polygon",
+        "curve"
+      ]
+    },
+    "dtype": "float64",
+    "glyph": {
+      "alphabet": "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
+      "bg_level": 0.06,
+      "char_gap_font_px": 1,
+      "chars_per_row_range": [
+        4,
+        9
+      ],
+      "fg_level": 1.0,
+      "left_margin": 2,
+      "n_rows_range": [
+        3,
+        6
+      ],
+      "row_gap_font_px": 2,
+      "scale_choices": [
+        1,
+        2
+      ],
+      "top_margin": 3
+    },
+    "maze": {
+      "bg_level": 0.0,
+      "fg_level": 1.0,
+      "fill_factor_range": [
+        0.05,
+        0.55
+      ],
+      "margin": 3,
+      "step_choices": [
+        6,
+        8
+      ],
+      "stroke_width_choices": [
+        1,
+        2
+      ]
+    },
+    "microtexture": {
+      "conv_mode": "reflect",
+      "fg_level": 1.0,
+      "rectify": "abs",
+      "renorm": "peak",
+      "sigma_pairs": [
+        [
+          0.8,
+          1.6
+        ],
+        [
+          1.0,
+          2.0
+        ],
+        [
+          1.2,
+          2.4
+        ],
+        [
+          1.5,
+          3.0
+        ]
+      ]
+    },
+    "peak": 1.0,
+    "sanity": {
+      "max_frac_above_half": 0.9,
+      "min_frac_above_half": 0.01,
+      "require_positive_variance": true
+    },
+    "seeds": {
+      "conf_base": 631000,
+      "conf_family_stride": 4,
+      "dev_base": 630900
+    },
+    "side_default": 64,
+    "spokes": {
+      "bg_level": 0.0,
+      "center_offset_px_range": [
+        -6,
+        6
+      ],
+      "fg_level": 1.0,
+      "n_spokes_choices": [
+        8,
+        12,
+        16,
+        20,
+        24,
+        32
+      ],
+      "r_inner_frac": 0.12,
+      "r_outer_frac": 0.92
+    }
+  },
+  "ruling": "GPT round-7 F1 ruling section 1.1 (DETAIL-24)",
+  "seed_table": [
+    {
+      "family": "glyph",
+      "name": "detail_glyph_0",
+      "seed": 631000
+    },
+    {
+      "family": "glyph",
+      "name": "detail_glyph_1",
+      "seed": 631001
+    },
+    {
+      "family": "glyph",
+      "name": "detail_glyph_2",
+      "seed": 631002
+    },
+    {
+      "family": "glyph",
+      "name": "detail_glyph_3",
+      "seed": 631003
+    },
+    {
+      "family": "chirp",
+      "name": "detail_chirp_0",
+      "seed": 631004
+    },
+    {
+      "family": "chirp",
+      "name": "detail_chirp_1",
+      "seed": 631005
+    },
+    {
+      "family": "chirp",
+      "name": "detail_chirp_2",
+      "seed": 631006
+    },
+    {
+      "family": "chirp",
+      "name": "detail_chirp_3",
+      "seed": 631007
+    },
+    {
+      "family": "spokes",
+      "name": "detail_spokes_0",
+      "seed": 631008
+    },
+    {
+      "family": "spokes",
+      "name": "detail_spokes_1",
+      "seed": 631009
+    },
+    {
+      "family": "spokes",
+      "name": "detail_spokes_2",
+      "seed": 631010
+    },
+    {
+      "family": "spokes",
+      "name": "detail_spokes_3",
+      "seed": 631011
+    },
+    {
+      "family": "maze",
+      "name": "detail_maze_0",
+      "seed": 631012
+    },
+    {
+      "family": "maze",
+      "name": "detail_maze_1",
+      "seed": 631013
+    },
+    {
+      "family": "maze",
+      "name": "detail_maze_2",
+      "seed": 631014
+    },
+    {
+      "family": "maze",
+      "name": "detail_maze_3",
+      "seed": 631015
+    },
+    {
+      "family": "contour",
+      "name": "detail_contour_0",
+      "seed": 631016
+    },
+    {
+      "family": "contour",
+      "name": "detail_contour_1",
+      "seed": 631017
+    },
+    {
+      "family": "contour",
+      "name": "detail_contour_2",
+      "seed": 631018
+    },
+    {
+      "family": "contour",
+      "name": "detail_contour_3",
+      "seed": 631019
+    },
+    {
+      "family": "microtexture",
+      "name": "detail_microtexture_0",
+      "seed": 631020
+    },
+    {
+      "family": "microtexture",
+      "name": "detail_microtexture_1",
+      "seed": 631021
+    },
+    {
+      "family": "microtexture",
+      "name": "detail_microtexture_2",
+      "seed": 631022
+    },
+    {
+      "family": "microtexture",
+      "name": "detail_microtexture_3",
+      "seed": 631023
+    }
+  ],
+  "sha256": {
+    "detail_chirp_0": "a37da05c539672f508b14ebb32b2303f8906f72a008e30d0b7a9629c16f08721",
+    "detail_chirp_1": "864d84bdfdadc9b748470a003e6c03de8782b1ae51ac24120050d2d9011181f7",
+    "detail_chirp_2": "7e770f8a839f669af86248557705ccc670ffc2a4205efa9f107fb18c99867fd1",
+    "detail_chirp_3": "64bd701f921143653ad9d4801a5f526b9a40d9ee90bd14a3aae4fb9f2cb02a0f",
+    "detail_contour_0": "c14503b9cc0c19f927464990f01d426e92259cb7fdfe88a7873e850a144f9ace",
+    "detail_contour_1": "e2a379f0952e754a23c5e58106f75c0cf59d35597a055615061ee3330797236e",
+    "detail_contour_2": "abf5fc92714721e2b0c8b83d2932fd4732dd895c04a2e0bc07106c04d50e4719",
+    "detail_contour_3": "0c0cbc0fb34191c6c50a25c49ae8f806128ea345506e90a72361a4f92377c606",
+    "detail_glyph_0": "b19d990cd224a3448164baf5fd5c42bf481124e19dcf0d937a4519ff3b099fcb",
+    "detail_glyph_1": "0bd01b5d89123208005c756eb7122930d4cf48494dd312c4da40437b37b39071",
+    "detail_glyph_2": "b992ea2e04f4ac79f1dcc069e601a5bc209451c5ceebc33b9fc7817ab8cfb798",
+    "detail_glyph_3": "afb0c0e891ad7f4731753b35a41509257c26303a7d5e15f5f877078d6318a046",
+    "detail_maze_0": "0c21875f402b91467c0a41a37394aeddadba7bb48e6b829a03a8f6f029cffb96",
+    "detail_maze_1": "df6996611ee1373f75b816aac0822169319d6a68c4841faf55f9414736377c6f",
+    "detail_maze_2": "a89c8330f236eabbd213e60529acef280b98587fd551d8a4556939306effa523",
+    "detail_maze_3": "c3e315a7aabc346574081e6fd55665efd7b98073cc3e1275a98b8b464234f724",
+    "detail_microtexture_0": "339e9d348c7e0d2ba3ac4ea6987cf5fe562dd7c2e990e323deb92da93848f0e7",
+    "detail_microtexture_1": "3f56b8ce2660d92978c56f97016f5cfab3b6b52766b76d310e014c7178b42465",
+    "detail_microtexture_2": "037e8581dcb840b049beeb2390f7c214fef248eac32ef6ae6bc14f0b327fd8f0",
+    "detail_microtexture_3": "500d97adde5b36bcec285cdfc72c7b1c2867c716ee59047c92504912e16d8369",
+    "detail_spokes_0": "d791abc22c8cb90899050e658838f5eb238197b39e48b8356c902beca9675354",
+    "detail_spokes_1": "265c78a7743bc2294e45d2b88108e3d8651aaa4f452f6c8ac5249da906c0526d",
+    "detail_spokes_2": "d3481c94a21fef83156a2e7ed7502e64148e10de6767952334ef328d291c3eef",
+    "detail_spokes_3": "1680fb307877a59718a44cbb9dd742b2ff70ef72b82c33e0982970ff65157915"
+  },
+  "side": 64
+}
