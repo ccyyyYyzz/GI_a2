@@ -1,6 +1,6 @@
 {
  "payload": {
-  "git_commit": "38fcc42f029f95abef31d4671589b5a57186de18",
+  "git_commit": "b96c09079e5110cad7bc753f24c0929db2c55efe",
   "git_dirty": true,
   "python": "3.11.5",
   "numpy": "1.24.4",
@@ -17,10 +17,10 @@
    "ruling_r7": "eea0ac1f4d80a10304a014dc8ae33fc5eb4a9a5430ccf60cb81127bc2fd51a0f",
    "figure_prereg": "7654ce7fc0e62de3d1091e7cac66cbd6b26bf4582a7f9ec7f0bafc098d59eda6",
    "env_lock": "ed454bbe2c0a509fb94059d201dfa6d07b103848fbbc845033cea02900e3e430",
-   "manifests_tree": "c50eeddbbc71dfec4c34b1a919efcf3f6c03f897f9641204e645b83510122056",
-   "expected_cells": "55080b62c2c2f1dbefe6455556b1bc26febfd596d87841462c24df3b6e13ea90"
+   "manifests_tree": "238d83bafd5ee444354c700d066a634825fdc30dbf606f7c7c95297e63393e33",
+   "expected_cells": "dd54ca17f67343f9b0bd47c8f43afa08c668c509c79114bafd3add229baae672"
   }
  },
- "payload_sha256": "eaf4281fc3bbf56004bd74556ecc157b7b1cd0eb1f1e9d2f9b414711f1741140",
- "generated_utc": "2026-07-18T07:41:05.133246+00:00"
+ "payload_sha256": "1fb8bc429c78d3d83dc60b0a54451d58df4f305521da02071987b0462f31f76b",
+ "generated_utc": "2026-07-18T07:54:50.141344+00:00"
 }
