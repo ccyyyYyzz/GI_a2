@@ -1,7 +1,7 @@
-# ROUND63 战役规范 D2.2（冻结候选版）：Dead-time-aware high-flux single-pixel imaging
+# ROUND63 战役规范 D2.3（F1 终版候选）：Dead-time-aware high-flux single-pixel imaging
 
-**日期**: 2026-07-18（D2.2 第三次修订同日）
-**状态**: D2.2 — 按 GPT 第六轮裁决（docs/ROUND63_GPT_ROUND6_RULING.md）：S1 试点证明旧协议被"正则化选择不可辨识 + 空间欠采样天花板"双重支配 → 主几何改 M/n=1、ν 网格九档、λ_TV 换 analytic_score_concentration 解析规则、删失分类 A–F 冻结；两步 S1（Pass A 校准 C₀ / Pass B 验证）后经一次不可变 commit 冻结为 F1。第四/五轮裁决的 AUDIT 拆分与描述性审计不变
+**日期**: 2026-07-18（D2.3 第四次修订同日）
+**状态**: D2.3 — 按 GPT 第七轮终裁（docs/ROUND63_GPT_ROUND7_RULING.md）：Pass B 证明旧终点在平滑自然图上结构性不可测正（safe−1dB 目标在 safe 动态范围<1dB 时必然掉到可观测拐点之下）→ **主确认队列换 DETAIL-24**（6 冻结族×4 程序生成实例,光子受限诊断靶）,STL 自然图降为**无过门的次级 regime-boundary 队列 NATURAL-24**；终点换 **Q90 归一化 safe 曲线目标**；**固定预算质量增益**为关键次级终点；10,000 次嵌套按族分层 bootstrap。"If DETAIL-24 fails, that is the campaign's confirmatory result." 第 4/5/6 轮裁决其余部分不变
 **取代**: docs/ROUND63_HIGHFLUX_CAMPAIGN_SPEC_DRAFT.md（作废存档）
 **产出**: Optics Express 投稿论文 *Dead-time-aware high-flux single-pixel imaging: operating beyond the conventional photon-counting regime with renewal-statistical reconstruction*
 
@@ -15,10 +15,13 @@
 
 - 安全参考点 **ρ₀ = 0.05**；**预注册主高通量点 ρ₁ = 0.6**；ρ = 1 为次级强负载点
 - **两个工作点用同一 RQL 估计器**（隔离"换工作点收益"与"换模型收益"）
-- 主质量目标（逐图）：Q_j\* = PSNR_rad(ρ=0.05, ν=2000, j) − 1 dB；固定 25/28/30 dB 为次级终点
-- 主速度比：**S_j = T_opt,ρ=0.05(Q_j\*) / T_opt,ρ=0.6(Q_j\*)**，T_opt = M_physical·T；PSNR_rad–log T_opt 单调拟合插值；**删失按第六轮冻结分类 A–F**（T_min=M_physical·τ·ν_min, ν_min=5：B fast 触地 → S_gate=T_s/T_min 保守下界进全部门；C 双触地 → S_gate=1 进中位数但不计入 S>1 张数、标 unresolved below floor；D 反向 → S_gate=T_min/T_f<1 计非正；E fast 到 ν=2000 未达标 → 计失败不删；F 数据缺失 → ANALYSIS_FAILURE=0 并触发完整性审计；**bootstrap 每次抽样内重判删失类别**，不得预冻结逐图状态）
-- **过门（三条同时）**：24 张确认自然图 **中位 S_j ≥ 3**；图像级分层 bootstrap **95% 下界 > 1**；**≥ 18/24 图 S_j > 1**
-- 结果单位 = 图像（seed 图内配对平均；bootstrap 外层重采样图像、内层重采样 seed；不将 24×5 当 120 个独立样本）
+- **确认队列（第七轮）**：主 = **DETAIL-24**（6 族 × 4 实例程序生成靶：5×7 位图字形/线对啁啾 1–4px/辐条星/迷宫条码 1–2px/非零底细轮廓/带通 Rademacher 微纹理；生成器代码+参数 manifest+seeds（确认 631000+4f+i,开发 630900–05 仅验实现）+图像 SHA256 全部 F1 冻结；确认实例 F1 前禁重建；推断条件于声明的程序化靶分布,论文不得当作任意自然图像代表）；次级 = **NATURAL-24**（STL test 0..23,无过门,regime-boundary 报告,措辞见裁决 §4）
+- 主质量目标（逐图,第七轮 Q90）：safe 侧可观测动态范围 R_j = Q̃_{0.05,j}(T_max) − Q̃_{0.05,j}(T_min)（5-seed 均值 + 等权 PAVA 等渗拟合,原始曲线并报）；R_j < 0.50 dB → SAFE_RANGE_UNINFORMATIVE（S_gate=1 不计正）；否则 **Q90_j = Q̃_{0.05,j}(T_min) + 0.90·R_j**；交叉时刻 log T_opt 线性内插；固定 25/28/30 dB 为次级终点
+- 主速度比：**S_j = T_opt,ρ=0.05(Q90_j) / T_opt,ρ=0.6(Q90_j)**，T_opt = M_physical·T；删失 = 第六轮分类 + SAFE_RANGE_UNINFORMATIVE（B: S_gate=T_s/T_min 下界进全部门；C 双触地: S_gate=1 标 unresolved below floor 不计正；D: T_min/T_f<1；E: 0 不删；F: 0+完整性审计；无图因删失被删）
+- **主过门（常数不变,DETAIL-24 上）**：中位 S_gate ≥ 3；**10,000 次嵌套按族分层 bootstrap**（图内重采样 5 seeds → **重建曲线/目标/删失** → 族内重采样 4 图 → 24 图中位数）2.5% 下界 > 1；≥ 18/24 图 S_gate > 1 ⇒ **DETAIL_SPEED_PASS**（理由存档：理想信息率比 ≈7.9×,3× 中位是保守工程主张）
+- **关键次级终点 = 固定预算质量增益**：ΔQ^budget_j = Q_fast,j(ν=2000) − Q_safe,j(ν=2000)（**原始** 5-seed 均值,非等渗）；成功规则 中位 ≥1.0 dB & LB2.5>0 & ≥18/24 正；同 bootstrap；**禁称 ceiling lift**（慢臂更长驻留或可追平——主张仅限冻结采集时间预算）；不可否决/拯救主门
+- ν≤2 **不加生产 exact 补丁**（确认网格始于 ν=5；ν≤2 为已识别 RQL 边界非部署主张；ν=1 ceiling 比例是物理可辨识性警告）；ν=1,2 仅作可选 S4/补充材料参考（exact Bernoulli/trinomial vs RQL + ceiling 比例 + 部署区外声明）；ν<5 不进任何确认终点
+- 池化通量初始化 = 白名单合法（全臂一致改 x0）；表述"stable pooled moment initialization",不称精确估计器
 
 ## 1. 冻结边界（逐字条款）
 
