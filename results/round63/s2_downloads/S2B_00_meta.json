@@ -1,0 +1,208 @@
+{
+  "shard_id": "S2B_00",
+  "stage": "S2B",
+  "cells_done": {
+    "S2B_c0001": {
+      "wall_s": 227.78,
+      "n_rows": 48
+    },
+    "S2B_c0002": {
+      "wall_s": 226.51,
+      "n_rows": 48
+    },
+    "S2B_c0003": {
+      "wall_s": 228.72,
+      "n_rows": 48
+    },
+    "S2B_c0004": {
+      "wall_s": 242.63,
+      "n_rows": 48
+    },
+    "S2B_c0005": {
+      "wall_s": 244.95,
+      "n_rows": 48
+    },
+    "S2B_c0006": {
+      "wall_s": 242.2,
+      "n_rows": 48
+    },
+    "S2B_c0007": {
+      "wall_s": 262.5,
+      "n_rows": 48
+    },
+    "S2B_c0008": {
+      "wall_s": 266.53,
+      "n_rows": 48
+    },
+    "S2B_c0009": {
+      "wall_s": 262.17,
+      "n_rows": 48
+    },
+    "S2B_c0010": {
+      "wall_s": 253.39,
+      "n_rows": 48
+    },
+    "S2B_c0011": {
+      "wall_s": 252.64,
+      "n_rows": 48
+    },
+    "S2B_c0012": {
+      "wall_s": 251.87,
+      "n_rows": 48
+    },
+    "S2B_c0013": {
+      "wall_s": 269.12,
+      "n_rows": 48
+    },
+    "S2B_c0014": {
+      "wall_s": 266.26,
+      "n_rows": 48
+    },
+    "S2B_c0015": {
+      "wall_s": 270.93,
+      "n_rows": 48
+    },
+    "S2B_c0016": {
+      "wall_s": 313.39,
+      "n_rows": 48
+    },
+    "S2B_c0017": {
+      "wall_s": 309.63,
+      "n_rows": 48
+    },
+    "S2B_c0018": {
+      "wall_s": 309.25,
+      "n_rows": 48
+    },
+    "S2B_c0019": {
+      "wall_s": 256.81,
+      "n_rows": 48
+    },
+    "S2B_c0020": {
+      "wall_s": 260.71,
+      "n_rows": 48
+    },
+    "S2B_c0021": {
+      "wall_s": 260.27,
+      "n_rows": 48
+    },
+    "S2B_c0022": {
+      "wall_s": 278.96,
+      "n_rows": 48
+    },
+    "S2B_c0023": {
+      "wall_s": 273.68,
+      "n_rows": 48
+    },
+    "S2B_c0024": {
+      "wall_s": 276.97,
+      "n_rows": 48
+    },
+    "S2B_c0025": {
+      "wall_s": 312.51,
+      "n_rows": 48
+    },
+    "S2B_c0026": {
+      "wall_s": 310.84,
+      "n_rows": 48
+    },
+    "S2B_c0027": {
+      "wall_s": 312.65,
+      "n_rows": 48
+    },
+    "S2B_c0028": {
+      "wall_s": 451.7,
+      "n_rows": 48
+    },
+    "S2B_c0029": {
+      "wall_s": 455.15,
+      "n_rows": 48
+    },
+    "S2B_c0030": {
+      "wall_s": 452.97,
+      "n_rows": 48
+    },
+    "S2B_c0031": {
+      "wall_s": 482.66,
+      "n_rows": 48
+    },
+    "S2B_c0032": {
+      "wall_s": 486.97,
+      "n_rows": 48
+    },
+    "S2B_c0033": {
+      "wall_s": 485.81,
+      "n_rows": 48
+    },
+    "S2B_c0034": {
+      "wall_s": 522.39,
+      "n_rows": 48
+    },
+    "S2B_c0035": {
+      "wall_s": 526.8,
+      "n_rows": 48
+    },
+    "S2B_c0036": {
+      "wall_s": 532.16,
+      "n_rows": 48
+    },
+    "S2B_c0037": {
+      "wall_s": 527.21,
+      "n_rows": 48
+    },
+    "S2B_c0038": {
+      "wall_s": 513.38,
+      "n_rows": 48
+    },
+    "S2B_c0039": {
+      "wall_s": 514.62,
+      "n_rows": 48
+    },
+    "S2B_c0040": {
+      "wall_s": 527.88,
+      "n_rows": 48
+    }
+  },
+  "fieldnames": [
+    "cell_id",
+    "shard_id",
+    "side",
+    "pattern",
+    "rho_bar",
+    "nu",
+    "M",
+    "seed",
+    "image",
+    "arm",
+    "PSNR",
+    "SSIM",
+    "LPIPS",
+    "rad_nrmse",
+    "flux_dev",
+    "lam_tv",
+    "mean_counts",
+    "optical_time_s",
+    "dark_frac",
+    "tau_err",
+    "runtime_s",
+    "select_runtime_s",
+    "PSNR_rad",
+    "C_hat",
+    "S_N2",
+    "V0_exact",
+    "muprime0_exact",
+    "omega_A",
+    "c_used",
+    "sigma_grad_arm",
+    "lambda_tv_arm",
+    "audit_status",
+    "d_ratio",
+    "q_d",
+    "q_mean",
+    "leak_suspect"
+  ],
+  "wall_accum_s": 13723.82,
+  "aborted_over_budget": false,
+  "wall_s": 13723.82,
+  "process_cpu_s": 13722.04
+}

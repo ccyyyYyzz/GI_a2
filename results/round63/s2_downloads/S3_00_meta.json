@@ -1,0 +1,176 @@
+{
+  "shard_id": "S3_00",
+  "stage": "S3",
+  "cells_done": {
+    "S3_c0001": {
+      "wall_s": 438.0,
+      "n_rows": 24
+    },
+    "S3_c0002": {
+      "wall_s": 433.52,
+      "n_rows": 24
+    },
+    "S3_c0003": {
+      "wall_s": 424.55,
+      "n_rows": 24
+    },
+    "S3_c0004": {
+      "wall_s": 424.04,
+      "n_rows": 24
+    },
+    "S3_c0005": {
+      "wall_s": 424.28,
+      "n_rows": 24
+    },
+    "S3_c0006": {
+      "wall_s": 417.03,
+      "n_rows": 24
+    },
+    "S3_c0007": {
+      "wall_s": 409.37,
+      "n_rows": 24
+    },
+    "S3_c0008": {
+      "wall_s": 405.03,
+      "n_rows": 24
+    },
+    "S3_c0009": {
+      "wall_s": 402.81,
+      "n_rows": 24
+    },
+    "S3_c0010": {
+      "wall_s": 401.82,
+      "n_rows": 24
+    },
+    "S3_c0011": {
+      "wall_s": 402.85,
+      "n_rows": 24
+    },
+    "S3_c0012": {
+      "wall_s": 396.21,
+      "n_rows": 24
+    },
+    "S3_c0013": {
+      "wall_s": 382.64,
+      "n_rows": 24
+    },
+    "S3_c0014": {
+      "wall_s": 384.34,
+      "n_rows": 24
+    },
+    "S3_c0015": {
+      "wall_s": 382.5,
+      "n_rows": 24
+    },
+    "S3_c0016": {
+      "wall_s": 381.4,
+      "n_rows": 24
+    },
+    "S3_c0017": {
+      "wall_s": 380.09,
+      "n_rows": 24
+    },
+    "S3_c0018": {
+      "wall_s": 383.82,
+      "n_rows": 24
+    },
+    "S3_c0019": {
+      "wall_s": 381.19,
+      "n_rows": 24
+    },
+    "S3_c0020": {
+      "wall_s": 385.44,
+      "n_rows": 24
+    },
+    "S3_c0021": {
+      "wall_s": 384.4,
+      "n_rows": 24
+    },
+    "S3_c0022": {
+      "wall_s": 382.88,
+      "n_rows": 24
+    },
+    "S3_c0023": {
+      "wall_s": 384.77,
+      "n_rows": 24
+    },
+    "S3_c0024": {
+      "wall_s": 383.92,
+      "n_rows": 24
+    },
+    "S3_c0025": {
+      "wall_s": 387.64,
+      "n_rows": 24
+    },
+    "S3_c0026": {
+      "wall_s": 388.41,
+      "n_rows": 24
+    },
+    "S3_c0027": {
+      "wall_s": 387.41,
+      "n_rows": 24
+    },
+    "S3_c0028": {
+      "wall_s": 367.43,
+      "n_rows": 24
+    },
+    "S3_c0029": {
+      "wall_s": 358.99,
+      "n_rows": 24
+    },
+    "S3_c0030": {
+      "wall_s": 358.54,
+      "n_rows": 24
+    },
+    "S3_c0031": {
+      "wall_s": 358.76,
+      "n_rows": 24
+    },
+    "S3_c0032": {
+      "wall_s": 354.53,
+      "n_rows": 24
+    }
+  },
+  "fieldnames": [
+    "cell_id",
+    "shard_id",
+    "side",
+    "pattern",
+    "rho_bar",
+    "nu",
+    "M",
+    "seed",
+    "image",
+    "arm",
+    "PSNR",
+    "SSIM",
+    "LPIPS",
+    "rad_nrmse",
+    "flux_dev",
+    "lam_tv",
+    "mean_counts",
+    "optical_time_s",
+    "dark_frac",
+    "tau_err",
+    "runtime_s",
+    "select_runtime_s",
+    "PSNR_rad",
+    "C_hat",
+    "S_N2",
+    "V0_exact",
+    "muprime0_exact",
+    "omega_A",
+    "c_used",
+    "sigma_grad_arm",
+    "lambda_tv_arm",
+    "audit_status",
+    "d_ratio",
+    "q_d",
+    "q_mean",
+    "leak_suspect"
+  ],
+  "wall_accum_s": 12538.74,
+  "aborted_over_budget": false,
+  "wall_s": 12538.74,
+  "process_cpu_s": 12537.02
+}

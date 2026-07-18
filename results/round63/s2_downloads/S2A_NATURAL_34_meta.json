@@ -1,0 +1,76 @@
+{
+  "shard_id": "S2A_NATURAL_34",
+  "stage": "S2A_NATURAL",
+  "cells_done": {
+    "S2A_NATURAL_c0192": {
+      "wall_s": 1986.95,
+      "n_rows": 30
+    },
+    "S2A_NATURAL_c0193": {
+      "wall_s": 1940.97,
+      "n_rows": 30
+    },
+    "S2A_NATURAL_c0194": {
+      "wall_s": 1885.58,
+      "n_rows": 30
+    },
+    "S2A_NATURAL_c0195": {
+      "wall_s": 1846.08,
+      "n_rows": 30
+    },
+    "S2A_NATURAL_c0196": {
+      "wall_s": 1898.18,
+      "n_rows": 30
+    },
+    "S2A_NATURAL_c0197": {
+      "wall_s": 1898.28,
+      "n_rows": 30
+    },
+    "S2A_NATURAL_c0198": {
+      "wall_s": 1906.78,
+      "n_rows": 30
+    }
+  },
+  "fieldnames": [
+    "cell_id",
+    "shard_id",
+    "side",
+    "pattern",
+    "rho_bar",
+    "nu",
+    "M",
+    "seed",
+    "image",
+    "arm",
+    "PSNR",
+    "SSIM",
+    "LPIPS",
+    "rad_nrmse",
+    "flux_dev",
+    "lam_tv",
+    "mean_counts",
+    "optical_time_s",
+    "dark_frac",
+    "tau_err",
+    "runtime_s",
+    "select_runtime_s",
+    "PSNR_rad",
+    "C_hat",
+    "S_N2",
+    "V0_exact",
+    "muprime0_exact",
+    "omega_A",
+    "c_used",
+    "sigma_grad_arm",
+    "lambda_tv_arm",
+    "audit_status",
+    "d_ratio",
+    "q_d",
+    "q_mean",
+    "leak_suspect"
+  ],
+  "wall_accum_s": 13362.92,
+  "aborted_over_budget": false,
+  "wall_s": 13362.92,
+  "process_cpu_s": 13361.39
+}

@@ -74,30 +74,63 @@ def main():
         _write(out_dir, report)
         return 1
 
-    # gate 3: expected coverage (key = rho,nu,M,seed,image,arm within stage)
+    # gate 3: expected coverage.
+    # v2 key fix (bookkeeping only, no science rule touched): the original
+    # 6-column key (rho,nu,M,seed,image,arm) collides within stages whose
+    # cells differ only in pattern (S2C: hadpair vs gam4) or in mismatch
+    # variant (S3: same 6-tuple under 10 detector variants).  pattern is
+    # available on both sides, so it joins the key; mismatch variants are
+    # not reconstructible from row columns, so stages whose expected rows
+    # collide even with pattern fall back to a cell_id count check
+    # (cell_id is manifest-assigned and unique within a stage).
     idx = {k: header.index(k) for k in
-           ("rho_bar", "nu", "M", "seed", "image", "arm")}
+           ("rho_bar", "nu", "M", "seed", "image", "arm", "pattern")}
     def key_of(row):
         return (row[idx["rho_bar"]], row[idx["nu"]], row[idx["M"]],
-                row[idx["seed"]], row[idx["image"]], row[idx["arm"]])
-    got = {}
-    for row in rows:
-        k = key_of(row)
-        got[k] = got.get(k, 0) + 1
-    exp = set()
+                row[idx["seed"]], row[idx["image"]], row[idx["arm"]],
+                row[idx["pattern"]])
+    exp_rows = []
     with open(EXP, newline="") as f:
         for e in csv.DictReader(f):
             if e.get("stage") == a.stage:
-                exp.add((str(float(e["rho_bar"])), str(float(e["nu"])),
-                         e["M"], e["seed"], e["image"], e["arm"]))
-    gotk = {(str(float(k[0])), str(float(k[1])), k[2], k[3], k[4], k[5])
-            for k in got}
-    dupes = [k for k, c in got.items() if c > 1]
-    miss = exp - gotk
-    extra = gotk - exp
-    report["gates"]["coverage"] = {
-        "expected": len(exp), "got": len(gotk),
-        "missing": len(miss), "extras": len(extra), "dupes": len(dupes)}
+                exp_rows.append(e)
+    exp_keys = [(str(float(e["rho_bar"])), str(float(e["nu"])),
+                 e["M"], e["seed"], e["image"], e["arm"], e["pattern"])
+                for e in exp_rows]
+    use_cellid = (len(set(exp_keys)) != len(exp_keys)
+                  and "cell_id" in header)
+    if use_cellid:
+        # Row-level accounting: one expected_cells row corresponds to one
+        # CSV data row for these stages; identity within the stage is the
+        # (cell_id, image, arm, seed) quadruple.
+        cid = header.index("cell_id")
+        quad = {}
+        for row in rows:
+            k = (row[cid], row[idx["image"]], row[idx["arm"]],
+                 row[idx["seed"]])
+            quad[k] = quad.get(k, 0) + 1
+        dupes = [k for k, c in quad.items() if c > 1]
+        n_exp, n_got = len(exp_rows), len(rows)
+        miss = ["<count:%d>" % (n_exp - n_got)] if n_got < n_exp else []
+        extra = ["<count:%d>" % (n_got - n_exp)] if n_got > n_exp else []
+        report["gates"]["coverage"] = {
+            "mode": "row_count+quad_dup", "expected": n_exp, "got": n_got,
+            "missing": max(0, n_exp - n_got), "extras": max(0, n_got - n_exp),
+            "dupes": len(dupes)}
+    else:
+        got = {}
+        for row in rows:
+            k = key_of(row)
+            got[k] = got.get(k, 0) + 1
+        exp = set(exp_keys)
+        gotk = {(str(float(k[0])), str(float(k[1])), k[2], k[3], k[4], k[5],
+                 k[6]) for k in got}
+        dupes = [k for k, c in got.items() if c > 1]
+        miss = exp - gotk
+        extra = gotk - exp
+        report["gates"]["coverage"] = {
+            "mode": "key7", "expected": len(exp), "got": len(gotk),
+            "missing": len(miss), "extras": len(extra), "dupes": len(dupes)}
     if miss or extra or dupes:
         print(f"GATE FAIL: coverage missing={len(miss)} extras={len(extra)} "
               f"dupes={len(dupes)}")

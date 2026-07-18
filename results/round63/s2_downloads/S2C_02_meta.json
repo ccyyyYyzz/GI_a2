@@ -1,0 +1,148 @@
+{
+  "shard_id": "S2C_02",
+  "stage": "S2C",
+  "cells_done": {
+    "S2C_c0030": {
+      "wall_s": 436.5,
+      "n_rows": 48
+    },
+    "S2C_c0031": {
+      "wall_s": 466.19,
+      "n_rows": 48
+    },
+    "S2C_c0032": {
+      "wall_s": 472.2,
+      "n_rows": 48
+    },
+    "S2C_c0033": {
+      "wall_s": 474.54,
+      "n_rows": 48
+    },
+    "S2C_c0034": {
+      "wall_s": 499.27,
+      "n_rows": 48
+    },
+    "S2C_c0035": {
+      "wall_s": 498.21,
+      "n_rows": 48
+    },
+    "S2C_c0036": {
+      "wall_s": 500.2,
+      "n_rows": 48
+    },
+    "S2C_c0037": {
+      "wall_s": 488.76,
+      "n_rows": 48
+    },
+    "S2C_c0038": {
+      "wall_s": 475.68,
+      "n_rows": 48
+    },
+    "S2C_c0039": {
+      "wall_s": 472.39,
+      "n_rows": 48
+    },
+    "S2C_c0040": {
+      "wall_s": 500.43,
+      "n_rows": 48
+    },
+    "S2C_c0041": {
+      "wall_s": 499.72,
+      "n_rows": 48
+    },
+    "S2C_c0042": {
+      "wall_s": 488.01,
+      "n_rows": 48
+    },
+    "S2C_c0043": {
+      "wall_s": 463.1,
+      "n_rows": 48
+    },
+    "S2C_c0044": {
+      "wall_s": 464.21,
+      "n_rows": 48
+    },
+    "S2C_c0045": {
+      "wall_s": 451.47,
+      "n_rows": 48
+    },
+    "S2C_c0046": {
+      "wall_s": 458.15,
+      "n_rows": 48
+    },
+    "S2C_c0047": {
+      "wall_s": 457.91,
+      "n_rows": 48
+    },
+    "S2C_c0048": {
+      "wall_s": 460.53,
+      "n_rows": 48
+    },
+    "S2C_c0049": {
+      "wall_s": 480.82,
+      "n_rows": 48
+    },
+    "S2C_c0050": {
+      "wall_s": 477.8,
+      "n_rows": 48
+    },
+    "S2C_c0051": {
+      "wall_s": 481.5,
+      "n_rows": 48
+    },
+    "S2C_c0052": {
+      "wall_s": 536.34,
+      "n_rows": 48
+    },
+    "S2C_c0053": {
+      "wall_s": 534.79,
+      "n_rows": 48
+    },
+    "S2C_c0054": {
+      "wall_s": 534.6,
+      "n_rows": 48
+    }
+  },
+  "fieldnames": [
+    "cell_id",
+    "shard_id",
+    "side",
+    "pattern",
+    "rho_bar",
+    "nu",
+    "M",
+    "seed",
+    "image",
+    "arm",
+    "PSNR",
+    "SSIM",
+    "LPIPS",
+    "rad_nrmse",
+    "flux_dev",
+    "lam_tv",
+    "mean_counts",
+    "optical_time_s",
+    "dark_frac",
+    "tau_err",
+    "runtime_s",
+    "select_runtime_s",
+    "PSNR_rad",
+    "C_hat",
+    "S_N2",
+    "V0_exact",
+    "muprime0_exact",
+    "omega_A",
+    "c_used",
+    "sigma_grad_arm",
+    "lambda_tv_arm",
+    "audit_status",
+    "d_ratio",
+    "q_d",
+    "q_mean",
+    "leak_suspect"
+  ],
+  "wall_accum_s": 12073.45,
+  "aborted_over_budget": false,
+  "wall_s": 12073.45,
+  "process_cpu_s": 12071.95
+}

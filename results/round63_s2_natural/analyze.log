@@ -1,0 +1,9 @@
+[s1] out=results/round63_s2_natural mode=normal smoke=False C0=inf cells=36 (2 rho x 9 nu x 2 seed)
+[s1] ANALYSIS  rows=19800  cohort=natural  nu_budget=2000  rho 0.05->0.6
+       primary Q90: median S_gate=5.701  n(S_gate>1)=18/30  boot LB2.5=1.000  DETAIL_SPEED_PASS=None
+       fixed-budget: median DeltaQ=1.44 dB  n(DeltaQ>0)=29/30  boot LB2.5=1.18  pass=None
+       status: NORMAL=18, SAFE_RANGE_UNINFORMATIVE=12
+       audit: 6750 OK cells, leak_suspect=50, max D_ratio=20.307
+       max per-fit wall = 91.86s (see runtime_calibration.json)
+[s1] wrote results/round63_s2_natural\PILOT_SUMMARY.md , pilot_summary.json , runtime_calibration.json
+[s1] DONE

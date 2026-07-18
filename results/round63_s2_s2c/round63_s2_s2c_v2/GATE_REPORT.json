@@ -1,0 +1,22 @@
+{
+ "stage": "S2C",
+ "gates": {
+  "shards_complete": {
+   "total": 3,
+   "missing": []
+  },
+  "meta_rowcount": {
+   "bad": []
+  },
+  "coverage": {
+   "mode": "key7",
+   "expected": 2592,
+   "got": 2592,
+   "missing": 0,
+   "extras": 0,
+   "dupes": 0
+  }
+ },
+ "rows": 2592,
+ "ALL_GATES_PASS": true
+}

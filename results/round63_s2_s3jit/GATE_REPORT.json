@@ -1,0 +1,22 @@
+{
+ "stage": "S3JIT",
+ "gates": {
+  "shards_complete": {
+   "total": 1,
+   "missing": []
+  },
+  "meta_rowcount": {
+   "bad": []
+  },
+  "coverage": {
+   "mode": "row_count+quad_dup",
+   "expected": 288,
+   "got": 288,
+   "missing": 0,
+   "extras": 0,
+   "dupes": 0
+  }
+ },
+ "rows": 288,
+ "ALL_GATES_PASS": true
+}

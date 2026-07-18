@@ -1,0 +1,96 @@
+{
+  "shard_id": "S3JIT_00",
+  "stage": "S3JIT",
+  "cells_done": {
+    "S3JIT_c0001": {
+      "wall_s": 439.52,
+      "n_rows": 24
+    },
+    "S3JIT_c0002": {
+      "wall_s": 441.29,
+      "n_rows": 24
+    },
+    "S3JIT_c0003": {
+      "wall_s": 435.02,
+      "n_rows": 24
+    },
+    "S3JIT_c0004": {
+      "wall_s": 425.76,
+      "n_rows": 24
+    },
+    "S3JIT_c0005": {
+      "wall_s": 426.1,
+      "n_rows": 24
+    },
+    "S3JIT_c0006": {
+      "wall_s": 424.46,
+      "n_rows": 24
+    },
+    "S3JIT_c0007": {
+      "wall_s": 445.17,
+      "n_rows": 24
+    },
+    "S3JIT_c0008": {
+      "wall_s": 433.93,
+      "n_rows": 24
+    },
+    "S3JIT_c0009": {
+      "wall_s": 431.73,
+      "n_rows": 24
+    },
+    "S3JIT_c0010": {
+      "wall_s": 430.64,
+      "n_rows": 24
+    },
+    "S3JIT_c0011": {
+      "wall_s": 435.44,
+      "n_rows": 24
+    },
+    "S3JIT_c0012": {
+      "wall_s": 431.69,
+      "n_rows": 24
+    }
+  },
+  "fieldnames": [
+    "cell_id",
+    "shard_id",
+    "side",
+    "pattern",
+    "rho_bar",
+    "nu",
+    "M",
+    "seed",
+    "image",
+    "arm",
+    "PSNR",
+    "SSIM",
+    "LPIPS",
+    "rad_nrmse",
+    "flux_dev",
+    "lam_tv",
+    "mean_counts",
+    "optical_time_s",
+    "dark_frac",
+    "tau_err",
+    "runtime_s",
+    "select_runtime_s",
+    "PSNR_rad",
+    "C_hat",
+    "S_N2",
+    "V0_exact",
+    "muprime0_exact",
+    "omega_A",
+    "c_used",
+    "sigma_grad_arm",
+    "lambda_tv_arm",
+    "audit_status",
+    "d_ratio",
+    "q_d",
+    "q_mean",
+    "leak_suspect"
+  ],
+  "wall_accum_s": 5200.86,
+  "aborted_over_budget": false,
+  "wall_s": 5200.86,
+  "process_cpu_s": 5200.14
+}
