@@ -1,0 +1,390 @@
+{
+  "families_order": [
+    "glyph",
+    "chirp",
+    "spokes",
+    "maze",
+    "contour",
+    "microtexture"
+  ],
+  "params": {
+    "chirp": {
+      "bg_level": 0.0,
+      "fg_level": 1.0,
+      "gap_range": [
+        1,
+        4
+      ],
+      "grid_choices": [
+        2,
+        3,
+        4
+      ],
+      "orientations": [
+        "h",
+        "v",
+        "d",
+        "ad"
+      ],
+      "width_range": [
+        1,
+        4
+      ]
+    },
+    "contour": {
+      "bg_level_range": [
+        0.05,
+        0.15
+      ],
+      "center_frac_range": [
+        0.28,
+        0.72
+      ],
+      "curve_freq_range": [
+        1.0,
+        3.0
+      ],
+      "fg_level": 1.0,
+      "n_shapes_range": [
+        4,
+        7
+      ],
+      "outline_width_choices": [
+        1,
+        2
+      ],
+      "polygon_vertices_range": [
+        3,
+        6
+      ],
+      "radius_frac_range": [
+        0.14,
+        0.42
+      ],
+      "shape_types": [
+        "ellipse",
+        "polygon",
+        "curve"
+      ]
+    },
+    "dtype": "float64",
+    "glyph": {
+      "alphabet": "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
+      "bg_level": 0.06,
+      "char_gap_font_px": 1,
+      "chars_per_row_range": [
+        4,
+        9
+      ],
+      "fg_level": 1.0,
+      "left_margin": 2,
+      "n_rows_range": [
+        3,
+        6
+      ],
+      "row_gap_font_px": 2,
+      "scale_choices": [
+        1,
+        2
+      ],
+      "top_margin": 3
+    },
+    "maze": {
+      "bg_level": 0.0,
+      "fg_level": 1.0,
+      "fill_factor_range": [
+        0.05,
+        0.55
+      ],
+      "margin": 3,
+      "step_choices": [
+        6,
+        8
+      ],
+      "stroke_width_choices": [
+        1,
+        2
+      ]
+    },
+    "microtexture": {
+      "conv_mode": "reflect",
+      "fg_level": 1.0,
+      "rectify": "abs",
+      "renorm": "peak",
+      "sigma_pairs": [
+        [
+          0.8,
+          1.6
+        ],
+        [
+          1.0,
+          2.0
+        ],
+        [
+          1.2,
+          2.4
+        ],
+        [
+          1.5,
+          3.0
+        ]
+      ]
+    },
+    "peak": 1.0,
+    "sanity": {
+      "max_frac_above_half": 0.9,
+      "min_frac_above_half": 0.01,
+      "require_positive_variance": true
+    },
+    "seeds": {
+      "conf_base": 631000,
+      "conf_family_stride": 4,
+      "dev_base": 630900
+    },
+    "side_default": 64,
+    "spokes": {
+      "bg_level": 0.0,
+      "center_offset_px_range": [
+        -6,
+        6
+      ],
+      "fg_level": 1.0,
+      "n_spokes_choices": [
+        8,
+        12,
+        16,
+        20,
+        24,
+        32
+      ],
+      "r_inner_frac": 0.12,
+      "r_outer_frac": 0.92
+    }
+  },
+  "params32": {
+    "roi": {
+      "background_guard_iters": 2,
+      "background_rule": "complement of binary_dilation(core, 3x3 full, 2 iterations) = pixels at least 2 px from any signal core pixel; deterministic fallback when that complement is empty (fully-filled scene) = outer 2 px border minus the signal ROI",
+      "border_width": 2,
+      "connectivity": "8 (3x3 full structuring element)",
+      "signal_dilate_iters": 1,
+      "signal_half_max_frac": 0.5,
+      "signal_rule": "binary_dilation(truth > 0.5*max, 3x3 full structuring element, 1 iteration)"
+    },
+    "sanity": {
+      "max_frac_above_half": 0.9,
+      "min_frac_above_half": 0.01,
+      "require_positive_variance": true,
+      "roi_disjoint": true,
+      "roi_nonempty": true
+    },
+    "seeds": {
+      "conf_base": 632000,
+      "conf_family_mult": 100,
+      "dev_base": 631900
+    },
+    "side": 32
+  },
+  "roi_mode": {
+    "detail32_chirp_0": "border_minus_signal",
+    "detail32_chirp_1": "border_minus_signal",
+    "detail32_chirp_2": "border_minus_signal",
+    "detail32_chirp_3": "border_minus_signal",
+    "detail32_contour_0": "far_complement",
+    "detail32_contour_1": "far_complement",
+    "detail32_contour_2": "far_complement",
+    "detail32_contour_3": "far_complement",
+    "detail32_glyph_0": "far_complement",
+    "detail32_glyph_1": "far_complement",
+    "detail32_glyph_2": "far_complement",
+    "detail32_glyph_3": "far_complement",
+    "detail32_maze_0": "far_complement",
+    "detail32_maze_1": "far_complement",
+    "detail32_maze_2": "far_complement",
+    "detail32_maze_3": "far_complement",
+    "detail32_microtexture_0": "far_complement",
+    "detail32_microtexture_1": "far_complement",
+    "detail32_microtexture_2": "far_complement",
+    "detail32_microtexture_3": "far_complement",
+    "detail32_spokes_0": "far_complement",
+    "detail32_spokes_1": "far_complement",
+    "detail32_spokes_2": "far_complement",
+    "detail32_spokes_3": "far_complement"
+  },
+  "roi_sha256": {
+    "detail32_chirp_0": "72e249a2a027f98b5431746942c8bd43e9adf878ef046a689c75fab93ded6971",
+    "detail32_chirp_1": "f767a4254d236c5c86e01215621b06f91077044386c41d9d0de11a431912451c",
+    "detail32_chirp_2": "54bb23a105b7111a70ee0f19999c1fd553b127dc558cb53c689dd22f78462dda",
+    "detail32_chirp_3": "b80b2bccd8e9c720eae223f016bbfd04e74cf6826fb0e6516202cd69285026a0",
+    "detail32_contour_0": "12dde89cbffde15db807e6d99a1c710e9e81bea2985fb4f633bc323058cd4b47",
+    "detail32_contour_1": "03edd14e81b7ea49608a0517831a7749062eb7f4d6d41d06b16274e6ef1806e9",
+    "detail32_contour_2": "d275faca26b46acc18c516c50ae0869c7885a1fb795f084fba90ca457c783dfa",
+    "detail32_contour_3": "1a8bc1d0f9f7ad6cf10c414e61d369f89d9685fd0f21a003084b6080de3298fd",
+    "detail32_glyph_0": "8cf24e8153f0f78c1ecb86f32ff2579a2509ed057076640a65b4d32dc96ad8b2",
+    "detail32_glyph_1": "110a598f927b975991e4799e4149d5f6eb89d9fd67286533c45e619295281d75",
+    "detail32_glyph_2": "b007d161b4028369834a81c5a95c04fd9546348be94ed205f396be661fcd022e",
+    "detail32_glyph_3": "a46ede3085daf1147414801ccc8fbb1f757547018e37f775c8d1bb0e3f23765d",
+    "detail32_maze_0": "e2b6c6af9a76d7ff792be56e4fd561e204c382a9958b3a443c45629bde538d9a",
+    "detail32_maze_1": "074478893ff51e60e7fdff1f5bd3cfcdba2f3858dbc87de79325c5f318993d37",
+    "detail32_maze_2": "80c367bec765b42b070cfa219d550d9929d09ce867e749d40029031f01b863ce",
+    "detail32_maze_3": "3d117b1ad029699977df027711ca2debe2aeee10d6b335272d257b2bfd2d6cf4",
+    "detail32_microtexture_0": "5a000317cab9a00f3997b73e3c2d882344ca532b170e4f446a929083fbb5d138",
+    "detail32_microtexture_1": "73064e4b8b892e90b70f9a7315cc8a7468641d6bcab37ea2462c8497d20370f7",
+    "detail32_microtexture_2": "601354ad6a4d636c9c6e980d48a28f274e589d36d56b163399a81702a8a70180",
+    "detail32_microtexture_3": "7fc03edb24571c89535aa56462fba1e0982e84133ee7b05cd68b33306b60e1d4",
+    "detail32_spokes_0": "18475bc07f74a3b99d7d3a86f5c5d67ed1d89b27ed242aed96a066c74fffeb79",
+    "detail32_spokes_1": "2a5f9143500b9c1099b750c7a0a029aa666a59ca18520c554bd7db912fb39b56",
+    "detail32_spokes_2": "ebdd0e51e5f7e79f349b126edf887666d5ac1fd95b82e0b2e4740d851c0e8ed3",
+    "detail32_spokes_3": "b4e771ee5d458fc632c5ce69273967f07a5f0b9852f6a4823ea17ec684748423"
+  },
+  "ruling": "GPT round-8 ruling section 2 (DETAIL-32 confirmatory)",
+  "seed_table": [
+    {
+      "family": "glyph",
+      "name": "detail32_glyph_0",
+      "seed": 632000
+    },
+    {
+      "family": "glyph",
+      "name": "detail32_glyph_1",
+      "seed": 632001
+    },
+    {
+      "family": "glyph",
+      "name": "detail32_glyph_2",
+      "seed": 632002
+    },
+    {
+      "family": "glyph",
+      "name": "detail32_glyph_3",
+      "seed": 632003
+    },
+    {
+      "family": "chirp",
+      "name": "detail32_chirp_0",
+      "seed": 632100
+    },
+    {
+      "family": "chirp",
+      "name": "detail32_chirp_1",
+      "seed": 632101
+    },
+    {
+      "family": "chirp",
+      "name": "detail32_chirp_2",
+      "seed": 632102
+    },
+    {
+      "family": "chirp",
+      "name": "detail32_chirp_3",
+      "seed": 632103
+    },
+    {
+      "family": "spokes",
+      "name": "detail32_spokes_0",
+      "seed": 632200
+    },
+    {
+      "family": "spokes",
+      "name": "detail32_spokes_1",
+      "seed": 632201
+    },
+    {
+      "family": "spokes",
+      "name": "detail32_spokes_2",
+      "seed": 632202
+    },
+    {
+      "family": "spokes",
+      "name": "detail32_spokes_3",
+      "seed": 632203
+    },
+    {
+      "family": "maze",
+      "name": "detail32_maze_0",
+      "seed": 632300
+    },
+    {
+      "family": "maze",
+      "name": "detail32_maze_1",
+      "seed": 632301
+    },
+    {
+      "family": "maze",
+      "name": "detail32_maze_2",
+      "seed": 632302
+    },
+    {
+      "family": "maze",
+      "name": "detail32_maze_3",
+      "seed": 632303
+    },
+    {
+      "family": "contour",
+      "name": "detail32_contour_0",
+      "seed": 632400
+    },
+    {
+      "family": "contour",
+      "name": "detail32_contour_1",
+      "seed": 632401
+    },
+    {
+      "family": "contour",
+      "name": "detail32_contour_2",
+      "seed": 632402
+    },
+    {
+      "family": "contour",
+      "name": "detail32_contour_3",
+      "seed": 632403
+    },
+    {
+      "family": "microtexture",
+      "name": "detail32_microtexture_0",
+      "seed": 632500
+    },
+    {
+      "family": "microtexture",
+      "name": "detail32_microtexture_1",
+      "seed": 632501
+    },
+    {
+      "family": "microtexture",
+      "name": "detail32_microtexture_2",
+      "seed": 632502
+    },
+    {
+      "family": "microtexture",
+      "name": "detail32_microtexture_3",
+      "seed": 632503
+    }
+  ],
+  "sha256": {
+    "detail32_chirp_0": "ba952c148e9b9118acd7cfb2ebbbf4a96a8b146bfd50c250b599abacdb3ef913",
+    "detail32_chirp_1": "6dff867651273d8657445dc46bdb67bbb48ebd2e3120804f56c654081ab3c324",
+    "detail32_chirp_2": "27ea0251993a909e87aa0e1ea666e5acbd4550c3dad4f2611dfb497641143c37",
+    "detail32_chirp_3": "2429d562f40fafef3a71f794fd7b4fd5f7d8f9964ea0189c090b1f8638cfc573",
+    "detail32_contour_0": "21523b4a89ff42e1be439181cffe47a4fa57dc59c12694d5c54106899ba721eb",
+    "detail32_contour_1": "ec0dda8549bb0d5e24aee41188fd0009e34445ddf70ee744bc4efc2ffe1cde25",
+    "detail32_contour_2": "d87d093f5e8dc637eaedfa7be23e4440c23648577ca0d227a6ce2460ba74b471",
+    "detail32_contour_3": "0c23eaf99993c35ca362d6ede0123232dabb9780306618379728956864e502a5",
+    "detail32_glyph_0": "1d914a80a027f6d19745c579dde461bdec5d93acd95b3011dc05fcc88020e58d",
+    "detail32_glyph_1": "2132db87106001dc6b3b44d0cd5f80b4e93a95de6abd18749d75f792abaae4e7",
+    "detail32_glyph_2": "d043b3158a422e958576cbbbc62739365ab572016c1c1d4f81393f28587fa1b7",
+    "detail32_glyph_3": "a1e06cac08822b7a382602908092771ca9baa3deed12256cf51e825878221e48",
+    "detail32_maze_0": "81cdc237a56a0c0e4893c55ed4cf17ae0dae4ef8f06b574b894d2b74249f4c09",
+    "detail32_maze_1": "b8c019b20b294cb5144468e6bd22f6f7e3d3361a8e05750eacb7b2215330fc54",
+    "detail32_maze_2": "ea91388d6fd7029bde83ab839b15355bbddcbe2b7e6f708b4fc42c08694ee876",
+    "detail32_maze_3": "95e1415fa65171409d25816f1e0cd227f4972ae6f9a4678f31fb329291e95377",
+    "detail32_microtexture_0": "881f8d1d73b34b25c02d1af0474346e2d0af35cfdf2bbc36a6c44b5a377cea8f",
+    "detail32_microtexture_1": "c9e6c83f9e0f2d8b4c11c603a0dfea5434097021f1420e0d5405bb11a58a8f8b",
+    "detail32_microtexture_2": "7718a3307cfb2884cc7cecf6f0748cda210bf2d82fa714b58545929e2056362c",
+    "detail32_microtexture_3": "e1f60f0e0dcb581ad9164eedd7ff6155f2e0e56ce052edef62cca3c5f21de711",
+    "detail32_spokes_0": "7c56b071c6a223407a41f10268fd0425923c945d5ecd7a9990971bd4b039544c",
+    "detail32_spokes_1": "b444726644fa122c4e7d03658a9e23d067ad277228424751378102c89909cd36",
+    "detail32_spokes_2": "a3b0daf2f41931449d78db960bfb2b86ba44feba7e49c3e5bf767bec11565101",
+    "detail32_spokes_3": "07de7b4620b51d4f211aa10c3238e1c5998f827d6c96dcc6956cfa8d5608e3dc"
+  },
+  "side": 32
+}

@@ -64,6 +64,10 @@ EXPECTED_KEYS = {
     # F1 cell-level DESCRIPTIVE audit columns (round-5 ruling: continuous
     # diagnostics only, RQL rows only; '' elsewhere):
     "audit_status", "d_ratio", "q_d", "q_mean", "leak_suspect",
+    # STUDY-2 mechanism + CNR descriptive columns (round-8 ruling §10/§11;
+    # never gates). cnr/C_u/Gamma/S_det/S_inc always emitted; k_occupancy is
+    # '' for the non-sparse kinds exercised here:
+    "cnr", "C_u", "Gamma", "S_det", "S_inc", "k_occupancy",
 }
 
 PASS = []

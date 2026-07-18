@@ -2,8 +2,15 @@
 shard_runner.py (spec §3, §5).
 
 A cell is a dict of grid coordinates:
-  side (16/32/64/128), pattern ('bern50'|'hadpair'|'gam4'), rho_bar, nu,
-  M (signed measurements), seed, arms (list of solver arm names),
+  side (16/32/64/128), pattern ('bern50'|'hadpair'|'gam4'|'sparsek'), rho_bar,
+  nu, M (signed measurements), seed, arms (list of solver arm names),
+  k (sparsek occupancy; required for pattern 'sparsek', ignored otherwise),
+  flux_mode ('normalized' default = A=(n/k)B fixed-load, or 'unnormalized' = A=B
+             so the detector rate drops with k — STUDY-2 separation, ruling §13),
+  alpha_cv / alpha_rho_t (dynamic-scattering AR(1) lognormal channel applied to
+             u BEFORE dead time, ruling §14; alpha_cv 0 = off default),
+  imageset ('conf'|'dev'|'detail24'|'detail24_dev'|'detail32'|'detail32_dev';
+            detail32* carry frozen SIGNAL/BACKGROUND ROIs -> the CNR column),
   images ('pilot8' | 'all' | explicit list),
   det: optional dict of Detector overrides for the TRUE simulator
        (dark_frac, p_ap, ap_tau, paralyzable, tau_jitter_cv, start_mode, guard),
@@ -34,9 +41,15 @@ for direction-only arms), select_runtime_s (seconds inside select_eta_and_fit,
 level, '' otherwise), and the cell-level DESCRIPTIVE audit columns on RQL rows
 (audit_status / d_ratio / q_d / q_mean / leak_suspect — round-5 ruling: pure
 diagnostics, no binary adequacy gate, never affect any campaign decision).
-Existing columns are unchanged so shard merging stays stable.
-RNG streams: rng_for(seed, 63, 3, ...) for buckets — disjoint from pattern
-(63,1,*) and image (63,2,*) streams.
+Existing columns are unchanged so shard merging stays stable. STUDY-2 appends
+six descriptive columns (never gates; ruling §10/§11): cnr (frozen-ROI CNR on
+the nonneg reconstruction, per arm; '' when no ROIs), C_u (bucket-energy contrast
+sd(u)/mean(u) of the noiseless u), Gamma (= C_u sqrt(nu rho/(1+rho))), S_det
+(= (1/Mn) sum N_i), S_inc (= (1/Mn) sum lam_i T) and k_occupancy ("k|occupancy"
+for the sparse ladder, else '').
+RNG streams: rng_for(seed, 63, 3, ...) for buckets, rng_for(seed, 63, 7, ...)
+for the dynamic-scattering channel — disjoint from pattern (63,1,*) and image
+(63,2,*) streams.
 """
 import os
 import sys
@@ -50,8 +63,10 @@ sys.path.insert(0, os.path.dirname(HERE))
 from gi_core import metrics as MET
 from gi_core.utils import rng_for
 from images63 import build_image_set, build_dev_image_set
-from detail24 import build_detail24_set, build_detail24_dev_set
-from patterns import make_patterns
+from detail24 import (build_detail24_set, build_detail24_dev_set,
+                      build_detail32_set, build_detail32_dev_set,
+                      load_detail32_rois)
+from patterns import make_patterns, KIND_IDS
 from physics import Detector, simulate_counts
 from solvers import ArmContext, run_arm, _ITER_ARMS
 import select_eta
@@ -74,6 +89,8 @@ _IMG_BUILDERS = {
     "dev": build_dev_image_set,             # S1 development (STL train + dev_*)
     "detail24": build_detail24_set,         # F1 primary confirmatory cohort (24)
     "detail24_dev": build_detail24_dev_set, # DETAIL-24 dev instances (6)
+    "detail32": build_detail32_set,         # STUDY-2 confirmatory cohort (24)
+    "detail32_dev": build_detail32_dev_set, # STUDY-2 dev instances (6)
 }
 
 
@@ -98,12 +115,30 @@ def _images(side, spec, dev=False, imageset="conf"):
     return {k: imgs[k] for k in spec}
 
 
-def _patterns(kind, M, n, seed):
-    key = (kind, M, n, seed)
+def _patterns(kind, M, n, seed, k=None):
+    key = (kind, M, n, seed, k)
     if key not in _PAT_CACHE:
         _PAT_CACHE.clear()  # hold one pattern set (memory)
-        _PAT_CACHE[key] = make_patterns(kind, M, n, seed)
+        _PAT_CACHE[key] = make_patterns(kind, M, n, seed, k=k)
     return _PAT_CACHE[key]
+
+
+def _ar1_lognormal(m, cv, rho_t, rng):
+    """Stationary lognormal AR(1) multiplicative scaling series (dynamic-
+    scattering secondary, ruling §14): z_t = rho_t z_{t-1} + eps_t with the
+    stationary marginal Var(z) = sigma_z^2 = ln(1 + cv^2), and
+    alpha_t = exp(z_t - sigma_z^2 / 2) so that E[alpha_t] = 1 and CV(alpha) = cv.
+    z_0 is drawn from the stationary marginal (no burn-in transient)."""
+    m = int(m)
+    sig_z2 = float(np.log1p(cv * cv))
+    sig_z = float(np.sqrt(sig_z2))
+    sig_eps = float(np.sqrt(max(sig_z2 * (1.0 - rho_t * rho_t), 0.0)))
+    z = np.empty(m, dtype=np.float64)
+    z[0] = float(rng.standard_normal()) * sig_z
+    eps = rng.standard_normal(m) * sig_eps
+    for t in range(1, m):
+        z[t] = rho_t * z[t - 1] + eps[t]
+    return np.exp(z - 0.5 * sig_z2)
 
 
 def run_cell(cell):
@@ -127,28 +162,78 @@ def run_cell(cell):
                        paralyzable=bool(est_kw.get("assume_paralyzable", False)),
                        start_mode=det_true.start_mode)
 
-    pat = _patterns(cell["pattern"], M, n, seed)
+    pattern = cell["pattern"]
+    k = cell.get("k")
+    pat = _patterns(pattern, M, n, seed, k=k)
     A, meta = pat["A"], pat["meta"]
+    # STUDY-2 flux-mode separation (ruling §13): "normalized" (default) hands the
+    # campaign the photon-budget-normalized A = (n/k) B, so mean detector load is
+    # held FIXED across occupancy; "unnormalized" hands A = B (= (k/n) * the
+    # normalized A), so turning pixels off REDUCES the detector count rate (the
+    # known sparse-pile-up mitigation). CNR/C_u are scale-invariant (identical);
+    # S_det/S_inc differ, which is exactly what the separation run isolates.
+    flux_mode = cell.get("flux_mode", "normalized")
+    if pattern == "sparsek" and flux_mode == "unnormalized":
+        A = A * (float(k) / float(n))
+    # frozen SIGNAL/BACKGROUND ROIs for the CNR co-secondary (ruling §11), when
+    # the image set carries them (DETAIL-32); None otherwise (CNR left blank).
+    imageset = cell.get("imageset", "conf")
+    roi_map = (load_detail32_rois(side, dev=(imageset == "detail32_dev"))
+               if imageset in ("detail32", "detail32_dev") else None)
     imgs = _images(side, cell.get("images", "pilot8"),
                    dev=bool(cell.get("dev", False)),
-                   imageset=cell.get("imageset", "conf"))
+                   imageset=imageset)
     # production lam_TV selection: "discrepancy" (default; the F1-frozen
     # AUDIT-split rule in select_eta — GPT round-4 ruling) or "legacy" (the
     # deprecated own-NLL rule inside run_arm, retained for ablation only).
     # Legacy keeps ALL arms on the run_arm path.
     select_rule = cell.get("select_rule", "discrepancy")
     # frozen integer cell key for the split / fold / bootstrap RNG streams
-    kind_id = {"bern50": 1, "hadpair": 2, "gam4": 3}[cell["pattern"]]
+    kind_id = KIND_IDS[pattern]
     cell_key = (kind_id, int(round(rho * 1000)), int(round(nu)), M, side)
+    # descriptive occupancy tag emitted on every row (ruling §10): "k|occupancy"
+    # for the sparse ladder, blank otherwise.
+    k_occ = ("%d|%.6g" % (int(k), meta.get("occupancy", float(k) / n))
+             if pattern == "sparsek" else "")
+    # dynamic-scattering channel parameters (ruling §14; default off)
+    alpha_cv = float(cell.get("alpha_cv", 0.0))
+    alpha_rho_t = float(cell.get("alpha_rho_t", 0.95))
     # the DEV/AUDIT split is pattern-level: identical for every image and arm
     # of this cell (computed lazily once, on the first selected arm)
     cell_split = None
     rows = []
+    img_names = list(imgs)
+    M_phys = A.shape[0]
     for img_name, x in imgs.items():
+        idx = img_names.index(img_name)
         u = A @ x
+        # C_u: actual bucket-energy contrast of the TRUE (noiseless) measurement
+        # realization (ruling §10) — deployment-visible (u = patterns x truth).
+        u_mean = float(np.mean(u))
+        C_u = float(np.std(u) / u_mean) if u_mean > 0 else float("nan")
+        # Gamma = C_u sqrt(nu rho/(1+rho)) (ruling §10 first-order index).
+        Gamma = (C_u * float(np.sqrt(nu * rho / (1.0 + rho)))
+                 if np.isfinite(C_u) else float("nan"))
+        # dynamic-scattering multiplicative channel applied BEFORE dead time
+        # (ruling §14): alpha_t series on its own rng_for(...,63,7,...) stream,
+        # u scaled element-wise pre-simulate. Physics/estimator untouched (A is
+        # what the reconstruction sees; the scaling is an unmodeled nuisance).
+        if alpha_cv > 0.0:
+            rng_alpha = rng_for(seed, 63, 7, kind_id, int(rho * 1000), int(nu),
+                                M, idx)
+            u_sim = u * _ar1_lognormal(M_phys, alpha_cv, alpha_rho_t, rng_alpha)
+        else:
+            u_sim = u
         rng_noise = rng_for(seed, 63, 3, kind_id, int(rho * 1000), int(nu), M,
-                            list(imgs).index(img_name))
-        b, N = simulate_counts(u, Phi, T, det_true, rng_noise, sigma_b=sigma_b)
+                            idx)
+        b, N = simulate_counts(u_sim, Phi, T, det_true, rng_noise,
+                               sigma_b=sigma_b)
+        # two photon axes (ruling §11): detected S_det = (1/Mn) sum N_i and
+        # incident S_inc = (1/Mn) sum lam_i T (dead time makes S_det nonlinear).
+        lam_sim = Phi * np.maximum(u_sim, 0.0) + det_true.dark
+        S_det = float(N.sum()) / (M_phys * n)
+        S_inc = float((lam_sim * T).sum()) / (M_phys * n)
+        roi = roi_map.get(img_name) if roi_map is not None else None
         ctx = ArmContext(Phi=Phi, det=det_est, T=T, side=side,
                          sigma_b=sigma_b, n_iter=int(cell.get("fista_iters", 200)),
                          select_iter=int(cell.get("select_iter", 60)),
@@ -195,8 +280,13 @@ def run_cell(cell):
                 else np.nan
             m = MET.main_metrics(xh, x, side,
                                  with_lpips=bool(cell.get("use_lpips", False)))
+            # nonneg reconstruction (CNR is scale-invariant, so the same value
+            # holds on physical-scale and flux-matched maps; ruling §11).
+            xp_full = np.maximum(xh, 0.0)
+            cnr_val = (MET.cnr(xp_full, roi[0], roi[1])
+                       if roi is not None else float("nan"))
             if arm in PHYSICAL_ARMS:
-                xp = np.maximum(xh, 0.0)
+                xp = xp_full
                 rad = float(np.linalg.norm(xp - x) / np.linalg.norm(x))
                 flux_dev = float(xp.sum() / x.sum() - 1.0)
                 # PSNR_rad = radiometric PSNR, NO rescaling (spec D2 §4 PRIMARY
@@ -236,5 +326,15 @@ def run_cell(cell):
                 "q_mean": (round(float(q_mean), 5)
                            if isinstance(q_mean, float) else q_mean),
                 "leak_suspect": leak,
+                # STUDY-2 mechanism + CNR descriptive columns (ruling §10/§11).
+                # CNR (frozen ROIs) is per-arm; C_u/Gamma/S_det/S_inc/k_occupancy
+                # are per-image (identical across the cell's arms).
+                "cnr": (round(float(cnr_val), 5)
+                        if np.isfinite(cnr_val) else ""),
+                "C_u": (round(C_u, 6) if np.isfinite(C_u) else ""),
+                "Gamma": (round(Gamma, 6) if np.isfinite(Gamma) else ""),
+                "S_det": round(S_det, 8),
+                "S_inc": round(S_inc, 8),
+                "k_occupancy": k_occ,
             })
     return rows

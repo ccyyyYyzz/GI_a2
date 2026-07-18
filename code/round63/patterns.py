@@ -27,11 +27,24 @@ hadpair  Random row/column-permuted Sylvester-Hadamard, returned as *complementa
          subset), which leaves the exact-unit-mean pair property intact.
 gam4     iid Gamma(shape=4, scale=1/4), mean 4*(1/4) = 1 (spec GAM4 stress arm;
          same family used by ROUND59 Phase A/B).  exposures_per_row = 1.
+sparsek  STUDY-2 sparse illumination ladder (GPT round-8 ruling §3/§4). A binary
+         occupancy-k measurement matrix B^(k) (every row and every column sum k,
+         full numeric rank) is built from k distinct cyclic shifts of a seeded
+         base permutation and then randomized by 20n accepted degree-preserving
+         2-switches; the matrix handed to the campaign is the PHOTON-BUDGET-
+         NORMALIZED A^(k) = (n/k) * B^(k), so that for a sum-normalized truth the
+         mean detector load is identical across occupancy levels (E[<a,x>] = 1;
+         ruling §4).  Requires the Study-2 square geometry M = n (both margins
+         then equal k exactly).  exposures_per_row = 1.  k = 1 is a seeded
+         permutation matrix (raster / point scanning).
 
 RNG: rng_for(seed, 63, 1, kind_id) under the SEED0=20260717 system (spec §5,
 utils.rng_for).  Stream tag 63 = ROUND63; sub-stream 1 = pattern layer;
-kind_id disambiguates the three constructions.
+kind_id disambiguates the constructions.  sparsek additionally folds (k, nonce)
+into the stream so different occupancy levels and rank-rebuild nonces are
+independent.
 """
+import hashlib
 import os
 import sys
 
@@ -45,7 +58,11 @@ R63 = 63              # ROUND63 stream tag (spec §5)
 PATTERN_SUBSTREAM = 1  # pattern layer sub-stream (images63 uses sub-stream 2)
 
 # stable kind ids for RNG derivation (frozen)
-KIND_IDS = {"bern50": 1, "hadpair": 2, "gam4": 3}
+KIND_IDS = {"bern50": 1, "hadpair": 2, "gam4": 3, "sparsek": 4}
+
+# sparsek: number of accepted degree-preserving 2-switches per pixel (ruling §3
+# "apply 20n = 20480 accepted degree-preserving 2-switches"); n = 1024 -> 20480.
+SPARSEK_SWITCHES_PER_N = 20
 
 
 def _next_pow2(n):
@@ -55,24 +72,99 @@ def _next_pow2(n):
     return 1 << int(np.ceil(np.log2(max(1, int(n)))))
 
 
-def make_patterns(kind, M, n, seed):
-    """Build an illumination matrix for one (kind, M, n, seed).
+def _sparsek_matrix(M, n, seed, k):
+    """Build B^(k) for the sparse ladder (ruling §3), returning
+    (B uint8, nonce, cond, n_switch_accepted, n_switch_attempts).
+
+    Construction: a seeded base permutation pi is stacked with k DISTINCT cyclic
+    column shifts {s_1..s_k}, i.e. B[i, (pi(i)+s_t) mod n] = 1.  With distinct
+    shifts every row carries exactly k ones and — because pi is a bijection —
+    every column also carries exactly k ones (one per shift).  The matrix is then
+    randomized by 20n ACCEPTED degree-preserving 2-switches on its 1-edge list:
+    two ones (i1,j1),(i2,j2) with i1!=i2, j1!=j2 and B[i1,j2]=B[i2,j1]=0 are
+    swapped to (i1,j2),(i2,j1); this preserves every row AND column sum and keeps
+    entries binary (edge-swap form of the checkerboard switch — high acceptance,
+    unlike blind 4-tuple rejection).  numpy matrix_rank on float64 must be full
+    (n); if deficient a preregistered nonce is advanced (folded into the RNG) and
+    the matrix rebuilt SOLELY until full rank.  No condition-number threshold is
+    imposed (ruling §3); the condition number is recorded only.
+
+    Study-2 freezes M = n (square); both margins then equal k exactly."""
+    if int(M) != int(n):
+        raise ValueError("sparsek requires the Study-2 square geometry M == n; "
+                         "got M=%d, n=%d" % (M, n))
+    n = int(n)
+    k = int(k)
+    if not (1 <= k <= n):
+        raise ValueError("sparsek occupancy k=%d out of range [1, n=%d]" % (k, n))
+    kind_id = KIND_IDS["sparsek"]
+    target = SPARSEK_SWITCHES_PER_N * n
+    max_attempts = 200 * target + 100000        # generous anti-hang guard
+    nonce = 0
+    while True:
+        rng = rng_for(seed, R63, PATTERN_SUBSTREAM, kind_id, k, nonce)
+        perm = rng.permutation(n)                       # base permutation pi
+        shifts = rng.permutation(n)[:k]                 # k DISTINCT cyclic shifts
+        cols = (perm[:, None] + shifts[None, :]) % n    # (n, k) on-pixel columns
+        B = np.zeros((n, n), dtype=np.uint8)
+        B[np.arange(n)[:, None], cols] = 1              # row/col sums == k exactly
+
+        edges = np.argwhere(B == 1)                     # (n*k, 2): [row, col]
+        n_edges = edges.shape[0]
+        accepted = attempts = 0
+        while accepted < target:
+            attempts += 1
+            if attempts > max_attempts:
+                raise RuntimeError(
+                    "sparsek 2-switch did not reach %d accepted swaps in %d "
+                    "attempts (k=%d n=%d)" % (target, attempts, k, n))
+            e1 = int(rng.integers(0, n_edges))
+            e2 = int(rng.integers(0, n_edges))
+            if e1 == e2:
+                continue
+            i1, j1 = int(edges[e1, 0]), int(edges[e1, 1])
+            i2, j2 = int(edges[e2, 0]), int(edges[e2, 1])
+            if i1 == i2 or j1 == j2:
+                continue
+            if B[i1, j2] or B[i2, j1]:
+                continue
+            B[i1, j1] = 0
+            B[i2, j2] = 0
+            B[i1, j2] = 1
+            B[i2, j1] = 1
+            edges[e1, 1] = j2
+            edges[e2, 1] = j1
+            accepted += 1
+
+        Bf = B.astype(np.float64)
+        rank = int(np.linalg.matrix_rank(Bf))           # ruling §3: numpy rank
+        if rank == n:
+            cond = float(np.linalg.cond(Bf))
+            return B, nonce, cond, accepted, attempts
+        nonce += 1                                       # rebuild only until full
+
+
+def make_patterns(kind, M, n, seed, k=None):
+    """Build an illumination matrix for one (kind, M, n, seed[, k]).
 
     Parameters
     ----------
-    kind : {"bern50", "hadpair", "gam4"}
+    kind : {"bern50", "hadpair", "gam4", "sparsek"}
     M    : number of *signed* measurements (logical rows).  For hadpair this is
-           the number of complementary pairs, so A has 2*M physical rows.
+           the number of complementary pairs, so A has 2*M physical rows.  For
+           sparsek M must equal n (Study-2 square geometry).
     n    : number of pixels (image side^2).
     seed : integer seed folded through rng_for(seed, 63, 1, kind_id).
+    k    : sparsek occupancy (on-pixels per row/column); required for sparsek,
+           ignored otherwise.
 
     Returns
     -------
     dict with keys
       A                 : (R x n) float64, nonneg, per-pixel mean 1.  R = M for
-                          bern50/gam4, R = 2*M for hadpair.
+                          bern50/gam4/sparsek, R = 2*M for hadpair.
       exposures_per_row : physical exposures charged per signed measurement
-                          (1 for bern50/gam4; 2 for hadpair pairs).
+                          (1 for bern50/gam4/sparsek; 2 for hadpair pairs).
       meta              : dict describing the construction and RNG provenance.
     """
     if kind not in KIND_IDS:
@@ -99,6 +191,39 @@ def make_patterns(kind, M, n, seed):
         exposures_per_row = 1
         meta["construction"] = ("iid Gamma(shape=4, scale=1/4); mean = 1, "
                                 "Var = 1/4 (ROUND59 GAM4 stress family)")
+        meta["n_physical_rows"] = M
+        meta["total_exposures"] = M
+
+    elif kind == "sparsek":
+        if k is None:
+            raise ValueError("sparsek requires the occupancy argument k=...")
+        k = int(k)
+        B, nonce, cond, n_sw, n_att = _sparsek_matrix(M, n, seed, k)
+        # PHOTON-BUDGET NORMALIZATION (ruling §4): A^(k) = (n/k) B^(k). With
+        # every column sum exactly k and M = n, mean_i (A x)_i = (n/M) Sum_j x_j
+        # = 1 for a sum-normalized x — identical mean detector load at every
+        # occupancy level, on-pixel incident rate rising as n/k.
+        A = (float(n) / float(k)) * B.astype(np.float64)
+        exposures_per_row = 1
+        occupancy = float(k) / float(n)
+        b_sha = hashlib.sha256(
+            np.ascontiguousarray(B, dtype=np.uint8).tobytes()).hexdigest()
+        meta["construction"] = (
+            "k=%d distinct cyclic shifts of a seeded base permutation + %d "
+            "accepted degree-preserving 2-switches; A = (n/k) B, row/col sums "
+            "== k, full numeric rank (ruling §3/§4)" % (k, n_sw))
+        meta["rng_stream"] = [R63, PATTERN_SUBSTREAM, kind_id, k, nonce]
+        meta["k"] = k
+        meta["occupancy"] = occupancy
+        meta["nonce"] = int(nonce)
+        meta["cond"] = cond
+        meta["row_sum"] = k
+        meta["col_sum"] = k
+        meta["normalization"] = "A = (n/k) * B"
+        meta["B_sha256"] = b_sha
+        meta["n_switch_accepted"] = int(n_sw)
+        meta["n_switch_attempts"] = int(n_att)
+        meta["switch_target"] = int(SPARSEK_SWITCHES_PER_N * n)
         meta["n_physical_rows"] = M
         meta["total_exposures"] = M
 
@@ -157,9 +282,46 @@ def _smoke():
               % (kind, A.shape, d["exposures_per_row"], agg,
                  float(pm.min()), float(pm.max()), float(pm.std()),
                  bool((A >= 0.0).all()), "PASS" if ok else "FAIL"))
+    all_ok = _smoke_sparsek() and all_ok
     print("[patterns smoke] %s" % ("ALL PASS" if all_ok else "FAILURES ABOVE"),
           flush=True)
     return 0 if all_ok else 1
+
+
+def _smoke_sparsek(n=1024):
+    """Study-2 sparse ladder checks: exact row/col sums k, full rank, exact
+    unit mean load E[A x] = 1 for a sum-normalized x, and k=1 permutation."""
+    print("[patterns sparsek] n=M=%d  ladder k in {512,32,16,1}" % n, flush=True)
+    rng = np.random.default_rng(12345)
+    x = rng.random(n)
+    x = x / x.sum()                                    # sum-normalized truth
+    ok = True
+    for k in (512, 32, 16, 1):
+        d = make_patterns("sparsek", n, n, 0, k=k)
+        A, meta = d["A"], d["meta"]
+        B = np.rint(A * (k / float(n))).astype(np.int64)   # recover B from A
+        row_ok = bool(np.all(B.sum(axis=1) == k))
+        col_ok = bool(np.all(B.sum(axis=0) == k))
+        bin_ok = bool(np.all((B == 0) | (B == 1)))
+        rank = int(np.linalg.matrix_rank(A.astype(np.float64)))
+        rank_ok = rank == n
+        emean = float(np.mean(A @ x))
+        mean_ok = abs(emean - 1.0) < 1e-9
+        perm_ok = True if k != 1 else (row_ok and col_ok
+                                       and int(B.sum()) == n)
+        this_ok = (row_ok and col_ok and bin_ok and rank_ok and mean_ok
+                   and perm_ok and d["exposures_per_row"] == 1
+                   and meta["k"] == k and abs(meta["occupancy"] - k / n) < 1e-15)
+        ok = ok and this_ok
+        print("  k=%-4d occ=%.4f rowsum=%s colsum=%s bin=%s rank=%d/%d "
+              "E[Ax]=%.3e nonce=%d cond=%.3g swaps=%d/%d sha=%s.. %s"
+              % (k, meta["occupancy"], row_ok, col_ok, bin_ok, rank, n,
+                 emean, meta["nonce"], meta["cond"],
+                 meta["n_switch_accepted"], meta["switch_target"],
+                 meta["B_sha256"][:8], "PASS" if this_ok else "FAIL"),
+              flush=True)
+    print("[patterns sparsek] %s" % ("PASS" if ok else "FAIL"), flush=True)
+    return ok
 
 
 if __name__ == "__main__":

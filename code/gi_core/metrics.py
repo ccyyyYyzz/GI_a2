@@ -82,6 +82,27 @@ def main_metrics(xhat, x_true, side, with_lpips=True):
     return out
 
 
+def cnr(image, signal_mask, background_mask):
+    """Contrast-to-noise ratio on frozen ROIs (GPT round-8 ruling §11):
+        CNR = (mean_sig - mean_bg) / ((sd_sig + sd_bg) / 2),
+    evaluated on the nonneg physical-scale reconstruction. Population std
+    (ddof=0). Returns NaN when the denominator is 0 (no tuned floor) or when
+    either ROI is empty. Scale-invariant to any positive rescaling, so the same
+    value holds on flux-matched or physical-scale maps.
+
+    `image` is a flat (n,) or (side, side) array; the masks are boolean arrays
+    of matching total size."""
+    img = np.asarray(image, dtype=np.float64).ravel()
+    sig = img[np.asarray(signal_mask, dtype=bool).ravel()]
+    bg = img[np.asarray(background_mask, dtype=bool).ravel()]
+    if sig.size == 0 or bg.size == 0:
+        return float("nan")
+    denom = 0.5 * (float(sig.std()) + float(bg.std()))
+    if denom <= 0.0:
+        return float("nan")
+    return float((float(sig.mean()) - float(bg.mean())) / denom)
+
+
 def diagnostic_metrics(xhat, x_true, side):
     """Truth-LS scalar fit (on xhat_+) + angle error + Pearson."""
     from skimage.metrics import structural_similarity

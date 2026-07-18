@@ -1,0 +1,246 @@
+{
+  "families_order": [
+    "glyph",
+    "chirp",
+    "spokes",
+    "maze",
+    "contour",
+    "microtexture"
+  ],
+  "params": {
+    "chirp": {
+      "bg_level": 0.0,
+      "fg_level": 1.0,
+      "gap_range": [
+        1,
+        4
+      ],
+      "grid_choices": [
+        2,
+        3,
+        4
+      ],
+      "orientations": [
+        "h",
+        "v",
+        "d",
+        "ad"
+      ],
+      "width_range": [
+        1,
+        4
+      ]
+    },
+    "contour": {
+      "bg_level_range": [
+        0.05,
+        0.15
+      ],
+      "center_frac_range": [
+        0.28,
+        0.72
+      ],
+      "curve_freq_range": [
+        1.0,
+        3.0
+      ],
+      "fg_level": 1.0,
+      "n_shapes_range": [
+        4,
+        7
+      ],
+      "outline_width_choices": [
+        1,
+        2
+      ],
+      "polygon_vertices_range": [
+        3,
+        6
+      ],
+      "radius_frac_range": [
+        0.14,
+        0.42
+      ],
+      "shape_types": [
+        "ellipse",
+        "polygon",
+        "curve"
+      ]
+    },
+    "dtype": "float64",
+    "glyph": {
+      "alphabet": "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
+      "bg_level": 0.06,
+      "char_gap_font_px": 1,
+      "chars_per_row_range": [
+        4,
+        9
+      ],
+      "fg_level": 1.0,
+      "left_margin": 2,
+      "n_rows_range": [
+        3,
+        6
+      ],
+      "row_gap_font_px": 2,
+      "scale_choices": [
+        1,
+        2
+      ],
+      "top_margin": 3
+    },
+    "maze": {
+      "bg_level": 0.0,
+      "fg_level": 1.0,
+      "fill_factor_range": [
+        0.05,
+        0.55
+      ],
+      "margin": 3,
+      "step_choices": [
+        6,
+        8
+      ],
+      "stroke_width_choices": [
+        1,
+        2
+      ]
+    },
+    "microtexture": {
+      "conv_mode": "reflect",
+      "fg_level": 1.0,
+      "rectify": "abs",
+      "renorm": "peak",
+      "sigma_pairs": [
+        [
+          0.8,
+          1.6
+        ],
+        [
+          1.0,
+          2.0
+        ],
+        [
+          1.2,
+          2.4
+        ],
+        [
+          1.5,
+          3.0
+        ]
+      ]
+    },
+    "peak": 1.0,
+    "sanity": {
+      "max_frac_above_half": 0.9,
+      "min_frac_above_half": 0.01,
+      "require_positive_variance": true
+    },
+    "seeds": {
+      "conf_base": 631000,
+      "conf_family_stride": 4,
+      "dev_base": 630900
+    },
+    "side_default": 64,
+    "spokes": {
+      "bg_level": 0.0,
+      "center_offset_px_range": [
+        -6,
+        6
+      ],
+      "fg_level": 1.0,
+      "n_spokes_choices": [
+        8,
+        12,
+        16,
+        20,
+        24,
+        32
+      ],
+      "r_inner_frac": 0.12,
+      "r_outer_frac": 0.92
+    }
+  },
+  "params32": {
+    "roi": {
+      "background_guard_iters": 2,
+      "background_rule": "complement of binary_dilation(core, 3x3 full, 2 iterations) = pixels at least 2 px from any signal core pixel; deterministic fallback when that complement is empty (fully-filled scene) = outer 2 px border minus the signal ROI",
+      "border_width": 2,
+      "connectivity": "8 (3x3 full structuring element)",
+      "signal_dilate_iters": 1,
+      "signal_half_max_frac": 0.5,
+      "signal_rule": "binary_dilation(truth > 0.5*max, 3x3 full structuring element, 1 iteration)"
+    },
+    "sanity": {
+      "max_frac_above_half": 0.9,
+      "min_frac_above_half": 0.01,
+      "require_positive_variance": true,
+      "roi_disjoint": true,
+      "roi_nonempty": true
+    },
+    "seeds": {
+      "conf_base": 632000,
+      "conf_family_mult": 100,
+      "dev_base": 631900
+    },
+    "side": 32
+  },
+  "roi_mode": {
+    "detail32_dev_chirp": "border_minus_signal",
+    "detail32_dev_contour": "far_complement",
+    "detail32_dev_glyph": "far_complement",
+    "detail32_dev_maze": "far_complement",
+    "detail32_dev_microtexture": "far_complement",
+    "detail32_dev_spokes": "far_complement"
+  },
+  "roi_sha256": {
+    "detail32_dev_chirp": "a35e8cd6a97443a0ab2405eaf897419603f4d70ef337a2c690935022541cef65",
+    "detail32_dev_contour": "9d1be073e4a65728fe464532447ba1193cf8958e1ab63148932d44a384229cdf",
+    "detail32_dev_glyph": "a03b74155abf1a2e4ca05ba44d9f9a554437a4ae662804c73d02839119300580",
+    "detail32_dev_maze": "a9a889f31ce473c00926f30bbf442abd2f24c947471956e9c3705cc4c87abb35",
+    "detail32_dev_microtexture": "9f572a996a23b70c0151d043730361814d7ca7b7a6884fe8dd7ae5807006786f",
+    "detail32_dev_spokes": "993db5eb784fda13355eba23daf6ef6684e6157d12d398974ddcb7e1db61f1e3"
+  },
+  "ruling": "GPT round-8 ruling section 2 (DETAIL-32 dev)",
+  "seed_table": [
+    {
+      "family": "glyph",
+      "name": "detail32_dev_glyph",
+      "seed": 631900
+    },
+    {
+      "family": "chirp",
+      "name": "detail32_dev_chirp",
+      "seed": 631901
+    },
+    {
+      "family": "spokes",
+      "name": "detail32_dev_spokes",
+      "seed": 631902
+    },
+    {
+      "family": "maze",
+      "name": "detail32_dev_maze",
+      "seed": 631903
+    },
+    {
+      "family": "contour",
+      "name": "detail32_dev_contour",
+      "seed": 631904
+    },
+    {
+      "family": "microtexture",
+      "name": "detail32_dev_microtexture",
+      "seed": 631905
+    }
+  ],
+  "sha256": {
+    "detail32_dev_chirp": "0739a02ba3ec073abce3cd0bf6301ee2720a747123f0a6b95ecd9164d7f778f2",
+    "detail32_dev_contour": "324e669198a719e025d4fe00d036604610564963c06af0bc653365089c21a8df",
+    "detail32_dev_glyph": "6a82884f829ffc3ffac7253bfef52b508f3dd0964afc0eb35cea932d1458d27d",
+    "detail32_dev_maze": "5d56b161ad7bf509fff4c859fe8c6a2a0544394afef81e425aa27c6d0ec43ccd",
+    "detail32_dev_microtexture": "246f538d0f9e2a89fd3050c24b6dbe1be3b8f985ade761828c048f2c594bc5c1",
+    "detail32_dev_spokes": "88f1be5e92f8c4bc9b3ff1097ce7616a95af8a063bd8bc8a910720d99a14a799"
+  },
+  "side": 32
+}
