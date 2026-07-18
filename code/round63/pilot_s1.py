@@ -951,9 +951,19 @@ def endpoint_analysis(rows, cfg):
     boot_B = int(getattr(cfg, "boot_B", BOOT_B_DEFAULT))
     rho_safe = min(cfg.rho_list)
     rho_fast = max(cfg.rho_list)
-    images = [im for im in cfg.images
-              if any(r.get("image") == im and r.get("arm") == PRIMARY_ARM
-                     for r in rows)]
+    # v-bump 2026-07-18 (outcome-blind defect fix, freeze clause "demonstrable
+    # implementation defects"): the image list was pinned to cfg.images (the
+    # DEV default names), so a confirmatory CSV whose cohort images differ
+    # (detail_*/stl_*) yielded ZERO analyzable images — structurally visible
+    # as an empty endpoint block, independent of any result value. The
+    # confirmatory analysis derives its image set from the ROWS themselves;
+    # an explicit cfg.images intersection is kept when it is non-empty (the
+    # dev pilot path, unchanged behavior).
+    row_images = sorted({r.get("image") for r in rows
+                         if r.get("arm") == PRIMARY_ARM and r.get("image")})
+    images = [im for im in cfg.images if im in row_images]
+    if not images:
+        images = row_images
     data, T_by_nu, seeds_by_image = _collect(rows, PRIMARY_ARM, rho_safe,
                                              rho_fast, images)
     if not T_by_nu or not images:
