@@ -1,0 +1,300 @@
+{
+  "account_hint": "pro1",
+  "blocked_by": "matrixfree_128",
+  "cells": [
+    {
+      "M": 8192,
+      "arms": [
+        "RQL",
+        "SAT-POISSON",
+        "PRECORRECT"
+      ],
+      "blocked_by": "matrixfree_128",
+      "cell_id": "S2C128_c0015",
+      "images": [
+        "stl_00",
+        "stl_01",
+        "stl_02",
+        "stl_03",
+        "stl_04",
+        "stl_05",
+        "stl_06",
+        "stl_07",
+        "usaf_bars",
+        "fine_lines",
+        "text",
+        "sparse_dots"
+      ],
+      "imageset": "conf",
+      "nu": 500.0,
+      "pattern": "bern50",
+      "rho_bar": 0.6,
+      "seed": 2,
+      "select_rule": "discrepancy",
+      "side": 128,
+      "sigma_b": 0.0,
+      "stage": "S2C128",
+      "tau": 5e-08
+    },
+    {
+      "M": 8192,
+      "arms": [
+        "RQL",
+        "SAT-POISSON",
+        "PRECORRECT"
+      ],
+      "blocked_by": "matrixfree_128",
+      "cell_id": "S2C128_c0016",
+      "images": [
+        "stl_00",
+        "stl_01",
+        "stl_02",
+        "stl_03",
+        "stl_04",
+        "stl_05",
+        "stl_06",
+        "stl_07",
+        "usaf_bars",
+        "fine_lines",
+        "text",
+        "sparse_dots"
+      ],
+      "imageset": "conf",
+      "nu": 2000.0,
+      "pattern": "bern50",
+      "rho_bar": 0.6,
+      "seed": 0,
+      "select_rule": "discrepancy",
+      "side": 128,
+      "sigma_b": 0.0,
+      "stage": "S2C128",
+      "tau": 5e-08
+    },
+    {
+      "M": 8192,
+      "arms": [
+        "RQL",
+        "SAT-POISSON",
+        "PRECORRECT"
+      ],
+      "blocked_by": "matrixfree_128",
+      "cell_id": "S2C128_c0017",
+      "images": [
+        "stl_00",
+        "stl_01",
+        "stl_02",
+        "stl_03",
+        "stl_04",
+        "stl_05",
+        "stl_06",
+        "stl_07",
+        "usaf_bars",
+        "fine_lines",
+        "text",
+        "sparse_dots"
+      ],
+      "imageset": "conf",
+      "nu": 2000.0,
+      "pattern": "bern50",
+      "rho_bar": 0.6,
+      "seed": 1,
+      "select_rule": "discrepancy",
+      "side": 128,
+      "sigma_b": 0.0,
+      "stage": "S2C128",
+      "tau": 5e-08
+    },
+    {
+      "M": 8192,
+      "arms": [
+        "RQL",
+        "SAT-POISSON",
+        "PRECORRECT"
+      ],
+      "blocked_by": "matrixfree_128",
+      "cell_id": "S2C128_c0018",
+      "images": [
+        "stl_00",
+        "stl_01",
+        "stl_02",
+        "stl_03",
+        "stl_04",
+        "stl_05",
+        "stl_06",
+        "stl_07",
+        "usaf_bars",
+        "fine_lines",
+        "text",
+        "sparse_dots"
+      ],
+      "imageset": "conf",
+      "nu": 2000.0,
+      "pattern": "bern50",
+      "rho_bar": 0.6,
+      "seed": 2,
+      "select_rule": "discrepancy",
+      "side": 128,
+      "sigma_b": 0.0,
+      "stage": "S2C128",
+      "tau": 5e-08
+    },
+    {
+      "M": 8192,
+      "arms": [
+        "RQL",
+        "SAT-POISSON",
+        "PRECORRECT"
+      ],
+      "blocked_by": "matrixfree_128",
+      "cell_id": "S2C128_c0019",
+      "images": [
+        "stl_00",
+        "stl_01",
+        "stl_02",
+        "stl_03",
+        "stl_04",
+        "stl_05",
+        "stl_06",
+        "stl_07",
+        "usaf_bars",
+        "fine_lines",
+        "text",
+        "sparse_dots"
+      ],
+      "imageset": "conf",
+      "nu": 100.0,
+      "pattern": "bern50",
+      "rho_bar": 1.0,
+      "seed": 0,
+      "select_rule": "discrepancy",
+      "side": 128,
+      "sigma_b": 0.0,
+      "stage": "S2C128",
+      "tau": 5e-08
+    },
+    {
+      "M": 8192,
+      "arms": [
+        "RQL",
+        "SAT-POISSON",
+        "PRECORRECT"
+      ],
+      "blocked_by": "matrixfree_128",
+      "cell_id": "S2C128_c0020",
+      "images": [
+        "stl_00",
+        "stl_01",
+        "stl_02",
+        "stl_03",
+        "stl_04",
+        "stl_05",
+        "stl_06",
+        "stl_07",
+        "usaf_bars",
+        "fine_lines",
+        "text",
+        "sparse_dots"
+      ],
+      "imageset": "conf",
+      "nu": 100.0,
+      "pattern": "bern50",
+      "rho_bar": 1.0,
+      "seed": 1,
+      "select_rule": "discrepancy",
+      "side": 128,
+      "sigma_b": 0.0,
+      "stage": "S2C128",
+      "tau": 5e-08
+    },
+    {
+      "M": 8192,
+      "arms": [
+        "RQL",
+        "SAT-POISSON",
+        "PRECORRECT"
+      ],
+      "blocked_by": "matrixfree_128",
+      "cell_id": "S2C128_c0021",
+      "images": [
+        "stl_00",
+        "stl_01",
+        "stl_02",
+        "stl_03",
+        "stl_04",
+        "stl_05",
+        "stl_06",
+        "stl_07",
+        "usaf_bars",
+        "fine_lines",
+        "text",
+        "sparse_dots"
+      ],
+      "imageset": "conf",
+      "nu": 100.0,
+      "pattern": "bern50",
+      "rho_bar": 1.0,
+      "seed": 2,
+      "select_rule": "discrepancy",
+      "side": 128,
+      "sigma_b": 0.0,
+      "stage": "S2C128",
+      "tau": 5e-08
+    }
+  ],
+  "est_hours": 5.654,
+  "frozen_inputs": [
+    {
+      "path": "data/r63_images/128/stl_00.png",
+      "sha256": ""
+    },
+    {
+      "path": "data/r63_images/128/stl_01.png",
+      "sha256": ""
+    },
+    {
+      "path": "data/r63_images/128/stl_02.png",
+      "sha256": ""
+    },
+    {
+      "path": "data/r63_images/128/stl_03.png",
+      "sha256": ""
+    },
+    {
+      "path": "data/r63_images/128/stl_04.png",
+      "sha256": ""
+    },
+    {
+      "path": "data/r63_images/128/stl_05.png",
+      "sha256": ""
+    },
+    {
+      "path": "data/r63_images/128/stl_06.png",
+      "sha256": ""
+    },
+    {
+      "path": "data/r63_images/128/stl_07.png",
+      "sha256": ""
+    },
+    {
+      "path": "data/r63_images/128/usaf_bars.png",
+      "sha256": ""
+    },
+    {
+      "path": "data/r63_images/128/fine_lines.png",
+      "sha256": ""
+    },
+    {
+      "path": "data/r63_images/128/text.png",
+      "sha256": ""
+    },
+    {
+      "path": "data/r63_images/128/sparse_dots.png",
+      "sha256": ""
+    }
+  ],
+  "meta_json": "results/round63/shards/S2C128_02_meta.json",
+  "output_csv": "results/round63/shards/S2C128_02.csv",
+  "priority": 3,
+  "shard_id": "S2C128_02",
+  "stage": "S2C128"
+}

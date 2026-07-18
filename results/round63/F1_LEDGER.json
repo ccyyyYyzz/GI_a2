@@ -1,0 +1,26 @@
+{
+ "payload": {
+  "git_commit": "38fcc42f029f95abef31d4671589b5a57186de18",
+  "git_dirty": true,
+  "python": "3.11.5",
+  "numpy": "1.24.4",
+  "scipy": "1.10.1",
+  "inputs_sha256": {
+   "images_confirmatory_natural": "e08b5ed402d31df7af1de569de44861c519b5b993afbe25f9b85c53f34c50bb1",
+   "images_detail24_confirmatory": "5d41fd03f43fa6480bb58b6e369566c84ffc1a4b79985a8ba75e2c8358e2dd18",
+   "images_detail24_dev": "031b503b2ac009e0a87bc0f3fa26cba53aa980d16cce10fc022eb1ed65ae8da8",
+   "images_s1_dev": "c9e5aa7ef9249315528a6e221cd37f5c894f5d699591d4f9c6ee673ee2662362",
+   "C0_FROZEN": "0035178a0407113162f78da6cd4ba34f856664d2c235784a9e591d0ec8d549ab",
+   "detail24_params_manifest": "397b837d1bf6cc3fce76adf487a67fe3e22aba6b44f2f8b80d7db5c6d9c3f15a",
+   "spec_D2": "d2a9d2855e5b6d55a6c5ebbbfec586dfdad6e30d3af5f1615bb687d54c152dac",
+   "ruling_r6": "54a606f51fb670659c44b6febc6539b1fa36b6dee6e90a05ce3a8b04109e48d5",
+   "ruling_r7": "eea0ac1f4d80a10304a014dc8ae33fc5eb4a9a5430ccf60cb81127bc2fd51a0f",
+   "figure_prereg": "7654ce7fc0e62de3d1091e7cac66cbd6b26bf4582a7f9ec7f0bafc098d59eda6",
+   "env_lock": "ed454bbe2c0a509fb94059d201dfa6d07b103848fbbc845033cea02900e3e430",
+   "manifests_tree": "c50eeddbbc71dfec4c34b1a919efcf3f6c03f897f9641204e645b83510122056",
+   "expected_cells": "55080b62c2c2f1dbefe6455556b1bc26febfd596d87841462c24df3b6e13ea90"
+  }
+ },
+ "payload_sha256": "eaf4281fc3bbf56004bd74556ecc157b7b1cd0eb1f1e9d2f9b414711f1741140",
+ "generated_utc": "2026-07-18T07:41:05.133246+00:00"
+}

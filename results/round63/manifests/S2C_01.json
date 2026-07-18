@@ -1,0 +1,571 @@
+{
+  "account_hint": "pro2",
+  "cells": [
+    {
+      "M": 2048,
+      "arms": [
+        "RQL",
+        "POISSON-LIN",
+        "PRECORRECT",
+        "GI"
+      ],
+      "cell_id": "S2C_c0015",
+      "images": [
+        "stl_00",
+        "stl_01",
+        "stl_02",
+        "stl_03",
+        "stl_04",
+        "stl_05",
+        "stl_06",
+        "stl_07",
+        "usaf_bars",
+        "fine_lines",
+        "text",
+        "sparse_dots"
+      ],
+      "imageset": "conf",
+      "nu": 500.0,
+      "pattern": "hadpair",
+      "rho_bar": 0.6,
+      "seed": 2,
+      "select_rule": "discrepancy",
+      "side": 64,
+      "sigma_b": 0.0,
+      "stage": "S2C",
+      "tau": 5e-08
+    },
+    {
+      "M": 2048,
+      "arms": [
+        "RQL",
+        "POISSON-LIN",
+        "PRECORRECT",
+        "GI"
+      ],
+      "cell_id": "S2C_c0016",
+      "images": [
+        "stl_00",
+        "stl_01",
+        "stl_02",
+        "stl_03",
+        "stl_04",
+        "stl_05",
+        "stl_06",
+        "stl_07",
+        "usaf_bars",
+        "fine_lines",
+        "text",
+        "sparse_dots"
+      ],
+      "imageset": "conf",
+      "nu": 2000.0,
+      "pattern": "hadpair",
+      "rho_bar": 0.6,
+      "seed": 0,
+      "select_rule": "discrepancy",
+      "side": 64,
+      "sigma_b": 0.0,
+      "stage": "S2C",
+      "tau": 5e-08
+    },
+    {
+      "M": 2048,
+      "arms": [
+        "RQL",
+        "POISSON-LIN",
+        "PRECORRECT",
+        "GI"
+      ],
+      "cell_id": "S2C_c0017",
+      "images": [
+        "stl_00",
+        "stl_01",
+        "stl_02",
+        "stl_03",
+        "stl_04",
+        "stl_05",
+        "stl_06",
+        "stl_07",
+        "usaf_bars",
+        "fine_lines",
+        "text",
+        "sparse_dots"
+      ],
+      "imageset": "conf",
+      "nu": 2000.0,
+      "pattern": "hadpair",
+      "rho_bar": 0.6,
+      "seed": 1,
+      "select_rule": "discrepancy",
+      "side": 64,
+      "sigma_b": 0.0,
+      "stage": "S2C",
+      "tau": 5e-08
+    },
+    {
+      "M": 2048,
+      "arms": [
+        "RQL",
+        "POISSON-LIN",
+        "PRECORRECT",
+        "GI"
+      ],
+      "cell_id": "S2C_c0018",
+      "images": [
+        "stl_00",
+        "stl_01",
+        "stl_02",
+        "stl_03",
+        "stl_04",
+        "stl_05",
+        "stl_06",
+        "stl_07",
+        "usaf_bars",
+        "fine_lines",
+        "text",
+        "sparse_dots"
+      ],
+      "imageset": "conf",
+      "nu": 2000.0,
+      "pattern": "hadpair",
+      "rho_bar": 0.6,
+      "seed": 2,
+      "select_rule": "discrepancy",
+      "side": 64,
+      "sigma_b": 0.0,
+      "stage": "S2C",
+      "tau": 5e-08
+    },
+    {
+      "M": 2048,
+      "arms": [
+        "RQL",
+        "POISSON-LIN",
+        "PRECORRECT",
+        "GI"
+      ],
+      "cell_id": "S2C_c0019",
+      "images": [
+        "stl_00",
+        "stl_01",
+        "stl_02",
+        "stl_03",
+        "stl_04",
+        "stl_05",
+        "stl_06",
+        "stl_07",
+        "usaf_bars",
+        "fine_lines",
+        "text",
+        "sparse_dots"
+      ],
+      "imageset": "conf",
+      "nu": 100.0,
+      "pattern": "hadpair",
+      "rho_bar": 1.0,
+      "seed": 0,
+      "select_rule": "discrepancy",
+      "side": 64,
+      "sigma_b": 0.0,
+      "stage": "S2C",
+      "tau": 5e-08
+    },
+    {
+      "M": 2048,
+      "arms": [
+        "RQL",
+        "POISSON-LIN",
+        "PRECORRECT",
+        "GI"
+      ],
+      "cell_id": "S2C_c0020",
+      "images": [
+        "stl_00",
+        "stl_01",
+        "stl_02",
+        "stl_03",
+        "stl_04",
+        "stl_05",
+        "stl_06",
+        "stl_07",
+        "usaf_bars",
+        "fine_lines",
+        "text",
+        "sparse_dots"
+      ],
+      "imageset": "conf",
+      "nu": 100.0,
+      "pattern": "hadpair",
+      "rho_bar": 1.0,
+      "seed": 1,
+      "select_rule": "discrepancy",
+      "side": 64,
+      "sigma_b": 0.0,
+      "stage": "S2C",
+      "tau": 5e-08
+    },
+    {
+      "M": 2048,
+      "arms": [
+        "RQL",
+        "POISSON-LIN",
+        "PRECORRECT",
+        "GI"
+      ],
+      "cell_id": "S2C_c0021",
+      "images": [
+        "stl_00",
+        "stl_01",
+        "stl_02",
+        "stl_03",
+        "stl_04",
+        "stl_05",
+        "stl_06",
+        "stl_07",
+        "usaf_bars",
+        "fine_lines",
+        "text",
+        "sparse_dots"
+      ],
+      "imageset": "conf",
+      "nu": 100.0,
+      "pattern": "hadpair",
+      "rho_bar": 1.0,
+      "seed": 2,
+      "select_rule": "discrepancy",
+      "side": 64,
+      "sigma_b": 0.0,
+      "stage": "S2C",
+      "tau": 5e-08
+    },
+    {
+      "M": 2048,
+      "arms": [
+        "RQL",
+        "POISSON-LIN",
+        "PRECORRECT",
+        "GI"
+      ],
+      "cell_id": "S2C_c0022",
+      "images": [
+        "stl_00",
+        "stl_01",
+        "stl_02",
+        "stl_03",
+        "stl_04",
+        "stl_05",
+        "stl_06",
+        "stl_07",
+        "usaf_bars",
+        "fine_lines",
+        "text",
+        "sparse_dots"
+      ],
+      "imageset": "conf",
+      "nu": 500.0,
+      "pattern": "hadpair",
+      "rho_bar": 1.0,
+      "seed": 0,
+      "select_rule": "discrepancy",
+      "side": 64,
+      "sigma_b": 0.0,
+      "stage": "S2C",
+      "tau": 5e-08
+    },
+    {
+      "M": 2048,
+      "arms": [
+        "RQL",
+        "POISSON-LIN",
+        "PRECORRECT",
+        "GI"
+      ],
+      "cell_id": "S2C_c0023",
+      "images": [
+        "stl_00",
+        "stl_01",
+        "stl_02",
+        "stl_03",
+        "stl_04",
+        "stl_05",
+        "stl_06",
+        "stl_07",
+        "usaf_bars",
+        "fine_lines",
+        "text",
+        "sparse_dots"
+      ],
+      "imageset": "conf",
+      "nu": 500.0,
+      "pattern": "hadpair",
+      "rho_bar": 1.0,
+      "seed": 1,
+      "select_rule": "discrepancy",
+      "side": 64,
+      "sigma_b": 0.0,
+      "stage": "S2C",
+      "tau": 5e-08
+    },
+    {
+      "M": 2048,
+      "arms": [
+        "RQL",
+        "POISSON-LIN",
+        "PRECORRECT",
+        "GI"
+      ],
+      "cell_id": "S2C_c0024",
+      "images": [
+        "stl_00",
+        "stl_01",
+        "stl_02",
+        "stl_03",
+        "stl_04",
+        "stl_05",
+        "stl_06",
+        "stl_07",
+        "usaf_bars",
+        "fine_lines",
+        "text",
+        "sparse_dots"
+      ],
+      "imageset": "conf",
+      "nu": 500.0,
+      "pattern": "hadpair",
+      "rho_bar": 1.0,
+      "seed": 2,
+      "select_rule": "discrepancy",
+      "side": 64,
+      "sigma_b": 0.0,
+      "stage": "S2C",
+      "tau": 5e-08
+    },
+    {
+      "M": 2048,
+      "arms": [
+        "RQL",
+        "POISSON-LIN",
+        "PRECORRECT",
+        "GI"
+      ],
+      "cell_id": "S2C_c0025",
+      "images": [
+        "stl_00",
+        "stl_01",
+        "stl_02",
+        "stl_03",
+        "stl_04",
+        "stl_05",
+        "stl_06",
+        "stl_07",
+        "usaf_bars",
+        "fine_lines",
+        "text",
+        "sparse_dots"
+      ],
+      "imageset": "conf",
+      "nu": 2000.0,
+      "pattern": "hadpair",
+      "rho_bar": 1.0,
+      "seed": 0,
+      "select_rule": "discrepancy",
+      "side": 64,
+      "sigma_b": 0.0,
+      "stage": "S2C",
+      "tau": 5e-08
+    },
+    {
+      "M": 2048,
+      "arms": [
+        "RQL",
+        "POISSON-LIN",
+        "PRECORRECT",
+        "GI"
+      ],
+      "cell_id": "S2C_c0026",
+      "images": [
+        "stl_00",
+        "stl_01",
+        "stl_02",
+        "stl_03",
+        "stl_04",
+        "stl_05",
+        "stl_06",
+        "stl_07",
+        "usaf_bars",
+        "fine_lines",
+        "text",
+        "sparse_dots"
+      ],
+      "imageset": "conf",
+      "nu": 2000.0,
+      "pattern": "hadpair",
+      "rho_bar": 1.0,
+      "seed": 1,
+      "select_rule": "discrepancy",
+      "side": 64,
+      "sigma_b": 0.0,
+      "stage": "S2C",
+      "tau": 5e-08
+    },
+    {
+      "M": 2048,
+      "arms": [
+        "RQL",
+        "POISSON-LIN",
+        "PRECORRECT",
+        "GI"
+      ],
+      "cell_id": "S2C_c0027",
+      "images": [
+        "stl_00",
+        "stl_01",
+        "stl_02",
+        "stl_03",
+        "stl_04",
+        "stl_05",
+        "stl_06",
+        "stl_07",
+        "usaf_bars",
+        "fine_lines",
+        "text",
+        "sparse_dots"
+      ],
+      "imageset": "conf",
+      "nu": 2000.0,
+      "pattern": "hadpair",
+      "rho_bar": 1.0,
+      "seed": 2,
+      "select_rule": "discrepancy",
+      "side": 64,
+      "sigma_b": 0.0,
+      "stage": "S2C",
+      "tau": 5e-08
+    },
+    {
+      "M": 2048,
+      "arms": [
+        "RQL",
+        "POISSON-LIN",
+        "PRECORRECT",
+        "GI"
+      ],
+      "cell_id": "S2C_c0028",
+      "images": [
+        "stl_00",
+        "stl_01",
+        "stl_02",
+        "stl_03",
+        "stl_04",
+        "stl_05",
+        "stl_06",
+        "stl_07",
+        "usaf_bars",
+        "fine_lines",
+        "text",
+        "sparse_dots"
+      ],
+      "imageset": "conf",
+      "nu": 100.0,
+      "pattern": "gam4",
+      "rho_bar": 0.05,
+      "seed": 0,
+      "select_rule": "discrepancy",
+      "side": 64,
+      "sigma_b": 0.0,
+      "stage": "S2C",
+      "tau": 5e-08
+    },
+    {
+      "M": 2048,
+      "arms": [
+        "RQL",
+        "POISSON-LIN",
+        "PRECORRECT",
+        "GI"
+      ],
+      "cell_id": "S2C_c0029",
+      "images": [
+        "stl_00",
+        "stl_01",
+        "stl_02",
+        "stl_03",
+        "stl_04",
+        "stl_05",
+        "stl_06",
+        "stl_07",
+        "usaf_bars",
+        "fine_lines",
+        "text",
+        "sparse_dots"
+      ],
+      "imageset": "conf",
+      "nu": 100.0,
+      "pattern": "gam4",
+      "rho_bar": 0.05,
+      "seed": 1,
+      "select_rule": "discrepancy",
+      "side": 64,
+      "sigma_b": 0.0,
+      "stage": "S2C",
+      "tau": 5e-08
+    }
+  ],
+  "est_hours": 5.855,
+  "frozen_inputs": [
+    {
+      "path": "data/r63_images/64/stl_00.png",
+      "sha256": "bfb2f0df6a641e4c61752dde016c766dcee1c48e0a5b0a0102d0b848372790d1"
+    },
+    {
+      "path": "data/r63_images/64/stl_01.png",
+      "sha256": "b9274589f94d6e6a3f3576e56a0dc14d16b37c12abb1b1aa5c6fd71801afcc40"
+    },
+    {
+      "path": "data/r63_images/64/stl_02.png",
+      "sha256": "1c2f1d0823316fc570ce3b50bf0730859d8a9835e4c96bd014d250bb309aa021"
+    },
+    {
+      "path": "data/r63_images/64/stl_03.png",
+      "sha256": "a230bf3ac3542df7cbc7b771675357065d4cb3ce83d9019809651d71f9c90fc1"
+    },
+    {
+      "path": "data/r63_images/64/stl_04.png",
+      "sha256": "0d8ea9806022fe57bbf23df1a0a71432e7d207008329d78bff7f4571945ce9ad"
+    },
+    {
+      "path": "data/r63_images/64/stl_05.png",
+      "sha256": "4872843998f8e92fbd851a3cab608f538b24b6baf083181e5b1ecfe844cb64d3"
+    },
+    {
+      "path": "data/r63_images/64/stl_06.png",
+      "sha256": "bf601be478b3a29f60aed3634eb5dba8aa3f6c6ab292fb7d47d0909120621102"
+    },
+    {
+      "path": "data/r63_images/64/stl_07.png",
+      "sha256": "c50810e2c76886e7c26c2e475949426d56e9cd6c01bcc77a6c90bab358bc7524"
+    },
+    {
+      "path": "data/r63_images/64/usaf_bars.png",
+      "sha256": "a684705e394858d516cab6b71492ced5a9de144f245849e26d31c323627106b9"
+    },
+    {
+      "path": "data/r63_images/64/fine_lines.png",
+      "sha256": "96be33639d7a1fff0e664cfddaeca24981e2237e84fcaff31e9235e6a5a11a89"
+    },
+    {
+      "path": "data/r63_images/64/text.png",
+      "sha256": "ec9ce9eddb7bbe2d39e58bfadddf26a2e7b63c61e0a1bee8fc9151e16a5c8950"
+    },
+    {
+      "path": "data/r63_images/64/sparse_dots.png",
+      "sha256": "e944dd7931569392c7379ac7f260aec6acc1e40eda2a5e2e72847088852b85a6"
+    }
+  ],
+  "meta_json": "results/round63/shards/S2C_01_meta.json",
+  "output_csv": "results/round63/shards/S2C_01.csv",
+  "priority": 3,
+  "shard_id": "S2C_01",
+  "stage": "S2C"
+}
