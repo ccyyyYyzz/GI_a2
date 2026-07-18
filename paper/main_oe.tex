@@ -56,12 +56,18 @@ small, uniformly positive fixed-photon-budget gain remained
 $+0.23$~dB) --- the multiplex-limited phase. In a second preregistered study
 (Study~2, $32^2$), spatial occupancy was varied at \emph{equal mean detector
 load and equal incident dose}, raising the measured bucket contrast from
-$\Cu = 0.040$ (occupancy $50\%$) to $1.27$ (raster), and
-\SPH{S2 primary k=16 verdict sentence: median $S$ + CI or honest negative}.
-Under the same protocol the fixed-budget high-flux gain grew monotonically
-along the contrast ladder (median $+0.65$, $+4.17$~dB at occupancy $50\%$
-and $3.1\%$, respectively), and the gain survived dynamic scattering with
-coefficient of variation $0.20$. The resulting operating-point map opens up
+$\Cu = 0.040$ (occupancy $50\%$) to $1.27$ (raster). On the gate-carrying
+$1.6\%$-occupancy arm the preregistered acquisition-speed gate returned
+formally negative on scene breadth ($16/24$ scenes accelerated versus the
+preregistered $18/24$ bar), while the acceleration, where measurable, was
+large and significant (median $6.8\times$, bootstrap lower bound
+$2.8\times$) and the frozen fixed-budget secondary passed ($+1.16$~dB
+median, $19/24$ scenes positive); the non-accelerating scenes are precisely
+the lowest-contrast families, so the confirmatory cohort itself straddles
+the predicted contrast boundary. Under the same protocol the fixed-budget
+high-flux gain grew monotonically along the contrast ladder (median
+$+0.65$, $+4.17$~dB at occupancy $50\%$ and $3.1\%$, respectively), and the
+gain survived dynamic scattering with coefficient of variation $0.20$. The resulting operating-point map opens up
 an avenue for photon-budget-limited and dwell-time-limited single-pixel
 systems.
 \end{abstract}
@@ -332,18 +338,46 @@ threshold on every sparse rung:\ $\Gamma = 1.09$, $6.07$, $8.66$, and
 $34.79$, respectively [Fig.~\ref{fig:ladder}(c)].
 
 \subsection{Primary confirmatory outcome ($k = 16$)}
-\SPH{S2 primary verdict paragraph: frozen analyzer output — median
-$S_{\mathrm{gate}}$, bootstrap CI, $\ge 18/24$ tally, fixed-budget
-secondary; honest reporting either way; Fig.~\ref{fig:ladder}(e)}
+% Frozen analyzer output verbatim (results/round63_study2/STUDY2_SUMMARY.md,
+% tag study2-scored). Honest reporting; no post-hoc gate change.
+The preregistered acquisition-speed gate returned formally negative:\ of its
+three frozen criteria, the effect-size criteria passed --- median
+$S_{\mathrm{gate}} = 6.8$ (bar:\ $\ge 3$) with family-stratified bootstrap
+lower bound $2.8$ (bar:\ $> 1$) --- but the breadth criterion failed, with
+$16/24$ scenes accelerating against the preregistered $18/24$ bar
+[Fig.~\ref{fig:ladder}(e)]. The frozen fixed-budget secondary passed all
+three of its criteria (median $+1.16$~dB at $\nu = 2000$, $19/24$ scenes
+positive, bootstrap lower bound $+0.72$~dB); by the preregistered hierarchy
+it cannot rescue the failed primary, and no geometry, image-class, or
+endpoint redesign follows.
+
+The composition of the failure is itself the phase diagram at work. The
+eight non-accelerating scenes comprise the entire microtexture family
+($0/4$; three safe-range-uninformative, one fast-arm-censored), half of the
+contour family, and one chirp instance, while glyph, maze, and spokes
+accelerated $4/4$ with per-scene speedups of $5$--$33\times$. Ranking the
+six families by their measured bucket contrast reproduces the gate outcome
+exactly:\ $\Cu = 0.53$ (maze, $4/4$), $0.41$ (glyph, $4/4$), $0.38$
+(spokes, $4/4$), $0.28$ (chirp, $3/4$), $0.27$ (contour, $1/4$), $0.17$
+(microtexture, $0/4$). The contrast boundary predicted by the mechanism
+does not merely separate Study~1 from Study~2 --- it passes through the
+Study-2 scene ensemble itself, and the per-family gate outcome is monotone
+in measured contrast (a descriptive observation; no statistic in this
+paragraph entered any decision rule).
 
 \subsection{Fixed-budget gain along the ladder}
 % Numbers: robustness/controls CSVs (commit b0a70ad).
-At fixed incident photon budget ($\nu = 2000$) the high-flux gain grows
-monotonically with pattern contrast:\ per-image median $+0.65$~dB
-($24/24$ scenes positive) at $k = 512$, $+4.17$~dB ($24/24$) at the $k = 32$
-robustness arm, and $+3.64$~dB ($21/24$) at the raster control,
-respectively \SPH{k=16 primary fixed-budget number when analyzer runs}.
-The dense rung reproduces the Study-1 magnitude, confirming that the
+At fixed incident photon budget ($\nu = 2000$) every rung of the ladder
+shows a positive high-flux median gain, and the dense rung is the smallest:\
+per-image median $+0.65$~dB ($24/24$ scenes positive) at $k = 512$,
+$+4.17$~dB ($24/24$) at $k = 32$, $+1.16$~dB ($19/24$) at the gate-carrying
+$k = 16$ arm, and $+3.64$~dB ($21/24$) at the raster control, respectively
+[Fig.~\ref{fig:ladder}(e)]. The profile across the sparse rungs is not
+monotone in contrast:\ sparsity raises bucket contrast but simultaneously
+raises the operator conditioning burden ($\kappa_A = n/k$), and the two
+effects compete --- $k = 32$ combines most of the contrast benefit with
+half the conditioning burden of $k = 16$ and attains the largest gain. The
+dense-rung value reproduces the Study-1 magnitude, confirming that the
 $64^{2}$-to-$32^{2}$ re-parameterization did not manufacture the effect.
 
 \subsection{Mechanism separation: equal-load gain is not rate starvation}
