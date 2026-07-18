@@ -11,7 +11,11 @@ declare -A SESS=( [pro1a]=r63_pro1a [pro1b]=r63_pro1b [pro2a]=r63_pro2a [pro2b]=
 declare -A MISS=( [pro1a]=0 [pro1b]=0 [pro2a]=0 [pro2b]=0 [pro2c]=0 )
 
 LAST_DIGEST=0
+REBIND=/mnt/d/GI_another/code/round63/colab/live_rebind.sh
 while true; do
+  # self-heal: refresh runtime-proxy tokens every cycle (they expire ~30-45
+  # min and the CLI's 401 path prunes rows instead of refreshing)
+  bash "$REBIND" >/dev/null 2>&1
   all_done=1
   CYCLE_OUT=""
   ANOMALY=0
