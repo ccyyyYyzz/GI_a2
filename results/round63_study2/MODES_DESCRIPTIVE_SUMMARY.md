@@ -48,12 +48,17 @@ All numbers: RQL arm, PSNR_rad, means over completed rows.
 
 | arm | k | mean Δ | median Δ | positive |
 |---|---|---|---|---|
-| robustness (no gate) | 32 | **+5.10 dB** | **+4.17 dB** | 24/24 |
-| control | 512 | +0.79 | +0.65 | 24/24 |
-| control | 1 | +2.59 | +3.64 | 21/24 |
+| robustness (no gate) | 32 | **+5.10 dB** | **+4.13 dB** | 24/24 |
+| control | 512 | +0.79 | +0.64 | 24/24 |
+| control | 1 | +2.59 | +3.56 | 21/24 |
 
 (The k=16 primary fixed-budget secondary is computed only by the frozen
 analyzer after the primary grid completes.)
+
+CONVENTION NOTE (2026-07-19): medians in this table were originally quoted
+from an upper-middle order statistic; corrected here to the standard
+interpolated median (matching the frozen analyzer convention). Means and
+counts unchanged.
 
 ## 4. Dynamic scattering (k=16, CV(α)=0.20, 6 reps × 3 seeds)
 
