@@ -1,0 +1,16 @@
+# ROUND63 S2 lane plan -- session pro2c (account pro2)
+# 13 shards, 71.40 est_hours total (greedy-LPT balanced)
+# one shard_id per line; blank lines and '#' comments ignored.
+S2A_DETAIL_11
+S2A_DETAIL_15
+S2A_DETAIL_21
+S2A_NATURAL_09
+S2A_NATURAL_13
+S2A_NATURAL_19
+S2A_NATURAL_23
+S2A_NATURAL_29
+S2A_NATURAL_31
+S2A_NATURAL_33
+S2A_NATURAL_35
+S2A_NATURAL_37
+S3_03
