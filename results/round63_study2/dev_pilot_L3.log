@@ -1,0 +1,24 @@
+[L3] rho=0.05 nu=5 s0 PSNR_rad=12.31
+[L3] rho=0.05 nu=5 s1 PSNR_rad=14.52
+[L3] rho=0.05 nu=20 s0 PSNR_rad=8.13
+[L3] rho=0.05 nu=20 s1 PSNR_rad=7.87
+[L3] rho=0.05 nu=200 s0 PSNR_rad=8.28
+[L3] rho=0.05 nu=200 s1 PSNR_rad=8.46
+[L3] rho=0.05 nu=1000 s0 PSNR_rad=8.57
+[L3] rho=0.05 nu=1000 s1 PSNR_rad=8.78
+[L3] rho=0.05 nu=2000 s0 PSNR_rad=8.57
+[L3] rho=0.05 nu=2000 s1 PSNR_rad=8.57
+[L3] rho=0.6 nu=5 s0 PSNR_rad=8.44
+[L3] rho=0.6 nu=5 s1 PSNR_rad=9.41
+[L3] rho=0.6 nu=20 s0 PSNR_rad=9.38
+[L3] rho=0.6 nu=20 s1 PSNR_rad=10.10
+[L3] rho=0.6 nu=200 s0 PSNR_rad=9.85
+[L3] rho=0.6 nu=200 s1 PSNR_rad=10.01
+[L3] rho=0.6 nu=1000 s0 PSNR_rad=9.88
+[L3] rho=0.6 nu=1000 s1 PSNR_rad=9.98
+[L3] rho=0.6 nu=2000 s0 PSNR_rad=9.88
+[L3] rho=0.6 nu=2000 s1 PSNR_rad=9.93
+
+[L3] detail32_dev_microtexture Lblob_matched: R=-0.00 dB
+[L3] SAFE_RANGE_UNINFORMATIVE
+[L3] DONE
