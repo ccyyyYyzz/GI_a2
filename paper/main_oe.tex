@@ -1,0 +1,214 @@
+% ROUND63 OE manuscript — working skeleton (pre-F1 draft)
+% PORTING NOTE: written against the standard article class so it compiles
+% anywhere; port to opticajnl.cls (Optica template) at submission prep — the
+% section structure below already follows the OE research-article shape.
+% PLACEHOLDER DISCIPLINE: every number that depends on S1/S2/S3/S4 outputs is
+% written as \SPH{...} (S-placeholder) and indexed in PLACEHOLDER_LEDGER.md;
+% the manuscript is "filled" only after the confirmatory runs, and zero \SPH
+% may survive submission (campaign rule inherited from the 2026-07-13 audit).
+\documentclass[10pt,twocolumn]{article}
+\usepackage{amsmath,amssymb,bm}
+\usepackage{graphicx}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\newcommand{\SPH}[1]{\textcolor{red}{[#1]}}   % unfilled campaign placeholder
+\newcommand{\rhobar}{\bar{\rho}}
+
+\title{Dead-time-aware high-flux single-pixel imaging: operating beyond the
+conventional photon-counting regime with renewal-statistical reconstruction}
+
+% Author block: USER DECISION (affiliation + collaborators) — do not fill.
+\author{\SPH{author block — user decision}}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+% Chen-genre shape: field-first opening, pain point, "Here we report ...",
+% mechanism, headline numbers, application close. NO "for the first time"
+% (round-4 novelty discipline), no "first".
+Single-pixel imaging with photon-counting detectors is conventionally operated
+at low photon flux, keeping the detector dead-time loss below a few percent at
+the cost of long acquisition times. Here we report dead-time-aware high-flux
+single-pixel imaging, in which the operating flux is deliberately raised into
+the strongly nonlinear regime $\rhobar \in [0.3, 1]$ (dead-time duty $\rhobar
+= \lambda\tau$) and the nonlinearity is absorbed by a convex renewal
+quasi-likelihood (RQL) reconstruction with a deployment-legal, truth-free
+regularization rule. A finite-window count-information analysis explains why
+this is possible and where it must stop: the Fisher information of the
+integrated photon count possesses a principal ridge at the cube-root load
+$\rho^{*}(\nu) = (6\nu)^{1/3} - 2/3 + O(\nu^{-1/3})$ ($\nu = T/\tau$ dead-time
+slots per exposure), arising from terminal detector-phase information loss.
+Preregistered simulations across \SPH{S2-A grid summary} show a median
+time-to-quality acceleration of \SPH{S2 median $S$ with CI} at matched
+radiometric image quality relative to the conventional $\rhobar = 0.05$
+operating point, robust to \SPH{S3 mismatch envelope summary}. The proposed
+operating-point map opens up an avenue for photon-budget-limited and
+dwell-time-limited single-pixel systems.
+\end{abstract}
+
+\section{Introduction}
+% Para 1 — field-first (Chen style): SPI/ghost imaging + photon counting
+% context, applications (low-light, NIR/SWIR, LiDAR-adjacent, biological).
+\SPH{field-first paragraph}
+
+% Para 2 — the pain point: the 5\% rule / low-flux convention; dead time as
+% the reason; time cost scales inversely with allowed flux; cite Liu-2021-type
+% pre-correction, Li-2023 RJMCMC, Jorgensen-2026 dead-time MLE as the
+% correction-centric line (defensive citations, round-4 list).
+\SPH{pain-point paragraph}
+
+% Para 3 — the reframe (our contribution): not "correct the distortion" but
+% "move the operating point"; RQL joint inverse problem; the ridge as the
+% principled boundary. Safe novelty wording VERBATIM from round-4/5 ruling:
+Previous studies established count-rate-dependent CRLB degradation,
+task-specific optimal operating fluxes, and high-flux recovery using
+time-resolved dead-time models \SPH{cites: Wang 2011; B\'ecares--Bl\'azquez
+2012; Gupta et al.; Rapp \& Goyal; Jorgensen--Johnson 2026; 2025 dToF}. Here,
+we study a different information bottleneck: a finite exposure from which only
+the integrated nonparalyzable count is retained. For this count-only
+observation, we derive a principal finite-window Fisher-information ridge and
+show that its optimal load obeys a cube-root law, $\rho^{*}(\nu) =
+(6\nu)^{1/3} - 2/3 + O(\nu^{-1/3})$, arising from terminal detector-phase
+information loss.
+
+% Para 4 — contributions list + preregistration statement + paper roadmap.
+\SPH{contributions + prereg-statement paragraph}
+
+\section{Physical model and problem statement}
+\label{sec:model}
+% Frozen content (spec D2.1 §2): non-paralyzable renewal counting, active
+% start, exact PMF; dimensionless axes; arrival rates lambda_i = Phi <a_i, x>
+% + d; raw-count observation; the exact PMF via the Poisson representation.
+A single-pixel detector with dead time $\tau$ observes, for illumination
+pattern $a_i$ and scene $x \ge 0$, a Poisson arrival process of rate
+$\lambda_i = \Phi\, a_i^{\top} x + d$ during an exposure of duration
+$T = \nu\tau$; after each registered count the detector is blind for $\tau$
+(non-paralyzable, active start). The recorded observation is the integrated
+count $N_i$ alone, with exact law
+\begin{equation}
+  P(N_i \ge m) = F_{\Gamma(m,\lambda_i)}\!\bigl(T - (m-1)\tau\bigr)
+              = P\bigl(\mathrm{Pois}(z_m) \ge m\bigr),
+  \quad z_m = \lambda_i\,(T-(m-1)\tau).
+  \label{eq:exactpmf}
+\end{equation}
+The per-slot load $\rho_i = \lambda_i \tau$ is the dead-time duty; the
+conventional regime keeps $\rho \lesssim 0.05$.
+\SPH{paragraph: measurement ensembles (Bernoulli, complementary Hadamard
+pairs at $2M$ exposures, gamma-modulated), per-pattern $\rho$ percentiles}
+
+\section{Renewal quasi-likelihood reconstruction}
+\label{sec:rql}
+% Frozen: the convex objective; why not full Gaussian (supplement pointer);
+% relation of the single-frame root to pre-correction (honesty clause).
+We reconstruct by
+\begin{equation}
+  \hat{x} = \arg\min_{x \ge 0}\;
+  \frac{1}{M}\sum_{i=1}^{M}\Bigl[(T - N_i\tau)\,\lambda_i(x)
+  - N_i \log \lambda_i(x)\Bigr] + \lambda_{\mathrm{TV}}\,
+  \mathrm{TV}(x),
+  \label{eq:rql}
+\end{equation}
+with $\lambda_i(x) = \Phi a_i^{\top} x + d$. The data term is convex in
+$\lambda$ (and in $x$ through the affine map); its single-measurement
+stationary point $\hat\lambda = N/(T - N\tau)$ coincides with the classical
+dead-time rate correction, so the estimator's novelty resides not in the
+per-measurement formula but in the joint regularized inverse problem and the
+operating-point map it enables. At ceiling counts ($N\tau \ge T$) the
+objective is unbounded below in $\lambda$ — the true identifiability boundary
+of count-only observation; the fraction of ceiling counts is recorded per
+cell. A full heteroscedastic Gaussian likelihood fails at high load through a
+variance-collapse non-coercivity (Supplement~\SPH{S-ref}).
+
+\subsection{Truth-free regularization selection and descriptive audit}
+\label{sec:selection}
+% Frozen F1 rule (round-4 + round-5): DEV/AUDIT split, DEV-only one-SE
+% selection, descriptive audit. Prereg wording VERBATIM (round-5):
+For each measurement set, patterns are split once into a development part
+(80\% of pattern groups; complementary pairs kept whole) and an audit part
+(20\%). The TV weight is chosen on the development part alone: a grouped
+5-fold cross-fit scores each candidate $\eta = \lambda_{\mathrm{TV}} /
+\lambda_{\mathrm{max}}$ on a dimensionless 9-point path by the calibrated
+renewal residual $r_i = (N_i - \mu_{\mathrm{NP}}(\hat\lambda_i)) /
+\sqrt{V_{\mathrm{NP}}(\hat\lambda_i)}$, and the largest $\eta$ within one
+fold-dispersion standard error of the minimizer is frozen. All arms are
+selected by the identical rule.
+
+The measurement audit is descriptive and does not constitute a model-adequacy
+test. All audit statistics are excluded from regularization selection,
+reconstruction, cell inclusion, and confirmatory pass/fail decisions. The
+refit-bootstrap reference distribution is conditional on a smoothed plug-in
+scene; its empirical tail ranks are therefore not calibrated model-class
+$p$-values for arbitrary scenes and can be anti-conservative in the upper
+tail when the true scene is rougher than the plug-in. Moreover, count-only
+observations collected at a single operating point cannot generally
+distinguish detector mean-response mismatch from radiometric rescaling of the
+scene. Detector-mismatch consequences are therefore quantified directly
+through the preregistered radiometric metrics in
+Section~\ref{sec:mismatch}.
+
+\section{The finite-window count-information ridge}
+\label{sec:ridge}
+% Port from paper/THEORY_SECTION_DRAFT.md (X.1-X.4) — the crown jewel.
+\SPH{port theory section: missing-information identity, cube-root law,
+peak-information expansion, VarN-still-diverges remark, zoning + CLT
+boundary; Fig.~\ref{fig:main}(a)}
+
+\section{Preregistered simulation campaign}
+\label{sec:campaign}
+% Frozen: prereg hypothesis verbatim (D2.1 §0), grids, metrics, S_j
+% definition, bootstrap, freeze/commit provenance paragraph.
+We test whether renewal quasi-likelihood reconstruction permits operation in
+$\rhobar \in [0.3, 1]$ with a statistically significant reduction in total
+optical integration time relative to the conventional $\rhobar = 0.05$
+operating point. \SPH{campaign-design paragraph: grid, images-as-units,
+time-to-quality protocol (fixed $M$, dwell scan), radiometric PSNR primary,
+censoring, stratified bootstrap, S1/S2 separation, freeze commit SHA}
+
+\section{Results}
+\label{sec:results}
+\subsection{Time-to-quality acceleration at high flux}
+\SPH{S2-A headline: median $S_j$, bootstrap CI, per-image spread;
+Fig.~\ref{fig:main}(b,c)}
+\subsection{Operating-point map and the ridge}
+\SPH{empirical $S_Q$ vs $\rhobar$ against the exact-FI envelope;
+Fig.~\ref{fig:main}(d); $\rhobar=2$ information-decreasing confirmation}
+\subsection{Robustness to detector mismatch}
+\label{sec:mismatch}
+\SPH{S3: tau error, dark, afterpulsing, start modes, guard; radiometric
+degradation envelopes; descriptive audit distributions (supplement)}
+\subsection{Pattern ensembles, undersampling, and scale}
+\SPH{S2-B/C: M/n, hadpair (2M exposure accounting), gam4, 128\textsuperscript{2}}
+\subsection{Exact-likelihood reference at small scale}
+\SPH{S4: scalar Fisher map + 8/16 px exact-vs-RQL split}
+
+\begin{figure*}[t]
+  \centering
+  \SPH{4-panel main figure per spec D2.1 §6 — (a) exists:
+  results/round63\_theory/fig\_a\_ridge\_map.pdf}
+  \caption{\SPH{main figure caption}}
+  \label{fig:main}
+\end{figure*}
+
+\section{Discussion}
+% Honest scoping: simulation-only (compensated by detector-parameter ranges +
+% full mismatch map + open frozen benchmark); narrow novelty scope of the
+% ridge (round-4 wording); count-only vs timestamp architectures (Rapp);
+% "opens up an avenue" close (Chen genre). NO separate limitations section
+% per Chen style, but the honesty lives inside these paragraphs.
+\SPH{discussion paragraphs}
+
+\section*{Code and data availability}
+All simulation code, frozen preregistration documents, per-cell manifests,
+and evidence bundles are available at \SPH{repo URL wording — user decision}.
+
+\section*{Acknowledgments}
+\SPH{funding/acknowledgments — user decision}
+
+% \bibliography{refs}
+\SPH{bibliography — build refs.bib during S5 with defensive citations from
+docs/ROUND63\_GPT\_ROUND4\_DIGEST.md \S Q2}
+
+\end{document}
