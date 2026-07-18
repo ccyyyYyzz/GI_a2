@@ -1,57 +1,59 @@
-"""ROUND63 lambda_TV selection + model-adequacy audit — F1-FROZEN rule.
+"""ROUND63 lambda_TV rule + descriptive measurement audit — F1-FROZEN
+(`analytic_score_concentration`, GPT round-6 ruling; audit layer = round-5).
 
-Source of record: docs/ROUND63_GPT_ROUND4_DIGEST.md (GPT round-4 ruling,
-"outer AUDIT split + coherent refit bootstrap"). This file supersedes the
-round-3 six-step draft rule; the changes and their reasons:
+Rule history (each superseded layer probed to death before replacement —
+docs/ROUND63_GPT_ROUND{4,5,6}_*.md):
+  round-3 six-step discrepancy      -> probe: 10/10 null false alarms (gate)
+  round-4 coherent-bootstrap gate   -> probe: 7/20 size + 0/10 power
+  round-5 descriptive audit (kept)  -> no binary gate, flag-free diagnostics
+  round-6 selection replacement     -> S1: one-SE discrepancy collapses to
+    eta*=1 (TV-null) everywhere; mechanism = bucket-SPI multiplex
+    disadvantage (per-frame pattern contrast sd(u) = sqrt(sum x^2) ~ 1.6%
+    << shot noise, so held-out renewal fit is FLAT in eta at M <= n).
+    Truth-free per-image search is structurally powerless here — replaced by
+    an ANALYTIC noise-scaled TV weight with one development-calibrated
+    concentration threshold.
 
-  * OUTER 80/20 DEV/AUDIT split per cell (logical groups; hadpair pairs are
-    atomic). AUDIT never touches lam_max / eta selection / initializers.
-  * eta* per arm from a grouped K=5 fold cross-fit INSIDE DEV, one-SE rule on
-    per-fold MEAN squared calibrated renewal residuals. GOF is fully OUT of
-    the acceptance set: adequacy can never change the estimator.
-  * Measurement audit = DESCRIPTIVE ONLY (round-5 FINAL ruling,
-    docs/ROUND63_GPT_ROUND5_RULING.md: NO binary adequacy gate — the
-    outcome-blind probe killed it on both size, 7/20 null false alarms, and
-    power, 0/10 on paralyzable/tau-err; detector mean mismatch is absorbed
-    into scene scale and is structurally unidentifiable from count-only
-    single-operating-point data). Once per cell, by RQL: a coherent plugin
-    scene (DEV fit at eta_min, 25 iters) predicts the untouched AUDIT;
-    B_DIAG=39 coherent refit replicates (generator = A @ x_plugin + dark,
-    never concatenated cross-fitted lambdas; NO early stop — truncated
-    replicate sets make ranks non-comparable) yield continuous descriptive
-    ranks: D_ratio, plugin_upper_rank q_D (NOT a calibrated p-value), q_mean
-    (+ MEAN_RESIDUAL_WARN marker), q_corr (+ LOAD_CORR_WARN), and the
-    fixed-lam_hat lower-tail LEAKAGE_SUSPECT (q_low <= 0.01).
-  * No audit statistic may affect eta*, reconstruction, cell inclusion,
-    campaign gates, or confirmatory inference; detector-mismatch damage is
-    quantified directly by S3's preregistered radiometric metrics.
-  * All RNG keys are integers (the round-4 audit caught int(round(T)) == 0 for
-    physical T, which had different-nu cells sharing bootstrap streams).
+THE FROZEN RULE (round-6 digest §1, all constants final):
+  lambda_TV,a = c_i * sigma_{g,a} * sqrt(2 ln n)
+  sigma_{g,a} = Phi * sqrt(kappa_A * v_{s,a} / M)
+    kappa_A   = max_j (1/M) sum_i a_ij^2          (actual pattern matrix)
+    v_{s,a}   = Var_{N ~ exact NP renewal(lam_bar, T, tau_hat)}[s_a(N)]
+                (physics.score_variance — exact PMF enumeration; CLT moments
+                are FORBIDDEN, they break at nu = 5, 10)
+    lam_bar   = Phi + dark_hat                    (E[u] = 1 analytic)
+  c_i two-bin: 0.50 if C_hat_i <= C0 else 0.25   (no continuous maps)
+  C_hat = clip[ n (S_N^2 - V0)_+ / ((Phi mu'_0)^2 omega_A), 1, 64 ]
+    S_N^2 from DEV raw counts; mu0, V0, mu'_0 exact-PMF moments at lam_bar;
+    omega_A = (1/(M_dev n)) sum_{i in DEV} sum_j (a_ij - abar_j)^2
+    S_N^2 <= V0 -> C_hat = 1 (smooth bin; no negative extrapolation)
+  C0 is THE one development-calibrated constant (Pass A, round-6 §1.6/§5):
+  candidates {0,1.5,2,3,4,6,8,12,16,inf}, endpoint-oracle regret objective
+  J(C0) = Q0.90 over dev images, tie -> larger C0 within 0.02 dB. Frozen in
+  C0_FROZEN.json next to this file after Pass A; before that callers must
+  pass C0 explicitly. ALL arms share the same c_i.
+  Paper wording: "analytically noise-scaled TV with one development-
+  calibrated concentration threshold" — never "training-free".
 
-Frozen constants (F1): AUDIT_FRAC=0.2, MIN_AUDIT_GROUPS=128, K=5,
-ETA_GRID as below, TV_NULL_REL=1e-3, lam_max expansion cap 40 / 26 log
-bisections, N_SEL=60 path iters, N_AUDIT=25 audit iters, B_DIAG=39 (always
-all 39), B_LEAK=199, P_LEAK=0.01.
+The DEV/AUDIT 80/20 split SURVIVES: DEV -> the concentration statistic;
+AUDIT -> the round-5 descriptive audit (unchanged semantics: continuous
+ranks, no adequacy gate, nothing may affect reconstruction or inference).
+The old production path (lam_max bisection, K-fold cross-fit, one-SE) is
+deleted; git history keeps it.
 
-RNG stream layout (all-integer keys, disjoint by the trailing tag):
-  outer split      rng_for(*cell_key, seed, 63, 4, 0)
-  inner DEV folds  rng_for(*cell_key, seed, 63, 4, 1)
-  audit bootstrap  rng_for(*cell_key, seed, 63, 4, 2, tau_ns)
-  leak bootstrap   rng_for(*cell_key, seed, 63, 4, 3, tau_ns)
-cell_key = (kind_id, rho_milli, nu_int, M, side) — integers built by the
-caller (campaign.run_cell / probes); tau_ns = int(round(tau * 1e9)).
+RNG stream layout (integer keys): outer split rng_for(*cell_key, seed, 63,
+4, 0); audit bootstrap (..., 63, 4, 2, tau_ns); leak bootstrap (..., 63, 4,
+3, tau_ns). cell_key = (kind_id, rho_milli, nu_int, M, side).
 
 API (campaign.py contract):
-  split_dev_audit(M, meta, cell_key, seed) -> dict split
-  select_eta_arm(arm_name, A, b, ctx, cell_key, seed, split) -> sel dict
-  audit_cell(A, b, ctx, cell_key, seed, split, sel_rql) -> audit dict
+  split_dev_audit(M, meta, cell_key, seed) -> split dict
+  concentration_stat(A, b, ctx, split) -> dict (C_hat + logged ingredients)
+  analytic_lambda(arm_name, A, ctx, C_hat, C0) -> dict (lam_tv + ingredients)
+  audit_cell(A, b, ctx, cell_key, seed, split, lam_plugin) -> audit dict
   select_eta_and_fit(arm_name, A, b, ctx, cell_key=None, seed=0,
-                     run_audit=None) -> (x_final, info)
-    run_audit defaults to (arm_name == "RQL"). info keys kept from the old
-    rule where they still exist (eta_star, lam_tv, lam_max_arm, eta_grid,
-    d_bar_curve, SE_min, ...) plus the audit block on RQL.
-float64 throughout.
+                     run_audit=None, split=None, C0=None) -> (x, info)
 """
+import json
 import os
 import sys
 from dataclasses import replace
@@ -63,29 +65,26 @@ sys.path.insert(0, HERE)
 sys.path.insert(0, os.path.dirname(HERE))
 
 from gi_core.utils import rng_for
-from physics import qmle_mean_var, simulate_counts
-from solvers import (tv_fista, tv_value, init_gi_flux, run_arm,
-                     _arm_factory, _qmle_irls_factory)
+from physics import (qmle_mean_var, simulate_counts, exact_moments,
+                     score_variance)
+from solvers import tv_fista, init_gi_flux, run_arm, _arm_factory
 
 # ---------------------------------------------------------------- F1 constants
-ETA_GRID = (1e-4, 3e-4, 1e-3, 3e-3, 1e-2, 3e-2, 1e-1, 3e-1, 1.0)
-K_FOLDS = 5
 AUDIT_FRAC = 0.20
 MIN_AUDIT_GROUPS = 128
-TV_NULL_REL = 1e-3
-N_SEL = 60          # selection-path / lam_max fits (outer iterations)
-N_AUDIT = 25        # plugin + per-replicate audit fits
-B_DIAG = 39         # refit bootstrap replicates — ALWAYS all 39 (round-5:
-                    # early stopping disabled; continuous ranks from truncated
-                    # replicate sets are not comparable)
+C_BIN_LOW = 0.50            # c for C_hat <= C0  (smooth / diffuse scenes)
+C_BIN_HIGH = 0.25           # c for C_hat >  C0  (concentrated scenes)
+C_HAT_CLIP = (1.0, 64.0)
+C0_CANDIDATES = (0.0, 1.5, 2.0, 3.0, 4.0, 6.0, 8.0, 12.0, 16.0, float("inf"))
+C0_FILE = os.path.join(HERE, "C0_FROZEN.json")
+N_AUDIT = 25                # plugin + per-replicate audit fits (round-5)
+B_DIAG = 39                 # ALWAYS all 39 (round-5: no early stop)
 B_LEAK = 199
 P_LEAK = 0.01
 LAM_FLOOR_REL = 1e-6
 
 
 def _default_cell_key(ctx, M):
-    """Fallback integer cell key when the caller supplies none (probes/smoke).
-    Production (campaign.run_cell) always passes the real grid coordinates."""
     nu_int = int(round(ctx.T / ctx.det.tau))
     return (0, 0, nu_int, int(M), int(ctx.side))
 
@@ -94,10 +93,18 @@ def _tau_ns(ctx):
     return max(1, int(round(ctx.det.tau * 1e9)))
 
 
-# ---------------------------------------------------------------- step 1: split
+def frozen_C0():
+    """The Pass-A calibrated concentration threshold; None before Pass A."""
+    if os.path.exists(C0_FILE):
+        with open(C0_FILE) as f:
+            return float(json.load(f)["C0"])
+    return None
+
+
+# ---------------------------------------------------------------- outer split
 def _logical_groups(M, meta):
-    """Logical measurement groups: one physical pattern row (bern50/gam4) or one
-    complementary hadpair pair (atomic — a fold/split never separates it)."""
+    """One physical pattern row (bern50/gam4) or one complementary hadpair
+    pair (atomic) per logical group."""
     pair_indices = meta.get("pair_indices") if isinstance(meta, dict) else None
     if pair_indices is not None and len(pair_indices) > 0:
         pairs = np.asarray(pair_indices, dtype=np.int64)
@@ -112,15 +119,15 @@ def _logical_groups(M, meta):
 
 
 def split_dev_audit(M, meta, cell_key, seed):
-    """Frozen outer split: first 80% of hash-permuted logical groups -> DEV,
-    rest -> AUDIT. Shared by ALL arms of the cell. AUDIT takes no part in
-    lam_max, eta selection, or initializer construction."""
+    """Frozen 80/20 logical-group split (hash-permuted). DEV feeds only the
+    concentration statistic; AUDIT only the descriptive audit; neither runs
+    any reconstruction hyperparameter search (round-6 §1.1)."""
     if isinstance(meta, dict) and (meta.get("continuous")
                                    or meta.get("fold_mode") == "block"):
         raise NotImplementedError(
-            "continuous acquisition has no independent AUDIT (unbounded "
-            "afterpulse tails); per the F1 ruling such cells inherit eta* from "
-            "the corresponding active-start cell with AUDIT_STATUS=NA_DEPENDENT.")
+            "continuous acquisition has no independent AUDIT; such cells "
+            "inherit lambda from the corresponding active-start cell with "
+            "AUDIT_STATUS=NA_DEPENDENT (campaign layer).")
     groups = _logical_groups(M, meta)
     G = len(groups)
     rng = rng_for(*cell_key, seed, 63, 4, 0)
@@ -136,80 +143,54 @@ def split_dev_audit(M, meta, cell_key, seed):
     return {"dev_mask": dev_mask, "audit_mask": audit_mask,
             "n_groups": G, "n_dev_groups": int(n_dev),
             "n_audit_groups": int(G - n_dev),
-            "underpowered": bool((G - n_dev) < MIN_AUDIT_GROUPS),
-            "dev_groups": [groups[gi] for gi in perm[:n_dev]]}
+            "underpowered": bool((G - n_dev) < MIN_AUDIT_GROUPS)}
 
 
-def _dev_folds(split, cell_key, seed, K=K_FOLDS):
-    """Grouped K folds INSIDE DEV (frame-index -> fold id; -1 outside DEV)."""
-    dev_groups = split["dev_groups"]
-    P = len(dev_groups)
-    K = max(2, min(K, P))
-    rng = rng_for(*cell_key, seed, 63, 4, 1)
-    perm = rng.permutation(P)
-    M = split["dev_mask"].size
-    folds = np.full(M, -1, dtype=np.int64)
-    for k, blk in enumerate(np.array_split(perm, K)):
-        for gi in blk:
-            folds[dev_groups[gi]] = k
-    return folds, K
-
-
-# ------------------------------------------------- lam_max (DEV-only by caller)
-def lam_max_arm(f_grad, x0, side, n_iter=N_SEL, tv_null_rel=TV_NULL_REL,
-                max_expand=40, n_bisect=26):
-    """Smallest lam_TV whose solution is TV-null (TV < tv_null_rel * TV(x0)).
-    Anchors the dimensionless eta path. F1 NOTE: the caller must hand this
-    DEV-only data — a full-data lam_max leaks AUDIT through the penalty scale.
-    Frozen: anchor ||grad f(x0)||, geometric expand (cap 40), 26 log bisections,
-    all fits at the selection budget."""
-    x0 = np.asarray(x0, dtype=np.float64).ravel()
-    tv0 = tv_value(x0, side)
-    _, g0 = f_grad(x0)
-    lam0 = float(np.linalg.norm(g0)) + 1e-30
-    if tv0 <= 0:
-        return lam0
-    thresh = tv_null_rel * tv0
-
-    def is_null(lam):
-        x, _ = tv_fista(f_grad, x0, float(lam), n_iter=n_iter, side=side)
-        return tv_value(x, side) < thresh
-
-    hi = lam0
-    if is_null(hi):
-        lo = hi
-        for _ in range(max_expand):
-            lo *= 0.5
-            if not is_null(lo):
-                break
-        else:
-            return hi
+# ------------------------------------------- the concentration statistic (DEV)
+def concentration_stat(A, b, ctx, split):
+    """C_hat = clip[ n (S_N^2 - V0)_+ / ((Phi mu'_0)^2 omega_A), 1, 64 ]
+    from DEV raw counts + exact-PMF moments at lam_bar = Phi + dark (round-6
+    §1.4). Deployment-legal: no truth, no reconstruction."""
+    A = np.asarray(A, dtype=np.float64)
+    b = np.asarray(b, dtype=np.float64)
+    dev = split["dev_mask"]
+    b_dev = b[dev]
+    A_dev = A[dev]
+    M_dev = int(dev.sum())
+    n = A.shape[1]
+    S_N2 = float(np.var(b_dev, ddof=1)) if M_dev >= 2 else 0.0
+    lam_bar = ctx.Phi + ctx.det.dark
+    mu0, V0, mup0 = exact_moments(lam_bar, ctx.T, ctx.det.tau)
+    abar = A_dev.mean(axis=0)
+    omega_A = float(np.mean((A_dev - abar) ** 2))
+    denom = (ctx.Phi * mup0) ** 2 * omega_A
+    if denom <= 0 or S_N2 <= V0:
+        C_hat = 1.0
     else:
-        lo = hi
-        for _ in range(max_expand):
-            hi *= 2.0
-            if is_null(hi):
-                break
-        else:
-            return hi
-    for _ in range(n_bisect):
-        mid = float(np.sqrt(lo * hi))
-        if is_null(mid):
-            hi = mid
-        else:
-            lo = mid
-    return hi
+        C_hat = float(np.clip(n * (S_N2 - V0) / denom,
+                              C_HAT_CLIP[0], C_HAT_CLIP[1]))
+    return {"C_hat": C_hat, "S_N2": S_N2, "V0_exact": V0, "mu0_exact": mu0,
+            "muprime0_exact": mup0, "omega_A": omega_A, "M_dev": M_dev}
 
 
-# ------------------------------------------------------------- shared plumbing
-def _make_factory(arm_name, ctx, x_ref):
-    if arm_name == "QMLE":
-        return _qmle_irls_factory(ctx, x_ref)
-    return _arm_factory(arm_name, ctx)
+# --------------------------------------------------- the analytic lambda rule
+def analytic_lambda(arm_name, A, ctx, C_hat, C0):
+    """lambda_TV,a = c(C_hat; C0) * Phi * sqrt(kappa_A v_{s,a} / M) *
+    sqrt(2 ln n) (round-6 §1.2/§1.5). Same c for every arm."""
+    A = np.asarray(A, dtype=np.float64)
+    M, n = A.shape
+    kappa_A = float(np.max(np.mean(A ** 2, axis=0)))
+    lam_bar = ctx.Phi + ctx.det.dark
+    v_s = score_variance(arm_name, lam_bar, ctx.T, ctx.det.tau)
+    sigma_g = ctx.Phi * np.sqrt(kappa_A * v_s / M)
+    c_used = C_BIN_LOW if C_hat <= C0 else C_BIN_HIGH
+    return {"c_used": c_used, "sigma_grad_arm": float(sigma_g),
+            "kappa_A": kappa_A, "v_s_arm": float(v_s),
+            "lambda_tv_arm": float(c_used * sigma_g * np.sqrt(2.0 * np.log(n)))}
 
 
+# --------------------------------------- descriptive measurement audit (cell)
 def _std_residuals(b, lam_hat, ctx):
-    """Standardized calibrated non-paralyzable renewal residuals."""
     mu, v = qmle_mean_var(lam_hat, ctx.T, ctx.det.tau, ctx.sigma_b)
     return (np.asarray(b, dtype=np.float64) - mu) / np.sqrt(v)
 
@@ -227,82 +208,12 @@ def _predict_lam(A_sub, x_hat, ctx):
     return np.maximum(ctx.Phi * (A_sub @ x_hat) + ctx.det.dark, lam_floor)
 
 
-# ------------------------------------------------------- step 2: eta* per arm
-def select_eta_arm(arm_name, A, b, ctx, cell_key, seed, split,
-                   eta_grid=ETA_GRID):
-    """DEV-only eta selection for one arm. Grouped K=5 cross-fit inside DEV,
-    per-fold MEAN squared calibrated renewal residual, one-SE rule
-    (SE = fold-dispersion heuristic, not a confidence interval). GOF plays no
-    part here. Returns the sel dict consumed by audit_cell / the final refit."""
-    A = np.asarray(A, dtype=np.float64)
-    b = np.asarray(b, dtype=np.float64)
-    dev = split["dev_mask"]
-    A_dev, b_dev = A[dev], b[dev]
-    folds_full, K = _dev_folds(split, cell_key, seed)
-    folds = folds_full[dev]                    # fold ids aligned to DEV frames
-
-    x0_dev = ctx.x0
-    if x0_dev is None:
-        x0_dev = init_gi_flux(A_dev, b_dev, ctx.Phi, ctx.det.dark, ctx.T,
-                              ctx.det.tau)
-    fg_dev = _make_factory(arm_name, ctx, x0_dev)(A_dev, b_dev)
-    lam_max = lam_max_arm(fg_dev, x0_dev, ctx.side, n_iter=N_SEL)
-
-    etas = list(eta_grid)
-    d_k = np.full((len(etas), K), np.nan)      # per-fold mean squared residual
-    for i, eta in enumerate(etas):
-        lam_tv = float(eta) * lam_max
-        for k in range(K):
-            val = folds == k
-            if not val.any():
-                d_k[i, k] = np.nan
-                continue
-            tr = ~val
-            A_tr, b_tr = A_dev[tr], b_dev[tr]
-            x0k = init_gi_flux(A_tr, b_tr, ctx.Phi, ctx.det.dark, ctx.T,
-                               ctx.det.tau)
-            fg = _make_factory(arm_name, ctx, x0k)(A_tr, b_tr)
-            x_hat, _ = tv_fista(fg, x0k, lam_tv, n_iter=N_SEL, side=ctx.side)
-            r = _std_residuals(b_dev[val], _predict_lam(A_dev[val], x_hat, ctx),
-                               ctx)
-            d_k[i, k] = float(np.mean(r ** 2))
-
-    d_bar = np.nanmean(d_k, axis=1)
-    i_min = int(np.argmin(d_bar))              # first occurrence = smallest eta
-    dk_min = d_k[i_min][np.isfinite(d_k[i_min])]
-    SE_min = (float(np.std(dk_min, ddof=1) / np.sqrt(dk_min.size))
-              if dk_min.size >= 2 else 0.0)
-    thresh = d_bar[i_min] + SE_min
-    admissible = [i for i in range(len(etas)) if d_bar[i] <= thresh]
-    i_star = max(admissible)                   # max regularization one-SE pick
-    return {
-        "arm": arm_name, "eta_grid": [float(e) for e in etas],
-        "eta_star": float(etas[i_star]), "eta_min": float(etas[i_min]),
-        "i_star": i_star, "i_min": i_min,
-        "lam_max_arm": float(lam_max),
-        "lam_tv": float(etas[i_star]) * float(lam_max),
-        "lam_plugin": float(etas[i_min]) * float(lam_max),
-        "d_bar_curve": [float(x) for x in d_bar],
-        "SE_min": SE_min, "one_se_threshold": float(thresh),
-        "K": int(K), "x0_dev": x0_dev,
-    }
-
-
-# --------------------------------------- descriptive measurement audit (cell)
-def audit_cell(A, b, ctx, cell_key, seed, split, sel_rql):
-    """DESCRIPTIVE measurement audit — once per cell, carried by RQL.
-
-    Round-5 FINAL ruling: there is NO binary adequacy gate. The probe evidence
-    (results/round63_gof_probe/) showed a p<=0.025 gate on this statistic has
-    neither size (7/20 null false alarms — the refit null is conditional on the
-    SMOOTHED plugin scene, anti-conservative for rougher true scenes) nor power
-    (0/10 on paralyzable / tau-err mismatch — detector mean shifts are absorbed
-    into scene scale; structurally unidentifiable from count-only single-point
-    data). Everything here is recorded as CONTINUOUS ranks/ratios, excluded
-    from eta*, reconstruction, cell inclusion, and confirmatory inference;
-    detector-mismatch damage is measured directly by S3's radiometric metrics.
-    All B_DIAG=39 replicates ALWAYS run (early stopping disabled: truncated
-    replicate sets make ranks non-comparable)."""
+def audit_cell(A, b, ctx, cell_key, seed, split, lam_plugin):
+    """Round-5 DESCRIPTIVE audit, unchanged semantics (continuous ranks, no
+    adequacy gate, nothing downstream may change). One round-6 adaptation:
+    the plugin smoothing level is now the production analytic lambda for RQL
+    (the old eta_min * lam_max anchor no longer exists); recorded in the
+    output for provenance."""
     A = np.asarray(A, dtype=np.float64)
     b = np.asarray(b, dtype=np.float64)
     dev, aud = split["dev_mask"], split["audit_mask"]
@@ -311,8 +222,8 @@ def audit_cell(A, b, ctx, cell_key, seed, split, sel_rql):
                 "n_audit_groups": split["n_audit_groups"]}
 
     A_dev, b_dev, A_aud, b_aud = A[dev], b[dev], A[aud], b[aud]
-    lam_plugin = sel_rql["lam_plugin"]
-    x0_dev = sel_rql["x0_dev"]
+    x0_dev = init_gi_flux(A_dev, b_dev, ctx.Phi, ctx.det.dark, ctx.T,
+                          ctx.det.tau)
     fg_dev = _arm_factory("RQL", ctx)(A_dev, b_dev)
     x_plugin, _ = tv_fista(fg_dev, x0_dev, lam_plugin, n_iter=N_AUDIT,
                            side=ctx.side)
@@ -323,11 +234,9 @@ def audit_cell(A, b, ctx, cell_key, seed, split, sel_rql):
     mr_obs = float(np.mean(r_obs))
     c_obs = _corr(r_obs, lam_aud * ctx.det.tau)
 
-    # coherent generator scene over ALL patterns (dark added inside simulate)
     u_scene = np.maximum(A @ x_plugin, 0.0)
     tau_ns = _tau_ns(ctx)
 
-    # refit-per-replicate bootstrap: ALL 39 replicates, no early stop
     rng_boot = rng_for(*cell_key, seed, 63, 4, 2, tau_ns)
     D_star = np.empty(B_DIAG)
     mr_star = np.empty(B_DIAG)
@@ -346,14 +255,12 @@ def audit_cell(A, b, ctx, cell_key, seed, split, sel_rql):
         mr_star[bi] = float(np.mean(r_s))
         c_star[bi] = _corr(r_s, lam_s * ctx.det.tau)
 
-    # continuous ranks over the full replicate set (descriptive, uncalibrated)
     q_D = (1 + int(np.sum(D_star >= D_obs))) / (B_DIAG + 1.0)
     q_mean = (1 + int(np.sum(np.abs(mr_star) >= abs(mr_obs)))) / (B_DIAG + 1.0)
     c_fin = np.abs(c_star[np.isfinite(c_star)])
     q_corr = ((1 + int(np.sum(c_fin >= abs(c_obs)))) / (B_DIAG + 1.0)
               if (np.isfinite(c_obs) and c_fin.size) else None)
 
-    # fixed-lam_hat lower-tail leakage diagnostic (no refits)
     rng_leak = rng_for(*cell_key, seed, 63, 4, 3, tau_ns)
     mu_a, v_a = qmle_mean_var(lam_aud, ctx.T, ctx.det.tau, ctx.sigma_b)
     inv_sd = 1.0 / np.sqrt(v_a)
@@ -391,13 +298,10 @@ def audit_cell(A, b, ctx, cell_key, seed, split, sel_rql):
 
 # --------------------------------------------------------------- orchestrator
 def select_eta_and_fit(arm_name, A, b, ctx, cell_key=None, seed=0,
-                       run_audit=None, eta_grid=ETA_GRID, split=None):
-    """Full F1 rule for one arm: DEV/AUDIT split -> DEV eta* selection ->
-    (RQL only) adequacy audit -> final refit on ALL frames at eta*.
-
-    The audit is DESCRIPTIVE only (round-5 ruling): none of its statistics
-    change eta* or the reconstruction (the old E=empty -> eta_min fallback is
-    deliberately gone). Returns (x_final, info)."""
+                       run_audit=None, split=None, C0=None, c_force=None):
+    """Analytic lambda + final fit for one arm; RQL additionally carries the
+    once-per-cell descriptive audit. c_force overrides the two-bin c (used
+    ONLY by the Pass-A calibration to compute the .25/.50 endpoints)."""
     A = np.asarray(A, dtype=np.float64)
     b = np.asarray(b, dtype=np.float64)
     M = A.shape[0]
@@ -408,36 +312,53 @@ def select_eta_and_fit(arm_name, A, b, ctx, cell_key=None, seed=0,
         run_audit = (arm_name == "RQL")
     if getattr(ctx.det, "start_mode", "active") == "continuous":
         raise NotImplementedError(
-            "continuous acquisition: inherit eta* from the corresponding "
+            "continuous acquisition: inherit lambda from the corresponding "
             "active-start cell (AUDIT_STATUS=NA_DEPENDENT) at the campaign "
             "layer.")
-
     if split is None:
         split = split_dev_audit(M, ctx.meta, cell_key, seed)
-    sel = select_eta_arm(arm_name, A, b, ctx, cell_key, seed, split,
-                         eta_grid=eta_grid)
+
+    conc = concentration_stat(A, b, ctx, split)
+    if c_force is None:
+        if C0 is None:
+            C0 = frozen_C0()
+        if C0 is None:
+            raise RuntimeError(
+                "C0 not frozen yet (Pass A pending) and no explicit C0/"
+                "c_force given — refusing to guess the concentration "
+                "threshold.")
+        sel = analytic_lambda(arm_name, A, ctx, conc["C_hat"], C0)
+    else:
+        sel = analytic_lambda(arm_name, A, ctx, conc["C_hat"],
+                              float("inf") if c_force == C_BIN_LOW else 0.0)
+        sel["c_used"] = float(c_force)
+        sel["lambda_tv_arm"] = float(
+            c_force * sel["sigma_grad_arm"]
+            * np.sqrt(2.0 * np.log(A.shape[1])))
 
     audit = None
     if run_audit:
-        sel_rql = sel if arm_name == "RQL" else \
-            select_eta_arm("RQL", A, b, ctx, cell_key, seed, split,
-                           eta_grid=eta_grid)
-        audit = audit_cell(A, b, ctx, cell_key, seed, split, sel_rql)
+        if arm_name == "RQL":
+            lam_plugin = sel["lambda_tv_arm"]
+        else:
+            rql = analytic_lambda("RQL", A, ctx, conc["C_hat"],
+                                  C0 if C0 is not None else float("inf"))
+            lam_plugin = rql["lambda_tv_arm"]
+        audit = audit_cell(A, b, ctx, cell_key, seed, split, lam_plugin)
 
-    ctx_final = replace(ctx, lam_tv=sel["lam_tv"], n_iter=int(ctx.n_iter),
-                        x0=None)
+    ctx_final = replace(ctx, lam_tv=sel["lambda_tv_arm"],
+                        n_iter=int(ctx.n_iter), x0=None)
     x_final, fit_info = run_arm(arm_name, A, b, ctx_final)
 
     info = {
-        "arm": arm_name, "rule": "f1_audit_split_descriptive",
+        "arm": arm_name, "rule": "analytic_score_concentration",
         "cell_key": list(cell_key), "seed": int(seed),
-        "eta_star": sel["eta_star"], "eta_min": sel["eta_min"],
-        "lam_tv": sel["lam_tv"], "lam_max_arm": sel["lam_max_arm"],
-        "eta_grid": sel["eta_grid"], "d_bar_curve": sel["d_bar_curve"],
-        "SE_min": sel["SE_min"], "one_se_threshold": sel["one_se_threshold"],
-        "K": sel["K"], "split": {k: split[k] for k in
-                                 ("n_groups", "n_dev_groups", "n_audit_groups",
-                                  "underpowered")},
+        "lam_tv": sel["lambda_tv_arm"],
+        "C0": (float(C0) if C0 is not None else None),
+        **conc, **sel,
+        "split": {k: split[k] for k in
+                  ("n_groups", "n_dev_groups", "n_audit_groups",
+                   "underpowered")},
         "audit": audit,
         "fit_info": fit_info,
     }
@@ -466,31 +387,32 @@ def _smoke():
     det = Detector(tau=tau, dark=0.0, start_mode="active")
     Phi = rho / (tau * float(u.mean()))
     b, N = simulate_counts(u, Phi, T, det, rng_for(0, 63, 3, 1))
-    print("[select_eta F1 smoke] side=%d M=%d rho_emp=%.4f mean_counts=%.1f"
+    print("[select F1v2 smoke] side=%d M=%d rho_emp=%.4f mean_counts=%.1f"
           % (side, M, float(np.mean(Phi * u) * tau), float(N.mean())),
           flush=True)
 
-    ctx = ArmContext(Phi=Phi, det=det, T=T, side=side, n_iter=150,
-                     select_iter=N_SEL, pattern_kind="bern50",
-                     meta={"kind": "bern50"})
+    ctx = ArmContext(Phi=Phi, det=det, T=T, side=side, n_iter=200,
+                     pattern_kind="bern50", meta={"kind": "bern50"})
     cell_key = (1, 600, 500, M, side)
     ok = True
     for arm in ("RQL", "POISSON-LIN"):
         t0 = time.time()
-        x, info = select_eta_and_fit(arm, A, b, ctx, cell_key=cell_key, seed=0)
+        x, info = select_eta_and_fit(arm, A, b, ctx, cell_key=cell_key,
+                                     seed=0, C0=4.0)
         dt = time.time() - t0
         finite = bool(np.all(np.isfinite(x)))
         ok = ok and finite and np.isfinite(info["lam_tv"])
         au = info["audit"]
-        print("  %-11s eta*=%.3g lam_tv=%.3g audit=%s (%.1fs)"
-              % (arm, info["eta_star"], info["lam_tv"],
+        print("  %-11s C_hat=%.2f c=%.2f sigma_g=%.3g lam_tv=%.3g audit=%s"
+              " (%.1fs)"
+              % (arm, info["C_hat"], info["c_used"], info["sigma_grad_arm"],
+                 info["lam_tv"],
                  (None if au is None else
                   {k: au.get(k) for k in ("AUDIT_STATUS", "D_ratio",
-                                          "plugin_upper_rank", "q_mean",
-                                          "LEAKAGE_SUSPECT",
-                                          "MEAN_RESIDUAL_WARN")}), dt),
+                                          "plugin_upper_rank",
+                                          "LEAKAGE_SUSPECT")}), dt),
               flush=True)
-    print("[select_eta F1 smoke] %s" % ("PASS" if ok else "FAIL"), flush=True)
+    print("[select F1v2 smoke] %s" % ("PASS" if ok else "FAIL"), flush=True)
     return 0 if ok else 1
 
 

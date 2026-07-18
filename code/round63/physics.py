@@ -412,3 +412,92 @@ def fisher_exact(lam, T, tau, start_mode="active"):
     p = np.exp(lp0)
     ok = p > 1e-15
     return float(np.sum(p[ok] * d[ok] ** 2))
+
+
+# ----------------------------------------------------------------------
+# exact finite-window moments + per-arm score variance (round-6 F1 rule:
+# the analytic_score_concentration lambda_TV scale — never CLT, spec forbids
+# CLT moments at nu = 5, 10)
+# ----------------------------------------------------------------------
+def exact_pmf_vector(lam, T, tau):
+    """(m_grid, p_m) of the exact active-start NP renewal count at scalar lam.
+    p sums to 1 to machine precision (exact_logpmf is CDF-difference stable)."""
+    lam = float(lam)
+    m_max = int(np.floor(T / tau)) + 1
+    m = np.arange(0, m_max + 1, dtype=np.int64)
+    lp = exact_logpmf(m, np.full(m.shape, lam), T, tau)
+    p = np.where(np.isfinite(lp), np.exp(lp), 0.0)
+    s = p.sum()
+    if s > 0:
+        p = p / s
+    return m, p
+
+
+def exact_moments(lam, T, tau):
+    """(mu0, V0, muprime0) of the exact count law at scalar lam:
+    mu0 = E[N], V0 = Var N (exact enumeration), and the EXACT rate derivative
+    muprime0 = dE[N]/dlam = sum_m dG_m/dlam with the verified analytic identity
+    dG_m/dlam = t_m e^{-z} z^{m-1}/(m-1)!  (t_m = T-(m-1)tau, z = lam t_m) —
+    the same Gdot machinery as exact_fisher_analytic / exact_tv, no finite
+    differences."""
+    from scipy.special import gammaln
+    lam = float(lam)
+    m, p = exact_pmf_vector(lam, T, tau)
+    mu0 = float(np.sum(p * m))
+    V0 = float(np.sum(p * (m - mu0) ** 2))
+    mm = m[1:].astype(np.float64)
+    t = T - (mm - 1.0) * tau
+    ok = t > 0
+    mup = 0.0
+    if lam > 0 and ok.any():
+        z = lam * t[ok]
+        logg = np.log(t[ok]) - z + (mm[ok] - 1.0) * np.log(z) - gammaln(mm[ok])
+        mup = float(np.sum(np.exp(logg[logg > -745.0])))
+    return mu0, V0, mup
+
+
+def arm_score(arm_name, m, lam, T, tau, w_floor=1e-8):
+    """Per-frame score s_a(m; lam) = d q_a / d lam of each production data term
+    (round-6 digest 1.2), vectorized over integer counts m at scalar lam."""
+    m = np.asarray(m, dtype=np.float64)
+    if arm_name == "RQL":
+        return np.maximum(T - m * tau, 0.0) - m / lam
+    if arm_name == "POISSON-LIN":
+        return T - m / lam
+    if arm_name == "SAT-POISSON":
+        den = 1.0 + lam * tau
+        mu = lam * T / den
+        dmu = T / den ** 2
+        return dmu * (1.0 - m / mu)
+    if arm_name == "PRECORRECT":
+        # W_raw(m) * (lam - lam_hat_pre(m)); normalization of W by the
+        # exact-PMF mean is applied by the CALLER (score_variance), per the
+        # round-6 note (exact E[w_raw], not a sample mean)
+        r = m / T
+        denom = np.maximum(1.0 - r * tau, 1.0 / (1.0 + 1e4))
+        lam_hat = r / denom
+        dlam_dN = 1.0 / (T * denom ** 2)
+        _, varN = qmle_mean_var(np.maximum(lam_hat, 1e-12 / T), T, tau, 0.0)
+        w_raw = 1.0 / np.maximum(varN * dlam_dN ** 2, w_floor)
+        return w_raw * (lam - lam_hat)
+    raise ValueError("no analytic score for arm %r" % (arm_name,))
+
+
+def score_variance(arm_name, lam, T, tau):
+    """v_{s,a} = Var_{N ~ exact NP renewal(lam,T,tau)}[ s_a(N; lam) ] by exact
+    enumeration (round-6 digest 1.2). For PRECORRECT the raw delta-method
+    weights are first normalized by their exact-PMF mean."""
+    m, p = exact_pmf_vector(lam, T, tau)
+    s = arm_score(arm_name, m, float(lam), T, tau)
+    if arm_name == "PRECORRECT":
+        r = m.astype(np.float64) / T
+        denom = np.maximum(1.0 - r * tau, 1.0 / (1.0 + 1e4))
+        lam_hat = r / denom
+        dlam_dN = 1.0 / (T * denom ** 2)
+        _, varN = qmle_mean_var(np.maximum(lam_hat, 1e-12 / T), T, tau, 0.0)
+        w_raw = 1.0 / np.maximum(varN * dlam_dN ** 2, 1e-8)
+        Ew = float(np.sum(p * w_raw))
+        if Ew > 0:
+            s = s / Ew
+    mean_s = float(np.sum(p * s))
+    return float(np.sum(p * (s - mean_s) ** 2))

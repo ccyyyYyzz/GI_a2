@@ -153,7 +153,8 @@ def run_cell(cell):
                         A.shape[0], meta, cell_key, seed)
                 xh, info = select_eta.select_eta_and_fit(
                     arm, A, b, ctx, cell_key=cell_key, seed=seed,
-                    split=cell_split)
+                    split=cell_split, C0=cell.get("C0"),
+                    c_force=cell.get("c_force"))
                 sel_dt = time.time() - t_sel
                 audit = info.get("audit") or {}
                 audit_status = audit.get("AUDIT_STATUS", "")
@@ -161,13 +162,19 @@ def run_cell(cell):
                 q_d = audit.get("plugin_upper_rank", "")
                 q_mean = audit.get("q_mean", "")
                 leak = audit.get("LEAKAGE_SUSPECT", "")
-                es = info.get("eta_star", None)
-                eta_out = round(float(es), 6) if es is not None else ""
+                rule_cols = {k: info.get(k, "") for k in
+                             ("C_hat", "S_N2", "V0_exact", "muprime0_exact",
+                              "omega_A", "c_used", "sigma_grad_arm",
+                              "lambda_tv_arm")}
                 sel_out = round(sel_dt, 3)
             else:
                 xh, info = run_arm(arm, A, b, ctx)
-                eta_out, sel_out = "", ""
+                sel_out = ""
                 audit_status, d_ratio, q_d, q_mean, leak = "", "", "", "", ""
+                rule_cols = {k: "" for k in
+                             ("C_hat", "S_N2", "V0_exact", "muprime0_exact",
+                              "omega_A", "c_used", "sigma_grad_arm",
+                              "lambda_tv_arm")}
             lam_tv = float(info.get("lam_tv", np.nan)) if isinstance(info, dict) \
                 else np.nan
             m = MET.main_metrics(xh, x, side,
@@ -199,8 +206,10 @@ def run_cell(cell):
                 "dark_frac": dark_frac, "tau_err": est_kw.get("tau_err", 0.0),
                 "runtime_s": round(time.time() - t0, 2),
                 "select_runtime_s": sel_out,
-                "eta_star": eta_out,
                 "PSNR_rad": psnr_rad_out,
+                # round-6 analytic rule ledger (spec: log per cell)
+                **{k: (round(float(v), 6) if isinstance(v, float) else v)
+                   for k, v in rule_cols.items()},
                 # cell-level DESCRIPTIVE audit (RQL rows only; '' elsewhere;
                 # round-5 ruling: continuous ranks, no binary adequacy gate)
                 "audit_status": audit_status,

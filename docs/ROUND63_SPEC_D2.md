@@ -1,7 +1,7 @@
-# ROUND63 战役规范 D2.1（冻结候选版）：Dead-time-aware high-flux single-pixel imaging
+# ROUND63 战役规范 D2.2（冻结候选版）：Dead-time-aware high-flux single-pixel imaging
 
-**日期**: 2026-07-18（D2.1 修订同日）
-**状态**: D2.1 — D2 基础上按 GPT Pro 第四轮裁决（docs/ROUND63_GPT_ROUND4_DIGEST.md）替换 λ_TV/GOF 规则（旧"六步规则+GOF 进接受集"作废）；S1 试点后经一次不可变 commit 冻结为 F1
+**日期**: 2026-07-18（D2.2 第三次修订同日）
+**状态**: D2.2 — 按 GPT 第六轮裁决（docs/ROUND63_GPT_ROUND6_RULING.md）：S1 试点证明旧协议被"正则化选择不可辨识 + 空间欠采样天花板"双重支配 → 主几何改 M/n=1、ν 网格九档、λ_TV 换 analytic_score_concentration 解析规则、删失分类 A–F 冻结；两步 S1（Pass A 校准 C₀ / Pass B 验证）后经一次不可变 commit 冻结为 F1。第四/五轮裁决的 AUDIT 拆分与描述性审计不变
 **取代**: docs/ROUND63_HIGHFLUX_CAMPAIGN_SPEC_DRAFT.md（作废存档）
 **产出**: Optics Express 投稿论文 *Dead-time-aware high-flux single-pixel imaging: operating beyond the conventional photon-counting regime with renewal-statistical reconstruction*
 
@@ -16,7 +16,7 @@
 - 安全参考点 **ρ₀ = 0.05**；**预注册主高通量点 ρ₁ = 0.6**；ρ = 1 为次级强负载点
 - **两个工作点用同一 RQL 估计器**（隔离"换工作点收益"与"换模型收益"）
 - 主质量目标（逐图）：Q_j\* = PSNR_rad(ρ=0.05, ν=2000, j) − 1 dB；固定 25/28/30 dB 为次级终点
-- 主速度比：**S_j = T_opt,ρ=0.05(Q_j\*) / T_opt,ρ=0.6(Q_j\*)**，T_opt = M_physical·T；PSNR_rad–log T_opt 单调拟合插值；达不到目标按 censored 处理
+- 主速度比：**S_j = T_opt,ρ=0.05(Q_j\*) / T_opt,ρ=0.6(Q_j\*)**，T_opt = M_physical·T；PSNR_rad–log T_opt 单调拟合插值；**删失按第六轮冻结分类 A–F**（T_min=M_physical·τ·ν_min, ν_min=5：B fast 触地 → S_gate=T_s/T_min 保守下界进全部门；C 双触地 → S_gate=1 进中位数但不计入 S>1 张数、标 unresolved below floor；D 反向 → S_gate=T_min/T_f<1 计非正；E fast 到 ν=2000 未达标 → 计失败不删；F 数据缺失 → ANALYSIS_FAILURE=0 并触发完整性审计；**bootstrap 每次抽样内重判删失类别**，不得预冻结逐图状态）
 - **过门（三条同时）**：24 张确认自然图 **中位 S_j ≥ 3**；图像级分层 bootstrap **95% 下界 > 1**；**≥ 18/24 图 S_j > 1**
 - 结果单位 = 图像（seed 图内配对平均；bootstrap 外层重采样图像、内层重采样 seed；不将 24×5 当 120 个独立样本）
 
@@ -56,7 +56,7 @@
 
 ## 3. 网格（GPT 授权最小充分集）
 
-**S2-A 主战役（不可砍）**：64²，Bernoulli-50%，M/n=0.5（M=2048），ρ̄∈{0.05, 0.3, 0.6, 1, 2}，**ν∈{20, 50, 100, 200, 500, 1000, 2000}（time-to-quality = 固定 M 扫 dwell T=ντ）**，24 张确认自然图（STL-10 **test** split 索引 0..23，S1 不得接触），5 seeds。RQL 全网格；POISSON-LIN/SAT-POISSON/PRECORRECT 至少在 ρ̄∈{0.05, 0.6, 1}×全 ν；GI/DGI 选点+展示。M 扫描降级为次级"系统资源曲线"（附录）。
+**S2-A 主战役（不可砍）**：64²，Bernoulli-50%，**M/n=1（M=4096，第六轮裁决：M/n≤0.5 的欠采样天花板使平滑自然图全光子轴动态范围仅 0.7 dB，不可辨识；M/n∈{0.25,0.5} 降入 S2-B 作为被报告的现象）**，ρ̄∈{0.05, 0.3, 0.6, 1, 2}，**ν∈{5, 10, 20, 50, 100, 200, 500, 1000, 2000}（九档；ν<20 论文称 short-window stress region，不得声称 RQL≈exact；固定 M 扫 dwell T=ντ）**，24 张确认自然图（STL-10 **test** split 索引 0..23，S1 不得接触），5 seeds。RQL 全网格；POISSON-LIN/SAT-POISSON/PRECORRECT 至少在 ρ̄∈{0.05, 0.6, 1}×全 ν；GI/DGI 选点+展示。M 扫描降级为次级"系统资源曲线"（附录）。
 **S2-B 欠采样稳健**：M/n∈{0.25, 0.5, 1}×ρ̄∈{0.05, 0.6, 1}×ν∈{100, 500, 2000}，12 图、3 seeds。
 **S2-C 图样/尺度锚点**：hadpair 与 gam4：ρ̄∈{0.05, 0.6, 1}×ν∈{100, 500, 2000}，M/n=0.5，8–12 图、3 seeds（互补对 M_physical=2M_signed 计费）；128²：Bernoulli，同锚点，仅 RQL/SAT/PRECORRECT/PnP-BM3D，**matrix-free 算子实现为前置硬门**；**PnP 冻结 = PnP-BM3D**。
 **S3 失配（OAT + 三交互）**：固定 64²/bern50/M-n=0.5/ν=500；ρ̄∈{0.3, 0.6, 1}+参考 0.05；12 图、3 seeds。轴：τ 误差{−20,−10,0,+10,+20}%（+flat-field 标定部署版；联合 profile 只在 2 代表点）；暗{0,.05,.1,.25,.5}（已知/±10%/联合估计）；afterpulse{0,1,2,5,10}%；start modes{active,delayed,continuous}；guard{0,1,5}τ；jitter{0,5,10}% 附录。交互仅 ρ×τ-err、ρ×p_ap、continuous×afterpulse。**continuous 格子无独立 AUDIT（afterpulse 无界尾）：η\* 继承同 arm/image/seed/ρ/ν/A 的 active-start 格子，GOF_STATUS=GOF_NA_DEPENDENT，MODEL_FAIL_PREDICTIVE=NA（F1 冻结条款）。**
@@ -66,7 +66,7 @@
 
 - **主指标 = radiometric PSNR（PSNR_rad，不重标度）** + radiometric NRMSE + flux bias；flux-matched 改名 **shape-PSNR** 降为次级；SSIM/LPIPS 次级
 - 图像：S1 开发集 = STL-10 **train** 0..15 + dev 结构靶（data/r63_images_dev/）；S2 确认集 = test 0..23 + 6 结构靶（结构靶只展示不进推断）；主图图名与 crop 坐标在冻结 commit 中登记
-- **λ_TV 选择（F1 冻结，GPT 第四轮框架 + 第五轮终裁）**（实现 = code/round63/select_eta.py；裁决存档 docs/ROUND63_GPT_ROUND4_DIGEST.md + ROUND63_GPT_ROUND5_RULING.md）：每 cell 逻辑组（hadpair 对原子）冻结 hash 拆 **80% DEV / 20% AUDIT**；η\* 逐臂在 **DEV 内** grouped K=5 交叉拟合（λ_max 仅用 DEV；逐折均值 d̄(η)；one-SE fold-dispersion 启发式；η\* = 最大相容；tie 取最小 η）；RNG 键全整数 (cell_key, seed, 63, 4, tag)
+- **λ_TV 选择（F1 冻结 = 第六轮 `analytic_score_concentration`，取代第四轮 DEV 交叉拟合——后者被 S1 证明在桶式 SPI 多路复用劣势下结构性无功率、全网格坍缩到 η=1 完全平滑）**（实现 = code/round63/select_eta.py；裁决 docs/ROUND63_GPT_ROUND6_RULING.md）：**λ_TV,a = c_i·σ_{g,a}·√(2 ln n)**，σ_{g,a}=Φ√(κ_A·v_{s,a}/M)，v_{s,a}=各臂 score 在**精确 renewal 律**下的方差（physics.score_variance 枚举；ν=5,10 禁用 CLT 矩），κ_A=实测图案列能量；**c_i 两档**：Ĉ≤C₀→0.50，Ĉ>C₀→0.25；**Ĉ = clip[n(S_N²−V₀)₊/((Φμ′₀)²ω_A), 1, 64]**（DEV 原始计数 + 精确 PMF 矩，S_N²≤V₀→Ĉ=1）；**C₀ 为唯一开发集校准常数**（Pass A：endpoint-oracle regret，J=Q_{0.90}，tie 取大，冻结于 C0_FROZEN.json 后不可改）；全臂共用 c_i；逐 cell 落盘 C_hat/S_N2/V0/μ′₀/ω_A/c_used/σ_g/λ_TV；论文表述 "analytically noise-scaled TV with one development-calibrated concentration threshold"，禁称 training-free。每 cell 逻辑组（hadpair 对原子）冻结 hash 拆 **80% DEV / 20% AUDIT**（DEV 只算 Ĉ，AUDIT 只做描述性审计，均无超参搜索）；RNG 键全整数 (cell_key, seed, 63, 4, tag)
 - **测量审计 = 纯描述性（第五轮终裁：无二元充分性门）**：结果盲探针证明 p≤0.025 门在该统计量上既无尺寸（正确模型 7/20 误报——refit 零假设条件于平滑 plugin 场景，对更粗糙真场景上尾反保守）也无功效（paralyzable/τ-err 0/10——探测器均值错配被场景尺度吸收，count-only 单工作点结构性不可辨识）。每 RQL cell 记录：AUDIT_STATUS∈{OK, UNDERPOWERED(<128 audit 组), NA_DEPENDENT(continuous)}、D_obs/D̄\*/sd/D_ratio、plugin_upper_rank q_D（**非标定 p 值**）、q_mean(+MEAN_RESIDUAL_WARN 描述性标记)、q_corr(+LOAD_CORR_WARN)、固定-λ̂ 下尾 q_low(+LEAKAGE_SUSPECT≤0.01)、residual-vs-load 图；**B_DIAG=39 全跑（禁早停——截断副本集的连续秩不可比）**；**任何审计统计量不得影响 η\*、重建、cell 取舍、战役门或确认推断**；探测器错配的后果由 S3 预注册 radiometric 指标直接量化。预注册措辞逐字条款见 ROUND63_GPT_ROUND5_RULING.md "Preregistered wording"。证据链：字面六步 10/10 误报 → 候选 A 8/10 → 第四轮门 7/20+0/10 → 删门（results/round63_gof_probe/）。truth-oracle λ 只作诊断，标 ORACLE—NOT DEPLOYABLE
 - 公平性表述（论文逐字）：见 GPT 第三轮 REPLY §3.5 存档段落
 
@@ -84,6 +84,6 @@
 
 ## 7. 分期与算力
 
-S0'（本轮）：六硬门修复 + 本规范 D2 → S1 试点（本地，开发集，验证信号+校准预算）→ **F1 不可变冻结 commit** → S2/S3/S4（Colab pro2×3 + pro1×2 + 本地，分片按 §3 网格；keep-alive+watchdog+Drive 传输按既有纪律）→ S5 论文（OE opticajnl，Chen 体裁表述层，GPT 评审循环 ≥2 轮）。
+S0'（本轮）：六硬门修复 + 规则三轮迭代（第 4/5/6 轮）→ **S1 两步**（Pass A = 唯一 C₀ 校准（c=.25/.50 端点 → regret → C0_FROZEN 单独 commit，此后端点/公式/目标不可改）；Pass B = 冻结 C₀ 下 M=4096 九档 ν 全臂验证：确认曲线不再平坦、存在可解析光子受限区、校准 Colab 分片时间）→ **F1 不可变冻结 commit**（含重生成 manifests/expected-cell 表/成本模型/SHA 账本/删失逻辑）→ S2/S3/S4（Colab pro2×3 + pro1×2 + 本地）→ S5 论文（OE opticajnl，Chen 体裁表述层，GPT 评审循环 ≥2 轮）。
 预算：S1 ≤ 1 h 本地 wall；S2-A 为最大块（估 ~2–4 千 arm-fit，含 λ 选择 ~5× 开销——S1 校准后定分片）；超预算按 §1 截断顺序。
 RNG：SEED0 体系，round63 流 (seed, 63, part, ...)；全输入输出 SHA256。
