@@ -328,14 +328,30 @@ def precorrect_wls(A, b, T, tau, Phi, dark, lam_tv, side, x0=None,
 # ----------------------------------------------------------------------
 def init_gi_flux(A, b, Phi, dark, T, tau):
     """Shared x0 for every iterative arm: clipped centered-GI reconstruction
-    rescaled so its implied signal rate Phi*mean(A x0) matches the flux estimated
-    from the data (mean of the pre-corrected arrival rate, minus dark). Direction
-    from GI, magnitude from the data — no truth used."""
+    rescaled so its implied signal rate Phi*mean(A x0) matches the flux
+    estimated from the data. Direction from GI, magnitude from the data — no
+    truth used.
+
+    Flux scale = POOLED non-paralyzable pre-correction
+        lam_hat = sum(N) / (M*T - tau*sum(N)),
+    the same inversion as the per-frame Liu rule but applied to the pooled
+    exposure. The per-frame mean used before is catastrophically unstable in
+    the short-window stress region (nu <= 2: a single count hits the
+    per-frame ceiling N*tau >= T, the saturation clamp fires, and the flux
+    target explodes ~1e4x, poisoning x0 and sending radiometric PSNR to
+    -30..-60 dB — S1 pass-B/nu-probe finding). The pooled form never hits a
+    per-frame ceiling unless the WHOLE record is saturated, in which case the
+    clamped value is the honest boundary estimate. Deployment-legal (data +
+    calibrated constants only)."""
     A = np.asarray(A, dtype=np.float64)
+    b = np.asarray(b, dtype=np.float64)
     x = np.maximum(gi_corr(A, b), 0.0)
     if x.sum() <= 0:
         x = np.ones(A.shape[1], dtype=np.float64)
-    target = max(float(np.mean(precorrect_rates(b, T, tau))) - dark, 1e-12)
+    M = b.shape[0]
+    total = float(np.maximum(b, 0.0).sum())
+    denom = max(M * T - tau * total, M * T / (1.0 + 1e4))
+    target = max(total / denom - dark, 1e-12)
     cur = Phi * float(np.mean(A @ x))
     if cur > 0:
         x = x * (target / cur)
