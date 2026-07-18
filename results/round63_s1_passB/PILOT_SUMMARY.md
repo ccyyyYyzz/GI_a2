@@ -1,32 +1,42 @@
-# ROUND63 S1 DEV PILOT SUMMARY (round-6 protocol)
+# ROUND63 S1 PILOT SUMMARY (round-7 Q90 endpoint, cohort=dev)
 
-**S1 is exploratory and development-only** (spec D2 §1): dev images and seeds are disjoint from all S2 confirmatory images and seeds; these results do not enter confirmatory intervals or main tables.
+**S1 is exploratory and development-only** (spec D2 §1): dev images and seeds are disjoint from all S2 confirmatory images and seeds; these results do not enter confirmatory intervals or main tables. The analysis layer here is the round-7 FINAL endpoint reused verbatim for S2.
 
-- rows: 1080   images: 6   seeds: [0, 1]   arms: RQL, POISSON-LIN, SAT-POISSON, PRECORRECT, GI   mode: pass_b
+- rows: 1080   images: 6   seeds: [0, 1]   arms: RQL, POISSON-LIN, SAT-POISSON, PRECORRECT, GI   mode: pass_b   cohort: dev
 - side 64, bern50, M 4096, nu [5, 10, 20, 50, 100, 200, 500, 1000, 2000], rho_bar [0.05, 0.6], tau 50 ns, sigma_b 0, active start
 - select_iter 60, fista_iters 200, C0 inf, analytic score-concentration lam_TV rule + descriptive audit
 
-## 1. Time-to-quality speedup S_gate — RQL (round-6 §4 censoring)
+## 1. Acquisition-speed endpoint S_gate — RQL (round-7 §2 Q90)
 
-T_opt = M_physical*nu*tau; T_min at the shortest nu tier. Q*_j = PSNR_rad[RQL, rho=0.05, nu=2000] - 1 dB. S_gate per the frozen taxonomy A(normal)/B(fast-left-censored, lower bound)/C(both-left-censored, =1, unresolved below floor)/D(safe-left/fast-interior, <1)/E(fast-right-censored, fail=0)/F(analysis failure=0).
+Per (image, rho): seed-mean PSNR_rad at each nu -> equal-weight PAVA isotonic fit vs log T_opt (raw curve kept in the JSON). Safe = rho=0.05; fast = rho=0.6. R_j = Qiso_safe(T_max) - Qiso_safe(T_min); if R_j<0.50 dB the safe range is uninformative (S_gate=1, not positive); else Q90_j = Qiso_safe(T_min) + 0.90*R_j and crossing times come by log-T interpolation on the isotonic curves. Censoring: NORMAL(=T_s/T_f)/FAST_LEFT_CENSORED(>=T_s/T_min)/BOTH_LEFT_CENSORED(=1, unresolved)/SAFE_LEFT_FAST_INTERIOR(<1)/FAST_RIGHT_CENSORED(fail=0)/SAFE_RANGE_UNINFORMATIVE(=1)/ANALYSIS_FAILURE(0). No image deleted.
 
-| image | status | S_gate | T_safe | T_fast | Q*_j (dB) | seeds |
-|---|---|---|---|---|---|---|
-| dev_stl_00 | BOTH_LEFT_CENSORED | 1.000 | 0.001024 | 0.001024 | 17.34 | 2 |
-| dev_stl_01 | SAFE_LEFT_FAST_INTERIOR | 0.756 | 0.001024 | 0.001355 | 15.23 | 2 |
-| dev_stl_02 | BOTH_LEFT_CENSORED | 1.000 | 0.001024 | 0.001024 | 14.90 | 2 |
-| dev_stl_03 | BOTH_LEFT_CENSORED | 1.000 | 0.001024 | 0.001024 | 14.12 | 2 |
-| dev_text | BOTH_LEFT_CENSORED | 1.000 | 0.001024 | 0.001024 | 12.85 | 2 |
-| dev_fine_lines | BOTH_LEFT_CENSORED | 1.000 | 0.001024 | 0.001024 | 5.17 | 2 |
-| **median S_gate** | | 1.000 | | | | |
+| image | family | status | S_gate | T_safe | T_fast | R_j (dB) | Q90_j (dB) | DeltaQ_budget (dB) | seeds |
+|---|---|---|---|---|---|---|---|---|---|
+| dev_stl_00 | dev_stl_00 | SAFE_RANGE_UNINFORMATIVE | 1.000 | -- | -- | 0.37 | -- | 0.43 | 2 |
+| dev_stl_01 | dev_stl_01 | SAFE_RANGE_UNINFORMATIVE | 1.000 | -- | -- | 0.26 | -- | 0.71 | 2 |
+| dev_stl_02 | dev_stl_02 | NORMAL | 7.777 | 0.3101 | 0.03987 | 0.88 | 15.82 | 1.52 | 2 |
+| dev_stl_03 | dev_stl_03 | SAFE_RANGE_UNINFORMATIVE | 1.000 | -- | -- | 0.33 | -- | 1.53 | 2 |
+| dev_text | dev_text | NORMAL | 7.669 | 0.3413 | 0.04451 | 0.78 | 13.77 | 2.32 | 2 |
+| dev_fine_lines | dev_fine_lines | SAFE_RANGE_UNINFORMATIVE | 1.000 | -- | -- | 0.11 | -- | 0.07 | 2 |
+| **median S_gate** | | | 1.000 | | | | | | |
 
-Status counts: BOTH_LEFT_CENSORED=5, SAFE_LEFT_FAST_INTERIOR=1
+Status counts: NORMAL=2, SAFE_RANGE_UNINFORMATIVE=4
 
-Gate stats (S1 dev, descriptive — NOT a confirmatory gate): median S_gate=1.000; images with S_gate>1 (excl. C/E/F)=0/6; image-level stratified bootstrap (B=2000) 2.5% lower bound of the median = 0.878.
+### Primary gate (§2.5) — DETAIL_SPEED_PASS = null (non-detail cohort: no positive gate, §4)
 
-Reference gate check (median>=3: False; bootstrap_lower>1: False) — reported for orientation only; S1 never enters the confirmatory decision.
+- median S_gate = 1.000  (>=3: False)
+- bootstrap 2.5% LB of median S_gate = 1.000  (>1: False)
+- images with S_gate>1 (excl. non-positive classes) = 2/6  (>=18: False)
 
-Secondary arms (point-estimate median S_gate): POISSON-LIN=0.245 (n>1=0), SAT-POISSON=1.000 (n>1=0), PRECORRECT=0.000 (n>1=1)
+### Fixed-budget quality gain (§3, key secondary)
+
+DeltaQ_budget = RAW seed-mean PSNR_rad(fast) - (safe) at nu=2000 (NOT isotonic). Descriptive success: median>=1.0 dB AND LB2.5>0 AND >=18 images with DeltaQ>0.
+
+- median DeltaQ = 1.12 dB  (>=1.0: True)
+- bootstrap 2.5% LB of median DeltaQ = 0.09  (>0: True)
+- images with DeltaQ>0 = 6/6  (>=18: False)   pass = null (non-detail cohort)
+
+Bootstrap: B=500 draws, stream rng_for(0, 63, 6, 2), stratified by image (degenerate); finite draws S_gate=500 / DeltaQ=500.
 
 ## 2. Descriptive measurement audit by (rho, nu) — RQL cells
 

@@ -1,4 +1,13 @@
-"""ROUND63 S1 DEV PILOT (local, development-only) — GPT round-6 ruling.
+"""ROUND63 S1 DEV PILOT (local, development-only).
+
+SWEEP / Pass-A machinery = GPT round-6 ruling; the ANALYSIS layer is the GPT
+round-7 FINAL endpoint (docs/ROUND63_GPT_ROUND7_RULING.md §2-4): per-image
+seed-mean + equal-weight PAVA isotonic curves, the Q90 = Qiso_safe(T_min) +
+0.90*(Qiso_safe(T_max)-Qiso_safe(T_min)) target (retires the old
+Q_safe(nu_max) - 1 dB target), the augmented censoring taxonomy, a 10,000-draw
+nested family-stratified bootstrap, and the fixed-budget quality-gain secondary.
+The analysis functions (pava/judge_image/fixed_budget_gain/bootstrap_endpoints/
+endpoint_analysis) are a clean module-level API reused verbatim for S2.
 
 S1 FREEZE CLAUSE (spec D2 §1, verbatim):
   "S1 is exploratory and development-only. S1 images and seeds are disjoint
@@ -82,11 +91,23 @@ DEFAULT_RHO = [0.05, 0.6]
 DEFAULT_SEEDS = [0, 1]
 DEFAULT_M = 4096                                    # round-6 §2: M/n = 1 at 64^2
 
-PRIMARY_ARM = "RQL"                                 # round-6 §4 primary gate S_j
-SECONDARY_TTQ = ["POISSON-LIN", "SAT-POISSON", "PRECORRECT"]
+PRIMARY_ARM = "RQL"                                 # round-7 §2 primary gate S_gate
 
 # the two endpoint c weights the Pass-A calibration reconstructs at every cell
 C_ENDPOINTS = (0.25, 0.50)
+
+# ---- round-7 FINAL endpoint constants (docs/ROUND63_GPT_ROUND7_RULING.md) --- #
+# NOTE: the ANALYSIS layer below is the round-7 Q90 endpoint (retires the old
+# Q* = Q_safe(nu_max) - 1 dB target); the SWEEP / Pass-A machinery is unchanged
+# from round-6. This same analysis code is reused verbatim for S2 confirmatory.
+R_MIN_DB = 0.50            # §2.3 safe-range informativeness floor (dB)
+Q90_FRAC = 0.90           # §2.3 fraction of the safe dynamic range to recover
+NU_BUDGET = 2000.0        # §3 fixed-budget terminal dwell tier
+MEDIAN_MIN = 3.0          # §2.5 primary gate: median S_gate >= 3
+N_GT1_MIN = 18            # §2.5 primary gate: >=18 images with S_gate>1 (of 24)
+DQ_MEDIAN_MIN = 1.0       # §3  secondary: median DeltaQ >= 1.0 dB
+BOOT_B_DEFAULT = 10000    # §2.5 nested family-stratified replicate count
+BOOT_STREAM = (0, 63, 6, 2)  # §2.5 rng_for(0,63,6,2) bootstrap stream
 
 # stable CSV schema = EXACTLY campaign.run_cell's current emission order
 # (round-6: eta_star dropped; the analytic-rule ledger + audit columns added).
@@ -102,12 +123,36 @@ PASSA_FIELDNAMES = FIELDNAMES + ["c_force"]
 
 _KEY_COLS = ("side", "pattern", "rho_bar", "nu", "M", "seed", "image", "arm")
 
-# gate bookkeeping (round-6 §4): statuses excluded from the "S_gate>1" tally.
-# C = both-left-censored (S_gate fixed 1.0, not a measured 1x); E = fast never
-# reaches (failure, S_gate 0); F = analysis failure (S_gate 0). D naturally has
-# S_gate<1 so it is not >1 anyway (it counts as a non-positive result).
-_GT1_EXCLUDED = {"BOTH_LEFT_CENSORED", "FAST_RIGHT_CENSORED", "ANALYSIS_FAILURE"}
+# gate bookkeeping (round-7 §2.5): NON-POSITIVE statuses excluded from the
+# "S_gate>1" tally. BOTH_LEFT_CENSORED (S_gate fixed 1.0, unresolved below floor)
+# and SAFE_RANGE_UNINFORMATIVE (S_gate 1.0, safe curve too flat to test) are
+# both pinned at 1.0 and never counted positive; FAST_RIGHT_CENSORED / ANALYSIS
+# _FAILURE sit at 0. SAFE_LEFT_FAST_INTERIOR naturally has S_gate<1 (not >1).
+_NOT_POSITIVE = {"BOTH_LEFT_CENSORED", "FAST_RIGHT_CENSORED", "ANALYSIS_FAILURE",
+                 "SAFE_RANGE_UNINFORMATIVE"}
 _TIE_DB = 0.02                                      # round-6 §1.6 C0 tie window
+
+# Family map (round-7 §2.5): prefer detail24.family_of when that module is
+# importable; otherwise parse detail_<family>_<i>. detail24.py is authored
+# concurrently, so the import is best-effort and must never hard-fail here.
+try:                                                # noqa: SIM105
+    from detail24 import family_of as _family_of_detail
+except Exception:                                   # pragma: no cover - fallback
+    _family_of_detail = None
+
+
+def family_of(image):
+    """Family label for a DETAIL-24 image name detail_<family>_<i>.
+    Delegates to detail24.family_of when present, else name-prefix parsing."""
+    if _family_of_detail is not None:
+        try:
+            return _family_of_detail(image)
+        except Exception:
+            pass
+    parts = str(image).split("_")
+    if len(parts) >= 3 and parts[0] == "detail":
+        return "_".join(parts[1:-1])
+    return str(image)
 
 
 # ---- small coercion / key helpers ----------------------------------------- #
@@ -232,6 +277,18 @@ def parse_args(argv):
                     help="skip the sweep, (re)build summaries from existing CSV")
     ap.add_argument("--no-analysis", action="store_true",
                     help="sweep only (parallel worker mode)")
+    ap.add_argument("--cohort", type=str, default="dev",
+                    help="analysis cohort label (default dev). Only 'detail' "
+                         "claims a positive DETAIL_SPEED_PASS gate; every other "
+                         "label (dev/natural) reports the same stats with the "
+                         "gate left null (round-7 §4).")
+    ap.add_argument("--boot-B", type=int, default=BOOT_B_DEFAULT, dest="boot_B",
+                    help="nested family-stratified bootstrap replicates "
+                         "(default %d; lower it for smokes)" % BOOT_B_DEFAULT)
+    ap.add_argument("--selftest-analysis", action="store_true",
+                    dest="selftest_analysis",
+                    help="run the PAVA + censoring-classifier structural self "
+                         "test and exit (no data needed)")
     return ap.parse_args(argv)
 
 
@@ -266,7 +323,8 @@ def build_cfg(a):
         nu_list=nu_list, rho_list=rho_list, arms=arms,
         select_iter=a.select_iter, fista_iters=a.fista_iters,
         out=out, smoke=smoke, mode=mode, freeze_c0=bool(a.freeze_c0),
-        C0=a.C0)
+        C0=a.C0, cohort=str(getattr(a, "cohort", "dev")),
+        boot_B=int(getattr(a, "boot_B", BOOT_B_DEFAULT)))
 
 
 def cfg_dict(cfg):
@@ -275,6 +333,8 @@ def cfg_dict(cfg):
             "images": cfg.images, "seeds": cfg.seeds,
             "select_iter": cfg.select_iter, "fista_iters": cfg.fista_iters,
             "smoke": cfg.smoke, "mode": cfg.mode,
+            "cohort": getattr(cfg, "cohort", "dev"),
+            "boot_B": int(getattr(cfg, "boot_B", BOOT_B_DEFAULT)),
             "C0": (None if cfg.C0 is None else float(cfg.C0))}
 
 
@@ -605,10 +665,35 @@ def analyze_passa(cfg, freeze):
             "frozen": bool(freeze)}
 
 
-# ---- round-6 §4 frozen floor-censoring analysis --------------------------- #
+# ---- round-7 §2 endpoint: Q90 target + PAVA isotonic + censoring ----------- #
+def pava(y):
+    """Ordinary equal-weight pool-adjacent-violators isotonic regression:
+    the least-squares nondecreasing fit to y in its given order (§2.2). Uses
+    only the ordering (equal weights), not the x spacing. Returns a float64
+    array the same length/order as y."""
+    y = np.asarray(y, dtype=np.float64)
+    means, weights, counts = [], [], []
+    for val in y:
+        m, w, c = float(val), 1.0, 1
+        while means and means[-1] > m:                 # pool the violated block
+            pm, pw, pc = means.pop(), weights.pop(), counts.pop()
+            m = (pm * pw + m * w) / (pw + w)
+            w += pw
+            c += pc
+        means.append(m)
+        weights.append(w)
+        counts.append(c)
+    out = np.empty(y.size, dtype=np.float64)
+    i = 0
+    for m, c in zip(means, counts):
+        out[i:i + c] = m
+        i += c
+    return out
+
+
 def _t_reach_interior(T, P, Q):
     """Interior crossing time by linear interpolation in log10(T) on the
-    monotonized curve P (assumes P[0] < Q <= P.max(), so k>=1)."""
+    monotone curve P (assumes P[0] < Q <= P.max(), so k>=1)."""
     k = int(np.nonzero(P >= Q)[0][0])
     logT = np.log10(T)
     if P[k] == P[k - 1]:
@@ -619,9 +704,9 @@ def _t_reach_interior(T, P, Q):
     return float(10.0 ** lt)
 
 
-def _mono_curve(seed_map, seeds, T_by_nu):
-    """(T asc, cummax P) seed-mean PSNR_rad curve over the given seed multiset,
-    or None. Cumulative max = isotonic-lite monotonization (round-5 convention)."""
+def _seed_mean_curve(seed_map, seeds, T_by_nu):
+    """Raw seed-mean PSNR_rad curve over the given seed MULTISET (duplicates
+    weight naturally), sorted by ascending T_opt. Returns (T, P_raw) or None."""
     Ts, Ps = [], []
     for nu in sorted(seed_map):
         vals = [seed_map[nu][s] for s in seeds
@@ -635,14 +720,22 @@ def _mono_curve(seed_map, seeds, T_by_nu):
     T = np.asarray(Ts, dtype=np.float64)
     P = np.asarray(Ps, dtype=np.float64)
     order = np.argsort(T)
-    T, P = T[order], P[order]
-    return T, np.maximum.accumulate(P)
+    return T[order], P[order]
+
+
+def _iso_curve(raw):
+    """(T, P_raw) -> (T, P_iso) with equal-weight PAVA of P_raw in T order
+    (§2.2: nondecreasing Q~(log T_opt)). None passes through."""
+    if raw is None:
+        return None
+    T, P = raw
+    return T, pava(P)
 
 
 def _reach_state(curve, Q):
     """('RIGHT'|'FLOOR'|'INTERIOR', T_c). RIGHT = never reaches Q; FLOOR =
     already at/above Q at the shortest T (left-censored); INTERIOR = crosses
-    strictly inside the grid."""
+    strictly inside the grid. Operates on the isotonic curve."""
     if curve is None:
         return "RIGHT", float("nan")
     T, P = curve
@@ -653,56 +746,87 @@ def _reach_state(curve, Q):
     return "INTERIOR", _t_reach_interior(T, P, Q)
 
 
-def _judge_image(entry, seeds, T_by_nu, T_min, nu_ref, q_override=None):
-    """Classify one image's (safe,fast) curves per round-6 §4 and return
-    (status, S_gate, T_s, T_f, Qstar). Q*_j is the RQL-derived target
-    (seed-mean PSNR_rad of the safe curve at nu_ref, minus 1 dB); q_override
-    supplies that same RQL target when judging the SECONDARY arms (round-6 §4:
-    one shared target for every arm)."""
-    safe, fast = entry["safe"], entry["fast"]
-    if q_override is not None:
-        Q = float(q_override)
-    else:
-        if nu_ref not in safe:
-            return "ANALYSIS_FAILURE", 0.0, None, None, None
-        qvals = [safe[nu_ref][s] for s in seeds
-                 if s in safe[nu_ref] and safe[nu_ref][s] is not None]
-        if not qvals:
-            return "ANALYSIS_FAILURE", 0.0, None, None, None
-        Q = float(np.mean(qvals)) - 1.0
+def _target(safe_iso):
+    """Round-7 §2.3 per-image target from the SAFE isotonic curve.
+    Returns (status, R_j, Q90, Qmin, Qmax): status is None on the normal path,
+    'SAFE_RANGE_UNINFORMATIVE' when R_j<0.50 dB, 'ANALYSIS_FAILURE' when the
+    safe curve is missing."""
+    if safe_iso is None:
+        return "ANALYSIS_FAILURE", None, None, None, None
+    _, P = safe_iso
+    Qmin = float(P[0])                 # Qiso_safe(T_min)
+    Qmax = float(P[-1])                # Qiso_safe(T_max)
+    R = Qmax - Qmin                    # observable safe-side dynamic range
+    if R < R_MIN_DB:
+        return "SAFE_RANGE_UNINFORMATIVE", R, None, Qmin, Qmax
+    return None, R, Qmin + Q90_FRAC * R, Qmin, Qmax
 
-    cs = _mono_curve(safe, seeds, T_by_nu)
-    cf = _mono_curve(fast, seeds, T_by_nu)
-    st_s, T_s = _reach_state(cs, Q)
-    st_f, T_f = _reach_state(cf, Q)
 
-    # F: safe fails / data missing (should be impossible by Q* construction).
-    if st_s == "RIGHT" or cs is None:
-        return "ANALYSIS_FAILURE", 0.0, T_s, T_f, Q
-    # E: fast never reaches Q* by nu_max -> failure (S_gate 0).
-    if st_f == "RIGHT" or cf is None:
-        return "FAST_RIGHT_CENSORED", 0.0, T_s, T_f, Q
-    # A/B/C/D over {FLOOR, INTERIOR} x {FLOOR, INTERIOR}
+def _classify(safe_iso, fast_iso, Q, T_min):
+    """Round-7 §2.4 reach-state classifier of the (safe,fast) isotonic curves
+    against threshold Q. Returns (status, S_gate, T_s, T_f). Kept separate from
+    the target so each censoring class is directly unit-testable."""
+    st_s, T_s = _reach_state(safe_iso, Q)
+    st_f, T_f = _reach_state(fast_iso, Q)
+    # missing/incomplete safe curve: analysis-completeness failure.
+    if st_s == "RIGHT":
+        return "ANALYSIS_FAILURE", 0.0, T_s, T_f
+    # fast never reaches Q by nu_max -> failure (S_gate 0).
+    if st_f == "RIGHT":
+        return "FAST_RIGHT_CENSORED", 0.0, T_s, T_f
     if st_s == "INTERIOR" and st_f == "INTERIOR":
         s = (T_s / T_f) if T_f > 0 else 0.0
-        return "NORMAL", float(s), T_s, T_f, Q
+        return "NORMAL", float(s), T_s, T_f
     if st_s == "INTERIOR" and st_f == "FLOOR":
-        s = (T_s / T_min) if T_min > 0 else 0.0        # lower bound
-        return "FAST_LEFT_CENSORED", float(s), T_s, T_f, Q
+        s = (T_s / T_min) if T_min > 0 else 0.0        # >= lower bound
+        return "FAST_LEFT_CENSORED", float(s), T_s, T_f
     if st_s == "FLOOR" and st_f == "INTERIOR":
         s = (T_min / T_f) if T_f > 0 else 0.0          # < 1: non-positive
-        return "SAFE_LEFT_FAST_INTERIOR", float(s), T_s, T_f, Q
-    # both FLOOR: unresolved below floor, S_gate fixed to 1.0
-    return "BOTH_LEFT_CENSORED", 1.0, T_s, T_f, Q
+        return "SAFE_LEFT_FAST_INTERIOR", float(s), T_s, T_f
+    # both FLOOR: unresolved below floor, S_gate fixed to 1.0.
+    return "BOTH_LEFT_CENSORED", 1.0, T_s, T_f
 
 
-def _gate_stats(items):
-    """items: list of (status, S_gate). Returns (median over ALL, count S_gate>1
-    excluding C/E/F per round-6 §4)."""
-    S = [sg for (_, sg) in items]
-    median = float(np.median(S)) if S else float("nan")
-    n_gt1 = sum(1 for (st, sg) in items if st not in _GT1_EXCLUDED and sg > 1.0)
-    return median, n_gt1
+def judge_image(entry, seeds, T_by_nu, T_min):
+    """Full round-7 §2.2-2.4 per-image judge (reused verbatim by S2 and by the
+    bootstrap). Builds seed-mean + isotonic curves for both operating points
+    over the seed multiset, derives the Q90 target from the safe curve, and
+    classifies. Returns a dict with status, S_gate, T_s, T_f, R_j, Q90, Qmin,
+    Qmax and the raw/isotonic curves (curves are kept for reporting only)."""
+    safe_raw = _seed_mean_curve(entry["safe"], seeds, T_by_nu)
+    fast_raw = _seed_mean_curve(entry["fast"], seeds, T_by_nu)
+    safe_iso = _iso_curve(safe_raw)
+    fast_iso = _iso_curve(fast_raw)
+    tstatus, R, Q90, Qmin, Qmax = _target(safe_iso)
+    base = {"R_j": R, "Q90": Q90, "Qmin": Qmin, "Qmax": Qmax,
+            "safe_raw": safe_raw, "fast_raw": fast_raw,
+            "safe_iso": safe_iso, "fast_iso": fast_iso}
+    if tstatus == "ANALYSIS_FAILURE":
+        return {"status": "ANALYSIS_FAILURE", "S_gate": 0.0,
+                "T_s": None, "T_f": None, **base}
+    if tstatus == "SAFE_RANGE_UNINFORMATIVE":
+        return {"status": "SAFE_RANGE_UNINFORMATIVE", "S_gate": 1.0,
+                "T_s": None, "T_f": None, **base}
+    status, S_gate, T_s, T_f = _classify(safe_iso, fast_iso, Q90, T_min)
+    return {"status": status, "S_gate": float(S_gate),
+            "T_s": T_s, "T_f": T_f, **base}
+
+
+def fixed_budget_gain(entry, seeds, nu_budget):
+    """Round-7 §3 fixed-budget quality gain DeltaQ_j = RAW seed-mean PSNR_rad
+    (NOT isotonic) at the terminal dwell nu_budget: fast minus safe. None when
+    that grid point is missing for either operating point."""
+    def raw_at(side_map):
+        d = side_map.get(nu_budget)
+        if not d:
+            return None
+        vals = [d[s] for s in seeds if s in d and d[s] is not None]
+        return float(np.mean(vals)) if vals else None
+    qs = raw_at(entry["safe"])
+    qf = raw_at(entry["fast"])
+    if qs is None or qf is None:
+        return None
+    return float(qf - qs)
 
 
 def _collect(rows, arm, rho_safe, rho_fast, images):
@@ -738,32 +862,93 @@ def _collect(rows, arm, rho_safe, rho_fast, images):
     return data, T_by_nu, seeds_by_image
 
 
-def _bootstrap_lower(data, seeds_by_image, T_by_nu, T_min, nu_ref, images, B=2000):
-    """Image-level stratified bootstrap of the median S_gate (round-6 §4): every
-    draw resamples seeds within image, re-forms both curves, RE-JUDGES the
-    censoring class, regenerates S_gate, then resamples images. Returns the 2.5%
-    lower bound of the median-S_gate distribution."""
-    if not images:
-        return float("nan"), np.array([])
-    rng = rng_for(0, 63, 6, 1)
-    n = len(images)
-    meds = np.empty(B, dtype=np.float64)
-    for d in range(B):
-        per_img = []
+def _ser_curve(c):
+    """(T, P) numpy tuple -> JSON-friendly {"T":[...], "P":[...]} (or None).
+    Used to preserve BOTH the raw seed-mean and the isotonic curve (§2.2)."""
+    if c is None:
+        return None
+    T, P = c
+    return {"T": [float(x) for x in T], "P": [float(x) for x in P]}
+
+
+def _cohort_family(image, cohort):
+    """DETAIL-24 uses the family_of(...) grouping; every other cohort treats
+    each image as its own family (§2.5 degenerate stratification)."""
+    return family_of(image) if cohort == "detail" else str(image)
+
+
+def _build_strata(images, cohort):
+    """Bootstrap strata (§2.5). DETAIL-24: {family: [its images]} so each draw
+    resamples the images WITHIN each of the six families. Any non-detail cohort
+    (dev/natural): one stratum of all images => a plain image bootstrap."""
+    if cohort == "detail":
+        strata = {}
         for im in images:
-            sl = seeds_by_image[im]
+            strata.setdefault(family_of(im), []).append(im)
+        return strata
+    return {"__all__": list(images)}
+
+
+def bootstrap_endpoints(images, strata, seeds_by_image, stat_fns, B):
+    """Round-7 §2.5 nested family-stratified bootstrap of the cohort median,
+    computed for EVERY statistic in stat_fns off the SAME resamples (a paired
+    bootstrap: identical seed/image draws, different per-image statistics).
+    Each replicate: (1) resample each image's seeds with replacement and
+    recompute its statistic (which REBUILDS curves/target/censoring); (2) within
+    each stratum resample its images with replacement; (3) take the cohort
+    median. Deterministic stream rng_for(0,63,6,2). Returns
+    {name: {"LB2.5":.., "n_finite":.., "meds": ndarray}}."""
+    names = list(stat_fns)
+    meds = {nm: np.empty(B, dtype=np.float64) for nm in names}
+    if not images:
+        for nm in names:
+            meds[nm][:] = np.nan
+        return {nm: {"LB2.5": float("nan"), "n_finite": 0, "meds": meds[nm]}
+                for nm in names}
+    rng = rng_for(*BOOT_STREAM)
+    imgs_sorted = sorted(images)
+    strata_sorted = sorted(strata.items())
+    for d in range(B):
+        per = {nm: {} for nm in names}
+        for im in imgs_sorted:                          # (1) seed resample
+            sl = seeds_by_image.get(im, [])
             if sl:
-                drawn = [int(s) for s in rng.choice(sl, size=len(sl), replace=True)]
+                drawn = [int(s) for s in rng.choice(sl, size=len(sl),
+                                                    replace=True)]
             else:
                 drawn = []
-            st, sg, _, _, _ = _judge_image(data[im], drawn, T_by_nu, T_min, nu_ref)
-            per_img.append(sg)
-        idx = rng.integers(0, n, size=n)
-        meds[d] = float(np.median([per_img[i] for i in idx]))
-    return float(np.quantile(meds, 0.025)), meds
+            for nm in names:
+                per[nm][im] = stat_fns[nm](im, drawn)
+        picked = []                                     # (2) image resample
+        for _, fam_imgs in strata_sorted:
+            k = len(fam_imgs)
+            if k == 0:
+                continue
+            idx = rng.integers(0, k, size=k)
+            picked.extend(fam_imgs[i] for i in idx)
+        for nm in names:                                # (3) cohort median
+            vals = [per[nm][im] for im in picked
+                    if per[nm][im] is not None
+                    and np.isfinite(per[nm][im])]
+            meds[nm][d] = float(np.median(vals)) if vals else np.nan
+    out = {}
+    for nm in names:
+        arr = meds[nm]
+        finite = arr[np.isfinite(arr)]
+        out[nm] = {"LB2.5": (float(np.quantile(finite, 0.025))
+                             if finite.size else float("nan")),
+                   "n_finite": int(finite.size), "meds": arr}
+    return out
 
 
-def censoring_analysis(rows, cfg):
+def endpoint_analysis(rows, cfg):
+    """Round-7 FINAL endpoint analysis for one cohort. cfg.cohort selects the
+    family stratification and whether a positive gate is claimed:
+    cohort=='detail' -> DETAIL_SPEED_PASS true/false; every other cohort
+    (dev/natural) reports the identical statistics but leaves the gate null
+    (§4 no positive pass gate)."""
+    cohort = getattr(cfg, "cohort", "dev")
+    boot_B = int(getattr(cfg, "boot_B", BOOT_B_DEFAULT))
     rho_safe = min(cfg.rho_list)
     rho_fast = max(cfg.rho_list)
     images = [im for im in cfg.images
@@ -772,71 +957,102 @@ def censoring_analysis(rows, cfg):
     data, T_by_nu, seeds_by_image = _collect(rows, PRIMARY_ARM, rho_safe,
                                              rho_fast, images)
     if not T_by_nu or not images:
-        return {"rho_safe": rho_safe, "rho_fast": rho_fast, "images": images,
-                "per_image": [], "S_median": None, "n_Sgate_gt1": 0,
-                "n_images": len(images), "note": "no PSNR_rad rows for the "
-                "primary arm"}
-    nu_ref = max(T_by_nu)
+        return {"cohort": cohort, "rho_safe": rho_safe, "rho_fast": rho_fast,
+                "images": images, "per_image": [], "S_median": None,
+                "n_Sgate_gt1": 0, "n_images": len(images),
+                "primary_gate": {"DETAIL_SPEED_PASS": None},
+                "fixed_budget_quality_gain": {"pass": None},
+                "note": "no PSNR_rad rows for the primary arm"}
     T_min = float(min(T_by_nu.values()))
+    nus = set(T_by_nu)
+    nu_budget = NU_BUDGET if NU_BUDGET in nus else max(nus)
 
+    # ---- point estimates (actual seeds, no resampling)
     per_image = []
     warnings = []
     for im in images:
-        st, sg, T_s, T_f, Q = _judge_image(data[im], seeds_by_image[im],
-                                           T_by_nu, T_min, nu_ref)
-        per_image.append({"image": im, "status": st, "S_gate": sg,
-                          "T_s": T_s, "T_f": T_f, "Qstar": Q,
-                          "n_seeds": len(seeds_by_image[im])})
-        if st == "ANALYSIS_FAILURE":
-            w = ("[s1] LOUD WARNING cell-completeness: image %s -> "
-                 "ANALYSIS_FAILURE (safe arm never reaches Q* or data missing; "
-                 "round-6 §4-F). Check the cell grid." % im)
+        j = judge_image(data[im], seeds_by_image[im], T_by_nu, T_min)
+        dq = fixed_budget_gain(data[im], seeds_by_image[im], nu_budget)
+        per_image.append({
+            "image": im, "family": _cohort_family(im, cohort),
+            "status": j["status"], "S_gate": j["S_gate"],
+            "T_s": j["T_s"], "T_f": j["T_f"], "R_j": j["R_j"],
+            "Q90_j": j["Q90"], "Qmin": j["Qmin"], "Qmax": j["Qmax"],
+            "DeltaQ_budget": dq, "n_seeds": len(seeds_by_image[im]),
+            # §2.2: keep the raw seed-mean curve alongside the isotonic one.
+            "curves": {"safe_raw": _ser_curve(j["safe_raw"]),
+                       "safe_iso": _ser_curve(j["safe_iso"]),
+                       "fast_raw": _ser_curve(j["fast_raw"]),
+                       "fast_iso": _ser_curve(j["fast_iso"])}})
+        if j["status"] == "ANALYSIS_FAILURE":
+            w = ("[s1] LOUD WARNING analysis-completeness: image %s -> "
+                 "ANALYSIS_FAILURE (safe curve missing/incomplete; round-7 "
+                 "§2.4). No image is deleted; check the cell grid." % im)
             warnings.append(w)
             print(w, flush=True)
 
-    items = [(d["status"], d["S_gate"]) for d in per_image]
-    median, n_gt1 = _gate_stats(items)
-    boot_lower, _ = _bootstrap_lower(data, seeds_by_image, T_by_nu, T_min,
-                                     nu_ref, images, B=2000)
+    S = [d["S_gate"] for d in per_image]
+    S_median = float(np.median(S)) if S else float("nan")
+    n_gt1 = sum(1 for d in per_image
+                if d["status"] not in _NOT_POSITIVE and d["S_gate"] > 1.0)
 
-    # secondary arms: point-estimate median only (descriptive). They are judged
-    # against the SAME RQL-derived Q*_j per image (round-6 §4: one shared target).
-    qstar_by_image = {d["image"]: d["Qstar"] for d in per_image}
-    secondary = {}
-    for arm in [a for a in SECONDARY_TTQ if a in cfg.arms]:
-        d2, T2, s2 = _collect(rows, arm, rho_safe, rho_fast, images)
-        if not T2:
-            continue
-        nr2, tm2 = max(T2), float(min(T2.values()))
-        it2 = []
-        for im in images:
-            q = qstar_by_image.get(im)
-            if q is None:
-                continue
-            st, sg, _, _, _ = _judge_image(d2[im], s2[im], T2, tm2, nr2,
-                                           q_override=q)
-            it2.append((st, sg))
-        if it2:
-            m2, g2 = _gate_stats(it2)
-            secondary[arm] = {"S_median": m2, "n_Sgate_gt1": g2}
+    DQ = [d["DeltaQ_budget"] for d in per_image if d["DeltaQ_budget"] is not None]
+    DQ_median = float(np.median(DQ)) if DQ else float("nan")
+    n_dq_pos = sum(1 for d in per_image
+                   if d["DeltaQ_budget"] is not None and d["DeltaQ_budget"] > 0)
+    n_dq_missing = sum(1 for d in per_image if d["DeltaQ_budget"] is None)
+
+    # ---- nested family-stratified bootstrap (both endpoints, paired draws)
+    strata = _build_strata(images, cohort)
+    stat_fns = {
+        "S_gate": (lambda im, sd:
+                   judge_image(data[im], sd, T_by_nu, T_min)["S_gate"]),
+        "DeltaQ": (lambda im, sd:
+                   fixed_budget_gain(data[im], sd, nu_budget)),
+    }
+    boot = bootstrap_endpoints(images, strata, seeds_by_image, stat_fns, boot_B)
+    LB_S = boot["S_gate"]["LB2.5"]
+    LB_DQ = boot["DeltaQ"]["LB2.5"]
+
+    is_detail = (cohort == "detail")
+    primary_ok = bool(S_median >= MEDIAN_MIN and np.isfinite(LB_S)
+                      and LB_S > 1.0 and n_gt1 >= N_GT1_MIN)
+    secondary_ok = bool(DQ_median >= DQ_MEDIAN_MIN and np.isfinite(LB_DQ)
+                        and LB_DQ > 0.0 and n_dq_pos >= N_GT1_MIN)
 
     n_status = {}
     for d in per_image:
         n_status[d["status"]] = n_status.get(d["status"], 0) + 1
 
-    return {"rho_safe": rho_safe, "rho_fast": rho_fast, "nu_ref": nu_ref,
-            "T_min": T_min, "T_by_nu": {("%g" % k): v for k, v in
-                                        sorted(T_by_nu.items())},
-            "images": images, "per_image": per_image,
-            "S_median": median, "n_Sgate_gt1": n_gt1, "n_images": len(images),
-            "status_counts": n_status,
-            "bootstrap_B": 2000, "bootstrap_median_lower_2p5": boot_lower,
-            "secondary_arms": secondary,
-            "reference_gate": {"median>=3": (median is not None and median >= 3.0),
-                               "bootstrap_lower>1": (np.isfinite(boot_lower)
-                                                     and boot_lower > 1.0),
-                               "n_gt1": n_gt1, "n_images": len(images)},
-            "warnings": warnings}
+    return {
+        "cohort": cohort, "rho_safe": rho_safe, "rho_fast": rho_fast,
+        "nu_budget": nu_budget, "T_min": T_min,
+        "T_by_nu": {("%g" % k): v for k, v in sorted(T_by_nu.items())},
+        "images": images, "per_image": per_image, "status_counts": n_status,
+        "n_images": len(images),
+        "S_median": S_median, "n_Sgate_gt1": n_gt1,
+        "bootstrap": {
+            "B": boot_B, "stream": list(BOOT_STREAM), "stratified_by": (
+                "family" if is_detail else "image (degenerate)"),
+            "S_gate_LB2.5": LB_S, "S_gate_n_finite": boot["S_gate"]["n_finite"],
+            "DeltaQ_LB2.5": LB_DQ, "DeltaQ_n_finite": boot["DeltaQ"]["n_finite"]},
+        "primary_gate": {
+            "endpoint": "time_to_recover_90pct_safe_range (Q90)",
+            "median_S_gate": S_median, "median>=3": bool(S_median >= MEDIAN_MIN),
+            "bootstrap_LB2.5": LB_S, "LB>1": bool(np.isfinite(LB_S) and LB_S > 1.0),
+            "n_Sgate_gt1": n_gt1, "n_gt1>=%d" % N_GT1_MIN: bool(n_gt1 >= N_GT1_MIN),
+            "n_images": len(images),
+            "DETAIL_SPEED_PASS": (primary_ok if is_detail else None)},
+        "fixed_budget_quality_gain": {
+            "endpoint": "DeltaQ_budget = RAW seed-mean PSNR_rad(fast)-(safe) @ nu=%g"
+                        % nu_budget,
+            "median_DeltaQ_dB": DQ_median,
+            "median>=1.0": bool(DQ_median >= DQ_MEDIAN_MIN),
+            "bootstrap_LB2.5": LB_DQ, "LB>0": bool(np.isfinite(LB_DQ) and LB_DQ > 0.0),
+            "n_DeltaQ_pos": n_dq_pos, "n_pos>=%d" % N_GT1_MIN: bool(n_dq_pos >= N_GT1_MIN),
+            "n_missing": n_dq_missing,
+            "pass": (secondary_ok if is_detail else None)},
+        "warnings": warnings}
 
 
 # ---- descriptive audit summary (round-5: no binary gate) ------------------ #
@@ -901,16 +1117,31 @@ def _fmt_S(s):
     return "%.3f" % s
 
 
+def _fmt_dB(v):
+    if v is None or (isinstance(v, float) and not np.isfinite(v)):
+        return "--"
+    return "%.2f" % v
+
+
 def _write_md(cfg, cen, mft, rtc, n_rows, path):
+    cohort = cen.get("cohort", getattr(cfg, "cohort", "dev"))
+    pg = cen.get("primary_gate", {})
+    fb = cen.get("fixed_budget_quality_gain", {})
+    bt = cen.get("bootstrap", {})
     L = []
-    L.append("# ROUND63 S1 DEV PILOT SUMMARY (round-6 protocol)")
+    L.append("# ROUND63 S1 PILOT SUMMARY (round-7 Q90 endpoint, cohort=%s)"
+             % cohort)
     L.append("")
     L.append("**S1 is exploratory and development-only** (spec D2 §1): dev images"
              " and seeds are disjoint from all S2 confirmatory images and seeds;"
-             " these results do not enter confirmatory intervals or main tables.")
+             " these results do not enter confirmatory intervals or main tables."
+             " The analysis layer here is the round-7 FINAL endpoint reused"
+             " verbatim for S2.")
     L.append("")
-    L.append("- rows: %d   images: %d   seeds: %s   arms: %s   mode: %s"
-             % (n_rows, len(cfg.images), cfg.seeds, ", ".join(cfg.arms), cfg.mode))
+    L.append("- rows: %d   images: %d   seeds: %s   arms: %s   mode: %s   "
+             "cohort: %s"
+             % (n_rows, len(cfg.images), cfg.seeds, ", ".join(cfg.arms),
+                cfg.mode, cohort))
     L.append("- side %d, %s, M %d, nu %s, rho_bar %s, tau %.0f ns, sigma_b 0, "
              "active start" % (cfg.side, cfg.pattern, cfg.M,
                                [int(x) for x in cfg.nu_list], cfg.rho_list,
@@ -921,28 +1152,33 @@ def _write_md(cfg, cen, mft, rtc, n_rows, path):
                 ("None" if cfg.C0 is None else ("%g" % cfg.C0))))
     L.append("")
 
-    # --- Table 1: frozen floor-censoring taxonomy (round-6 §4)
-    L.append("## 1. Time-to-quality speedup S_gate — RQL (round-6 §4 censoring)")
+    # --- Table 1: round-7 Q90 endpoint + censoring taxonomy (§2.2-2.5)
+    L.append("## 1. Acquisition-speed endpoint S_gate — RQL (round-7 §2 Q90)")
     L.append("")
-    L.append("T_opt = M_physical*nu*tau; T_min at the shortest nu tier. "
-             "Q*_j = PSNR_rad[RQL, rho=%.3g, nu=%g] - 1 dB. S_gate per the frozen "
-             "taxonomy A(normal)/B(fast-left-censored, lower bound)/"
-             "C(both-left-censored, =1, unresolved below floor)/"
-             "D(safe-left/fast-interior, <1)/E(fast-right-censored, fail=0)/"
-             "F(analysis failure=0)."
-             % (cen.get("rho_safe", float("nan")), cen.get("nu_ref", float("nan"))))
+    L.append("Per (image, rho): seed-mean PSNR_rad at each nu -> equal-weight "
+             "PAVA isotonic fit vs log T_opt (raw curve kept in the JSON). "
+             "Safe = rho=%.3g; fast = rho=%.3g. R_j = Qiso_safe(T_max) - "
+             "Qiso_safe(T_min); if R_j<%.2f dB the safe range is uninformative "
+             "(S_gate=1, not positive); else Q90_j = Qiso_safe(T_min) + "
+             "%.2f*R_j and crossing times come by log-T interpolation on the "
+             "isotonic curves. Censoring: NORMAL(=T_s/T_f)/FAST_LEFT_CENSORED"
+             "(>=T_s/T_min)/BOTH_LEFT_CENSORED(=1, unresolved)/"
+             "SAFE_LEFT_FAST_INTERIOR(<1)/FAST_RIGHT_CENSORED(fail=0)/"
+             "SAFE_RANGE_UNINFORMATIVE(=1)/ANALYSIS_FAILURE(0). No image deleted."
+             % (cen.get("rho_safe", float("nan")),
+                cen.get("rho_fast", float("nan")), R_MIN_DB, Q90_FRAC))
     L.append("")
     if cen.get("per_image"):
-        L.append("| image | status | S_gate | T_safe | T_fast | Q*_j (dB) | seeds |")
-        L.append("|---|---|---|---|---|---|---|")
+        L.append("| image | family | status | S_gate | T_safe | T_fast | "
+                 "R_j (dB) | Q90_j (dB) | DeltaQ_budget (dB) | seeds |")
+        L.append("|---|---|---|---|---|---|---|---|---|---|")
         for d in cen["per_image"]:
-            q = d.get("Qstar")
-            L.append("| %s | %s | %s | %s | %s | %s | %d |"
-                     % (d["image"], d["status"], _fmt_S(d["S_gate"]),
-                        _fmt_T(d["T_s"]), _fmt_T(d["T_f"]),
-                        ("%.2f" % q) if q is not None else "--",
-                        d.get("n_seeds", 0)))
-        L.append("| **median S_gate** | | %s | | | | |"
+            L.append("| %s | %s | %s | %s | %s | %s | %s | %s | %s | %d |"
+                     % (d["image"], d.get("family", "--"), d["status"],
+                        _fmt_S(d["S_gate"]), _fmt_T(d["T_s"]), _fmt_T(d["T_f"]),
+                        _fmt_dB(d.get("R_j")), _fmt_dB(d.get("Q90_j")),
+                        _fmt_dB(d.get("DeltaQ_budget")), d.get("n_seeds", 0)))
+        L.append("| **median S_gate** | | | %s | | | | | | |"
                  % _fmt_S(cen.get("S_median")))
         L.append("")
         sc = cen.get("status_counts", {})
@@ -950,28 +1186,52 @@ def _write_md(cfg, cen, mft, rtc, n_rows, path):
                  % (", ".join("%s=%d" % (k, v) for k, v in sorted(sc.items()))
                     or "none"))
         L.append("")
-        L.append("Gate stats (S1 dev, descriptive — NOT a confirmatory gate): "
-                 "median S_gate=%s; images with S_gate>1 (excl. C/E/F)=%d/%d; "
-                 "image-level stratified bootstrap (B=%d) 2.5%% lower bound of "
-                 "the median = %s."
-                 % (_fmt_S(cen.get("S_median")), cen.get("n_Sgate_gt1", 0),
-                    cen.get("n_images", 0), cen.get("bootstrap_B", 0),
-                    _fmt_S(cen.get("bootstrap_median_lower_2p5"))))
+
+        # primary gate block
+        pass_val = pg.get("DETAIL_SPEED_PASS", None)
+        pass_str = ("null (non-detail cohort: no positive gate, §4)"
+                    if pass_val is None else str(pass_val))
+        L.append("### Primary gate (§2.5) — DETAIL_SPEED_PASS = %s" % pass_str)
         L.append("")
-        ref = cen.get("reference_gate", {})
-        L.append("Reference gate check (median>=3: %s; bootstrap_lower>1: %s) — "
-                 "reported for orientation only; S1 never enters the confirmatory "
-                 "decision." % (ref.get("median>=3"), ref.get("bootstrap_lower>1")))
+        L.append("- median S_gate = %s  (>=%.0f: %s)"
+                 % (_fmt_S(cen.get("S_median")), MEDIAN_MIN, pg.get("median>=3")))
+        L.append("- bootstrap 2.5%% LB of median S_gate = %s  (>1: %s)"
+                 % (_fmt_S(bt.get("S_gate_LB2.5")), pg.get("LB>1")))
+        L.append("- images with S_gate>1 (excl. non-positive classes) = %d/%d  "
+                 "(>=%d: %s)"
+                 % (cen.get("n_Sgate_gt1", 0), cen.get("n_images", 0),
+                    N_GT1_MIN, pg.get("n_gt1>=%d" % N_GT1_MIN)))
         L.append("")
-        sec = cen.get("secondary_arms", {})
-        if sec:
-            L.append("Secondary arms (point-estimate median S_gate): %s"
-                     % ", ".join("%s=%s (n>1=%d)"
-                                 % (a, _fmt_S(v["S_median"]), v["n_Sgate_gt1"])
-                                 for a, v in sec.items()))
-            L.append("")
+
+        # secondary block
+        L.append("### Fixed-budget quality gain (§3, key secondary)")
+        L.append("")
+        L.append("DeltaQ_budget = RAW seed-mean PSNR_rad(fast) - (safe) at "
+                 "nu=%g (NOT isotonic). Descriptive success: median>=%.1f dB "
+                 "AND LB2.5>0 AND >=%d images with DeltaQ>0."
+                 % (cen.get("nu_budget", NU_BUDGET), DQ_MEDIAN_MIN, N_GT1_MIN))
+        L.append("")
+        L.append("- median DeltaQ = %s dB  (>=%.1f: %s)"
+                 % (_fmt_dB(fb.get("median_DeltaQ_dB")), DQ_MEDIAN_MIN,
+                    fb.get("median>=1.0")))
+        L.append("- bootstrap 2.5%% LB of median DeltaQ = %s  (>0: %s)"
+                 % (_fmt_dB(bt.get("DeltaQ_LB2.5")), fb.get("LB>0")))
+        L.append("- images with DeltaQ>0 = %d/%d  (>=%d: %s)   pass = %s"
+                 % (fb.get("n_DeltaQ_pos", 0), cen.get("n_images", 0),
+                    N_GT1_MIN, fb.get("n_pos>=%d" % N_GT1_MIN),
+                    ("null (non-detail cohort)" if fb.get("pass") is None
+                     else fb.get("pass"))))
+        L.append("")
+
+        # bootstrap diagnostics
+        L.append("Bootstrap: B=%s draws, stream rng_for%s, stratified by %s; "
+                 "finite draws S_gate=%s / DeltaQ=%s."
+                 % (bt.get("B"), tuple(bt.get("stream", BOOT_STREAM)),
+                    bt.get("stratified_by"), bt.get("S_gate_n_finite"),
+                    bt.get("DeltaQ_n_finite")))
+        L.append("")
         if cen.get("warnings"):
-            L.append("**Cell-completeness warnings:**")
+            L.append("**Analysis-completeness warnings:**")
             for w in cen["warnings"]:
                 L.append("- %s" % w)
             L.append("")
@@ -1034,11 +1294,11 @@ def analyze(cfg):
     if not rows:
         raise SystemExit("[s1] rows CSV %s is empty" % path)
 
-    cen = censoring_analysis(rows, cfg)
+    cen = endpoint_analysis(rows, cfg)
     mft = audit_table(rows)
     rtc = runtime_calibration(rows)
     summary = {"config": cfg_dict(cfg), "n_rows": len(rows),
-               "censoring_analysis": cen, "model_fail_rates": mft,
+               "endpoint_analysis": cen, "model_fail_rates": mft,
                "runtime_calibration": rtc}
 
     with open(os.path.join(cfg.out, "pilot_summary.json"), "w") as f:
@@ -1049,14 +1309,23 @@ def analyze(cfg):
     _write_md(cfg, cen, mft, rtc, len(rows), md)
 
     # stdout digest
-    print("[s1] ANALYSIS  rows=%d  nu_ref=%s  rho %g->%g"
-          % (len(rows), _fmt_T(cen.get("nu_ref")), cen.get("rho_safe", float("nan")),
+    pg = cen.get("primary_gate", {})
+    fb = cen.get("fixed_budget_quality_gain", {})
+    bt = cen.get("bootstrap", {})
+    print("[s1] ANALYSIS  rows=%d  cohort=%s  nu_budget=%s  rho %g->%g"
+          % (len(rows), cen.get("cohort"), _fmt_T(cen.get("nu_budget")),
+             cen.get("rho_safe", float("nan")),
              cen.get("rho_fast", float("nan"))), flush=True)
-    print("       S_median[RQL]=%s  n(S_gate>1 excl C/E/F)=%d/%d  "
-          "bootstrap 2.5%% lower=%s"
+    print("       primary Q90: median S_gate=%s  n(S_gate>1)=%d/%d  "
+          "boot LB2.5=%s  DETAIL_SPEED_PASS=%s"
           % (_fmt_S(cen.get("S_median")), cen.get("n_Sgate_gt1", 0),
-             cen.get("n_images", 0), _fmt_S(cen.get("bootstrap_median_lower_2p5"))),
-          flush=True)
+             cen.get("n_images", 0), _fmt_S(bt.get("S_gate_LB2.5")),
+             pg.get("DETAIL_SPEED_PASS")), flush=True)
+    print("       fixed-budget: median DeltaQ=%s dB  n(DeltaQ>0)=%d/%d  "
+          "boot LB2.5=%s  pass=%s"
+          % (_fmt_dB(fb.get("median_DeltaQ_dB")), fb.get("n_DeltaQ_pos", 0),
+             cen.get("n_images", 0), _fmt_dB(bt.get("DeltaQ_LB2.5")),
+             fb.get("pass")), flush=True)
     sc = cen.get("status_counts", {})
     print("       status: %s"
           % (", ".join("%s=%d" % (k, v) for k, v in sorted(sc.items())) or "none"),
@@ -1073,6 +1342,109 @@ def analyze(cfg):
     print("[s1] wrote %s , pilot_summary.json , runtime_calibration.json"
           % md, flush=True)
     return summary
+
+
+# ---- structural self-test (round-7 analysis; no data needed) --------------- #
+def _selftest():
+    """Structural asserts for PAVA, the censoring classifier (one synthetic
+    fixture per class incl. SAFE_RANGE_UNINFORMATIVE), the Q90 target, the
+    fixed-budget gain and the family-stratified bootstrap. Verifies mechanics,
+    NOT science. Run via `pilot_s1.py --selftest-analysis`."""
+    n_ok = 0
+
+    # --- PAVA hand cases (equal weight) -----------------------------------
+    assert np.allclose(pava([1, 3, 2, 4]), [1, 2.5, 2.5, 4]), "pava violator pool"
+    assert np.allclose(pava([3, 2, 1]), [2, 2, 2]), "pava full decreasing"
+    assert np.allclose(pava([1, 2, 3]), [1, 2, 3]), "pava already isotonic"
+    assert np.allclose(pava([5]), [5]), "pava singleton"
+    assert pava([]).size == 0, "pava empty"
+    n_ok += 1
+
+    # --- reach-state censoring classifier (Q=1.5, T grid 1..16) -----------
+    T = np.array([1., 2., 4., 8., 16.])
+    T_min = 1.0
+    Q = 1.5
+    def iso(vals):
+        return (T, pava(np.asarray(vals, dtype=float)))
+    interior = iso([0, 1, 2, 3, 4])          # crosses 1.5 in the interior
+    floor = iso([2, 3, 4, 5, 6])             # already >= 1.5 at T_min
+    never = iso([0, 0.1, 0.2, 0.3, 0.4])     # max < 1.5
+
+    st, sg, _, _ = _classify(interior, iso([0, 2, 3, 4, 5]), Q, T_min)
+    assert st == "NORMAL" and np.isfinite(sg) and sg > 0, "NORMAL"
+    st, sg, _, _ = _classify(interior, floor, Q, T_min)
+    assert st == "FAST_LEFT_CENSORED" and sg > 0, "FAST_LEFT_CENSORED"
+    st, sg, _, _ = _classify(floor, floor, Q, T_min)
+    assert st == "BOTH_LEFT_CENSORED" and sg == 1.0, "BOTH_LEFT_CENSORED"
+    st, sg, _, _ = _classify(floor, interior, Q, T_min)
+    assert st == "SAFE_LEFT_FAST_INTERIOR" and 0 <= sg < 1, "SAFE_LEFT_FAST_INTERIOR"
+    st, sg, _, _ = _classify(interior, never, Q, T_min)
+    assert st == "FAST_RIGHT_CENSORED" and sg == 0.0, "FAST_RIGHT_CENSORED"
+    st, sg, _, _ = _classify(never, interior, Q, T_min)
+    assert st == "ANALYSIS_FAILURE" and sg == 0.0, "ANALYSIS_FAILURE(safe RIGHT)"
+    st, sg, _, _ = _classify(None, interior, Q, T_min)
+    assert st == "ANALYSIS_FAILURE" and sg == 0.0, "ANALYSIS_FAILURE(safe None)"
+    n_ok += 1
+
+    # --- judge_image: target construction + the two pinned statuses -------
+    Tn = {5.: 1., 10.: 2., 20.: 4., 50.: 8., 100.: 16.}
+    def cv(vals):                            # 2-seed curve, identical seeds
+        return {nu: {0: v, 1: v} for nu, v in zip(sorted(Tn), vals)}
+
+    flat = {"safe": cv([10, 10, 10, 10, 10]), "fast": cv([20, 20, 20, 20, 20])}
+    j = judge_image(flat, [0, 1], Tn, 1.0)
+    assert j["status"] == "SAFE_RANGE_UNINFORMATIVE" and j["S_gate"] == 1.0, \
+        "SAFE_RANGE_UNINFORMATIVE (R_j<0.5)"
+    assert abs(j["R_j"]) < 1e-9 and j["Q90"] is None, "uninformative R_j/Q90"
+
+    inform = {"safe": cv([10, 10.5, 11, 11.5, 12]),
+              "fast": cv([11, 11.9, 12.5, 13, 13.5])}
+    j = judge_image(inform, [0, 1], Tn, 1.0)
+    assert abs(j["R_j"] - 2.0) < 1e-9, "R_j = Qiso(Tmax)-Qiso(Tmin)"
+    assert abs(j["Q90"] - (10.0 + 0.9 * 2.0)) < 1e-9, "Q90 = Qmin + 0.9 R_j"
+    assert j["status"] in ("NORMAL", "FAST_LEFT_CENSORED") and j["S_gate"] > 0, \
+        "informative image classifies positive"
+    # raw + isotonic curves are both retained
+    assert j["safe_raw"] is not None and j["safe_iso"] is not None, "curves kept"
+    n_ok += 1
+
+    # --- fixed-budget gain (raw seed-mean, fast - safe) -------------------
+    dq = fixed_budget_gain({"safe": cv([0, 0, 0, 0, 10]),
+                            "fast": cv([0, 0, 0, 0, 14])}, [0, 1], 100.0)
+    assert abs(dq - 4.0) < 1e-9, "DeltaQ = raw fast-safe at nu_budget"
+    assert fixed_budget_gain({"safe": {}, "fast": cv([0]*5)}, [0], 100.0) is None, \
+        "DeltaQ None when a grid point is missing"
+    n_ok += 1
+
+    # --- family_of parsing + strata -------------------------------------
+    assert family_of("detail_glyph_3") == "glyph", "family_of simple"
+    assert family_of("detail_line_pair_1") == "line_pair", "family_of multiword"
+    strata_d = _build_strata(["detail_glyph_0", "detail_glyph_1",
+                              "detail_maze_0"], "detail")
+    assert set(strata_d) == {"glyph", "maze"}, "detail strata by family"
+    strata_dev = _build_strata(["dev_text", "dev_fine_lines"], "dev")
+    assert set(strata_dev) == {"__all__"}, "non-detail = one plain stratum"
+    n_ok += 1
+
+    # --- bootstrap machinery runs end-to-end + is deterministic ----------
+    imgs = {"a": inform, "b": {"safe": cv([9, 9.6, 10.2, 10.8, 11.4]),
+                               "fast": cv([10, 11, 11.8, 12.4, 13])}}
+    names = list(imgs)
+    sbi = {im: [0, 1] for im in names}
+    fns = {"S_gate": lambda im, sd: judge_image(imgs[im], sd, Tn, 1.0)["S_gate"],
+           "DeltaQ": lambda im, sd: fixed_budget_gain(imgs[im], sd, 100.0)}
+    b1 = bootstrap_endpoints(names, _build_strata(names, "dev"), sbi, fns, 64)
+    b2 = bootstrap_endpoints(names, _build_strata(names, "dev"), sbi, fns, 64)
+    assert b1["S_gate"]["meds"].shape == (64,), "bootstrap draw count"
+    assert np.isfinite(b1["S_gate"]["LB2.5"]), "bootstrap S_gate LB finite"
+    assert np.allclose(b1["S_gate"]["meds"], b2["S_gate"]["meds"]), \
+        "bootstrap deterministic (fixed rng_for stream)"
+    n_ok += 1
+
+    print("[s1] SELFTEST-ANALYSIS PASS (%d groups; PAVA + 7 censoring classes "
+          "+ Q90 target + fixed-budget + family strata + bootstrap)" % n_ok,
+          flush=True)
+    return 0
 
 
 # ---- driver ---------------------------------------------------------------- #
@@ -1096,6 +1468,8 @@ def _resolve_c0(cfg, need_sweep):
 
 def main(argv=None):
     a = parse_args(sys.argv[1:] if argv is None else argv)
+    if getattr(a, "selftest_analysis", False):
+        return _selftest()
     if a.pass_a and a.pass_b:
         raise SystemExit("[s1] choose at most one of --pass-a / --pass-b")
     cfg = build_cfg(a)
