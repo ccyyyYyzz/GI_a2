@@ -12,13 +12,12 @@ A cell is a dict of grid coordinates:
   use_lpips (default False; PSNR/SSIM/rad-NRMSE always),
   fista_iters (default 200), tau (default 50e-9), sigma_b (default 0.0),
   dev (default False; True -> S1 development image set, disjoint from S2),
-  select_rule ('discrepancy' default | 'legacy'), select_iter (default 60),
-  sel_K (folds, default 5), gof_mode (default 'refit') — see run_cell.
+  select_rule ('discrepancy' default | 'legacy'), select_iter (default 60).
 
 lam_TV selection (spec D2 §4): for iterative arms (solvers._ITER_ARMS) under the
 default 'discrepancy' rule, run_cell calls select_eta.select_eta_and_fit (the
-six-step cross-fitted common renewal discrepancy rule) instead of run_arm's
-deprecated own-NLL fallback. 'legacy' keeps every arm on the run_arm path.
+F1-frozen AUDIT-split rule + descriptive measurement audit) instead of
+run_arm's deprecated own-NLL fallback. 'legacy' keeps every arm on the run_arm path.
 Non-iterative arms (GI/DGI/EXACT) always use run_arm.
 
 Physical accounting per cell: T = nu*tau; optical integration time =
@@ -31,9 +30,11 @@ flux-matched protocol), radiometric NRMSE without rescaling (physical-scale
 arms only; NaN for direction-only arms), lam_tv, runtime. Extra columns:
 PSNR_rad (radiometric, non-rescaled PSNR — spec D2 §4 PRIMARY metric; ''
 for direction-only arms), select_runtime_s (seconds inside select_eta_and_fit,
-'' when the discrepancy rule did not run), MODEL_FAIL (bool for a discrepancy-
-selected iterative arm, '' otherwise), eta_star (chosen dimensionless TV level,
-'' otherwise). Existing columns are unchanged so shard merging stays stable.
+'' when the discrepancy rule did not run), eta_star (chosen dimensionless TV
+level, '' otherwise), and the cell-level DESCRIPTIVE audit columns on RQL rows
+(audit_status / d_ratio / q_d / q_mean / leak_suspect — round-5 ruling: pure
+diagnostics, no binary adequacy gate, never affect any campaign decision).
+Existing columns are unchanged so shard merging stays stable.
 RNG streams: rng_for(seed, 63, 3, ...) for buckets — disjoint from pattern
 (63,1,*) and image (63,2,*) streams.
 """
@@ -143,8 +144,9 @@ def run_cell(cell):
             use_select = (select_rule == "discrepancy" and arm in _ITER_ARMS)
             if use_select:
                 # F1-frozen rule (select_eta docstring): DEV-only eta*, and —
-                # on the RQL arm only — the once-per-cell adequacy audit
-                # (MODEL_FAIL_PREDICTIVE, flag-only, never alters eta*).
+                # on the RQL arm only — the once-per-cell DESCRIPTIVE
+                # measurement audit (round-5: no binary gate; nothing here may
+                # alter eta*, reconstruction, or any campaign decision).
                 t_sel = time.time()
                 if cell_split is None:
                     cell_split = select_eta.split_dev_audit(
@@ -153,19 +155,19 @@ def run_cell(cell):
                     arm, A, b, ctx, cell_key=cell_key, seed=seed,
                     split=cell_split)
                 sel_dt = time.time() - t_sel
-                mf = info.get("MODEL_FAIL")
-                model_fail = "" if mf is None else bool(mf)
                 audit = info.get("audit") or {}
-                gof_status = audit.get("GOF_STATUS", "")
-                gof_p = audit.get("p_value", "")
+                audit_status = audit.get("AUDIT_STATUS", "")
+                d_ratio = audit.get("D_ratio", "")
+                q_d = audit.get("plugin_upper_rank", "")
+                q_mean = audit.get("q_mean", "")
                 leak = audit.get("LEAKAGE_SUSPECT", "")
                 es = info.get("eta_star", None)
                 eta_out = round(float(es), 6) if es is not None else ""
                 sel_out = round(sel_dt, 3)
             else:
                 xh, info = run_arm(arm, A, b, ctx)
-                model_fail, eta_out, sel_out = "", "", ""
-                gof_status, gof_p, leak = "", "", ""
+                eta_out, sel_out = "", ""
+                audit_status, d_ratio, q_d, q_mean, leak = "", "", "", "", ""
             lam_tv = float(info.get("lam_tv", np.nan)) if isinstance(info, dict) \
                 else np.nan
             m = MET.main_metrics(xh, x, side,
@@ -197,13 +199,17 @@ def run_cell(cell):
                 "dark_frac": dark_frac, "tau_err": est_kw.get("tau_err", 0.0),
                 "runtime_s": round(time.time() - t0, 2),
                 "select_runtime_s": sel_out,
-                "MODEL_FAIL": model_fail,
                 "eta_star": eta_out,
                 "PSNR_rad": psnr_rad_out,
-                # cell-level adequacy audit (RQL rows only; '' elsewhere)
-                "gof_status": gof_status,
-                "gof_p": (round(float(gof_p), 5)
-                          if isinstance(gof_p, float) else gof_p),
+                # cell-level DESCRIPTIVE audit (RQL rows only; '' elsewhere;
+                # round-5 ruling: continuous ranks, no binary adequacy gate)
+                "audit_status": audit_status,
+                "d_ratio": (round(float(d_ratio), 4)
+                            if isinstance(d_ratio, float) else d_ratio),
+                "q_d": (round(float(q_d), 5)
+                        if isinstance(q_d, float) else q_d),
+                "q_mean": (round(float(q_mean), 5)
+                           if isinstance(q_mean, float) else q_mean),
                 "leak_suspect": leak,
             })
     return rows

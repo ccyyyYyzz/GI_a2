@@ -56,9 +56,10 @@ EXPECTED_KEYS = {
     "PSNR", "SSIM", "LPIPS", "rad_nrmse", "flux_dev", "lam_tv",
     "mean_counts", "optical_time_s", "dark_frac", "tau_err", "runtime_s",
     # D2 §4 selection-routing columns (campaign.run_cell now emits these):
-    "select_runtime_s", "MODEL_FAIL", "eta_star", "PSNR_rad",
-    # F1 cell-level adequacy audit columns (RQL rows only; '' elsewhere):
-    "gof_status", "gof_p", "leak_suspect",
+    "select_runtime_s", "eta_star", "PSNR_rad",
+    # F1 cell-level DESCRIPTIVE audit columns (round-5 ruling: continuous
+    # diagnostics only, RQL rows only; '' elsewhere):
+    "audit_status", "d_ratio", "q_d", "q_mean", "leak_suspect",
 }
 
 PASS = []

@@ -18,6 +18,12 @@ candidate-A refit failed 8/10 (results/round63_gof_probe/probe_results.json @
 commit 109b718); the F1 rule is the round-4 repair. M regimes chosen so the
 AUDIT split stays powered (M=1500 -> 300 audit groups; M=768 -> 154 >= 128).
 
+ROLE AFTER ROUND 5: the binary gate was DELETED based on this probe's first
+run (7/20 null false alarms, 0/10 detection — see PROBE_F1_SUMMARY.md and
+docs/ROUND63_GPT_ROUND5_RULING.md). The probe now records the DESCRIPTIVE
+distributions of the audit statistics under null/misspecified generators —
+supplement evidence for why the audit is reported without a gate.
+
 Writes results/round63_gof_probe/probe_f1_results.json + PROBE_F1_SUMMARY.md.
 """
 import json
@@ -84,23 +90,23 @@ def run_one(scenario, x_true, M, ds):
     au = info["audit"]
     row = {"scenario": scenario, "M": M, "dataset": ds,
            "runtime_s": round(dt, 1), "eta_star": info["eta_star"],
-           "GOF_STATUS": au["GOF_STATUS"],
-           "MODEL_FAIL_PREDICTIVE": au["MODEL_FAIL_PREDICTIVE"],
-           "p_value": round(au.get("p_value", float("nan")), 5),
-           "B_used": au.get("B_used"),
+           "AUDIT_STATUS": au["AUDIT_STATUS"],
            "D_obs": round(au.get("D_obs", float("nan")), 1),
            "D_star_mean": round(au.get("D_star_mean", float("nan")), 1),
-           "D_star_max": round(au.get("D_star_max", float("nan")), 1),
+           "D_star_sd": round(au.get("D_star_sd", float("nan")), 2),
+           "D_ratio": round(au.get("D_ratio", float("nan")), 4),
+           "q_d": au.get("plugin_upper_rank"),
+           "q_mean": au.get("q_mean"),
+           "q_corr": au.get("q_corr"),
            "LEAKAGE_SUSPECT": au.get("LEAKAGE_SUSPECT"),
            "MEAN_RESIDUAL_WARN": au.get("MEAN_RESIDUAL_WARN"),
            "LOAD_CORR_WARN": au.get("LOAD_CORR_WARN"),
            "mean_r_obs": round(au.get("mean_r_obs", float("nan")), 4)}
-    print("  %-12s M=%-5d ds=%d fail=%-5s p=%-7s D=%.0f null[mean=%.0f "
-          "max=%.0f] B=%s leak=%s warn=%s (%.0fs)"
-          % (scenario, M, ds, row["MODEL_FAIL_PREDICTIVE"], row["p_value"],
-             row["D_obs"], row["D_star_mean"], row["D_star_max"],
-             row["B_used"], row["LEAKAGE_SUSPECT"],
-             row["MEAN_RESIDUAL_WARN"], dt), flush=True)
+    print("  %-12s M=%-5d ds=%d D_ratio=%-7s q_d=%-7s q_mean=%-7s leak=%s "
+          "mwarn=%s (%.0fs)"
+          % (scenario, M, ds, row["D_ratio"], row["q_d"], row["q_mean"],
+             row["LEAKAGE_SUSPECT"], row["MEAN_RESIDUAL_WARN"], dt),
+          flush=True)
     return row
 
 
@@ -117,18 +123,25 @@ def main():
         for ds in range(R_DETECT):
             rows.append(run_one(scen, x_true, M_LIST[0], ds))
 
-    def rate(scen, M=None):
+    def stats(scen, M=None):
         sel = [r for r in rows if r["scenario"] == scen
                and (M is None or r["M"] == M)]
-        return "%d/%d" % (sum(bool(r["MODEL_FAIL_PREDICTIVE"]) for r in sel),
-                          len(sel))
+        drs = sorted(r["D_ratio"] for r in sel)
+        return {"n": len(sel),
+                "D_ratio_med": drs[len(drs) // 2] if drs else None,
+                "extreme_rank_qd": "%d/%d" % (
+                    sum(1 for r in sel if r["q_d"] is not None
+                        and r["q_d"] <= 0.025 + 1e-12), len(sel)),
+                "mean_warn": "%d/%d" % (
+                    sum(bool(r["MEAN_RESIDUAL_WARN"]) for r in sel), len(sel))}
 
-    summary = {"false_alarm_null_M1500": rate("null", 1500),
-               "false_alarm_null_M768": rate("null", 768),
-               "detect_paralyzable": rate("paralyzable"),
-               "detect_tau_err_+20%": rate("tau_err"),
-               "expected_null_level": "0.025 exact (about %d/40 per regime)"
-                                      % R_NULL}
+    summary = {"null_M1500": stats("null", 1500),
+               "null_M768": stats("null", 768),
+               "paralyzable": stats("paralyzable"),
+               "tau_err_+20%": stats("tau_err"),
+               "note": "descriptive distributions only (round-5: no gate); "
+                       "extreme_rank_qd is the incidence the DELETED gate "
+                       "would have flagged"}
     out = {"config": {"side": SIDE, "tau": TAU, "nu": NU, "rho": RHO,
                       "M_list": list(M_LIST), "R_null": R_NULL,
                       "R_detect": R_DETECT, "rule":
@@ -136,12 +149,13 @@ def main():
            "rows": rows, "summary": summary}
     with open(os.path.join(OUT, "probe_f1_results.json"), "w") as f:
         json.dump(out, f, indent=1)
-    lines = ["# F1 adequacy-audit coverage probe (outcome-blind)", "",
-             "Exact MC level 0.025; null false alarms should be ~R/40.", ""]
-    lines += ["- **%s**: %s" % (k, v) for k, v in summary.items()]
+    lines = ["# F1 audit-statistic distribution probe (outcome-blind)", "",
+             "Round-5: NO binary gate; these are descriptive distributions.",
+             ""]
+    lines += ["- **%s**: %s" % (k, json.dumps(v)) for k, v in summary.items()]
     lines += ["", "History: literal round-3 rule 10/10 false alarms; "
-              "candidate-A refit 8/10 (probe_results.json). Full rows in "
-              "probe_f1_results.json."]
+              "candidate-A refit 8/10 (probe_results.json); round-4 gate "
+              "7/20 null + 0/10 detection -> gate deleted (round-5 ruling)."]
     with open(os.path.join(OUT, "PROBE_F1_SUMMARY.md"), "w") as f:
         f.write("\n".join(lines) + "\n")
     print("[probe-F1] summary:", json.dumps(summary), flush=True)

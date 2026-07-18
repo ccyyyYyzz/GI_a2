@@ -68,8 +68,9 @@ SECONDARY_TTQ = ["POISSON-LIN", "SAT-POISSON", "PRECORRECT"]   # same Q*_j targe
 FIELDNAMES = ["side", "pattern", "rho_bar", "nu", "M", "seed", "image", "arm",
               "PSNR", "SSIM", "LPIPS", "rad_nrmse", "flux_dev", "lam_tv",
               "mean_counts", "optical_time_s", "dark_frac", "tau_err",
-              "runtime_s", "select_runtime_s", "MODEL_FAIL", "eta_star",
-              "PSNR_rad", "gof_status", "gof_p", "leak_suspect"]
+              "runtime_s", "select_runtime_s", "eta_star",
+              "PSNR_rad", "audit_status", "d_ratio", "q_d", "q_mean",
+              "leak_suspect"]
 
 _KEY_COLS = ("side", "pattern", "rho_bar", "nu", "M", "seed", "image", "arm")
 
@@ -150,8 +151,6 @@ def parse_args(argv):
                     help="fista iters inside lam_TV selection (default 60)")
     ap.add_argument("--fista-iters", type=int, default=200,
                     help="final-refit fista iters (default 200)")
-    ap.add_argument("--gof-mode", type=str, default="refit",
-                    help="select_eta gof mode (default refit)")
     ap.add_argument("--smoke", action="store_true",
                     help="fast preset: side=32,M=512,2 images,seeds{0},"
                          "nu{100,500},arms RQL+POISSON-LIN+GI (own out dir)")
@@ -188,7 +187,7 @@ def build_cfg(a):
         side=side, M=M, pattern=PATTERN, tau=TAU, images=images, seeds=seeds,
         nu_list=nu_list, rho_list=rho_list, arms=arms,
         select_iter=a.select_iter, fista_iters=a.fista_iters,
-        gof_mode=a.gof_mode, out=out, smoke=smoke)
+        out=out, smoke=smoke)
 
 
 def cfg_dict(cfg):
@@ -196,7 +195,7 @@ def cfg_dict(cfg):
             "nu_list": cfg.nu_list, "rho_list": cfg.rho_list, "arms": cfg.arms,
             "images": cfg.images, "seeds": cfg.seeds,
             "select_iter": cfg.select_iter, "fista_iters": cfg.fista_iters,
-            "gof_mode": cfg.gof_mode, "smoke": cfg.smoke}
+            "smoke": cfg.smoke}
 
 
 def cells(cfg):
@@ -211,7 +210,7 @@ def cells(cfg):
                     nu=float(nu), M=cfg.M, seed=int(seed), arms=list(cfg.arms),
                     images=list(cfg.images), dev=True, tau=cfg.tau, sigma_b=0.0,
                     fista_iters=cfg.fista_iters, select_iter=cfg.select_iter,
-                    gof_mode=cfg.gof_mode, select_rule="discrepancy", sel_K=5,
+                    select_rule="discrepancy",
                     use_lpips=False))
     return cs
 
@@ -393,22 +392,31 @@ def time_to_quality(rows, cfg):
             "T_reach": T_reach, "images": images, "arms": arms}
 
 
-# ---- analysis 2: MODEL_FAIL incidence ------------------------------------- #
-def model_fail_table(rows):
+# ---- analysis 2: descriptive audit summary (round-5: no binary gate) ------ #
+def audit_table(rows):
+    """Aggregate the RQL cell-level DESCRIPTIVE audit: D_ratio spread and
+    LEAKAGE_SUSPECT counts by (rho, nu). Pure diagnostics — never a gate."""
     agg = {}
     for r in rows:
-        mf = r.get("MODEL_FAIL", "")
-        if mf in ("", None):
-            continue                                      # non-selected arm
-        key = (_f(r["rho_bar"]), _f(r["nu"]), r["arm"])
-        d = agg.setdefault(key, {"fail": 0, "tot": 0})
+        if r.get("audit_status", "") != "OK":
+            continue
+        key = (_f(r["rho_bar"]), _f(r["nu"]))
+        d = agg.setdefault(key, {"d_ratio": [], "leak": 0, "tot": 0})
+        try:
+            d["d_ratio"].append(float(r["d_ratio"]))
+        except (TypeError, ValueError):
+            pass
         d["tot"] += 1
-        if str(mf) == "True":
-            d["fail"] += 1
-    return {"%g|%g|%s" % (k[0], k[1], k[2]):
-            {"fail": v["fail"], "tot": v["tot"],
-             "rate": (v["fail"] / v["tot"] if v["tot"] else 0.0)}
-            for k, v in sorted(agg.items())}
+        if str(r.get("leak_suspect", "")) == "True":
+            d["leak"] += 1
+    out = {}
+    for k, v in sorted(agg.items()):
+        dr = v["d_ratio"]
+        out["%g|%g" % k] = {
+            "n": v["tot"], "leak": v["leak"],
+            "d_ratio_med": (sorted(dr)[len(dr) // 2] if dr else None),
+            "d_ratio_max": (max(dr) if dr else None)}
+    return out
 
 
 # ---- analysis 3: runtime calibration -------------------------------------- #
@@ -454,9 +462,9 @@ def _write_md(cfg, ttq, mft, rtc, n_rows, path):
              "active start" % (cfg.side, cfg.pattern, cfg.M,
                                [int(x) for x in cfg.nu_list], cfg.rho_list,
                                cfg.tau * 1e9))
-    L.append("- select_iter %d, fista_iters %d, gof_mode %s, discrepancy "
-             "lam_TV rule (spec D2 §4)"
-             % (cfg.select_iter, cfg.fista_iters, cfg.gof_mode))
+    L.append("- select_iter %d, fista_iters %d, F1 discrepancy "
+             "lam_TV rule + descriptive audit (spec D2 §4)"
+             % (cfg.select_iter, cfg.fista_iters))
     L.append("")
 
     # --- Table 1: time-to-quality speedup
@@ -488,18 +496,24 @@ def _write_md(cfg, ttq, mft, rtc, n_rows, path):
     L.append("Censored (image count per arm): %s" % cc)
     L.append("")
 
-    # --- Table 2: MODEL_FAIL incidence
-    L.append("## 2. MODEL_FAIL incidence by (rho, nu, arm)")
+    # --- Table 2: descriptive audit summary
+    L.append("## 2. Descriptive measurement audit by (rho, nu) — RQL cells")
+    L.append("")
+    L.append("Continuous diagnostics only (round-5 ruling: no binary gate).")
     L.append("")
     if mft:
-        L.append("| rho | nu | arm | fail | total | rate |")
+        L.append("| rho | nu | n | D_ratio med | D_ratio max | leak |")
         L.append("|---|---|---|---|---|---|")
         for k, v in mft.items():
-            rho, nu, arm = k.split("|")
-            L.append("| %s | %s | %s | %d | %d | %.3f |"
-                     % (rho, nu, arm, v["fail"], v["tot"], v["rate"]))
+            rho, nu = k.split("|")
+            L.append("| %s | %s | %d | %s | %s | %d |"
+                     % (rho, nu, v["n"],
+                        ("%.3f" % v["d_ratio_med"]) if v["d_ratio_med"]
+                        is not None else "n/a",
+                        ("%.3f" % v["d_ratio_max"]) if v["d_ratio_max"]
+                        is not None else "n/a", v["leak"]))
     else:
-        L.append("(no discrepancy-selected rows — MODEL_FAIL not applicable)")
+        L.append("(no OK-status audit rows)")
     L.append("")
 
     # --- Table 3: runtime calibration
@@ -538,7 +552,7 @@ def analyze(cfg):
         raise SystemExit("[s1] rows CSV %s is empty" % path)
 
     ttq = time_to_quality(rows, cfg)
-    mft = model_fail_table(rows)
+    mft = audit_table(rows)
     rtc = runtime_calibration(rows)
     summary = {"config": cfg_dict(cfg), "n_rows": len(rows),
                "time_to_quality": ttq, "model_fail_rates": mft,
@@ -560,9 +574,11 @@ def analyze(cfg):
         print("       S_median[%-11s] = %s   censored=%d/%d"
               % (a, ("%.3f" % m) if m is not None else "n/a",
                  ttq["censored_counts"][a], len(ttq["images"])), flush=True)
-    n_fail = sum(v["fail"] for v in mft.values())
-    n_tot = sum(v["tot"] for v in mft.values())
-    print("       MODEL_FAIL total = %d/%d selected rows" % (n_fail, n_tot),
+    n_leak = sum(v["leak"] for v in mft.values())
+    n_tot = sum(v["n"] for v in mft.values())
+    drs = [v["d_ratio_max"] for v in mft.values() if v["d_ratio_max"]]
+    print("       audit: %d OK cells, leak_suspect=%d, max D_ratio=%s"
+          % (n_tot, n_leak, ("%.3f" % max(drs)) if drs else "n/a"),
           flush=True)
     if rtc:
         wmax = max(v["wall_max_s"] for v in rtc.values())

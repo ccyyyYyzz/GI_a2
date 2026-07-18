@@ -9,27 +9,29 @@ round-3 six-step draft rule; the changes and their reasons:
   * eta* per arm from a grouped K=5 fold cross-fit INSIDE DEV, one-SE rule on
     per-fold MEAN squared calibrated renewal residuals. GOF is fully OUT of
     the acceptance set: adequacy can never change the estimator.
-  * Model adequacy = MODEL_FAIL_PREDICTIVE, tested ONCE per cell by RQL (not
-    per baseline arm): a coherent plugin scene x_plugin (RQL fit on DEV at
-    eta_min, 25 iters) predicts the untouched AUDIT; B=39 refit-per-replicate
-    parametric bootstrap replays the same pipeline coherently (generator =
-    A @ x_plugin + dark, never concatenated cross-fitted lambdas); exact
-    Monte-Carlo p-value, MODEL_FAIL_PREDICTIVE <=> p <= 0.025 (level 1/40).
-    Semantics: "the calibrated renewal detector model plus the frozen RQL-TV
-    reconstruction procedure cannot explain independent audit data" — NOT a
-    pure likelihood-class test (at M < n, detector misfit and null-space
-    under-recovery are not strictly separable; stated in the paper).
-  * Fixed-lambda-hat bootstrap survives only as the LOWER-tail leakage
-    diagnostic (LEAKAGE_SUSPECT, p_low <= 0.01). mean-r / load-correlation are
-    independent WARNINGS, never part of the MODEL_FAIL union.
-  * MODEL_FAIL never alters eta*, never removes a cell, never consults PSNR.
+  * Measurement audit = DESCRIPTIVE ONLY (round-5 FINAL ruling,
+    docs/ROUND63_GPT_ROUND5_RULING.md: NO binary adequacy gate — the
+    outcome-blind probe killed it on both size, 7/20 null false alarms, and
+    power, 0/10 on paralyzable/tau-err; detector mean mismatch is absorbed
+    into scene scale and is structurally unidentifiable from count-only
+    single-operating-point data). Once per cell, by RQL: a coherent plugin
+    scene (DEV fit at eta_min, 25 iters) predicts the untouched AUDIT;
+    B_DIAG=39 coherent refit replicates (generator = A @ x_plugin + dark,
+    never concatenated cross-fitted lambdas; NO early stop — truncated
+    replicate sets make ranks non-comparable) yield continuous descriptive
+    ranks: D_ratio, plugin_upper_rank q_D (NOT a calibrated p-value), q_mean
+    (+ MEAN_RESIDUAL_WARN marker), q_corr (+ LOAD_CORR_WARN), and the
+    fixed-lam_hat lower-tail LEAKAGE_SUSPECT (q_low <= 0.01).
+  * No audit statistic may affect eta*, reconstruction, cell inclusion,
+    campaign gates, or confirmatory inference; detector-mismatch damage is
+    quantified directly by S3's preregistered radiometric metrics.
   * All RNG keys are integers (the round-4 audit caught int(round(T)) == 0 for
     physical T, which had different-nu cells sharing bootstrap streams).
 
 Frozen constants (F1): AUDIT_FRAC=0.2, MIN_AUDIT_GROUPS=128, K=5,
 ETA_GRID as below, TV_NULL_REL=1e-3, lam_max expansion cap 40 / 26 log
-bisections, N_SEL=60 path iters, N_AUDIT=25 audit iters, B_AUDIT=39
-(early-stop after 19 all-below), P_FAIL=0.025, B_LEAK=199, P_LEAK=0.01.
+bisections, N_SEL=60 path iters, N_AUDIT=25 audit iters, B_DIAG=39 (always
+all 39), B_LEAK=199, P_LEAK=0.01.
 
 RNG stream layout (all-integer keys, disjoint by the trailing tag):
   outer split      rng_for(*cell_key, seed, 63, 4, 0)
@@ -73,9 +75,9 @@ MIN_AUDIT_GROUPS = 128
 TV_NULL_REL = 1e-3
 N_SEL = 60          # selection-path / lam_max fits (outer iterations)
 N_AUDIT = 25        # plugin + per-replicate audit fits
-B_AUDIT = 39        # refit bootstrap replicates (exact 1/40 MC level)
-B_EARLY = 19        # early-stop block: any exceedance in first 19 => PASS
-P_FAIL = 0.025
+B_DIAG = 39         # refit bootstrap replicates — ALWAYS all 39 (round-5:
+                    # early stopping disabled; continuous ranks from truncated
+                    # replicate sets are not comparable)
 B_LEAK = 199
 P_LEAK = 0.01
 LAM_FLOOR_REL = 1e-6
@@ -118,7 +120,7 @@ def split_dev_audit(M, meta, cell_key, seed):
         raise NotImplementedError(
             "continuous acquisition has no independent AUDIT (unbounded "
             "afterpulse tails); per the F1 ruling such cells inherit eta* from "
-            "the corresponding active-start cell with GOF_NA_DEPENDENT.")
+            "the corresponding active-start cell with AUDIT_STATUS=NA_DEPENDENT.")
     groups = _logical_groups(M, meta)
     G = len(groups)
     rng = rng_for(*cell_key, seed, 63, 4, 0)
@@ -286,17 +288,26 @@ def select_eta_arm(arm_name, A, b, ctx, cell_key, seed, split,
     }
 
 
-# ---------------------------------------------------- steps 3-7: cell adequacy
+# --------------------------------------- descriptive measurement audit (cell)
 def audit_cell(A, b, ctx, cell_key, seed, split, sel_rql):
-    """MODEL_FAIL_PREDICTIVE audit — once per cell, carried by RQL.
-    Coherent plugin scene at eta_min (never eta*: one-SE's deliberate smoothing
-    bias must not trigger the flag) -> predict untouched AUDIT -> B=39 coherent
-    refit bootstrap -> exact MC p-value. Flag-only: nothing downstream changes."""
+    """DESCRIPTIVE measurement audit — once per cell, carried by RQL.
+
+    Round-5 FINAL ruling: there is NO binary adequacy gate. The probe evidence
+    (results/round63_gof_probe/) showed a p<=0.025 gate on this statistic has
+    neither size (7/20 null false alarms — the refit null is conditional on the
+    SMOOTHED plugin scene, anti-conservative for rougher true scenes) nor power
+    (0/10 on paralyzable / tau-err mismatch — detector mean shifts are absorbed
+    into scene scale; structurally unidentifiable from count-only single-point
+    data). Everything here is recorded as CONTINUOUS ranks/ratios, excluded
+    from eta*, reconstruction, cell inclusion, and confirmatory inference;
+    detector-mismatch damage is measured directly by S3's radiometric metrics.
+    All B_DIAG=39 replicates ALWAYS run (early stopping disabled: truncated
+    replicate sets make ranks non-comparable)."""
     A = np.asarray(A, dtype=np.float64)
     b = np.asarray(b, dtype=np.float64)
     dev, aud = split["dev_mask"], split["audit_mask"]
     if split["underpowered"]:
-        return {"GOF_STATUS": "GOF_UNDERPOWERED", "MODEL_FAIL_PREDICTIVE": None,
+        return {"AUDIT_STATUS": "UNDERPOWERED",
                 "n_audit_groups": split["n_audit_groups"]}
 
     A_dev, b_dev, A_aud, b_aud = A[dev], b[dev], A[aud], b[aud]
@@ -316,11 +327,12 @@ def audit_cell(A, b, ctx, cell_key, seed, split, sel_rql):
     u_scene = np.maximum(A @ x_plugin, 0.0)
     tau_ns = _tau_ns(ctx)
 
-    # steps 4-5: refit-per-replicate bootstrap, early stop, exact MC p-value
+    # refit-per-replicate bootstrap: ALL 39 replicates, no early stop
     rng_boot = rng_for(*cell_key, seed, 63, 4, 2, tau_ns)
-    D_star, mr_star, c_star = [], [], []
-    n_exceed = 0
-    for bi in range(B_AUDIT):
+    D_star = np.empty(B_DIAG)
+    mr_star = np.empty(B_DIAG)
+    c_star = np.empty(B_DIAG)
+    for bi in range(B_DIAG):
         b_star, _ = simulate_counts(u_scene, ctx.Phi, ctx.T, ctx.det, rng_boot,
                                     sigma_b=ctx.sigma_b)
         b_star = np.asarray(b_star, dtype=np.float64)
@@ -330,25 +342,18 @@ def audit_cell(A, b, ctx, cell_key, seed, split, sel_rql):
         x_s, _ = tv_fista(fgs, x0s, lam_plugin, n_iter=N_AUDIT, side=ctx.side)
         lam_s = _predict_lam(A_aud, x_s, ctx)
         r_s = _std_residuals(b_star[aud], lam_s, ctx)
-        Ds = float(np.sum(r_s ** 2))
-        D_star.append(Ds)
-        mr_star.append(float(np.mean(r_s)))
-        c_star.append(_corr(r_s, lam_s * ctx.det.tau))
-        if Ds >= D_obs:
-            n_exceed += 1
-        # early stop: p = (1+n_exceed)/(B+1) <= 0.025 requires n_exceed == 0
-        # over all 39, so ANY exceedance decides PASS immediately; and after the
-        # first 19 all-below we must finish the block (binary-equivalent).
-        if n_exceed > 0 and (bi + 1) >= 1:
-            break
-    B_used = len(D_star)
-    model_fail = (n_exceed == 0)               # <=> p = 1/40 <= 0.025
-    p_value = (1 + n_exceed) / (B_AUDIT + 1.0) if B_used == B_AUDIT \
-        else (1 + n_exceed) / (B_used + 1.0)   # early-stopped: report bound
-    # NOTE: on early stop the decision is exact; the numeric p is then only an
-    # upper-bound style summary (>= 2/40), recorded as such.
+        D_star[bi] = float(np.sum(r_s ** 2))
+        mr_star[bi] = float(np.mean(r_s))
+        c_star[bi] = _corr(r_s, lam_s * ctx.det.tau)
 
-    # step 6: fixed-lam_hat lower-tail leakage diagnostic (no refits)
+    # continuous ranks over the full replicate set (descriptive, uncalibrated)
+    q_D = (1 + int(np.sum(D_star >= D_obs))) / (B_DIAG + 1.0)
+    q_mean = (1 + int(np.sum(np.abs(mr_star) >= abs(mr_obs)))) / (B_DIAG + 1.0)
+    c_fin = np.abs(c_star[np.isfinite(c_star)])
+    q_corr = ((1 + int(np.sum(c_fin >= abs(c_obs)))) / (B_DIAG + 1.0)
+              if (np.isfinite(c_obs) and c_fin.size) else None)
+
+    # fixed-lam_hat lower-tail leakage diagnostic (no refits)
     rng_leak = rng_for(*cell_key, seed, 63, 4, 3, tau_ns)
     mu_a, v_a = qmle_mean_var(lam_aud, ctx.T, ctx.det.tau, ctx.sigma_b)
     inv_sd = 1.0 / np.sqrt(v_a)
@@ -361,22 +366,23 @@ def audit_cell(A, b, ctx, cell_key, seed, split, sel_rql):
                            * inv_sd) ** 2))
         if D0 <= D_obs:
             n_low += 1
-    p_low = (1 + n_low) / (B_LEAK + 1.0)
+    q_low = (1 + n_low) / (B_LEAK + 1.0)
 
-    # step 7: residual-structure warnings (never in the MODEL_FAIL union)
-    mean_warn = bool(abs(mr_obs) > max(abs(m) for m in mr_star))
-    c_finite = [abs(c) for c in c_star if np.isfinite(c)]
-    corr_warn = (bool(abs(c_obs) > max(c_finite))
-                 if (np.isfinite(c_obs) and c_finite) else None)
-
+    min_rank = 1.0 / (B_DIAG + 1.0)
     return {
-        "GOF_STATUS": "GOF_OK", "MODEL_FAIL_PREDICTIVE": bool(model_fail),
-        "p_value": float(p_value), "B_used": int(B_used),
-        "D_obs": D_obs, "D_star_max": float(max(D_star)),
-        "D_star_mean": float(np.mean(D_star)),
-        "LEAKAGE_SUSPECT": bool(p_low <= P_LEAK), "p_low": float(p_low),
-        "MEAN_RESIDUAL_WARN": mean_warn, "LOAD_CORR_WARN": corr_warn,
-        "mean_r_obs": mr_obs, "corr_obs": c_obs,
+        "AUDIT_STATUS": "OK",
+        "D_obs": D_obs, "D_star_mean": float(np.mean(D_star)),
+        "D_star_sd": float(np.std(D_star, ddof=1)),
+        "D_ratio": float(D_obs / np.mean(D_star)),
+        "plugin_upper_rank": float(q_D),           # NOT a calibrated p-value
+        "mean_r_obs": mr_obs, "q_mean": float(q_mean),
+        "MEAN_RESIDUAL_WARN": bool(abs(q_mean - min_rank) < 1e-12),
+        "corr_obs": c_obs,
+        "q_corr": (float(q_corr) if q_corr is not None else None),
+        "LOAD_CORR_WARN": (bool(abs(q_corr - min_rank) < 1e-12)
+                           if q_corr is not None else None),
+        "q_low": float(q_low), "LEAKAGE_SUSPECT": bool(q_low <= P_LEAK),
+        "B_diag": int(B_DIAG),
         "n_audit_frames": int(aud.sum()),
         "n_audit_groups": split["n_audit_groups"],
         "lam_plugin": float(lam_plugin),
@@ -389,8 +395,8 @@ def select_eta_and_fit(arm_name, A, b, ctx, cell_key=None, seed=0,
     """Full F1 rule for one arm: DEV/AUDIT split -> DEV eta* selection ->
     (RQL only) adequacy audit -> final refit on ALL frames at eta*.
 
-    MODEL_FAIL_PREDICTIVE is an adequacy FLAG: it never changes eta*, never
-    suppresses the reconstruction (the old E=empty -> eta_min fallback is
+    The audit is DESCRIPTIVE only (round-5 ruling): none of its statistics
+    change eta* or the reconstruction (the old E=empty -> eta_min fallback is
     deliberately gone). Returns (x_final, info)."""
     A = np.asarray(A, dtype=np.float64)
     b = np.asarray(b, dtype=np.float64)
@@ -403,7 +409,8 @@ def select_eta_and_fit(arm_name, A, b, ctx, cell_key=None, seed=0,
     if getattr(ctx.det, "start_mode", "active") == "continuous":
         raise NotImplementedError(
             "continuous acquisition: inherit eta* from the corresponding "
-            "active-start cell (GOF_NA_DEPENDENT) at the campaign layer.")
+            "active-start cell (AUDIT_STATUS=NA_DEPENDENT) at the campaign "
+            "layer.")
 
     if split is None:
         split = split_dev_audit(M, ctx.meta, cell_key, seed)
@@ -422,7 +429,7 @@ def select_eta_and_fit(arm_name, A, b, ctx, cell_key=None, seed=0,
     x_final, fit_info = run_arm(arm_name, A, b, ctx_final)
 
     info = {
-        "arm": arm_name, "rule": "f1_audit_split_coherent_bootstrap",
+        "arm": arm_name, "rule": "f1_audit_split_descriptive",
         "cell_key": list(cell_key), "seed": int(seed),
         "eta_star": sel["eta_star"], "eta_min": sel["eta_min"],
         "lam_tv": sel["lam_tv"], "lam_max_arm": sel["lam_max_arm"],
@@ -432,7 +439,6 @@ def select_eta_and_fit(arm_name, A, b, ctx, cell_key=None, seed=0,
                                  ("n_groups", "n_dev_groups", "n_audit_groups",
                                   "underpowered")},
         "audit": audit,
-        "MODEL_FAIL": (audit or {}).get("MODEL_FAIL_PREDICTIVE"),
         "fit_info": fit_info,
     }
     return x_final, info
@@ -479,9 +485,9 @@ def _smoke():
         print("  %-11s eta*=%.3g lam_tv=%.3g audit=%s (%.1fs)"
               % (arm, info["eta_star"], info["lam_tv"],
                  (None if au is None else
-                  {k: au.get(k) for k in ("GOF_STATUS",
-                                          "MODEL_FAIL_PREDICTIVE", "p_value",
-                                          "B_used", "LEAKAGE_SUSPECT",
+                  {k: au.get(k) for k in ("AUDIT_STATUS", "D_ratio",
+                                          "plugin_upper_rank", "q_mean",
+                                          "LEAKAGE_SUSPECT",
                                           "MEAN_RESIDUAL_WARN")}), dt),
               flush=True)
     print("[select_eta F1 smoke] %s" % ("PASS" if ok else "FAIL"), flush=True)
