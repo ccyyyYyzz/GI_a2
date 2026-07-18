@@ -1,0 +1,5 @@
+[study2:analyze] rows=10800  k=16  images=24  rho 0.05->0.6
+       primary Q90: median S_gate=6.796  n(S_gate>1)=16/24  boot LB2.5=2.835  DETAIL_SPEED_PASS=False
+       fixed-budget: median DeltaQ=1.16 dB  n(DeltaQ>0)=19/24  boot LB2.5=0.72  pass=True
+[study2:analyze] wrote D:\GI_another\results\round63_study2\STUDY2_SUMMARY.md , study2_summary.json
+[study2] DONE
