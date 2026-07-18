@@ -1,0 +1,144 @@
+{
+  "shard_id": "S3_03",
+  "stage": "S3",
+  "cells_done": {
+    "S3_c0097": {
+      "wall_s": 394.99,
+      "n_rows": 24
+    },
+    "S3_c0098": {
+      "wall_s": 425.9,
+      "n_rows": 24
+    },
+    "S3_c0099": {
+      "wall_s": 418.12,
+      "n_rows": 24
+    },
+    "S3_c0100": {
+      "wall_s": 407.72,
+      "n_rows": 24
+    },
+    "S3_c0101": {
+      "wall_s": 402.24,
+      "n_rows": 24
+    },
+    "S3_c0102": {
+      "wall_s": 392.92,
+      "n_rows": 24
+    },
+    "S3_c0103": {
+      "wall_s": 380.31,
+      "n_rows": 24
+    },
+    "S3_c0104": {
+      "wall_s": 371.53,
+      "n_rows": 24
+    },
+    "S3_c0105": {
+      "wall_s": 370.09,
+      "n_rows": 24
+    },
+    "S3_c0106": {
+      "wall_s": 363.51,
+      "n_rows": 24
+    },
+    "S3_c0107": {
+      "wall_s": 372.3,
+      "n_rows": 24
+    },
+    "S3_c0108": {
+      "wall_s": 372.03,
+      "n_rows": 24
+    },
+    "S3_c0109": {
+      "wall_s": 394.57,
+      "n_rows": 24
+    },
+    "S3_c0110": {
+      "wall_s": 402.14,
+      "n_rows": 24
+    },
+    "S3_c0111": {
+      "wall_s": 396.25,
+      "n_rows": 24
+    },
+    "S3_c0112": {
+      "wall_s": 388.62,
+      "n_rows": 24
+    },
+    "S3_c0113": {
+      "wall_s": 398.14,
+      "n_rows": 24
+    },
+    "S3_c0114": {
+      "wall_s": 401.01,
+      "n_rows": 24
+    },
+    "S3_c0115": {
+      "wall_s": 400.68,
+      "n_rows": 24
+    },
+    "S3_c0116": {
+      "wall_s": 391.3,
+      "n_rows": 24
+    },
+    "S3_c0117": {
+      "wall_s": 400.36,
+      "n_rows": 24
+    },
+    "S3_c0118": {
+      "wall_s": 410.28,
+      "n_rows": 24
+    },
+    "S3_c0119": {
+      "wall_s": 396.44,
+      "n_rows": 24
+    },
+    "S3_c0120": {
+      "wall_s": 395.7,
+      "n_rows": 24
+    }
+  },
+  "fieldnames": [
+    "cell_id",
+    "shard_id",
+    "side",
+    "pattern",
+    "rho_bar",
+    "nu",
+    "M",
+    "seed",
+    "image",
+    "arm",
+    "PSNR",
+    "SSIM",
+    "LPIPS",
+    "rad_nrmse",
+    "flux_dev",
+    "lam_tv",
+    "mean_counts",
+    "optical_time_s",
+    "dark_frac",
+    "tau_err",
+    "runtime_s",
+    "select_runtime_s",
+    "PSNR_rad",
+    "C_hat",
+    "S_N2",
+    "V0_exact",
+    "muprime0_exact",
+    "omega_A",
+    "c_used",
+    "sigma_grad_arm",
+    "lambda_tv_arm",
+    "audit_status",
+    "d_ratio",
+    "q_d",
+    "q_mean",
+    "leak_suspect"
+  ],
+  "wall_accum_s": 9447.3,
+  "aborted_over_budget": false,
+  "wall_s": 9447.3,
+  "process_cpu_s": 9445.87
+}

@@ -19,7 +19,7 @@ while true; do
   all_done=1
   CYCLE_OUT=""
   ANOMALY=0
-  for tag in pro1a pro1b pro2a pro2b pro2c; do
+  for tag in pro1a pro1b; do
     a="${ACCT[$tag]}"; s="${SESS[$tag]}"
     f="$STAGE/$tag.json"
     rm -f "$f"
