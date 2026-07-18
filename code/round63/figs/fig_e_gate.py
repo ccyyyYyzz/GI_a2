@@ -1,10 +1,10 @@
-"""Optics-Express figure, panel (e) — occupancy-ladder gate diagram: fixed-budget
+"""Optics-Express figure, panel (e) — occupancy-ladder gate diagram: fixed-dwell
 quality gain and the (frozen, k=16-only) acquisition-speedup gate.
 
 Two stacked single-column subplots sharing the log2 occupancy axis
 k in {512, 32, 16, 1} (left -> right; labelled with occupancy percent):
 
-  * TOP    : per-image fixed-budget quality gain DeltaQ (rho_bar 0.6 vs 0.05 at
+  * TOP    : per-image fixed-dwell quality gain DeltaQ (rho_bar 0.6 vs 0.05 at
     nu = 2000, RQL), as jittered small grey dots (one per detail-32 image) with a
     large median marker per rung. Sources per rung:
         k = 512, 1  -> controls_rows.csv  (per-image seed-mean fast - safe)
@@ -61,7 +61,7 @@ K_LABELS = {                       # occupancy-percent labels (match panels b/c)
 }
 K16 = 16
 ARM = "RQL"
-NU_FIXED = 2000.0                  # fixed-budget operating dwell
+NU_FIXED = 2000.0                  # fixed-dwell operating dwell
 RHO_SAFE, RHO_FAST = 0.05, 0.6
 
 PREREG_BAR = 1.0                   # +1 dB preregistered secondary bar (k=16 gate)
@@ -93,7 +93,7 @@ def load_rows(path):
 
 
 def deltaq_from_csv(path, k):
-    """Per-image fixed-budget DeltaQ = seed-mean(fast) - seed-mean(safe) at
+    """Per-image fixed-dwell DeltaQ = seed-mean(fast) - seed-mean(safe) at
     (k, nu=NU_FIXED, RQL). Returns {image: delta} over images having both arms."""
     rows = load_rows(path)
     by = {}
@@ -131,7 +131,7 @@ def _jitter(k, n, seed):
 
 
 def report(dq_by_k, sg16):
-    print("[fig_e] TOP: fixed-budget DeltaQ (rho 0.6 vs 0.05, nu=%.0f, %s)"
+    print("[fig_e] TOP: fixed-dwell DeltaQ (rho 0.6 vs 0.05, nu=%.0f, %s)"
           % (NU_FIXED, ARM), flush=True)
     print("[fig_e] %-6s %-9s %-12s %-8s %-10s"
           % ("k", "source", "median_dB", "n_img", "n_pos(>0)"), flush=True)
@@ -165,7 +165,7 @@ def make_figure(dq_by_k, sg16):
     fig.subplots_adjust(left=0.16, right=0.965, top=0.955, bottom=0.17,
                         hspace=0.13)
 
-    # ---------------- TOP: fixed-budget DeltaQ ---------------- #
+    # ---------------- TOP: fixed-dwell DeltaQ ---------------- #
     axt.axhline(0.0, ls="--", lw=0.8, color="0.4", zorder=1)
     axt.axhline(PREREG_BAR, ls=":", lw=1.0, color=C_ORANGE, zorder=1)
     axt.text(0.025, 0.955, "preregistered bar (k=16 gate)",
@@ -181,7 +181,7 @@ def make_figure(dq_by_k, sg16):
         med = float(np.median(vals))
         axt.scatter([k], [med], s=52, marker="D", color=C_BLUE,
                     edgecolors="black", linewidths=0.7, zorder=4)
-    axt.set_ylabel(r"fixed-budget $\Delta$PSNR$_\mathrm{rad}$ (dB)", fontsize=7,
+    axt.set_ylabel(r"fixed-dwell $\Delta$PSNR$_\mathrm{rad}$ (dB)", fontsize=7,
                    labelpad=2)
     axt.tick_params(axis="y", labelsize=7)
 

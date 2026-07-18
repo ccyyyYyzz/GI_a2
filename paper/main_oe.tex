@@ -21,8 +21,10 @@
 \newcommand{\Cu}{C_{u}}
 
 % Round-8 frozen retitle (ruling §Q3).
+% R9 frozen title: "operating map", not "phase diagram" (no universal
+% critical C_u was preregistered or estimated).
 \title{When high flux helps single-pixel imaging:\\
-a contrast--dead-time phase diagram}
+a contrast--dead-time operating map}
 
 % Author block: USER DECISION (affiliation + collaborators) — do not fill.
 \author{\SPH{author block — user decision}}
@@ -38,7 +40,7 @@ a contrast--dead-time phase diagram}
 Single-pixel imaging with photon-counting detectors is conventionally
 operated at low photon flux, keeping the detector dead-time loss below a few
 percent at the cost of long acquisition times. Here we report a
-contrast--dead-time phase diagram for high-flux single-pixel imaging:
+contrast--dead-time operating map for high-flux single-pixel imaging:
 whether deliberately raising the operating flux into the strongly nonlinear
 dead-time regime helps or does not help is governed by the
 illumination-pattern bucket contrast, not by the dead-time correction alone.
@@ -51,25 +53,29 @@ O(\nu^{-1/3})$ ($\nu = T/\tau$ dead-time slots per exposure). In a
 preregistered dense-pattern study (Study~1, $64^2$ scenes, occupancy
 $50\%$), the time-to-quality endpoint was uninformative in $24/24$ scenes
 (safe-range quality span below the preregistered $0.5$~dB floor), while a
-small, uniformly positive fixed-photon-budget gain remained
+small, uniformly positive fixed-dwell gain remained
 ($+0.28$~dB median, $24/24$ scenes positive, bootstrap lower bound
-$+0.23$~dB) --- the multiplex-limited phase. In a second preregistered study
-(Study~2, $32^2$), spatial occupancy was varied at \emph{equal mean detector
-load and equal incident dose}, raising the measured bucket contrast from
-$\Cu = 0.040$ (occupancy $50\%$) to $1.27$ (raster). On the gate-carrying
-$1.6\%$-occupancy arm the preregistered acquisition-speed gate returned
-formally negative on scene breadth ($16/24$ scenes accelerated versus the
-preregistered $18/24$ bar), while the acceleration, where measurable, was
-large and significant (median $6.8\times$, bootstrap lower bound
-$2.8\times$) and the frozen fixed-budget secondary passed ($+1.16$~dB
-median, $19/24$ scenes positive); the non-accelerating scenes are precisely
-the lowest-contrast families, so the confirmatory cohort itself straddles
-the predicted contrast boundary. Under the same protocol the fixed-budget
-high-flux gain grew monotonically along the contrast ladder (median
-$+0.64$, $+4.13$~dB at occupancy $50\%$ and $3.1\%$, respectively), and the
-gain survived dynamic scattering with coefficient of variation $0.20$. The resulting operating-point map opens up
-an avenue for photon-budget-limited and dwell-time-limited single-pixel
-systems.
+$+0.23$~dB) --- the multiplex-limited regime. In a second preregistered
+study (Study~2, $32^2$), spatial occupancy was varied at \emph{equal mean
+detector load and equal incident dose across occupancies}, raising the
+measured bucket contrast from $\Cu = 0.040$ (occupancy $50\%$) to $1.27$
+(raster).
+% R9 §4 frozen abstract replacement (verbatim):
+In Study~2, the preregistered acquisition-speed endpoint was formally
+negative because its breadth criterion failed ($16/24$ scenes with
+$S_{\mathrm{gate}} > 1$, versus the required $18/24$), although both
+effect-size criteria passed (median $6.80\times$; family-stratified
+bootstrap lower bound $2.84\times$). The preregistered fixed-dwell
+secondary passed (median $+1.16$~dB at the terminal dwell, $19/24$ scenes
+positive, lower bound $+0.72$~dB). A post hoc descriptive family-level
+analysis found that the six success fractions were monotonically ordered by
+measured bucket contrast, consistent with---but not establishing---a
+contrast-controlled transition. Across preregistered no-gate occupancy
+controls, the fixed-dwell gain was nonmonotone and largest among the tested
+rungs at $3.1\%$ occupancy, exposing a contrast--conditioning trade-off.
+The gain survived dynamic scattering with coefficient of variation $0.20$.
+The resulting operating map opens up an avenue for photon-budget-limited
+and dwell-time-limited single-pixel systems.
 \end{abstract}
 
 \section{Introduction}
@@ -246,7 +252,7 @@ artifact. (ii) Beyond the ridge ($\rho \ge \rho^{*}$) the count information
 genuinely decreases — no estimator operating on counts, including the
 exact-likelihood reference, recovers it. High-flux operation is therefore
 beneficial only up to a computable boundary, and that boundary is one axis
-of the phase diagram reported here.
+of the operating map reported here.
 
 \subsection{Deployment zoning and the CLT trust boundary}
 The Gaussian (CLT) surrogate information satisfies $J_{\mathrm{exact}} /
@@ -287,7 +293,7 @@ the safe-arm quality span across the entire dwell grid fell below the
 preregistered $0.5$~dB informativeness floor
 (\textsc{safe\_range\_uninformative}; $S_{\mathrm{gate}} = 1$ by the frozen
 censoring taxonomy), so no time-to-quality acceleration could be certified.
-The preregistered fixed-photon-budget secondary, in contrast, was uniformly
+The preregistered fixed-dwell secondary, in contrast, was uniformly
 positive but small: at $\nu = 2000$ the high-flux arm gained a median
 $+0.28$~dB (radiometric PSNR), positive in $24/24$ scenes, with
 family-stratified bootstrap lower bound $+0.23$~dB --- statistically
@@ -304,7 +310,7 @@ $\Cu = \mathrm{sd}(u)/\mathrm{mean}(u) \sim 1/\sqrt{n}$
 relative modulation of order $10^{-2}$, so the per-count information about
 \emph{structure} is contrast-limited, not count-limited --- raising the flux
 adds photons to a nearly constant bucket. This is the multiplex-limited
-phase of the phase diagram; it motivates and is confirmed by Study~2.
+regime of the operating map; it motivates Study~2.
 
 \section{Study 2: the contrast ladder --- equal load, equal dose}
 \label{sec:study2}
@@ -345,29 +351,33 @@ three frozen criteria, the effect-size criteria passed --- median
 $S_{\mathrm{gate}} = 6.8$ (bar:\ $\ge 3$) with family-stratified bootstrap
 lower bound $2.8$ (bar:\ $> 1$) --- but the breadth criterion failed, with
 $16/24$ scenes accelerating against the preregistered $18/24$ bar
-[Fig.~\ref{fig:ladder}(e)]. The frozen fixed-budget secondary passed all
-three of its criteria (median $+1.16$~dB at $\nu = 2000$, $19/24$ scenes
-positive, bootstrap lower bound $+0.72$~dB); by the preregistered hierarchy
-it cannot rescue the failed primary, and no geometry, image-class, or
-endpoint redesign follows.
+[Fig.~\ref{fig:ladder}(e)]. The frozen fixed-dwell secondary passed all
+three of its criteria (median $+1.16$~dB at the terminal dwell, $19/24$
+scenes positive, bootstrap lower bound $+0.72$~dB); by the preregistered
+hierarchy it cannot rescue the failed primary, and no geometry,
+image-class, or endpoint redesign follows.
 
-The composition of the failure is itself the phase diagram at work. The
-eight non-accelerating scenes comprise the entire microtexture family
-($0/4$; three safe-range-uninformative, one fast-arm-censored), half of the
-contour family, and one chirp instance, while glyph, maze, and spokes
-accelerated $4/4$ with per-scene speedups of $5$--$33\times$. Ranking the
-six families by their measured bucket contrast reproduces the gate outcome
-exactly:\ $\Cu = 0.53$ (maze, $4/4$), $0.41$ (glyph, $4/4$), $0.38$
-(spokes, $4/4$), $0.28$ (chirp, $3/4$), $0.27$ (contour, $1/4$), $0.17$
-(microtexture, $0/4$). The contrast boundary predicted by the mechanism
-does not merely separate Study~1 from Study~2 --- it passes through the
-Study-2 scene ensemble itself, and the per-family gate outcome is monotone
-in measured contrast (a descriptive observation; no statistic in this
-paragraph entered any decision rule).
+The composition of the failure is structured. The eight non-accelerating
+scenes comprise the entire microtexture family ($0/4$; three
+safe-range-uninformative, one fast-arm-censored), three of four contour
+instances, and one chirp instance, while glyph, maze, and spokes
+accelerated $4/4$ with per-scene speedups of $5$--$33\times$.
+% R9 §3 frozen wording (verbatim); "predicted boundary" is banned.
+After unblinding, a descriptive family-level analysis showed that the six
+family success fractions were monotonically ordered by their corresponding
+mean measured bucket contrasts ($\Cu = 0.53$ maze $4/4$, $0.41$ glyph
+$4/4$, $0.38$ spokes $4/4$, $0.28$ chirp $3/4$, $0.27$ contour $1/4$,
+$0.17$ microtexture $0/4$). This six-point ordering was not preregistered,
+did not enter any decision rule, and does not estimate a universal critical
+contrast; it is consistent with the confirmatory cohort spanning a
+contrast-controlled transition.
 
-\subsection{Fixed-budget gain along the ladder}
-% Numbers: robustness/controls CSVs (commit b0a70ad).
-At fixed incident photon budget ($\nu = 2000$) every rung of the ladder
+\subsection{Fixed-dwell gain along the ladder}
+% Numbers: robustness/controls CSVs (commit b0a70ad). R9: "fixed-dwell",
+% not "fixed photon budget" — at equal nu the high-rho arm uses more
+% incident photons; equal dose holds across k, not across rho.
+At fixed dwell ($\nu = 2000$, equal optical integration time and equal
+incident dose across occupancies) every rung of the ladder
 shows a positive high-flux median gain, and the dense rung is the smallest:\
 per-image median $+0.64$~dB ($24/24$ scenes positive) at $k = 512$,
 $+4.13$~dB ($24/24$) at $k = 32$, $+1.16$~dB ($19/24$) at the gate-carrying
@@ -432,7 +442,7 @@ degradation envelopes; descriptive audit distributions (supplement)}
   \SPH{six-panel assembly: (a) fig\_a\_ridge\_map (exists); (b)
   figs/fig\_b\_masks (built); (c) figs/fig\_c\_ladder (built); (d)
   detail32\_spokes\_0 PSNR+CNR vs dwell — needs k=16 primary rows; (e)
-  $S_{\mathrm{gate}}$ + fixed-budget gain by occupancy — needs analyzer; (f)
+  $S_{\mathrm{gate}}$ + fixed-dwell gain by occupancy — built; (f)
   figs/fig\_f\_scattering (built)}
   \caption{\SPH{ladder figure caption — must NOT claim panel (d) peaks at
   $\rho^{*}$ (round-8 §12)}}
@@ -446,9 +456,11 @@ degradation envelopes; descriptive audit distributions (supplement)}
 % MANDATORY round-8 limitation sentence (peak irradiance + bench validation);
 % "opens up an avenue" close (Chen genre). No separate limitations section
 % per Chen style, but the honesty lives inside these paragraphs.
-\SPH{discussion paragraphs — must include verbatim-scope sentence: sparse
-operation requires much higher peak irradiance on the illuminated pixels and
-the phase diagram still requires optical-bench validation}
+\SPH{discussion paragraphs — must include: (i) round-8 limitation sentence
+(sparse operation requires much higher peak irradiance; the operating map
+still requires optical-bench validation); (ii) R9-frozen patch-sparse
+paragraph (Q2 §3); (iii) R9-frozen adaptivity sentence (Q3 §3); (iv)
+R9-frozen optical-displacement collaboration paragraph (Q4 §5)}
 
 \section*{Code and data availability}
 All simulation code, frozen preregistration documents, per-cell manifests,
