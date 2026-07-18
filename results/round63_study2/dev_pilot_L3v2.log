@@ -1,0 +1,92 @@
+[L3v2] scene pixel contrast sd/mean = 0.132
+[L3v2] design C_u LblobT: 0.111
+[L3v2] design C_u Lmatch_p1: 0.209
+[L3v2] design C_u Lmatch_p2: 0.312
+[L3v2] design C_u sparsek: 0.033
+[L3v2] 1/80 sparsek rho=0.05 nu=5 s0 PSNR_rad=19.45
+[L3v2] 2/80 sparsek rho=0.05 nu=5 s1 PSNR_rad=17.96
+[L3v2] 3/80 sparsek rho=0.05 nu=20 s0 PSNR_rad=20.21
+[L3v2] 4/80 sparsek rho=0.05 nu=20 s1 PSNR_rad=17.53
+[L3v2] 5/80 sparsek rho=0.05 nu=200 s0 PSNR_rad=20.16
+[L3v2] 6/80 sparsek rho=0.05 nu=200 s1 PSNR_rad=-0.82
+[L3v2] 7/80 sparsek rho=0.05 nu=1000 s0 PSNR_rad=-0.82
+[L3v2] 8/80 sparsek rho=0.05 nu=1000 s1 PSNR_rad=20.31
+[L3v2] 9/80 sparsek rho=0.05 nu=2000 s0 PSNR_rad=20.98
+[L3v2] 10/80 sparsek rho=0.05 nu=2000 s1 PSNR_rad=-0.38
+[L3v2] 11/80 sparsek rho=0.6 nu=5 s0 PSNR_rad=17.56
+[L3v2] 12/80 sparsek rho=0.6 nu=5 s1 PSNR_rad=18.42
+[L3v2] 13/80 sparsek rho=0.6 nu=20 s0 PSNR_rad=-0.90
+[L3v2] 14/80 sparsek rho=0.6 nu=20 s1 PSNR_rad=16.97
+[L3v2] 15/80 sparsek rho=0.6 nu=200 s0 PSNR_rad=20.51
+[L3v2] 16/80 sparsek rho=0.6 nu=200 s1 PSNR_rad=20.56
+[L3v2] 17/80 sparsek rho=0.6 nu=1000 s0 PSNR_rad=22.70
+[L3v2] 18/80 sparsek rho=0.6 nu=1000 s1 PSNR_rad=22.08
+[L3v2] 19/80 sparsek rho=0.6 nu=2000 s0 PSNR_rad=24.25
+[L3v2] 20/80 sparsek rho=0.6 nu=2000 s1 PSNR_rad=-0.61
+[L3v2] 21/80 LblobT rho=0.05 nu=5 s0 PSNR_rad=15.42
+[L3v2] 22/80 LblobT rho=0.05 nu=5 s1 PSNR_rad=16.79
+[L3v2] 23/80 LblobT rho=0.05 nu=20 s0 PSNR_rad=-1.27
+[L3v2] 24/80 LblobT rho=0.05 nu=20 s1 PSNR_rad=-1.23
+[L3v2] 25/80 LblobT rho=0.05 nu=200 s0 PSNR_rad=-0.58
+[L3v2] 26/80 LblobT rho=0.05 nu=200 s1 PSNR_rad=-0.23
+[L3v2] 27/80 LblobT rho=0.05 nu=1000 s0 PSNR_rad=-0.84
+[L3v2] 28/80 LblobT rho=0.05 nu=1000 s1 PSNR_rad=-0.72
+[L3v2] 29/80 LblobT rho=0.05 nu=2000 s0 PSNR_rad=-0.49
+[L3v2] 30/80 LblobT rho=0.05 nu=2000 s1 PSNR_rad=-0.23
+[L3v2] 31/80 LblobT rho=0.6 nu=5 s0 PSNR_rad=-0.30
+[L3v2] 32/80 LblobT rho=0.6 nu=5 s1 PSNR_rad=-1.19
+[L3v2] 33/80 LblobT rho=0.6 nu=20 s0 PSNR_rad=-0.80
+[L3v2] 34/80 LblobT rho=0.6 nu=20 s1 PSNR_rad=-0.70
+[L3v2] 35/80 LblobT rho=0.6 nu=200 s0 PSNR_rad=-0.15
+[L3v2] 36/80 LblobT rho=0.6 nu=200 s1 PSNR_rad=-0.19
+[L3v2] 37/80 LblobT rho=0.6 nu=1000 s0 PSNR_rad=-0.15
+[L3v2] 38/80 LblobT rho=0.6 nu=1000 s1 PSNR_rad=-0.10
+[L3v2] 39/80 LblobT rho=0.6 nu=2000 s0 PSNR_rad=0.05
+[L3v2] 40/80 LblobT rho=0.6 nu=2000 s1 PSNR_rad=-0.02
+[L3v2] 41/80 Lmatch_p1 rho=0.05 nu=5 s0 PSNR_rad=-1.15
+[L3v2] 42/80 Lmatch_p1 rho=0.05 nu=5 s1 PSNR_rad=-2.10
+[L3v2] 43/80 Lmatch_p1 rho=0.05 nu=20 s0 PSNR_rad=-1.14
+[L3v2] 44/80 Lmatch_p1 rho=0.05 nu=20 s1 PSNR_rad=-0.74
+[L3v2] 45/80 Lmatch_p1 rho=0.05 nu=200 s0 PSNR_rad=0.94
+[L3v2] 46/80 Lmatch_p1 rho=0.05 nu=200 s1 PSNR_rad=0.11
+[L3v2] 47/80 Lmatch_p1 rho=0.05 nu=1000 s0 PSNR_rad=0.62
+[L3v2] 48/80 Lmatch_p1 rho=0.05 nu=1000 s1 PSNR_rad=0.50
+[L3v2] 49/80 Lmatch_p1 rho=0.05 nu=2000 s0 PSNR_rad=0.39
+[L3v2] 50/80 Lmatch_p1 rho=0.05 nu=2000 s1 PSNR_rad=0.42
+[L3v2] 51/80 Lmatch_p1 rho=0.6 nu=5 s0 PSNR_rad=0.36
+[L3v2] 52/80 Lmatch_p1 rho=0.6 nu=5 s1 PSNR_rad=-0.14
+[L3v2] 53/80 Lmatch_p1 rho=0.6 nu=20 s0 PSNR_rad=0.84
+[L3v2] 54/80 Lmatch_p1 rho=0.6 nu=20 s1 PSNR_rad=0.67
+[L3v2] 55/80 Lmatch_p1 rho=0.6 nu=200 s0 PSNR_rad=0.78
+[L3v2] 56/80 Lmatch_p1 rho=0.6 nu=200 s1 PSNR_rad=0.93
+[L3v2] 57/80 Lmatch_p1 rho=0.6 nu=1000 s0 PSNR_rad=0.92
+[L3v2] 58/80 Lmatch_p1 rho=0.6 nu=1000 s1 PSNR_rad=0.86
+[L3v2] 59/80 Lmatch_p1 rho=0.6 nu=2000 s0 PSNR_rad=0.97
+[L3v2] 60/80 Lmatch_p1 rho=0.6 nu=2000 s1 PSNR_rad=1.00
+[L3v2] 61/80 Lmatch_p2 rho=0.05 nu=5 s0 PSNR_rad=16.03
+[L3v2] 62/80 Lmatch_p2 rho=0.05 nu=5 s1 PSNR_rad=-0.39
+[L3v2] 63/80 Lmatch_p2 rho=0.05 nu=20 s0 PSNR_rad=0.01
+[L3v2] 64/80 Lmatch_p2 rho=0.05 nu=20 s1 PSNR_rad=-0.23
+[L3v2] 65/80 Lmatch_p2 rho=0.05 nu=200 s0 PSNR_rad=0.99
+[L3v2] 66/80 Lmatch_p2 rho=0.05 nu=200 s1 PSNR_rad=1.11
+[L3v2] 67/80 Lmatch_p2 rho=0.05 nu=1000 s0 PSNR_rad=1.21
+[L3v2] 68/80 Lmatch_p2 rho=0.05 nu=1000 s1 PSNR_rad=1.01
+[L3v2] 69/80 Lmatch_p2 rho=0.05 nu=2000 s0 PSNR_rad=1.09
+[L3v2] 70/80 Lmatch_p2 rho=0.05 nu=2000 s1 PSNR_rad=1.21
+[L3v2] 71/80 Lmatch_p2 rho=0.6 nu=5 s0 PSNR_rad=0.77
+[L3v2] 72/80 Lmatch_p2 rho=0.6 nu=5 s1 PSNR_rad=0.48
+[L3v2] 73/80 Lmatch_p2 rho=0.6 nu=20 s0 PSNR_rad=1.43
+[L3v2] 74/80 Lmatch_p2 rho=0.6 nu=20 s1 PSNR_rad=1.38
+[L3v2] 75/80 Lmatch_p2 rho=0.6 nu=200 s0 PSNR_rad=1.67
+[L3v2] 76/80 Lmatch_p2 rho=0.6 nu=200 s1 PSNR_rad=1.92
+[L3v2] 77/80 Lmatch_p2 rho=0.6 nu=1000 s0 PSNR_rad=1.88
+[L3v2] 78/80 Lmatch_p2 rho=0.6 nu=1000 s1 PSNR_rad=1.85
+[L3v2] 79/80 Lmatch_p2 rho=0.6 nu=2000 s0 PSNR_rad=1.88
+[L3v2] 80/80 Lmatch_p2 rho=0.6 nu=2000 s1 PSNR_rad=1.86
+
+[L3v2] === endpoints ===
+[L3v2]    sparsek: SAFE_RANGE_UNINFORMATIVE (R=-0.00) dQ=+1.51
+[L3v2]     LblobT: SAFE_RANGE_UNINFORMATIVE (R=-0.00) dQ=+0.37
+[L3v2]  Lmatch_p1: R=2.12  S_gate=19.83  dQ(2000)=+0.58
+[L3v2]  Lmatch_p2: SAFE_RANGE_UNINFORMATIVE (R=-0.00) dQ=+0.72
+[L3v2] DONE
