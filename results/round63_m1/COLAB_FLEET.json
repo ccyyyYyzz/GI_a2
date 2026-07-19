@@ -1,0 +1,63 @@
+{
+  "campaign": "round63_m1",
+  "generated_utc": "2026-07-19T10:24:00Z",
+  "gpu": "L4",
+  "note": "Pre-staged M1 Colab fleet (infrastructure only; NO campaign computation launched, m1-freeze tag not yet created). Endpoints are the stable assignment ids; runtime-proxy tokens expire ~30-45 min and are NOT stored here (rebind from list_assignments per docs/COLAB_USAGE_GUIDE.md 3.2). created_utc for the four new sessions is the keep-alive spawn time captured at `new` completion; r63m1_a pre-existed from a prior session and was rebound + re-keepalived today.",
+  "accounts": {
+    "pro1": {"tier": "Pro", "home": "/var/tmp/codex-colab-accounts/pro1", "max_l4": 2, "sessions": 2},
+    "pro2": {"tier": "Pro+", "home": "/var/tmp/codex-colab-accounts/pro2", "max_l4": 3, "sessions": 3}
+  },
+  "sessions": [
+    {
+      "account": "pro2",
+      "session": "r63m1_a",
+      "endpoint": "gpu-l4-s-kkb-ass1a0-1nyfnwnp4tdm7",
+      "accelerator": "L4",
+      "variant": "GPU",
+      "created_utc": "prior-session (S0 infra)",
+      "rebound_utc": "2026-07-19T10:22:53Z",
+      "keepalive_pid": 575,
+      "status": "READY"
+    },
+    {
+      "account": "pro2",
+      "session": "r63m1_b",
+      "endpoint": "gpu-l4-s-kkb-ass1a2-2ewo3v2wtyo4t",
+      "accelerator": "L4",
+      "variant": "GPU",
+      "created_utc": "2026-07-19T10:20:42Z",
+      "keepalive_pid": 424,
+      "status": "READY"
+    },
+    {
+      "account": "pro2",
+      "session": "r63m1_c",
+      "endpoint": "gpu-l4-s-kkb-ass1a0-1aoo31a7535i2",
+      "accelerator": "L4",
+      "variant": "GPU",
+      "created_utc": "2026-07-19T10:21:12Z",
+      "keepalive_pid": 462,
+      "status": "READY"
+    },
+    {
+      "account": "pro1",
+      "session": "r63m1_p1a",
+      "endpoint": "gpu-l4-s-kkb-ass1a1-et10wo27823l",
+      "accelerator": "L4",
+      "variant": "GPU",
+      "created_utc": "2026-07-19T10:21:41Z",
+      "keepalive_pid": 498,
+      "status": "READY"
+    },
+    {
+      "account": "pro1",
+      "session": "r63m1_p1b",
+      "endpoint": "gpu-l4-s-kkb-ass1a1-16ca78jr3df9g",
+      "accelerator": "L4",
+      "variant": "GPU",
+      "created_utc": "2026-07-19T10:22:12Z",
+      "keepalive_pid": 534,
+      "status": "READY"
+    }
+  ]
+}
