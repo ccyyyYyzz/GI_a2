@@ -16,6 +16,7 @@
 \usepackage[margin=2.2cm]{geometry}
 \usepackage{xcolor}
 \usepackage{hyperref}
+\usepackage{placeins}
 \newcommand{\SPH}[1]{\textcolor{red}{[#1]}}   % unfilled campaign placeholder
 \newcommand{\rhobar}{\bar{\rho}}
 \newcommand{\Cu}{C_{u}}
@@ -34,48 +35,38 @@ a contrast--dead-time operating map}
 \maketitle
 
 \begin{abstract}
-% Chen-genre shape: field-first opening, pain point, "Here we report ...",
-% mechanism, headline numbers, application close. NO "first" (round-4/5/8
-% novelty discipline).
-Single-pixel imaging with photon-counting detectors is conventionally
-operated at low photon flux, keeping the detector dead-time loss below a few
-percent at the cost of long acquisition times. Here we report a
-contrast--dead-time operating map for high-flux single-pixel imaging:
-whether deliberately raising the operating flux into the strongly nonlinear
-dead-time regime helps or does not help is governed by the
-illumination-pattern bucket contrast, not by the dead-time correction alone.
-The nonlinearity is absorbed by a convex renewal quasi-likelihood (RQL)
-reconstruction with a deployment-legal, truth-free regularization rule, and
-a finite-window count-information analysis locates the principled boundary:
-the Fisher information of the integrated photon count possesses a principal
-ridge at the cube-root load $\rho^{*}(\nu) = (6\nu)^{1/3} - 2/3 +
-O(\nu^{-1/3})$ ($\nu = T/\tau$ dead-time slots per exposure). In a
-preregistered dense-pattern study (Study~1, $64^2$ scenes, occupancy
-$50\%$), the time-to-quality endpoint was uninformative in $24/24$ scenes
-(safe-range quality span below the preregistered $0.5$~dB floor), while a
-small, uniformly positive fixed-dwell gain remained
-($+0.28$~dB median, $24/24$ scenes positive, bootstrap lower bound
-$+0.23$~dB) --- the multiplex-limited regime. In a second preregistered
-study (Study~2, $32^2$), spatial occupancy was varied at \emph{equal mean
-detector load and equal incident dose across occupancies}, raising the
-measured bucket contrast from $\Cu = 0.040$ (occupancy $50\%$) to $1.27$
-(raster).
-% R9 §4 frozen abstract replacement (verbatim):
-In Study~2, the preregistered acquisition-speed endpoint was formally
-negative because its breadth criterion failed ($16/24$ scenes with
-$S_{\mathrm{gate}} > 1$, versus the required $18/24$), although both
-effect-size criteria passed (median $6.80\times$; family-stratified
-bootstrap lower bound $2.84\times$). The preregistered fixed-dwell
-secondary passed (median $+1.16$~dB at the terminal dwell, $19/24$ scenes
-positive, lower bound $+0.72$~dB). A post hoc descriptive family-level
-analysis found that the six success fractions were monotonically ordered by
-measured bucket contrast, consistent with---but not establishing---a
-contrast-controlled transition. Across preregistered no-gate occupancy
-controls, the fixed-dwell gain was nonmonotone and largest among the tested
-rungs at $3.1\%$ occupancy, exposing a contrast--conditioning trade-off.
-The gain survived dynamic scattering with coefficient of variation $0.20$.
-The resulting operating map opens up an avenue for photon-budget-limited
-and dwell-time-limited single-pixel systems.
+Single-pixel imaging with photon-counting detectors is conventionally run at
+low flux so that detector dead time removes few arrivals, but this protection
+costs acquisition time. We ask when deliberately entering the nonlinear
+dead-time regime improves count-only single-pixel imaging and when it merely
+adds saturated photons.
+
+A convex renewal quasi-likelihood (RQL) reconstruction models the integrated
+nonparalyzable count without per-scene tuning. Its finite-window Fisher
+information has a principal ridge at
+$\rho^{*}(\nu)=(6\nu)^{1/3}-2/3+O(\nu^{-1/3})$, while the bucket-energy
+contrast of the illumination patterns determines how much of that scalar count
+information reaches scene structure.
+
+In a preregistered dense-pattern study, the time-to-quality endpoint was
+uninformative and therefore formally negative for every scene; a small but
+uniformly positive fixed-dwell benefit remained, with median gain
+$+0.28$~dB. Dense multiplexing thus suppressed structural modulation even
+when dead-time correction remained accurate.
+
+In a second preregistered study, spatial occupancy varied at equal mean
+detector load and equal incident dose across occupancies. The acquisition-speed
+primary remained formally negative because its breadth criterion failed,
+whereas the fixed-dwell secondary passed with a median $+1.16$~dB gain. The
+response across occupancies was nonmonotone, exposing a contrast--conditioning
+trade-off rather than a universal optimal sparsity.
+
+Together, the results define a contrast--dead-time operating map: high flux is
+useful only when illumination preserves enough bucket modulation for the scene
+and the operator remains sufficiently conditioned. Sparse equal-dose operation
+also concentrates power into fewer illuminated pixels, so peak irradiance can
+bind before the detector limit. All evidence here is simulation-only and
+requires optical-bench validation.
 \end{abstract}
 
 \section{Introduction}
@@ -152,43 +143,19 @@ released.
 \begin{figure*}[!t]
   \centering
   \includegraphics[width=\textwidth]{figs/fig_mechanism_p1.pdf}
-  \caption{Contrast--dead-time operating map for high-flux single-pixel
-  imaging. DMD: digital micromirror device; SPD: single-pixel (bucket)
-  photon-counting detector; RQL: renewal quasi-likelihood reconstruction;
-  $a_i$: binary illumination pattern; $x$: scene; $N_i$: integrated bucket
-  count; $\hat{x}$: reconstruction; $\Phi$: incident-flux scale; $d$: dark
-  rate; $\tau$: detector dead time; $\rho=\lambda\tau$: per-slot detector
-  load; $\nu=T/\tau$: dead-time slots per exposure $T$; $\Cu=\mathrm{sd}_i(u_i)
-  /\mathrm{mean}_i(u_i)$: measured bucket-energy contrast of $u_i=a_i^{\top}x$;
-  $\Gamma=\Cu\sqrt{\nu\rho/(1+\rho)}$: contrast-to-count-noise index.
-  (a)~Single-pixel imaging chain: structured illumination from a DMD probes a
-  low- or high-contrast scene $x$, and the bucket counts $N_i$ feed the RQL
-  reconstruction $\hat{x}$ under the forward model
-  $\lambda_i=\Phi\,a_i^{\top}x+d$, exposure $T=\nu\tau$.
-  (b)~Dead-time mechanism: after each registered count the detector is blind
-  for $\tau$ (shaded), censoring later arrivals ($\times$); the mean detected
-  counts per slot $\nu_{\det}/\nu=\rho/(1+\rho)$ bend away from the ideal
-  (dashed) as the load rises, while the exact count-information peaks on the
-  ridge $\rho^{*}(\nu)=(6\nu)^{1/3}-2/3$ ($\rho^{*}\approx7.8$ and $22.2$ at
-  $\nu=100$ and $2000$, respectively), well beyond the conventional
-  $\rho=0.05$ and the high-flux $\rhobar=0.6$ operating points.
-  (c)~Operating map in the contrast--load plane: the photon-limited onset
-  $\Gamma=1$ is a descriptive photon-limited-onset proxy, marking bucket
-  modulation comparable to count noise; it is not a predicted or validated
-  boundary for high-flux image benefit. The six Study-2
-  structural families are placed at the high-flux operating load
-  $\rhobar=0.6$ by their measured bucket contrast and coloured by the frozen
-  acquisition-speed gate outcome, with the number of accelerating instances
-  shown as a green wedge: maze ($\Cu=0.53$), glyph ($0.41$) and spokes
-  ($0.38$) accelerate $4/4$, chirp ($0.28$) $3/4$, contour ($0.27$) $1/4$, and
-  microtexture ($0.17$) $0/4$, respectively, while the dense $k=512$ rung
-  ($\Cu=0.040$) sits at the $\Gamma=1$ multiplex-limited boundary. All six
-  family markers share the single operating load $\rhobar=0.6$; the
-  horizontal offsets are cosmetic, applied only to separate near-coincident
-  markers (chirp and contour differ by $0.01$ in $\Cu$), and thin leader
-  lines tie each family label to its marker. The contrast-controlled
-  transition band is descriptive and does not estimate a universal critical
-  contrast. Grayscale object icons are for display purposes.}
+  \caption{\textbf{High-flux single-pixel imaging is controlled by detector
+  load and bucket contrast.} (a)~Computational acquisition model: a global
+  flux scale $\Phi$ drives DMD patterns $a_i$ on a scene $x$; the bucket counts
+  $N_i$ feed renewal quasi-likelihood (RQL) reconstruction $\hat{x}$ under
+  $\lambda_i=\Phi a_i^{\top}x+d$ and exposure $T=\nu\tau$.
+  (b)~After each registered count the detector is blind for $\tau$, censoring
+  later arrivals. The mean detected counts bend away from the ideal response,
+  while exact count information peaks at
+  $\rho^{*}(\nu)=(6\nu)^{1/3}-2/3$ ($\rho^{*}\approx7.8$ and $22.2$ at
+  $\nu=100$ and $2000$), beyond the conventional $\rho=0.05$ and tested
+  high-flux $\rhobar=0.6$ points. (c)~The onset $\Gamma=1$ in the
+  contrast--load plane is a descriptive photon-limited-onset proxy, not a
+  predicted or validated boundary. Grayscale object icons are illustrative.}
   \label{fig:mechanism}
 \end{figure*}
 
@@ -204,9 +171,12 @@ $T = \nu\tau$; after each registered count the detector is blind for $\tau$
 (non-paralyzable, active start). The recorded observation is the integrated
 count $N_i$ alone, with exact law
 \begin{equation}
-  P(N_i \ge m) = F_{\Gamma(m,\lambda_i)}\!\bigl(T - (m-1)\tau\bigr)
-              = P\bigl(\mathrm{Pois}(z_m) \ge m\bigr),
-  \quad z_m = \lambda_i\,(T-(m-1)\tau).
+  \begin{aligned}
+  P(N_i \ge m)
+    &=F_{\Gamma(m,\lambda_i)}\!\bigl(T-(m-1)\tau\bigr)\\
+    &=P\bigl(\mathrm{Pois}(z_m)\ge m\bigr),\\
+  z_m&=\lambda_i\bigl(T-(m-1)\tau\bigr).
+  \end{aligned}
   \label{eq:exactpmf}
 \end{equation}
 The per-slot load $\rho_i = \lambda_i \tau$ is the dead-time duty; the
@@ -226,10 +196,11 @@ released evidence bundles.
 % relation of the single-frame root to pre-correction (honesty clause).
 We reconstruct by
 \begin{equation}
-  \hat{x} = \arg\min_{x \ge 0}\;
-  \frac{1}{M}\sum_{i=1}^{M}\Bigl[(T - N_i\tau)\,\lambda_i(x)
-  - N_i \log \lambda_i(x)\Bigr] + \lambda_{\mathrm{TV}}\,
-  \mathrm{TV}(x),
+  \begin{aligned}
+  \hat{x}=\arg\min_{x\ge0}\;&\frac{1}{M}\sum_{i=1}^{M}
+  \Bigl[(T-N_i\tau)\lambda_i(x)-N_i\log\lambda_i(x)\Bigr]\\
+  &+\lambda_{\mathrm{TV}}\,\mathrm{TV}(x),
+  \end{aligned}
   \label{eq:rql}
 \end{equation}
 with $\lambda_i(x) = \Phi a_i^{\top} x + d$. The data term is convex in
@@ -313,9 +284,12 @@ the information-optimal load
 \end{equation}
 with peak per-slot information
 \begin{equation}
-  J(\rho^{*}) = 1 - \bigl(c^{-1} + c^{2}/12\bigr)\,\nu^{-1/3}
-  + o(\nu^{-1/3}) = 1 - 0.8255\,\nu^{-1/3} + o(\nu^{-1/3}),
-  \quad c = 6^{1/3}.
+  \begin{aligned}
+  J(\rho^{*})
+    &=1-\bigl(c^{-1}+c^{2}/12\bigr)\nu^{-1/3}+o(\nu^{-1/3})\\
+    &=1-0.8255\,\nu^{-1/3}+o(\nu^{-1/3}),
+    \qquad c=6^{1/3}.
+  \end{aligned}
   \label{eq:peakJ}
 \end{equation}
 Exact evaluation of the renewal PMF gives $\rho^{*} = 4.53$, $6.16$, $7.87$,
@@ -324,7 +298,7 @@ $500$, $1000$, and $2000$, respectively; the closed form
 $(6\nu)^{1/3} - 2/3$ gives $4.27$, $6.03$, $7.77$, $9.96$, $13.76$, $17.50$,
 and $22.23$ — a $5.9\%$ gap at $\nu = 20$ shrinking to sub-percent by
 $\nu = 500$, consistent with the $O(\nu^{-1/3})$ remainder
-[Fig.~\ref{fig:ladder}(a)].
+[Fig.~\ref{fig:ladder-mechanism}(a)].
 
 Two structural remarks. (i) The ridge is not a count-variance pinning
 effect: at $\rho = \rho^{*}$ the count variance
@@ -403,7 +377,7 @@ count-only channel and do not replace task-specific finite-rate optima
 for nonzero-pulse-length detectors or information bounds for
 time-resolved dead-time event records.
 
-\section{Study 1: dense patterns --- the multiplex-limited phase}
+\section{Study 1: dense patterns --- the multiplex-limited regime}
 \label{sec:study1}
 % Round-8 §Q3: Study 1 in MAIN TEXT before Study 2 — its frozen negative and
 % the +0.28 dB uniform positive are part of the scientific result, not a
@@ -444,6 +418,29 @@ significant, but far below the preregistered $1$~dB practical-relevance
 bar. Both outcomes are reported as frozen; no endpoint, gate, or analysis
 constant was altered after the freeze.
 
+\begin{figure*}[!t]
+  \centering
+  \begin{minipage}[t]{0.62\textwidth}\centering
+    \includegraphics[width=\linewidth]{figs/fig_s1b_images.pdf}\\[-0.5ex]
+    {\footnotesize (a)}
+  \end{minipage}\hfill
+  \begin{minipage}[t]{0.36\textwidth}\centering
+    \includegraphics[width=\linewidth]{figs/fig_s1c_curves.pdf}\\[-0.5ex]
+    {\footnotesize (b)}\\[0.5ex]
+    \includegraphics[width=\linewidth]{figs/fig_s1d_svsrho.pdf}\\[-0.5ex]
+    {\footnotesize (c)}
+  \end{minipage}
+  \caption{\textbf{Dense illumination leaves the preregistered speed endpoint
+  uninformative.} (a)~Detail and natural-scene boundary examples under safe
+  and high-flux reconstructions. Dense multiplexing leaves the detail target
+  prior-limited, whereas RQL retains coarse structure in the natural example.
+  (b)~Radiometric PSNR versus optical integration time: the safe-arm quality
+  range remains below the frozen informativeness floor. (c)~Every detail scene
+  lies at the $S=1$ censoring bound despite the available detector count-rate
+  increase, exposing the multiplex limitation.}
+  \label{fig:study1}
+\end{figure*}
+
 \subsection{Natural-scene cohort (secondary, no gate)}
 % Frozen analyzer output (results/round63_s2_natural, cohort=natural,
 % gate-null per round-7 §4; R9 Q5 §3 main-text scope).
@@ -459,22 +456,6 @@ acquisition) the likelihood-based reconstruction, not the sampling ratio,
 is what renders the data usable. Smooth, prior-limited scenes thus occupy the low-benefit
 region of the acquisition-speed map even where the fixed-dwell radiometric
 benefit of high-flux operation is substantial.
-\begin{figure}[t]
-  \centering
-  \includegraphics[width=\linewidth]{figs/fig_nat_pair.pdf}
-  \caption{Natural-cohort representative:\ truth, safe operating point at
-  full dwell ($13.8$~dB), and high-flux RQL at equal dwell ($15.9$~dB).
-  Display subject selected by rule (disclosed):\ the photograph whose
-  fixed-dwell gain lies closest to the cohort median of $+1.44$~dB
-  (\texttt{stl\_16}, $+1.46$~dB) --- a median representative, not a best
-  case. The cohort is prior-limited at the studied photon budget:\
-  reconstructions are spatially smoothed and the high-flux benefit is
-  radiometric, visible both in the recovered coarse structure and in the
-  center-row intensity profile (right):\ the safe arm is nearly flat
-  while the high-flux arm tracks the scene's intensity excursions at
-  equal dwell.}
-  \label{fig:natpair}
-\end{figure}
 
 \subsection{Mechanism: bucket multiplex contrast}
 The two outcomes are jointly explained by the bucket contrast of dense
@@ -517,79 +498,109 @@ convention of Ref.~\cite{hao2025photonlimited}, whose experiments span
 $S_{\mathrm{det}} = 0.096$--$0.44$) and the incident axis
 $S_{\mathrm{inc}}$, which differ nonlinearly under dead time.
 
-\subsection{The measured contrast ladder}
-% Numbers: fluxmap CSVs (commit b0a70ad); regenerated by fig_c_ladder.py.
-The measured bucket contrast follows the designed ladder:\ $\Cu = 0.040$,
-$0.222$, $0.316$, and $1.270$ at $k = 512$, $32$, $16$, and $1$,
-respectively, and the contrast-to-count-noise index at the high-flux
-operating point ($\rhobar = 0.6$, $\nu = 2000$) crosses the photon-limited
-threshold on every sparse rung:\ $\Gamma = 1.09$, $6.07$, $8.66$, and
-$34.79$, respectively [Fig.~\ref{fig:ladder}(c)].
+\subsection{Preregistered verdicts}
+The preregistered Study-2 primary endpoint was formally negative because its breadth criterion failed: 16 of 24 scenes accelerated, below the required 18 of 24.
+The two effect-size criteria passed, with median
+$S_{\mathrm{gate}}=6.796$ and family-stratified bootstrap lower bound $2.835$,
+but they do not rescue the failed primary. The preregistered fixed-dwell
+secondary passed: median $+1.16$~dB at the terminal dwell, 19 of 24 scenes
+positive, and lower bound $+0.72$~dB. The frozen hierarchy is therefore
+``primary formally negative; fixed-dwell secondary passed,'' with no endpoint,
+geometry, or image-class redesign.
 
-\subsection{Primary confirmatory outcome ($k = 16$)}
-% Frozen analyzer output verbatim (results/round63_study2/STUDY2_SUMMARY.md,
-% tag study2-scored). Honest reporting; no post-hoc gate change.
-The preregistered acquisition-speed gate returned formally negative:\ of its
-three frozen criteria, the effect-size criteria passed --- median
-$S_{\mathrm{gate}} = 6.8$ (bar:\ $\ge 3$) with family-stratified bootstrap
-lower bound $2.8$ (bar:\ $> 1$) --- but the breadth criterion failed, with
-$16/24$ scenes accelerating against the preregistered $18/24$ bar
-[Fig.~\ref{fig:ladder}(e)]. The frozen fixed-dwell secondary passed all
-three of its criteria (median $+1.16$~dB at the terminal dwell, $19/24$
-scenes positive, bootstrap lower bound $+0.72$~dB); by the preregistered
-hierarchy it cannot rescue the failed primary, and no geometry,
-image-class, or endpoint redesign follows.
+The eight non-accelerating scenes comprise the entire microtexture family
+($0/4$), three of four contour instances, and one chirp instance, whereas
+glyph, maze, and spokes accelerated $4/4$. After unblinding, a descriptive
+family-level analysis showed that the six success fractions were monotonically
+ordered by their mean measured bucket contrasts: maze $\Cu=0.53$ ($4/4$),
+glyph $0.41$ ($4/4$), spokes $0.38$ ($4/4$), chirp $0.28$ ($3/4$), contour
+$0.27$ ($1/4$), and microtexture $0.17$ ($0/4$). This ordering was not
+preregistered, did not enter any decision rule, and does not estimate a
+universal critical contrast.
 
-The composition of the failure is structured. The eight non-accelerating
-scenes comprise the entire microtexture family ($0/4$; three
-safe-range-uninformative, one fast-arm-censored), three of four contour
-instances, and one chirp instance, while glyph, maze, and spokes
-accelerated $4/4$ with per-scene speedups of $5$--$33\times$.
-% R9 §3 frozen wording (verbatim); "predicted boundary" is banned.
-After unblinding, a descriptive family-level analysis showed that the six
-family success fractions were monotonically ordered by their corresponding
-mean measured bucket contrasts ($\Cu = 0.53$ maze $4/4$, $0.41$ glyph
-$4/4$, $0.38$ spokes $4/4$, $0.28$ chirp $3/4$, $0.27$ contour $1/4$,
-$0.17$ microtexture $0/4$). This six-point ordering was not preregistered,
-did not enter any decision rule, and does not estimate a universal critical
-contrast; it is consistent with the confirmatory cohort spanning a
-contrast-controlled transition.
+Across the preregistered no-gate occupancy controls, fixed-dwell gain was
+nonmonotone and largest among the tested rungs at $k=32$ ($3.1\%$ occupancy),
+where the median was $+4.13$~dB. This is evidence of a
+contrast--conditioning trade-off, not an ``optimal sparsity'' claim. Complete
+per-rung and per-scene values are given in the supplement.
 
-\subsection{Fixed-dwell gain along the ladder}
-% Numbers: robustness/controls CSVs (commit b0a70ad). R9: "fixed-dwell",
-% not "fixed photon budget" — at equal nu the high-rho arm uses more
-% incident photons; equal dose holds across k, not across rho.
-At fixed dwell ($\nu = 2000$, equal optical integration time and equal
-incident dose across occupancies) every rung of the ladder
-shows a positive high-flux median gain, and the dense rung is the smallest:\
-per-image median $+0.64$~dB ($24/24$ scenes positive) at $k = 512$,
-$+4.13$~dB ($24/24$) at $k = 32$, $+1.16$~dB ($19/24$) at the gate-carrying
-$k = 16$ arm, and $+3.56$~dB ($21/24$) at the raster control, respectively
-[Fig.~\ref{fig:ladder}(e)]. The profile across the sparse rungs is not
-monotone in contrast:\ sparsity raises bucket contrast but simultaneously
-raises the operator conditioning burden ($\kappa_A = n/k$), and the two
-effects compete --- $k = 32$ combines most of the contrast benefit with
-half the conditioning burden of $k = 16$ and attains the largest gain. The
-dense-rung value reproduces the Study-1 magnitude, confirming that the
-$64^{2}$-to-$32^{2}$ re-parameterization did not manufacture the effect.
+\subsection{Contrast and conditioning across occupancies}
+The measured bucket contrast follows the designed ladder: $\Cu=0.040$,
+$0.222$, $0.316$, and $1.270$ at $k=512$, $32$, $16$, and $1$,
+respectively. At $\rhobar=0.6$ and $\nu=2000$, the corresponding descriptive
+contrast-to-count-noise index is $\Gamma=1.09$, $6.07$, $8.66$, and $34.79$
+(Fig.~\ref{fig:ladder-mechanism}). Sparsity increases bucket modulation but
+also raises the conditioning burden $\kappa_A=n/k$; the competing trends
+explain why fixed-dwell benefit is nonmonotone rather than increasing steadily
+with contrast. The dense-rung value remains close to the Study-1 magnitude,
+showing that the change from $64^2$ to $32^2$ did not manufacture the effect.
+
+\begin{figure*}[!t]
+  \centering
+  \begin{minipage}[t]{0.31\textwidth}
+    \includegraphics[width=\linewidth]{../results/round63_theory/fig_a_ridge_map.pdf}
+  \end{minipage}\hfill
+  \begin{minipage}[t]{0.37\textwidth}
+    \includegraphics[width=\linewidth]{figs/fig_b_masks.pdf}
+  \end{minipage}\hfill
+  \begin{minipage}[t]{0.28\textwidth}
+    \includegraphics[width=\linewidth]{figs/fig_c_ladder.pdf}
+  \end{minipage}
+  \caption{\textbf{Exact information ridge and the illumination ladder.}
+  (a)~Exact count-Fisher information per unit time versus detector load,
+  peaking on $\rho^{*}(\nu)=(6\nu)^{1/3}-2/3$.
+  (b)~Representative masks at $k\in\{512,32,16,1\}$; amplitude normalization
+  holds mean load and incident dose per pixel fixed across occupancies.
+  (c)~Measured bucket contrast $\Cu$ and descriptive photon-limited index
+  $\Gamma$ versus occupancy. Contrast rises with sparsity, while the dense
+  rung lies near the descriptive $\Gamma=1$ onset proxy. Error bars are
+  $\pm1$ s.d. over image--seed pairs.}
+  \label{fig:ladder-mechanism}
+\end{figure*}
+
+\begin{figure*}[!t]
+  \centering
+  \begin{minipage}[t]{0.48\textwidth}
+    \includegraphics[width=\linewidth]{figs/fig_d_dwell.pdf}
+  \end{minipage}\hfill
+  \begin{minipage}[t]{0.48\textwidth}
+    \includegraphics[width=\linewidth]{figs/fig_e_gate.pdf}
+  \end{minipage}
+  \caption{\textbf{Dwell curves, fixed-dwell gain, and acquisition speed.}
+  (a)~Radiometric PSNR and CNR versus dwell budget for the preregistered
+  subject at safe and high flux. (b)~Per-image fixed-dwell gain across the
+  occupancy ladder and per-scene acquisition speed at the gate-carrying
+  $k=16$ rung. The Study-2 primary is formally negative because only 16 of 24
+  scenes accelerate, despite median $S_{\mathrm{gate}}=6.796$; the
+  fixed-dwell secondary passes at $+1.16$~dB. Open markers denote censored
+  scenes. Only $k=16$ carries the frozen speed gate.}
+  \label{fig:ladder-outcomes}
+\end{figure*}
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=\linewidth]{figs/fig_s2_gallery.pdf}
-  \caption{Study-2 reconstructions at the gate-carrying occupancy
-  ($k = 16$, RQL, seed~0), all through the frozen production path.
-  Row subjects by disclosed rule:\ the preregistered display subject
-  (spokes), the largest fixed-dwell gain in the frozen verdict table
-  (maze, $+9.7$~dB seed-mean --- a best case, labeled as such), and a
-  failing-family representative (microtexture). Columns:\ truth; safe
-  operating point at full dwell; high flux at one tenth of the dwell;
-  high flux at full dwell. On contrast-adequate scenes the high-flux arm
-  matches the safe arm's quality in a tenth of the acquisition time and
-  far exceeds it at equal time ($22.0 \to 32.4$~dB on the maze), while
-  the low-contrast microtexture is indifferent to flux at every dwell ---
-  the operating map in three rows.}
-  \label{fig:gallery}
+  \includegraphics[width=\linewidth]{figs/fig_p1_families.pdf}
+  \caption{\textbf{High-flux acceleration by scene family (empirical).}
+  Acceleration rises with measured bucket contrast across the six structural
+  families: maze, glyph, and spokes accelerate $4/4$, chirp $3/4$, contour
+  $1/4$, and microtexture $0/4$. These outcomes use one operating load; no
+  critical-contrast boundary or transition band is claimed.}
+  \label{fig:families}
 \end{figure}
+
+\begin{figure*}[!t]
+  \centering
+  \includegraphics[width=0.9\textwidth]{figs/fig_s2_gallery.pdf}
+  \caption{\textbf{Study-2 reconstruction outcomes at the gate-carrying
+  occupancy $k=16$.} Columns show truth, the safe operating point at full
+  dwell, high flux at one tenth of the dwell, and high flux at full dwell.
+  Contrast-adequate spokes and maze scenes reach the safe quality sooner and
+  improve at equal dwell, whereas low-contrast microtexture remains
+  insensitive to flux. The rows comprise the preregistered subject, a clear
+  success, and a failing-family example; detailed selection provenance is in
+  the supplement.}
+  \label{fig:gallery}
+\end{figure*}
 
 \subsection{Mechanism separation: equal-load gain is not rate starvation}
 % Numbers: separation CSVs (commit b0a70ad). The closest-prior killer
@@ -612,7 +623,7 @@ therefore a contrast effect, not a rate-reduction effect.
 Under multiplicative dynamic scattering (lognormal AR(1) factors,
 $\mathrm{CV}(\alpha) = 0.20$, applied before dead time) the high-flux gain
 persists and grows with dwell:\ $+0.66$, $+1.84$, and $+2.32$~dB at
-$\nu = 20$, $200$, and $2000$, respectively [Fig.~\ref{fig:ladder}(f)],
+$\nu = 20$, $200$, and $2000$, respectively (Supplementary Information),
 reported on the measured-photons axis $S_{\mathrm{det}}$ for direct
 comparison with single-photon underwater single-pixel experiments
 \cite{hao2025photonlimited}.
@@ -649,97 +660,17 @@ deployment zone and reaches only $-0.05$~dB in the extreme-load corner
 directions (up to $9$~dB), consistent with the nonconvexity of the exact
 objective, with no systematic advantage to either arm; full tables and
 multistart diagnostics are provided in the supplement. The convex
-surrogate therefore costs essentially nothing in reconstruction quality
-On the reported small exact-reference grid and under the frozen TV settings,
+surrogate therefore tracked the exact reference closely on this grid. Under
+the frozen TV settings,
 the exact and approximate likelihood reconstructions agreed to the stated
 numerical tolerance, and the exact calculation added little runtime at those
 tested sizes. This empirical agreement does not establish uniqueness of the
 TV-regularized solution; convexity of the data term alone is insufficient when
 the design is underdetermined and the TV penalty is not strictly convex.
 
-% ---------- Study-1 figure (prereg: docs/ROUND63_FIGURE_PREREG.md) ----------
-\begin{figure*}[t]
-  \centering
-  \begin{minipage}[t]{0.62\textwidth}\centering
-    \includegraphics[width=\linewidth]{figs/fig_s1b_images.pdf}\\[-0.5ex]
-    {\footnotesize (a)}
-  \end{minipage}\hfill
-  \begin{minipage}[t]{0.36\textwidth}\centering
-    \includegraphics[width=\linewidth]{figs/fig_s1c_curves.pdf}\\[-0.5ex]
-    {\footnotesize (b)}\\[0.5ex]
-    \includegraphics[width=\linewidth]{figs/fig_s1d_svsrho.pdf}\\[-0.5ex]
-    {\footnotesize (c)}
-  \end{minipage}
-  \caption{Study~1:\ the dense-pattern multiplex-limited regime (frozen
-  preregistered display subjects). (a)~Image arrays for the confirmatory
-  detail subject \texttt{detail\_glyph\_0} (top, with the frozen zoom crop)
-  and the natural-cohort boundary subject \texttt{stl\_02} (bottom):\
-  truth, safe operating point at full and short dwell, and the three
-  high-flux arms at $\rhobar = 0.6$, $\nu = 50$. Dense multiplexing leaves
-  the detail subject prior-limited in every arm (the frozen negative made
-  visible), while on the natural subject the naive and pre-corrected arms
-  collapse ($9.1$ and $1.0$~dB) and RQL retains full quality
-  ($18.0$~dB). (b)~Seed-mean radiometric PSNR versus optical integration
-  time for all 24 detail scenes (thin lines) with cohort medians (thick):\
-  the safe-arm median spans less than $0.2$~dB --- the
-  safe-range-uninformative verdict. (c)~Per-scene acquisition-speed bounds
-  versus fast-arm load:\ every scene sits at the $S = 1$ censoring bound,
-  below the preregistered gate bar, while the count-rate ratio (dotted)
-  shows what the detector alone would permit --- the gap between the two
-  is the multiplex limitation.}
-  \label{fig:study1}
-\end{figure*}
-
-% ---------- Study-2 six-panel ladder figure (round-8 §Q3; addendum
-% docs/ROUND63_FIGURE_PREREG_ADDENDUM_LADDER.md) ----------
-\begin{figure*}[t]
-  \centering
-  \begin{minipage}[t]{0.32\textwidth}\centering
-    \includegraphics[width=\linewidth]{../results/round63_theory/fig_a_ridge_map.pdf}\\[-1ex]
-    {\footnotesize (a)}
-  \end{minipage}\hfill
-  \begin{minipage}[t]{0.64\textwidth}\centering
-    \includegraphics[width=\linewidth]{figs/fig_b_masks.pdf}\\[-1ex]
-    {\footnotesize (b)}
-  \end{minipage}\\[1ex]
-  \begin{minipage}[t]{0.32\textwidth}\centering
-    \includegraphics[width=\linewidth]{figs/fig_c_ladder.pdf}\\[-1ex]
-    {\footnotesize (c)}
-  \end{minipage}\hfill
-  \begin{minipage}[t]{0.32\textwidth}\centering
-    \includegraphics[width=\linewidth]{figs/fig_d_dwell.pdf}\\[-1ex]
-    {\footnotesize (d)}
-  \end{minipage}\hfill
-  \begin{minipage}[t]{0.32\textwidth}\centering
-    \includegraphics[width=\linewidth]{figs/fig_f_scattering.pdf}\\[-1ex]
-    {\footnotesize (f)}
-  \end{minipage}\\[1ex]
-  \begin{minipage}[t]{0.5\textwidth}\centering
-    \includegraphics[width=\linewidth]{figs/fig_e_gate.pdf}\\[-1ex]
-    {\footnotesize (e)}
-  \end{minipage}
-  \caption{The contrast--dead-time operating map (Study~2). (a)~Exact
-  count-Fisher-information map with the cube-root ridge
-  $\rho^{*}(\nu)$. (b)~Representative occupancy-ladder masks
-  ($k = 512/32/16/1$) under equal mean detector load and equal incident
-  dose ($A = (n/k)B$, $\Phi = \rhobar/\tau$). (c)~Measured bucket
-  contrast $\Cu$ and photon-limited index $\Gamma$ versus occupancy; the
-  dense rung sits at the $\Gamma = 1$ threshold. (d)~Radiometric PSNR and
-  CNR versus dwell for the preregistered resolution-target subject
-  (\texttt{detail32\_spokes\_0}, $k = 16$); the ridge of panel~(a) is a
-  scalar count-information result and no coincidence with the image
-  optimum is claimed. (e)~Fixed-dwell gain by occupancy (top; the dotted
-  line is the $k = 16$ preregistered bar) and per-scene acquisition
-  speedups on the gate-carrying $k = 16$ arm (bottom); open markers are
-  fast-arm-censored scenes. (f)~Dynamic-scattering secondary in
-  measured-photons units; the shaded band is the experimental range of
-  Ref.~\cite{hao2025photonlimited}.}
-  \label{fig:ladder}
-\end{figure*}
-
+\FloatBarrier
 \section{Discussion}
-% No separate limitations section per Chen style; the honesty lives inside
-% these paragraphs. Frozen wordings: R9 Q5 §5 (position), round-8 §Q3
+% Frozen wordings: R9 Q5 §5 (position), round-8 §Q3
 % (peak irradiance), R9 Q2 §3 / Q3 §3 / Q4 §5 (future-work paragraphs,
 % verbatim).
 The scientific position established by the two studies is deliberately
@@ -753,17 +684,19 @@ secondary, this constitutes an operating map:\ a computable answer to when
 high-flux operation is worth engaging, rather than a universal
 acceleration claim.
 
-Two scope boundaries must be stated plainly. First, all results are
-simulation-based; the exact renewal forward model, the detector-mismatch
-envelopes of Section~\ref{sec:mismatch}, and the openly released frozen
-benchmark compensate but do not substitute for optical-bench validation.
-Second, sparse operation at equal dose concentrates the same illumination
-into fewer pixels:\ the on-pixel peak irradiance rises as $n/k$
-($64\times$ at the gate-carrying occupancy), which spatial-light-modulator
-power budgets, laser-safety limits, and local photodamage constraints may
-cap before the detector does. The operating map therefore still requires
-optical-bench validation, and its sparse rungs are conditional on peak-power
-headroom.
+\subsection{Limitations}
+Three scope boundaries must be stated plainly. First, all results are
+simulation-based; the exact renewal forward model, detector-mismatch envelopes,
+and frozen benchmark do not substitute for optical-bench validation. Second,
+sparse operation at equal dose concentrates the same illumination into fewer
+pixels: the on-pixel peak irradiance rises as $n/k$ ($64\times$ at the
+gate-carrying occupancy), so source power, spatial-light-modulator limits,
+laser safety, or local photodamage may bind before the detector does. Third,
+the operating map assumes a calibrated, stable detector dead time. Jitter,
+drift, correlation, or paralyzable recovery changes the count-information
+surface; deployment therefore requires recovery-time calibration and a
+detector-specific load limit. The reported sparse rungs are conditional on
+both peak-power headroom and that calibration.
 
 Three extensions follow directly from the failure structure. For
 uniformly scattered fixed-$k$ supports,

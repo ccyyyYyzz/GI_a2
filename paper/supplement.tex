@@ -130,6 +130,17 @@ scenes: \texttt{low\_contrast} is the only strongly negative rung
 
 \input{supp_tables/S2_natural.tex}
 
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=0.72\textwidth]{figs/fig_nat_pair.pdf}
+  \caption{Natural-cohort median representative: truth, safe operation at full
+  dwell ($13.8$~dB), and high-flux RQL at equal dwell ($15.9$~dB), with the
+  centre-row radiometric profile. The displayed image is \texttt{stl\_16},
+  selected before plotting as the scene whose fixed-dwell gain lies closest to
+  the cohort median ($+1.46$ versus $+1.44$~dB); it is not a best case.}
+  \label{fig:s-natural}
+\end{figure}
+
 % ======================================================================
 \section{Complete detector-mismatch tables}
 \label{sec:s3}
@@ -184,6 +195,13 @@ contrast--conditioning trade-off discussed in the main text.
 
 \input{supp_tables/S5_ladder.tex}
 
+The main-text Study-2 reconstruction gallery uses three declared row roles:
+the preregistered spokes display subject, the maze instance with the largest
+fixed-dwell gain in the frozen verdict table (explicitly a best case), and a
+microtexture representative from the non-accelerating family. Columns and
+display scaling are common across rows; no additional image was selected after
+viewing the rendered gallery.
+
 % ======================================================================
 \section{Dynamic-scattering detail}
 \label{sec:s6}
@@ -197,15 +215,27 @@ $+1.84$, $+2.32$~dB at $\nu=20,200,2000$).
 
 \input{supp_tables/S6_scattering.tex}
 
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=0.72\textwidth]{figs/fig_f_scattering.pdf}
+  \caption{Dynamic-scattering robustness. Radiometric PSNR versus measured
+  detected signal $S_{\mathrm{det}}$ under a fluctuating scattering medium
+  ($\mathrm{CV}(\alpha)=0.20$) at safe and high flux. The high-flux advantage
+  persists across the experimentally reported $S_{\mathrm{det}}$ range
+  (shaded); error bars span dwell replicates.}
+  \label{fig:s-scattering}
+\end{figure}
+
 % ======================================================================
 \section{Ensemble and undersampling sensitivity (S2B/S2C)}
 \label{sec:s7}
 
-Tables~\ref{tab:s7_s2b} and~\ref{tab:s7_s2c} report the supplementary
-geometry/ensemble sensitivity: the undersampling budget $M\in\{1024,2048\}$ for
-dense Bernoulli$(1/2)$ illumination (S2B), and the complementary Hadamard-type
-pairs (\texttt{hadpair}) and gamma-modulated patterns (\texttt{gam4}) at $M=2048$
-(S2C). Entries are median RQL radiometric PSNR at $\rhobar\in\{0.05,0.6,1.0\}$ and
+Tables~\ref{tab:s7_s2b} and~\ref{tab:s7_s2c} report supplementary ensemble
+sensitivity. Dense Bernoulli$(1/2)$ illumination at
+1024 and 2048 measurements supplies S2B. Complementary Hadamard-type pairs
+(\texttt{hadpair}) and gamma-modulated patterns (\texttt{gam4}) at $M=2048$
+supply S2C. Entries are median RQL radiometric PSNR at
+$\rhobar\in\{0.05,0.6,1.0\}$ and
 $\nu\in\{100,500,2000\}$. Consistent with the multiplex-limited reading of the
 dense regime, the RQL quality is stable across sampling budgets and pattern
 ensembles and rises modestly with load at long dwell. (Provenance note: the S2C

@@ -1,8 +1,7 @@
 % ============================================================================
-% PAPER 2 SUPPLEMENT (method line, M1). Created in the editorial restructure
-% that compressed the main text to one storyline; every technical block here
-% was MOVED from main_m1.tex (or from the frozen rulings) verbatim, not
-% reworded. Sections:
+% PAPER 2 SUPPLEMENT (method line, M1), expanded in the R20/R21 presentation
+% restructure. Reader-facing results remain in main_m1.tex; governance,
+% optimization, and provenance detail is retained here.
 %   S1 framework theorem (R14 Candidate A, full generalized-KKT system)
 %   S2 alignment proposition (R14 Candidate C, full statement + failure modes)
 %   S3 design machinery in full (certificate math, guards, dictionary,
@@ -28,10 +27,11 @@
 \renewcommand{\thesection}{S\arabic{section}}
 \renewcommand{\theequation}{S\arabic{equation}}
 \renewcommand{\thetable}{S\arabic{table}}
+\renewcommand{\thefigure}{S\arabic{figure}}
 \renewcommand{\theproposition}{S\arabic{proposition}}
 
-\title{Supplement:\ Information-optimal illumination for dead-time-limited
-single-pixel imaging}
+\title{Supplementary information:\ Jitter-capped high-flux single-pixel
+imaging with global power control}
 \author{\SPH{author block --- user decision (mirrors main text)}}
 \date{}
 
@@ -171,6 +171,29 @@ optimization and held fixed, with a fixed numerical ridge
 $\epsilon_0 = 10^{-9}\,\mathrm{tr}(B^{\top}V_{\text{FIXED}^\ast}B)/r$
 (R13~\S6). A design-dependent ridge is not permitted:\ it would change the
 objective derivative and invalidate the sensitivity calculation.
+
+\subsection{Retired adaptive arm and path diagnostic}
+\label{sec:s-retired-path}
+The earlier variable-load adaptive arm (\textsc{OED-DT}) was retired as a
+proposed or gated imaging method before the campaign freeze. Its speed gate was
+withdrawn as infeasible rather than recorded as a confirmatory failure. Within
+the frozen target-load-normalized atom family, the joint incident-budget,
+$\pm5\%$ per-pixel dose, A-risk, and spectral guards admitted no nonzero
+adaptive mixture in the audited development cell. The exact descending mixture
+scan therefore terminated at the balanced endpoint, recorded as
+\texttt{ADAPTIVE\_COLLAPSE\_UNDER\_GUARDS}. This is development-only evidence
+about one parameterization under the joint guard stack, not a confirmatory
+theorem or a claim that adaptive geometry is generally infeasible.
+
+The target-load normalization fixes each pattern's amplitude to reach a
+predicted load; on dim supports this can demand large physical amplitude and
+anti-align the dose vector with scene brightness. The descending scan is
+retained solely as the path-specific descriptive diagnostic
+\texttt{PATH\_FEASIBLE\_ALPHA}, relative to the frozen row ordering. It is
+never an estimator, fallback, certificate, or imaging endpoint. Dose-relaxed
+and dose-constrained continuous solutions likewise remain no-endpoint design
+diagnostics. The separate dose-only construction below shows why the path
+failure cannot be generalized to the dose constraint alone.
 
 \subsection{The full-stack near-optimality certificate}
 % R18 §2-§3: certified class C_stack = full deployed conditioning stack;
@@ -346,6 +369,61 @@ $\mathbb{E}[N\mid\rho]\simeq\nu\rho/(1+\rho)$, whose marginal cost tends to
 zero at high load, so a detected-count-only budget can permit arbitrarily
 large incident power while appearing nearly cost-free.
 
+\subsection{Development-only dose-uniform construction}
+\label{sec:s-dose-only}
+\emph{Development-only constructive analysis; not a confirmatory endpoint or
+population estimate.} A support-preserving construction over the frozen
+dictionary found feasible designs within the incident budget and the
+$\pm5\%$ per-pixel dose band. It is an existence lower bound, not an estimate
+of the dose-only optimum: initialization placed positive mass only on the
+lowest-load column, so zero-mass gain columns could not activate. Table
+\ref{tab:s-devreplication} reports every family and both anchor cells without
+selection. All 12 gaps are positive, with D-efficiency lower bounds from
+$1.64\times$ to $2.51\times$. No confirmatory dose-only verdict exists.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.82\textwidth]{figs/actiii_b.pdf}
+\caption{\textbf{Constructive dose-only geometry headroom (development only).}
+For each of six development families, the dose-only primal gap per task
+dimension is positive at both anchors (right axis: D-efficiency lower bound
+$1.6$--$2.5\times$), establishing scene-adapted headroom under the
+$\pm5\%$ per-pixel dose band. The construction is support-preserving; it is
+not a confirmatory endpoint, a population estimate, or a dose-only optimum.}
+\label{fig:s-dose-only}
+\end{figure}
+
+\begin{table}[t]
+\centering
+\caption{Development-only constructive dose-only probe, frozen six-image
+replication (seed 0; not a confirmatory endpoint or population estimate).
+$\Delta/r$ is the per-dimension log-determinant gap over deployed SCAT32 and
+$\mathrm{Eff}_D^{\downarrow}=e^{\Delta/r}$ is the dose-feasible D-efficiency
+lower bound. Every cell is budget- and dose-feasible.}
+\label{tab:s-devreplication}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lccrrcc@{}}
+\hline
+Scene & $\nu$ & $b$ & SCAT32 & Probe & $\Delta/r$ &
+$\mathrm{Eff}_D^{\downarrow}$ \\
+\hline
+glyph        & 2000 & 0.60 & 3646.425 & 3801.577 & 0.776 & $2.17\times$ \\
+glyph        & 200  & 0.05 & 2788.834 & 2969.346 & 0.903 & $2.47\times$ \\
+chirp        & 2000 & 0.60 & 3646.994 & 3819.047 & 0.860 & $2.36\times$ \\
+chirp        & 200  & 0.05 & 2788.149 & 2887.359 & 0.496 & $1.64\times$ \\
+maze         & 2000 & 0.60 & 3633.386 & 3750.598 & 0.586 & $1.80\times$ \\
+maze         & 200  & 0.05 & 2790.259 & 2892.347 & 0.510 & $1.67\times$ \\
+spokes       & 2000 & 0.60 & 3640.443 & 3820.941 & 0.903 & $2.47\times$ \\
+spokes       & 200  & 0.05 & 2800.765 & 2958.083 & 0.787 & $2.20\times$ \\
+contour      & 2000 & 0.60 & 3648.639 & 3829.357 & 0.904 & $2.47\times$ \\
+contour      & 200  & 0.05 & 2772.045 & 2891.034 & 0.595 & $1.81\times$ \\
+microtexture & 2000 & 0.60 & 3667.825 & 3851.978 & 0.921 & $2.51\times$ \\
+microtexture & 200  & 0.05 & 2810.246 & 2953.895 & 0.718 & $2.05\times$ \\
+\hline
+\end{tabular}
+\end{table}
+
 % ===========================================================================
 \section{Monte-Carlo verification detail}
 \label{sec:s-verification}
@@ -389,6 +467,70 @@ two-point holds and cross-fitted conditional-score estimation) remains a
 preregistered extension beyond this verdict.
 
 % ===========================================================================
+\section{Campaign accounting and analysis provenance}
+\label{sec:s-campaign}
+\subsection{Exposure accounting, arms, and immutable records}
+Every arm uses $n=32^2=1024$ pixels and exactly 1024 physical exposures: a
+52-pattern scene-independent balanced pre-scan plus a 972-row main design. The
+pre-scan consists of 32 paired $4\times4$-block rows, 16 block rows, and four
+quadrant rows; each pixel receives cumulative amplitude $32+16+4=52$. All
+pre-scan counts enter the final reconstruction. The ridge arm additionally
+uses its pre-scan estimate to calibrate one global source multiplier, with no
+per-pattern servo. Optical time is
+$T_{\mathrm{opt}}=M_{\mathrm{total}}\nu\tau$; design-computation time is
+reported separately and never included in that endpoint.
+
+The five frozen arms are SCAT32-SAFE at mean load $0.05$, SCAT32-060 at
+$0.60$, RIDGE-SCAT32 at the dwell-specific numerical ridge, and the descriptive
+context arms SCAT16 and LBLOB16 at $0.60$. The same 24 confirmatory scenes,
+five paired seeds, common pre-scan, and 972-row balanced SCAT32 multiset are
+used for every operating-point comparison. Scene generators, images, regions
+of interest, the expanded design dictionary, and the expected-cell ledger carry
+immutable manifests and SHA256 records. These process records establish
+provenance but do not enter any scientific endpoint.
+
+Each imaging cell records incident and detected photons, incident-dose and
+detected-count ratios, achieved mean-load quantiles, physical peak, predicted
+and realized ceiling fractions, global-clip status, and exact mean count
+information. Each geometry cell additionally records its terminal status,
+primal and dual gaps, residuals, conditioning checks, cut counts, solver status
+for the primary solve and one deterministic rescaled retry, and wall time. The
+frozen per-cell cap is 420~s (60~s primal screen plus 180~s primary solve and
+one 180~s retry); there is no third attempt, threshold change, imputation, or
+cell deletion. The exact field list and dictionary hash are retained in the
+released disclosure ledger.
+
+\subsection{Implementation-to-specification correction record}
+The immutable tag, raw campaign cells, and original analyzer outputs were
+preserved. The dated bundle
+\texttt{results/round63\_m1/CORRECTION\_2026-07-19/} recomputes the endpoints
+from those same cells under the preregistered specification. Table
+\ref{tab:s-correction} records the three implementation discrepancies and the
+spec-conformant treatment. The promoted independent implementation and the
+in-project rerun agreed on all 18 audited numerical outputs. Main-text claims
+use \texttt{M1\_VERDICTS\_SPEC\_CORRECTED\_R19.json}; the original analyzer
+outputs remain available beside
+\texttt{ANALYSIS\_CORRECTION\_DISCLOSURE.md}.
+
+\begin{table}[t]
+\centering
+\caption{R19 implementation-to-specification correction record. No raw cell,
+scene, arm, endpoint, or gate changed.}
+\label{tab:s-correction}
+\small
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{@{}p{0.20\textwidth}p{0.32\textwidth}p{0.32\textwidth}@{}}
+\hline
+Component & Original analyzer & Spec-conformant correction \\
+\hline
+Crossing axis & $\log(\nu\rho)$ & $\log T_{\mathrm{opt}}$ \\
+Bootstrap & resampled family labels & six fixed strata with paired within-image seed resampling \\
+Monotone fit & nonstandard isotonic routine; censoring taxonomy omitted & equal-weight PAVA with the frozen censoring taxonomy \\
+\hline
+\end{tabular}
+\end{table}
+
+% ===========================================================================
 \section{Secondary-arm and certificate full results}
 \label{sec:s-secondary}
 \subsection{Ridge operating-point and time-to-quality}
@@ -406,7 +548,8 @@ and the realized dark-count/timing-error fractions are $0$ at every dwell. The
 ridge advantage over \textsc{SCAT32-060} grows with dwell (crossing positive
 near $\nu = 20$) and peaks near $\nu = 1000$--$2000$; the advantage over the
 $0.05$ safe reference is larger at fixed dwell. This fixed-dwell picture does
-Using the preregistered elapsed optical-time coordinate
+not by itself measure acquisition speed. Using the preregistered elapsed
+optical-time coordinate
 $T_{\mathrm{opt}}=M_{\mathrm{total}}\nu\tau$ and the frozen Q90/PAVA/censoring
 procedure, the corrected ridge time-to-quality endpoint passed: median
 $S_{\mathrm{gate}}=19.127043091646133$, family-stratified nested-bootstrap
@@ -472,6 +615,22 @@ near-optimality bound is asserted, and the counterexample cohort is reported
 as confirmatory descriptive evidence that scene-adapted geometry headroom
 survives the full deployed conditioning stack, with no categorical collapse or
 near-optimality claim.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{figs/fig_audit_supp.pdf}
+\caption{\textbf{Development-only geometry path and descriptive certificate
+status.} (a)~Along the descending exact-rounding path for the development glyph
+scene, every adaptive OED-DT fraction $\alpha>0$ breaches the dose band and,
+by $\alpha\approx0.06$, the spectral floor; the A-risk cap does not bind, so no
+feasible scene-adapted point exists on this development-only path.
+(b)~Terminal status of the 480 full-stack cells: 299 counterexample, 181
+numerically unresolved, and no certified cell. The analysis is descriptive and
+makes no near-optimality claim. (c)~The finite counterexample primal gaps per
+task dimension exceed the $10^{-2}$ near-optimality bar by about two orders of
+magnitude.}
+\label{fig:s-audit}
+\end{figure}
 
 \subsection{Context arms and design diagnostics}
 At the deployed operating point ($\rhobar = 0.60$, $\nu = 2000$) the frozen
