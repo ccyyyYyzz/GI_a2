@@ -29,3 +29,15 @@ points within one grid notch (spacing 1.157). nu=200 column consistent
 including the crossover correction (cv=0 peak 9.28~10.0 exact; cv=0.3
 measured 1.86 vs 1.77 predicted). The R14 law is confirmed
 out-of-sample at two dwells.
+
+## ZOOM-SWEEP REFINEMENT (registered mid-sweep, rows 3-4 pending)
+
+Continuous-peak (quadratic-interpolated) measurements, nu=2000, local
+150k run: cv=0.02 -> 9.645 (dev -7.3% vs R14 constant), cv=0.05 -> 5.154
+(-9.4%). EXPONENT test: ratio 1.872 vs (0.05/0.02)^(2/3)=1.842 -> -2/3
+confirmed at 1.6%. CONSTANT: effective jitter-cost multiplier
+k = 1/(c^2 rho*^2 (1+2 rho*)) = 1.32 / 1.33 (consistent) -> hypothesis
+k = 4/3 (lognormal higher-moment or derivation coefficient).
+PREREGISTERED before zoom rows 3-4 land: if k=4/3 holds, measured peaks
+should be cv=0.1 -> ~3.18 and cv=0.2 -> ~2.09 (= R14 values x 0.909).
+Colab 400k replication also pending.
