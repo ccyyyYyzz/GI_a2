@@ -79,21 +79,42 @@ and dwell-time-limited single-pixel systems.
 \end{abstract}
 
 \section{Introduction}
-% Para 1 — field-first (Chen style): SPI/ghost imaging + photon counting
-% context, applications (low-light, NIR/SWIR, LiDAR-adjacent, biological).
-\SPH{field-first paragraph}
+% Para 1 — field-first (Chen style).
+Single-pixel imaging (SPI) and computational ghost imaging reconstruct a
+scene from the temporal sequence of a single bucket detector's responses
+to structured illumination \cite{duarte2008singlepixel,shapiro2008computational,
+edgar2019principles}, and have proven particularly attractive where array
+sensors are unavailable or photon budgets are severe:\ low-light and
+photon-starved imaging, NIR/SWIR sensing, and imaging through scattering
+media such as turbid water \cite{hao2025photonlimited,hao2025randommedia,
+hao2025complexfield}. In the photon-starved regime the bucket detector is
+a photon-counting device --- a single-photon avalanche diode or
+photomultiplier --- and image quality is set by how many photons can be
+counted within the available acquisition time.
 
-% Para 2 — the pain point: the 5\% rule / low-flux convention; dead time as
-% the reason; time cost scales inversely with allowed flux; cite Liu-2021-type
-% pre-correction, Li-2023 RJMCMC, Jorgensen-2026 dead-time MLE as the
-% correction-centric line (defensive citations, round-4 list).
-\SPH{pain-point paragraph}
+% Para 2 — the pain point: the low-flux convention.
+Photon-counting detectors, however, are blind for a dead time $\tau$
+after each registered count. The established response is to operate at
+low flux --- keeping the dead-time duty $\rho = \lambda\tau$ at the few-percent
+level so that losses stay small and a linear correction suffices --- and to
+pay for it with acquisition time, since the count rate is then a small
+fraction of the detector's $1/\tau$ ceiling. A substantial literature
+instead corrects or models the distortion at higher rates:\ dead-time
+compensation and high-flux operation in single-photon lidar
+\cite{rapp2019deadtime,rapp2021highflux,gupta2019photonflooded,
+gupta2019asynchronous}, count-rate corrections in photon-counting
+imaging \cite{liu2021photoncounting}, and dead-time-aware estimation
+bounds \cite{jorgensen2026deadtime}. These works are
+correction-centric or timestamp-based; what remains unmapped is the
+operating question for the count-only bucket channel itself:\ at what
+flux, for which scenes, does raising the rate into the nonlinear regime
+actually help?
 
 % Para 3 — the ridge reframe. Safe novelty wording VERBATIM from round-4/5:
 Previous studies established count-rate-dependent CRLB degradation,
 task-specific optimal operating fluxes, and high-flux recovery using
-time-resolved dead-time models \SPH{cites: Wang 2011; B\'ecares--Bl\'azquez
-2012; Gupta et al.; Rapp \& Goyal; Jorgensen--Johnson 2026; 2025 dToF}. Here,
+time-resolved dead-time models \cite{wang2011pileup,becares2012deadtime,
+gupta2019photonflooded,rapp2019deadtime,jorgensen2026deadtime}. Here,
 we study a different information bottleneck: a finite exposure from which only
 the integrated nonparalyzable count is retained. For this count-only
 observation, we derive a principal finite-window Fisher-information ridge and
@@ -105,7 +126,7 @@ information loss.
 % (verbatim, frozen). Zhang/Liu/Han keys from refs.bib when built.
 Sparse illumination itself is not the claimed contribution of this work.
 Prior work has used sparse patterns to reduce detector count rates and
-alleviate pile-up \SPH{cites: Zhang et al.; Liu et al.; Han et al.}. Here,
+alleviate pile-up \cite{liu2019pileup,han2025sparsehadamard}. Here,
 instead, spatial occupancy is varied under equal mean detector load and
 equal incident dose, revealing a contrast-controlled boundary between
 multiplex-limited and photon-limited high-flux single-pixel imaging.
@@ -427,7 +448,7 @@ persists and grows with dwell:\ $+0.66$, $+1.84$, and $+2.32$~dB at
 $\nu = 20$, $200$, and $2000$, respectively [Fig.~\ref{fig:ladder}(f)],
 reported on the measured-photons axis $S_{\mathrm{det}}$ for direct
 comparison with single-photon underwater single-pixel experiments
-\SPH{cite: Hao 2025 APL Photonics}.
+\cite{hao2025photonlimited}.
 
 \subsection{Robustness to detector mismatch}
 \label{sec:mismatch}
@@ -463,17 +484,68 @@ degradation envelopes; descriptive audit distributions (supplement)}
 \end{figure*}
 
 \section{Discussion}
-% Honest scoping: simulation-only (compensated by detector-parameter ranges +
-% full mismatch map + open frozen benchmark); narrow novelty scope of the
-% ridge (round-4 wording); count-only vs timestamp architectures (Rapp);
-% MANDATORY round-8 limitation sentence (peak irradiance + bench validation);
-% "opens up an avenue" close (Chen genre). No separate limitations section
-% per Chen style, but the honesty lives inside these paragraphs.
-\SPH{discussion paragraphs — must include: (i) round-8 limitation sentence
-(sparse operation requires much higher peak irradiance; the operating map
-still requires optical-bench validation); (ii) R9-frozen patch-sparse
-paragraph (Q2 §3); (iii) R9-frozen adaptivity sentence (Q3 §3); (iv)
-R9-frozen optical-displacement collaboration paragraph (Q4 §5)}
+% No separate limitations section per Chen style; the honesty lives inside
+% these paragraphs. Frozen wordings: R9 Q5 §5 (position), round-8 §Q3
+% (peak irradiance), R9 Q2 §3 / Q3 §3 / Q4 §5 (future-work paragraphs,
+% verbatim).
+The scientific position established by the two studies is deliberately
+mixed. Dense illumination is multiplex-limited; sparse equal-load
+illumination produces large and statistically supported benefits for many,
+but not sufficiently many, preregistered scenes to pass the breadth gate.
+The scene response is nevertheless structured by bucket contrast, while
+the tested occupancy ladder exposes an independent conditioning penalty.
+Together with the exact count-information ridge and the passed fixed-dwell
+secondary, this constitutes an operating map:\ a computable answer to when
+high-flux operation is worth engaging, rather than a universal
+acceleration claim.
+
+Two scope boundaries must be stated plainly. First, all results are
+simulation-based; the exact renewal forward model, the detector-mismatch
+envelopes of Section~\ref{sec:mismatch}, and the openly released frozen
+benchmark compensate but do not substitute for optical-bench validation.
+Second, sparse operation at equal dose concentrates the same illumination
+into fewer pixels:\ the on-pixel peak irradiance rises as $n/k$
+($64\times$ at the gate-carrying occupancy), which spatial-light-modulator
+power budgets, laser-safety limits, and local photodamage constraints may
+cap before the detector does. The operating map therefore still requires
+optical-bench validation, and its sparse rungs are conditional on peak-power
+headroom.
+
+Three extensions follow directly from the failure structure. For
+uniformly scattered fixed-$k$ supports,
+$\Cu^{2} = \frac{n-k}{k(n-1)}\,(n\lVert x\rVert_2^{2} - 1)$, giving the
+observed $k^{-1/2}$ spatial-averaging law. A local support instead
+averages only the effective number of independent correlation cells
+within the patch and may therefore preserve modulation from scale-matched
+structure. Local, foveated and multiscale single-pixel patterns have
+previously been developed for resolution and measurement efficiency;
+optimizing their spatial scale for equal-load dead-time contrast is a
+distinct future design problem.
+
+The present results do not establish that adaptive illumination is
+necessary. Although dead-time nonlinearity makes the statistically
+efficient pattern scale scene-dependent, a strict adaptive advantage
+requires a specified scene class, resource constraint and loss. A natural
+follow-up is to seek a minimax or Chernoff-information separation between
+fixed multiscale illumination and a two-stage
+scale-estimation-plus-matched-pattern policy.
+
+A coherent extension would use a coarse complex-field estimate to
+synthesize an optical displacement that suppresses the predicted common
+mode before photon counting. Unlike electronic balanced subtraction, a
+dark-port receiver removes photons before dead-time loss. Exact nulling,
+however, gives quadratic residual sensitivity and demands spatial-mode
+matching and phase stability; the relevant operating variable is
+therefore an optimized displacement bias rather than maximal null depth.
+Testing this receiver first under static and then dynamic scattering is a
+natural optical-bench extension. More broadly, architectures that retain
+per-photon timing \cite{rapp2019deadtime,rapp2021highflux} occupy a different
+information regime than the count-only channel analyzed here; the map
+presented in this work is the count-only baseline against which such
+richer architectures can be costed. The proposed operating map, the
+deployment-legal reconstruction rule, and the frozen open benchmark open
+up an avenue for dwell-time-limited and photon-budget-limited
+single-pixel systems operating deep in the dead-time regime.
 
 \section*{Code and data availability}
 All simulation code, frozen preregistration documents, per-cell manifests,
@@ -482,8 +554,8 @@ and evidence bundles are available at \SPH{repo URL wording — user decision}.
 \section*{Acknowledgments}
 \SPH{funding/acknowledgments — user decision}
 
-% \bibliography{refs}
-\SPH{bibliography — refs.bib being built (defensive sets: round-4 digest Q2
-+ round-8 ruling Q2)}
+% opticajnl port will switch the style; unsrt for the working draft.
+\bibliographystyle{unsrt}
+\bibliography{refs}
 
 \end{document}
