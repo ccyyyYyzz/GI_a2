@@ -18,3 +18,14 @@ nu=200 run: crossover term 1/(6*200)=8.3e-4 shifts cv<=0.05 peaks left
 (cv=0.02: [8e-4+8.3e-4]^(-1/3) ~ 8.5; cv=0: (1200)^(1/3) ~ 10.6).
 
 The cv=0.02 and cv=0.2 rows are OUT-OF-SAMPLE tests of the R14 law.
+
+## VERDICT (appended after sweep completion, same session)
+
+nu=2000 measured peaks: cv 0/0.02/0.05/0.1/0.2/0.3 ->
+22.297 / 10.739 / 5.173 / 3.862 / 2.153 / 1.607.
+Both OUT-OF-SAMPLE predictions hit: cv=0.02 predicted 10.4 measured
+10.739 (3%); cv=0.2 predicted 2.30 measured 2.153 (6%). All in-sample
+points within one grid notch (spacing 1.157). nu=200 column consistent
+including the crossover correction (cv=0 peak 9.28~10.0 exact; cv=0.3
+measured 1.86 vs 1.77 predicted). The R14 law is confirmed
+out-of-sample at two dwells.
