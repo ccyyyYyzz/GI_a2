@@ -41,3 +41,14 @@ k = 4/3 (lognormal higher-moment or derivation coefficient).
 PREREGISTERED before zoom rows 3-4 land: if k=4/3 holds, measured peaks
 should be cv=0.1 -> ~3.18 and cv=0.2 -> ~2.09 (= R14 values x 0.909).
 Colab 400k replication also pending.
+
+## k=4/3 HYPOTHESIS REFUTED (row 3)
+
+cv=0.1 measured 3.752 (+7.2% vs R14 3.50; k-hypothesis predicted 3.18 -
+wrong sign entirely). Deviations -7.3/-9.4/+7.2% flip sign -> dominated
+by peak-location noise on flat tops at n_mc=150k, not a systematic
+constant. The n=2 "consistency" was overfit; registered and refuted on
+the record. Correct treatment: per-point peak-location error bars
+(bootstrap), then weighted log-log fit of rho* vs c across all points +
+the Colab 400k replication before any constant-level claim. The -2/3
+exponent claim from rows 1-2 ratio must also carry these error bars.
