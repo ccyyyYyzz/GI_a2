@@ -115,4 +115,10 @@ Fredrik Gr{\"o}nberg, Mats Danielsson, and Martin Sj{\"o}lin.
   nonzero pulse length.
 \newblock {\em Medical Physics}, 45(8):3800--3811, 2018.
 
+\bibitem{companion}
+{Companion manuscript (paper~2)}.
+\newblock Jitter-capped high-flux single-pixel imaging with global power
+  control, 2026.
+\newblock in submission; author block per paper~2 (user decision).
+
 \end{thebibliography}

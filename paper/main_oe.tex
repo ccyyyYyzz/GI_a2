@@ -241,8 +241,8 @@ Section~\ref{sec:mismatch}.
 \section{The finite-window count-information ridge}
 \label{sec:ridge}
 % Ported from paper/THEORY_SECTION_DRAFT.md X.1–X.4 (source of record:
-% docs/ROUND63_GPT_ROUND3_DIGEST.md §2). X.5 relation-to-prior-work stays
-% \SPH pending the Grönberg full-text sign-off (S5 hard item).
+% docs/ROUND63_GPT_ROUND3_DIGEST.md §2). X.5 relation-to-prior-work was
+% FILLED with the R12 full-text-certified wording (no open placeholder).
 \subsection{The missing-information identity}
 Let $I_N(\rho,\nu)$ denote the Fisher information of the single-frame count
 $N$ with respect to $\log\lambda$, and $J = I_N/\nu$ its per-slot
@@ -694,7 +694,9 @@ gate-carrying occupancy), so source power, spatial-light-modulator limits,
 laser safety, or local photodamage may bind before the detector does. Third,
 the operating map assumes a calibrated, stable detector dead time. Jitter,
 drift, correlation, or paralyzable recovery changes the count-information
-surface; deployment therefore requires recovery-time calibration and a
+surface --- the companion manuscript~\cite{companion} derives the
+hold-time-jitter cap on the optimal load and its global power-control
+deployment; deployment therefore requires recovery-time calibration and a
 detector-specific load limit. The reported sparse rungs are conditional on
 both peak-power headroom and that calibration.
 
