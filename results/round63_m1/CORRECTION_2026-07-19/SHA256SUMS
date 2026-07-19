@@ -1,0 +1,23 @@
+# SHA256SUMS -- R19 dated correction bundle (results/round63_m1/CORRECTION_2026-07-19/)
+# Generated: 2026-07-19
+# Immutable input: tag m1-freeze @ 6f00932.
+# Origin of files:
+#   scripts/m1_independent_recompute.py, scripts/m1_frozen_and_axis_only.py and
+#   outputs/m1_independent_output.json, outputs/m1_frozen_and_axis_only_output.json were copied
+#   byte-verbatim from results/round63_m1/AUDIT_2026-07-19/ (promoted from E:\GAN_FCC_WORK\.codex_tmp\);
+#   outputs/*_RERUN.json are the in-project reruns, also copied byte-verbatim from that audit dir.
+#   scripts/verify_r19_correction.py is a companion deterministic checker added to the bundle by the
+#   repo maintenance process (git user Codex); it is hashed here because it is part of the committed
+#   bundle, but it was not produced by this correction-authoring step.
+# Format: <sha256>  <path-relative-to-bundle-root>
+
+63f9efb9cde0e1215bf156a074c5136346e75cbdfc9de16ac6ed9f01ae0e7750  ANALYSIS_CORRECTION_DISCLOSURE.md
+6cbd1d50fcec85ab3fffe69fb33b88f81531578a319cce29f6b8f9e7371bc797  M1_VERDICTS_SPEC_CORRECTED_R19.json
+1e3f8062bef4015c3ef5c2c59164406f71b428aa52f518a262951bd8826d5c42  M1_VERDICTS_SPEC_CORRECTED_R19.md
+f9fd195f6a24ccd0f93b09125ac3efddef46d5fc17249d0c0797ad8a3a6b1cb0  outputs/m1_frozen_and_axis_only_output.json
+9eabdcc31942265a911d78d7c01ccb25f92d5417e91534bee0705e0e754ec654  outputs/m1_frozen_and_axis_only_output_RERUN.json
+57bb3ca8cdb0487b9950dbd1df483dac9d1ef21119d8d039f1b72dceb10cbbcf  outputs/m1_independent_output.json
+db7c1f7de526d88415869af59656384d571e0c1314dd96ef43fff0b675f1985d  outputs/m1_independent_output_RERUN.json
+e71637efef519b65ee8084675897a67ffe3a2f6c99a2001b7f69e8c199b783ad  scripts/m1_frozen_and_axis_only.py
+0901ddaa092cf037b42394488bdc1693cee51b4573e36fdc2fc5abe70f7ea3b2  scripts/m1_independent_recompute.py
+f8121625a728395632a5f10543d7f3a37c9ae75c7ab3164d7741596c0fbcf4df  scripts/verify_r19_correction.py
