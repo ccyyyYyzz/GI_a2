@@ -83,17 +83,25 @@ out-of-sample at both fresh points ($3\%$ and $6\%$), and a pooled two-run
 continuous-peak fit measures the jitter exponent at $-0.658$ ($1.3\%$ from
 $-2/3$). The design principle:\ hand-designed sparse and matched patterns
 are atoms of one concave experiment-design program whose per-atom
-information is the exact renewal kernel; the optimum is certified against a
-frozen structured dictionary under explicit load, dose, and peak
-constraints, and the program separates into two conjugate resource
-corners --- a photon-budgeted variable-load optimizer (\textsc{OED-DT}) and
-a time-budgeted ridge-tracking policy with a single global knob
-(\textsc{RIDGE-FIXED}). A preregistered simulation campaign (M1) with one
-gate, a common charged pre-scan, six arms, and a mandatory disclosure
-ledger tests the principle; all outcomes are reported as frozen
-\SPH{M1: primary/secondary verdicts and cross-arm numbers}. The result is
-an operating handbook:\ measure the jitter, let the law set the load, let
-the certificate set the patterns.
+information is the exact renewal kernel, and under uniform-dose safety that
+program yields a sharp doctrine. Unconstrained, information wants to
+concentrate load; a uniform $\pm5\%$ per-pixel dose constraint removes that
+degree of freedom and collapses the tested target-load-normalized adaptive
+design toward a balanced pattern family; the near-optimality of that
+balanced design (\textsc{SCAT32}) over an expanded gain-coupled dictionary
+is certified, not assumed, by a full dose-constrained dual bound; and the
+surviving useful control is the global detector operating point, one power
+knob that tracks the jitter-capped ridge. A preregistered simulation
+campaign (M1) tests the doctrine with a paired fixed-dwell ridge
+operating-point primary (\textsc{RIDGE-SCAT32} versus \textsc{SCAT32-060}, a
+power-for-time comparison), a nine-dwell time-to-quality secondary, a
+480-cell near-optimality certificate, five arms, and a mandatory disclosure
+ledger; the three verdicts are mutually non-rescuing and all outcomes are
+reported as frozen \SPH{M1: ridge operating-point, speed, and certificate
+verdicts with cross-arm numbers}. The result is an operating handbook:\
+measure the jitter, let the law set the load, let the certificate vouch for
+the balanced patterns, and tune the global operating point when time is the
+scarce resource.
 \end{abstract}
 
 % ===========================================================================
@@ -136,11 +144,13 @@ zero-jitter critical manifold of a two-parameter crossover
 refined Monte-Carlo sweep existed, were confirmed out-of-sample. One
 certified design principle answers the second:\ hand-designed patterns are
 atoms of a single concave experiment-design program over design measures
-with the exact renewal kernel, certified against a frozen dictionary, and
-the program separates cleanly into a photon-budgeted corner and a
-time-budgeted corner (Section~\ref{sec:design}). A preregistered campaign
-(M1) seals both with one gate and a mandatory disclosure ledger
-(Sections~\ref{sec:campaign}--\ref{sec:results}).
+with the exact renewal kernel, and under uniform-dose safety that program
+collapses toward a balanced pattern family whose near-optimality is
+certified against an expanded frozen dictionary, leaving the global detector
+operating point as the surviving useful control (Section~\ref{sec:design}).
+A preregistered campaign (M1) seals both with a ridge operating-point
+primary, a time-to-quality secondary, a near-optimality certificate, and a
+mandatory disclosure ledger (Sections~\ref{sec:campaign}--\ref{sec:results}).
 
 % ¶4 -- frozen novelty wording (R10 Q6, verbatim; no "first"). DO NOT REWORD.
 We formulate a local approximate-design framework for single-pixel
@@ -164,12 +174,14 @@ small-jitter coefficient $2^{-1/3}$, and the matched crossover prediction
 $(6\nu)^{1/3}(1+12\nu c_v^{2})^{-1/3}$, verified out-of-sample against
 preregistered predictions with a pooled jitter-exponent measurement of
 $-0.658$; (ii)~the certified design principle (Section~\ref{sec:design}):\
-one concave program with the exact renewal kernel, a conservative relaxed
-Kiefer--Wolfowitz certificate, frozen guards, and the photon-budget versus
-time-budget conjugacy as its operating doctrine; (iii)~a preregistered
-simulation campaign (M1) whose scenes, atoms, load grid, guards, endpoints,
-and single gate were frozen in an immutable commit before any confirmatory
-reconstruction existed, reported as frozen including any negative primary
+one concave program with the exact renewal kernel whose uniform-dose-constrained
+optimum collapses to a balanced pattern family, a full dose-constrained dual
+near-optimality certificate over an expanded gain-coupled dictionary, frozen
+guards, and the photon-budget versus time-budget conjugacy as its operating
+doctrine; (iii)~a preregistered simulation campaign (M1) whose scenes, atoms,
+load grid, guards, endpoints, and three mutually non-rescuing verdicts were
+frozen in an immutable commit before any confirmatory reconstruction existed,
+reported as frozen including any negative primary
 \SPH{M1: campaign outcomes}; and (iv)~an operating handbook for real
 detectors (Table~\ref{tab:handbook}), ending in a bench-testable
 prediction. All code, frozen preregistration documents, and per-cell
@@ -366,12 +378,25 @@ extension are given in the supplement.
 % ===========================================================================
 \section{The certified design principle}
 \label{sec:design}
-% Act 3a, ~1 page: master program; ONE paragraph certificate/guards +
-% Table 2 (full machinery -> supplement S3); conjugacy doctrine; one
-% paragraph each for the framework theorem (A -> supplement S1) and the
-% alignment proposition (C -> supplement S2).
+% Act 3a: master program; four-beat doctrine (R17 6.1) -- (1) information
+% wants concentration; (2) uniform-dose safety collapses it; (3) simplicity
+% certified over the EXPANDED class; (4) global operating point survives.
+% Full machinery -> supplement S3.
+The design principle is a doctrine in four movements. Unconstrained, the
+information geometry wants to concentrate illumination load on the brightest,
+most valuable directions (Section~\ref{sec:program}). A uniform per-pixel dose
+constraint removes that degree of freedom:\ within the frozen
+target-load-normalized atom family the adaptive concentration collapses toward
+the balanced design (Section~\ref{sec:collapse}). The simplicity of that
+balanced design is then certified rather than assumed, by a full
+dose-constrained dual bound over an expanded gain-coupled dictionary
+(Section~\ref{sec:certificate}). What survives as useful control is not
+spatial redistribution of dose but the global detector operating point, a
+single power knob that tracks the jitter-capped ridge
+(Sections~\ref{sec:conjugacy} and~\ref{sec:alignment}).
 
 \subsection{One concave program over design measures}
+\label{sec:program}
 Freeze the coarse pre-scan reconstruction at $\hat x$ and parameterize the
 locally estimable image perturbation as $x(\theta) = \hat x + B\theta$, with
 $B \in \mathbb{R}^{n\times r}$ spanning a declared $r$-dimensional estimable
@@ -409,34 +434,77 @@ the solve, with a fixed numerical ridge; conventions in the supplement). If
 every atom obeys a pointwise equal-load constraint the scalar kernel factors
 out and the geometry reduces to ordinary linear
 D-optimality~\cite{kiefer1959optimum}; genuine dead-time-aware design
-therefore requires controlled load variation.
+therefore requires controlled load variation. Unconstrained, this geometry
+rewards concentrating load on the brightest, highest-value directions --- the
+incentive whose fate under safety constraints the rest of this section traces.
 
-\subsection{Certificate and guards}
-\label{sec:guards}
-% ONE paragraph + Table 2; full machinery moved to supplement S3.
-The optimum is certified, not trusted. By concavity, optimality is
-equivalent to a bounded reduced sensitivity (the constrained
+\subsection{Uniform-dose safety and the collapse of adaptive concentration}
+\label{sec:collapse}
+The unconstrained incentive to concentrate load does not survive the safety
+constraints. The earlier variable-load adaptive arm (\textsc{OED-DT}) is
+therefore retired as a proposed or gated imaging method:\ its speed gate was
+withdrawn before the campaign freeze as infeasible, not recorded as a
+confirmatory failure. Within the frozen target-load-normalized atom family,
+under the incident-signal budget and the $\pm5\%$ per-pixel dose constraint,
+no nonzero adaptive mixture is admissible in the audited development cell ---
+the descending exact mixture scan terminates at zero adaptive rows,
+\texttt{ADAPTIVE\_COLLAPSE\_UNDER\_GUARDS}. This is development evidence about
+one parameterization, explicitly not a confirmatory theorem and not a claim
+that adaptivity is foreclosed:\ the target-load-normalized atomization fixes
+each pattern's amplitude to hit a predicted load, which on dim supports
+demands large physical amplitude and anti-aligns the dose vector with
+brightness, so the collapse could be an artifact of that anti-brightness
+parameterization. Removing that possibility is exactly why the near-optimality
+certificate below is run over an \emph{expanded} gain-coupled class. The
+descending scan survives only as a path-specific descriptive diagnostic
+(\texttt{PATH\_FEASIBLE\_ALPHA}, relative to the frozen row ordering, reported
+in the methods-development supplement), never an estimator, fallback, or
+certificate. The dose-relaxed and dose-constrained continuous OED solutions
+are retained as no-endpoint design diagnostics that illustrate the incentive
+and the safety frontier (Figure~\ref{fig:actiii}); neither is the proposed
+imaging method.
+
+\subsection{Simplicity certified, not assumed}
+\label{sec:certificate}
+% ONE paragraph + Table 2; full dose-constrained dual over D_cert in supp S3.
+The balanced design's near-optimality is certified, not trusted. By concavity,
+optimality is equivalent to a bounded reduced sensitivity (the constrained
 Kiefer--Wolfowitz / general equivalence condition for nonlinear
-models~\cite{kiefer1959optimum,white1973equivalence}); because a strict
-per-pixel-dose dual is not yet implemented, the frozen confirmatory
-quantity is a conservative additive budget-dual bound,
-\texttt{RELAXED\_KW\_UPPER\_BOUND}, required to satisfy
-$G_{\mathrm{rel}}/r \le 10^{-3}$ against an exact scan of the frozen
-dictionary --- a learned proposer may warm-start the search, but every
-frozen run finishes with the exact
-oracle~\cite{jaggi2013frankwolfe}. Continuous weights are rounded to an
-exact $972$-row design by efficient rounding and deterministic
+models~\cite{kiefer1959optimum,white1973equivalence}). The confirmatory
+quantity is the full dose-constrained dual upper bound $G_{\mathrm{full}}$ of
+the deployed balanced \textsc{SCAT32} design against the continuous optimum of
+the dose-safe class, evaluated over an \emph{expanded} dictionary
+$D_{\mathrm{cert}} = D_{\mathrm{load}}\cup D_{\mathrm{gain}}$:\ to the frozen
+target-load-normalized atoms $D_{\mathrm{load}}$ it adds a certificate-only
+gain-coupled family $D_{\mathrm{gain}}$ in which each base geometry is scaled
+by $\gamma\in\{0.2,0.5,1,2,5\}$ with its predicted load allowed to
+\emph{emerge} rather than be rescaled to a target, so fixed-flux
+self-water-filling and bounded per-pattern gain control lie inside the
+comparison class. The dual carries one incident-budget multiplier and every
+upper and lower per-pixel-dose multiplier, uses coverage-seeded column
+generation, and finishes with an exact scan over all of $D_{\mathrm{cert}}$;
+the frozen bar is $G_{\mathrm{full}}/r \le 10^{-2}$, certifying local
+D-efficiency of at least $\exp(-0.01) = 0.99005$ relative to the continuous
+optimum of the expanded dose-safe class (full dual in the supplement). A-risk
+and spectral constraints are deliberately excluded from the dual target class,
+so that the certified class is larger and the near-optimality statement
+stronger; the deployed \textsc{SCAT32} rows still satisfy every physical and
+conditioning disclosure separately. The frozen certificate wording is exact.
+Within the frozen nonnegative illumination dictionary, local pre-scan
+linearization, incident budget, and $\pm5\%$ per-pixel dose constraint, the
+balanced SCAT32 design was tested against a full constrained dual upper bound.
+Global ridge tracking was evaluated separately as the time-limited,
+power-available control. Continuous weights are rounded to an exact $972$-row
+design by efficient rounding and deterministic
 exchange~\cite{pukelsheim1992rounding,nikolov2022volume,sagnol2015exact},
-admissible only at exact D-efficiency $\ge 0.95$. Every remaining guard is
-a frozen constraint, not a tunable proxy (Table~\ref{tab:machinery}); any
-violation is a declared failure state with the fixed comparator as the
-predeclared fallback, and no threshold is retuned after freeze. The full
-guard mathematics, the dictionary listing, and the budget accounting are in
-the supplement.
+admissible only at exact D-efficiency $\ge 0.95$. Every remaining guard is a
+frozen constraint, not a tunable proxy (Table~\ref{tab:machinery}); the full
+guard mathematics, the expanded dictionary listing, and the budget accounting
+are in the supplement.
 
 \begin{table}[t]
 \centering
-\caption{The frozen design machinery at a glance (R10/R11/R13; full
+\caption{The frozen design machinery at a glance (R10/R11/R13/R17; full
 statements in the supplement).}
 \label{tab:machinery}
 \footnotesize
@@ -447,7 +515,9 @@ Element & Frozen rule \\
 \hline
 Dictionary & all cyclic translates of the 13 R10 support families
   (scattered $k=16/32$, solid $4\times4$, Lblob, bars, compact-32, ring);
-  weight powers $p\in\{0,1\}$ only \\
+  weight powers $p\in\{0,1\}$; the certificate scan adds gain-coupled copies
+  $a_{g,\gamma}=\gamma a_g^{\mathrm{base}}$, $\gamma\in\{0.2,0.5,1,2,5\}$,
+  emergent load ($D_{\mathrm{cert}}=D_{\mathrm{load}}\cup D_{\mathrm{gain}}$) \\
 Budget & incident-signal inequality $\int\rho_s\,d\xi \le 0.60$; detected
   counts dual-reported, never the sole budget \\
 Peak & shape:\ $w_j\in[\tfrac14,4]$, $k\ge16$; physical:\
@@ -455,12 +525,13 @@ Peak & shape:\ $w_j\in[\tfrac14,4]$, $k\ge16$; physical:\
 Dose & per-pixel mean exposure within $\pm5\%$ of image mean, re-verified
   post-rounding \\
 Floors & $V_{\mathrm{OED}}\succeq0.5\,V_{\text{FIXED}^\ast}$;
-  $\mathrm{tr}(V^{-1})\le1.05\,\mathrm{tr}(V_{\text{FIXED}^\ast}^{-1})$ \\
+  $\mathrm{tr}(V^{-1})\le1.05\,\mathrm{tr}(V_{\text{FIXED}^\ast}^{-1})$
+  (disclosed separately; not in the dual target class) \\
 Kernel trust & exact-PMF certification; $J_{\mathrm{mean}}/\Jex\ge0.90$;
   RQL log-load bias $\le0.05$; $p_{\mathrm{ceil}}\le0.05$ per atom,
   $\le0.01$ design-weighted \\
-Certificate & $G_{\mathrm{rel}}/r\le10^{-3}$ (relaxed KW, exact dictionary
-  scan) \\
+Certificate & $G_{\mathrm{full}}/r\le10^{-2}$ (full dose-constrained dual,
+  expanded $D_{\mathrm{cert}}$ scan; local D-eff.\ $\ge0.99005$) \\
 Rounding & exact $972$-row design, $\mathrm{Eff}_D\ge0.95$ \\
 \hline
 \end{tabular}
@@ -469,22 +540,23 @@ Rounding & exact $972$-row design, $\mathrm{Eff}_D\ge0.95$ \\
 \subsection{The conjugacy doctrine: photon budget versus time budget}
 \label{sec:conjugacy}
 % Frozen R11/R13 §8(f) wording preserved verbatim. The operating doctrine.
-The design admits two conjugate resource corners of the same dead-time
-information map. The gate-carrying \textsc{OED-DT} arm holds the original
-incident-signal resource as a hard \emph{inequality},
+The doctrine has two conjugate resource corners of the same dead-time
+information map. In the \emph{photon-budgeted} corner the near-optimality
+certificate holds the incident-signal resource as a hard \emph{inequality},
 \begin{equation}
   \int \rho_s(a)\,d\xi(a) \le 0.60,
   \label{eq:budget}
 \end{equation}
-so a subset of high-value atoms may enter the ridge zone only if compensated
-by low-load or omitted atoms (R11~\S4); detected counts are dual-reported but
-are never the sole fairness budget, because
+so a design measure may push a subset of high-value atoms into the ridge zone
+only if compensated by low-load or omitted atoms (R11~\S4); detected counts
+are dual-reported but are never the sole fairness budget, because
 $\mathbb{E}[N\mid\rho]\simeq\nu\rho/(1+\rho)$ has vanishing marginal cost at
-high load. The no-gate \textsc{RIDGE-FIXED} arm instead fixes the support and
-applies one global multiplier per dwell, calibrated on the pre-scan estimate
-to mean load $\rhoR(\nu)$, followed by a single global safety clip; it uses a
-deliberately larger incident budget and is therefore descriptive
-(R11~\S2). The exact production ridge is
+high load. The \emph{time-budgeted} corner is the no-gate ridge-tracking
+policy \textsc{RIDGE-SCAT32}:\ it fixes the balanced support and applies one
+global multiplier per dwell, calibrated on the pre-scan estimate to mean load
+$\rhoR(\nu)$, followed by a single global safety clip, spending a deliberately
+larger incident budget for time rather than photons (R11~\S2). The exact
+production ridge is
 $\rhoR(\nu) = \min\arg\max_{\rho\in\mathcal{R}_{\mathrm{adm}}(\nu)}
 \Jex(\rho,\nu)$ over the admissible set
 $\mathcal{R}_{\mathrm{adm}}(\nu) = \{0<\rho\le 24:\ p_{\mathrm{ceil}}\le 0.01,\
@@ -517,7 +589,7 @@ optima \emph{motivate} these coordinates and are not themselves claimed as
 continuous KKT theorems --- they were selected from discrete grids and
 judged by image endpoints, not by the master $\log\det$ objective.
 
-\subsection{Why one global knob suffices for RIDGE-FIXED}
+\subsection{Why one global knob suffices for RIDGE-SCAT32}
 \label{sec:alignment}
 % Candidate C demoted to one paragraph; full proposition, power-law reading,
 % and failure modes in supplement S2. R14 frozen wording preserved.
@@ -530,14 +602,18 @@ projected KKT residual --- not $\Cu$ alone --- and outside that condition,
 variable-load OED can improve without any universal bound on the fixed-flux
 approximation ratio. On nonnegative sparse-support scenes the
 source-induced load ordering naturally tracks directional value, which is
-why \textsc{RIDGE-FIXED} needs only a single global multiplier, and why the
+why \textsc{RIDGE-SCAT32} needs only a single global multiplier, and why the
 uniform per-pattern servo --- which loses by up to $\sim7$~dB in the
 companion's dev evidence~\cite{companion} --- fails by erasing exactly that
 alignment. With random holds, $J'$ vanishes at the jitter cap and is
 negative beyond it, so fixed flux can overdrive the brightest directions
 and explicit gain control becomes necessary. The full proposition, its
 residual near-optimality bound, and its failure modes are in the
-supplement.
+supplement. Naive per-pattern load equalization was thus refuted (R11) for
+destroying this brightness--information alignment, while the dose-safe
+analysis of Section~\ref{sec:collapse} shows the opposite extreme ---
+adaptive concentration --- conflicting with strict dose and conditioning
+safety; the balanced global-flux policy is the robust middle.
 
 % ===========================================================================
 \section{Preregistered campaign (M1)}
@@ -578,124 +654,175 @@ $4$ quadrant rows (amplitude $4$), so every pixel receives cumulative
 amplitude $32 + 16 + 4 = 52$ and the row-mean pattern is exactly the all-ones
 vector; the mean pre-scan load then equals the declared global load for any
 sum-normalized scene, with no $\hat x$-dependent row scaling (R13~\S2). All
-$52$ counts enter every arm's final reconstruction; only adaptive arms use the
-pre-scan to choose subsequent patterns. Fixed arms run $972$ main patterns;
-every arm totals exactly $1024$ physical exposures.
+$52$ counts enter every arm's final reconstruction; \textsc{RIDGE-SCAT32}
+additionally uses the pre-scan estimate to calibrate its single global source
+multiplier, with no per-pattern servo. Every arm runs the same $972$
+\textsc{SCAT32} main patterns and totals exactly $1024$ physical exposures.
 
-\paragraph{Arms.}
-Table~\ref{tab:arms} lists the six arms. Only \textsc{OED-DT} carries a
-confirmatory gate; the others are ablations, baselines, or the descriptive
-ridge-tracking demonstration. The R13 freeze audit additionally mandates
-\textsc{MATCH1} as a no-gate arm and a committed selection of the global fixed
-comparator $\text{FIXED}^\ast$ from $\{\textsc{SCAT32}, \textsc{LBLOB16},
-\textsc{MATCH1}\}$ by the frozen development rule (median fixed-dwell
-radiometric PSNR at $(\rhobar,\nu) = (0.60, 2000)$, averaged over development
-seeds, evaluated in the order
-\textsc{SCAT32}$\rightarrow$\textsc{LBLOB16}$\rightarrow$\textsc{MATCH1} with
-ties resolved within $0.05$~dB). The committed record is
-$\text{FIXED}^\ast = \textsc{SCAT32}$, with development scores $17.498$,
-$11.908$, and $9.181$~dB for \textsc{SCAT32}, \textsc{LBLOB16}, and
-\textsc{MATCH1}, respectively; no tie occurred. An earlier
+\paragraph{Arms and the deployed design.}
+The deployed spatial design is the balanced exact $972$-row \textsc{SCAT32}
+multiset, identical across every operating-point comparison; the common
+$52$-row pre-scan is charged to each arm. Table~\ref{tab:arms} lists the five
+arms. Three share this design and differ only in source power:\
+\textsc{SCAT32-SAFE} at global mean load $0.05$, \textsc{SCAT32-060} at
+$0.60$, and \textsc{RIDGE-SCAT32}, which applies one global multiplier per
+dwell (calibrated on the pre-scan to $\rhoR(\nu)$, then the frozen global
+clip). Two frozen fixed baselines, \textsc{SCAT16} and \textsc{LBLOB16} at
+load $0.60$, are retained as descriptive context columns (no gate), so the
+cross-arm occupancy-ladder comparison keeps its reference columns. The $k=32$
+occupancy rung of the deployed design is fixed by the frozen development rule
+(median fixed-dwell radiometric PSNR at $(\rhobar,\nu) = (0.60, 2000)$,
+averaged over development seeds), which selected \textsc{SCAT32} over the
+clustered \textsc{LBLOB16} and a matched baseline with development scores
+$17.498$, $11.908$, and $9.181$~dB respectively; an earlier
 information-score-based selection was invalidated by external audit (R15) for
-departing from the frozen rule, and the selection was re-run under the original
-R10 prescription. The frozen radiometric-PSNR rule independently selects the
-$k=32$ occupancy rung, consistent with the companion's Study~2 fixed-dwell
-optimum at the same rung~\cite{companion}. Reconstruction (RQL with the frozen
-analytic $\lambda_{\mathrm{TV}}$ rule and pooled initialization) is identical
-across arms; the primary comparison is each arm's own fast curve against the
-common safe ($\rhobar = 0.05$) reference of its own pattern set.
+departing from the frozen rule and was re-run under the original R10
+prescription. The rung is consistent with the companion's Study~2 fixed-dwell
+optimum~\cite{companion}. Reconstruction (RQL with the frozen analytic
+$\lambda_{\mathrm{TV}}$ rule and pooled initialization) is identical across
+arms.
 
 \begin{table}[t]
 \centering
-\caption{The six M1 arms. Only \textsc{OED-DT} carries the confirmatory gate;
-the R13 freeze audit additionally requires \textsc{MATCH1} and a committed
-$\text{FIXED}^\ast$ selection (see text).}
+\caption{The five M1 arms over the common balanced \textsc{SCAT32} design.
+The paired \textsc{RIDGE-SCAT32} vs.\ \textsc{SCAT32-060} comparison carries
+the primary gate and \textsc{RIDGE-SCAT32} vs.\ \textsc{SCAT32-SAFE} the speed
+gate; the near-optimality certificate (\texttt{DOSE\_SAFE\_CERT\_PASS})
+applies to the deployed design itself. \textsc{SCAT16} and \textsc{LBLOB16}
+are descriptive context.}
 \label{tab:arms}
 \small
 \setlength{\tabcolsep}{4pt}
-\begin{tabular}{@{}lp{4.0cm}l@{}}
+\begin{tabular}{@{}lp{3.7cm}l@{}}
 \hline
 Arm & Role & Gate \\
 \hline
-\textsc{OED-DT} & variable-load exact-kernel D-optimal design (v3 solver;
-  relaxed-KW certificate vs.\ the frozen dictionary) & primary \\
-\textsc{OED-EQLOAD} & same optimizer, all atoms at $\rhobar$ (kernel
-  ablation) & none \\
-\textsc{SCAT16} & frozen scattered $k=16$ (companion bridge) & none \\
-\textsc{SCAT32} & best ladder rung by fixed-dwell median & none \\
-\textsc{LBLOB16} & committed clustered support (strongest fixed baseline;
-  spectral-floor reference) & none \\
-\textsc{RIDGE-FIXED} & dwell-dependent ridge-tracking policy
-  (time-budget demonstration) & none \\
+\textsc{SCAT32-SAFE} & balanced design at load $0.05$ (safe reference; speed
+  baseline) & speed base \\
+\textsc{SCAT32-060} & balanced design at load $0.60$ (primary comparator) &
+  primary comp. \\
+\textsc{RIDGE-SCAT32} & one global multiplier per dwell to $\rhoR(\nu)$ +
+  global clip (ridge policy) & primary, speed \\
+\textsc{SCAT16} & frozen scattered $k=16$ at load $0.60$ (companion bridge) &
+  none \\
+\textsc{LBLOB16} & committed clustered support at load $0.60$
+  (spectral-floor reference) & none \\
 \hline
 \end{tabular}
 \end{table}
 
-\paragraph{Endpoints and gate.}
-The frozen $Q_{90}$ time-to-quality machinery transfers verbatim:\ seed-mean
-radiometric PSNR, equal-weight PAVA isotonic curves, a $0.50$~dB
-safe-range informativeness floor, the frozen censoring taxonomy, and a
-$10{,}000$-replicate nested family-stratified bootstrap. The single primary
-gate applies to \textsc{OED-DT} only (\texttt{METHOD\_SPEED\_PASS}):\ median
-$S_{\mathrm{gate}} \ge 3$, bootstrap lower bound $> 1$, and $\ge 18/24$ scenes
-with $S_j > 1$. Two secondaries cannot rescue a failed primary:\ a
-fixed-dwell safe-versus-fast gain (\texttt{METHOD\_FIXED\_DWELL\_PASS};
-median $\ge 1$~dB at the terminal dwell, lower bound $> 0$, $\ge 18/24$
-positive) and a design gain of \textsc{OED-DT} over $\text{FIXED}^\ast$ at the
-fast terminal dwell (\texttt{METHOD\_DESIGN\_PASS}; median $\ge 0.50$~dB,
-family-stratified lower bound $> 0$, $\ge 18/24$ positive).
+\paragraph{Endpoints and gates.}
+Three preregistered, mutually non-rescuing verdicts govern the campaign. The
+\emph{primary} is a paired fixed-dwell ridge operating-point test
+(\texttt{RIDGE\_OPERATING\_PASS}). At terminal dwell $\nu = 2000$, for each
+confirmatory image $j$ define
+$\Delta Q^{\mathrm{ridge}}_j =
+\overline{\mathrm{PSNR}}_{\mathrm{rad}}(\textsc{RIDGE-SCAT32},\nu{=}2000,j) -
+\overline{\mathrm{PSNR}}_{\mathrm{rad}}(\textsc{SCAT32-060},\nu{=}2000,j)$, the
+mean over the five frozen seeds, with identical pre-scan, identical $972$-row
+\textsc{SCAT32} multiset, paired pattern/noise seeds, the same reconstruction
+path, and the same optical dwell --- only the single global main-acquisition
+multiplier differs. PASS iff
+$\operatorname{median}_j \Delta Q^{\mathrm{ridge}}_j \ge 1.0$~dB, the $2.5\%$
+bootstrap lower bound on the median exceeds $0$, and
+$\#\{j:\Delta Q^{\mathrm{ridge}}_j > 0\} \ge 18/24$, using the existing
+$10{,}000$-replicate nested family-stratified bootstrap; any numerical or guard
+failure stays in the intention-to-treat cohort and counts as nonpositive. This
+is a fixed-dwell, power-for-time operating-point test. It is not an
+equal-photon-budget or photon-efficiency comparison. The \emph{secondary} is
+the nine-dwell $Q_{90}$ time-to-quality test (\texttt{RIDGE\_SPEED\_PASS}):\
+\textsc{SCAT32-SAFE} at load $0.05$ against the dwell-dependent
+\textsc{RIDGE-SCAT32} policy, using the frozen PAVA/censoring machinery (the
+seed-mean radiometric PSNR, equal-weight PAVA isotonic curves, $0.50$~dB
+safe-range informativeness floor, and censoring taxonomy transfer verbatim),
+with median $S_{\mathrm{gate}} \ge 3$, bootstrap lower bound $> 1$, and
+$\ge 18/24$ images with $S_{\mathrm{gate}} > 1$. The \emph{confirmatory
+structural secondary} is the near-optimality certificate
+(\texttt{DOSE\_SAFE\_CERT\_PASS}, Section~\ref{sec:certificate}):\ PASS iff
+every one of the $24\times5\times2\times2 = 480$ certificate cells
+($\nu\in\{200,2000\}$, $b\in\{0.05,0.60\}$) is primal-feasible, numerically
+certified, and satisfies $G_{\mathrm{full}}/r \le 10^{-2}$. No verdict can
+rescue another.
 
 \paragraph{Disclosure ledger.}
 Every cell discloses incident and detected photons (predicted and realized),
-dose ratios, source/peak-irradiance ratio, the load percentiles $\rho_5$,
-$\rho_{50}$, $\rho_{95}$, $\rho_{\max}$, predicted and realized ceiling
-fractions, and mean $\Jex$; designed cells add the continuous and exact
-$\log\det$ objectives, the exact D-efficiency, A-risk, spectral floor, and the
-relaxed-KW gap. The full nine-dwell kernel/ridge certification table is frozen
-before any confirmatory scene is opened.
+the incident-dose and detected-count ratios, source/peak-irradiance ratio, the
+achieved mean load and its quantiles $\rho_5$, $\rho_{50}$, $\rho_{95}$,
+$\rho_{\max}$, the physical peak, predicted and realized ceiling fractions, any
+\texttt{RIDGE\_GUARD\_CLIPPED} flag, and mean $\Jex$; certificate cells add the
+full dose-constrained dual $G_{\mathrm{full}}$, the exact D-efficiency, the
+dual/complementarity report, and the \texttt{MU\_CAP\_ACTIVE} disclosure. The
+full nine-dwell kernel/ridge certification table and the SHA256 of
+$D_{\mathrm{cert}} = D_{\mathrm{load}}\cup D_{\mathrm{gain}}$ are frozen before
+any confirmatory scene is opened.
 
 % ===========================================================================
 \section{Results}
 \label{sec:results}
-% Skeleton: primary + two key secondaries + one combined secondary-arm
-% subsection (full tables in supplement S5) + cross-arm table. Numbers fill
-% from the M1 campaign after tag m1-freeze.
-\subsection{Primary: OED-DT time-to-quality}
-\SPH{M1: METHOD\_SPEED\_PASS verdict --- median $S_{\mathrm{gate}}$, bootstrap
-lower bound, count of scenes with $S_j>1$, and the frozen PASS/FAIL call.}
+% Skeleton: ridge operating-point primary + speed secondary + certificate
+% + one combined context/diagnostics subsection + Act III figure + cross-arm
+% table. All numbers \SPH; fill from the M1 campaign after tag m1-freeze.
+\subsection{Primary: ridge operating-point gain}
+\SPH{M1: RIDGE\_OPERATING\_PASS --- median $\Delta Q^{\mathrm{ridge}}$ (dB) at
+$\nu=2000$, $2.5\%$ bootstrap lower bound, count of scenes with
+$\Delta Q^{\mathrm{ridge}}>0$, and the frozen PASS/FAIL call, with the
+mandatory incident-dose ratio, detected-count ratio, achieved mean load and
+quantiles, physical peak, ceiling fraction, and \texttt{RIDGE\_GUARD\_CLIPPED}
+tally.} This is a fixed-dwell, power-for-time operating-point test. It is not
+an equal-photon-budget or photon-efficiency comparison.
 
-\subsection{Design gain: OED-DT vs.\ $\text{FIXED}^\ast$}
-\SPH{M1: METHOD\_DESIGN\_PASS --- median design gain (dB) at the fast terminal
-dwell, family-stratified lower bound, count positive.}
+\subsection{Secondary: ridge time-to-quality}
+\SPH{M1: RIDGE\_SPEED\_PASS --- median $S_{\mathrm{gate}}$, bootstrap lower
+bound, count of scenes with $S_{\mathrm{gate}}>1$, and PASS/FAIL, for
+\textsc{SCAT32-SAFE} against the dwell-dependent \textsc{RIDGE-SCAT32} policy.}
 
-\subsection{Fixed-dwell safe-versus-fast gain}
-\SPH{M1: METHOD\_FIXED\_DWELL\_PASS --- median terminal-dwell gain (dB),
-count positive, bootstrap lower bound, per-arm ladder.}
+\subsection{Confirmatory certificate: near-optimality of the balanced design}
+\SPH{M1: DOSE\_SAFE\_CERT\_PASS --- distribution of $G_{\mathrm{full}}/r$
+across the 480 certificate cells, the fraction certified at $\le10^{-2}$,
+primal feasibility, and the frozen PASS/FAIL call.}
 
-\subsection{Secondary arms and design diagnostics}
-\SPH{M1: RIDGE-FIXED operating-point demonstration, OED-EQLOAD kernel
-ablation, and per-cell certificate/rounding diagnostics --- summary here;
-full tables in the supplement.}
+\subsection{Context arms and design diagnostics}
+\SPH{M1: \textsc{SCAT16}/\textsc{LBLOB16} context ladder, the dose-relaxed and
+dose-constrained OED design diagnostics feeding Figure~\ref{fig:actiii}, and
+the development-cell guard-versus-$\alpha$ collapse --- summary here; full
+tables in the supplement.}
+
+\begin{figure*}[t]
+\centering
+\fbox{\parbox[c][4.0cm][c]{0.95\textwidth}{\centering
+\SPH{M1 (Act III, four panels):\ (a)~dose deviation, A-risk, and spectral
+guard versus path-specific $\alpha$ on a DEV representative, labeled
+development evidence; (b)~confirmatory $G_{\mathrm{full}}/r$ distributions over
+the expanded dose-safe class (480 cells); (c)~ridge-versus-$0.60$ fixed-dwell
+reconstructions and per-scene quality gains at $\nu=2000$; (d)~a schematic
+distinguishing the photon-budgeted and time-limited resource corners.}}}
+\caption{Act III:\ uniform-dose safety collapses adaptive concentration
+(development evidence), the balanced design's near-optimality is certified
+over the expanded class, and global operating-point control survives. Panels
+fill from the frozen M1 analyzer after tag \texttt{m1-freeze}.}
+\label{fig:actiii}
+\end{figure*}
 
 \begin{table*}[t]
 \centering
-\caption{Cross-arm summary (descriptive; no new gates beyond the
-\textsc{OED-DT} primary). All entries fill from the frozen M1 analyzer after
-tag \texttt{m1-freeze}.}
+\caption{Cross-arm summary (descriptive; the gates are the
+\textsc{RIDGE-SCAT32} primary and speed comparisons and the deployed-design
+certificate). All entries fill from the frozen M1 analyzer after tag
+\texttt{m1-freeze}; ``---'' marks a paired metric that does not apply to a
+reference or context arm.}
 \label{tab:crossarm}
 \footnotesize
 \setlength{\tabcolsep}{5pt}
-\begin{tabular}{@{}lccccccc@{}}
+\begin{tabular}{@{}llccccc@{}}
 \hline
-Arm & median $S_{\mathrm{gate}}$ & design (dB) & fixed-dwell (dB)
-& mean $\Jex$ & incident budget & ceiling frac. & verdict \\
+Arm & Role & achieved $\rhobar$ & inc.-dose ratio & ceiling frac.
+& mean $\Jex$ & $\Delta Q^{\mathrm{ridge}}$\,/\,$S_{\mathrm{gate}}$ \\
 \hline
-\textsc{OED-DT}      & \SPH{M1} & \SPH{M1} & \SPH{M1} & \SPH{M1} & \SPH{M1} & \SPH{M1} & \SPH{M1} \\
-\textsc{OED-EQLOAD}  & \SPH{M1} & \SPH{M1} & \SPH{M1} & \SPH{M1} & \SPH{M1} & \SPH{M1} & \SPH{M1} \\
-\textsc{SCAT16}      & \SPH{M1} & \SPH{M1} & \SPH{M1} & \SPH{M1} & \SPH{M1} & \SPH{M1} & \SPH{M1} \\
-\textsc{SCAT32}      & \SPH{M1} & \SPH{M1} & \SPH{M1} & \SPH{M1} & \SPH{M1} & \SPH{M1} & \SPH{M1} \\
-\textsc{LBLOB16}     & \SPH{M1} & \SPH{M1} & \SPH{M1} & \SPH{M1} & \SPH{M1} & \SPH{M1} & \SPH{M1} \\
-\textsc{RIDGE-FIXED} & \SPH{M1} & \SPH{M1} & \SPH{M1} & \SPH{M1} & \SPH{M1} & \SPH{M1} & \SPH{M1} \\
+\textsc{SCAT32-SAFE}  & safe ref.\ / speed base & \SPH{M1} & \SPH{M1} & \SPH{M1} & \SPH{M1} & --- \\
+\textsc{SCAT32-060}   & primary comparator      & \SPH{M1} & \SPH{M1} & \SPH{M1} & \SPH{M1} & --- \\
+\textsc{RIDGE-SCAT32} & ridge policy (gated)    & \SPH{M1} & \SPH{M1} & \SPH{M1} & \SPH{M1} & \SPH{M1} \\
+\textsc{SCAT16}       & context                 & \SPH{M1} & \SPH{M1} & \SPH{M1} & \SPH{M1} & --- \\
+\textsc{LBLOB16}      & context                 & \SPH{M1} & \SPH{M1} & \SPH{M1} & \SPH{M1} & --- \\
 \hline
 \end{tabular}
 \end{table*}
@@ -705,15 +832,33 @@ Arm & median $S_{\mathrm{gate}}$ & design (dB) & fixed-dwell (dB)
 \label{sec:discussion}
 % No separate limitations section (companion house style); honesty inside the
 % paragraphs. Ends on the bench-testable prediction.
-The two arms expose conjugate resource regimes of the same dead-time
+The campaign exposes two conjugate resource regimes of the same dead-time
 information map. Under a linear incident-photon budget the per-photon
 efficiency $\Jex(\rho,\nu)/\rho$ falls monotonically, so a budget-constrained
 design rations photons onto lower loads and \emph{avoids} the ridge; the
 ridge belongs to time-constrained operation, where power is available and the
 only scarcity is dwell. Reading the flux ridge and the design allocation as
 one program clarifies that the large fixed-dwell gains of the companion are an
-operating-point effect, not evidence that a variable-load optimizer must spend
-into the ridge.
+operating-point effect, not evidence that a design must spatially redistribute
+dose into the ridge.
+
+Contingent on the frozen verdicts (\SPH{M1: RIDGE\_OPERATING\_PASS,
+RIDGE\_SPEED\_PASS, and DOSE\_SAFE\_CERT\_PASS calls}), the campaign is
+preregistered to license the governing ruling's frozen conclusions. Under the
+declared dose-safety constraints, per-pattern load adaptation provided no
+certified material D-information advantage over the balanced design at the
+preregistered anchor dwells. The useful surviving control was the global
+operating point rather than spatial redistribution of incident dose. This does
+not assert that adaptivity is universally foreclosed or that the balanced
+design is optimal over all physical patterns:\ the collapse is a structural
+statement about the tested target-load-normalized family under strict
+uniform-dose safety, and the certificate is stated relative to the frozen
+expanded dictionary, the local pre-scan estimate, and the declared resource
+model. The line's thesis, in the frozen wording of the governing ruling, is
+this. Strict uniform-dose safety collapses the tested adaptive design space
+toward a balanced pattern family, for which near-optimality can be certified;
+high-flux benefit is then recovered by tuning the global detector operating
+point.
 
 The jitter-capped ridge is the practical caution. The cube-root ridge is a
 property of the zero-jitter critical manifold; the moment a detector's hold
@@ -753,10 +898,10 @@ Step & Rule \\
 3.\ Check engagement & common $52$-pattern pre-scan $\to$ measured $\Cu$;
   $\Gamma = \Cu\sqrt{\nu\rho/(1+\rho)} \gtrsim 1$ marks the photon-limited
   regime \\
-4.\ Pick patterns & photon-budgeted:\ certified \textsc{OED-DT} design
-  (relaxed-KW certificate vs.\ the frozen dictionary); time-budgeted:\
-  \textsc{RIDGE-FIXED} --- one global multiplier to $\rhoR(\nu)$
-  (Section~\ref{sec:alignment}) \\
+4.\ Pick patterns & photon-budgeted:\ the balanced \textsc{SCAT32} design,
+  certified near-optimal over the expanded dose-safe class
+  ($G_{\mathrm{full}}/r\le10^{-2}$); time-budgeted:\ \textsc{RIDGE-SCAT32} ---
+  one global multiplier to $\rhoR(\nu)$ (Section~\ref{sec:alignment}) \\
 5.\ Doctrine & photon-constrained $\to$ stay below the ridge
   ($\Jex/\rho$ falls); time-constrained $\to$ track the jitter-capped
   ridge \\
@@ -786,11 +931,16 @@ experiment for the line.
 % ===========================================================================
 \section{Reproducibility}
 \label{sec:repro}
-The design formulation, guards, and campaign follow four frozen rulings:\ the
+The design formulation, guards, and campaign follow five frozen rulings:\ the
 dead-time OED formulation and equivalence certificate (R10), the ridge-zone
 load architecture and incident-budget conjugacy (R11), the M1 freeze audit
-(R13), and the unification ruling (R14, issue ``R14 ruling: unification
-architecture''), whose theorem hierarchy Section~\ref{sec:theory} follows.
+(R13), the unification ruling (R14, issue ``R14 ruling: unification
+architecture''), whose theorem hierarchy Section~\ref{sec:theory} follows, and
+the safety-constrained refreeze (R17, issue ``R17 ruling:
+safety-constrained OED collapse and coherent refreeze''), which retired the
+adaptive imaging arm, re-architected the campaign around the ridge
+operating-point primary and the expanded-class near-optimality certificate,
+and froze the manuscript claim discipline of Section~\ref{sec:design}.
 Exact-law peak predictions for the refined jitter sweep, including the two
 out-of-sample rows, were registered before the sweep completed
 (\texttt{docs/R14\_PREREGISTERED\_PREDICTIONS.md}, commit \texttt{8a627bb})

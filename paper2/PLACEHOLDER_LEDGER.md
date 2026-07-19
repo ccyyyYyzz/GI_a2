@@ -38,6 +38,50 @@ universality scope, critical-manifold statement), R13 §8(f)
 photon-economics wording, A's discrete-optima caveat, C's frozen wording,
 Theorems 1–3, Table 1 + provenance.
 
+## R17 re-architecture (2026-07-19, ruling issue #9)
+
+The M1 campaign was re-architected per `docs/ROUND63_GPT_ROUND17_RULING_RAW.md`
+and `docs/ROUND63_METHOD_SPEC_M1_R17_AMENDMENT.md` (§F). Structural changes to
+the manuscript pair (claims + machinery only — NO campaign outcome filled,
+every outcome slot stays `\SPH`):
+
+- **Arm roster.** OED-DT retired as the proposed/gated method (its
+  `METHOD_SPEED_PASS` gate withdrawn *pre-freeze as infeasible*, never a
+  confirmatory failure); OED-EQLOAD arm dropped; `RIDGE-FIXED` renamed
+  `RIDGE-SCAT32`; MATCH1 dropped as an arm (kept only in the deployed-design
+  occupancy-rung selection record). New 5-arm roster over the common balanced
+  972-row SCAT32 design: **SCAT32-SAFE / SCAT32-060 / RIDGE-SCAT32** +
+  **SCAT16 / LBLOB16** descriptive context columns. OED survives only as
+  dose-relaxed / dose-constrained *design diagnostics* feeding the Act III
+  figure.
+- **Endpoints.** Old `METHOD_SPEED_PASS` / `METHOD_DESIGN_PASS` /
+  `METHOD_FIXED_DWELL_PASS` removed. New three mutually non-rescuing verdicts:
+  primary `RIDGE_OPERATING_PASS` (paired fixed-dwell ν=2000, RIDGE-SCAT32 vs
+  SCAT32-060; median ΔQ≥1.0 dB / LB2.5>0 / ≥18/24; mandatory power-for-time
+  disclosure), secondary `RIDGE_SPEED_PASS` (nine-dwell Q90, SCAT32-SAFE @0.05
+  vs dwell-dependent RIDGE-SCAT32; median S_gate≥3 / LB>1 / 18/24),
+  confirmatory structural secondary `DOSE_SAFE_CERT_PASS` (480-cell full
+  dose-constrained dual G_full/r≤1e-2 over expanded D_cert=D_load∪D_gain,
+  D-eff≥0.99005).
+- **Act III (§3–6) four-beat** (R17 §6.1): (1) information wants concentration
+  (§3.1); (2) uniform-dose safety collapses it — DEV `ADAPTIVE_COLLAPSE_UNDER_
+  GUARDS`, labeled development evidence, not a theorem (§3.2, new); (3)
+  simplicity certified by the expanded-class dual (§3.3); (4) global operating
+  point survives (§3.4 conjugacy + §3.6 alignment). R11+R17 unified: naive
+  equalization killed alignment; adaptive concentration conflicts with dose
+  safety; balanced global-flux is the robust middle (§3.6). Four-panel Act III
+  figure planned (Fig. `fig:actiii`, §5) with `\SPH` data panels.
+- **Certificate machinery** (§3.3 main, S3 supp): relaxed-KW G_rel/r≤1e-3
+  replaced by the full dose-constrained dual G_full/r≤1e-2 over the expanded
+  D_cert; D_gain gain-coupled family (γ∈{0.2,0.5,1,2,5}, emergent load) added
+  to the dictionary listing; A-risk/spectral disclosed separately, not in the
+  dual target class.
+
+**Frozen R17 wordings verified present verbatim (PDF+tex checked):** final
+claim (ruling §6.3), power-for-time disclosure (§2.2, appears in §4 endpoints
+and §5.1 results), and the three §6.2 permitted wordings. **Five NOT-PERMITTED
+sentences verified absent.**
+
 ## Previously FILLED (unchanged by the restructure)
 
 - R14 theory content (all seven original theory placeholders) — Section 2 is
@@ -54,47 +98,56 @@ Theorems 1–3, Table 1 + provenance.
 Classes: **M1** (campaign outputs after tag `m1-freeze`), **R14-SUPP**
 (supplement proofs / crossover proof), **USER** (author, repo URL, funding).
 
-### main_m1.tex
+### main_m1.tex (R17 architecture)
 
 | # | line | Location | Placeholder | Class |
 |---|------|----------|-------------|-------|
 | 1 | ~56  | title page | author block | USER |
-| 2 | ~94  | abstract | primary/secondary verdicts + cross-arm numbers | M1 |
-| 3 | ~173 | intro (contrib iii) | campaign outcomes (incl. any negative primary) | M1 |
-| 4 | ~284 | §2.2 crossover ¶ | uniform two-parameter crossover proof, or prediction label retained | R14-SUPP |
-| 5 | ~591 | §4 arms | ~~committed FIXED* selection record {SCAT32,LBLOB16,MATCH1}~~ **FILLED** (FIXED*=SCAT32; source of record: `results/round63_m1/FREEZE_CHECKLIST_LEDGER.md` box 5, frozen R10 DEV radiometric-PSNR rule, R15-remedied) | M1 |
-| 6 | ~653 | §5.1 | METHOD_SPEED_PASS: median S, LB, count>1, PASS/FAIL | M1 |
-| 7 | ~657 | §5.2 | METHOD_DESIGN_PASS: median design gain (dB), LB, count | M1 |
-| 8 | ~661 | §5.3 | METHOD_FIXED_DWELL_PASS: median terminal gain (dB), count, LB | M1 |
-| 9 | ~665 | §5.4 | secondary arms + diagnostics summary (full tables → supp S5) | M1 |
-| 10 | ~682–687 | §5 cross-arm table | 6 arms × 7 columns = 42 cells | M1 |
-| 11 | ~797 | §7 | repo URL wording | USER |
-| 12 | ~798 | §7 | funding / acknowledgments | USER |
+| 2 | ~100 | abstract | ridge operating-point + speed + certificate verdicts + cross-arm numbers | M1 |
+| 3 | ~185 | intro (contrib iii) | campaign outcomes (incl. any negative primary) | M1 |
+| 4 | ~296 | §2.2 crossover ¶ | uniform two-parameter crossover proof, or prediction label retained | R14-SUPP |
+| 5 | ~766 | §5.1 | `RIDGE_OPERATING_PASS`: median ΔQ_ridge (dB), LB2.5, count>0, PASS/FAIL + mandatory disclosures | M1 |
+| 6 | ~775 | §5.2 | `RIDGE_SPEED_PASS`: median S_gate, LB, count>1, PASS/FAIL | M1 |
+| 7 | ~780 | §5.3 | `DOSE_SAFE_CERT_PASS`: G_full/r distribution over 480 cells, fraction ≤1e-2, PASS/FAIL | M1 |
+| 8 | ~785 | §5.4 | context arms (SCAT16/LBLOB16) + dose-relaxed/-constrained OED design diagnostics + DEV collapse summary | M1 |
+| 9 | ~793 | §5 Fig `fig:actiii` | Act III four data panels (a guard-vs-α DEV / b G_full/r dist / c ridge-vs-0.60 images+gains / d resource-corner schematic) | M1 |
+| 10 | ~821–825 | §5 cross-arm table | 5 arms × descriptive+paired cols = 21 cells | M1 |
+| 11 | ~845 | §6 discussion | frozen-conclusion contingency verdicts (RIDGE_OPERATING/SPEED/DOSE_SAFE_CERT calls) | M1 |
+| 12 | ~958 | §7 | repo URL wording | USER |
+| 13 | ~959 | §7 | funding / acknowledgments | USER |
 
-### supplement_m1.tex
+Note (site formerly #5, now retired as a placeholder): the deployed-design
+occupancy-rung selection (SCAT32 over LBLOB16 and a matched baseline; DEV
+radiometric-PSNR scores 17.498 / 11.908 / 9.181 dB; R15-remedied) is **FILLED
+inline** in §4 as prose, not an `\SPH` — it justifies why the deployed balanced
+design is the k=32 rung. Source of record: `results/round63_m1/FREEZE_CHECKLIST_LEDGER.md`.
+
+### supplement_m1.tex (R17 architecture)
 
 | # | line | Location | Placeholder | Class |
 |---|------|----------|-------------|-------|
 | S-1 | ~35  | title page | author block (mirrors main; fills with same user decision) | USER |
-| S-2 | ~277 | S5.1 | RIDGE-FIXED full results (per-dwell gains, loads, clip flags, ceilings) | M1 |
-| S-3 | ~282 | S5.2 | OED-EQLOAD kernel ablation full results | M1 |
-| S-4 | ~287 | S5.3 | certificate/rounding diagnostics per designed cell | M1 |
-| S-5 | ~293 | S6 | proofs of Theorems 1–3 + Proposition S1; uniform crossover proof or prediction label | R14-SUPP |
+| S-2 | ~304 | S5.1 | ridge operating-point + nine-dwell speed full results (per-dwell gains, loads, clip flags, ceilings, S_gate curves) | M1 |
+| S-3 | ~311 | S5.2 | near-optimality certificate distribution (per-cell G_full/r, feasibility, D-eff, dual/complementarity, MU_CAP_ACTIVE) | M1 |
+| S-4 | ~317 | S5.3 | context arms + dose-relaxed/-constrained OED design diagnostics + DEV collapse (PATH_FEASIBLE_ALPHA) | M1 |
+| S-5 | ~325 | S6 | proofs of Theorems 1–3 + Proposition S1; uniform crossover proof or prediction label | R14-SUPP |
 
-**Counts.** 16 open sites (main 11 + supplement 5; site #5 FILLED 2026-07-19);
-raw `\SPH` commands: main 52 (10 single + 42 table cells), supplement 5, total
-57. By class (open): M1 ×10, R14-SUPP ×2, USER ×4.
+**Counts.** 18 open sites (main 13 + supplement 5). Rendered `\SPH` commands:
+main 33 (12 single + 21 table cells), supplement 5, total 38. By class:
+M1 ×32 (main 29 + supp 3), R14-SUPP ×2 (main 1 + supp 1), USER ×4 (main 3 +
+supp 1). The former FIXED*/occupancy-rung site is FILLED inline (no `\SPH`).
 
 ## Fill order (suggested)
 
 1. **Supplement proofs** → S-5 and main #4 (R14 §1.7 "provable immediately"
    list; crossover keeps its prediction label unless the dedicated uniform
    proof lands).
-2. **m1-freeze → run → analyze** → main #2, #3, #5–#10; supplement S-2–S-4.
-   Main #5 (FIXED*) fills at freeze from the DEV selection record —
-   NOTE: R15 (commit af6d0b6) invalidated the previous FIXED* selection;
-   the record must be the R15-remedied one.
-3. **USER** → main #1, #11, #12; supplement S-1.
+2. **m1-freeze → run → analyze** (revised R17 architecture) → main #2, #3,
+   #5–#11; supplement S-2–S-4. Verdicts fill only after the coherent R17
+   refreeze tag and outcome-blind ledger (ruling §7 / amendment §E); the three
+   verdicts (`RIDGE_OPERATING_PASS`, `RIDGE_SPEED_PASS`, `DOSE_SAFE_CERT_PASS`)
+   are mutually non-rescuing.
+3. **USER** → main #1, #12, #13; supplement S-1.
 
 ## Frozen-wording constraints (carried; verified surviving the restructure)
 
@@ -116,6 +169,18 @@ raw `\SPH` commands: main 52 (10 single + 42 table cells), supplement 5, total
   class only (exclusions listed verbatim in §2.2).
 - Handbook Γ row is descriptive (companion's computable engagement
   criterion), never a confirmatory gate — G10 discipline.
+- **R17 claim discipline (frozen):** the DEV `m=0` collapse is *development
+  evidence* (`ADAPTIVE_COLLAPSE_UNDER_GUARDS`), explicitly NOT a confirmatory
+  theorem; OED-DT never presented as a confirmatory failure (its gate was
+  withdrawn pre-freeze as infeasible). Three §6.2 permitted wordings + the
+  §6.3 final claim + the §2.2 power-for-time disclosure appear VERBATIM; the
+  five NOT-PERMITTED sentences ("adaptivity is impossible under dead time";
+  "safety constraints always eliminate adaptive sensing"; "SCAT32 is globally
+  optimal over all physical patterns"; "the m=0 DEV result is a confirmatory
+  theorem"; "the ridge arm is photon efficient") must never appear. Outcome
+  claims (permitted §6.2 #2/#3, final claim) are stated only as
+  campaign-licensed conclusions **contingent on** the `\SPH` verdicts, never
+  as asserted results.
 - Bibliography: `paper2/refs.bib` = copy of `paper/refs.bib` + flagged
   METHOD-LINE group; entries marked "VERIFY at submission" need a live
   Crossref pass. R14 §1.9 names Dubi & Atar and He et al. (NIST) as

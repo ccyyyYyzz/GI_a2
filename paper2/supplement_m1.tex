@@ -119,7 +119,7 @@ drive the fixed-flux objective ratio to zero, so fixed flux can be
 arbitrarily bad. With random holds, $J'$ vanishes at the jitter cap and is
 negative beyond it, so fixed flux can overdrive the brightest directions and
 explicit gain control becomes necessary. This explains both sides of the
-companion's dev evidence~\cite{companion}:\ \textsc{RIDGE-FIXED} with one
+companion's dev evidence~\cite{companion}:\ \textsc{RIDGE-SCAT32} with one
 global knob is near-optimal exactly when its realized residuals are small
 (self-water-filling), while the uniform servo --- which loses by up to
 $\sim7$~dB on sparse-support scenes --- fails because forcing equal $\rho_i$
@@ -139,8 +139,9 @@ $\epsilon_0 = 10^{-9}\,\mathrm{tr}(B^{\top}V_{\text{FIXED}^\ast}B)/r$
 (R13~\S6). A design-dependent ridge is not permitted:\ it would change the
 objective derivative and invalidate the sensitivity calculation.
 
-\subsection{The equivalence certificate}
-% MOVED verbatim from the pre-restructure main §2.2.
+\subsection{The near-optimality certificate}
+% R17 §4: full dose-constrained dual over the EXPANDED class D_cert; the
+% deployed balanced SCAT32 is the certified design, not an OED optimizer.
 By concavity of $\log\det$ and affineness of $\xi\mapsto V(\xi)$, a feasible
 design $\xi^\ast$ is optimal iff there exist constraint multipliers such that
 the reduced sensitivity
@@ -148,27 +149,38 @@ $s(a) = \mathrm{tr}[V(\xi^\ast)^{-1}H(a)] - \sum_j\alpha_j e_j(a)
 - \sum_k\beta_k c_k(a)$ satisfies $s(a) \le \eta^\ast$ over $\mathcal{A}$ with
 equality on the support (the constrained Kiefer--Wolfowitz / general
 equivalence theorem for nonlinear
-models~\cite{kiefer1959optimum,white1973equivalence}). Because a strict
-per-pixel-dose dual is not yet implemented, the frozen confirmatory quantity
-is the conservative additive budget-dual bound: with
-$d_a = \mathrm{tr}(V^{-1} M_{\mathrm{main}} H_a)$, $c_a = \rho_a$, budget
-$c^{\top}\xi \le b$, and $\theta \ge 0$,
+models~\cite{kiefer1959optimum,white1973equivalence}). The confirmatory
+certificate evaluates this gap for the \emph{deployed} balanced \textsc{SCAT32}
+design against the continuous optimum of the dose-safe class over the
+expanded dictionary $D_{\mathrm{cert}} = D_{\mathrm{load}}\cup D_{\mathrm{gain}}$
+(\S\ref{sec:s-dict}). With per-atom design value
+$d_a = \mathrm{tr}(V^{-1} M_{\mathrm{main}} H_a)$, one incident-budget
+multiplier $\theta\ge0$, budget $b$, and upper/lower per-pixel-dose multipliers
+$\mu^+,\mu^-\ge0$, the full dose-constrained dual is
 \begin{equation}
-  \begin{aligned}
-  G_{\mathrm{rel}} &= \max_a(d_a - \theta c_a) - \sum_a \xi_a(d_a - \theta c_a)
-  + \theta\{b - c^{\top}\xi\},\\
-  &\qquad\qquad G_{\mathrm{rel}}/r \le 10^{-3},
-  \end{aligned}
+  G_{\mathrm{full}} = \min_{\theta,\mu^+,\mu^-\ge0}
+  \Bigl[\max_{a\in D_{\mathrm{cert}}} s_a(\theta,\mu^+,\mu^-)
+  - d^{\top}\xi + \theta b\Bigr],
+  \qquad G_{\mathrm{full}}/r \le 10^{-2},
   \label{eq:s-relkw}
 \end{equation}
-which upper-bounds the gap to the optimum of the relaxed (dose-free)
-problem and hence to the dose-constrained optimum (R13~\S6.1). It is reported
-as \texttt{RELAXED\_KW\_UPPER\_BOUND}, relative to the frozen dictionary and
-local estimate, not as a full per-pixel equivalence certificate. The maximum
-is taken by an exact scan of the frozen dictionary; a learned proposer may
-warm-start the search but the frozen run finishes with the exact
-oracle~\cite{jaggi2013frankwolfe}. Continuous weights are rounded to an exact
-$972$-row design by efficient rounding followed by deterministic
+where $s_a(\theta,\mu^+,\mu^-) = d_a - \theta\rho_a
+- \sum_j(\mu^+_j - \mu^-_j)\,\partial d_j/\partial\xi_a$ is the dose- and
+budget-priced reduced sensitivity, the inner maximum uses coverage-seeded
+column generation and finishes with an exact scan over all of
+$D_{\mathrm{cert}}$~\cite{jaggi2013frankwolfe}, and every upper and lower
+pixel-dose inequality carries its own multiplier (R15 / R17~\S4.4). The bar
+$G_{\mathrm{full}}/r \le 10^{-2}$ certifies local D-efficiency of at least
+$\exp(-0.01) = 0.99005$ relative to the continuous optimum of the expanded
+dose-safe class. A-risk and spectral constraints are deliberately excluded
+from the dual target class, making the certified class larger and the result
+stronger; the deployed \textsc{SCAT32} rows still satisfy the A-risk,
+spectral, peak, and ceiling disclosures separately. Retained numerics:
+active-dose toy agreement $\le 10^{-8}$, primal dose/budget feasibility, the
+full-dictionary scan residual, dual/complementarity reporting, and the finite
+$\mu$ cap as a conservative restriction disclosed as \texttt{MU\_CAP\_ACTIVE}.
+Continuous weights are rounded to an exact $972$-row design by efficient
+rounding followed by deterministic
 exchange~\cite{pukelsheim1992rounding,nikolov2022volume,sagnol2015exact},
 admissible only if the exact D-efficiency $\ge 0.95$.
 
@@ -203,17 +215,32 @@ state (\texttt{DICTIONARY\_RANK\_FAIL}, \texttt{CONTINUOUS\_CERTIFICATE\_FAIL},
 fallback is the fixed comparator; no threshold is retuned after freeze.
 
 \subsection{The frozen dictionary}
-% R10 Q7 §5 minimum dictionary as amended by R13 §3.
-The exact searchable dictionary includes all cyclic translates of:\
-scattered balanced supports at $k=16$ and $k=32$; the solid $4\times4$
-patch; the committed \textsc{Lblob}$6\times6$ 16-pixel support;
+\label{sec:s-dict}
+% R10 Q7 §5 minimum dictionary as amended by R13 §3; D_gain added per R17 §4.2.
+The exact searchable base dictionary $D_{\mathrm{load}}$ includes all cyclic
+translates of:\ scattered balanced supports at $k=16$ and $k=32$; the solid
+$4\times4$ patch; the committed \textsc{Lblob}$6\times6$ 16-pixel support;
 bars/rectangles $1\times16$, $2\times8$, $4\times4$, $8\times2$,
 $16\times1$; compact 32-pixel square/rectangle variants; and the frozen
 16-pixel ring/annulus family --- with $p=0$ and guarded $p=1$ weights for
 every applicable support. The implementation supports variable $k$; all
 translation families use the circulant/FFT evaluator, and the dictionary
 manifest carries every family, translation, power, support size, and
-SHA256.
+SHA256. These are the target-load-normalized atoms:\ each pattern's amplitude
+is chosen to hit a predicted load.
+
+For the near-optimality certificate only, an additional gain-coupled family
+$D_{\mathrm{gain}}$ is formed:\ for every frozen base geometry and weight
+pattern, physical rows $a_{g,\gamma} = \gamma\,a_g^{\mathrm{base}}$ with
+$\gamma\in\{0.2,0.5,1,2,5\}$, the base $a_g^{\mathrm{base}}$ normalized by the
+scene-independent physical convention of the fixed patterns, and predicted
+load allowed to \emph{emerge} as
+$\rho_{g,\gamma} = \rhobar\,\gamma\,(a_g^{\mathrm{base}})^{\top}\hat x$ ---
+never rescaled to a target load, so fixed-flux self-water-filling and bounded
+per-pattern gain control lie inside the comparison class. The same support,
+weight, physical-peak, ceiling, and RQL-trust admission guards apply to both
+parts; $D_{\mathrm{cert}} = D_{\mathrm{load}}\cup D_{\mathrm{gain}}$ is
+SHA256-frozen before any confirmatory scene is opened.
 
 \subsection{Budget accounting}
 % R11 §4.3 dual reporting.
@@ -271,21 +298,26 @@ two-point holds and cross-fitted conditional-score estimation) remains a
 preregistered extension beyond this verdict.
 
 % ===========================================================================
-\section{Secondary-arm full results}
+\section{Secondary-arm and certificate full results}
 \label{sec:s-secondary}
-\subsection{RIDGE-FIXED operating-point demonstration}
-\SPH{M1: fixed-dwell gain per dwell of the ridge-tracking policy over
-$\rhobar=0.60$ and safe references, realized loads, requested vs.\ achieved
-mean load, RIDGE\_GUARD\_CLIPPED flags, and ceiling fractions.}
+\subsection{Ridge operating-point and time-to-quality}
+\SPH{M1: per-dwell fixed-dwell gains of \textsc{RIDGE-SCAT32} over
+\textsc{SCAT32-060} and the safe reference, realized loads, requested vs.\
+achieved mean load, \texttt{RIDGE\_GUARD\_CLIPPED} flags, ceiling fractions,
+and the nine-dwell $S_{\mathrm{gate}}$ curves for
+\texttt{RIDGE\_SPEED\_PASS}.}
 
-\subsection{OED-EQLOAD kernel ablation}
-\SPH{M1: equal-load geometry vs.\ variable-load geometry --- any design
-difference attributable to the renewal kernel, with numerical-noise
-disclosure.}
+\subsection{Near-optimality certificate distribution}
+\SPH{M1: per-cell full dose-constrained dual $G_{\mathrm{full}}/r$ over the
+480 certificate cells, primal feasibility, exact D-efficiency,
+dual/complementarity, and \texttt{MU\_CAP\_ACTIVE} incidence, for
+\texttt{DOSE\_SAFE\_CERT\_PASS}.}
 
-\subsection{Certificate and rounding diagnostics}
-\SPH{M1: relaxed-KW gap $G_{\mathrm{rel}}/r$, exact D-efficiency, A-risk
-ratio, and spectral-floor margin per designed cell.}
+\subsection{Context arms and design diagnostics}
+\SPH{M1: \textsc{SCAT16}/\textsc{LBLOB16} context ladder, the dose-relaxed and
+dose-constrained OED design diagnostics, and the development-cell
+guard-versus-$\alpha$ collapse (\texttt{PATH\_FEASIBLE\_ALPHA}) --- all
+no-endpoint.}
 
 % ===========================================================================
 \section{Proofs}

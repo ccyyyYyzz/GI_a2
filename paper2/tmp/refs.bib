@@ -1,0 +1,510 @@
+% ============================================================================
+% refs.bib  --  Defensive-citation bibliography
+% Manuscript: "When high flux helps single-pixel imaging: a contrast--dead-time
+%              phase diagram"  (target: Optics Express)
+%
+% Every entry below was verified against a live web/Crossref search
+% (authors, journal, volume, pages, year, DOI) on 2026-07-18.
+% Two roles could not be verified and are left as commented %UNVERIFIED stubs
+% (Zhang single-photon SPI pile-up; Li 2023 RJMCMC dead time) -- do NOT cite
+% these until a real record is confirmed.
+%
+% ----------------------------------------------------------------------------
+% ROLE -> KEY MAP  (the 7 defensive-citation groups)
+% ----------------------------------------------------------------------------
+% 1. Dead-time / count-rate information line (CRLB, pileup, high-flux, ridge):
+%      wang2011pileup          -- count-rate-dependent CRLB, nonparalyzable delta-pulse
+%      becares2012deadtime     -- explicit optimal counting rate / dead-time uncertainty
+%      gupta2019photonflooded  -- photon-flooded SPAD lidar, optimal flux (CVPR)
+%      gupta2019asynchronous   -- asynchronous single-photon 3D imaging (ICCV)
+%      rapp2019deadtime        -- dead-time compensation, high-flux ranging (IEEE TSP)
+%      rapp2021highflux        -- high-flux single-photon lidar (Optica)
+%      jorgensen2026deadtime   -- dead-time-constrained event detection, Fisher-rate/MLE bounds
+%      gronberg2018deadtime    -- finite-pulse nonparalyzable count statistics (CLOSEST ridge prior)
+% 2. Sparse-pattern SPI prior art (round-8 Q2 closest prior):
+%      liu2019pileup           -- sparse measurement + pile-up correction, compressive LiDAR
+%      han2025sparsehadamard   -- tunable sparse Hadamard speckle patterns SPI
+%      %UNVERIFIED zhang* : "Zhang et al." single-photon NIR SPI pile-up (see stub below)
+% 3. Multiplex / photon-noise line (positive multiplexing can lose):
+%      harwit1979hadamard      -- Hadamard Transform Optics (foundational)
+%      wuttig2005multiplex     -- multiplex disadvantage under photon noise
+% 4. SPI/GI field-first + Chen-group (PolyU) anchors:
+%      duarte2008singlepixel   -- single-pixel camera (IEEE SPM)
+%      edgar2019principles     -- single-pixel imaging review (Nature Photonics)
+%      shapiro2008computational-- computational ghost imaging (PRA)
+%      hao2025photonlimited    -- Hao/Peng/Chen APL Photonics, S_det convention anchor
+%      hao2025complexfield     -- Hao & Chen, scattering media (Optics Letters)
+%      hao2025randommedia      -- Hao/Xiao/Chen, random media (Applied Physics Letters)
+% 5. Correction-centric line (dead-time / pile-up pre-correction in imaging):
+%      liu2021photoncounting   -- photon-counting correction, single-photon compressive imaging
+%      %UNVERIFIED li2023* : RJMCMC dead time (see stub below)
+% 6. TV regularization:
+%      rudin1992nonlinear      -- ROF total variation
+%      beck2009fast            -- FISTA
+% 7. Photon-counting statistics (renewal-process dead-time):
+%      muller1973deadtime      -- classic dead-time / renewal counting statistics
+%      yu2000mean              -- exact mean/variance of counting with dead time
+% ============================================================================
+
+
+% ---------------------------------------------------------------------------
+% GROUP 1 -- Dead-time / count-rate information line
+% ---------------------------------------------------------------------------
+
+@article{wang2011pileup,
+  author  = {Wang, Adam S. and Harrison, Daniel and Lobastov, Vladimir and Tkaczyk, J. Eric},
+  title   = {Pulse pileup statistics for energy discriminating photon counting x-ray detectors},
+  journal = {Medical Physics},
+  volume  = {38},
+  number  = {7},
+  pages   = {4265--4275},
+  year    = {2011},
+  doi     = {10.1118/1.3592932}
+}
+
+@article{becares2012deadtime,
+  author  = {B{\'e}cares, V. and Bl{\'a}zquez, J.},
+  title   = {Detector Dead Time Determination and Optimal Counting Rate for a Detector Near a Spallation Source or a Subcritical Multiplying System},
+  journal = {Science and Technology of Nuclear Installations},
+  volume  = {2012},
+  pages   = {240693},
+  year    = {2012},
+  doi     = {10.1155/2012/240693}
+}
+
+@inproceedings{gupta2019photonflooded,
+  author    = {Gupta, Anant and Ingle, Atul and Velten, Andreas and Gupta, Mohit},
+  title     = {Photon-Flooded Single-Photon 3D Cameras},
+  booktitle = {2019 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+  pages     = {6763--6772},
+  year      = {2019},
+  doi       = {10.1109/CVPR.2019.00693}
+}
+
+@inproceedings{gupta2019asynchronous,
+  author    = {Gupta, Anant and Ingle, Atul and Gupta, Mohit},
+  title     = {Asynchronous Single-Photon 3D Imaging},
+  booktitle = {2019 IEEE/CVF International Conference on Computer Vision (ICCV)},
+  pages     = {7908--7917},
+  year      = {2019},
+  doi       = {10.1109/ICCV.2019.00800}
+}
+
+@article{rapp2019deadtime,
+  author  = {Rapp, Joshua and Ma, Yanting and Dawson, Robin M. A. and Goyal, Vivek K.},
+  title   = {Dead Time Compensation for High-Flux Ranging},
+  journal = {IEEE Transactions on Signal Processing},
+  volume  = {67},
+  number  = {13},
+  pages   = {3471--3486},
+  year    = {2019},
+  doi     = {10.1109/TSP.2019.2914891}
+}
+
+@article{rapp2021highflux,
+  author  = {Rapp, Joshua and Ma, Yanting and Dawson, Robin M. A. and Goyal, Vivek K.},
+  title   = {High-flux single-photon lidar},
+  journal = {Optica},
+  volume  = {8},
+  number  = {1},
+  pages   = {30},
+  year    = {2021},
+  doi     = {10.1364/OPTICA.403190}
+}
+% TODO(rapp2021highflux): only start page (30) is in the verified Crossref record; confirm end page from the PDF.
+
+@misc{jorgensen2026deadtime,
+  author       = {Jorgensen, Frederic J. N. and Johnson, Steven G.},
+  title        = {Fundamental Bounds and Efficient Estimation for Dead-Time-Constrained Event Detection, with Application to Single-Photon Lidar},
+  year         = {2026},
+  eprint       = {2605.23210},
+  archivePrefix = {arXiv},
+  primaryClass = {stat.ME},
+  note         = {arXiv:2605.23210}
+}
+
+@article{gronberg2018deadtime,
+  author  = {Gr{\"o}nberg, Fredrik and Danielsson, Mats and Sj{\"o}lin, Martin},
+  title   = {Count statistics of nonparalyzable photon-counting detectors with nonzero pulse length},
+  journal = {Medical Physics},
+  volume  = {45},
+  number  = {8},
+  pages   = {3800--3811},
+  year    = {2018},
+  doi     = {10.1002/mp.13063}
+}
+
+
+% ---------------------------------------------------------------------------
+% GROUP 2 -- Sparse-pattern SPI prior art (round-8 Q2 closest prior)
+% ---------------------------------------------------------------------------
+
+@article{liu2019pileup,
+  author  = {Liu, Shuai and Yao, Xu-Ri and Liu, Xue-Feng and Xu, Da-Zhi and Wang, Xing-Da and Liu, Bing and Wang, Chao and Zhai, Guang-Jie and Zhao, Qing},
+  title   = {Pile-up effect in an infrared single-pixel compressive LiDAR system},
+  journal = {Optics Express},
+  volume  = {27},
+  number  = {16},
+  pages   = {22138--22146},
+  year    = {2019},
+  doi     = {10.1364/OE.27.022138}
+}
+
+@article{han2025sparsehadamard,
+  author  = {Han, Yuyuan and Wu, Peng and Xu, Hanxiong and Li, Bin and He, Yuchen and Liu, Jianbin and Chen, Hui and Zheng, Huaibin},
+  title   = {Generalized sparse Hadamard single-pixel imaging},
+  journal = {Optics Express},
+  volume  = {33},
+  number  = {20},
+  pages   = {43324--43341},
+  year    = {2025},
+  doi     = {10.1364/OE.576533}
+}
+
+% %UNVERIFIED -- "Zhang et al." single-photon NIR single-pixel imaging pile-up
+% paper described in ROUND63_GPT_ROUND8_RULING.md Q2 (random+Hadamard, image
+% quality vs count rate, sparsities 50% -> 3.1%, "sufficiently sparse patterns
+% mitigated pile-up by reducing the detector photon rate"). Four targeted
+% searches (2019-2025, Optics Express / Photonics Research / single-photon SPI)
+% did NOT surface a distinct first-author-Zhang record matching this
+% description. The same "sparse patterns lower the count rate to avoid pile-up"
+% claim is already covered by liu2019pileup and liu2021photoncounting, which
+% are safe to cite in its place. Do not cite the entry below until a real
+% record is confirmed.
+% (stub, do not cite) article zhang20XXpileup
+%   author  = {Zhang, ...},
+%   title   = {... single-photon single-pixel imaging pile-up / sparse patterns ...},
+%   journal = {...},
+%   year    = {20XX},
+%   doi     = {...}   % TODO: locate and verify
+% }
+
+
+% ---------------------------------------------------------------------------
+% GROUP 3 -- Multiplex / photon-noise line
+% ---------------------------------------------------------------------------
+
+@book{harwit1979hadamard,
+  author    = {Harwit, Martin and Sloane, Neil J. A.},
+  title     = {Hadamard Transform Optics},
+  publisher = {Academic Press},
+  address   = {New York},
+  year      = {1979}
+}
+
+@article{wuttig2005multiplex,
+  author  = {Wuttig, Andreas},
+  title   = {Optimal transformations for optical multiplex measurements in the presence of photon noise},
+  journal = {Applied Optics},
+  volume  = {44},
+  number  = {14},
+  pages   = {2710--2719},
+  year    = {2005},
+  doi     = {10.1364/AO.44.002710}
+}
+
+
+% ---------------------------------------------------------------------------
+% GROUP 4 -- SPI/GI field-first + Chen-group (PolyU) anchors
+% ---------------------------------------------------------------------------
+
+@article{duarte2008singlepixel,
+  author  = {Duarte, Marco F. and Davenport, Mark A. and Takhar, Dharmpal and Laska, Jason N. and Sun, Ting and Kelly, Kevin F. and Baraniuk, Richard G.},
+  title   = {Single-pixel imaging via compressive sampling},
+  journal = {IEEE Signal Processing Magazine},
+  volume  = {25},
+  number  = {2},
+  pages   = {83--91},
+  year    = {2008},
+  doi     = {10.1109/MSP.2007.914730}
+}
+
+@article{edgar2019principles,
+  author  = {Edgar, Matthew P. and Gibson, Graham M. and Padgett, Miles J.},
+  title   = {Principles and prospects for single-pixel imaging},
+  journal = {Nature Photonics},
+  volume  = {13},
+  number  = {1},
+  pages   = {13--20},
+  year    = {2019},
+  doi     = {10.1038/s41566-018-0300-7}
+}
+
+@article{shapiro2008computational,
+  author  = {Shapiro, Jeffrey H.},
+  title   = {Computational ghost imaging},
+  journal = {Physical Review A},
+  volume  = {78},
+  number  = {6},
+  pages   = {061802},
+  year    = {2008},
+  doi     = {10.1103/PhysRevA.78.061802}
+}
+
+@article{hao2025photonlimited,
+  author  = {Hao, Yining and Peng, Yang and Zhang, Tianshun and Chen, Wen},
+  title   = {High-quality photon-limited imaging through dynamic and complex scattering media with a single-photon detector},
+  journal = {APL Photonics},
+  volume  = {10},
+  number  = {10},
+  pages   = {106119},
+  year    = {2025},
+  doi     = {10.1063/5.0293168}
+}
+
+@article{hao2025complexfield,
+  author  = {Hao, Yining and Chen, Wen},
+  title   = {Single-pixel complex-field imaging through scattering media},
+  journal = {Optics Letters},
+  volume  = {50},
+  number  = {6},
+  pages   = {1949--1952},
+  year    = {2025},
+  doi     = {10.1364/OL.551397}
+}
+
+@article{hao2025randommedia,
+  author  = {Hao, Yining and Xiao, Yin and Chen, Wen},
+  title   = {Single-pixel imaging through random media with automated adaptive corrections},
+  journal = {Applied Physics Letters},
+  volume  = {126},
+  number  = {13},
+  pages   = {131105},
+  year    = {2025},
+  doi     = {10.1063/5.0257816}
+}
+
+
+% ---------------------------------------------------------------------------
+% GROUP 5 -- Correction-centric line (dead-time / pile-up pre-correction)
+% ---------------------------------------------------------------------------
+
+@article{liu2021photoncounting,
+  author  = {Liu, Xinyuan and Ma, Yue and Li, Song and Yang, Jian and Zhang, Zhiyu and Tian, Xin},
+  title   = {Photon counting correction method to improve the quality of reconstructed images in single photon compressive imaging systems},
+  journal = {Optics Express},
+  volume  = {29},
+  number  = {23},
+  pages   = {37945},
+  year    = {2021},
+  doi     = {10.1364/OE.443084}
+}
+% TODO(liu2021photoncounting): only start page (37945) is in the verified Crossref record; confirm end page from the PDF.
+
+% %UNVERIFIED -- "Li 2023" reversible-jump MCMC dead-time reference requested in
+% the correction-centric line. Searches returned only the general Bayesian /
+% RJ-MCMC single-photon lidar line (Tachella/McLaughlin et al.), none of which
+% is a 2023 first-author-Li dead-time paper. Do not cite until confirmed.
+% (stub, do not cite) article li2023rjmcmc
+%   author  = {Li, ...},
+%   title   = {... reversible jump MCMC dead time single-photon ...},
+%   journal = {...},
+%   year    = {2023},
+%   doi     = {...}   % TODO: locate and verify
+% }
+
+
+% ---------------------------------------------------------------------------
+% GROUP 6 -- TV regularization
+% ---------------------------------------------------------------------------
+
+@article{rudin1992nonlinear,
+  author  = {Rudin, Leonid I. and Osher, Stanley and Fatemi, Emad},
+  title   = {Nonlinear total variation based noise removal algorithms},
+  journal = {Physica D: Nonlinear Phenomena},
+  volume  = {60},
+  number  = {1--4},
+  pages   = {259--268},
+  year    = {1992},
+  doi     = {10.1016/0167-2789(92)90242-F}
+}
+
+@article{beck2009fast,
+  author  = {Beck, Amir and Teboulle, Marc},
+  title   = {A Fast Iterative Shrinkage-Thresholding Algorithm for Linear Inverse Problems},
+  journal = {SIAM Journal on Imaging Sciences},
+  volume  = {2},
+  number  = {1},
+  pages   = {183--202},
+  year    = {2009},
+  doi     = {10.1137/080716542}
+}
+
+
+% ---------------------------------------------------------------------------
+% GROUP 7 -- Photon-counting statistics (renewal-process dead-time)
+% ---------------------------------------------------------------------------
+
+@article{muller1973deadtime,
+  author  = {M{\"u}ller, J{\"o}rg W.},
+  title   = {Dead-time problems},
+  journal = {Nuclear Instruments and Methods},
+  volume  = {112},
+  number  = {1--2},
+  pages   = {47--57},
+  year    = {1973},
+  doi     = {10.1016/0029-554X(73)90773-8}
+}
+
+@article{yu2000mean,
+  author  = {Yu, Daniel F. and Fessler, Jeffrey A.},
+  title   = {Mean and variance of single photon counting with deadtime},
+  journal = {Physics in Medicine and Biology},
+  volume  = {45},
+  number  = {7},
+  pages   = {2043--2056},
+  year    = {2000},
+  doi     = {10.1088/0031-9155/45/7/324}
+}
+
+@article{alvarez2014pileup,
+  author  = {Alvarez, Robert E.},
+  title   = {Signal to noise ratio of energy selective x-ray photon counting systems with pileup},
+  journal = {Medical Physics},
+  volume  = {41},
+  number  = {11},
+  pages   = {111909},
+  year    = {2014},
+  doi     = {10.1118/1.4898102}
+}
+
+
+% ============================================================================
+% METHOD-LINE ADDITIONS (paper 2 / M1 campaign)
+% ----------------------------------------------------------------------------
+% This file is a COPY of paper/refs.bib (paper 1, frozen) so that paper2/
+% compiles self-contained without touching the frozen paper/ tree. GROUPs 1-7
+% above are unchanged and already Crossref-verified (2026-07-18). The entries
+% below were transcribed from the R10 ruling reference list
+% (docs/ROUND63_GPT_ROUND10_RULING_RAW.md, "Core references") plus the
+% companion manuscript. DOIs/arXiv IDs are as given there; fields marked
+% "VERIFY at submission" (volume/pages/authors) still need the same live
+% Crossref pass GROUPs 1-7 received before this skeleton becomes submittable.
+% Follows paper 1's %UNVERIFIED discipline: do not treat a VERIFY entry as
+% publication-ready.
+% ============================================================================
+
+% --- companion (paper 1) -----------------------------------------------------
+@misc{companion,
+  author = {{Companion manuscript (paper~1)}},
+  title  = {When high flux helps single-pixel imaging: a contrast--dead-time operating map},
+  year   = {2026},
+  note   = {in submission; author block per paper~1 (user decision)}
+}
+
+% --- optimal experimental design / equivalence theory ------------------------
+@article{kiefer1959optimum,
+  author  = {Kiefer, Jack},
+  title   = {Optimum Experimental Designs},
+  journal = {Journal of the Royal Statistical Society: Series B},
+  year    = {1959},
+  doi     = {10.1111/j.2517-6161.1959.tb00338.x},
+  note    = {volume/pages VERIFY at submission}
+}
+
+@article{white1973equivalence,
+  author  = {White, L. V.},
+  title   = {An extension of the general equivalence theorem to nonlinear models},
+  journal = {Biometrika},
+  volume  = {60},
+  number  = {2},
+  pages   = {345--348},
+  year    = {1973},
+  doi     = {10.1093/biomet/60.2.345}
+}
+
+@article{pukelsheim1992rounding,
+  author  = {Pukelsheim, Friedrich and Rieder, Sabine},
+  title   = {Efficient rounding of approximate designs},
+  journal = {Biometrika},
+  volume  = {79},
+  number  = {4},
+  pages   = {763--770},
+  year    = {1992},
+  doi     = {10.1093/biomet/79.4.763}
+}
+
+@article{sagnol2015exact,
+  author  = {Sagnol, Guillaume and Harman, Radoslav},
+  title   = {Computing exact {D}-optimal designs by mixed integer second-order cone programming},
+  journal = {The Annals of Statistics},
+  volume  = {43},
+  number  = {5},
+  pages   = {2198--2224},
+  year    = {2015},
+  doi     = {10.1214/15-AOS1339},
+  note    = {arXiv:1307.4953}
+}
+
+@article{nikolov2022volume,
+  author  = {Nikolov, Aleksandar and Singh, Mohit and Tantipongpipat, Uthaipon},
+  title   = {Proportional Volume Sampling and Approximation Algorithms for {A}-Optimal Design},
+  journal = {Mathematics of Operations Research},
+  year    = {2022},
+  doi     = {10.1287/moor.2021.1129},
+  note    = {volume/pages VERIFY at submission}
+}
+
+% --- Frank--Wolfe inexact oracle --------------------------------------------
+@inproceedings{jaggi2013frankwolfe,
+  author    = {Jaggi, Martin},
+  title     = {Revisiting {Frank--Wolfe}: Projection-Free Sparse Convex Optimization},
+  booktitle = {Proceedings of the 30th International Conference on Machine Learning (ICML)},
+  series    = {PMLR},
+  volume    = {28},
+  pages     = {427--435},
+  year      = {2013}
+}
+
+% --- goal-oriented / sequential OED in imaging inverse problems --------------
+@article{attia2018goaloriented,
+  author  = {Attia, Ahmed and Alexanderian, Alen and Saibaba, Arvind K.},
+  title   = {Goal-oriented optimal design of experiments for large-scale {Bayesian} linear inverse problems},
+  journal = {Inverse Problems},
+  volume  = {34},
+  number  = {9},
+  pages   = {095009},
+  year    = {2018},
+  doi     = {10.1088/1361-6420/aad210}
+}
+
+@article{burger2021sequential,
+  author  = {Burger, Martin and Hauptmann, Andreas and Helin, Tapio and others},
+  title   = {Sequentially optimized projections in {X}-ray imaging},
+  journal = {Inverse Problems},
+  year    = {2021},
+  doi     = {10.1088/1361-6420/ac01a4},
+  note    = {authors/volume/pages VERIFY at submission}
+}
+
+% --- learned / adaptive sensing-matrix design (neighboring prior art) --------
+@misc{feng2018adaptive,
+  author        = {{Feng} and others},
+  title         = {Optimal illumination pattern design for single-pixel imaging},
+  year          = {2018},
+  eprint        = {1806.01340},
+  archivePrefix = {arXiv},
+  note          = {arXiv:1806.01340; authors/title VERIFY at submission}
+}
+
+@misc{maxu2021sensing,
+  author        = {{Ma} and {Xu} and {Maleki}},
+  title         = {Sensing-matrix design for generalized nonlinear inverse problems},
+  year          = {2021},
+  eprint        = {2111.03237},
+  archivePrefix = {arXiv},
+  note          = {arXiv:2111.03237; authors/title VERIFY at submission}
+}
+
+% --- limits of adaptive sensing ---------------------------------------------
+@article{ariascastro2013adaptive,
+  author  = {Arias-Castro, Ery and Cand{\`e}s, Emmanuel J. and Davenport, Mark A.},
+  title   = {On the Fundamental Limits of Adaptive Sensing},
+  journal = {IEEE Transactions on Information Theory},
+  volume  = {59},
+  number  = {1},
+  pages   = {472--481},
+  year    = {2013},
+  doi     = {10.1109/TIT.2012.2215837},
+  note    = {arXiv:1111.4646}
+}

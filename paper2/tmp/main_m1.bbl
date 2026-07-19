@@ -90,13 +90,6 @@ L.~V. White.
 \newblock An extension of the general equivalence theorem to nonlinear models.
 \newblock {\em Biometrika}, 60(2):345--348, 1973.
 
-\bibitem{jaggi2013frankwolfe}
-Martin Jaggi.
-\newblock Revisiting {Frank--Wolfe}: Projection-free sparse convex
-  optimization.
-\newblock In {\em Proceedings of the 30th International Conference on Machine
-  Learning (ICML)}, volume~28 of {\em PMLR}, pages 427--435, 2013.
-
 \bibitem{pukelsheim1992rounding}
 Friedrich Pukelsheim and Sabine Rieder.
 \newblock Efficient rounding of approximate designs.
