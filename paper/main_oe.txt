@@ -1,0 +1,1163 @@
+When high flux helps single-pixel imaging:
+a contrast–dead-time operating map
+[author block — user decision]
+
+Abstract
+
+conditioning trade-off. The gain survived dynamic scattering with coefficient of variation 0.20. The resulting
+operating map opens up an avenue for photon-budgetSingle-pixel imaging with photon-counting detectors is limited and dwell-time-limited single-pixel systems.
+conventionally operated at low photon flux, keeping
+the detector dead-time loss below a few percent at
+the cost of long acquisition times. Here we report a 1
+Introduction
+contrast–dead-time operating map for high-flux singlepixel imaging: whether deliberately raising the operat- Single-pixel imaging (SPI) and computational ghost
+ing flux into the strongly nonlinear dead-time regime imaging reconstruct a scene from the temporal sequence
+helps or does not help is governed by the illumination- of a single bucket detector’s responses to structured ilpattern bucket contrast, not by the dead-time correc- lumination [?, ?, ?], and have proven particularly attion alone. The nonlinearity is absorbed by a con- tractive where array sensors are unavailable or photon
+vex renewal quasi-likelihood (RQL) reconstruction with budgets are severe: low-light and photon-starved imaga deployment-legal, truth-free regularization rule, and ing, NIR/SWIR sensing, and imaging through scattera finite-window count-information analysis locates the ing media such as turbid water [?, ?, ?]. In the photonprincipled boundary: the Fisher information of the in- starved regime the bucket detector is a photon-counting
+tegrated photon count possesses a principal ridge at device — a single-photon avalanche diode or photomulthe cube-root load ρ∗ (ν) = (6ν)1/3 − 2/3 + O(ν −1/3 ) tiplier — and image quality is set by how many photons
+(ν = T /τ dead-time slots per exposure). In a prereg- can be counted within the available acquisition time.
+Photon-counting detectors, however, are blind for a
+istered dense-pattern study (Study 1, 642 scenes, occupancy 50%), the time-to-quality endpoint was uninfor- dead time τ after each registered count. The established
+mative in 24/24 scenes (safe-range quality span below response is to operate at low flux — keeping the deadthe preregistered 0.5 dB floor), while a small, uniformly time duty ρ = λτ at the few-percent level so that losses
+positive fixed-dwell gain remained (+0.28 dB median, stay small and a linear correction suffices — and to pay
+24/24 scenes positive, bootstrap lower bound +0.23 dB) for it with acquisition time, since the count rate is then
+— the multiplex-limited regime. In a second prereg- a small fraction of the detector’s 1/τ ceiling. A substanistered study (Study 2, 322 ), spatial occupancy was tial literature instead corrects or models the distortion
+varied at equal mean detector load and equal incident at higher rates: dead-time compensation and high-flux
+dose across occupancies, raising the measured bucket operation in single-photon lidar [?, ?, ?, ?], count-rate
+contrast from Cu = 0.040 (occupancy 50%) to 1.27 corrections in photon-counting imaging [?], and dead(raster). In Study 2, the preregistered acquisition-speed time-aware estimation bounds [?]. These works are
+endpoint was formally negative because its breadth correction-centric or timestamp-based; what remains
+criterion failed (16/24 scenes with Sgate > 1, versus unmapped is the operating question for the count-only
+the required 18/24), although both effect-size crite- bucket channel itself: at what flux, for which scenes,
+ria passed (median 6.80×; family-stratified bootstrap does raising the rate into the nonlinear regime actually
+lower bound 2.84×). The preregistered fixed-dwell help?
+Previous studies established count-rate-dependent
+secondary passed (median +1.16 dB at the terminal
+dwell, 19/24 scenes positive, lower bound +0.72 dB). CRLB degradation, task-specific optimal operating
+A post hoc descriptive family-level analysis found that fluxes, and high-flux recovery using time-resolved deadthe six success fractions were monotonically ordered time models [?, ?, ?, ?, ?]. Here, we study a different
+by measured bucket contrast, consistent with—but not information bottleneck: a finite exposure from which
+establishing—a contrast-controlled transition. Across only the integrated nonparalyzable count is retained.
+preregistered no-gate occupancy controls, the fixed- For this count-only observation, we derive a princidwell gain was nonmonotone and largest among the pal finite-window Fisher-information ridge and show
+tested rungs at 3.1% occupancy, exposing a contrast– that its optimal load obeys a cube-root law, ρ∗ (ν) =
+1
+
+3
+
+(6ν)1/3 −2/3+O(ν −1/3 ), arising from terminal detectorphase information loss.
+Sparse illumination itself is not the claimed contribution of this work. Prior work has used sparse patterns to
+reduce detector count rates and alleviate pile-up [?, ?].
+Here, instead, spatial occupancy is varied under equal
+mean detector load and equal incident dose, revealing a contrast-controlled boundary between multiplexlimited and photon-limited high-flux single-pixel imaging.
+This work contributes: (i) an exact finite-window
+count-information analysis of the nonparalyzable channel, including a missing-information identity and the
+cube-root ridge of Eq. (??); (ii) a convex renewal
+quasi-likelihood reconstruction with a truth-free analytic regularization rule, validated against the exact
+likelihood; (iii) two preregistered simulation studies
+— dense-pattern and equal-load occupancy-ladder —
+whose endpoints, gates, scene lists, and display subjects
+were frozen in immutable commits before any confirmatory reconstruction existed, and whose outcomes are
+reported as frozen, including the formally negative primaries; and (iv) the resulting operating map with its
+computable engagement criterion. Figure ?? sets out
+the single-pixel imaging chain, the dead-time saturation
+mechanism, and the resulting contrast–dead-time operating map. All code, frozen preregistration documents,
+and per-cell evidence bundles are openly released.
+
+2
+
+Renewal quasi-likelihood reconstruction
+
+We reconstruct by
+M
+i
+1 Xh
+(T −Ni τ ) λi (x)−Ni log λi (x) +λTV TV(x),
+x≥0 M
+i=1
+(2)
+with λi (x) = Φa⊤
+x
++
+d.
+The
+data
+term
+is
+convex
+i
+in λ (and in x through the affine map); its singlemeasurement stationary point λ̂ = N/(T − N τ ) coincides with the classical dead-time rate correction, so the
+estimator’s novelty resides not in the per-measurement
+formula but in the joint regularized inverse problem and
+the operating-point map it enables. At ceiling counts
+(N τ ≥ T ) the objective is unbounded below in λ —
+the true identifiability boundary of count-only observation; the fraction of ceiling counts is recorded per cell.
+A full heteroscedastic Gaussian likelihood fails at high
+load through a variance-collapse non-coercivity (Supplement §S1).
+
+x̂ = arg min
+
+3.1
+
+Truth-free regularization selection
+and descriptive audit
+
+Physical model and problem
+The TV weight is set by a frozen analytic scorestatement
+concentration rule with no per-scene tuning: λTV =
+
+√
+c σg 2 ln n with global constant c = 0.50 frozen
+p before
+any confirmatory data existed, and σg = Φ κA vs /M
+computed from the exact renewal per-count score variance vs (no Gaussian approximation; the central limit
+theorem is quantitatively untrustworthy at short windows ν ≤ 10). All arms are scaled by the identical rule
+through their own κA .
+
+A single-pixel detector with dead time τ observes, for
+illumination pattern ai and scene x ≥ 0, a Poisson arrival process of rate λi = Φ a⊤
+i x + d during an exposure
+of duration T = ντ ; after each registered count the detector is blind for τ (non-paralyzable, active start). The
+recorded observation is the integrated count Ni alone,
+with exact law
+
+
+ The measurement audit is descriptive and does not
+a model-adequacy
+test. All audit statistics
+P (Ni ≥ m) = FΓ(m,λi ) T −(m−1)τ = P Pois(zm ) ≥ m , constitute
+zm = λi (T
+−(m−1)τ ).
+(1) are excluded from regularization selection, reconstrucThe per-slot load ρi = λi τ is the dead-time duty; the tion, cell inclusion, and confirmatory pass/fail deciconventional regime keeps ρ ≲ 0.05. Illumination en- sions. The refit-bootstrap reference distribution is consembles used in this work: dense Bernoulli(1/2) pat- ditional on a smoothed plug-in scene; its empirical tail
+terns (Study 1 primary), complementary Hadamard- ranks are therefore not calibrated model-class p-values
+type pairs charged at 2M physical exposures and for arbitrary scenes and can be anti-conservative in the
+gamma-modulated patterns (supplementary ensemble upper tail when the true scene is rougher than the plugsensitivity), and the Study-2 fixed-occupancy binary in. Moreover, count-only observations collected at a sinladder of Section ??. Because patterns spread instanta- gle operating point cannot generally distinguish detecneous load, deployment statements use the per-pattern tor mean-response mismatch from radiometric rescal95th percentile of ρ rather than its mean; percentile ing of the scene. Detector-mismatch consequences are
+ledgers for every cell are part of the released evidence therefore quantified directly through the preregistered
+radiometric metrics in Section ??.
+bundles.
+2
+
+(a)
+
+dead time τ → (b)
+structured
+illumination
+
+bucket counts Ni
+
+low Cu
+
+DMD
+
+light
+source
+
+high Cu
+
+SPD
+
+object x
+
+pattern ai
+
+RQL
+
+recon. x̂
+
+photoncounting
+
+forward model: λi = Φ ai⊤x + d, exposure T = ντ, load ρ = λτ
+
+photon arrivals censored by dead time
+
+(b)
+
+τ
+
+(c)
+
+exposure T = ντ
+
+detected / slot νdet /ν
+
+1.0
+0.8
+0.6
+
+bucket contrast Cu
+
+1
+
+× lost (blind)
+
+| registered count
+
+ideal (no dead time)
+detected ρ/(1+ρ)
+
+ρ = 0.05
+(conventional)
+
+0.4
+ρ̄ = 0.6
+(high flux)
+
+0.2
+
+count-information
+ridge ρ *(ν)
+
+ρ̄ = 0.6 (high flux)
+
+high-flux operation helps
+conventional
+low flux
+
+maze 4/4
+
+0.5
+
+glyph 4/4
+spokes 4/4
+chirp 3/4
+
+transition band
+
+contour 1/4
+
+0.2
+
+microtexture 0/4
+
+0.1
+
+Γ=
+
+1
+
+0.05
+dense (Study 1)
+
+multiplex-limited (Γ < 1)
+
+0.0
+10−1
+
+100
+
+101
+
+0.01
+
+0.05
+
+0.1
+
+0.6
+
+1
+
+detector load ρ = λτ
+
+incident load ρ = λτ
+
+Figure 1: Contrast–dead-time operating map for high-flux single-pixel imaging. DMD: digital micromirror device;
+SPD: single-pixel (bucket) photon-counting detector; RQL: renewal quasi-likelihood reconstruction; ai : binary
+illumination pattern; x: scene; Ni : integrated bucket count; x̂: reconstruction; Φ: incident-flux scale; d: dark
+rate; τ : detector dead time; ρ = λτ : per-slot detector load; ν = T /τ : dead-time
+slots per exposure T ; Cu =
+p
+νρ/(1 + ρ): contrast-to-count-noise
+sdi (ui )/meani (ui ): measured bucket-energy contrast of ui = a⊤
+i x; Γ = Cu
+index. (a) Single-pixel imaging chain: structured illumination from a DMD probes a low- or high-contrast scene
+x, and the bucket counts Ni feed the RQL reconstruction x̂ under the forward model λi = Φ a⊤
+i x + d, exposure
+T = ντ . (b) Dead-time mechanism: after each registered count the detector is blind for τ (shaded), censoring
+later arrivals (×); the mean detected counts per slot νdet /ν = ρ/(1 + ρ) bend away from the ideal (dashed) as
+the load rises, while the exact count-information peaks on the ridge ρ∗ (ν) = (6ν)1/3 − 2/3 (ρ∗ ≈ 7.8 and 22.2
+at ν = 100 and 2000, respectively), well beyond the conventional ρ = 0.05 and the high-flux ρ̄ = 0.6 operating
+points. (c) Operating map in the contrast–load plane: the photon-limited onset Γ = 1 is a descriptive photonlimited-onset proxy, marking bucket modulation comparable to count noise; it is not a predicted or validated
+boundary for high-flux image benefit. The six Study-2 structural families are placed at the high-flux operating
+load ρ̄ = 0.6 by their measured bucket contrast and coloured by the frozen acquisition-speed gate outcome,
+with the number of accelerating instances shown as a green wedge: maze (Cu = 0.53), glyph (0.41) and spokes
+(0.38) accelerate 4/4, chirp (0.28) 3/4, contour (0.27) 1/4, and microtexture (0.17) 0/4, respectively, while the
+dense k = 512 rung (Cu = 0.040) sits at the Γ = 1 multiplex-limited boundary. All six family markers share
+the single operating load ρ̄ = 0.6; the horizontal offsets are cosmetic, applied only to separate near-coincident
+markers (chirp and contour differ by 0.01 in Cu ), and thin leader lines tie each family label to its marker. The
+contrast-controlled transition band is descriptive and does not estimate a universal critical contrast. Grayscale
+object icons are for display purposes.
+
+3
+
+4
+
+The
+finite-window
+information ridge
+
+count-
+
+4.1
+
+The missing-information identity
+
+Let IN (ρ, ν) denote the Fisher information of the singleframe count N with respect to log λ, and J = IN /ν its
+
+4.3
+
+per-slot normalization (J = 1 is the saturation ceiling:
+one unit of log-rate information per dead-time slot).
+Writing Rν ∈ [0, 1) for the residual dead-time phase
+left at the window end — the unobserved fraction of a
+dead-time period truncated by the frame boundary —
+the information splits as
+
+
+IN = E[N ] − ρ2 E Var(Rν | N ) .
+(3)
+
+Deployment zoning and the CLT
+trust boundary
+
+The Gaussian (CLT) surrogate information satisfies
+Jexact /JCLT ≃ 1 − ρ2 /(12ν), so the surrogate
+√ stays
+1.2 ν —
+within
+10%
+of
+exact
+only
+for
+ρ
+≤
+ρ
+≍
+0.9
+√
+a ν scaling, distinct from the ν 1/3 ridge. We partition the (ρ, ν) plane into an RQL deployment zone
+(per-pattern ρ95 ≤ 1, the regime the campaigns demonstrate), a transition band, an exact-reference mode
+(short-window and extreme-saturation reference computations with the exact PMF), and the informationdecreasing region ρ ≥ ρ∗ (ν). Zoning uses the perpattern 95th percentile of ρ, not its mean: spreadoccupancy patterns distribute per-frame load, and the
+deployment guarantee must hold for the loaded tail, not
+the average.
+
+The first term is the complete-data information of the
+underlying renewal record (each registered event contributes one unit on the log λ scale); the second is the
+price of not observing the terminal phase: the frame
+boundary censors the last dead-time period, and the
+count alone cannot reveal how much of the window was
+spent in that final blind interval. The terminal phase
+has P (Rν = 0) = 1/(1 + ρ) and density ρ/(1 + ρ) on
+(0, 1), so Var(Rν ) → ρ(ρ + 4)/[12(1 + ρ)2 ] → 1/12 at
+high load — the censoring price grows as ρ2 /(12ν) per
+slot.
+
+4.4
+
+Relation to prior work
+
+Müller systematized renewal-theoretic analysis of extended and nonextended dead-time counters, relatExpanding J at large ρ and large ν,
+ing distorted interarrival laws to the resulting count
+2
+4
+statistics and measurement-origin effects [?]. Yu and
+1
+ρ
+ρ
+1 ρ
++ 2− +
++o(ν −2/3 ). (4) Fessler derived exact first and second moments for sevJ(ρ, ν) = 1− −
+2
+ρ 12ν ρ
+6ν 144ν
+eral dead-time counting models and used those moThe leading tradeoff is between the saturation gap 1/ρ ments to study intensity correction and the adequacy
+(a slot only carries full rate information when occu- of Poisson reconstruction models [?]. Wang et al.
+pied by a completed detection–dead-time cycle) and derived pileup count statistics for idealized energythe censoring price ρ2 /(12ν). The marginal balance discriminating nonparalyzable x-ray detectors and eval1/ρ2 = ρ/(6ν) gives ρ3 = 6ν, i.e. the information- uated task-specific Cramér–Rao performance as a funcoptimal load
+tion of input rate, establishing substantial high-rate
+ρ∗ (ν) = (6ν)1/3 − 23 + O(ν −1/3 ),
+(5) degradation of spectral-counting advantages [?]. Alvarez used renewal-process large-count moments and
+with peak per-slot information
+multivariate-Gaussian count models to quantify pileup
+induced
+covariance,
+signal-to-noise
+loss, and materialJ(ρ∗ ) = 1− c−1 +c2 /12 ν −1/3 +o(ν −1/3 ) = 1−0.8255 ν −1/3
++o(ν −1/3
+), c = 61/3
+.
+Task-specific
+(6) estimation Cramér–Rao bounds [?].
+Exact evaluation of the renewal PMF gives ρ∗ = 4.53, finite-rate optima also arise in nuclear counting; for ex6.16, 7.87, 9.99, 13.77, 17.45, and 22.16 at ν = 20, 50, ample, Bécares and Blázquez optimized counting rate
+100, 200, 500, 1000, and 2000, respectively; the closed by balancing dead-time losses, counting uncertainty,
+form (6ν)1/3 − 2/3 gives 4.27, 6.03, 7.77, 9.96, 13.76, source multiplicity, and dead-time-calibration uncer17.50, and 22.23 — a 5.9% gap at ν = 20 shrinking to tainty [?]. Grönberg et al. derived an exact finite-frame
+sub-percent by ν = 500, consistent with the O(ν −1/3 ) count probability mass function for a seminonparalyzable detector with nonzero pulse length, validated its
+remainder [Fig. ??(a)].
+Two structural remarks. (i) The ridge is not a count- moments against an electronic Monte Carlo model, and
+variance pinning effect: at ρ = ρ∗ the count variance used the exact distribution together with Poisson and
+Gaussian approximations to evaluate Fisher informaVar N = ν 1/3 /62/3 still diverges with ν; counts
+√ pin to
+the ceiling only at the much larger scale ρ ≍ ν. The tion for a single-threshold soft-tissue-density task as a
+information peak is an information-geometric tradeoff, function of count rate; their fixed-frame Fisher curve
+not a saturation artifact. (ii) Beyond the ridge (ρ ≥ ρ∗ ) exhibits an interior maximum followed by high-rate dethe count information genuinely decreases — no estima- cline [?].
+tor operating on counts, including the exact-likelihood
+A complementary line retains richer event informareference, recovers it. High-flux operation is therefore tion. Rapp et al. modeled the sequence of deadbeneficial only up to a computable boundary, and that time-distorted detection times as a Markov chain, enboundary is one axis of the operating map reported abling accurate high-flux single-photon lidar and large
+here.
+acquisition-time reductions [?]. Jorgensen and Johnson
+
+4.2
+
+The cube-root law
+
+4
+
+derived asymptotic Fisher-information rates and efficient estimators for periodic dead-time event-detection
+processes, showing that activation and event statistics
+can retain information discarded by conventional histogram summaries [?].
+Here we isolate a different detector-channel question:
+an ideal nonparalyzable detector is active at the start of
+a finite exposure, only its integrated scalar count is retained, and the parameter of interest is the log arrival
+rate itself. Treating ρ = λτ and ν = T /τ as independent axes, we derive the exact finite-window information surface, the terminal-phase missing-information
+identity of Eq. (??), and the principal information ridge
+of Eq. (??). These statements concern the activestart ideal count-only channel and do not replace taskspecific finite-rate optima for nonzero-pulse-length detectors or information bounds for time-resolved deadtime event records.
+
+5
+5.1
+
+truth
+
+safe/full
+13.8 dB
+
+RQL fast
+15.9 dB
+
+row 32 profile
+0.00035
+0.00030
+0.00025
+0.00020
+truth
+safe/full
+RQL fast
+
+Figure 2: Natural-cohort representative: truth, safe operating point at full dwell (13.8 dB), and high-flux RQL
+at equal dwell (15.9 dB). Display subject selected by
+rule (disclosed): the photograph whose fixed-dwell gain
+lies closest to the cohort median of +1.44 dB (stl 16,
++1.46 dB) — a median representative, not a best case.
+The cohort is prior-limited at the studied photon budget: reconstructions are spatially smoothed and the
+high-flux benefit is radiometric, visible both in the recovered coarse structure and in the center-row intensity
+profile (right): the safe arm is nearly flat while the highflux arm tracks the scene’s intensity excursions at equal
+dwell.
+
+Study 1: dense patterns — the
+multiplex-limited phase
+
+Sgate = 1 by the frozen censoring taxonomy), so no
+time-to-quality acceleration could be certified. The preregistered fixed-dwell secondary, in contrast, was uniformly positive but small: at ν = 2000 the high-flux
+arm gained a median +0.28 dB (radiometric PSNR),
+positive in 24/24 scenes, with family-stratified bootstrap lower bound +0.23 dB — statistically significant,
+but far below the preregistered 1 dB practical-relevance
+bar. Both outcomes are reported as frozen; no endpoint, gate, or analysis constant was altered after the
+freeze.
+
+Preregistered design
+
+We tested whether renewal quasi-likelihood reconstruction permits operation at ρ̄ = 0.6 with a statistically
+significant reduction in total optical integration time
+relative to the conventional ρ̄ = 0.05 operating point,
+on 642 scenes under dense Bernoulli illumination (occupancy 50%). Scenes are the units of inference: 24
+confirmatory detail targets (six structural families ×
+four instances), each measured at nine dwell points
+ν ∈ {5, . . . , 2000} with five measurement seeds. Per
+scene, seed-mean radiometric PSNR versus optical integration time is isotonically regressed for each arm;
+the quality target is Q90 , the safe-arm minimum plus
+90% of the safe-arm span, and the acquisition-speed ratio Sj is the ratio of safe to high-flux crossing times,
+with a frozen censoring taxonomy (a safe-arm span below 0.5 dB is uninformative; a high-flux arm that never
+reaches Q90 scores Sj = 0). The confirmatory gate
+— median S ≥ 3, family-stratified nested-bootstrap
+(10 000 replicates) lower bound > 1, and ≥ 18/24 scenes
+with Sj > 1 — and every constant above were frozen in
+an immutable commit before any confirmatory reconstruction existed, together with a fixed-dwell secondary
+endpoint (median ≥ 1 dB at the terminal dwell, lower
+bound > 0, ≥ 18/24 positive).
+
+5.3
+
+Natural-scene cohort (secondary,
+no gate)
+
+On the preregistered natural-image cohort (30
+scenes, same dense-pattern protocol, no confirmatory
+gate), the acquisition-speed endpoint was safe-rangeuninformative for 12/30 scenes, while the fixed-dwell
+gain was larger and more uniform than on the detail
+cohort: median +1.44 dB, 29/30 scenes positive,
+family-stratified bootstrap lower bound +1.18 dB. For
+context, classical correlation ghost imaging on the
+identical measurement records scores 4.8–6.3 dB —
+at this photon budget (≈ 95 detected photons per
+pixel over the full acquisition) the likelihood-based
+5.2 Preregistered outcome
+reconstruction, not the sampling ratio, is what renders
+The confirmatory time-to-quality gate returned nega- the data usable. Smooth, prior-limited scenes thus
+tive: in 24/24 scenes the safe-arm quality span across occupy the low-benefit region of the acquisition-speed
+the entire dwell grid fell below the preregistered 0.5 dB map even where the fixed-dwell radiometric benefit of
+informativeness floor (safe range uninformative; high-flux operation is substantial.
+5
+
+0.00015
+0.00010
+
+5.4
+
+Mechanism: bucket multiplex con- ery sparse rung: Γ = 1.09, 6.07, 8.66, and 34.79, respectively [Fig. ??(c)].
+trast
+
+The two outcomes are jointly explained by the bucket
+contrast of dense multiplexed illumination.
+For
+occupancy-1/2 patterns on n pixels the bucket energies
+√
+ui = a⊤
+i x concentrate as Cu = sd(u)/mean(u) ∼ 1/ n
+(≈ 1.6% at 642 ): the structural information rides on
+a relative modulation of order 10−2 , so the per-count
+information about structure is contrast-limited, not
+count-limited — raising the flux adds photons to a
+nearly constant bucket. This is the multiplex-limited
+regime of the operating map; it motivates Study 2.
+
+6
+
+Study 2: the contrast ladder
+— equal load, equal dose
+
+6.1
+
+Preregistered design
+
+6.3
+
+The preregistered acquisition-speed gate returned formally negative: of its three frozen criteria, the effectsize criteria passed — median Sgate = 6.8 (bar: ≥ 3)
+with family-stratified bootstrap lower bound 2.8 (bar:
+> 1) — but the breadth criterion failed, with 16/24
+scenes accelerating against the preregistered 18/24 bar
+[Fig. ??(e)]. The frozen fixed-dwell secondary passed
+all three of its criteria (median +1.16 dB at the terminal dwell, 19/24 scenes positive, bootstrap lower bound
++0.72 dB); by the preregistered hierarchy it cannot rescue the failed primary, and no geometry, image-class, or
+endpoint redesign follows.
+The composition of the failure is structured. The
+eight non-accelerating scenes comprise the entire microtexture family (0/4; three safe-range-uninformative,
+one fast-arm-censored), three of four contour instances,
+and one chirp instance, while glyph, maze, and spokes
+accelerated 4/4 with per-scene speedups of 5–33×.
+After unblinding, a descriptive family-level analysis
+showed that the six family success fractions were monotonically ordered by their corresponding mean measured bucket contrasts (Cu = 0.53 maze 4/4, 0.41 glyph
+4/4, 0.38 spokes 4/4, 0.28 chirp 3/4, 0.27 contour 1/4,
+0.17 microtexture 0/4). This six-point ordering was not
+preregistered, did not enter any decision rule, and does
+not estimate a universal critical contrast; it is consistent with the confirmatory cohort spanning a contrastcontrolled transition.
+
+Study 2 varies spatial occupancy k ∈ {512, 32, 16, 1}
+(occupancy 50%, 3.1%, 1.6%, 0.1% of n = 1024 pixels at
+322 ) using binary matrices with exact row and column
+sums k, while holding the mean detector load and the
+incident photon dose fixed across the ladder : the reconstruction operator is A(k) = (n/k) B (k) at flux Φ = ρ̄/τ ,
+so every occupancy shares identical mean count rate,
+identical incident photons per pattern, and identical cumulative dose per object pixel; only the on-pixel peak
+intensity rises as n/k. Sparse patterns therefore cannot
+win by starving the detector — the mechanism prior
+sparse-pattern work uses to mitigate pile-up [?, ?]. Only
+the k = 16 arm carries the confirmatory gate (constants
+unchanged from Study 1); k = 32 is a preregistered robustness arm and k = 512 and k = 1 are controls, all
+without gates. Two mechanism variables are recorded
+descriptively and never enter any gate: the measured
+bucket-energy contrast Cu = sdi (ui )/mean
+p i (ui ) and
+the contrast-to-count-noise index Γ = Cu νρ/(1 + ρ),
+whose crossing of unity marks the onset of the photonlimited structural regime. A contrast-to-noise ratio
+on generator-frozen signal/background regions is carried as a no-gate co-secondary, and all photon budgets
+are reported onPtwo axes: the measured-photons axis
+Sdet = (M n)−1 i Ni (the convention of Ref. [?], whose
+experiments span Sdet = 0.096–0.44) and the incident
+axis Sinc , which differ nonlinearly under dead time.
+
+6.2
+
+Primary confirmatory outcome (k =
+16)
+
+6.4
+
+Fixed-dwell gain along the ladder
+
+At fixed dwell (ν = 2000, equal optical integration
+time and equal incident dose across occupancies) every rung of the ladder shows a positive high-flux median gain, and the dense rung is the smallest: per-image
+median +0.64 dB (24/24 scenes positive) at k = 512,
++4.13 dB (24/24) at k = 32, +1.16 dB (19/24) at the
+gate-carrying k = 16 arm, and +3.56 dB (21/24) at
+the raster control, respectively [Fig. ??(e)]. The profile across the sparse rungs is not monotone in contrast:
+sparsity raises bucket contrast but simultaneously raises
+the operator conditioning burden (κA = n/k), and the
+two effects compete — k = 32 combines most of the contrast benefit with half the conditioning burden of k = 16
+and attains the largest gain. The dense-rung value reproduces the Study-1 magnitude, confirming that the
+642 -to-322 re-parameterization did not manufacture the
+effect.
+
+The measured contrast ladder
+
+The measured bucket contrast follows the designed ladder: Cu = 0.040, 0.222, 0.316, and 1.270 at k = 512,
+32, 16, and 1, respectively, and the contrast-to-countnoise index at the high-flux operating point (ρ̄ = 0.6,
+ν = 2000) crosses the photon-limited threshold on ev6
+
+safe ν=2000
+9.7 dB
+
+fast ν=200 (1/10 dwell)
+9.5 dB
+
+fast ν=2000
+12.9 dB
+
+22.0 dB
+
+21.7 dB
+
+32.4 dB
+
+the high-flux gain persists and grows with dwell: +0.66,
++1.84, and +2.32 dB at ν = 20, 200, and 2000, respectively [Fig. ??(f)], reported on the measured-photons
+axis Sdet for direct comparison with single-photon underwater single-pixel experiments [?].
+
+maze (largest gain, best case)
+
+spokes (prereg subject)
+
+truth
+
+6.7
+
+Robustness to detector mismatch
+
+Detector-mismatch consequences were quantified descriptively on the 642 cohort at the preregistered anchor
+(M/n = 0.5, ν = 500), pairing each perturbed cell with
+its no-mismatch baseline. Every anchor perturbation
+leaves the RQL radiometric PSNR within 0.34 dB of
+baseline at both operating points: dead-time miscalibration τ̂ = τ (1 ± 0.1) costs at most 0.12 dB (with a ±6%
+Figure 3: Study-2 reconstructions at the gate-carrying radiometric flux bias, the largest observed); a 10% dark
+occupancy (k = 16, RQL, seed 0), all through the frozen rate costs 0.16 dB when calibrated and 0.34 dB when
+production path. Row subjects by disclosed rule: the unmodeled; afterpulsing at 2–5% costs at most 0.09 dB.
+preregistered display subject (spokes), the largest fixed- Under the same perturbations the pre-correction arm
+dwell gain in the frozen verdict table (maze, +9.7 dB degrades more in five of six anchors (up to 0.79 dB,
+seed-mean — a best case, labeled as such), and a failing- unmodeled dark). Start-mode, guard-time, and deadfamily representative (microtexture). Columns: truth; time-jitter axes, severity sweeps to 50% dark, and the
+safe operating point at full dwell; high flux at one tenth descriptive measurement-audit distributions are tabuof the dwell; high flux at full dwell. On contrast- lated in the supplement.
+adequate scenes the high-flux arm matches the safe
+arm’s quality in a tenth of the acquisition time and far
+exceeds it at equal time (22.0 → 32.4 dB on the maze),
+while the low-contrast microtexture is indifferent to flux 6.8 Exact-likelihood reference at small
+at every dwell — the operating map in three rows.
+scale
+6.7 dB
+
+7.0 dB
+
+microtexture (failing family)
+
+6.8 dB
+
+6.5
+
+Because RQL is a convex surrogate, we verified at
+
+Mechanism separation: equal-load 82 and 162 that it tracks the exact renewal likeligain is not rate starvation
+hood under an identical TV functional and the iden-
+
+tical frozen selection rule: across the full preregistered grid (ρ ∈ {0.03, . . . , 2}, ν ∈ {20, . . . , 2000},
+three seeds, six scenes, 864 paired reconstructions)
+the median exact-minus-RQL radiometric-PSNR gap is
+≤ 0.01 dB throughout the deployment zone and reaches
+only −0.05 dB in the extreme-load corner (162 , ρ ≥ 0.6,
+ν = 2000). Individual cells differ in both directions (up
+to 9 dB), consistent with the nonconvexity of the exact
+objective, with no systematic advantage to either arm;
+full tables and multistart diagnostics are provided in
+the supplement. The convex surrogate therefore costs
+essentially nothing in reconstruction quality On the reported small exact-reference grid and under the frozen
+TV settings, the exact and approximate likelihood reconstructions agreed to the stated numerical tolerance,
+and the exact calculation added little runtime at those
+tested sizes. This empirical agreement does not establish uniqueness of the TV-regularized solution; convex6.6 Dynamic scattering
+ity of the data term alone is insufficient when the design
+Under multiplicative dynamic scattering (lognormal is underdetermined and the TV penalty is not strictly
+AR(1) factors, CV(α) = 0.20, applied before dead time) convex.
+
+On the six frozen mechanism representatives we ran the
+k = 16 geometry in two flux conventions: (i) normalized
+— the Study-2 mechanism, equal mean load and equal
+dose; and (ii) unnormalized — sparsity is allowed to reduce the detector count rate, as in prior sparse-pattern
+mitigation. In the normalized convention the high-flux
+arm retains a positive gain of +1.81 and +1.10 dB at
+ν = 200 and 2000, respectively, at detector loads of
+Sdet = 0.072–0.72 counts per pattern per pixel. The unnormalized convention shows larger relative deltas but
+strictly lower absolute quality at every dwell (e.g. 7.45
+versus 10.26 dB at the safe point, ν = 2000): it wins
+its comparison by starving the detector. The equalload, equal-dose gain is therefore a contrast effect, not
+a rate-reduction effect.
+
+7
+
+safe/full
+8.4 dB
+
+safe/short
+8.2 dB
+
+POISSON-LIN
+8.0 dB
+
+PRECORRECT
+6.6 dB
+
+RQL
+8.3 dB
+
+detail_glyph_0
+
+truth
+
+16
+
+PSNRrad (dB)
+
+glyph crop
+x[2,42) y[24,40)
+
+14
+
+truth
+
+safe/full
+18.2 dB
+
+safe/short
+18.1 dB
+
+POISSON-LIN
+9.1 dB
+
+PRECORRECT
+1.0 dB
+
+RQL
+18.0 dB
+
+12
+10
+8
+
+safe ρ̄ = 0.05 (median)
+
+stl_02
+
+fast ρ̄ = 0.6 (median)
+per-image (24)
+
+6
+10
+
+−3
+
+10
+
+−2
+
+10−1
+
+optical time Topt = M ν τ (s)
+
+(a)
+
+(b)
+
+acquisition speedup S
+
+101
+
+Study-1 gate bar (S=3)
+
+100
+count-rate ratio
+median S
+per-image S
+censored (S = 0)
+
+10−1
+
+S0:0
+S1:24
+
+S0:0
+S1:24
+
+0.3
+
+0.6
+
+S0:0
+S1:24
+
+1.0
+fast mean load ρf̄
+
+S0:0
+S1:24
+
+2.0
+
+S0 = fast right-censored, S1 = safe uninformative
+
+(c)
+
+Figure 4: Study 1: the dense-pattern multiplex-limited regime (frozen preregistered display subjects). (a) Image
+arrays for the confirmatory detail subject detail glyph 0 (top, with the frozen zoom crop) and the naturalcohort boundary subject stl 02 (bottom): truth, safe operating point at full and short dwell, and the three
+high-flux arms at ρ̄ = 0.6, ν = 50. Dense multiplexing leaves the detail subject prior-limited in every arm (the
+frozen negative made visible), while on the natural subject the naive and pre-corrected arms collapse (9.1 and
+1.0 dB) and RQL retains full quality (18.0 dB). (b) Seed-mean radiometric PSNR versus optical integration time
+for all 24 detail scenes (thin lines) with cohort medians (thick): the safe-arm median spans less than 0.2 dB —
+the safe-range-uninformative verdict. (c) Per-scene acquisition-speed bounds versus fast-arm load: every scene
+sits at the S = 1 censoring bound, below the preregistered gate bar, while the count-rate ratio (dotted) shows
+what the detector alone would permit — the gap between the two is the multiplex limitation.
+
+7
+
+Discussion
+
+all results are simulation-based; the exact renewal forward model, the detector-mismatch envelopes of SecThe scientific position established by the two studies tion ??, and the openly released frozen benchmark
+is deliberately mixed. Dense illumination is multiplex- compensate but do not substitute for optical-bench
+limited; sparse equal-load illumination produces large validation. Second, sparse operation at equal dose
+and statistically supported benefits for many, but not concentrates the same illumination into fewer pixsufficiently many, preregistered scenes to pass the els: the on-pixel peak irradiance rises as n/k (64×
+breadth gate. The scene response is nevertheless struc- at the gate-carrying occupancy), which spatial-lighttured by bucket contrast, while the tested occupancy modulator power budgets, laser-safety limits, and local
+ladder exposes an independent conditioning penalty. photodamage constraints may cap before the detector
+Together with the exact count-information ridge and does. The operating map therefore still requires opticalthe passed fixed-dwell secondary, this constitutes an op- bench validation, and its sparse rungs are conditional
+erating map: a computable answer to when high-flux on peak-power headroom.
+operation is worth engaging, rather than a universal
+acceleration claim.
+Three extensions follow directly from the failure
+Two scope boundaries must be stated plainly. First, structure. For uniformly scattered fixed-k supports,
+8
+
+n−k
+Cu2 = k(n−1)
+(n∥x∥22 − 1), giving the observed k −1/2
+spatial-averaging law. A local support instead averages only the effective number of independent correlation cells within the patch and may therefore preserve modulation from scale-matched structure. Local,
+foveated and multiscale single-pixel patterns have previously been developed for resolution and measurement
+efficiency; optimizing their spatial scale for equal-load
+dead-time contrast is a distinct future design problem.
+The present results do not establish that adaptive illumination is necessary. Although dead-time nonlinearity makes the statistically efficient pattern scale scenedependent, a strict adaptive advantage requires a specified scene class, resource constraint and loss. A natural
+follow-up is to seek a minimax or Chernoff-information
+separation between fixed multiscale illumination and
+a two-stage scale-estimation-plus-matched-pattern policy.
+A coherent extension would use a coarse complexfield estimate to synthesize an optical displacement that
+suppresses the predicted common mode before photon
+counting. Unlike electronic balanced subtraction, a
+dark-port receiver removes photons before dead-time
+loss. Exact nulling, however, gives quadratic residual sensitivity and demands spatial-mode matching and
+phase stability; the relevant operating variable is therefore an optimized displacement bias rather than maximal null depth. Testing this receiver first under static
+and then dynamic scattering is a natural optical-bench
+extension. More broadly, architectures that retain perphoton timing [?, ?] occupy a different information
+regime than the count-only channel analyzed here; the
+map presented in this work is the count-only baseline
+against which such richer architectures can be costed.
+The proposed operating map, the deployment-legal reconstruction rule, and the frozen open benchmark open
+up an avenue for dwell-time-limited and photon-budgetlimited single-pixel systems operating deep in the deadtime regime.
+
+Code and data availability
+All simulation code, frozen preregistration documents,
+per-cell manifests, and evidence bundles are available
+at [repo URL wording — user decision].
+
+Acknowledgments
+[funding/acknowledgments — user decision]
+
+9
+
+0.7
+
+1.0
+
+0.8
+0.7
+
+0.6
+
+100
+
+0.5
+0.3
+
+0.4
+
+0.2
+
+10−1
+*
+
+ρ (ν) exact argmax
+
+0.0
+
+(6ν)1/3 − 2/3
+ρ0.9 (CLT 10%)
+
+10−2
+
+102
+
+103
+
+k=32 (3.1%)
+
+k=16 (1.6%)
+
+k=1 (0.1%)
+
+on-pixel ×n/k = × 2
+rows=cols=512, rank 1024
+
+on-pixel ×n/k = × 32
+rows=cols=32, rank 1024
+
+on-pixel ×n/k = × 64
+rows=cols=16, rank 1024
+
+on-pixel ×n/k = × 1024
+rows=cols=1, rank 1024
+
+dead-time slots per frame ν = T/τ
+
+̄
+equal mean load ρ,̄ equal incident dose per pixel (A = (n/k) B, Φ = ρ/τ)
+
+(a)
+
+(b)
+14
+13
+101
+
+10−1
+
+)
+)
+.6% .1%
+(1 (3
+16 32
+
+14
+
+12
+3
+
+11
+10
+
+2
+
+9
+
+%)
+
+102
+
+(c)
+
+(d)
+
+ν = 200
+
+ν = 200
+
+ν = 20
+
+dynamic scattering, CV(α) = 0.20
+
+10−3
+
+10−2
+
+10−1
+
+100
+
+measured Sdet (photons pattern−1 pixel−1)
+
+(f)
+
+preregistered bar (k=16 gate)
+
+5
+0
+−5
+
+101
+
+10
+
+0
+
+10−1
+51
+
+%)
+
+50
+
+2(
+
+no gate (frozen)
+
+acquisition speedup S
+
+fixed-dwell ΔPSNRrad (dB)
+
+dwell budget ν (patterns)
+
+ν = 20
+
+8
+
+103
+
+pattern occupancy k (k/1024)
+
+ν = 2000
+
+ν = 2000
+
+10
+
+4
+101
+
+10
+
+12
+
+6
+
+1
+
+7
+
+50
+
+2(
+51
+
+ρ ̄ = 0.05 (safe)
+ρ ̄ = 0.6 (high-flux)
+
+8
+
+100
+
+16
+
+4
+
+no gate (frozen)
+
+%)
+
+0.1
+1(
+
+5
+
+CNR safe
+CNR fast
+
+32
+
+no gate (frozen)
+
+photon-limited threshold Γ = 1
+
+PSNRrad (dB)
+
+flux figure Γ
+
+100
+
+PSNR safe
+PSNR fast
+
+PSNRrad (dB)
+
+Γ (ρ ̄ = 0.6, ν = 2000)
+
+CNR
+
+Cu (all ρ,̄ ν)
+
+measured contrast Cu
+
+k=512 (50%)
+
+Hao et al. exp. range
+
+0.9
+
+Jexact = IN/ν (per-slot info about log λ; ceiling 1)
+
+0.3
+
+0.30.5
+0.5
+
+0.5
+
+0.5
+
+per-slot load ρ = λτ
+
+0.5
+
+0.3
+
+0.5 0.5
+0.5
+
+101
+
+0.3
+
+0.3
+
+gate bar (S=3)
+
+)
+)
+.1% 1.6%
+(
+16
+
+(3
+
+%)
+
+0.1
+
+1(
+
+pattern occupancy k (k/1024)
+(e)
+
+Figure 5: The contrast–dead-time operating map (Study 2). (a) Exact count-Fisher-information map with the
+cube-root ridge ρ∗ (ν). (b) Representative occupancy-ladder masks (k = 512/32/16/1) under equal mean detector
+load and equal incident dose (A = (n/k)B, Φ = ρ̄/τ ). (c) Measured bucket contrast Cu and photon-limited index
+Γ versus occupancy; the dense rung sits at the Γ = 1 threshold. (d) Radiometric PSNR and CNR versus dwell for
+the preregistered resolution-target subject (detail32 spokes 0, k = 16); the ridge of panel (a) is a scalar countinformation result and no coincidence with the image optimum is claimed. (e) Fixed-dwell gain by occupancy
+(top; the dotted line is the k = 16 preregistered bar) and per-scene acquisition speedups on the gate-carrying
+k = 16 arm (bottom); open markers are fast-arm-censored scenes. (f) Dynamic-scattering secondary in measuredphotons units; the shaded band is the experimental range of Ref. [?].
+
+10
+
+

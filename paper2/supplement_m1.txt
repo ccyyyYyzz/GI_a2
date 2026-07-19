@@ -1,0 +1,502 @@
+Supplement: Information-optimal illumination for dead-time-limited
+single-pixel imaging
+[author block — user decision (mirrors main text)]
+Numbering “Theorem 1–3” below refers to the main text; equations and propositions local to this supplement carry the S-prefix. All frozen constants trace to the R10/R11/R13/R14 rulings cited in the main-text
+source comments.
+
+S1
+
+The framework theorem: one master concave program
+
+The framework theorem generalizes the main-text design program: with the random-hold kernel JH (ρ, ν) of
+Theorem 2 inside the rank-one atoms Hz = νJH (ρz , ν) qz qz⊤ , the design-measure problem remains concave,
+and every true interior optimum of the declared
+P problem satisfies one generalized reduced-sensitivity/KKT
+system: the sensitivity ψ(z) = M tr[V −1 Hz ] − m βm cm (z) obeys ψ(z) ≤ η with equality on support atoms,
+and at any support atom interior in a smooth scalar coordinate y, ∂y ψ = 0 with ∂y2 ψ ≤ 0. The load
+′
+(ρ) ℓ equal to the marginal resource shadow
+coordinate yields the information-water-filling equation — M νJH
+⊤ −1
+price, with ℓ = q V q — while the support-scale and weight-power coordinates equate 2M νJH (ρ) qy⊤ V −1 q
+to the corresponding marginal dose/peak/dispersion price: the apparent “conditioning penalty” is not an ad
+hoc term but the V −1 geometry inside the reduced sensitivity, which also explains why raising proxy contrast
+from p = 1 to p = 2 can lower the true objective. One caveat is kept deliberately: the master design problem
+places load, support scale, and intensity weighting in one constrained concave measure optimization, and
+its support atoms satisfy a common reduced-sensitivity condition; but the empirically observed occupancy
+(k ≈ 32) and weighting (p ≈ 1) optima motivate these coordinates and are not themselves claimed as
+continuous KKT theorems — they were selected from discrete grids and judged by image endpoints, not by
+the master log det objective.
+
+S2
+
+The alignment proposition
+
+At
+values ℓi = qi⊤ V −1 qi , allocate scalar loads under the budget
+P a fixed design iterate with directional
+P
+i πi ρi = B to maximize F (ρ) =
+i πi ℓi J(ρi ); on an interval where J is increasing and strictly concave,
+the water-filling optimum satisfies ℓi J ′ (ρ∗i ) = β at every interior coordinate. A single global source induces
+ρ̃i = κui , with ui = a⊤
+i x the bucket brightness.
+P
+Proposition S1 (Alignment and projected-residual bound). Let πi > 0, i πi = 1, and consider
+max F (ρ) =
+ρ
+
+X
+
+πi ℓi J(ρi )
+
+subject to
+
+i
+
+X
+
+πi ρi = B,
+
+ρi ∈ [ρi , ρi ].
+
+i
+
+Assume J ∈ C 2 on the admitted interval and −ℓi J ′′ (ρ) ≥ m > 0 for every i and every admitted ρ. Let the
+feasible fixed-flux allocation be ρei = κui .
+The fixed-flux allocation is optimal if and only if there exist a scalar β and normal-cone elements si ∈
+N[ρ ,ρi ] (e
+ρi ) such that
+i
+ℓi J ′ (e
+ρi ) − β − si = 0
+for every i. For any β, choose si as a closest normal-cone element and define the projected KKT residual
+ri = ℓi J ′ (e
+ρi ) − β − si .
+
+1
+
+0 ≤ F (ρ∗ ) − F (ρ̃) ≤
+
+1 X
+πi ri2 .
+2m i
+
+(S1)
+
+If every ρei is interior, si = 0 and ri = ℓi J ′ (κui ) − β, recovering the interior alignment condition.
+Proof. The feasible set is convex and compact, and F is strictly concave under the curvature assumption, so
+the KKT conditions are necessary and sufficient and the optimum is unique. The equality multiplier is β;
+the box constraints contribute the normal-cone elements si . This proves the first statement.
+Let ∆i = ρ∗i − ρei . Strong concavity of each fi (ρ) = ℓi J(ρ) gives
+fi (ρ∗i ) − fi (e
+ρi ) ≤ fi′ (e
+ρi )∆i −
+
+m 2
+∆ .
+2 i
+
+P
+ρi ) = β + si + ri and sum with weights πi . The budget equality gives i πi ∆i = 0, while the
+Write fi′ (e
+normal-cone property gives si ∆i ≤ 0. Completing the square term by term proves the stated bound; the
+lower bound follows from optimality of ρ∗ .
+A computable projected-KKT residual — not Cu alone — therefore certifies whether one global flux knob
+is close to the scalar water-filling optimum. In power-law form, if J ′ (ρ) ≍ Cρ−s and ℓi ≍ uα
+i , fixed flux aligns
+when α ≈ s; for the rising kernel J = ρ/(1 + ρ) the local slope s(ρ) = 2ρ/(1 + ρ) runs from 0 toward 2, so the
+often-invoked ℓ ∝ u2 alignment is only a high-load approximation. Without the alignment condition there
+is no scene-independent constant-factor guarantee: two directions with u1 /u2 → ∞ but ℓ1 /ℓ2 → 0 drive the
+fixed-flux objective ratio to zero, so fixed flux can be arbitrarily bad. With random holds, J ′ vanishes at
+the jitter cap and is negative beyond it, so fixed flux can overdrive the brightest directions and explicit gain
+control becomes necessary. This explains both sides of the companion’s dev evidence [?]: RIDGE-SCAT32
+with one global knob is near-optimal exactly when its realized residuals are small (self-water-filling), while
+the uniform servo — which loses by up to ∼ 7 dB on sparse-support scenes — fails because forcing equal ρi
+discards a naturally favorable alignment between ui and ℓi .
+
+S3
+
+Design machinery in full
+
+S3.1
+
+Task subspace and numerical ridge
+
+The estimable subspace is frozen at r = 200: B is the top-200 eigenbasis of the fixed comparator’s information
+matrix under the same pre-scan, dwell, and resource convention, computed before the optimization and held
+fixed, with a fixed numerical ridge ϵ0 = 10−9 tr(B ⊤ VFIXED∗ B)/r (R13 §6). A design-dependent ridge is not
+permitted: it would change the objective derivative and invalidate the sensitivity calculation.
+
+S3.2
+
+The full-stack near-optimality certificate
+
+By concavity of log det and affineness of ξ 7→ V (ξ), a feasible design ξ ∗ isPoptimal iff there
+P exist constraint
+multipliers such that the reduced sensitivity s(a) = tr[V (ξ ∗ )−1 H(a)] − j αj ej (a) − k βk ck (a) satisfies
+s(a) ≤ η ∗ over A with equality on the support (the constrained Kiefer–Wolfowitz / general equivalence
+theorem for nonlinear models [?, ?]). The confirmatory certificate evaluates this gap for the deployed balanced
+SCAT32 design against the continuous optimum of the full deployedP
+conditioning stack over the expanded
+dictionary Dcert = Dload ∪ Dgain (§??). With V (ξ) = Vpre + Mmain a ξa Ha + ϵ0 I on the frozen r = 200
+subspace and Vfix the load-matched deployed SCAT32 information matrix for the same pre-scan, dwell,
+budget, subspace, and numerical ridge, the certified class is
+
+
+ξ ≥ 0, 1⊤ ξ = 1, c⊤ ξ ≤ b, U + ξ ≤ 0, U − ξ ≤ 0,
+,
+(S2)
+Cstack = ξ :
+−1
+tr{V (ξ)−1 } ≤ 1.05 tr(Vfix
+), V (ξ) ⪰ 0.5 Vfix
+where U ± encode the ±5% per-pixel dose band. Pointwise peak, ceiling, support, weight, and RQL-trust
+restrictions remain atom-admission guards; the A-risk and spectral conditions are global design constraints
+and are never approximated by dropping individual atoms. With atom sensitivity da = Mmain tr(Vd−1 Ha ) at
+
+2
+
+the deployed matrix Vd and d¯d = tr[Vd−1 (Vd − Vpre − ϵ0 I)], concavity gives log det V (ξ) − log det Vd ≤ d⊤ ξ − d¯d
+for every feasible ξ, so the support-function bound
+
+Gstack = sup d⊤ ξ − d¯d ,
+Gstack /r ≤ 10−2 ,
+(S3)
+ξ∈Cstack
+
+upper-bounds the optimality gap and certifies local D-efficiency Eff D ≥ exp(−Gstack /r) ≥ e−0.01 = 0.99005.
+The spectral constraint enters
+exactly
+as the linear matrix inequality V (ξ) − 0.5 Vfix ⪰ 0, and the A-risk cap
+
+
+−1
+I
+through the Schur block V I(ξ) W
+⪰ 0 with tr W ≤ 1.05 tr(Vfix
+); the dual of the resulting conic linear program
+carries one nonnegative budget multiplier, upper/lower pixel-dose multipliers, a positive-semidefinite matrix
+price for the spectral LMI, a positive-semidefinite block price and trace multiplier for the A-risk LMI, and
+a full-dictionary maximum reduced sensitivity. The frozen implementation is a certified cutting-plane outer
+approximation: spectral eigenvector cuts z ⊤ {V (ξ) − 0.5 Vfix }z ≥ 0 for every discovered violating generalized
+eigenvector z; A-risk tangent cuts h(Vk ) − tr{Vk−2 (V − Vk )} ≤ 1.05 h(Vfix ) for the convex h(V ) = tr(V −1 )
+with gradient −V −2 ; a linear master with budget/dose prices and coverage-seeded column generation [?];
+and an exact scan over all of Dcert each round. A finite cut set defines an outer relaxation of Cstack , so a
+small master bound remains conservative; a large bound is never called a counterexample unless a feasible
+primal design is constructed. To that end every cell also runs a frozen support-expanding primal search over
+Cstack (positive initialization on all admitted columns or Frank–Wolfe atom injection); a feasible design with
+actual [log det V (ξ) − log det Vd ]/r > 10−2 classifies the cell COUNTEREXAMPLE, and a primal lower bound never
+certifies near-optimality — it can only refute it. Each of the 480 cells receives exactly one terminal status —
+CERTIFIED, COUNTEREXAMPLE, or NUMERICAL UNRESOLVED — under the frozen compute protocol (60 s primal
+screen, 180 s primary cutting-plane solve, one deterministic rescaled retry of 180 s under frozen equilibration;
+CERT CELL WALL CAP = 420 s; no third attempt, no threshold change, no imputation, no cell deletion),
+and records solver status (primary and retry), wall seconds, coefficient dynamic range, dictionary-scan and
+A-risk/spectral cut counts, the full-dictionary scan residual, primal and dual gaps per r, the minimum
+generalized eigenvalue, the A-risk ratio, and MU CAP ACTIVE (an active finite dual cap certifies only after
+a ×100 cap-stability rerun changes the bound by at most 10−4 r with all residuals still passing). Before
+freeze the pipeline must pass a four-toy suite (budget+dose active; A-risk only; spectral only; all four active
+with a dose-feasible design rejected by conditioning) with independent primal solves, primal–dual agreement
+≤ 10−8 , minimum PSD residual ≥ −10−9 , normalized complementarity ≤ 10−8 , and full-dictionary scan
+residual ≤ 10−8 . The certificate is comparator- and subspace-relative by construction: it preserves the
+predeclared conditioning of SCAT32 on the directions SCAT32 resolves, and it is not a global optimum
+over all images, subspaces, risk tradeoffs, or physical patterns. Continuous weights are rounded to an exact
+972-row design by efficient rounding followed by deterministic exchange [?, ?, ?], admissible only if the exact
+D-efficiency ≥ 0.95.
+
+S3.3
+
+Guards as constraints
+
+The raw optimum is admissible only after all frozen guards pass; each is a constraint of the master program
+or a post-rounding check, not a tunable proxy. Peak (two-part, R13 A2): a shape guard bounds unit-load
+support weights to 41 ≤ wj ≤ 4 with support size k ≥ 16, and a physical guard caps maxi,j aphysical
+≤ 1536
+ij
+(the peak of a uniform k = 16 atom at the absolute load cap ρ = 24), so matched-intensity ridge atoms cannot
+silently demand more peak power. Weight power (R10 G4): the dictionary contains powers p ∈ {0, 1} only;
+p = 2 is excluded because dev evidence showed higher proxy contrast can worsen conditioning and endpoint
+quality. Per-pixel dose (R10 G5): each pixel’s mean exposure stays within ±5% of the image mean, enforced
+¯ maxj grj (R13 A5).
+in-optimizer and re-verified after rounding; a necessary row bound follows, ρr ≤ 1.05 M d/
+Spectral floor (R10 G6): VOED ⪰ 0.5 VFIXED∗ on B, with a convex-mixture fallback whose coefficient is fixed
+from information matrices before any image endpoint is seen. Kernel and trust (R11 G7–G8, R13 A1): every
+(ν, ρ) node is certified for exact-PMF mass, score, and derivative agreement, mean-information efficiency
+Jmean /Jexact ≥ 0.90, finite-window RQL log-load bias | log(ρ† /ρ)| ≤ 0.05, ceiling probability pceil (ρ, ν) ≤ 0.05
+−1
+−1
+per atom and ≤ 0.01 design-weighted. A-risk (R10 G7): tr(Vexact
+) ≤ 1.05 tr(VFIXED
+Any violation
+∗ ).
+is a declared failure state (DICTIONARY RANK FAIL, CONTINUOUS CERTIFICATE FAIL, SPECTRAL GUARD FAIL,
+A RISK GUARD FAIL, DOSE GUARD FAIL, ROUNDING FAIL), whose predeclared fallback is the fixed comparator;
+no threshold is retuned after freeze.
+3
+
+S3.4
+
+The frozen dictionary
+
+The exact searchable base dictionary Dload includes all cyclic translates of: scattered balanced supports at
+k = 16 and k = 32; the solid 4 × 4 patch; the committed Lblob6 × 6 16-pixel support; bars/rectangles 1 × 16,
+2 × 8, 4 × 4, 8 × 2, 16 × 1; compact 32-pixel square/rectangle variants; and the frozen 16-pixel ring/annulus
+family — with p = 0 and guarded p = 1 weights for every applicable support. The implementation supports
+variable k; all translation families use the circulant/FFT evaluator, and the dictionary manifest carries every
+family, translation, power, support size, and SHA256. These are the target-load-normalized atoms: each
+pattern’s amplitude is chosen to hit a predicted load.
+For the near-optimality certificate only, an additional gain-coupled family Dgain is formed: for every
+frozen base geometry and weight pattern, physical rows ag,γ = γ abase
+with γ ∈ {0.2, 0.5, 1, 2, 5}, the base
+g
+base
+ag
+normalized by the scene-independent physical convention of the fixed patterns, and predicted load
+allowed to emerge as ρg,γ = ρ̄ γ (abase
+)⊤ x̂ — never rescaled to a target load, so fixed-flux self-water-filling
+g
+and bounded per-pattern gain control lie inside the comparison class. The same support, weight, physicalpeak, ceiling, and RQL-trust admission guards apply to both parts; Dcert = Dload ∪ Dgain is SHA256-frozen
+before any confirmatory scene is opened.
+
+S3.5
+
+Budget accounting
+
+P
+P
+pred
+obs
+For
+P every arm both the incident budget Binc = i λs,i T and the detected budgets Bdet = i E[Ni ], Bdet =
+i Ni are reported, together with total and maximum per-pixel dose. Bdet may serve as an electronicsthroughput guard if a hardware limit is frozen before confirmation, but it is never the sole fairness constraint:
+for a nonparalyzable detector E[N | ρ] ≃ νρ/(1 + ρ), whose marginal cost tends to zero at high load, so a
+detected-count-only budget can permit arbitrarily large incident power while appearing nearly cost-free.
+
+S4
+
+Monte-Carlo verification detail
+
+The refined sweep (jitter sfi v2: lognormal holds, 100,000 frames per cell, common random numbers, 25point log grid of spacing 1.157, ν ∈ {200, 2000}) confirmed the R14 law out-of-sample. At ν = 2000 the
+measured peaks are ρ∗ = 22.297, 10.739, 5.173, 3.862, 2.153, and 1.607 at cv = 0, 0.02, 0.05, 0.1, 0.2, and 0.3,
+respectively; both predictions registered before the data existed hit — cv = 0.02 predicted ≈ 10.4, measured
+10.739 (3%); cv = 0.2 predicted ≈ 2.30, measured 2.153 (6%) — and every in-sample peak lies within one
+grid notch of its exact-law value (commits 8a627bb, predictions registered pre-data; 1d8d7aa, verdict). The
+ν = 200 column is consistent with the crossover correction: the cv = 0 peak at 9.28 tracks the exact ridge
+10.04, and cv = 0.3 measures 1.86 against the predicted 1.77.
+A continuous-peak zoom (quadratic interpolation, local run, 150,000 frames) and an independent replication (Colab, 400,000 frames) then measured the four jittered peaks twice each at ν = 2000: local 9.645,
+5.154, 3.752, 2.106 and replicated 9.610, 5.700, 3.399, 2.051 at cv = 0.02, 0.05, 0.1, 0.2, respectively. The
+pooled eight-measurement log-log fit gives slope −0.658 vs. the predicted −2/3 (1.3%); the constant sits
+about 5% below 2−1/3 , at the edge of the run-to-run noise, so the frozen statement is: exponent confirmed
+at 1.3%, constant consistent within 5–10%. The end points replicate a mild ≈ −8% low bias across both
+runs, left as an open higher-order note (candidate: a lognormal third-moment correction to the leading finitevariance law). One intermediate hypothesis is on the record: after the first two zoom points, an effective
+jitter-cost multiplier k = 4/3 was preregistered (commit 5e51088) and was refuted by the very next measured
+point, whose deviation flipped sign (commit 1a32758) — peak-location noise on flat information tops, not a
+systematic constant. The fuller three-hold-family exponent battery frozen in the ruling (tests E1–E5, with
+matched-CV gamma and bounded two-point holds and cross-fitted conditional-score estimation) remains a
+preregistered extension beyond this verdict.
+
+4
+
+Table S1: Per-dwell ridge operating-point results (median over the 24 confirmatory scenes; source: imaging
+shards). ∆Q columns are median seed-mean radiometric-PSNR gains; n>0 counts scenes with positive gain
+against SCAT32-060. Only the ν = 2000, SCAT32-060 entry is the frozen primary gate (+1.87 dB, 19/24).
+ν
+5
+10
+20
+50
+100
+200
+500
+1000
+2000
+
+achieved ρ̄
+0.246
+0.487
+0.967
+2.401
+4.778
+9.398
+13.806
+17.541
+22.255
+
+∆Q vs 060 (dB)
+−0.08
+−0.03
++0.10
++0.34
++0.76
++1.14
++1.31
++1.71
++1.87
+
+∆Q vs SAFE (dB)
++0.15
++0.25
++0.65
++1.16
++1.70
++1.97
++2.99
++3.65
++4.56
+
+n>0 vs 060
+2/24
+8/24
+24/24
+24/24
+24/24
+22/24
+21/24
+20/24
+19/24
+
+S5
+
+Secondary-arm and certificate full results
+
+S5.1
+
+Ridge operating-point and time-to-quality
+
+Table ?? gives the per-dwell fixed-dwell median radiometric gains of RIDGE-SCAT32 over the primary
+comparator SCAT32-060 and over the safe reference SCAT32-SAFE, pooled over the 24 confirmatory
+scenes (∆Q is the seed-mean per-scene gain, median over scenes; only the ν = 2000 row against SCAT32060 carries the primary gate). At every dwell the ridge policy reaches its target mean load ρR (ν) exactly:
+the achieved mean load equals the ridge target (maximum 22.25 at ν = 2000, below the absolute cap 24),
+so the global safety clip never binds and no RIDGE GUARD CLIPPED event is recorded; the predicted countceiling fraction pceil < 10−6 and the realized dark-count/timing-error fractions are 0 at every dwell. The ridge
+advantage over SCAT32-060 grows with dwell (crossing positive near ν = 20) and peaks near ν = 1000–2000;
+the advantage over the 0.05 safe reference is larger at fixed dwell. This fixed-dwell picture does Using the
+preregistered elapsed optical-time coordinate Topt = Mtotal ντ and the frozen Q90/PAVA/censoring procedure,
+the corrected ridge time-to-quality endpoint passed: median Sgate = 19.127043091646133, family-stratified
+nested-bootstrap 2.5th-percentile bound 18.328492357080282, and 21/24 scenes above one.
+
+S5.2
+
+Descriptive full-stack analysis distribution
+
+The preregistered 24-cell development feasibility screen selected the FALLBACK DESCRIPTIVE branch before
+freeze. The post-freeze full-stack computation is therefore descriptive and has no PASS/FAIL endpoint.
+It returns over the 480 frozen cells (Dcert SHA 908cfccbd249de22). The terminal-status distribution is
+0 CERTIFIED, 299 COUNTEREXAMPLE, 181 NUMERICAL UNRESOLVED, stable across the four anchors (ordered
+CERTIFIED/COUNTEREXAMPLE/UNRESOLVED: (ν, b) = (200, 0.05): 0/77/43; (200, 0.60): 0/67/53;
+(2000, 0.05): 0/84/36; (2000, 0.60): 0/71/49). Every cell is deployed-design feasible (dep feasible true in all
+480; realized per-pixel dose deviation 0.040, inside the ±5% band) and none has an active finite dual cap
+(MU CAP ACTIVE false in all 480). The 299 counterexamples are found by the frozen 60 s support-expanding
+primal screen (solver status primary = SKIPPED COUNTEREXAMPLE, the dual solve short-circuited), each a
+full-stack-feasible design with actual per-dimension log-determinant improvement (primal gap lower per r)
+over deployed SCAT32 in the range 1.19–1.87 (median 1.43), two orders of magnitude above the 10−2
+bar. The 181 unresolved cells return an infeasible cutting-plane master under the frozen numerical protocol
+(LP FAIL on both the primary solve and the single deterministic rescaled retry; coefficient dynamic range
+4000), so no finite dual upper bound Gstack /r is obtained for them; per the taxonomy these are not certified
+rather than refuted. Wall time is well inside budget (median 64.6 s, maximum 67.3 s against the 420 s
+CERT CELL WALL CAP; no cell reaches the cap; no imputation, no cell deletion). Because no cell is certified, the
+branch is descriptive: no dual/complementarity near-optimality bound is asserted, and the counterexample
+cohort is reported as confirmatory descriptive evidence that scene-adapted geometry headroom survives the
+full deployed conditioning stack, with no categorical collapse or near-optimality claim.
+
+5
+
+S5.3
+
+Context arms and design diagnostics
+
+At the deployed operating point (ρ̄ = 0.60, ν = 2000) the frozen context ladder places the deployed k = 32
+scattered support above both descriptive references at matched load: mean radiometric PSNR 17.12 dB
+(SCAT32-060) > 14.18 dB (SCAT16, scattered k = 16) > 9.63 dB (LBLOB16, clustered), consistent
+with the frozen development-selection rule (main-text Section on the deployed design). The dose-relaxed
+and dose-constrained continuous OED solutions are retained as no-endpoint design diagnostics feeding the
+Act III figure; the development-cell guard-versus-α scan terminates at zero adaptive rows under the joint
+dose/A-risk/spectral guard stack (ADAPTIVE COLLAPSE UNDER GUARDS), its only surviving descriptive artifact being the path-specific feasibility index PATH FEASIBLE ALPHA, taken relative to the frozen row ordering
+and never an estimator, fallback, or certificate. The dose-only class is retained only as a no-gate development analysis with source-of-record fields DOSE ONLY PRIMAL GAP PER R, DOSE ONLY D EFFICIENCY LOWER,
+DOSE ONLY DUAL UPPER IF AVAILABLE, and DOSE ONLY SOLVER STATUS; its current values are lower bounds
+on available headroom, not estimates of the global dose-only optimum, and no confirmatory dose-only verdict
+exists.
+
+S6
+
+Proofs
+
+Installed proofs. Theorem ?? follows from the complete-path martingale score and the law of total variance. Theorem ?? uses the delayed-renewal local normal approximation under the regularity stated below,
+and Theorem ?? follows by differentiating the limiting information rate. The alignment result uses a projected
+KKT residual at box boundaries. The crossover proposition is conditional on a uniform C 2 triangular-array
+expansion; its matched-asymptotic-prediction label is retained.
+Proposition S2 (Uniform crossover constant from the triangular expansion). Let t = ν −1/3 , x = 12νc2v ,
+and ρ = t−1 y. Assume that, uniformly on compact x- and y-sets containing y0 (x) = (6/(1 + x))1/3 ,
+Jν,cv (t−1 y) = 1 − tF1 (y, x) + t2 F2 (y, x) + Rt (y, x),
+where F1 = y −1 +(1+x)y 2 /12, F2 = y −2 +(x−2)y/12+(1+x)2 y 4 /144, and Rt and its first two y-derivatives
+are O(t3 ). Then the principal maximizer is unique for sufficiently large ν and
+ρ∗ = (2c2v + (6ν)−1 )−1/3 −
+
+12νc2v + 4
++ O(ν −1/3 ).
+6(12νc2v + 1)
+
+Proof. F1′ = −y −2 + (1 + x)y/6 has the unique minimizer y0 and F1′′ (y0 , x) = (1 + x)/2 > 0. The uniform
+C 2 remainder and the implicit function theorem give y∗ = y0 + ty1 + O(t2 ), with y1 = F2′ (y0 , x)/F1′′ (y0 , x) =
+−(x + 4)/(6(x + 1)). Substitution of x = 12νc2v and t = ν −1/3 gives the displayed expansion.
+Proof of Theorem 1 (missing-information identity). Let At be the predictable detector-active indicator and
+RT
+LT = 0 At dt. Conditional on the state path, the score for θ = log λ is UT = NT − λLT . The compensated
+count is a martingale with quadratic variation λLT , hence Ipath = ENT . For GT = σ(NT ), UN = E(UT | GT ),
+and total variance gives
+IN (θ; T ) = ENT − λ2 E[Var(LT | NT )] .
+
+Proof of Theorem 2 (long-window rate). Rescale by τ , so EB = 1, Var B = c2v , and an ordinary cycle is
+2
+C = B + X with X ∼ Exp(ρ). Thus µC = 1 + ρ−1 and σC
+= c2v + ρ−2 . Delayed-renewal asymptotics give
+2 2
+3
+mν = νρ/(1 + ρ) + O(1), vν = νρ(1 + cv ρ )/(1 + ρ) + O(1), and ṁν = νρ/(1 + ρ)2 + O(1). Under the
+regular nonlattice local-limit/LAN assumptions, IN = ṁ2ν /vν + O(1), so IN /ν → J∞ = ρ/[(1 + ρ)(1 + c2v ρ2 )].
+Subtracting this from the complete-path rate ρ/(1 + ρ) gives the stated missing rate.
+The local-limit step is invoked for a regular nonlattice delayed-renewal family with a finite 3 + ϵ moment
+and parameter derivatives controlled on compact load intervals; lognormal, gamma/exponential, and bounded
+regular hold families satisfy the intended conditions. The theorem is not asserted for infinite-variance,
+correlated, observed, or load-dependent holds.
+6
+
+Proof of Theorem 3 (cubic optimum). For J∞ = ρ/[(1 + ρ)(1 + c2v ρ2 )],
+d
+1 − c2v ρ2 (1 + 2ρ)
+log J∞ =
+.
+dρ
+ρ(1 + ρ)(1 + c2v ρ2 )
+The numerator has one zero, which is the unique global maximum because the rate vanishes at both endpoints.
+2/3
+−2/3
+2/3
+4/3
+Setting ε = cv and solving ε3 ρ2 (1+2ρ) = 1 by powers gives ρ = 2−1/3 cv
+−1/6+21/3 cv /36+O(cv ).
+P
+P
+Proposition S3 (Alignment and projected-residual bound). Let F (ρ) = i πi ℓi J(ρi ) subject to i πi ρi = B
+and box bounds. If −ℓi J ′′ ≥ m > 0, a feasible ρe is optimal iff there are β and si ∈ N[ρ ,ρi ] (e
+ρi ) with
+i
+ℓi J ′ (e
+ρi ) − β − si = 0. For any such closest normal-cone elements, ri = ℓi J ′ (e
+ρi ) − β − si satisfies
+0 ≤ F (ρ∗ ) − F (e
+ρ) ≤
+
+1 X
+πi ri2 .
+2m i
+
+Proof. Strict concavity makes the feasible optimum unique and KKT conditions necessary and sufficient.
+With ∆i = ρ∗i − ρei , strong concavity gives fi (ρ∗i ) − fi (e
+ρi ) ≤ fi′ (e
+ρi )∆i − m∆2i /2. The budget equality removes
+the β term, normal-cone monotonicity gives si ∆i ≤ 0, and ri ∆i − m∆2i /2 ≤ ri2 /(2m). Summing proves the
+bound.
+
+7
+
+

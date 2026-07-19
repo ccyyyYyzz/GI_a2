@@ -1,0 +1,1579 @@
+Information-optimal illumination for dead-time-limited single-pixel
+imaging:
+certificates, water filling, and the jitter-capped ridge
+[author block — user decision]
+
+Abstract
+
+registered simulation campaign (M1) tests the doctrine
+with a paired fixed-dwell ridge operating-point primary
+(RIDGE-SCAT32 versus SCAT32-060, a power-fortime comparison), a nine-dwell time-to-quality secondary, the full-stack descriptive analysis, five arms,
+and a mandatory disclosure ledger. Using the preregistered elapsed optical-time coordinate, Topt = Mtotal ντ ,
+and the frozen Q90/PAVA/censoring procedure, the
+ridge time-to-quality endpoint passed: the median conservative speed ratio was 19.13×, the family-stratified
+nested-bootstrap 2.5th-percentile bound was 18.33×,
+and 21 of 24 scenes had Sgate > 1. The ridge operatingpoint primary also passes (median fixed-dwell radiometric gain 1.87 dB at ν = 2000, 19/24 scenes positive,
+2.5% bootstrap lower bound 1.41348975 dB). The fullstack computation is descriptive: across 480 cells, none
+was certified, 299 produced feasible counterexamples,
+and 181 were numerically unresolved. The result is an
+operating handbook: measure the jitter, let the law set
+the load, read the certificate as a geometry diagnostic,
+and tune the global operating point when time is the
+scarce resource.
+
+A photon-counting detector operated at its deterministic information-optimal flux can forfeit more than half
+of its recorded information the moment its dead time
+carries a few percent of timing jitter. This paper asks
+how hard a real, jittery detector can be driven, and with
+what illumination — one law answers the first half, one
+certified design principle the second, and a preregistered
+campaign seals both. The law: for hidden random hold
+times of coefficient of variation cv , we derive an exact missing-information identity and the long-window
+count-information rate J∞ (ρ, cv ) = ρ/[(1+ρ)(1+c2v ρ2 )],
+whose optimum is finite for every nonzero hold-time
+variance, solves the cubic c2v ρ2 (1 + 2ρ) = 1, and scales
+−2/3
+at small jitter; matching this extenas 2−1/3 cv
+sive loss to the deterministic terminal-phase loss of
+a companion study [?] predicts the smooth crossover
+ρ∗ (ν, cv ) ∼ (6ν)1/3 (1 + 12νc2v )−1/3 , with zero jitter
+the critical manifold on which the ridge grows as ν 1/3
+(ν = T /τ dead-time slots per exposure). Exact-law
+peak predictions registered before the refined MonteCarlo sweep completed were confirmed out-of-sample
+at both fresh points (3% and 6%), and a pooled tworun continuous-peak fit measures the jitter exponent at
+−0.658 (1.3% from −2/3). The design principle: handdesigned sparse and matched patterns are atoms of one
+concave experiment-design program whose per-atom information is the exact renewal kernel, and under deployment safety that program yields a sharply localized doctrine. Information rewards scene-adapted measurement
+geometry; a uniform ±5% per-pixel dose constraint controls cumulative exposure but does not eliminate that
+geometry headroom — a development-only constructive
+probe exhibits a dose-uniform, budget-feasible design
+with more than twice the local D-information of the balanced family in audited development cells; whether the
+headroom survives the full deployed conditioning stack
+— incident budget, dose band, A-risk cap, and spectral floor — is tested by a 480-cell descriptive full-stack
+analysis of the balanced (SCAT32) design; and global
+operating-point control is orthogonal and survives, one
+power knob that tracks the jitter-capped ridge. A pre-
+
+1
+
+Introduction
+
+Drive a photon-counting detector to the flux where its
+count information peaks, and a five-percent timing jitter in its dead time silently forfeits about 55% of that
+information (Table ??). Single-pixel imaging (SPI) and
+computational ghost imaging reconstruct a scene from
+the responses of a single bucket detector to structured
+illumination [?, ?, ?]; in the photon-starved regime the
+bucket is a photon-counting device that is blind for a
+dead time τ after each registered count, and the conventional response is to operate at low flux, keeping the
+per-slot load ρ = λτ at the few-percent level and paying in acquisition time. A companion study [?] showed
+that this convention leaves gains on the table: the exact Fisher information of the integrated nonparalyzable count possesses a principal ridge at the cube-root
+load ρ∗ (ν) = (6ν)1/3 − 2/3 + O(ν −1/3 ), and that work
+mapped when driving a fixed illumination family toward the ridge helps. The trap above is the sharp edge
+1
+
+efficient 2−1/3 , and the matched crossover prediction
+(6ν)1/3 (1 + 12νc2v )−1/3 , verified out-of-sample against
+preregistered predictions with a pooled jitter-exponent
+measurement of −0.658; (ii) the certified design principle (Section ??): one concave program with the exact
+renewal kernel, a constructive development-stage localization showing that uniform dose alone leaves sceneadapted geometry headroom, a full-stack conic nearoptimality certificate over an expanded gain-coupled
+dictionary, frozen guards, and the photon-budget versus
+time-budget conjugacy as its operating doctrine; (iii) a
+preregistered simulation campaign (M1) whose scenes,
+atoms, load grid, guards, endpoints, and three mutually
+non-rescuing verdicts were frozen in an immutable commit before any confirmatory reconstruction existed and
+are reported as frozen: the ridge operating-point primary passes, the elapsed-optical-time speed endpoint
+passes, and the full-stack computation is a descriptive
+analysis returning counterexamples rather than certification; and (iv) an operating handbook for real detectors (Table ??), ending in a bench-testable prediction.
+All code, frozen preregistration documents, and per-cell
+evidence bundles are openly released; full derivations,
+guard machinery, and verification detail are in the supplement.
+
+of that map: the deterministic ridge is not where a real
+detector should operate. Figure ?? sets out the deadtime-aware imaging pipeline, the global power knob,
+and the count-information ridge law that anchors the
+paper.
+Two questions therefore remain open. First, a deployment question: how hard can a real detector — whose
+dead time is a random hold time with some measurable coefficient of variation — actually be driven before
+the ridge collapses? Second, a design question: under a
+fixed incident-photon and dose budget, which illumination extracts the most information from the dead-time
+channel, and by how much can a certified optimizer improve on a strong fixed hand design?
+One law answers the first question: hidden holdtime randomness adds an extensive missing-information
+term, the long-window optimum becomes finite at the
+root of an exact cubic, and the deterministic ridge
+is the zero-jitter critical manifold of a two-parameter
+crossover (Section ??); its peak predictions, registered
+before the refined Monte-Carlo sweep existed, were confirmed out-of-sample. One certified design principle answers the second: hand-designed patterns are atoms of
+a single concave experiment-design program over design measures with the exact renewal kernel; uniform
+dose alone controls cumulative exposure without eliminating scene-adapted geometry headroom, so the operative restriction is the full deployed conditioning stack,
+against which the balanced design’s near-optimality is
+tested by a certified conic dual bound over an expanded
+frozen dictionary, with the global detector operating
+point as the orthogonal surviving control (Section ??).
+A preregistered campaign (M1) seals both with a ridge
+operating-point primary, a time-to-quality secondary,
+the full-stack certificate, and a mandatory disclosure
+ledger (Sections ??–??).
+We formulate a local approximate-design framework
+for single-pixel illumination in which each pattern’s information is computed from the exact finite-window
+nonparalyzable renewal count law, optimized under explicit detector-load, dose, per-pixel-exposure, and peakirradiance constraints and accompanied by generalizedequivalence and exact-rounding certificates. Existing
+photon-counting optimal experiment design, adaptive
+or learned SPI, and dead-time optimal-flux studies address neighboring components [?, ?, ?, ?, ?, ?]; we
+found no prior framework combining these elements for
+integrated-count single-pixel illumination. The certificate is always stated relative to the frozen dictionary,
+the local pre-scan estimate, and the declared resource
+model.
+This work contributes: (i) the random-hold countinformation law (Section ??): an exact missinginformation identity, the long-window rate with its exact jitter-limited cubic optimum and small-jitter co-
+
+2
+
+The law: driving a jittery detector
+
+The recovery-time law of the detector determines a
+scalar count-information kernel; everything else in this
+paper allocates illumination against that kernel. The
+companion’s deterministic detector [?] is the zero-jitter
+critical manifold of the theory below. The supplement
+gives the installed proofs with their stated regularity
+and conditionality assumptions; the crossover law remains a matched-asymptotic prediction rather than a
+universal finite-window theorem.
+
+2.1
+
+Random-hold count information
+
+Generalize the detector so that after each registered
+event it blocks for a hidden random hold time Bi ∼ H,
+iid, independent of the Poisson arrivals and of λ, with
+mean τ and coefficient of variation cv = σB /τ (the companion’s deterministic model is cv = 0). The observed
+datum remains the integrated registered count NT over
+T = ντ ; the active time LT , the state path, and the
+realized holds are hidden from the count-only observer.
+Theorem 1 (missing-information identity) For
+θ = log λ, the complete detector-path information is
+E[NT ], and the information retained by the scalar
+count is exactly
+
+
+IN (θ; T ) = E[NT ] − λ2 E Var(LT | NT )
+(1)
+2
+
+(b) Ridge law ρ̄ ∗ (ν) = (6ν)1/3 − 2/3
+
+(a) Dead-time-aware single-pixel imaging pipeline
+1.0
+
+Φ: one scalar source multiplier
+sets the load ρ ̄ = τ [λ]
+bucket
+counts Ni
+
+laser source
+
+DMD, SCAT32 ai
+
+object x
+
+SPD photon-counting
+
+RQL recon. x ̂
+
+dead time τ → timeline
+
+photon arrivals censored by dead time
+
+τ
+
+exposure T = ντ
+jitter
+
+count-information efficiency J(ρ;̄ ν)
+
+GLOBAL POWER KNOB
+
+zero-jitter limit (c = 0)
+
+ρ ̄ ∗ = 22.2
+
+0.8
+ρ̄
+
+∗
+
+= 10.0
+
+0.6
+
+0.4
+global power knob
+
+0.2
+ν = 2000
+ν = 200
+
+▾ recorded count
+× lost (blind)
+shaded: τ hold (darker: jitter-broadened)
+
+0.0
+
+100
+
+101
+
+detector load ρ̄ = τ [λ]
+
+Figure 1: Schematic of the dead-time-aware single-pixel imaging pipeline and the count-information ridge law.
+(a) Imaging pipeline: the global power knob Φ (dial) is the single scalar source multiplier setting the detector
+load ρ̄ = τ E[λ]; the beam (orange arrows) passes from the laser source through the DMD, which displays the
+SCAT32 scattered-sparse illumination patterns ai (inset), to the object x (inset: the confirmatory maze scene),
+and the SPD photon-counting detector feeds the bucket counts Ni (blue arrow) to the RQL reconstruction x̂
+(inset: the RIDGE-SCAT32 reconstruction of the same scene, seed 0, ν = 2000). DMD: digital micromirror
+device; SPD: single-pixel (bucket) detector; RQL: renewal quasi-likelihood reconstruction. In the photon-arrival
+timeline (lower inset), recorded counts (green markers) each open a non-paralyzable dead-time hold of length τ
+(shaded; one hold is jitter-broadened, darker), and arrivals inside a hold are lost (×); the exposure is T = ντ , so
+ν = T /τ is the dwell budget. (b) Count-information efficiency J(ρ̄; ν) versus detector load, evaluated from the
+exact finite-window count law for ν = 2000 and ν = 200, whose optimal-load ridges are ρ̄∗ = 22.2 and ρ̄∗ = 10.0,
+respectively; the ridge follows the finite-window law ρ̄∗ (ν) = (6ν)1/3 −2/3 (zero-jitter limit, c = 0), and the global
+power knob (arrow) moves the operating point onto the ridge. The colour is used only for display purposes.
+for every finite T and every iid hidden hold law H in- the deterministic terminal-phase loss, nonvanishing as
+dependent of λ.
+ν → ∞.
+The companion’s terminal-phase identity is the speTheorem 3 (exact jitter-limited optimum) For
+cial case in which the uncertainty in LT is confined
+every fixed cv > 0, J∞ (ρ, cv ) has a unique interior
+to the terminal detector phase. The identity requires
+maximum ρc solving the cubic
+amendment if the hold law depends on λ or the scene,
+if realized holds are observed and used, if holds are sec2v ρ2c (1 + 2ρc ) = 1,
+(3)
+rially correlated, or if the counter is paralyzable.
+Theorem 2 (long-window rate) Under
+nonlattice renewal local-limit conditions,
+
+with small-jitter expansion
+
+standard
+
+1/3
+
+ρc = 2−1/3 c−2/3
+− 16 + 236 c2/3
++ O(c4/3
+v
+v
+v ),
+IN (log λ; T )
+ρ
+−→ J∞ (ρ, cv ) =
+, (2)
+ν
+(1 + ρ) (1 + c2v ρ2 )
+whose leading coefficient is 2−1/3 = 0.79370 . . .
+depending on H only through its mean and variance.
+The missing-information rate converges to c2v ρ3 /[(1 +
+ρ)(1 + c2v ρ2 )]: an extensive loss equal, to first order in
+2
+E[NT ] — conditioning on
+c2v ρ2 , to the heuristic λ2 σB
+the count partially reveals the accumulated hold fluctuation, contributing the factor (1+c2v ρ2 )−1 — and, unlike
+
+(4)
+
+For exponential holds (cv = 1, outside the smalljitter regime) the exact positive root is ρc = 0.6573 . . .;
+gamma, bounded two-point, and lognormal holds sharing a small cv share the leading coefficient, with distribution shape entering at the next order.
+3
+
+2.2
+
+The crossover and its universality
+Table 1:
+Scalar count information J(ρ, ν =
+class
+2000, cv ) for lognormal hold times: three-stage peak
+
+Matching the extensive loss c2v ρ2 against the determinis- measurement against the exact-law predictions of
+tic terminal-boundary loss ρ2 /(12ν) in the joint regime Theorem ??/Eq. (??), registered before the data
+(docs/R14 PREREGISTERED PREDICTIONS.md, commit
+ν → ∞, cv → 0, c2v ν = O(1) gives
+8a627bb; verdicts at 1d8d7aa, 4d8310d, bd731d5).
+−1/3
+
+
+Grid: jitter sfi v2, 100,000 frames, 25-point log
+1
+−1/3
+, grid (spacing 1.157). Zoom: continuous quadratic= (6ν)1/3 1 + 12νc2v
+ρ∗ (ν, cv ) ∼ 2c2v +
+6ν
+(5) interpolated peaks, local run, 150,000 frames. Repliwith scaling variable x = 12νc2v and crossover at cation: independent Colab run, 400,000 frames. Both
+cv ≍ (12ν)−1/2 : the deterministic limit x → 0 re- out-of-sample (o.o.s.) grid rows hit (cv = 0.02: 3%;
+covers (6ν)1/3 and the jitter-dominated limit recovers cv = 0.2: 6%); the pooled eight-measurement log-log
+−2/3
+−2/3
+2−1/3 cv . An earlier min{(6ν)1/3 , c0 cv } conjec- fit gives slope −0.658 vs. −2/3 (1.3%), with the conture is only the two-limit envelope of Eq. (??), with an stant consistent with 2−1/3 = 0.794 within 5–10% (the
+artificial kink, and is superseded. Per the frozen claim earlier coarse-grid fit 0.72 was a finite-grid artifact) and
+discipline, the exact identity and the long-window limit a reproducible mild ≈ −8% low bias at the end points
+imply the jitter exponent −2/3; the full finite-window (open higher-order note). Hardware warning: at the decrossover of Eq. (??) is a matched-asymptotic predic- terministic ridge (ρ = 22.3), 5% jitter leaves J = 0.43
+tion until a uniform two-parameter (triangular-array vs. 0.95 — about 55% of the scalar count information
+renewal local-limit) proof is complete. Proposition ?? forfeited. J at peak from the grid run.
+cv
+peak ρ (grid / zoom / replic.)
+exact law
+J at peak
+below is conditional on the stated uniform C 2 expan0
+22.297 / — / —
+22.25 (ridge)
+0.9452
+sion; absent a separate proof of that expansion, the
+0.02
+10.739 / 9.645 / 9.610
+≈ 10.4 (o.o.s.)
+0.8731
+crossover remains a matched-asymptotic prediction.
+0.05
+5.173 / 5.154 / 5.700
+5.69
+0.7848
+0.1
+3.862 / 3.752 / 3.399
+3.50
+0.6989
+The exponent pair (1/3, −2/3) is universal within the
+0.2
+2.153 / 2.106 / 2.051
+≈ 2.30 (o.o.s.)
+0.5882
+regular finite-variance iid hidden-hold class: iid hidden
+0.3
+1.607 / — / —
+1.63
+0.5042
+nonnegative holds whose law is independent of λ, with
+finite nonzero mean and finite variance, forming a regular small-jitter family, under count-only observation continuous-peak zoom and an independent replication
+and active-start nonparalyzable operation. It is not (Colab, 400,000 frames) then measured the exponent itclaimed for heavy-tailed (infinite-variance) holds, cor- self: the pooled eight-measurement log-log fit gives slope
+related or drifting holds, holds observed by the elec- −0.658, within 1.3% of the predicted −2/3, with the
+tronics, paralyzable detectors, event-time observations, constant consistent with 2−1/3 within 5–10% and a reor λ-dependent recovery. The precise critical statement producible mild ≈ −8% end-point low bias left as an
+is: zero hold-time variance is the critical manifold on open higher-order note (candidate: a lognormal thirdwhich the optimal load continues to grow with win- moment correction). One honest beat from the record:
+dow length; any fixed nonzero hidden hold variance pro- a mid-sweep effective-multiplier hypothesis (k = 4/3)
+duces a finite long-window optimum. Adjacent renewal- was preregistered and refuted by the very next meaCLT and random-dead-time literature establishes the sured point (commits 5e51088, 1a32758). Run specmean/variance ingredients and task-specific finite-rate ifications, both-run peak tables, and the frozen threeoptima [?, ?, ?, ?, ?]; we found no source stating family exponent battery (tests E1–E5) that remains a
+the count-only exponent pair or the extensive/terminal preregistered extension are given in the supplement.
+crossover.
+
+2.3
+
+3
+
+Preregistered verification
+
+The certified design principle
+
+The design principle is a doctrine in four movements.
+Information rewards scene-adapted measurement geometry: the dose-relaxed optimum and a constructive
+dose-only probe expose substantial local D-information
+headroom (Sections ?? and ??). Uniform dose is not
+enough to eliminate that headroom: a balanced cumulative exposure can coexist with scene-adapted measurement directions (Section ??). Conditioning safeguards define the deployable class: the A-risk and spectral anchors test whether the geometry headroom sur-
+
+The law was tested the way the campaigns are run:
+predictions first, data second. The exact-law column of
+Table ??, including two out-of-sample rows, was registered before any refined measurement existed (commit
+8a627bb). The grid sweep then confirmed the law at
+both registered fresh points — cv = 0.02: predicted
+≈ 10.4, measured 10.739 (3%); cv = 0.2: predicted
+≈ 2.30, measured 2.153 (6%) — with every in-sample
+peak within one grid notch and the ν = 200 column consistent including the crossover correction of Eq. (??). A
+4
+
+vives reconstruction-trust requirements, and the fullstack certificate quantifies what remains (Section ??).
+Global operating-point control is orthogonal and survives: ridge tracking changes one global source multiplier and is evaluated by the empirical power-for-time
+endpoints (Sections ?? and ??).
+
+3.1
+
+The earlier variable-load adaptive arm (OED-DT)
+is retired as a proposed or gated imaging method:
+its speed gate was withdrawn before the campaign
+freeze as infeasible, not recorded as a confirmatory failure. Within the frozen target-load-normalized atom
+family, under the declared guard stack — incident
+budget, ±5% per-pixel dose, A-risk cap, and spectral floor — no nonzero adaptive mixture is admissible in the audited development cell: the descending exact mixture scan terminates at zero adaptive rows (ADAPTIVE COLLAPSE UNDER GUARDS), every
+nonzero mixture violating at least one of the dose, Arisk, or spectral guards. This is development evidence
+about one parameterization under the joint guard stack,
+explicitly not a confirmatory theorem; the target-loadnormalized atomization fixes each pattern’s amplitude
+to hit a predicted load, which on dim supports demands
+large physical amplitude and anti-aligns the dose vector with brightness. Two consequences are drawn, and
+they are separated deliberately. First, the constructive development probe of Section ?? shows that the
+dose constraint alone does not produce the collapse:
+dose-uniform, budget-feasible geometry headroom exists. The operative restriction is therefore the conditioning stack, and the near-optimality certificate of
+Section ?? targets exactly that full stack over an expanded gain-coupled class. Second, the descending scan
+survives only as a path-specific descriptive diagnostic
+(PATH FEASIBLE ALPHA, relative to the frozen row ordering, reported in the methods-development supplement), never an estimator, fallback, or certificate. The
+dose-relaxed and dose-constrained continuous OED solutions are retained as no-endpoint design diagnostics
+that illustrate the incentive and the safety frontier (Figure ??); neither is the proposed imaging method.
+
+One concave program over design
+measures
+
+Freeze the coarse pre-scan reconstruction at x̂ and parameterize the locally estimable image perturbation as
+x(θ) = x̂ + Bθ, with B ∈ Rn×r spanning a declared rdimensional estimable subspace. For a nonnegative illumination atom a the arrival rate is λ(a) = Φ a⊤ x̂ + d
+and the load is ρ(a) = τ λ(a). With Jexact (ρ, ν) the
+exact per-slot information of the integrated renewal
+count for log λ (generalized to the random-hold kernel of Theorem ?? when cv > 0) and score direction
+q(a) = Φ B ⊤ a/λ(a), the rank-one local information
+atom is the chain-rule form
+H(a; x̂) = ν Jexact (ρ(a), ν) q(a)q(a)⊤
+= ν Jexact (ρ(a), ν)
+
+Φ2
+B ⊤ aa⊤ B.
+λ(a)2
+
+(6)
+
+A raw
+√ sensitivity g ∝ Φa is incomplete unless the factor νJexact /λ is absorbed into it. For a probability
+measure ξ over
+R the compact feasible atom set A, define
+V (ξ) = V0 + A H(a) dξ(a) with V0 ⪰ 0 the frozen prescan information, and maximize the local D-criterion
+max log det V (ξ)
+ξ
+
+s.t. linear resource constraints,
+
+(7)
+subject to average load, cumulative dose, family allocation, and peak constraints. The objective is concave in
+ξ; it is a local information surrogate and is not claimed
+to optimize reconstruction PSNR or any image-domain
+risk. The estimable subspace is frozen at r = 200 (the
+top eigenbasis of the fixed comparator’s information
+matrix, fixed before the solve, with a fixed numerical
+ridge; conventions in the supplement). If every atom
+obeys a pointwise equal-load constraint the scalar kernel
+factors out and the geometry reduces to ordinary linear
+D-optimality [?]; genuine dead-time-aware design therefore requires controlled load variation. Unconstrained,
+this geometry rewards scene-adapted concentration of
+measurement effort on the brightest, highest-value directions — the incentive whose fate under deployment
+safety the rest of this section traces.
+
+3.3
+
+Development evidence: the doseonly constructive probe
+
+Development-only constructive analysis; not a confirmatory endpoint or population estimate.
+A
+development-only constructive probe showed that the
+±5% per-pixel dose constraint alone did not eliminate
+scene-adapted geometry selection: a feasible low-load
+geometry design achieved a substantially larger local
+determinant than SCAT32 in the audited cells. This
+was a lower-bound construction, not an estimate of the
+dose-only optimum. Concretely, on the glyph development scene (m1 dev glyph, measurement seed 0), at the
+two audited cells (ν, b) = (2000, 0.60) and (200, 0.05),
+the probe produced probability designs over the frozen
+3.2 Safety guards and the retirement of Dcert satisfying the incident budget and the ±5% dose
+band with log-determinant improvements over deployed
+the adaptive arm
+SCAT32 of ∆ log det V /r = 0.776 and 0.903, certifyThe scene-adapted incentive collides with the deployed ing local D-efficiency ratios of at least e0.776 ≈ 2.17
+safety guards in the audited development evidence. and e0.903 ≈ 2.47, respectively. The construction is
+5
+
+3.4
+
+Conditioning safeguards define the
+
+Table
+2:
+Development-only
+constructive
+deployable class: the full-stack cerdose-only probe,
+frozen six-image replication
+tificate
+(results/round63 m1/R18 GAP PROBE REPLICATION.md;
+DEV images, seed 0; not a confirmatory endpoint or The deployable class is defined by the conditionpopulation estimate). Every result is reported without ing safeguards, and the balanced design’s local nearselection. ∆/r is the per-dimension log-determinant optimality is evaluated rather than assumed. Begap of the probe design over deployed SCAT32; fore the immutable campaign tag, the required 24Eff ↓D = e∆/r is the certified dose-feasible D-efficiency cell development feasibility screen selected the prereglower bound. Constant across all cells (support- istered FALLBACK DESCRIPTIVE branch. Consequently,
+preserving initialization caveat, main text): Dgain mass FULL STACK CERT PASS was removed before freeze, and
+0.000, per-pixel dose deviation 0.038, budget used equal the post-freeze full-stack computation was specified
+to the low-load quantile (0.300 at (ν, b) = (2000, 0.60), only as a descriptive three-status analysis, not as a
+0.025 at (200, 0.05)); all cells budget- and dose-feasible. PASS/FAIL endpoint. By concavity, optimality is
+scene
+glyph
+glyph
+chirp
+chirp
+maze
+maze
+spokes
+spokes
+contour
+contour
+microtexture
+microtexture
+
+ν
+2000
+200
+2000
+200
+2000
+200
+2000
+200
+2000
+200
+2000
+200
+
+b
+0.60
+0.05
+0.60
+0.05
+0.60
+0.05
+0.60
+0.05
+0.60
+0.05
+0.60
+0.05
+
+SCAT32
+3646.425
+2788.834
+3646.994
+2788.149
+3633.386
+2790.259
+3640.443
+2800.765
+3648.639
+2772.045
+3667.825
+2810.246
+
+probe
+3801.577
+2969.346
+3819.047
+2887.359
+3750.598
+2892.347
+3820.941
+2958.083
+3829.357
+2891.034
+3851.978
+2953.895
+
+∆/r
+0.776
+0.903
+0.860
+0.496
+0.586
+0.510
+0.903
+0.787
+0.904
+0.595
+0.921
+0.718
+
+Eff ↓D
+2.17×
+2.47×
+2.36×
+1.64×
+1.80×
+1.67×
+2.47×
+2.20×
+2.47×
+1.81×
+2.51×
+2.05×
+
+equivalent to a bounded reduced sensitivity (the constrained Kiefer–Wolfowitz / general equivalence condition for nonlinear models [?, ?]). The descriptive
+full-stack analysis therefore targeted the full deployed
+stack: the frozen dictionary and local pre-scan linearization, incident budget, ±5% per-pixel dose band, Arisk cap, and spectral floor. Global ridge tracking
+was evaluated separately as the time-limited, poweravailable control. Explicitly, the certified class Cstack
+contains every probability design over the expanded
+dictionary Dcert = Dload ∪ Dgain — the frozen targetload-normalized atoms plus a certificate-only gaincoupled family in which each base geometry is scaled by
+γ ∈ {0.2, 0.5, 1, 2, 5} with its predicted load allowed to
+emerge rather than be rescaled to a target, so fixed-flux
+self-water-filling and bounded per-pattern gain control
+lie inside the comparison class — that satisfies the incident budget, the ±5% per-pixel dose band, the A-risk
+−1
+cap tr{V (ξ)−1 } ≤ 1.05 tr(Vfix
+), and the spectral floor
+V (ξ) ⪰ 0.5 Vfix , with Vfix the load-matched deployed
+SCAT32 information matrix. The A-risk and spectral
+conditions are global design constraints of the class, represented exactly as linear matrix inequalities and priced
+in the dual by positive-semidefinite multipliers; they are
+never approximated by dropping individual atoms. The
+certificate quantity is the support-function upper bound
+Gstack on the log-determinant gap between the deployed
+design and the continuous optimum of Cstack , computed
+by a certified cutting-plane outer approximation (spectral eigenvector cuts, convex A-risk tangent cuts, budget/dose prices, column generation, and an exact fulldictionary scan; a finite cut set is an outer relaxation, so
+a small bound remains conservative); the frozen bar is
+Gstack /r ≤ 10−2 , certifying local D-efficiency of at least
+exp(−0.01) = 0.99005 (full construction, primal discriminator, and numerical protocol in the supplement).
+The certificate is comparator- and subspace-relative by
+construction: it preserves the predeclared conditioning
+of SCAT32 on the directions SCAT32 resolves, and it
+is not a global optimum over all images, subspaces, risk
+tradeoffs, or physical patterns. Continuous weights are
+rounded to an exact 972-row design by efficient round-
+
+existence-only, and its composition must not be overread: the probe initializes positive mass only on the
+lowest-load Dload column, and its multiplicative update is support-preserving (an exactly zero column can
+never activate), so the reported designs — all mass on
+Dload , uniform low support loads, roughly half the photon budget spent — establish neither that the doseonly optimum avoids gain atoms nor that it prefers
+low loads or a partial budget. The dose-only class is
+retained only as a no-gate development analysis; no
+confirmatory dose-only verdict exists. A frozen siximage replication (all six development images, seed 0,
+the same two anchor cells, every result reported without
+selection) is given in Table ??: the per-dimension logdeterminant gap ranges from 0.496 to 0.921 across all
+six families and both anchors, certifying dose-feasible
+local D-efficiency lower bounds of 1.64× to 2.51×, with
+every construction budget- and dose-feasible at every
+recorded point. The dose-only construction shows that
+uniform exposure still permits scene-adapted geometry
+selection. Optimizing and validating that geometry under relaxed or task-specific conditioning constraints is
+left to a separate follow-up; no such arm or endpoint is
+added to the present campaign.
+6
+
+the admissible set Radm (ν) = {0 < ρ ≤ 24 : pceil ≤
+Table 3: The frozen design machinery at a glance
+0.01, Jmean /Jexact ≥ 0.90}, using the exact numeri(R10/R11/R13/R17/R18; full statements in the supcal ridge rather than the asymptotic cube-root form
+plement).
+(R11 §1). Under the incident-photon budget the releElement
+Frozen rule
+vant scalar efficiency is Jexact (ρ, ν)/ρ, which decreases
+Dictionary
+all cyclic translates of the 13 R10 supacross the admitted palette; a photon-budgeted optiport families (scattered k = 16/32, solid
+4 × 4, Lblob, bars, compact-32, ring);
+mizer therefore rationally spends on lower loads and
+weight powers p ∈ {0, 1}; the certificate
+avoids the ridge, while the ridge belongs to the timescan adds gain-coupled copies ag,γ =
+limited, power-available corner. This is a resourceγabase
+,
+γ
+∈
+{0.2,
+0.5,
+1,
+2,
+5},
+emergent
+g
+regime statement, not a universal prohibition on ridgeload (Dcert = Dload ∪ Dgain
+R )
+Budget
+incident-signal inequality ρs dξ ≤ 0.60;
+zone allocation: sufficiently valuable directions may still
+detected counts dual-reported, never the
+receive larger loads in other cells (R13 §8(f)).
+sole budget
+shape: wj ∈ [ 41 , 4], k ≥ 16; physical:
+max aij ≤ 1536
+3.6 One program behind every optiDose
+per-pixel mean exposure within ±5% of
+mum
+image mean, re-verified post-rounding
+Floors
+spectral V (ξ) ⪰ 0.5 VFIXED∗ ; A-risk
+−1
+Every true interior optimum of the declared detr(V −1 ) ≤ 1.05 tr(VFIXED
+∗ ) — global
+design constraints of the certified class
+sign problem — over load, support scale, and intenCstack , LMI-priced in the certificate dual
+sity weighting — satisfies one generalized reducedKernel trust exact-PMF certification; Jmean /Jexact ≥
+sensitivity/KKT system of the master program, whose
+0.90; RQL log-load bias ≤ 0.05; pceil ≤
+load coordinate is the information-water-filling equa0.05 per atom, ≤ 0.01 design-weighted
+Certificate
+Gstack /r ≤ 10−2 (full-stack conic dual,
+tion and whose scale and weighting coordinates price
+expanded Dcert scan; per-cell status
+conditioning through the V −1 geometry (full system in
+CERTIFIED / COUNTEREXAMPLE / NUMERICAL UNRESOLVED;
+the supplement); this also explains why raising proxy
+local D-eff. ≥ 0.99005)
+contrast from p = 1 to p = 2 can lower the true obRounding
+exact 972-row design, Eff D ≥ 0.95
+Peak
+
+jective. One caveat is kept deliberately: the master design problem places load, support scale, and intensity
+ing and deterministic exchange [?, ?, ?], admissible only weighting in one constrained concave measure optimizaat exact D-efficiency ≥ 0.95. Every remaining guard is a tion, and its support atoms satisfy a common reducedfrozen constraint, not a tunable proxy (Table ??); the sensitivity condition; but the empirically observed occufull guard mathematics, the expanded dictionary list- pancy (k ≈ 32) and weighting (p ≈ 1) optima motivate
+ing, and the budget accounting are in the supplement. these coordinates and are not themselves claimed as
+continuous KKT theorems — they were selected from
+3.5 The conjugacy doctrine: photon discrete grids and judged by image endpoints, not by
+the master log det objective.
+budget versus time budget
+The doctrine has two conjugate resource corners of
+3.7 Why one global knob suffices for
+the same dead-time information map. In the photonRIDGE-SCAT32
+budgeted corner the full-stack certificate holds the
+incident-signal resource as a hard inequality,
+Fixed flux performs implicit information water fillZ
+ing when bucket brightness and local directional value
+ρs (a) dξ(a) ≤ 0.60,
+(8) satisfy the marginal-information alignment condition
+ℓi J ′ (κui ) = β across active directions (ℓi = qi⊤ V −1 qi
+so a design measure may push a subset of high-value the directional value, ui = a⊤
+i x the bucket brightness);
+atoms into the ridge zone only if compensated by low- its adequacy is measured by a projected KKT residload or omitted atoms (R11 §4); detected counts are ual — not Cu alone — and outside that condition,
+dual-reported but are never the sole fairness budget, variable-load OED can improve without any universal
+because E[N | ρ] ≃ νρ/(1 + ρ) has vanishing marginal bound on the fixed-flux approximation ratio. On noncost at high load. The time-budgeted corner is the no- negative sparse-support scenes the source-induced load
+gate ridge-tracking policy RIDGE-SCAT32: it fixes ordering naturally tracks directional value, which is why
+the balanced support and applies one global multi- RIDGE-SCAT32 needs only a single global multiplier,
+plier per dwell, calibrated on the pre-scan estimate to and why the uniform per-pattern servo — which loses
+mean load ρR (ν), followed by a single global safety clip, by up to ∼ 7 dB in the companion’s dev evidence [?]
+spending a deliberately larger incident budget for time — fails by erasing exactly that alignment. With ranrather than photons (R11 §2). The exact production dom holds, J ′ vanishes at the jitter cap and is negaridge is ρR (ν) = min arg maxρ∈Radm (ν) Jexact (ρ, ν) over tive beyond it, so fixed flux can overdrive the brightest
+7
+
+directions and explicit gain control becomes necessary.
+The full proposition, its residual near-optimality bound,
+and its failure modes are in the supplement. Naive perpattern load equalization was thus refuted (R11) for
+destroying this brightness–information alignment, while
+the development evidence of Section ?? shows the opposite extreme — adaptive concentration — colliding with
+the deployed conditioning stack; the balanced globalflux policy is the robust middle of the tested extremes,
+with dose-feasible geometry headroom outside the conditioning stack left to a separate follow-up (Section ??).
+
+4
+
+Table 4: The five M1 arms over the common balanced
+SCAT32 design. The paired RIDGE-SCAT32 vs.
+SCAT32-060 comparison carries the primary gate and
+RIDGE-SCAT32 vs. SCAT32-SAFE the speed comparison; the full-stack computation is descriptive and
+applies to the deployed design itself. SCAT16 and
+LBLOB16 are descriptive context.
+Arm
+SCAT32-SAFE
+
+Role
+balanced design at load
+0.05 (safe reference; speed
+baseline)
+SCAT32-060
+balanced design at load
+0.60 (primary comparator)
+RIDGE-SCAT32 one global multiplier per
+dwell to ρR (ν) + global
+clip (ridge policy)
+SCAT16
+frozen scattered k = 16
+at load 0.60 (companion
+bridge)
+LBLOB16
+committed
+clustered
+support at load 0.60
+(spectral-floor reference)
+
+Preregistered campaign (M1)
+
+M1 is a separate follow-up campaign with its own seed
+namespace, manifests, and expected-cell ledger; it does
+not reopen the companion’s frozen studies. It freezes
+on the R13 audit plus one immutable commit (tag
+m1-freeze); after that commit no scene, atom family,
+load grid, guard, endpoint, or gate may change, and if
+the primary fails there is no third redesign.
+
+Gate
+speed base
+
+primary comp.
+
+primary, speed
+
+none
+
+none
+
+Geometry and constants. n = 322 = 1024;
+Mtotal = 1024 = Mpre (52) + Mmain (972) for every
+arm; nonparalyzable active start, τ = 50 ns, d = 0, the same 972 SCAT32 main patterns and totals exactly
+σb = 0; ρ̄ ∈ {0.05, 0.60} for the budget-anchored arms; 1024 physical exposures.
+ν ∈ {5, 10, 20, 50, 100, 200, 500, 1000, 2000}; five measurement seeds per (image, condition). Optical time
+Topt = Mtotal ν τ ; design-computation wall time is reported separately and never folded into Topt .
+Arms and the deployed design. The deployed spatial design is the balanced exact 972-row SCAT32 mulScenes. Twenty-four fresh confirmatory instances tiset, identical across every operating-point comparison;
+(six generator families × four instances) with seeds the common 52-row pre-scan is charged to each arm.
+sf,r = 633000 + 100f + r, plus six development-only Table ?? lists the five arms. Three share this design and
+instances 632900 + f . The six committed generators differ only in source power: SCAT32-SAFE at global
+(glyph, chirp, spokes, maze, contour, microtexture) are mean load 0.05, SCAT32-060 at 0.60, and RIDGEreused verbatim with their actual names — “USAF” is SCAT32, which applies one global multiplier per dwell
+not used unless a USAF target is generated, and spokes (calibrated on the pre-scan to ρR (ν), then the frozen
+is described as a radial resolution target. No accep- global clip). Two frozen fixed baselines, SCAT16 and
+tance filter of any kind is applied; generators, images, LBLOB16 at load 0.60, are retained as descriptive conand ROIs receive SHA256 manifests.
+text columns (no gate), so the cross-arm occupancyladder comparison keeps its reference columns. The
+Common pre-scan. Every arm receives and pays for k = 32 occupancy rung of the deployed design is fixed
+the same 52-pattern scene-independent balanced pre- by the frozen development rule (median fixed-dwell rascan at its own (ρ̄, ν): 32 paired 4 × 4-block rows (sup- diometric PSNR at (ρ̄, ν) = (0.60, 2000), averaged over
+port 32, amplitude 32), 16 block rows (amplitude 16), development seeds), which selected SCAT32 over the
+and 4 quadrant rows (amplitude 4), so every pixel re- clustered LBLOB16 and a matched baseline with deceives cumulative amplitude 32 + 16 + 4 = 52 and the velopment scores 17.498, 11.908, and 9.181 dB respecrow-mean pattern is exactly the all-ones vector; the tively; an earlier information-score-based selection was
+mean pre-scan load then equals the declared global load invalidated by external audit (R15) for departing from
+for any sum-normalized scene, with no x̂-dependent row the frozen rule and was re-run under the original R10
+scaling (R13 §2). All 52 counts enter every arm’s final prescription. The rung is consistent with the companreconstruction; RIDGE-SCAT32 additionally uses the ion’s Study 2 fixed-dwell optimum [?]. Reconstruction
+pre-scan estimate to calibrate its single global source (RQL with the frozen analytic λTV rule and pooled inimultiplier, with no per-pattern servo. Every arm runs tialization) is identical across arms.
+8
+
+Endpoints and gates. Two preregistered empirical verdicts govern the campaign, alongside
+one descriptive structural analysis.
+The primary is a paired fixed-dwell ridge operating-point
+test (RIDGE OPERATING PASS). At terminal dwell
+ν = 2000, for each confirmatory image j define
+∆Qridge
+= PSNRrad (RIDGE-SCAT32, ν=2000, j) −
+j
+PSNRrad (SCAT32-060, ν=2000, j), the mean over the
+five frozen seeds, with identical pre-scan, identical 972row SCAT32 multiset, paired pattern/noise seeds, the
+same reconstruction path, and the same optical dwell
+— only the single global main-acquisition multiplier dif≥ 1.0 dB, the 2.5%
+fers. PASS iff medianj ∆Qridge
+j
+bootstrap lower bound on the median exceeds 0, and
+> 0} ≥ 18/24, using the existing
+#{j : ∆Qridge
+j
+10,000-replicate nested family-stratified bootstrap; any
+numerical or guard failure stays in the intention-totreat cohort and counts as nonpositive. This is a fixeddwell, power-for-time operating-point test. It is not an
+equal-photon-budget or photon-efficiency comparison.
+The secondary is the nine-dwell Q90 time-to-quality
+test (RIDGE SPEED PASS): SCAT32-SAFE at load 0.05
+against the dwell-dependent RIDGE-SCAT32 policy,
+using the frozen PAVA/censoring machinery (the seedmean radiometric PSNR, equal-weight PAVA isotonic
+curves, 0.50 dB safe-range informativeness floor, and
+censoring taxonomy transfer verbatim), with median
+Sgate ≥ 3, bootstrap lower bound > 1, and ≥ 18/24
+images with Sgate > 1. The confirmatory structural
+secondary is the full-stack descriptive analysis (Section ??). Every one of the 24 × 5 × 2 × 2 = 480
+certificate cells (ν ∈ {200, 2000}, b ∈ {0.05, 0.60}) receives exactly one terminal status — CERTIFIED (deployed design and class primal-feasible, all residual
+checks passed, Gstack /r ≤ 10−2 ), COUNTEREXAMPLE
+(a concrete full-stack-feasible design with actual logdeterminant improvement per dimension > 10−2 , found
+by the frozen support-expanding primal screen), or
+NUMERICAL UNRESOLVED (neither conclusion within the
+frozen numerical protocol) — under a frozen per-cell
+wall cap of 420 s (a 60 s primal screen, a 180 s cuttingplane solve, and one deterministic rescaled retry; no
+third attempt, no threshold change, no imputation,
+no cell deletion). The three statuses are descriptive:
+COUNTEREXAMPLE supplies constructive evidence of local geometry headroom, while NUMERICAL UNRESOLVED
+supplies neither certification nor refutation. No categorical certificate verdict is assigned.
+
+Table 5: Per-family primary result at ν = 2000:
+median paired ridge gain ∆Qridge and the count
+of positive scenes (four instances per family).
+The pooled median is 1.87 dB and 19/24 scenes
+Source:
+are
+positive
+(RIDGE OPERATING PASS).
+results/round63 m1/M1 VERDICTS.json and the
+imaging shards.
+Family
+maze
+glyph
+microtexture
+chirp
+spokes
+contour
+
+median ∆Qridge (dB)
++6.37
++3.58
++1.49
++1.40
++0.71
+−4.18
+
+scenes > 0
+4/4
+4/4
+4/4
+4/4
+2/4
+1/4
+
+and mean Jexact ; certificate cells add the terminal status, the full-stack dual bound Gstack , the exact Defficiency, solver status for the primary solve and the
+single retry, wall seconds, coefficient dynamic range,
+dictionary-scan and A-risk/spectral cut counts, the fulldictionary scan residual, the primal and dual gaps per
+r, the minimum generalized eigenvalue, the A-risk ratio, and the MU CAP ACTIVE disclosure. The full ninedwell kernel/ridge certification table and the SHA256 of
+Dcert = Dload ∪Dgain are frozen before any confirmatory
+scene is opened.
+
+5
+
+Results
+
+5.1
+
+Primary:
+gain
+
+ridge
+
+operating-point
+
+The primary verdict is RIDGE OPERATING PASS =
+PASS. At ν = 2000 the median paired radiometric gain of RIDGE-SCAT32 over SCAT32-060 is
+medianj ∆Qridge
+= 1.87 dB (frozen bar ≥ 1.0 dB); the
+j
+2.5% nested family-stratified bootstrap lower bound on
+the median is 1.41348975 dB (bar > 0); and 19/24
+scenes are positive (bar ≥ 18/24). All three conditions pass. The gain is bought with incident power,
+not photons: the ridge policy reaches its target mean
+load ρ̄ = ρR (2000) = 22.25 (the global safety clip
+does not bind), a 37× incident-dose ratio and a 2.6×
+detected-count ratio over the balanced SCAT32-060
+comparator, with no count-ceiling saturation (predicted
+pceil < 10−6 ; realized dark-count and timing-error fractions 0) and no RIDGE GUARD CLIPPED event. The gain
+is strongly scene-dependent (Table ??, Figure ??), from
++6.37 dB on maze to −4.18 dB on contour, the sole
+negative-median family (Section ??). This is a fixeddwell, power-for-time operating-point test. It is not an
+equal-photon-budget or photon-efficiency comparison.
+
+Disclosure ledger. Every cell discloses incident and
+detected photons (predicted and realized), the incidentdose and detected-count ratios, source/peak-irradiance
+ratio, the achieved mean load and its quantiles ρ5 ,
+ρ50 , ρ95 , ρmax , the physical peak, predicted and realized ceiling fractions, any RIDGE GUARD CLIPPED flag,
+9
+
+5.2
+
+Secondary: ridge time-to-quality
+
+Using the preregistered elapsed optical-time coordinate,
+Topt = Mtotal ντ , and the frozen Q90/PAVA/censoring
+procedure, the ridge time-to-quality endpoint passed:
+the median conservative speed ratio was 19.13×,
+the family-stratified nested-bootstrap 2.5th-percentile
+bound was 18.33×, and 21 of 24 scenes had Sgate > 1.
+
+Gstack /r ≤ 10−2 is 0. The status split is stable across
+the four anchors ((ν, b) = (200, 0.05): 77/43; (200, 0.60):
+67/53; (2000, 0.05): 84/36; (2000, 0.60): 71/49 counterexample/unresolved). Every cell is deployed-design
+feasible for budget, dose (±5%; realized deviation
+0.040), A-risk, and spectral constraints, with no active finite dual cap (MU CAP ACTIVE false in all 480),
+and the protocol runs well inside its budget (median
+wall time 64.6 s, maximum 67.3 s, against the 420 s
+per-cell cap; no cell reaches it). The 299 counterexamples are concrete full-stack-feasible designs whose actual per-dimension log-determinant improvement over
+deployed SCAT32 exceeds the 10−2 bar by roughly two
+orders of magnitude (median 1.43, range 1.19–1.87 per
+dimension, found by the frozen support-expanding primal screen); the 181 unresolved cells returned an infeasible cutting-plane master under the frozen numerical
+protocol and are not certified — which is not the same
+as scientifically refuted. Under the pre-freeze descriptive branch had already been selected, this distribution
+is reported without a categorical certificate verdict. Descriptively, the counterexample cohort is confirmatory
+evidence that the balanced design’s scene-adapted geometry headroom survives the full deployed conditioning stack — now over fresh confirmatory scenes and
+the complete stack, consistent with the developmentonly dose-only probe of Section ??. Per-cell statuses,
+gaps, residuals, cut counts, and wall times are in the
+disclosure ledger (supplement S5.2).
+
+Analysis correction. After the campaign was
+unblinded, an independent peer audit found that
+the frozen scoring implementation did not reproduce
+three parts of the preregistered analysis. It placed the
+Q90 crossings on log(νρ) rather than on the frozen
+elapsed optical time log Topt ; it resampled family
+labels rather than retaining all six fixed strata with
+paired within-image seed resampling; and it used a
+nonstandard isotonic implementation while omitting
+the frozen censoring taxonomy.
+The immutable
+tag, raw cells, and original analyzer outputs were
+preserved unchanged. A dated correction artifact
+recomputed the endpoints from the same frozen raw
+cells using the preregistered axis and machinery;
+the promoted independent implementation and an
+in-project rerun agreed on all 18 audited numerical
+outputs with no deep differences. Scientific claims
+and tables use the spec-conformant corrected results,
+while the original outputs remain available in the
+provenance record.
+The source-of-record bundle
+is
+results/round63 m1/CORRECTION 2026-07-19/,
+specifically M1 VERDICTS SPEC CORRECTED R19.json
+and ANALYSIS CORRECTION DISCLOSURE.md.
+As a post-hoc resource sensitivity, we repeated the
+corrected Q90 machinery on the incident-exposure coordinate proportional to νρ. It yielded a median ratio 5.4 Context arms and design diagnosof 0.279, a 2.5th-percentile bound of 0.240, and only 1
+tics
+of 24 scenes above one. Thus ridge tracking greatly reduced elapsed dwell in this campaign but did not reduce
+incident exposure to Q90 under this coordinate. This At the deployed operating point (ρ̄ = 0.60, ν =
+sensitivity was not the preregistered speed endpoint and 2000) the frozen context arms complete the occucarries no PASS/FAIL verdict.
+pancy ladder that motivated the k = 32 scattered
+support: mean radiometric PSNR is 17.12 dB for
+SCAT32-060,
+14.18 dB for the scattered k = 16
+5.3 Structural secondary: descriptive
+SCAT16, and 9.63 dB for the clustered LBLOB16,
+full-stack analysis
+placing the deployed design above both descriptive
+Before the immutable campaign tag, the required 24- references at matched load (Table ??) and consiscell development feasibility screen selected the pre- tent with the frozen development-selection rule (Secregistered FALLBACK DESCRIPTIVE branch.
+Conse- tion ??). The dose-relaxed and dose-constrained conquently, FULL STACK CERT PASS was removed before tinuous OED solutions, retained as no-endpoint design
+freeze, and the post-freeze full-stack computation was diagnostics, and the development-cell guard-versus-α
+specified only as a descriptive three-status analy- collapse (ADAPTIVE COLLAPSE UNDER GUARDS under the
+sis, not as a PASS/FAIL endpoint.
+Across the joint dose/A-risk/spectral guard stack, with the path480 frozen certificate cells (24 confirmatory scenes specific descriptive PATH FEASIBLE ALPHA diagnostic)
+× 5 seeds × ν ∈ {200, 2000} × b ∈ {0.05, 0.60}), feed the Act III figure (Figure ??); their full tables and
+0 are CERTIFIED, 299 are COUNTEREXAMPLE, and 181 the dose-only development probe fields are in suppleare NUMERICAL UNRESOLVED; the fraction certified at ment S5.3.
+10
+
+Table 6: Cross-arm summary at the primary dwell ν = 2000 (descriptive; means over 24 scenes × 5 seeds).
+Achieved ρ̄ and incident-dose ratio are read from the imaging shards; the incident-dose ratio is normalized to
+the SCAT32-060 comparator. Ceiling fraction is the predicted count-saturation probability pceil = P(N = ν)
+from the frozen renewal kernel at the achieved mean load (realized dark-count fraction is 0 for every arm). Mean
+Jexact is the exact per-slot count information evaluated at the achieved mean load via the same frozen kernel.
+The gates are the RIDGE-SCAT32 primary and speed comparisons and the deployed-design certificate; “—”
+marks a paired metric that does not apply to a reference or context arm.
+Arm
+SCAT32-SAFE
+SCAT32-060
+RIDGE-SCAT32
+SCAT16
+LBLOB16
+
+6
+
+Role
+safe ref. / speed base
+primary comparator
+ridge policy (gated)
+context
+context
+
+Discussion:
+handbook
+
+the
+
+achieved ρ̄
+0.05
+0.60
+22.25
+0.60
+0.60
+
+inc.-dose ratio
+0.08×
+1.00×
+37.1×
+1.00×
+1.01×
+
+ceiling frac.
+< 10−6
+< 10−6
+< 10−6
+< 10−6
+< 10−6
+
+mean Jexact
+0.048
+0.375
+0.935
+0.375
+0.375
+
+∆Qridge / Sgate
+—
+—
++1.87 / 19.127
+—
+—
+
+operating declared resource model, and the directions SCAT32
+
+The campaign exposes two conjugate resource regimes
+of the same dead-time information map.
+Under
+a linear incident-photon budget the per-photon efficiency Jexact (ρ, ν)/ρ falls monotonically, so a budgetconstrained design rations photons onto lower loads
+and avoids the ridge; the ridge belongs to timeconstrained operation, where power is available and the
+only scarcity is dwell. Reading the flux ridge and the
+design allocation as one program clarifies that the large
+fixed-dwell gains of the companion are an operatingpoint effect, not evidence that a design must spatially
+redistribute dose into the ridge.
+The
+corrected
+verdicts
+are
+settled:
+the
+ridge
+operating-point
+primary
+passes
+(RIDGE OPERATING PASS = PASS, median 1.87 dB), the
+ridge speed secondary passes (Sgate = 19.13×, lower
+bound 18.33×, 21/24 above one), and the full-stack
+analysis remains descriptive (0/480 cells certified); the
+campaign is preregistered to license only the governing
+ruling’s frozen conclusions. Global operating-point
+control remains the deployed positive arm; geometry
+selection is now known to retain dose-feasible headroom outside the conditioning stack (Section ??), so
+operating-point control and geometry adaptation are
+not presented as an exhaustive either–or. Because
+the descriptive branch was selected before freeze,
+the certificate licenses no categorical near-optimality
+statement and no collapse claim: across the 480 confirmatory cells, 0 certified, 299 counterexample, and
+181 numerically unresolved (Section ??), so within the
+frozen full-stack class balanced SCAT32 is not certified
+near-optimal, and the descriptive counterexample cohort descriptively shows that scene-adapted geometry
+headroom survives the full deployed conditioning stack
+— a localized, better-defined open problem, not a
+rescued outcome. The certificate is comparator- and
+subspace-relative: it is stated relative to the frozen
+expanded dictionary, the local pre-scan estimate, the
+
+resolves. The line’s thesis, in the frozen wording of the
+governing ruling, is this. Uniform dose controls cumulative exposure but does not eliminate scene-adapted
+geometry selection. The operative restriction is the
+full deployed conditioning stack: balanced SCAT32
+is evaluated descriptively within that frozen class,
+while time-limited image gains are tested separately by
+global ridge tracking.
+The primary gain is scene-dependent, and its one
+negative-median family is diagnostic: on contour the
+balanced 0.60 design outperforms the ridge on three
+of four instances (median ∆Qridge = −4.18 dB, versus
++6.37 on maze), the separating covariate being bucketbrightness contrast (losing instances Cu ∈ [0.21, 0.25]
+against the winning instance’s 0.33; across all 24 scenes
+∆Qridge correlates with Cu at +0.64), with no guard,
+trust, dark-count, or ceiling flag firing, consistent with
+the alignment condition of Section ?? under which a single global flux multiplier is least effective where bucket
+brightness is weakly aligned with directional value; the
+residual family-geometry dependence — contour loses
+where an equally low-contrast chirp scene gains — is
+left as a hypothesis.
+The jitter-capped ridge is the practical caution. The
+cube-root ridge is a property of the zero-jitter critical
+manifold; the moment a detector’s hold time carries a
+coefficient of variation cv , the long-window optimum is
+finite — the exact cubic c2v ρ2 (1 + 2ρ) = 1 of Theo−2/3
+rem ??, scaling as 2−1/3 cv
+— and driving past it is
+actively harmful: at the deterministic ridge (ρ = 22.3),
+5% jitter already forfeits about 55% of the scalar count
+information in the refined sweep (Table ??). A deployment must therefore locate its operating point against
+the jitter-limited ceiling of the real detector, not the deterministic ridge; the safe conclusion is conditional on
+measured timing jitter.
+Together, the law and the design principle compress
+into the operating handbook of Table ??: characterize
+the detector, let the law set the load ceiling, check engagement with the pre-scan, and pick the pattern recipe
+
+11
+
+OED collapse and coherent refreeze”), which retired
+Table 7: Operating handbook for dead-time-limited
+the adaptive imaging arm and re-architected the camsingle-pixel imaging. The engagement index Γ is depaign around the ridge operating-point primary and
+scriptive (the companion’s computable engagement cria structural near-optimality certificate, and the fullterion [?]), never a confirmatory gate.
+stack localization (R18, issue “R18 ruling: full-stack
+Step
+Rule
+1. Characterize
+measure τ and the hold-time cv from certificate localization and final refreeze”), which redefined the confirmatory certificate over the full deployed
+time-tagged recovery intervals
+2. Set the load
+jitter-capped optimum from c2v ρ2 (1 + conditioning stack (FULL STACK CERT PASS), admitted
+2ρ) = 1 (long window) or (6ν)1/3 (1 +
+the dose-only constructive probe as development-only
+12νc2v )−1/3 (finite window); never operate a jittered detector at the determinis- evidence, and froze the corrected claim discipline of
+Section ??. Exact-law peak predictions for the retic ridge
+3. Check engagement common 52-pattern p
+pre-scan → mea- fined jitter sweep, including the two out-of-sample
+sured Cu ; Γ = Cu νρ/(1 + ρ) ≳ 1
+rows, were registered before the sweep completed
+marks the photon-limited regime
+4. Pick patterns
+photon-budgeted: the balanced SCAT32 (docs/R14 PREREGISTERED PREDICTIONS.md, commit
+design,
+tested for certified near- 8a627bb) and confirmed in three stages (grid verdict
+optimality within the full deployed 1d8d7aa; local zoom 4d8310d; pooled Colab replicaconditioning class (Gstack /r ≤ 10−2 );
+tion bd731d5), with the intermediate k = 4/3 hypothtime-budgeted: RIDGE-SCAT32 — one
+esis preregistered at 5e51088 and refuted at 1a32758.
+global multiplier to ρR (ν) (Section ??)
+5. Doctrine
+photon-constrained → stay below the The campaign freezes at tag m1-freeze once the R13
+ridge (Jexact /ρ falls); time-constrained checklist passes outcome-blind self-tests; the companion
+→ track the jitter-capped ridge
+is frozen at tag paper1-freeze-v1. Source-of-record
+documents for every frozen constant are cited by ruling number in the block comments of the manuscript
+by which resource is scarce.
+Two scope boundaries stand.
+All results are source; full machinery and proofs are in the supplesimulation-based, and every certificate is stated rela- ment (supplement m1.tex). All code, frozen pretive to the frozen dictionary, the local pre-scan estimate, registration documents, per-cell manifests, and eviand the declared resource model; an optical extension dence bundles are available at [repo URL wording —
+along the companion’s discussion — a coarse complex- user decision]; funding and acknowledgments are [fundfield estimate synthesizing an optical displacement that ing/acknowledgments — user decision].
+removes common-mode photons before dead-time loss
+— remains a natural bench direction [?].
+The law itself, however, is bench-testable now, with
+no imaging required. For a real single-photon counting module, the hold-time coefficient of variation is directly measurable from time-tagged recovery intervals;
+the theory then predicts a count-information peak at
+the root of c2v ρ2 (1 + 2ρ) = 1 rather than at the deterministic ridge — for cv = 0.05, a peak near ρ ≈ 5.7 instead of ≈ 22 at ν = 2000, with about half the information forfeited if the deterministic ridge is used instead
+(Table ??). Sweeping source power at fixed dwell and
+estimating the count information from repeated frames
+traces J(ρ) directly; this single-detector power sweep is
+the immediate bench experiment for the line.
+
+7
+
+Reproducibility
+
+The design formulation, guards, and campaign follow
+six frozen rulings: the dead-time OED formulation and
+equivalence certificate (R10), the ridge-zone load architecture and incident-budget conjugacy (R11), the M1
+freeze audit (R13), the unification ruling (R14, issue
+“R14 ruling: unification architecture”), whose theorem hierarchy Section ?? follows, the safety-constrained
+refreeze (R17, issue “R17 ruling: safety-constrained
+12
+
+(d) Ridge power knob sharpens detail at fixed dwell (ν = 2000, seed 0)
+SCAT32-060
+(ρ̄ = 0.60)
+9.4 dB
+
+RIDGE-SCAT32
+(ρ̄ ∗ ≈ 22)
+
+24-image dQ (19/24 > 0)
+
+10.9 dB
+
+chirp_3
+median dQ
+
+6
+
++1.5
+dB
+4
+
+35.4 dB
+
+maze_1
+best (max dQ)
+
+28.7 dB
+
+median 1.87 dB
+
++6.7
+dB
+
+2
+
+≥ 1.0 dB bar
+
+0
+
+per-image dQ (dB)
+
+ground truth
+
+−2
+7.7 dB
+
+contour_1
+worst (min dQ)
+
+13.6 dB
+
+−4
+
+-5.8
+dB
+
+−6
+h
+yp
+gl
+
+p
+
+ir
+
+ch
+
+az
+
+m
+
+r
+re
+es
+ou
+tu
+ok
+nt
+ex
+t
+co
+ro
+ic
+m
+
+e
+sp
+
+Figure 2: Fixed-dwell reconstruction quality of the global power knob: RIDGE-SCAT32 against balanced
+SCAT32-060 at ν = 2000, seed 0 (the centrepiece of the operating-point primary). Each row shows, left to right,
+the ground truth, the SCAT32-060 reconstruction (ρ̄ = 0.60), and the RIDGE-SCAT32 reconstruction (ρ̄∗ ≈
+22), annotated with the per-row ∆Q badge: the median-∆Q scene m1 chirp 3 (radiometric PSNRrad of 9.4 and
+10.9 dB, respectively; ∆Q = +1.5 dB), the best-∆Q scene m1 maze 1 (28.7 and 35.4 dB; ∆Q = +6.7 dB), and the
+worst-∆Q scene m1 contour 1, a contour (13.6 and 7.7 dB; ∆Q = −5.8 dB). The right panel plots the per-image
+∆Q (seed-mean over five seeds) for all 24 confirmatory scenes grouped by family; the solid line is the campaign
+median 1.87 dB, the dashed line the 1.0 dB operating bar, and 19/24 scenes exceed zero. PSNRrad denotes the
+radiometric peak signal-to-noise ratio and ∆Q = PSNRrad (RIDGE-SCAT32) − PSNRrad (SCAT32-060); the
+thumbnail values are the seed-0 realization. The colour is used only for display purposes, and each row shares a
+common grayscale scale.
+
+13
+
+10
+
+1.05× A-risk cap
+
+0
+
+0.5× spectral floor
+
+PATH_FEASIBLE_ALPHA = None
+NO_FEASIBLE_POINT_ON_PATH
+
+only α = 0 (balanced) is dose-feasible,
+but fails the effD ≥ 0.95 floor
+
+10−1
+
+0.05 (±5% dose)
+
+0.0
+
+0.2
+
+0.4
+
+0.6
+
+0.8
+
+1.0
+
+path-specific OED fraction α = m/972
+dose deviation
+spectral floor μmin
+
+−1
+A-risk ratio tr(V −1)/tr(Vfix
+)
+
+(b) Dose-only geometry headroom is real
+(development-only lower bound; no gate)
+1.0
+2.5
+0.8
+2.0
+0.6
+1.5
+
+0.4
+0.2
+
+anchor A: ν = 2000, b = 0.60
+anchor B: ν = 200, b = 0.05
+
+support-preserving construction: existence, not optimum
+
+0.0
+
+h
+lyp
+
+g
+
+p
+hir
+
+c
+
+e
+az
+
+s
+ke
+
+o
+
+m
+
+sp
+
+r
+ou
+
+nt
+
+co
+
+t
+
+ex
+
+ot
+
+cr
+mi
+
+1.0
+
+e
+ur
+
+D-efficiency lower bound exp(gap)
+
+dose 2–11× over cap
+for every α > 0
+
+101
+
+dose-only primal gap / r (log det per dim.)
+
+guard quantity (log)
+
+(a) Adaptive mixture collapses under the conditioning stack
+(development evidence, DEV glyph, ν = 2000, b = 0.60)
+
+acquisition-time budget
+
+(e) Conjugate-corners doctrine: one knob, two regimes
+
+all 299 gaps exceed the bar
+(median 1.43)
+
+status by anchor: 0/480 CERTIFIED
+1.0
+
+125
+100
+
+43
+
+53
+
+36
+
+75
+50
+
+77
+
+25
+
+67
+
+84
+
+ba
+l
+
+po
+w
+
+er
+
+elapsed T_opt speed = PASS
+
+kn
+
+ob
+
+0.4
+0.2
+
+ν2000
+b0.05
+
+glo
+
+(fixed-dwell quality primary)
+
+near-optimality bar
+Gstack/r ≤ 10−2
+
+0.6
+
+0.0
+ν200
+b0.60
+
+SCAT32-SAFE comparator
+
+71
+
+0
+ν200
+b0.05
+
+(Q90 count-time secondary)
+
+Time-limited, power-available
+
+0.8
+
+49
+
+ECDF
+
+certificate cells (of 120 per anchor)
+
+(c) FULL_STACK_CERT confirmatory distribution (descriptive branch)
+
+Photon-budgeted corner
+
+ν2000
+b0.60
+
+COUNTEREXAMPLE
+NUMERICAL_UNRESOLVED
+CERTIFIED
+
+ridge point ρ ̄ ∗ : +1.87 dB median
+10−2
+
+10−1
+
+100
+
+primal gap / r (COUNTEREXAMPLE cells)
+
+RIDGE_OPERATING_PASS = TRUE
+
+optical power / flux budget
+
+Figure 3: Act III design doctrine: information rewards scene-adapted geometry, uniform dose alone does not
+eliminate that headroom (development evidence, panels a–b), the conditioning stack defines the deployable class
+tested by the full-stack certificate (panel c), and global operating-point control survives orthogonally (panel e;
+the operating-point reconstructions are Figure ??). (a) Guard collapse of the adaptive OED-DT mixture along
+the descending exact-rounding path for the development glyph scene at the fast anchor (ν = 2000, b = 0.60);
+development-only evidence, not a confirmatory endpoint. The dose deviation max |d/d¯− 1| (orange), the spectral
+−1
+) (blue) are shown versus the path-specific OED fraction
+floor µmin (green), and the A-risk ratio tr(V −1 )/tr(Vfix
+α = m/972, with the dashed guard bars the ±5% dose band (0.05), the spectral floor (0.5×), and the Arisk cap (1.05×), respectively; every α > 0 exceeds the dose band by 2–11× and, by α ≈ 0.06, breaches the
+spectral floor, while the A-risk cap never binds and only the balanced endpoint α = 0 is dose-feasible (failing
+the separate efficiency floor eff D ≥ 0.95), so PATH FEASIBLE ALPHA is None (NO FEASIBLE POINT ON PATH).
+(b) Constructive dose-only geometry headroom over the six development families; development-only lower bound,
+not a confirmatory endpoint or population estimate. The per-dimension dose-only primal gap [log det V (ξ) −
+log det VSCAT32 ]/r within the ±5% dose band is shown at anchor A (ν = 2000, b = 0.60; circles) and anchor B
+(ν = 200, b = 0.05; diamonds), the right axis reporting the D-efficiency lower bound exp(gap); across glyph, chirp,
+maze, spokes, contour, and microtexture the gaps are 0.78, 0.86, 0.59, 0.90, 0.90, and 0.92 at anchor A and 0.90,
+0.50, 0.51, 0.79, 0.59, and 0.72 at anchor B, respectively (D-efficiency lower bounds 1.6–2.5×). The construction
+is support-preserving and establishes existence, not the dose-only optimum. (c) Descriptive full-stack analysis
+distribution under the fallback-descriptive branch (0/480 CERTIFIED). The left bars give the terminal status of the
+480 certificate cells split by the four (ν, b) anchors (120 cells each): at (ν200, b0.05), (ν200, b0.60), (ν2000, b0.05),
+and (ν2000, b0.60) the cells are 77, 67, 84, and 71 COUNTEREXAMPLE and 43, 53, 36, and 49 NUMERICAL UNRESOLVED,
+respectively, with no CERTIFIED cell; the right panel is the empirical cumulative distribution of the finite primal
+gap per dimension for the 299 COUNTEREXAMPLE cells (median 1.43), the dashed line the near-optimality bar
+Gstack /r ≤ 10−2 , which every counterexample exceeds by about two orders of magnitude. The certificate is
+14claim is made. (e) Conjugate-corners operating doctrine
+reported descriptively and no categorical near-optimality
+for the global power knob: the plane is spanned by the optical-power/flux budget (horizontal) and the acquisitiontime budget (vertical); in the photon-budgeted corner (low power, ample time; Q90 elapsed-time secondary) the
+
+

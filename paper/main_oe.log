@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.9.25)  19 JUL 2026 20:24
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.9.25)  19 JUL 2026 21:13
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -318,7 +318,7 @@ def
 File: l3backend-pdftex.def 2024-02-20 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count289
 \l__pdf_internal_box=\box53
-) (tmp/main_oe.aux)
+) (./main_oe.aux)
 \openout1 = `main_oe.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 33.
@@ -400,7 +400,7 @@ e
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 Package hyperref Info: Link coloring OFF on input line 33.
-(tmp/main_oe.out) (tmp/main_oe.out)
+(./main_oe.out) (./main_oe.out)
 \@outlinefile=\write3
 \openout3 = `main_oe.out'.
 
@@ -592,7 +592,7 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [8 <./figs/fig_s1b_images.pdf> <./figs/fig_s1c_curves.pdf> <./figs/fig_s1d_svs
 rho.pdf>]
-(tmp/main_oe.bbl
+(./main_oe.bbl
 Underfull \hbox (badness 1205) in paragraph at lines 15--18
 []\OT1/cmr/m/n/10 Matthew P. Edgar, Gra-ham M. Gib-son, and
  []
@@ -616,7 +616,7 @@ Underfull \hbox (badness 1521) in paragraph at lines 66--70
 
 ] [11 <../results/round63_theory/fig_a_ridge_map.pdf> <./figs/fig_b_masks.pdf> 
 <./figs/fig_c_ladder.pdf> <./figs/fig_d_dwell.pdf> <./figs/fig_f_scattering.pdf
-> <./figs/fig_e_gate.pdf>] (tmp/main_oe.aux)
+> <./figs/fig_e_gate.pdf>] (./main_oe.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-02-20>
@@ -625,13 +625,13 @@ Package rerunfilecheck Info: File `main_oe.out' has not changed.
 (rerunfilecheck)             Checksum: 6F039102F839CF361B892226D679FE28;5553.
  ) 
 Here is how much of TeX's memory you used:
- 10859 strings out of 476023
- 166317 string characters out of 5790298
+ 10858 strings out of 476023
+ 166275 string characters out of 5790298
  1949190 words of memory out of 5000000
  32758 multiletter control sequences out of 15000+600000
  571993 words of font info for 87 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 75i,8n,79p,2799b,550s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,8n,79p,2799b,552s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx
 12.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm
 /cmcsc10.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/amsfo
@@ -653,7 +653,7 @@ ogram Files/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.
 pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbo
 ls/msbm10.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/cm-s
 uper/sfrm1000.pfb>
-Output written on tmp/main_oe.pdf (11 pages, 754471 bytes).
+Output written on main_oe.pdf (11 pages, 750388 bytes).
 PDF statistics:
  690 PDF objects out of 1000 (max. 8388607)
  464 compressed objects within 5 object streams

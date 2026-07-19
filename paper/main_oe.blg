@@ -3,16 +3,6 @@ Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: main_oe.aux
 The style file: unsrt.bst
 Database file #1: refs.bib
-You're missing a field name---line 175 of file refs.bib
- : 
- : %   author  = {Zhang, ...},
-(Error may have been on previous line)
-I'm skipping whatever remains of this entry
-You're missing a field name---line 299 of file refs.bib
- : 
- : %   author  = {Li, ...},
-(Error may have been on previous line)
-I'm skipping whatever remains of this entry
 You've used 20 entries,
             1791 wiz_defined-function locations,
             572 strings with 7086 characters,
@@ -54,4 +44,3 @@ warning$ -- 0
 while$ -- 53
 width$ -- 22
 write$ -- 221
-(There were 2 error messages)

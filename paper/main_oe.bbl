@@ -1,0 +1,118 @@
+\begin{thebibliography}{10}
+
+\bibitem{duarte2008singlepixel}
+Marco~F. Duarte, Mark~A. Davenport, Dharmpal Takhar, Jason~N. Laska, Ting Sun,
+  Kevin~F. Kelly, and Richard~G. Baraniuk.
+\newblock Single-pixel imaging via compressive sampling.
+\newblock {\em IEEE Signal Processing Magazine}, 25(2):83--91, 2008.
+
+\bibitem{shapiro2008computational}
+Jeffrey~H. Shapiro.
+\newblock Computational ghost imaging.
+\newblock {\em Physical Review A}, 78(6):061802, 2008.
+
+\bibitem{edgar2019principles}
+Matthew~P. Edgar, Graham~M. Gibson, and Miles~J. Padgett.
+\newblock Principles and prospects for single-pixel imaging.
+\newblock {\em Nature Photonics}, 13(1):13--20, 2019.
+
+\bibitem{hao2025photonlimited}
+Yining Hao, Yang Peng, Tianshun Zhang, and Wen Chen.
+\newblock High-quality photon-limited imaging through dynamic and complex
+  scattering media with a single-photon detector.
+\newblock {\em APL Photonics}, 10(10):106119, 2025.
+
+\bibitem{hao2025randommedia}
+Yining Hao, Yin Xiao, and Wen Chen.
+\newblock Single-pixel imaging through random media with automated adaptive
+  corrections.
+\newblock {\em Applied Physics Letters}, 126(13):131105, 2025.
+
+\bibitem{hao2025complexfield}
+Yining Hao and Wen Chen.
+\newblock Single-pixel complex-field imaging through scattering media.
+\newblock {\em Optics Letters}, 50(6):1949--1952, 2025.
+
+\bibitem{rapp2019deadtime}
+Joshua Rapp, Yanting Ma, Robin M.~A. Dawson, and Vivek~K. Goyal.
+\newblock Dead time compensation for high-flux ranging.
+\newblock {\em IEEE Transactions on Signal Processing}, 67(13):3471--3486,
+  2019.
+
+\bibitem{rapp2021highflux}
+Joshua Rapp, Yanting Ma, Robin M.~A. Dawson, and Vivek~K. Goyal.
+\newblock High-flux single-photon lidar.
+\newblock {\em Optica}, 8(1):30, 2021.
+
+\bibitem{gupta2019photonflooded}
+Anant Gupta, Atul Ingle, Andreas Velten, and Mohit Gupta.
+\newblock Photon-flooded single-photon 3d cameras.
+\newblock In {\em 2019 IEEE/CVF Conference on Computer Vision and Pattern
+  Recognition (CVPR)}, pages 6763--6772, 2019.
+
+\bibitem{gupta2019asynchronous}
+Anant Gupta, Atul Ingle, and Mohit Gupta.
+\newblock Asynchronous single-photon 3d imaging.
+\newblock In {\em 2019 IEEE/CVF International Conference on Computer Vision
+  (ICCV)}, pages 7908--7917, 2019.
+
+\bibitem{liu2021photoncounting}
+Xinyuan Liu, Yue Ma, Song Li, Jian Yang, Zhiyu Zhang, and Xin Tian.
+\newblock Photon counting correction method to improve the quality of
+  reconstructed images in single photon compressive imaging systems.
+\newblock {\em Optics Express}, 29(23):37945, 2021.
+
+\bibitem{jorgensen2026deadtime}
+Frederic J.~N. Jorgensen and Steven~G. Johnson.
+\newblock Fundamental bounds and efficient estimation for dead-time-constrained
+  event detection, with application to single-photon lidar, 2026.
+\newblock arXiv:2605.23210.
+
+\bibitem{wang2011pileup}
+Adam~S. Wang, Daniel Harrison, Vladimir Lobastov, and J.~Eric Tkaczyk.
+\newblock Pulse pileup statistics for energy discriminating photon counting
+  x-ray detectors.
+\newblock {\em Medical Physics}, 38(7):4265--4275, 2011.
+
+\bibitem{becares2012deadtime}
+V.~B{\'e}cares and J.~Bl{\'a}zquez.
+\newblock Detector dead time determination and optimal counting rate for a
+  detector near a spallation source or a subcritical multiplying system.
+\newblock {\em Science and Technology of Nuclear Installations}, 2012:240693,
+  2012.
+
+\bibitem{liu2019pileup}
+Shuai Liu, Xu-Ri Yao, Xue-Feng Liu, Da-Zhi Xu, Xing-Da Wang, Bing Liu, Chao
+  Wang, Guang-Jie Zhai, and Qing Zhao.
+\newblock Pile-up effect in an infrared single-pixel compressive lidar system.
+\newblock {\em Optics Express}, 27(16):22138--22146, 2019.
+
+\bibitem{han2025sparsehadamard}
+Yuyuan Han, Peng Wu, Hanxiong Xu, Bin Li, Yuchen He, Jianbin Liu, Hui Chen, and
+  Huaibin Zheng.
+\newblock Generalized sparse hadamard single-pixel imaging.
+\newblock {\em Optics Express}, 33(20):43324--43341, 2025.
+
+\bibitem{muller1973deadtime}
+J{\"o}rg~W. M{\"u}ller.
+\newblock Dead-time problems.
+\newblock {\em Nuclear Instruments and Methods}, 112(1--2):47--57, 1973.
+
+\bibitem{yu2000mean}
+Daniel~F. Yu and Jeffrey~A. Fessler.
+\newblock Mean and variance of single photon counting with deadtime.
+\newblock {\em Physics in Medicine and Biology}, 45(7):2043--2056, 2000.
+
+\bibitem{alvarez2014pileup}
+Robert~E. Alvarez.
+\newblock Signal to noise ratio of energy selective x-ray photon counting
+  systems with pileup.
+\newblock {\em Medical Physics}, 41(11):111909, 2014.
+
+\bibitem{gronberg2018deadtime}
+Fredrik Gr{\"o}nberg, Mats Danielsson, and Martin Sj{\"o}lin.
+\newblock Count statistics of nonparalyzable photon-counting detectors with
+  nonzero pulse length.
+\newblock {\em Medical Physics}, 45(8):3800--3811, 2018.
+
+\end{thebibliography}
