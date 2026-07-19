@@ -18,12 +18,21 @@ post-R23. Papers remain two; digs are post-hoc/descriptive unless promoted.
    long-window, information per detected photon is load-invariant (=1) and
    the FINITE-window ridge is exactly where counting stops equaling
    learning. → results/round63_next/SPEED_DECOMPOSITION.md (Opus, running).
-4. **Quantile-calibration rescue probe** (one knob, better aim): rerun the
-   frozen forward model on the failure scenes (contour×4, spokes negative,
-   microtexture) with the global multiplier calibrated to a load QUANTILE
-   instead of the mean — tests the ridge-fragility mechanism and the
-   cheapest possible contour fix. Post-hoc descriptive, frozen machinery.
-   → results/round63_next/QUANTILE_RESCUE_PROBE.md (Opus, running).
+4. **Quantile-calibration rescue probe** — COMPLETE, verdict NEGATIVE
+   (2026-07-20): harness reproduced frozen dQ to 0.00000 dB; Q90/Q75
+   calibration pulls the past-ridge load fraction from 46–48% to 7–16%
+   with essentially no quality response; no failing scene rescued; even
+   the per-pattern MEAN-CLIPPED genie fails (worsens contour_0/1 by
+   0.65–1.61 dB). The dispersion-past-ridge hypothesis is REFUTED for the
+   confirmatory negatives (which are contour_0/1/2 + spokes_0/1;
+   microtexture is positive — earlier brief premise corrected). Deficit
+   lives in geometry/task alignment, NOT load allocation: no reweighting
+   of light (rank-one OR per-pattern) helps these scenes; only different
+   PATTERNS could. Sharpens the falsifier's role: if the alignment
+   functional predicts these scenes, the closed story is "load control
+   cannot help misaligned scenes (probe) + geometry headroom exists
+   (certificate) + the functional says which is which (falsifier)".
+   → results/round63_next/QUANTILE_RESCUE_PROBE.md.
 
 ## QUEUED (batch into the next GPT round)
 
@@ -53,9 +62,11 @@ post-R23. Papers remain two; digs are post-hoc/descriptive unless promoted.
 - 19.13≈20.1 near-tautology → reframed as the c=0 channel signature
   (dig 3 formalizes).
 - Contour mechanism duality (dispersion-past-ridge vs misalignment) →
-  unified by ridge-top flatness: alpha*_J divergence (fragile alignment)
-  and cheap clipping are the SAME geometric fact; falsifier P3 + rescue
-  probe test it.
+  SETTLED EMPIRICALLY by the rescue probe (2026-07-20): the dispersion
+  mechanism is refuted; misalignment carries the weight. The earlier
+  "ridge-top flatness unifies both" synthesis was half wrong — the
+  flatness does make clipping cheap (speed decomposition confirmed
+  3–12% clip cost), but the contour deficit is not a load effect at all.
 - 两边对比度 → the three failure modes span the alignment functional:
   amplitude (C_u→0, microtexture), elasticity mismatch ((α−α*)², contour),
   brightness-invisible geometry (σ_ζ, R22 counterexample).
