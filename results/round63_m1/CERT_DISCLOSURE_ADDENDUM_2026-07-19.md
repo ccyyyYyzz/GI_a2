@@ -9,7 +9,7 @@ The original frozen certificate rows in `results/round63_m1/shards/M1_CERT_*.csv
 
 Campaign structure: the pre-freeze 24-cell development feasibility screen selected the preregistered `FALLBACK_DESCRIPTIVE` branch, so `FULL_STACK_CERT_PASS` was removed before freeze and the post-freeze full-stack computation is a descriptive three-status analysis, not a PASS/FAIL endpoint.
 
-Frozen status distribution over the 480 full-stack analysis cells (6 development images x 5 seeds x 2 nu x 2 b anchors, minus screen accounting; source of record):
+Frozen status distribution over the 480 full-stack analysis cells (24 confirmatory scenes x 5 seeds x 2 nu x 2 b anchors; source of record):
 
 - CERTIFIED: 0
 - COUNTEREXAMPLE: 299
