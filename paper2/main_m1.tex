@@ -83,8 +83,9 @@ jitter ($c_v$ the hold-time coefficient of variation); matching this
 extensive loss to the deterministic terminal-phase loss predicts the smooth
 crossover $\rho^{*}(\nu,c_v)\sim(6\nu)^{1/3}(1+12\nu c_v^{2})^{-1/3}$ ---
 zero jitter is the critical manifold on which the ridge grows as $\nu^{1/3}$,
-and a Monte-Carlo sweep matches the exact-law peak predictions within
-$5$--$6\%$ on the measured grid. We report a preregistered simulation campaign (M1) with a single
+and the exact-law peak predictions, registered before the refined
+Monte-Carlo sweep completed, were confirmed out-of-sample at both fresh
+points ($3\%$ and $6\%$ at $c_v = 0.02$ and $0.2$). We report a preregistered simulation campaign (M1) with a single
 gate on the optimized arm, a common charged pre-scan, six arms, and a
 mandatory per-cell disclosure ledger; all outcomes are reported as frozen
 \SPH{M1: primary/secondary verdicts and cross-arm numbers}.
@@ -320,7 +321,9 @@ fallback is the fixed comparator; no threshold is retuned after freeze.
 % form is only the two-limit envelope, with an artificial kink); the leading
 % coefficient is 2^{-1/3} = 0.794, NOT the fitted 0.72. Exact-law predictions
 % were REGISTERED before the refined sweep completed
-% (docs/R14_PREREGISTERED_PREDICTIONS.md, commit 8a627bb).
+% (docs/R14_PREREGISTERED_PREDICTIONS.md, commit 8a627bb) and CONFIRMED
+% out-of-sample by the sweep (verdict commit 1d8d7aa; both fresh points hit,
+% 3% and 6%).
 The theory spine follows the frozen unification ruling:\ the random-hold
 count-information results of Section~\ref{sec:jitter} are the headline
 theorems, the master design program of Section~\ref{sec:onelagrangian} is the
@@ -445,24 +448,27 @@ optima~\cite{muller1973deadtime,yu2000mean,gronberg2018deadtime,
 alvarez2014pileup,jorgensen2026deadtime}; we found no source stating the
 count-only exponent pair or the extensive/terminal crossover.
 
-% ---- Measured coarse sweep vs. registered exact-law predictions ------------
+% ---- Refined sweep vs. registered exact-law predictions --------------------
+% Source of record: results/round63_study2/jitter_sfi_v2_nu2000.log (+ nu200);
+% predictions registered PRE-DATA at commit 8a627bb, verdict at 1d8d7aa.
 \begin{table}[t]
 \centering
-\caption{Monte-Carlo scalar count information $J(\rho,\nu=2000,c_v)$ for
-lognormal hold times (coarse sweep:\ common random numbers, $60{,}000$
-frames), validated against the exact table at $c_v = 0$ ($J(2) = 0.676$ vs.\
-exact $0.667 + \text{corr}$), against the exact-law peak predictions of
-Theorem~\ref{thm:cubic}/Eq.~(\ref{eq:crossover}) as registered before the
-refined sweep completed (\texttt{docs/R14\_PREREGISTERED\_PREDICTIONS.md},
-commit \texttt{8a627bb}). The coarse-grid fit $c_0 \approx 0.72$ is an
-effective finite-grid, finite-sample coefficient; the exact asymptotic
-coefficient is $2^{-1/3} = 0.794$, and the exact-law predictions sit
-$5$--$6\%$ above the coarse measurements (grid-limited; the ratio test
-$\mathrm{cap}(0.05)/\mathrm{cap}(0.1) = 1.65$ vs.\ $2^{2/3} = 1.587$ is less
-sensitive to the common bias). Hardware warning:\ at $\rho = 24$ with
-$c_v = 0.05$, $J = 0.38$ vs.\ deterministic $0.95$ --- about $60\%$
-information loss from $5\%$ jitter at the deterministic ridge.
-Source:\ \texttt{results/round63\_study2/jitter\_scalar\_fi.log}.}
+\caption{Refined-sweep scalar count information $J(\rho,\nu=2000,c_v)$ for
+lognormal hold times (\texttt{jitter\_sfi\_v2}:\ $100{,}000$ frames per
+cell, common random numbers, 25-point log grid of geometric spacing
+$1.157$), against the exact-law peak predictions of
+Theorem~\ref{thm:cubic}/Eq.~(\ref{eq:crossover}) registered \emph{before}
+the sweep completed (\texttt{docs/R14\_PREREGISTERED\_PREDICTIONS.md},
+commit \texttt{8a627bb}; verdict at commit \texttt{1d8d7aa}). Both
+out-of-sample rows hit ($c_v = 0.02$:\ $3\%$; $c_v = 0.2$:\ $6\%$), and
+every in-sample peak lies within one grid notch of its prediction. The
+earlier coarse-grid fit $c_0 \approx 0.72$ was an effective finite-grid
+coefficient; the exact asymptotic coefficient is $2^{-1/3} = 0.794$.
+Hardware warning:\ at the deterministic ridge ($\rho = 22.3$), $5\%$ jitter
+leaves $J = 0.43$ vs.\ $0.95$ --- about $55\%$ of the scalar count
+information forfeited.
+Source:\ \texttt{results/round63\_study2/}\allowbreak
+\texttt{jitter\_sfi\_v2\_nu2000.log}.}
 \label{tab:jitter}
 \small
 \setlength{\tabcolsep}{4pt}
@@ -470,24 +476,28 @@ Source:\ \texttt{results/round63\_study2/jitter\_scalar\_fi.log}.}
 \hline
 $c_v$ & measured peak $\rho$ & exact-law prediction & $J$ at peak \\
 \hline
-$0$    & $\approx 22$--$24$   & $22.25$ (exact ridge) & $0.948$ \\
-$0.05$ & $\approx 5.43$       & $5.69$                & $0.796$ \\
-$0.1$  & $\approx 3.30$       & $3.50$                & $0.701$ \\
-$0.3$  & $\le 2$ (grid edge)  & $1.63$                & $0.499$ \\
+$0$    & $22.297$ & $22.25$ (exact ridge)          & $0.9452$ \\
+$0.02$ & $10.739$ & $\approx10.4$ (out-of-sample)  & $0.8731$ \\
+$0.05$ & $5.173$  & $5.69$                         & $0.7848$ \\
+$0.1$  & $3.862$  & $3.50$                         & $0.6989$ \\
+$0.2$  & $2.153$  & $\approx2.30$ (out-of-sample)  & $0.5882$ \\
+$0.3$  & $1.607$  & $1.63$                         & $0.5042$ \\
 \hline
 \end{tabular}
 \end{table}
 
-The coarse sweep of Table~\ref{tab:jitter} was measured \emph{before} the
-exact law was derived; the exact-law column was then registered, together
-with two out-of-sample rows --- $c_v = 0.02 \to \rho_{*} \approx 10.4$ and
-$c_v = 0.2 \to \rho_{*} \approx 2.30$ --- before the refined sweep completed
-(\texttt{docs/R14\_PREREGISTERED\_PREDICTIONS.md}, commit \texttt{8a627bb}).
-The refined sweep (three hold families --- lognormal, matched-CV gamma,
-bounded two-point --- with cross-fitted conditional-score information
-estimation, frozen exponent tests for $1/3$ and $-2/3$, a long-window cubic
-residual, and a scaling-collapse test of Eq.~(\ref{eq:crossover})) reports in
-Section~\ref{sec:results}.
+The exact-law column of Table~\ref{tab:jitter}, including the two
+out-of-sample rows, was registered before the refined sweep completed
+(commit \texttt{8a627bb}); the sweep then confirmed the law at both
+registered fresh points --- $c_v = 0.02$:\ predicted $\approx10.4$, measured
+$10.739$ ($3\%$); $c_v = 0.2$:\ predicted $\approx2.30$, measured $2.153$
+($6\%$) --- with every in-sample peak within one notch of the $\times1.157$
+grid (verdict at commit \texttt{1d8d7aa}). The $\nu = 200$ column is
+consistent including the crossover correction of
+Eq.~(\ref{eq:crossover}):\ the $c_v = 0$ peak sits at $9.28$ against the
+exact ridge $10.04$, and $c_v = 0.3$ measures $1.86$ against the predicted
+$1.77$. Section~\ref{sec:results} restates the verdict with the campaign
+results.
 
 \subsection{One master concave program}
 \label{sec:onelagrangian}
@@ -706,13 +716,23 @@ disclosure.}
 ratio, and spectral-floor margin per designed cell.}
 
 \subsection{Jitter-ridge refined sweep}
-\SPH{sweep: refined-sweep verdict --- deterministic $1/3$ and jitter $-2/3$
-exponent tests, long-window cubic residual, scaling collapse of
-$\rho_{*}/(6\nu)^{1/3}$ against $x = 12\nu c_v^{2}$ per
-Eq.~(\ref{eq:crossover}), distribution-shape universality across
-lognormal/gamma/two-point holds, and the registered out-of-sample rows
-$c_v = 0.02 \to \rho_{*}\approx10.4$ and $c_v = 0.2 \to
-\rho_{*}\approx2.30$.}
+The refined sweep (\texttt{jitter\_sfi\_v2}:\ lognormal holds, $100{,}000$
+frames per cell, common random numbers, 25-point log grid of spacing
+$1.157$, $\nu \in \{200, 2000\}$) confirmed the R14 law out-of-sample. At
+$\nu = 2000$ the measured peaks are $\rho_{*} = 22.297$, $10.739$, $5.173$,
+$3.862$, $2.153$, and $1.607$ at $c_v = 0$, $0.02$, $0.05$, $0.1$, $0.2$,
+and $0.3$, respectively (Table~\ref{tab:jitter}); both predictions
+registered before the data existed hit --- $c_v = 0.02$ predicted
+$\approx10.4$, measured $10.739$ ($3\%$); $c_v = 0.2$ predicted
+$\approx2.30$, measured $2.153$ ($6\%$) --- and every in-sample peak lies
+within one grid notch of its exact-law value (commits \texttt{8a627bb},
+predictions registered pre-data; \texttt{1d8d7aa}, verdict). The $\nu = 200$
+column is consistent with the crossover correction:\ the $c_v = 0$ peak at
+$9.28$ tracks the exact ridge $10.04$, and $c_v = 0.3$ measures $1.86$
+against the predicted $1.77$. The fuller three-hold-family exponent battery
+frozen in the ruling (tests E1--E5, with matched-CV gamma and bounded
+two-point holds and cross-fitted conditional-score estimation) remains a
+preregistered extension beyond this verdict.
 
 \begin{table*}[t]
 \centering
@@ -757,10 +777,9 @@ property of the zero-jitter critical manifold; the moment a detector's hold
 time carries a coefficient of variation $c_v$, the long-window optimum is
 finite --- the exact cubic $c_v^{2}\rho^{2}(1+2\rho) = 1$ of
 Theorem~\ref{thm:cubic}, scaling as $2^{-1/3}c_v^{-2/3}$ --- and driving past
-it is actively harmful:\ at the deterministic ridge, $5\%$ jitter already
-forfeits about $60\%$ of the scalar count information in the coarse dev
-measurement (Table~\ref{tab:jitter}), with the final uncertainty of that loss
-metric assigned by the preregistered batch protocol of the refined sweep. A
+it is actively harmful:\ at the deterministic ridge ($\rho = 22.3$), $5\%$
+jitter already forfeits about $55\%$ of the scalar count information in the
+refined sweep (Table~\ref{tab:jitter}). A
 deployment must therefore locate its operating point against the
 jitter-limited ceiling of the real detector, not the deterministic ridge; the
 safe conclusion is conditional on measured timing jitter.
@@ -783,7 +802,8 @@ load architecture and incident-budget conjugacy (R11), the M1 freeze audit
 architecture''), whose theorem hierarchy Section~\ref{sec:theory} follows.
 Exact-law peak predictions for the refined jitter sweep, including the two
 out-of-sample rows, were registered before the sweep completed
-(\texttt{docs/R14\_PREREGISTERED\_PREDICTIONS.md}, commit \texttt{8a627bb}).
+(\texttt{docs/R14\_PREREGISTERED\_PREDICTIONS.md}, commit \texttt{8a627bb})
+and confirmed by the sweep (verdict at commit \texttt{1d8d7aa}).
 The campaign freezes at tag \texttt{m1-freeze} once the R13
 checklist passes outcome-blind self-tests; the companion is frozen at tag
 \texttt{paper1-freeze-v1}. Source-of-record documents for every frozen

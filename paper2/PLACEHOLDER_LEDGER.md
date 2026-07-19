@@ -33,11 +33,34 @@ R14-RULED, not conjectural:
   removed.
 
 The former §3.1 site "M1: confirmatory jitter-ridge crossover" was subsumed
-into the §5.7 refined-sweep verdict site (#13 below).
+into the §5.7 refined-sweep verdict site — now also FILLED (below).
+
+## FILLED 2026-07-19 (second revision): refined-sweep verdict
+
+The SWEEP class is closed. §5.7 and Table 1 now carry the refined
+`jitter_sfi_v2` numbers (source of record:
+`results/round63_study2/jitter_sfi_v2_nu2000.log` + `_nu200.log`; verdict
+appended to `docs/R14_PREREGISTERED_PREDICTIONS.md`, commit 1d8d7aa):
+
+- ν=2000 measured peaks 22.297 / 10.739 / 5.173 / 3.862 / 2.153 / 1.607 at
+  c_v = 0 / 0.02 / 0.05 / 0.1 / 0.2 / 0.3 (Table 1 predicted-vs-measured);
+- both PREREGISTERED out-of-sample predictions hit: c_v=0.02 predicted ≈10.4
+  measured 10.739 (3%); c_v=0.2 predicted ≈2.30 measured 2.153 (6%)
+  (predictions registered pre-data at commit 8a627bb);
+- all in-sample peaks within one grid notch (geometric spacing 1.157);
+- ν=200 column consistent including the crossover correction (c_v=0 peak
+  9.28 vs exact ridge 10.04; c_v=0.3: 1.86 vs predicted 1.77);
+- hardware warning updated to the refined value: ~55% information loss at
+  the deterministic ridge with 5% jitter (J=0.43 vs 0.95 at ρ=22.3).
+
+§5.7 states honestly that the fuller three-hold-family exponent battery
+(E1–E5, gamma + bounded two-point, cross-fitted estimation) remains a
+preregistered extension beyond this verdict — as a scope sentence, not a
+placeholder.
 
 ## Open placeholders
 
-Four fill classes remain:
+Three fill classes remain:
 
 - **R14-SUPP** — the supplement carrying proofs at manuscript rigor (R14 §1.7
   lists what is provable immediately; the uniform two-parameter crossover
@@ -45,45 +68,39 @@ Four fill classes remain:
   stays).
 - **M1** — campaign outputs after tag `m1-freeze` (spec
   `docs/ROUND63_METHOD_SPEC_M1.md`; freeze audit R13 §10 checklist).
-- **SWEEP** — the refined jitter sweep (jitter_sfi_v2; estimator, hold
-  families, exponent tests E1–E5 frozen in R14 §5; predictions registered at
-  commit 8a627bb BEFORE completion).
 - **USER** — author/affiliation, repository URL wording, funding text.
 
 | # | tex line | Location | Placeholder | Fills from | Class |
 |---|----------|----------|-------------|-----------|-------|
 | 1 | ~48  | title page | author block | user decision | USER |
-| 2 | ~90  | abstract | primary/secondary verdicts + cross-arm numbers (frozen) | M1 campaign | M1 |
-| 3 | ~167 | intro (contrib iv) | campaign outcomes (incl. any negative primary) | M1 campaign | M1 |
-| 4 | ~336 | §3 intro | supplement: proofs of Theorems 1–3 + Proposition 1 | supplement writing | R14-SUPP |
-| 5 | ~427 | §3.1 crossover ¶ | uniform two-parameter crossover proof, or prediction label retained | dedicated proof effort | R14-SUPP |
-| 6 | ~623 | §Campaign (arms) | committed FIXED* selection record {SCAT32,LBLOB16,MATCH1} | M1 (DEV selection, R13 §3) | M1 |
-| 7 | ~684 | §5.1 Results | METHOD_SPEED_PASS: median S, LB, count>1, PASS/FAIL | M1 campaign | M1 |
-| 8 | ~688 | §5.2 Results | METHOD_DESIGN_PASS: median design gain (dB), LB, count | M1 campaign | M1 |
-| 9 | ~692 | §5.3 Results | METHOD_FIXED_DWELL_PASS: median terminal gain (dB), count, LB | M1 campaign | M1 |
-| 10 | ~696 | §5.4 Results | RIDGE-FIXED per-dwell gain, realized loads, ceiling fractions | M1 campaign | M1 |
-| 11 | ~700 | §5.5 Results | OED-EQLOAD kernel ablation (geometry diff + noise disclosure) | M1 campaign | M1 |
-| 12 | ~705 | §5.6 Results | relaxed-KW gap, exact D-efficiency, A-risk, spectral margin | M1 campaign | M1 |
-| 13 | ~709 | §5.7 Results | refined-sweep verdict: 1/3 and −2/3 exponent tests, cubic residual, scaling collapse vs Eq.(crossover), shape universality, registered out-of-sample rows (0.02→10.4, 0.2→2.30) | refined sweep (E1–E5) | SWEEP |
-| 14 | ~730–735 | §5 cross-arm table | 6 arms × 7 columns = 42 cells | M1 campaign | M1 |
-| 15 | ~792 | §7 Reproducibility | repo URL wording | user decision | USER |
-| 16 | ~793 | §7 Reproducibility | funding / acknowledgments | user decision | USER |
+| 2 | ~91  | abstract | primary/secondary verdicts + cross-arm numbers (frozen) | M1 campaign | M1 |
+| 3 | ~168 | intro (contrib iv) | campaign outcomes (incl. any negative primary) | M1 campaign | M1 |
+| 4 | ~339 | §3 intro | supplement: proofs of Theorems 1–3 + Proposition 1 | supplement writing | R14-SUPP |
+| 5 | ~430 | §3.1 crossover ¶ | uniform two-parameter crossover proof, or prediction label retained | dedicated proof effort | R14-SUPP |
+| 6 | ~633 | §Campaign (arms) | committed FIXED* selection record {SCAT32,LBLOB16,MATCH1} | M1 (DEV selection, R13 §3) | M1 |
+| 7 | ~694 | §5.1 Results | METHOD_SPEED_PASS: median S, LB, count>1, PASS/FAIL | M1 campaign | M1 |
+| 8 | ~698 | §5.2 Results | METHOD_DESIGN_PASS: median design gain (dB), LB, count | M1 campaign | M1 |
+| 9 | ~702 | §5.3 Results | METHOD_FIXED_DWELL_PASS: median terminal gain (dB), count, LB | M1 campaign | M1 |
+| 10 | ~706 | §5.4 Results | RIDGE-FIXED per-dwell gain, realized loads, ceiling fractions | M1 campaign | M1 |
+| 11 | ~710 | §5.5 Results | OED-EQLOAD kernel ablation (geometry diff + noise disclosure) | M1 campaign | M1 |
+| 12 | ~715 | §5.6 Results | relaxed-KW gap, exact D-efficiency, A-risk, spectral margin | M1 campaign | M1 |
+| 13 | ~750–755 | §5 cross-arm table | 6 arms × 7 columns = 42 cells | M1 campaign | M1 |
+| 14 | ~812 | §7 Reproducibility | repo URL wording | user decision | USER |
+| 15 | ~813 | §7 Reproducibility | funding / acknowledgments | user decision | USER |
 
-**Counts.** 16 placeholder sites (site 14 holds 42 `\SPH{M1}` cells, so the
-raw `\SPH` command count in the tex is 57). By class: R14-SUPP ×2, M1 ×10,
-SWEEP ×1, USER ×3.
+**Counts.** 15 placeholder sites (site 13 holds 42 `\SPH{M1}` cells, so the
+raw `\SPH` command count in the tex body is 56). By class: R14-SUPP ×2,
+M1 ×10, USER ×3.
 
 ## Fill order (suggested)
 
 1. **Supplement** → sites 4, 5 (write the supplement with the R14 §1.7
    "provable immediately" list; the crossover either gets the dedicated
    uniform proof or keeps its prediction label — R14 claim discipline).
-2. **Refined sweep completes** → site 13 (E1–E5 verdicts; out-of-sample rows
-   scored against the registered predictions).
-3. **m1-freeze → run → analyze** → sites 2, 3, 6, 7–12, 14. Site 6 (FIXED*)
+2. **m1-freeze → run → analyze** → sites 2, 3, 6, 7–12, 13. Site 6 (FIXED*)
    fills at freeze from the DEV selection record, before confirmatory scenes
    open.
-4. **USER** → sites 1, 15, 16 (author block, repo URL, funding).
+3. **USER** → sites 1, 14, 15 (author block, repo URL, funding).
 
 ## Frozen-wording constraints (carried from paper-1 discipline + R14)
 

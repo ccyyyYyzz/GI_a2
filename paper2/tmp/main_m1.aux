@@ -7,13 +7,13 @@
 \citation{shapiro2008computational}
 \citation{edgar2019principles}
 \citation{companion}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{section.1}\protected@file@percent }
 \citation{feng2018adaptive}
 \citation{maxu2021sensing}
 \citation{attia2018goaloriented}
 \citation{burger2021sequential}
 \citation{ariascastro2013adaptive}
 \citation{jorgensen2026deadtime}
-\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{section.1}\protected@file@percent }
 \citation{companion}
 \citation{kiefer1959optimum}
 \citation{kiefer1959optimum}
@@ -39,12 +39,12 @@
 \newlabel{sec:theory}{{3}{3}{Theory: the jitter-capped ridge and its unification}{section.3}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.1}The jitter-capped ridge}{3}{subsection.3.1}\protected@file@percent }
 \newlabel{sec:jitter}{{3.1}{3}{The jitter-capped ridge}{subsection.3.1}{}}
-\newlabel{thm:identity}{{1}{3}{missing-information identity}{theorem.1}{}}
 \citation{muller1973deadtime}
 \citation{yu2000mean}
 \citation{gronberg2018deadtime}
 \citation{alvarez2014pileup}
 \citation{jorgensen2026deadtime}
+\newlabel{thm:identity}{{1}{4}{missing-information identity}{theorem.1}{}}
 \newlabel{eq:identity}{{5}{4}{missing-information identity}{equation.3.5}{}}
 \newlabel{thm:rate}{{2}{4}{long-window rate}{theorem.2}{}}
 \newlabel{eq:Jinf}{{6}{4}{long-window rate}{equation.3.6}{}}
@@ -53,12 +53,12 @@
 \newlabel{eq:smallc}{{8}{4}{exact jitter-limited optimum}{equation.3.8}{}}
 \@writefile{toc}{\contentsline {paragraph}{Matched crossover (prediction).}{4}{section*.2}\protected@file@percent }
 \newlabel{eq:crossover}{{9}{4}{Matched crossover (prediction)}{equation.3.9}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Monte-Carlo scalar count information $J(\rho ,\nu =2000,c_v)$ for lognormal hold times (coarse sweep:\ common random numbers, $60{,}000$ frames), validated against the exact table at $c_v = 0$ ($J(2) = 0.676$ vs.\ exact $0.667 + \text  {corr}$), against the exact-law peak predictions of Theorem~\ref {thm:cubic}/Eq.~(\ref {eq:crossover}) as registered before the refined sweep completed (\texttt  {docs/R14\_PREREGISTERED\_PREDICTIONS.md}, commit \texttt  {8a627bb}). The coarse-grid fit $c_0 \approx 0.72$ is an effective finite-grid, finite-sample coefficient; the exact asymptotic coefficient is $2^{-1/3} = 0.794$, and the exact-law predictions sit $5$--$6\%$ above the coarse measurements (grid-limited; the ratio test $\mathrm  {cap}(0.05)/\mathrm  {cap}(0.1) = 1.65$ vs.\ $2^{2/3} = 1.587$ is less sensitive to the common bias). Hardware warning:\ at $\rho = 24$ with $c_v = 0.05$, $J = 0.38$ vs.\ deterministic $0.95$ --- about $60\%$ information loss from $5\%$ jitter at the deterministic ridge. Source:\ \texttt  {results/round63\_study2/jitter\_scalar\_fi.log}.}}{4}{table.1}\protected@file@percent }
-\newlabel{tab:jitter}{{1}{4}{Monte-Carlo scalar count information $J(\rho ,\nu =2000,c_v)$ for lognormal hold times (coarse sweep:\ common random numbers, $60{,}000$ frames), validated against the exact table at $c_v = 0$ ($J(2) = 0.676$ vs.\^^Mexact $0.667 + \text {corr}$), against the exact-law peak predictions of Theorem~\ref {thm:cubic}/Eq.~(\ref {eq:crossover}) as registered before the refined sweep completed (\texttt {docs/R14\_PREREGISTERED\_PREDICTIONS.md}, commit \texttt {8a627bb}). The coarse-grid fit $c_0 \approx 0.72$ is an effective finite-grid, finite-sample coefficient; the exact asymptotic coefficient is $2^{-1/3} = 0.794$, and the exact-law predictions sit $5$--$6\%$ above the coarse measurements (grid-limited; the ratio test $\mathrm {cap}(0.05)/\mathrm {cap}(0.1) = 1.65$ vs.\ $2^{2/3} = 1.587$ is less sensitive to the common bias). Hardware warning:\ at $\rho = 24$ with $c_v = 0.05$, $J = 0.38$ vs.\ deterministic $0.95$ --- about $60\%$ information loss from $5\%$ jitter at the deterministic ridge. Source:\ \texttt {results/round63\_study2/jitter\_scalar\_fi.log}}{table.1}{}}
 \@writefile{toc}{\contentsline {paragraph}{Universality class.}{4}{section*.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}One master concave program}{4}{subsection.3.2}\protected@file@percent }
+\newlabel{sec:onelagrangian}{{3.2}{4}{One master concave program}{subsection.3.2}{}}
 \citation{companion}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}One master concave program}{5}{subsection.3.2}\protected@file@percent }
-\newlabel{sec:onelagrangian}{{3.2}{5}{One master concave program}{subsection.3.2}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Refined-sweep scalar count information $J(\rho ,\nu =2000,c_v)$ for lognormal hold times (\texttt  {jitter\_sfi\_v2}:\ $100{,}000$ frames per cell, common random numbers, 25-point log grid of geometric spacing $1.157$), against the exact-law peak predictions of Theorem~\ref {thm:cubic}/Eq.~(\ref {eq:crossover}) registered \emph  {before} the sweep completed (\texttt  {docs/R14\_PREREGISTERED\_PREDICTIONS.md}, commit \texttt  {8a627bb}; verdict at commit \texttt  {1d8d7aa}). Both out-of-sample rows hit ($c_v = 0.02$:\ $3\%$; $c_v = 0.2$:\ $6\%$), and every in-sample peak lies within one grid notch of its prediction. The earlier coarse-grid fit $c_0 \approx 0.72$ was an effective finite-grid coefficient; the exact asymptotic coefficient is $2^{-1/3} = 0.794$. Hardware warning:\ at the deterministic ridge ($\rho = 22.3$), $5\%$ jitter leaves $J = 0.43$ vs.\ $0.95$ --- about $55\%$ of the scalar count information forfeited. Source:\ \texttt  {results/round63\_study2/}\allowbreak  \texttt  {jitter\_sfi\_v2\_nu2000.log}.}}{5}{table.1}\protected@file@percent }
+\newlabel{tab:jitter}{{1}{5}{Refined-sweep scalar count information $J(\rho ,\nu =2000,c_v)$ for lognormal hold times (\texttt {jitter\_sfi\_v2}:\ $100{,}000$ frames per cell, common random numbers, 25-point log grid of geometric spacing $1.157$), against the exact-law peak predictions of Theorem~\ref {thm:cubic}/Eq.~(\ref {eq:crossover}) registered \emph {before} the sweep completed (\texttt {docs/R14\_PREREGISTERED\_PREDICTIONS.md}, commit \texttt {8a627bb}; verdict at commit \texttt {1d8d7aa}). Both out-of-sample rows hit ($c_v = 0.02$:\ $3\%$; $c_v = 0.2$:\ $6\%$), and every in-sample peak lies within one grid notch of its prediction. The earlier coarse-grid fit $c_0 \approx 0.72$ was an effective finite-grid coefficient; the exact asymptotic coefficient is $2^{-1/3} = 0.794$. Hardware warning:\ at the deterministic ridge ($\rho = 22.3$), $5\%$ jitter leaves $J = 0.43$ vs.\ $0.95$ --- about $55\%$ of the scalar count information forfeited. Source:\ \texttt {results/round63\_study2/}\allowbreak \texttt {jitter\_sfi\_v2\_nu2000.log}}{table.1}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Brightness--information alignment}{5}{subsection.3.3}\protected@file@percent }
 \newlabel{sec:alignment}{{3.3}{5}{Brightness--information alignment}{subsection.3.3}{}}
 \newlabel{prop:alignment}{{1}{5}{alignment and residual bound}{proposition.1}{}}
@@ -67,7 +67,7 @@
 \@writefile{toc}{\contentsline {section}{\numberline {4}Preregistered campaign (M1)}{5}{section.4}\protected@file@percent }
 \newlabel{sec:campaign}{{4}{5}{Preregistered campaign (M1)}{section.4}{}}
 \@writefile{toc}{\contentsline {paragraph}{Geometry and constants.}{5}{section*.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Scenes.}{5}{section*.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Scenes.}{6}{section*.5}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{Common pre-scan.}{6}{section*.6}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{Arms.}{6}{section*.7}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{Endpoints and gate.}{6}{section*.8}\protected@file@percent }
@@ -84,8 +84,6 @@
 \bibdata{refs}
 \bibcite{companion}{1}
 \bibcite{duarte2008singlepixel}{2}
-\bibcite{shapiro2008computational}{3}
-\bibcite{edgar2019principles}{4}
 \@writefile{toc}{\contentsline {subsection}{\numberline {5.4}RIDGE-FIXED operating-point demonstration}{7}{subsection.5.4}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {5.5}OED-EQLOAD kernel ablation}{7}{subsection.5.5}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {5.6}Certificate and rounding diagnostics}{7}{subsection.5.6}\protected@file@percent }
@@ -94,6 +92,8 @@
 \newlabel{sec:discussion}{{6}{7}{Discussion}{section.6}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {7}Reproducibility}{7}{section.7}\protected@file@percent }
 \newlabel{sec:repro}{{7}{7}{Reproducibility}{section.7}{}}
+\bibcite{shapiro2008computational}{3}
+\bibcite{edgar2019principles}{4}
 \bibcite{feng2018adaptive}{5}
 \bibcite{maxu2021sensing}{6}
 \bibcite{attia2018goaloriented}{7}
