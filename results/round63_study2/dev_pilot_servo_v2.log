@@ -1,0 +1,79 @@
+[servo] 1/64 detail32_dev_maze servo rho_t=0.6 nu=200 s0 PSNR_rad=10.58
+[servo] 2/64 detail32_dev_maze servo rho_t=0.6 nu=200 s1 PSNR_rad=10.59
+[servo] 3/64 detail32_dev_maze servo rho_t=0.6 nu=2000 s0 PSNR_rad=13.74
+[servo] 4/64 detail32_dev_maze servo rho_t=0.6 nu=2000 s1 PSNR_rad=13.76
+[servo] 5/64 detail32_dev_maze servo rho_t=2.0 nu=200 s0 PSNR_rad=11.61
+[servo] 6/64 detail32_dev_maze servo rho_t=2.0 nu=200 s1 PSNR_rad=11.63
+[servo] 7/64 detail32_dev_maze servo rho_t=2.0 nu=2000 s0 PSNR_rad=14.89
+[servo] 8/64 detail32_dev_maze servo rho_t=2.0 nu=2000 s1 PSNR_rad=14.88
+[servo] 9/64 detail32_dev_maze servo rho_t=6.0 nu=200 s0 PSNR_rad=12.43
+[servo] 10/64 detail32_dev_maze servo rho_t=6.0 nu=200 s1 PSNR_rad=12.43
+[servo] 11/64 detail32_dev_maze servo rho_t=6.0 nu=2000 s0 PSNR_rad=15.53
+[servo] 12/64 detail32_dev_maze servo rho_t=6.0 nu=2000 s1 PSNR_rad=15.56
+[servo] 13/64 detail32_dev_maze servo rho_t=22.0 nu=200 s0 PSNR_rad=12.66
+[servo] 14/64 detail32_dev_maze servo rho_t=22.0 nu=200 s1 PSNR_rad=12.67
+[servo] 15/64 detail32_dev_maze servo rho_t=22.0 nu=2000 s0 PSNR_rad=15.81
+[servo] 16/64 detail32_dev_maze servo rho_t=22.0 nu=2000 s1 PSNR_rad=15.78
+[servo] 17/64 detail32_dev_maze fixed rho_t=0.6 nu=200 s0 PSNR_rad=10.64
+[servo] 18/64 detail32_dev_maze fixed rho_t=0.6 nu=200 s1 PSNR_rad=10.65
+[servo] 19/64 detail32_dev_maze fixed rho_t=0.6 nu=2000 s0 PSNR_rad=10.64
+[servo] 20/64 detail32_dev_maze fixed rho_t=0.6 nu=2000 s1 PSNR_rad=10.65
+[servo] 21/64 detail32_dev_maze fixed rho_t=2.0 nu=200 s0 PSNR_rad=17.03
+[servo] 22/64 detail32_dev_maze fixed rho_t=2.0 nu=200 s1 PSNR_rad=16.87
+[servo] 23/64 detail32_dev_maze fixed rho_t=2.0 nu=2000 s0 PSNR_rad=21.36
+[servo] 24/64 detail32_dev_maze fixed rho_t=2.0 nu=2000 s1 PSNR_rad=21.35
+[servo] 25/64 detail32_dev_maze fixed rho_t=6.0 nu=200 s0 PSNR_rad=17.31
+[servo] 26/64 detail32_dev_maze fixed rho_t=6.0 nu=200 s1 PSNR_rad=17.34
+[servo] 27/64 detail32_dev_maze fixed rho_t=6.0 nu=2000 s0 PSNR_rad=22.83
+[servo] 28/64 detail32_dev_maze fixed rho_t=6.0 nu=2000 s1 PSNR_rad=22.79
+[servo] 29/64 detail32_dev_maze fixed rho_t=22.0 nu=200 s0 PSNR_rad=16.98
+[servo] 30/64 detail32_dev_maze fixed rho_t=22.0 nu=200 s1 PSNR_rad=17.12
+[servo] 31/64 detail32_dev_maze fixed rho_t=22.0 nu=2000 s0 PSNR_rad=22.63
+[servo] 32/64 detail32_dev_maze fixed rho_t=22.0 nu=2000 s1 PSNR_rad=22.64
+[servo] 33/64 detail32_dev_glyph servo rho_t=0.6 nu=200 s0 PSNR_rad=8.23
+[servo] 34/64 detail32_dev_glyph servo rho_t=0.6 nu=200 s1 PSNR_rad=8.25
+[servo] 35/64 detail32_dev_glyph servo rho_t=0.6 nu=2000 s0 PSNR_rad=8.48
+[servo] 36/64 detail32_dev_glyph servo rho_t=0.6 nu=2000 s1 PSNR_rad=8.48
+[servo] 37/64 detail32_dev_glyph servo rho_t=2.0 nu=200 s0 PSNR_rad=8.86
+[servo] 38/64 detail32_dev_glyph servo rho_t=2.0 nu=200 s1 PSNR_rad=8.77
+[servo] 39/64 detail32_dev_glyph servo rho_t=2.0 nu=2000 s0 PSNR_rad=8.86
+[servo] 40/64 detail32_dev_glyph servo rho_t=2.0 nu=2000 s1 PSNR_rad=8.89
+[servo] 41/64 detail32_dev_glyph servo rho_t=6.0 nu=200 s0 PSNR_rad=9.01
+[servo] 42/64 detail32_dev_glyph servo rho_t=6.0 nu=200 s1 PSNR_rad=9.03
+[servo] 43/64 detail32_dev_glyph servo rho_t=6.0 nu=2000 s0 PSNR_rad=9.13
+[servo] 44/64 detail32_dev_glyph servo rho_t=6.0 nu=2000 s1 PSNR_rad=9.12
+[servo] 45/64 detail32_dev_glyph servo rho_t=22.0 nu=200 s0 PSNR_rad=9.14
+[servo] 46/64 detail32_dev_glyph servo rho_t=22.0 nu=200 s1 PSNR_rad=9.16
+[servo] 47/64 detail32_dev_glyph servo rho_t=22.0 nu=2000 s0 PSNR_rad=9.24
+[servo] 48/64 detail32_dev_glyph servo rho_t=22.0 nu=2000 s1 PSNR_rad=9.22
+[servo] 49/64 detail32_dev_glyph fixed rho_t=0.6 nu=200 s0 PSNR_rad=8.94
+[servo] 50/64 detail32_dev_glyph fixed rho_t=0.6 nu=200 s1 PSNR_rad=8.90
+[servo] 51/64 detail32_dev_glyph fixed rho_t=0.6 nu=2000 s0 PSNR_rad=8.94
+[servo] 52/64 detail32_dev_glyph fixed rho_t=0.6 nu=2000 s1 PSNR_rad=8.92
+[servo] 53/64 detail32_dev_glyph fixed rho_t=2.0 nu=200 s0 PSNR_rad=9.11
+[servo] 54/64 detail32_dev_glyph fixed rho_t=2.0 nu=200 s1 PSNR_rad=9.13
+[servo] 55/64 detail32_dev_glyph fixed rho_t=2.0 nu=2000 s0 PSNR_rad=9.14
+[servo] 56/64 detail32_dev_glyph fixed rho_t=2.0 nu=2000 s1 PSNR_rad=9.13
+[servo] 57/64 detail32_dev_glyph fixed rho_t=6.0 nu=200 s0 PSNR_rad=9.16
+[servo] 58/64 detail32_dev_glyph fixed rho_t=6.0 nu=200 s1 PSNR_rad=9.19
+[servo] 59/64 detail32_dev_glyph fixed rho_t=6.0 nu=2000 s0 PSNR_rad=9.19
+[servo] 60/64 detail32_dev_glyph fixed rho_t=6.0 nu=2000 s1 PSNR_rad=9.19
+[servo] 61/64 detail32_dev_glyph fixed rho_t=22.0 nu=200 s0 PSNR_rad=9.18
+[servo] 62/64 detail32_dev_glyph fixed rho_t=22.0 nu=200 s1 PSNR_rad=9.17
+[servo] 63/64 detail32_dev_glyph fixed rho_t=22.0 nu=2000 s0 PSNR_rad=9.15
+[servo] 64/64 detail32_dev_glyph fixed rho_t=22.0 nu=2000 s1 PSNR_rad=9.15
+
+[servo] === fixed-dwell PSNR_rad vs target load ===
+[servo] detail32_dev_maze nu=200  rho_t=[0.6, 2.0, 6.0, 22.0]
+[servo]    servo: 10.59  11.62  12.43  12.66
+[servo]    fixed: 10.64  16.95  17.32  17.05
+[servo] detail32_dev_maze nu=2000  rho_t=[0.6, 2.0, 6.0, 22.0]
+[servo]    servo: 13.75  14.88  15.55  15.79
+[servo]    fixed: 10.64  21.36  22.81  22.63
+[servo] detail32_dev_glyph nu=200  rho_t=[0.6, 2.0, 6.0, 22.0]
+[servo]    servo:  8.24   8.81   9.02   9.15
+[servo]    fixed:  8.92   9.12   9.18   9.17
+[servo] detail32_dev_glyph nu=2000  rho_t=[0.6, 2.0, 6.0, 22.0]
+[servo]    servo:  8.48   8.88   9.13   9.23
+[servo]    fixed:  8.93   9.14   9.19   9.15
+[servo] DONE
