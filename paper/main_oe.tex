@@ -303,10 +303,22 @@ We tested whether renewal quasi-likelihood reconstruction permits operation
 at $\rhobar = 0.6$ with a statistically significant reduction in total
 optical integration time relative to the conventional $\rhobar = 0.05$
 operating point, on $64^{2}$ scenes under dense Bernoulli illumination
-(occupancy $50\%$). \SPH{campaign-design sentence group: grid,
-images-as-units, time-to-quality Q90 protocol, censoring taxonomy,
-$10\,000$-replicate nested family-stratified bootstrap, gate constants
-(median $S \ge 3$, LB$_{2.5} > 1$, $\ge 18/24$), freeze SHA a8881e9}
+(occupancy $50\%$). Scenes are the units of inference:\ 24 confirmatory
+detail targets (six structural families $\times$ four instances), each
+measured at nine dwell points $\nu \in \{5,\dots,2000\}$ with five
+measurement seeds. Per scene, seed-mean radiometric PSNR versus optical
+integration time is isotonically regressed for each arm; the quality
+target is $Q_{90}$, the safe-arm minimum plus $90\%$ of the safe-arm span,
+and the acquisition-speed ratio $S_j$ is the ratio of safe to high-flux
+crossing times, with a frozen censoring taxonomy (a safe-arm span below
+$0.5$~dB is uninformative; a high-flux arm that never reaches $Q_{90}$
+scores $S_j = 0$). The confirmatory gate --- median $S \ge 3$,
+family-stratified nested-bootstrap ($10\,000$ replicates) lower bound
+$> 1$, and $\ge 18/24$ scenes with $S_j > 1$ --- and every constant above
+were frozen in an immutable commit before any confirmatory reconstruction
+existed, together with a fixed-dwell secondary endpoint (median
+$\ge 1$~dB at the terminal dwell, lower bound $> 0$, $\ge 18/24$
+positive).
 
 \subsection{Preregistered outcome}
 The confirmatory time-to-quality gate returned negative:\ in $24/24$ scenes
@@ -456,7 +468,20 @@ comparison with single-photon underwater single-pixel experiments
 degradation envelopes; descriptive audit distributions (supplement)}
 
 \subsection{Exact-likelihood reference at small scale}
-\SPH{S4: scalar Fisher map + 8/16 px exact-vs-RQL split (EXACT+TV arm)}
+% Frozen S4(ii) grid (spec D2); results/round63_s4 (864 paired cells).
+Because RQL is a convex surrogate, we verified at $8^{2}$ and $16^{2}$
+that it tracks the exact renewal likelihood under an identical TV
+functional and the identical frozen selection rule:\ across the full
+preregistered grid ($\rho \in \{0.03,\dots,2\}$, $\nu \in \{20,\dots,2000\}$,
+three seeds, six scenes, 864 paired reconstructions) the median
+exact-minus-RQL radiometric-PSNR gap is $\le 0.01$~dB throughout the
+deployment zone and reaches only $-0.05$~dB in the extreme-load corner
+($16^{2}$, $\rho \ge 0.6$, $\nu = 2000$). Individual cells differ in both
+directions (up to $9$~dB), consistent with the nonconvexity of the exact
+objective, with no systematic advantage to either arm; full tables and
+multistart diagnostics are provided in the supplement. The convex
+surrogate therefore costs essentially nothing in reconstruction quality
+while guaranteeing a unique optimum.
 
 % ---------- Study-1 figure (prereg: docs/ROUND63_FIGURE_PREREG.md) ----------
 \begin{figure*}[t]
