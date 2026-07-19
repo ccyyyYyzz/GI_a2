@@ -45,6 +45,16 @@ post-R23. Papers remain two; digs are post-hoc/descriptive unless promoted.
 7. **Arrays preemption paragraph**: J_m = m·J(ρ/m,c) + why single-detector
    operation still matters (cost/crosstalk/shared-source; the rank
    hierarchy reappears as common-mode vs per-element gains).
+8. **Telemetry removal of the jitter cap** (2026-07-20, from the
+   core-limitation analysis): E1 localizes the loss as E[Var(L|N)];
+   observing the hidden state (TDC event timestamps + re-arm/quench
+   telemetry) drives the conditional variance to ~0, restoring monotone
+   J → ρ/(1+ρ) and erasing the jitter cap up to TDC precision. Prior-art
+   fence to check: nuclear live-time clocks (Gedcke–Hale) measure L for
+   rate CORRECTION; the Fisher-restoration/optimal-load claim appears
+   unwritten. Natural bench proposal (SPAD + TDC + quench monitor:
+   "the ridge flattened by telemetry"). Needs: prior-art sweep + one
+   short GPT derivation round before any claim.
 
 ## PARKED (mine, next work)
 
