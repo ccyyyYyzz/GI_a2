@@ -136,6 +136,24 @@ pack_tree "results/round63_m1/designs"
 
 echo "[m1_make_bundle] planned files=$NPLAN  bytes=$BYTES  missing=$MISSING" >&2
 
+# (9) m1-freeze provenance: git describe + HEAD sha stamped into the bundle root
+#     (written before MANIFEST_SHA256, so it is covered by the sha manifest).
+GIT_DESCRIBE="$(git -C "$REPO" describe --tags 2>/dev/null || echo 'DESCRIBE_UNAVAILABLE')"
+GIT_HEAD="$(git -C "$REPO" rev-parse HEAD 2>/dev/null || echo 'HEAD_UNAVAILABLE')"
+if [ "$DRYRUN" = 1 ]; then
+  printf '  PACK  %-58s %10s B\n' "BUNDLE_PROVENANCE.txt (generated)" "-"
+  echo "        describe=$GIT_DESCRIBE  head=$GIT_HEAD"
+else
+  {
+    echo "bundle:        $NAME"
+    echo "git_describe:  $GIT_DESCRIBE"
+    echo "git_head:      $GIT_HEAD"
+    echo "built_utc:     $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+    echo "repo:          $REPO"
+    echo "note:          M1 confirmatory bundle; launch sets M1_FREEZE_LAUNCHED=1 (R17 s5 guard)."
+  } > "$STAGE/BUNDLE_PROVENANCE.txt"
+fi
+
 if [ "$DRYRUN" = 1 ]; then
   MB="$(awk "BEGIN{printf \"%.2f\", $BYTES/1048576}")"
   echo ""

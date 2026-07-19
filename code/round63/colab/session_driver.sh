@@ -167,7 +167,9 @@ write_status() {
       if [ -z "$shard" ]; then
         printf '    {"lane": %s, "shard": "-", "state": "idle"}' "$s"
       else
-        hb="$HB_DIR/${shard}.hb.json"
+        # normalize: plan lines may carry manifest PATHS (e.g. results/.../X.json)
+        # while remote_lane names heartbeats by bare shard_id -> join on basename.
+        hb="$HB_DIR/$(basename "${shard%.json}").hb.json"
         epoch="$(hb_field "$hb" epoch)"
         cells="$(hb_field "$hb" cells_done)"
         rows="$(hb_field "$hb" rows)"

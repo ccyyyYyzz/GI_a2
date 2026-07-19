@@ -16,9 +16,16 @@
 #
 # Fleet (see results/round63_m1/COLAB_FLEET.json): 5 x L4, 6 lanes each.
 #   pro2: r63m1_a  r63m1_b  r63m1_c        pro1: r63m1_p1a  r63m1_p1b
-# Shards: all 40 from results/round63_m1/manifests/MANIFEST_INDEX.json,
-# assigned by greedy-LPT to balance total est_hours across ALL FIVE sessions
-# (NOT the S2 even/odd parity -- the task calls for a 5-way cost balance).
+# Shards: ALL default_shards from results/round63_m1/manifests/MANIFEST_INDEX
+# .json (R17: 5 imaging arms + 38 M1_CERT descriptive-certificate shards).
+# Assignment: cert shards are LPT-balanced across the five sessions FIRST
+# (they carry ~95% of est cost; no session may become the cert straggler),
+# then the imaging shards are LPT-placed on top of the resulting loads.
+# No S2 even/odd parity -- 5-way est-cost balance per the launch order.
+#
+# Confirmatory lock: the driver is launched with M1_FREEZE_LAUNCHED=1 in its
+# environment (inherited by every lane -> shard_runner -> campaign/m1 cert
+# path), satisfying m1_runner._confirmatory_guard (R17 section 5).
 set -u
 
 REPO=/mnt/d/GI_another
@@ -34,10 +41,14 @@ WALL_BUDGET_S=43200
 
 PLAN_ONLY=0
 FORCE_NO_FREEZE=0
+ONLY=""
+SKIP_BUNDLE=0
 while [ $# -gt 0 ]; do
   case "$1" in
     --plan-only)       PLAN_ONLY=1; shift ;;
     --force-no-freeze) FORCE_NO_FREEZE=1; shift ;;
+    --only)            ONLY="$2"; shift 2 ;;   # launch ONE session tag (a|b|c|p1a|p1b)
+    --skip-bundle)     SKIP_BUNDLE=1; shift ;; # reuse the already-built bundle in $STAGE
     -h|--help) sed -n '2,25p' "$0"; exit 0 ;;
     *) echo "unknown arg: $1" >&2; exit 2 ;;
   esac
@@ -62,31 +73,40 @@ for key in ("default_shards", "blocked_shards"):
             continue
         seen.add(sid)
         shards.append({"id": sid, "est": float(s.get("est_hours", 0.0)),
+                       "cert": sid.startswith("M1_CERT"),
                        "manifest": "results/round63_m1/manifests/%s.json" % sid})
 SESSIONS = ["a", "b", "c", "p1a", "p1b"]      # 3 pro2 + 2 pro1
 ACCT = {"a": "pro2", "b": "pro2", "c": "pro2", "p1a": "pro1", "p1b": "pro1"}
 plan = {s: [] for s in SESSIONS}
 load = {s: 0.0 for s in SESSIONS}
-for sh in sorted(shards, key=lambda c: (-c["est"], c["id"])):   # LPT: descending
-    tgt = min(SESSIONS, key=lambda s: (load[s], SESSIONS.index(s)))
-    plan[tgt].append(sh); load[tgt] += sh["est"]
+def lpt(pool):
+    for sh in sorted(pool, key=lambda c: (-c["est"], c["id"])):  # descending
+        tgt = min(SESSIONS, key=lambda s: (load[s], SESSIONS.index(s)))
+        plan[tgt].append(sh); load[tgt] += sh["est"]
+# Pass 1: cert shards (dominant cost; even spread = no cert straggler).
+lpt([s for s in shards if s["cert"]])
+# Pass 2: imaging shards on top of the cert loads.
+lpt([s for s in shards if not s["cert"]])
 os.makedirs(out_dir, exist_ok=True)
 for s in SESSIONS:
     p = os.path.join(out_dir, "session_m1_%s.txt" % s)
+    nc = sum(1 for sh in plan[s] if sh["cert"])
     lines = ["# M1 lane plan -- session m1_%s (account %s)" % (s, ACCT[s]),
-             "# %d shards, %.3f est_hours (greedy-LPT balanced across 5 sessions)"
-             % (len(plan[s]), load[s]),
+             "# %d shards (%d cert + %d imaging), %.3f est_hours "
+             "(cert-first greedy-LPT across 5 sessions)"
+             % (len(plan[s]), nc, len(plan[s]) - nc, load[s]),
              "# one repo-relative manifest path per line; '#'/blank ignored."]
     for sh in sorted(plan[s], key=lambda c: c["id"]):
         lines.append(sh["manifest"])
     with open(p, "w", newline="\n") as f:
         f.write("\n".join(lines) + "\n")
-print("M1 lane plan (%d shards, balance total est_hours across 5 sessions):"
+print("M1 lane plan (%d shards; cert-first LPT, 5-way est-cost balance):"
       % len(shards))
 tot = 0.0; ns = 0
 for s in SESSIONS:
-    print("  m1_%-4s (%s): %2d shards  %6.3f est_hours"
-          % (s, ACCT[s], len(plan[s]), load[s]))
+    nc = sum(1 for sh in plan[s] if sh["cert"])
+    print("  m1_%-4s (%s): %2d shards (%d cert + %d img)  %6.3f est_hours"
+          % (s, ACCT[s], len(plan[s]), nc, len(plan[s]) - nc, load[s]))
     tot += load[s]; ns += len(plan[s])
 print("  TOTAL: %d shards  %.3f est_hours  |  spread(max-min) %.3f"
       % (ns, tot, max(load.values()) - min(load.values())))
@@ -115,8 +135,12 @@ fi
 plain() { local home="$1"; shift; HOME="/var/tmp/codex-colab-accounts/$home" timeout 240 "$C" --auth oauth2 "$@"; }
 
 # ---- rebuild the bundle fresh (deterministic; prints sha) -------------------- #
-bash "$REPO/code/round63/colab/m1_make_bundle.sh" --out "$STAGE" >"$STAGE/bundle_build.log" 2>&1 \
-  || { echo "BUNDLE_BUILD_FAILED"; tail -8 "$STAGE/bundle_build.log"; exit 1; }
+if [ "$SKIP_BUNDLE" = 1 ] && [ -s "$BUNDLE" ]; then
+  echo "== --skip-bundle: reusing $BUNDLE"
+else
+  bash "$REPO/code/round63/colab/m1_make_bundle.sh" --out "$STAGE" >"$STAGE/bundle_build.log" 2>&1 \
+    || { echo "BUNDLE_BUILD_FAILED"; tail -8 "$STAGE/bundle_build.log"; exit 1; }
+fi
 sha256sum "$BUNDLE" 2>/dev/null || { echo "BUNDLE_MISSING $BUNDLE"; exit 1; }
 SPLIT=0
 compgen -G "$BUNDLE.part_*" >/dev/null 2>&1 && SPLIT=1
@@ -186,20 +210,25 @@ PYEOF
     || { echo "PLAN_UPLOAD_FAIL $sess"; return 1; }
   echo "  plan uploaded"
 
-  # 5. detached driver launch (BACKGROUND_LAUNCHED pattern), 6 lanes
+  # 5. detached driver launch (BACKGROUND_LAUNCHED pattern), 6 lanes.
+  #    M1_FREEZE_LAUNCHED=1 goes into the driver env -> inherited by every lane
+  #    (remote_lane passes os.environ to shard_runner) -> satisfies the R17
+  #    confirmatory guard for imageset 'm1' / run_cert_cell.
   cat > "$STAGE/launch_$sess.py" <<PYEOF
 import os, subprocess
 B='${BUNDLE_ROOT_VM}'
 tag='${tag}'
 plan=f'{B}/code/round63/colab/plans/session_m1_{tag}.txt'
 os.makedirs(f'{B}/results/round63_m1/status', exist_ok=True)
+env=dict(os.environ)
+env['M1_FREEZE_LAUNCHED']='1'
 cmd=['setsid','nohup','bash',f'{B}/code/round63/colab/session_driver.sh',plan,
      '--bundle-root',B,'--session',f'm1_{tag}',
      '--status-json',f'{B}/results/round63_m1/status/m1_{tag}.json',
      '--n-lanes','${N_LANES}','--wall-budget-s','${WALL_BUDGET_S}']
-p=subprocess.Popen(cmd, stdout=open(f'{B}/driver_m1_{tag}.log','w'),
+p=subprocess.Popen(cmd, env=env, stdout=open(f'{B}/driver_m1_{tag}.log','w'),
                    stderr=subprocess.STDOUT, start_new_session=True)
-print('BACKGROUND_LAUNCHED', p.pid)
+print('BACKGROUND_LAUNCHED', p.pid, 'M1_FREEZE_LAUNCHED=1')
 PYEOF
   local lo
   lo=$(plain "$acct" exec --session "$sess" --file "$STAGE/launch_$sess.py" --timeout 120 2>&1)
@@ -225,10 +254,14 @@ PYEOF
 }
 
 fails=0
-launch_one pro2 r63m1_a   a   || fails=$((fails+1))
-launch_one pro2 r63m1_b   b   || fails=$((fails+1))
-launch_one pro2 r63m1_c   c   || fails=$((fails+1))
-launch_one pro1 r63m1_p1a p1a || fails=$((fails+1))
-launch_one pro1 r63m1_p1b p1b || fails=$((fails+1))
-echo "==== M1 LAUNCH SUMMARY: failures=$fails ===="
+do_one() {  # acct sess tag
+  if [ -n "$ONLY" ] && [ "$ONLY" != "$3" ]; then return 0; fi
+  launch_one "$1" "$2" "$3" || fails=$((fails+1))
+}
+do_one pro2 r63m1_a   a
+do_one pro2 r63m1_b   b
+do_one pro2 r63m1_c   c
+do_one pro1 r63m1_p1a p1a
+do_one pro1 r63m1_p1b p1b
+echo "==== M1 LAUNCH SUMMARY: failures=$fails (only='${ONLY:-all}') ===="
 exit "$fails"

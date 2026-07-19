@@ -1,62 +1,79 @@
 {
   "campaign": "round63_m1",
-  "generated_utc": "2026-07-19T10:24:00Z",
+  "generated_utc": "2026-07-19T15:04:30Z",
   "gpu": "L4",
-  "note": "Pre-staged M1 Colab fleet (infrastructure only; NO campaign computation launched, m1-freeze tag not yet created). Endpoints are the stable assignment ids; runtime-proxy tokens expire ~30-45 min and are NOT stored here (rebind from list_assignments per docs/COLAB_USAGE_GUIDE.md 3.2). created_utc for the four new sessions is the keep-alive spawn time captured at `new` completion; r63m1_a pre-existed from a prior session and was rebound + re-keepalived today.",
+  "note": "REBUILT fleet (generation 2). The 2026-07-19 ~10:2x UTC fleet was manually terminated by the user (~14:5x UTC) while debugging the permission block; all five sessions recreated fresh ~15:01-15:03 UTC. Endpoints are the stable assignment ids; runtime-proxy tokens expire ~30-45 min and are NOT stored here (rebind from list_assignments per docs/COLAB_USAGE_GUIDE.md 3.2 -- scratchpad rebind_m1_all.sh carries this endpoint map). created_utc = keep-alive spawn time at session-READY. No campaign computation has been launched from this fleet; m1-freeze tag exists at 6f00932 and ignition is authorized to run from the main session.",
   "accounts": {
     "pro1": {"tier": "Pro", "home": "/var/tmp/codex-colab-accounts/pro1", "max_l4": 2, "sessions": 2},
     "pro2": {"tier": "Pro+", "home": "/var/tmp/codex-colab-accounts/pro2", "max_l4": 3, "sessions": 3}
+  },
+  "campaign_state": {
+    "ignited_utc": "~2026-07-19T15:05Z (main session; 5 drivers BACKGROUND_LAUNCHED, M1_FREEZE_LAUNCHED=1, failures=0)",
+    "first_cells_confirmed_utc": "2026-07-19T15:15:27Z (168 cells fleet-wide, all 30 lanes in flight, 0 failures)",
+    "shards_per_session": {"m1_a": 11, "m1_b": 8, "m1_c": 8, "m1_p1a": 8, "m1_p1b": 8}
+  },
+  "monitoring": {
+    "watchdog_script": "code/round63/colab/m1_watch.sh (v2: VM ground-truth exec)",
+    "watchdog_pid": 10270,
+    "watchdog_timeout_wrapper_pid": 10268,
+    "armed_utc": "2026-07-19T15:15:06Z",
+    "cycle_s": 300,
+    "stall_threshold_s": 900,
+    "digest_log": "D:\\GI_another\\results\\round63_m1\\watch\\M1_WATCH_DIGEST.log",
+    "verbose_log_wsl": "/var/tmp/r63_m1_stage/watch/watch_verbose.log",
+    "taxonomy": ["COMPLETE", "OK", "STALL(>900s hb age)", "TOKEN/CLI(exec fails after rebind)", "DEAD(endpoint unassigned)"],
+    "digest_cadence": "every 6th cycle (30 min) + immediately on any non-OK state; counts and rc codes only (outcome-blind)",
+    "known_defect": "driver status JSON lane table is blind for M1 (plan lines are manifest paths; session_driver v1 joined hb filenames from the raw line). Cosmetic only; fixed in repo session_driver.sh (basename join) for FUTURE launches; running VMs monitored via heartbeat ground truth instead."
   },
   "sessions": [
     {
       "account": "pro2",
       "session": "r63m1_a",
-      "endpoint": "gpu-l4-s-kkb-ass1a0-1nyfnwnp4tdm7",
+      "endpoint": "gpu-l4-s-kkb-ass1a0-31p0z6j43zm2y",
       "accelerator": "L4",
       "variant": "GPU",
-      "created_utc": "prior-session (S0 infra)",
-      "rebound_utc": "2026-07-19T10:22:53Z",
-      "keepalive_pid": 575,
+      "created_utc": "2026-07-19T15:01:05Z",
+      "keepalive_pid": 8306,
       "status": "READY"
     },
     {
       "account": "pro2",
       "session": "r63m1_b",
-      "endpoint": "gpu-l4-s-kkb-ass1a2-2ewo3v2wtyo4t",
+      "endpoint": "gpu-l4-s-kkb-ass1a0-1qoqoql79dk3e",
       "accelerator": "L4",
       "variant": "GPU",
-      "created_utc": "2026-07-19T10:20:42Z",
-      "keepalive_pid": 424,
+      "created_utc": "2026-07-19T15:01:33Z",
+      "keepalive_pid": 8341,
       "status": "READY"
     },
     {
       "account": "pro2",
       "session": "r63m1_c",
-      "endpoint": "gpu-l4-s-kkb-ass1a0-1aoo31a7535i2",
+      "endpoint": "gpu-l4-s-kkb-ass1a1-2qniwt6j3y0pq",
       "accelerator": "L4",
       "variant": "GPU",
-      "created_utc": "2026-07-19T10:21:12Z",
-      "keepalive_pid": 462,
+      "created_utc": "2026-07-19T15:02:10Z",
+      "keepalive_pid": 8381,
       "status": "READY"
     },
     {
       "account": "pro1",
       "session": "r63m1_p1a",
-      "endpoint": "gpu-l4-s-kkb-ass1a1-et10wo27823l",
+      "endpoint": "gpu-l4-s-kkb-ass1a2-2ink89ozfh59f",
       "accelerator": "L4",
       "variant": "GPU",
-      "created_utc": "2026-07-19T10:21:41Z",
-      "keepalive_pid": 498,
+      "created_utc": "2026-07-19T15:02:39Z",
+      "keepalive_pid": 8416,
       "status": "READY"
     },
     {
       "account": "pro1",
       "session": "r63m1_p1b",
-      "endpoint": "gpu-l4-s-kkb-ass1a1-16ca78jr3df9g",
+      "endpoint": "gpu-l4-s-kkb-usw4a0-64dgi267p0qa",
       "accelerator": "L4",
       "variant": "GPU",
-      "created_utc": "2026-07-19T10:22:12Z",
-      "keepalive_pid": 534,
+      "created_utc": "2026-07-19T15:03:10Z",
+      "keepalive_pid": 8451,
       "status": "READY"
     }
   ]
