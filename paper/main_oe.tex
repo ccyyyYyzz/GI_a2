@@ -361,7 +361,15 @@ $29/30$ scenes positive, family-stratified bootstrap lower bound
 $+1.18$~dB. Smooth, prior-limited scenes thus occupy the low-benefit
 region of the acquisition-speed map even where the fixed-dwell radiometric
 benefit of high-flux operation is substantial.
-\SPH{one representative natural image pair (frozen prereg subject stl\_02)}
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\linewidth]{figs/fig_nat_pair.pdf}
+  \caption{Natural-cohort representative (frozen prereg subject
+  \texttt{stl\_02}):\ truth, safe operating point at full dwell
+  ($18.15$~dB), and high-flux RQL at equal dwell ($18.38$~dB) --- the
+  fixed-dwell radiometric benefit on a regime-boundary natural scene.}
+  \label{fig:natpair}
+\end{figure}
 
 \subsection{Mechanism: bucket multiplex contrast}
 The two outcomes are jointly explained by the bucket contrast of dense
@@ -524,11 +532,33 @@ while guaranteeing a unique optimum.
 % ---------- Study-1 figure (prereg: docs/ROUND63_FIGURE_PREREG.md) ----------
 \begin{figure*}[t]
   \centering
-  \SPH{Study-1 4-panel figure per frozen prereg — (a) exists:
-  results/round63\_theory/fig\_a\_ridge\_map.pdf; (b) image array
-  detail\_glyph\_0 + stl\_02; (c) PSNR vs $\log T$ curve families; (d)
-  $S$ vs $\rhobar$ + FI envelope}
-  \caption{\SPH{Study-1 figure caption}}
+  \begin{minipage}[t]{0.62\textwidth}\centering
+    \includegraphics[width=\linewidth]{figs/fig_s1b_images.pdf}\\[-0.5ex]
+    {\footnotesize (a)}
+  \end{minipage}\hfill
+  \begin{minipage}[t]{0.36\textwidth}\centering
+    \includegraphics[width=\linewidth]{figs/fig_s1c_curves.pdf}\\[-0.5ex]
+    {\footnotesize (b)}\\[0.5ex]
+    \includegraphics[width=\linewidth]{figs/fig_s1d_svsrho.pdf}\\[-0.5ex]
+    {\footnotesize (c)}
+  \end{minipage}
+  \caption{Study~1:\ the dense-pattern multiplex-limited regime (frozen
+  preregistered display subjects). (a)~Image arrays for the confirmatory
+  detail subject \texttt{detail\_glyph\_0} (top, with the frozen zoom crop)
+  and the natural-cohort boundary subject \texttt{stl\_02} (bottom):\
+  truth, safe operating point at full and short dwell, and the three
+  high-flux arms at $\rhobar = 0.6$, $\nu = 50$. Dense multiplexing leaves
+  the detail subject prior-limited in every arm (the frozen negative made
+  visible), while on the natural subject the naive and pre-corrected arms
+  collapse ($9.1$ and $1.0$~dB) and RQL retains full quality
+  ($18.0$~dB). (b)~Seed-mean radiometric PSNR versus optical integration
+  time for all 24 detail scenes (thin lines) with cohort medians (thick):\
+  the safe-arm median spans less than $0.2$~dB --- the
+  safe-range-uninformative verdict. (c)~Per-scene acquisition-speed bounds
+  versus fast-arm load:\ every scene sits at the $S = 1$ censoring bound,
+  below the preregistered gate bar, while the count-rate ratio (dotted)
+  shows what the detector alone would permit --- the gap between the two
+  is the multiplex limitation.}
   \label{fig:study1}
 \end{figure*}
 
