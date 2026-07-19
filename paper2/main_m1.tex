@@ -140,23 +140,14 @@ Figure~\ref{fig:hero} sets out the dead-time-aware imaging pipeline, the
 global power knob, and the count-information ridge law that anchors the
 paper.
 
-% ¶2 -- the two questions.
-Two questions therefore remain open. First, a \emph{deployment}
-question:\ how hard can a real detector --- whose dead time is a random
-hold time with some measurable coefficient of variation --- actually be
-driven before the ridge collapses? Second, a \emph{design} question:\ under
-a fixed incident-photon and dose budget, which illumination extracts the
-most information from the dead-time channel, and by how much can a
-certified optimizer improve on a strong fixed hand design?
-
-% ¶3 -- the answers (the spine).
-One law answers the first question:\ hidden hold-time randomness adds an
+% ¶2 -- the answers (the spine).
+One law answers the deployment question:\ hidden hold-time randomness adds an
 \emph{extensive} missing-information term, the long-window optimum becomes
 finite at the root of an exact cubic, and the deterministic ridge is the
 zero-jitter critical manifold of a two-parameter crossover
 (Section~\ref{sec:theory}); its peak predictions, registered before the
 refined Monte-Carlo sweep existed, were confirmed out-of-sample. One
-certified design principle answers the second:\ hand-designed patterns are
+certified design principle answers the design question:\ hand-designed patterns are
 atoms of a single concave experiment-design program over design measures
 with the exact renewal kernel; uniform dose alone controls cumulative
 exposure without eliminating scene-adapted geometry headroom, so the
@@ -366,6 +357,7 @@ count-only exponent pair or the extensive/terminal crossover.
 \label{sec:verification}
 % Three-stage evidence, condensed; full run specifications and both-run
 % tables in supplement S4. Sources of record in the header comment.
+\iffalse % machinery summary retained in supplement S3 for venue compression
 \begin{table}[t]
 \centering
 \caption{Scalar count information $J(\rho,\nu=2000,c_v)$ for lognormal hold
@@ -432,19 +424,12 @@ extension are given in the supplement.
 % that headroom; (3) conditioning safeguards define the deployable class;
 % (4) global operating-point control is orthogonal and survives.
 % Full machinery -> supplement S3.
-The design principle is a doctrine in four movements. Information rewards
-scene-adapted measurement geometry:\ the dose-relaxed optimum and a
-constructive dose-only probe expose substantial local D-information headroom
-(Sections~\ref{sec:program} and~\ref{sec:devprobe}). Uniform dose is not
-enough to eliminate that headroom:\ a balanced cumulative exposure can
-coexist with scene-adapted measurement directions
-(Section~\ref{sec:devprobe}). Conditioning safeguards define the deployable
-class:\ the A-risk and spectral anchors test whether the geometry headroom
-survives reconstruction-trust requirements, and the full-stack certificate
-quantifies what remains (Section~\ref{sec:certificate}). Global
-operating-point control is orthogonal and survives:\ ridge tracking changes
-one global source multiplier and is evaluated by the empirical
-power-for-time endpoints (Sections~\ref{sec:conjugacy}
+The design principle has one spine. Information rewards scene-adapted
+measurement geometry, while uniform dose alone does not remove that headroom
+(Sections~\ref{sec:program} and~\ref{sec:devprobe}). Conditioning safeguards
+define the deployable class and the full-stack analysis measures what remains
+(Section~\ref{sec:certificate}); global operating-point control is orthogonal
+and is tested by the power-for-time endpoints (Sections~\ref{sec:conjugacy}
 and~\ref{sec:alignment}).
 
 \subsection{One concave program over design measures}
@@ -652,18 +637,12 @@ weights are rounded to an exact $972$-row design by efficient rounding and
 deterministic
 exchange~\cite{pukelsheim1992rounding,nikolov2022volume,sagnol2015exact},
 admissible only at exact D-efficiency $\ge 0.95$. Every remaining guard is a
-frozen constraint, not a tunable proxy (Table~\ref{tab:machinery}); the full
-guard mathematics, the expanded dictionary listing, and the budget accounting
-are in the supplement.
+frozen constraint, not a tunable proxy; the full guard mathematics, expanded
+dictionary listing, exact rounding, and budget accounting are in supplement
+S3.
 
-\begin{table}[t]
-\centering
-\caption{The frozen design machinery at a glance (R10/R11/R13/R17/R18; full
-statements in the supplement).}
-\label{tab:machinery}
-\footnotesize
-\setlength{\tabcolsep}{4pt}
-\begin{tabular}{@{}lp{5.3cm}@{}}
+% The frozen machinery table is retained in supplement S3; the main text
+% carries the governing class and certificate threshold above.
 \hline
 Element & Frozen rule \\
 \hline
@@ -694,6 +673,7 @@ Rounding & exact $972$-row design, $\mathrm{Eff}_D\ge0.95$ \\
 \end{tabular}
 \end{table}
 
+\fi
 \subsection{The conjugacy doctrine: photon budget versus time budget}
 \label{sec:conjugacy}
 % Frozen R11/R13 §8(f) wording preserved verbatim. The operating doctrine.
@@ -726,25 +706,6 @@ belongs to the time-limited, power-available corner. This is a
 resource-regime statement, not a universal prohibition on ridge-zone
 allocation:\ sufficiently valuable directions may still receive larger loads
 in other cells (R13~\S8(f)).
-
-\subsection{One program behind every optimum}
-\label{sec:onelagrangian}
-% Candidate A demoted to one paragraph; full generalized-KKT system in
-% supplement S1. Frozen discrete-optima caveat preserved VERBATIM.
-Every true interior optimum of the declared design problem --- over load,
-support scale, and intensity weighting --- satisfies one generalized
-reduced-sensitivity/KKT system of the master program, whose load coordinate
-is the information-water-filling equation and whose scale and weighting
-coordinates price conditioning through the $V^{-1}$ geometry (full system
-in the supplement); this also explains why raising proxy contrast from
-$p=1$ to $p=2$ can lower the true objective. One caveat is kept
-deliberately:\ the master design problem places load, support scale, and
-intensity weighting in one constrained concave measure optimization, and
-its support atoms satisfy a common reduced-sensitivity condition; but the
-empirically observed occupancy ($k\approx32$) and weighting ($p\approx1$)
-optima \emph{motivate} these coordinates and are not themselves claimed as
-continuous KKT theorems --- they were selected from discrete grids and
-judged by image endpoints, not by the master $\log\det$ objective.
 
 \subsection{Why one global knob suffices for RIDGE-SCAT32}
 \label{sec:alignment}
@@ -1048,23 +1009,6 @@ development-only dose-only probe of Section~\ref{sec:devprobe}. Per-cell
 statuses, gaps, residuals, cut counts, and wall times are in the disclosure
 ledger (supplement S5.2).
 
-\subsection{Context arms and design diagnostics}
-At the deployed operating point ($\rhobar = 0.60$, $\nu = 2000$) the frozen
-context arms complete the occupancy ladder that motivated the $k = 32$
-scattered support:\ mean radiometric PSNR is $17.12$~dB for
-\textsc{SCAT32-060}, $14.18$~dB for the scattered $k = 16$ \textsc{SCAT16},
-and $9.63$~dB for the clustered \textsc{LBLOB16}, placing the deployed design
-above both descriptive references at matched load (Table~\ref{tab:crossarm})
-and consistent with the frozen development-selection rule
-(Section~\ref{sec:campaign}). The dose-relaxed and dose-constrained continuous
-OED solutions, retained as no-endpoint design diagnostics, and the
-development-cell guard-versus-$\alpha$ collapse
-(\texttt{ADAPTIVE\_COLLAPSE\_UNDER\_GUARDS} under the joint dose/A-risk/%
-spectral guard stack, with the path-specific descriptive
-\texttt{PATH\_FEASIBLE\_ALPHA} diagnostic) feed the Act III figure
-(Figure~\ref{fig:actiii}); their full tables and the dose-only development
-probe fields are in supplement~S5.3.
-
 \begin{figure*}[t]
 \centering
 \includegraphics[width=\textwidth]{figs/actiii_d.pdf}
@@ -1323,28 +1267,15 @@ experiment for the line.
 % ===========================================================================
 \section{Reproducibility}
 \label{sec:repro}
-The design formulation, guards, and campaign follow six frozen rulings:\ the
-dead-time OED formulation and equivalence certificate (R10), the ridge-zone
-load architecture and incident-budget conjugacy (R11), the M1 freeze audit
-(R13), the unification ruling (R14, issue ``R14 ruling: unification
-architecture''), whose theorem hierarchy Section~\ref{sec:theory} follows,
-the safety-constrained refreeze (R17, issue ``R17 ruling:
-safety-constrained OED collapse and coherent refreeze''), which retired the
-adaptive imaging arm and re-architected the campaign around the ridge
-operating-point primary and a structural near-optimality certificate, and
-the full-stack localization (R18, issue ``R18 ruling: full-stack certificate
-localization and final refreeze''), which redefined the confirmatory
-certificate over the full deployed conditioning stack
-(\texttt{FULL\_STACK\_CERT\_PASS}), admitted the dose-only constructive
-probe as development-only evidence, and froze the corrected claim discipline
-of Section~\ref{sec:design}.
-Exact-law peak predictions for the refined jitter sweep, including the two
-out-of-sample rows, were registered before the sweep completed
-(\texttt{docs/R14\_PREREGISTERED\_PREDICTIONS.md}, commit \texttt{8a627bb})
-and confirmed in three stages (grid verdict \texttt{1d8d7aa}; local zoom
-\texttt{4d8310d}; pooled Colab replication \texttt{bd731d5}), with the
-intermediate $k = 4/3$ hypothesis preregistered at \texttt{5e51088} and
-refuted at \texttt{1a32758}.
+The design, guards, and campaign follow the frozen rulings R10--R18: exact
+renewal-kernel OED, incident-budget conjugacy, the M1 audit and unification,
+the safety-constrained refreeze, and full-stack localization. Together they
+retired the adaptive imaging arm, retained the dose-only probe as
+development-only evidence, and fixed the corrected claim discipline used
+here. Exact-law peak predictions were preregistered before the refined jitter
+sweep and confirmed by grid, local-zoom, and pooled replication audits; the
+intermediate $k=4/3$ hypothesis was refuted. The ruling documents and commit
+identifiers are the audit trail.
 The campaign freezes at tag \texttt{m1-freeze} once the R13
 checklist passes outcome-blind self-tests; the companion is frozen at tag
 \texttt{paper1-freeze-v1}. Source-of-record documents for every frozen
