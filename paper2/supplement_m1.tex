@@ -359,25 +359,102 @@ preregistered extension beyond this verdict.
 \section{Secondary-arm and certificate full results}
 \label{sec:s-secondary}
 \subsection{Ridge operating-point and time-to-quality}
-\SPH{M1: per-dwell fixed-dwell gains of \textsc{RIDGE-SCAT32} over
-\textsc{SCAT32-060} and the safe reference, realized loads, requested vs.\
-achieved mean load, \texttt{RIDGE\_GUARD\_CLIPPED} flags, ceiling fractions,
-and the nine-dwell $S_{\mathrm{gate}}$ curves for
-\texttt{RIDGE\_SPEED\_PASS}.}
+Table~\ref{tab:s-perdwell} gives the per-dwell fixed-dwell median radiometric
+gains of \textsc{RIDGE-SCAT32} over the primary comparator
+\textsc{SCAT32-060} and over the safe reference \textsc{SCAT32-SAFE}, pooled
+over the $24$ confirmatory scenes ($\Delta Q$ is the seed-mean per-scene gain,
+median over scenes; only the $\nu = 2000$ row against \textsc{SCAT32-060}
+carries the primary gate). At every dwell the ridge policy reaches its target
+mean load $\rhoR(\nu)$ exactly:\ the achieved mean load equals the ridge
+target (maximum $22.25$ at $\nu = 2000$, below the absolute cap $24$), so the
+global safety clip never binds and no \texttt{RIDGE\_GUARD\_CLIPPED} event is
+recorded; the predicted count-ceiling fraction $p_{\mathrm{ceil}} < 10^{-6}$
+and the realized dark-count/timing-error fractions are $0$ at every dwell. The
+ridge advantage over \textsc{SCAT32-060} grows with dwell (crossing positive
+near $\nu = 20$) and peaks near $\nu = 1000$--$2000$; the advantage over the
+$0.05$ safe reference is larger at fixed dwell. This fixed-dwell picture does
+not survive photon-time normalization:\ the nine-dwell $Q_{90}$ time-to-%
+quality verdict \texttt{RIDGE\_SPEED\_PASS} is FAIL, with median
+$S_{\mathrm{gate}} = 0.276$ (bar $\ge 3$), $2.5\%$ bootstrap lower bound
+$0.172$ (bar $> 1$), and $1/24$ scenes with $S_{\mathrm{gate}} > 1$ (bar
+$\ge 18/24$), because $S_{\mathrm{gate}}$ is measured in optical (photon) time
+$\nu\rho$ and the ridge spends a $37\times$ larger incident budget than the
+balanced comparator (larger still than the safe reference) at $\nu = 2000$.
+
+\begin{table}[t]
+\centering
+\caption{Per-dwell ridge operating-point results (median over the $24$
+confirmatory scenes; source:\ imaging shards). $\Delta Q$ columns are median
+seed-mean radiometric-PSNR gains; $n_{>0}$ counts scenes with positive gain
+against \textsc{SCAT32-060}. Only the $\nu = 2000$, \textsc{SCAT32-060} entry
+is the frozen primary gate ($+1.87$~dB, $19/24$).}
+\label{tab:s-perdwell}
+\footnotesize
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{@{}rccccc@{}}
+\hline
+$\nu$ & achieved $\rhobar$ & $\Delta Q$ vs 060 (dB) &
+$\Delta Q$ vs SAFE (dB) & $n_{>0}$ vs 060 \\
+\hline
+5    & 0.246  & $-0.08$ & $+0.15$ & $2/24$  \\
+10   & 0.487  & $-0.03$ & $+0.25$ & $8/24$  \\
+20   & 0.967  & $+0.10$ & $+0.65$ & $24/24$ \\
+50   & 2.401  & $+0.34$ & $+1.16$ & $24/24$ \\
+100  & 4.778  & $+0.76$ & $+1.70$ & $24/24$ \\
+200  & 9.398  & $+1.14$ & $+1.97$ & $22/24$ \\
+500  & 13.806 & $+1.31$ & $+2.99$ & $21/24$ \\
+1000 & 17.541 & $+1.71$ & $+3.65$ & $20/24$ \\
+2000 & 22.255 & $+1.87$ & $+4.56$ & $19/24$ \\
+\hline
+\end{tabular}
+\end{table}
 
 \subsection{Full-stack certificate distribution}
-\SPH{M1: per-cell full-stack dual bound $G_{\mathrm{stack}}/r$ over the 480
-certificate cells, terminal statuses
-(\texttt{CERTIFIED}/\texttt{COUNTEREXAMPLE}/\texttt{NUMERICAL\_UNRESOLVED}),
-primal feasibility, exact D-efficiency, dual/complementarity, cut and scan
-counts, wall-time summary against the frozen 420~s cap, and
-\texttt{MU\_CAP\_ACTIVE} incidence, for \texttt{FULL\_STACK\_CERT\_PASS}.}
+The confirmatory certificate returns \texttt{FULL\_STACK\_CERT\_PASS} $=$ FAIL
+over the $480$ frozen cells ($D_{\mathrm{cert}}$ SHA
+\texttt{908cfccbd249de22}). The terminal-status distribution is $0$
+\texttt{CERTIFIED}, $299$ \texttt{COUNTEREXAMPLE}, $181$
+\texttt{NUMERICAL\_UNRESOLVED}, stable across the four anchors (ordered
+CERTIFIED/COUNTEREXAMPLE/UNRESOLVED:\ $(\nu,b)=(200,0.05)$:\ $0$/$77$/$43$;
+$(200,0.60)$:\ $0$/$67$/$53$; $(2000,0.05)$:\ $0$/$84$/$36$; $(2000,0.60)$:\
+$0$/$71$/$49$). Every cell is deployed-design feasible (\texttt{dep\_feasible}
+true in all $480$; realized per-pixel dose deviation $0.040$, inside the
+$\pm5\%$ band) and none has an active finite dual cap
+(\texttt{MU\_CAP\_ACTIVE} false in all $480$). The $299$ counterexamples are
+found by the frozen $60$~s support-expanding primal screen
+(\texttt{solver\_status\_primary} $=$ \texttt{SKIPPED\_COUNTEREXAMPLE}, the
+dual solve short-circuited), each a full-stack-feasible design with actual
+per-dimension log-determinant improvement (\texttt{primal\_gap\_lower\_per\_r})
+over deployed \textsc{SCAT32} in the range $1.19$--$1.87$ (median $1.43$), two
+orders of magnitude above the $10^{-2}$ bar. The $181$ unresolved cells return
+an infeasible cutting-plane master under the frozen numerical protocol
+(\texttt{LP\_FAIL} on both the primary solve and the single deterministic
+rescaled retry; coefficient dynamic range $4000$), so no finite dual upper
+bound $G_{\mathrm{stack}}/r$ is obtained for them; per the taxonomy these are
+\emph{not certified} rather than refuted. Wall time is well inside budget
+(median $64.6$~s, maximum $67.3$~s against the $420$~s \texttt{CERT\_CELL\_%
+WALL\_CAP}; no cell reaches the cap; no imputation, no cell deletion). Because
+no cell is certified, the branch is descriptive:\ no dual/complementarity
+near-optimality bound is asserted, and the counterexample cohort is reported
+as confirmatory descriptive evidence that scene-adapted geometry headroom
+survives the full deployed conditioning stack, with no categorical collapse or
+near-optimality claim.
 
 \subsection{Context arms and design diagnostics}
-\SPH{M1: \textsc{SCAT16}/\textsc{LBLOB16} context ladder, the dose-relaxed and
-dose-constrained OED design diagnostics, and the development-cell
-guard-versus-$\alpha$ collapse (\texttt{PATH\_FEASIBLE\_ALPHA}) --- all
-no-endpoint.} The dose-only class is retained only as a no-gate development
+At the deployed operating point ($\rhobar = 0.60$, $\nu = 2000$) the frozen
+context ladder places the deployed $k = 32$ scattered support above both
+descriptive references at matched load:\ mean radiometric PSNR $17.12$~dB
+(\textsc{SCAT32-060}) $>$ $14.18$~dB (\textsc{SCAT16}, scattered $k = 16$) $>$
+$9.63$~dB (\textsc{LBLOB16}, clustered), consistent with the frozen
+development-selection rule (main-text Section on the deployed design). The
+dose-relaxed and dose-constrained continuous OED solutions are retained as
+no-endpoint design diagnostics feeding the Act III figure; the development-cell
+guard-versus-$\alpha$ scan terminates at zero adaptive rows under the joint
+dose/A-risk/spectral guard stack (\texttt{ADAPTIVE\_COLLAPSE\_UNDER\_GUARDS}),
+its only surviving descriptive artifact being the path-specific feasibility
+index \texttt{PATH\_FEASIBLE\_ALPHA}, taken relative to the frozen row
+ordering and never an estimator, fallback, or certificate. The dose-only class
+is retained only as a no-gate development
 analysis with source-of-record fields
 \texttt{DOSE\_ONLY\_PRIMAL\_GAP\_PER\_R},
 \texttt{DOSE\_ONLY\_D\_EFFICIENCY\_LOWER},

@@ -198,10 +198,64 @@ them in prose); source of record `results/round63_m1/R18_GAP_PROBE_LOG.txt`.
 | S-4 | ~388 | S5.3 | context arms + dose-relaxed/-constrained OED design diagnostics + DEV collapse (PATH_FEASIBLE_ALPHA); dose-only DEV source-of-record fields listed in prose | M1 |
 | S-5 | ~404 | S6 | proofs of Theorems 1–3 + Proposition S1; uniform crossover proof or prediction label | R14-SUPP |
 
-**Counts.** 20 open sites (main 15 + supplement 5). Rendered `\SPH` commands:
-main 35 (14 single + 21 table cells), supplement 5, total 40. By class:
-M1 ×33 (main 30 = 9 single + 21 cells; supp 3), R14-SUPP ×2 (main 1 + supp 1),
-R18-DEV ×1 (main), USER ×4 (main 3 + supp 1).
+**Counts (pre-unblinding).** 20 open sites (main 15 + supplement 5). Rendered
+`\SPH` commands: main 35 (14 single + 21 table cells), supplement 5, total 40.
+By class: M1 ×33 (main 30 = 9 single + 21 cells; supp 3), R14-SUPP ×2 (main 1 +
+supp 1), R18-DEV ×1 (main), USER ×4 (main 3 + supp 1).
+
+## FILLED at unblinding (2026-07-19, tag `m1-freeze` @ 6f00932)
+
+Verdicts unblinded; all M1 outcome sites and the R18-DEV replication table
+filled from the frozen analyzer output and stated CSV aggregations. Compile
+verified: `pdflatex`+`bibtex` ×2 on both docs exit 0, 0 undefined, 0 overfull
+hbox/vbox. Forbidden certificate-pass paragraph absent; R18 frozen sentences
+(§4.3 P1/P2, §4.4 "is tested for" headline, DEV label, future-work, ×2
+power-for-time) verified present.
+
+**Sources of record:** `M1_VERDICTS.json`/`.md`, `CERT_BRANCH.json`, the 5
+imaging shards `shards/M1_<ARM>_00.csv` (5,400 rows; arm = `shard_id` prefix,
+`arm` col = estimator `RQL`), the 480 `shards/M1_CERT_*.csv` cert rows, and
+`R18_GAP_PROBE_REPLICATION.md`. Contour diagnostic:
+`results/round63_m1/CONTOUR_DIAGNOSTIC.md`.
+
+| # | site | status | fill + provenance |
+|---|------|--------|-------------------|
+| 2 | abstract | **FILLED (M1)** | primary 1.87 dB / 19-24 / LB 0.12; speed 0.28 neg; cert 0/299/181; 37× dose. `M1_VERDICTS.json` |
+| 3 | intro (iii) | **FILLED (M1)** | primary PASS / speed preregistered-negative / cert returns counterexamples |
+| 5 | §3.3 devprobe | **FILLED (R18-DEV)** | Table `tab:devreplication`, all 12 rows verbatim from `R18_GAP_PROBE_REPLICATION.md` (gap/r 0.496–0.921, D-eff 1.64×–2.51×); no selection |
+| 6 | §5.1 primary | **FILLED (M1)** | `RIDGE_OPERATING_PASS`=PASS; median ΔQ 1.867 = median_img[ mean_seed PSNR_rad(RIDGE,ν2000,img) − mean_seed PSNR_rad(SCAT32-060,ν2000,img) ]; LB2.5 0.120, 19/24 (`M1_VERDICTS.json`). Disclosures: inc-dose ratio 37.1× = mean S_inc(RIDGE)/mean S_inc(060) @ν2000; detected-count ratio 2.59× = mean mean_counts ratio; achieved load 22.25 = mean `rho_bar` @ν2000 = ρ_R(2000); ceiling frac <1e-6 = kernel p_ceil(22.25,2000); no clip (load = target). Added per-family `tab:family` (medians from `M1_VERDICTS.json`, positive counts from shards) |
+| 7 | §5.2 speed | **FILLED (M1)** | `RIDGE_SPEED_PASS`=FAIL; median S 0.276, LB 0.172, 1/24 (`M1_VERDICTS.json`); photon-time interpretation + conjugate corners |
+| 8 | §5.3 cert | **FILLED (M1)** | `FULL_STACK_CERT_PASS`=FAIL; 0/299/181 over 480 cells + by-anchor (`M1_VERDICTS.json`/`CERT_BRANCH.json`/`M1_CERT_*.csv`); wall median 64.6 max 67.3 (< 420 cap); dep_feasible 480/480, MU_CAP 0/480, dose_dev 0.040; CE primal_gap median 1.43 range 1.19–1.87 (from 299 CE rows). Failure-branch: no categorical/collapse claim; counterexample cohort = descriptive confirmatory evidence headroom survives full stack |
+| 9 | §5.4 context | **FILLED (M1)** | context ladder mean PSNR_rad @(0.60,ν2000): SCAT32-060 17.12 > SCAT16 14.18 > LBLOB16 9.63 (arm-mean over 24×5); OED diagnostics + DEV collapse referenced to Fig/supp |
+| 11 | cross-arm table | **FILLED (M1, 21 cells)** | @ν2000: achieved ρ̄ (mean `rho_bar`), inc-dose ratio (S_inc/S_inc[060]), ceiling frac (kernel p_ceil <1e-6), mean J_ex (kernel `J_exact` at achieved mean load: SAFE 0.048 / 060·SCAT16·LBLOB16 0.375 / RIDGE 0.935), ΔQ/S_gate for RIDGE (+1.87/0.276) |
+| 12 | §6 verdicts | **FILLED (M1)** | three verdict calls: primary PASS, speed FAIL, cert FAIL |
+| 13 | §6 conditional | **FILLED (M1, failure branch)** | cert FAILED → pass-paragraph NOT inserted; report 0/299/181 distribution, no categorical/collapse claim; headline kept "is tested for" (NOT swapped) |
+| S-2 | S5.1 | **FILLED (M1)** | per-dwell median ΔQ table `tab:s-perdwell` (median_img seed-mean PSNR_rad gain per dwell; ν2000 vs 060 = 1.87 matches primary); loads = ridge targets, no clip, p_ceil <1e-6; S_gate 0.276/0.172/1-24 |
+| S-3 | S5.2 | **FILLED (M1)** | full-stack cert distribution: statuses, anchors, wall, dep_feasible, MU_CAP, CE primal_gap 1.19–1.87, solver statuses (299 SKIPPED_COUNTEREXAMPLE, 181 LP_FAIL), d_cert_sha 908cfccbd249de22; descriptive branch |
+| S-4 | S5.3 | **FILLED (M1)** | context ladder + OED diagnostics + ADAPTIVE_COLLAPSE_UNDER_GUARDS / PATH_FEASIBLE_ALPHA |
+
+**Ambiguous / unpopulated source columns (disclosed, not guessed):** in the
+frozen imaging shards the columns `q_d`, `q_mean` (per-pattern dose/load
+quantiles), `audit_status`, `leak_suspect`, `cnr`, `d_ratio`, `k_occupancy`,
+`LPIPS` are **empty** for all arms; a physical-peak column is absent. These
+were reported as unpopulated/absent rather than fabricated (ceiling frac,
+mean J_ex, and load-quantile-adjacent disclosures were instead derived from
+the frozen renewal kernel `code/round63/oed_design_v3.kernel_eval` at the
+achieved mean load, documented in-caption). `V0_exact` is the RQL
+reconstruction variance (identical across arms at matched load), **not** the
+paper's `J_ex`; mean `J_ex` was therefore computed from the frozen kernel, not
+read from `V0_exact`. The incident-dose ratio uses `S_inc` normalized to the
+`SCAT32-060` comparator (documented in `tab:crossarm` caption).
+
+## Remaining open after unblinding pass (7 rendered `\SPH`)
+
+| class | sites |
+|-------|-------|
+| USER ×4 | main #1 author, #14 repo URL, #15 funding; supp S-1 author |
+| R14-SUPP ×2 | main #4 uniform crossover proof (prediction label retained); supp S-5 proofs of Thm 1–3 + Prop S1 |
+| pending-figures ×1 | main #10 Act III five-panel figure `fig:actiii` (figure agent owns `paper2/figs/`; currently a boxed `\SPH` placeholder, **not open science** — all underlying panel numbers are filled in text/tables) |
+
+No M1 or R18-DEV science placeholder remains open.
 
 ## Fill order (suggested)
 

@@ -99,12 +99,20 @@ preregistered simulation campaign (M1) tests the doctrine with a paired
 fixed-dwell ridge operating-point primary (\textsc{RIDGE-SCAT32} versus
 \textsc{SCAT32-060}, a power-for-time comparison), a nine-dwell
 time-to-quality secondary, the full-stack certificate, five arms, and a
-mandatory disclosure ledger; the three verdicts are mutually non-rescuing
-and all outcomes are reported as frozen \SPH{M1: ridge operating-point,
-speed, and full-stack certificate verdicts with cross-arm numbers}. The
+mandatory disclosure ledger. The three verdicts are mutually non-rescuing:\
+the ridge operating-point primary passes (median fixed-dwell radiometric gain
+$1.87$~dB at $\nu=2000$, $19/24$ scenes positive, $2.5\%$ bootstrap lower
+bound $0.12$~dB, at a $37\times$ incident-dose multiplier over the balanced
+comparator); the photon-time-to-quality secondary is a preregistered negative
+(median speed ratio $0.28$, $1/24$ scenes above unity), the two operating
+verdicts jointly instantiating the conjugate photon- and time-budget resource
+corners; and the full-stack certificate does not certify near-optimality
+($0/480$ cells certified, $299$ full-stack-feasible counterexamples exceeding
+the bar and $181$ numerically unresolved), leaving the balanced design's
+scene-adapted geometry headroom intact under the full conditioning stack. The
 result is an operating handbook:\ measure the jitter, let the law set the
-load, let the certificate arbitrate the geometry question, and tune the
-global operating point when time is the scarce resource.
+load, read the certificate as a geometry diagnostic, and tune the global
+operating point when time is the scarce resource.
 \end{abstract}
 
 % ===========================================================================
@@ -185,9 +193,11 @@ scene-adapted geometry headroom, a full-stack conic near-optimality
 certificate over an expanded gain-coupled dictionary, frozen guards, and the
 photon-budget versus time-budget conjugacy as its operating doctrine; (iii)~a preregistered simulation campaign (M1) whose scenes, atoms,
 load grid, guards, endpoints, and three mutually non-rescuing verdicts were
-frozen in an immutable commit before any confirmatory reconstruction existed,
-reported as frozen including any negative primary
-\SPH{M1: campaign outcomes}; and (iv)~an operating handbook for real
+frozen in an immutable commit before any confirmatory reconstruction existed
+and are reported as frozen:\ the ridge operating-point primary passes, the
+photon-time-to-quality secondary is a preregistered negative, and the
+full-stack certificate returns confirmatory counterexamples rather than
+certification; and (iv)~an operating handbook for real
 detectors (Table~\ref{tab:handbook}), ending in a bench-testable
 prediction. All code, frozen preregistration documents, and per-cell
 evidence bundles are openly released; full derivations, guard machinery,
@@ -506,14 +516,54 @@ budget spent --- establish neither that the dose-only optimum avoids gain
 atoms nor that it prefers low loads or a partial budget. The dose-only class
 is retained only as a no-gate development analysis; no confirmatory
 dose-only verdict exists. A frozen six-image replication (all six
-development images, the declared seeds, the same two anchor cells, every
-result reported without selection) is \SPH{R18-DEV: frozen six-image
-dose-only replication table --- in flight; set frozen before any aggregate
-is read}. The dose-only construction shows that uniform exposure still
-permits scene-adapted geometry selection. Optimizing and validating that
+development images, seed $0$, the same two anchor cells, every result
+reported without selection) is given in Table~\ref{tab:devreplication}:\ the
+per-dimension log-determinant gap ranges from $0.496$ to $0.921$ across all
+six families and both anchors, certifying dose-feasible local D-efficiency
+lower bounds of $1.64\times$ to $2.51\times$, with every construction
+budget- and dose-feasible at every recorded point. The dose-only
+construction shows that uniform exposure still permits scene-adapted
+geometry selection. Optimizing and validating that
 geometry under relaxed or task-specific conditioning constraints is left to
 a separate follow-up; no such arm or endpoint is added to the present
 campaign.
+
+\begin{table}[t]
+\centering
+\caption{Development-only constructive dose-only probe, frozen six-image
+replication (\texttt{results/round63\_m1/R18\_GAP\_PROBE\_REPLICATION.md};
+DEV images, seed $0$; \emph{not a confirmatory endpoint or population
+estimate}). Every result is reported without selection. $\Delta/r$ is the
+per-dimension log-determinant gap of the probe design over deployed
+\textsc{SCAT32}; $\mathrm{Eff}_D^{\downarrow} = e^{\Delta/r}$ is the certified
+dose-feasible D-efficiency \emph{lower} bound. Constant across all cells
+(support-preserving initialization caveat, main text):\ $D_{\mathrm{gain}}$
+mass $0.000$, per-pixel dose deviation $0.038$, budget used equal to the
+low-load quantile ($0.300$ at $(\nu,b)=(2000,0.60)$, $0.025$ at
+$(200,0.05)$); all cells budget- and dose-feasible.}
+\label{tab:devreplication}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}lccrrcc@{}}
+\hline
+scene & $\nu$ & $b$ & \textsc{SCAT32} & probe & $\Delta/r$ &
+$\mathrm{Eff}_D^{\downarrow}$ \\
+\hline
+glyph        & 2000 & 0.60 & 3646.425 & 3801.577 & 0.776 & $2.17\times$ \\
+glyph        & 200  & 0.05 & 2788.834 & 2969.346 & 0.903 & $2.47\times$ \\
+chirp        & 2000 & 0.60 & 3646.994 & 3819.047 & 0.860 & $2.36\times$ \\
+chirp        & 200  & 0.05 & 2788.149 & 2887.359 & 0.496 & $1.64\times$ \\
+maze         & 2000 & 0.60 & 3633.386 & 3750.598 & 0.586 & $1.80\times$ \\
+maze         & 200  & 0.05 & 2790.259 & 2892.347 & 0.510 & $1.67\times$ \\
+spokes       & 2000 & 0.60 & 3640.443 & 3820.941 & 0.903 & $2.47\times$ \\
+spokes       & 200  & 0.05 & 2800.765 & 2958.083 & 0.787 & $2.20\times$ \\
+contour      & 2000 & 0.60 & 3648.639 & 3829.357 & 0.904 & $2.47\times$ \\
+contour      & 200  & 0.05 & 2772.045 & 2891.034 & 0.595 & $1.81\times$ \\
+microtexture & 2000 & 0.60 & 3667.825 & 3851.978 & 0.921 & $2.51\times$ \\
+microtexture & 200  & 0.05 & 2810.246 & 2953.895 & 0.718 & $2.05\times$ \\
+\hline
+\end{tabular}
+\end{table}
 
 \subsection{Conditioning safeguards define the deployable class:\ the
 full-stack certificate}
@@ -846,32 +896,116 @@ any confirmatory scene is opened.
 % + one combined context/diagnostics subsection + Act III figure + cross-arm
 % table. All numbers \SPH; fill from the M1 campaign after tag m1-freeze.
 \subsection{Primary: ridge operating-point gain}
-\SPH{M1: RIDGE\_OPERATING\_PASS --- median $\Delta Q^{\mathrm{ridge}}$ (dB) at
-$\nu=2000$, $2.5\%$ bootstrap lower bound, count of scenes with
-$\Delta Q^{\mathrm{ridge}}>0$, and the frozen PASS/FAIL call, with the
-mandatory incident-dose ratio, detected-count ratio, achieved mean load and
-quantiles, physical peak, ceiling fraction, and \texttt{RIDGE\_GUARD\_CLIPPED}
-tally.} This is a fixed-dwell, power-for-time operating-point test. It is not
-an equal-photon-budget or photon-efficiency comparison.
+The primary verdict is \texttt{RIDGE\_OPERATING\_PASS} $=$ \textbf{PASS}. At
+$\nu = 2000$ the median paired radiometric gain of \textsc{RIDGE-SCAT32} over
+\textsc{SCAT32-060} is $\operatorname{median}_j \Delta Q^{\mathrm{ridge}}_j =
+1.87$~dB (frozen bar $\ge 1.0$~dB); the $2.5\%$ nested family-stratified
+bootstrap lower bound on the median is $0.12$~dB (bar $> 0$); and $19/24$
+scenes are positive (bar $\ge 18/24$). All three conditions pass. The gain is
+bought with incident power, not photons:\ the ridge policy reaches its target
+mean load $\rhobar = \rhoR(2000) = 22.25$ (the global safety clip does not
+bind), a $37\times$ incident-dose ratio and a $2.6\times$ detected-count ratio
+over the balanced \textsc{SCAT32-060} comparator, with no count-ceiling
+saturation (predicted $p_{\mathrm{ceil}} < 10^{-6}$; realized dark-count and
+timing-error fractions $0$) and no \texttt{RIDGE\_GUARD\_CLIPPED} event. The
+gain is strongly scene-dependent (Table~\ref{tab:family}), from $+6.37$~dB on
+\texttt{maze} to $-4.18$~dB on \texttt{contour}, the sole negative-median
+family (Section~\ref{sec:discussion}). This is a fixed-dwell, power-for-time
+operating-point test. It is not an equal-photon-budget or photon-efficiency
+comparison.
+
+\begin{table}[t]
+\centering
+\caption{Per-family primary result at $\nu = 2000$:\ median paired ridge gain
+$\Delta Q^{\mathrm{ridge}}$ and the count of positive scenes (four instances
+per family). The pooled median is $1.87$~dB and $19/24$ scenes are positive
+(\texttt{RIDGE\_OPERATING\_PASS}). Source:\
+\texttt{results/round63\_m1/M1\_VERDICTS.json} and the imaging shards.}
+\label{tab:family}
+\footnotesize
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{@{}lcc@{}}
+\hline
+Family & median $\Delta Q^{\mathrm{ridge}}$ (dB) & scenes $>0$ \\
+\hline
+\texttt{maze}         & $+6.37$ & $4/4$ \\
+\texttt{glyph}        & $+3.58$ & $4/4$ \\
+\texttt{microtexture} & $+1.49$ & $4/4$ \\
+\texttt{chirp}        & $+1.40$ & $4/4$ \\
+\texttt{spokes}       & $+0.71$ & $2/4$ \\
+\texttt{contour}      & $-4.18$ & $1/4$ \\
+\hline
+\end{tabular}
+\end{table}
 
 \subsection{Secondary: ridge time-to-quality}
-\SPH{M1: RIDGE\_SPEED\_PASS --- median $S_{\mathrm{gate}}$, bootstrap lower
-bound, count of scenes with $S_{\mathrm{gate}}>1$, and PASS/FAIL, for
-\textsc{SCAT32-SAFE} against the dwell-dependent \textsc{RIDGE-SCAT32} policy.}
+The secondary verdict is \texttt{RIDGE\_SPEED\_PASS} $=$ \textbf{FAIL}, a
+preregistered negative reported plainly. Against the \textsc{SCAT32-SAFE}
+reference at load $0.05$, the dwell-dependent \textsc{RIDGE-SCAT32} policy has
+median photon-time-to-quality ratio $S_{\mathrm{gate}} = 0.276$ (frozen bar
+$\ge 3$), $2.5\%$ bootstrap lower bound $0.172$ (bar $> 1$), and only $1/24$
+scenes with $S_{\mathrm{gate}} > 1$ (bar $\ge 18/24$); none of the three
+conditions passes. The direction of the failure is mechanistic, not anomalous.
+The $Q_{90}$ secondary is measured in optical (photon) time $\nu\rho$, where
+the ridge policy's large incident-power multiplier --- a $37\times$
+incident-dose ratio over the balanced comparator at $\nu = 2000$, and larger
+still over the $0.05$ safe reference --- dominates, so the fixed-dwell quality
+gains of the primary do not survive photon-time normalization. The two
+operating verdicts therefore instantiate the conjugate resource corners of
+Section~\ref{sec:conjugacy} empirically:\ when power is available and time is
+scarce, the ridge wins fixed-dwell quality (primary PASS); when the photon
+budget is scarce, the low-load balanced design wins time-to-quality
+(secondary FAIL). Neither rescues the other.
 
 \subsection{Confirmatory certificate: near-optimality over the full
 deployed stack}
-\SPH{M1: FULL\_STACK\_CERT\_PASS --- distribution of $G_{\mathrm{stack}}/r$
-and of terminal statuses (\texttt{CERTIFIED}\,/\,\texttt{COUNTEREXAMPLE}\,/\,%
-\texttt{NUMERICAL\_UNRESOLVED}) across the 480 certificate cells, the
-fraction certified at $\le10^{-2}$, wall-time summary against the frozen
-420~s cap, and the frozen PASS/FAIL call.}
+The confirmatory structural secondary does not certify:\
+\texttt{FULL\_STACK\_CERT\_PASS} $=$ \textbf{FAIL}. Of the $480$ frozen
+certificate cells ($24$ confirmatory scenes $\times\,5$ seeds
+$\times\,\nu\in\{200,2000\}\times b\in\{0.05,0.60\}$), $0$ are
+\texttt{CERTIFIED}, $299$ are \texttt{COUNTEREXAMPLE}, and $181$ are
+\texttt{NUMERICAL\_UNRESOLVED}; the fraction certified at
+$G_{\mathrm{stack}}/r \le 10^{-2}$ is $0$. The gate requires $480/480$
+\texttt{CERTIFIED}, so it fails. The status split is stable across the four
+anchors ($(\nu,b)=(200,0.05)$:\ $77$/$43$; $(200,0.60)$:\ $67$/$53$;
+$(2000,0.05)$:\ $84$/$36$; $(2000,0.60)$:\ $71$/$49$ counterexample/%
+unresolved). Every cell is deployed-design feasible for budget, dose
+($\pm5\%$; realized deviation $0.040$), A-risk, and spectral constraints,
+with no active finite dual cap (\texttt{MU\_CAP\_ACTIVE} false in all $480$),
+and the protocol runs well inside its budget (median wall time $64.6$~s,
+maximum $67.3$~s, against the $420$~s per-cell cap; no cell reaches it). The
+$299$ counterexamples are concrete full-stack-feasible designs whose actual
+per-dimension log-determinant improvement over deployed \textsc{SCAT32}
+exceeds the $10^{-2}$ bar by roughly two orders of magnitude (median $1.43$,
+range $1.19$--$1.87$ per dimension, found by the frozen support-expanding
+primal screen); the $181$ unresolved cells returned an infeasible
+cutting-plane master under the frozen numerical protocol and are not
+certified --- which is not the same as scientifically refuted. Under the
+frozen failure-branch rule no categorical near-optimality claim and no
+collapse claim is made. Descriptively, the counterexample cohort is
+confirmatory evidence that the balanced design's scene-adapted geometry
+headroom survives the full deployed conditioning stack --- now over fresh
+confirmatory scenes and the complete stack, consistent with the
+development-only dose-only probe of Section~\ref{sec:devprobe}. Per-cell
+statuses, gaps, residuals, cut counts, and wall times are in the disclosure
+ledger (supplement S5.2).
 
 \subsection{Context arms and design diagnostics}
-\SPH{M1: \textsc{SCAT16}/\textsc{LBLOB16} context ladder, the dose-relaxed and
-dose-constrained OED design diagnostics feeding Figure~\ref{fig:actiii}, and
-the development-cell guard-versus-$\alpha$ collapse --- summary here; full
-tables in the supplement.}
+At the deployed operating point ($\rhobar = 0.60$, $\nu = 2000$) the frozen
+context arms complete the occupancy ladder that motivated the $k = 32$
+scattered support:\ mean radiometric PSNR is $17.12$~dB for
+\textsc{SCAT32-060}, $14.18$~dB for the scattered $k = 16$ \textsc{SCAT16},
+and $9.63$~dB for the clustered \textsc{LBLOB16}, placing the deployed design
+above both descriptive references at matched load (Table~\ref{tab:crossarm})
+and consistent with the frozen development-selection rule
+(Section~\ref{sec:campaign}). The dose-relaxed and dose-constrained continuous
+OED solutions, retained as no-endpoint design diagnostics, and the
+development-cell guard-versus-$\alpha$ collapse
+(\texttt{ADAPTIVE\_COLLAPSE\_UNDER\_GUARDS} under the joint dose/A-risk/%
+spectral guard stack, with the path-specific descriptive
+\texttt{PATH\_FEASIBLE\_ALPHA} diagnostic) feed the Act III figure
+(Figure~\ref{fig:actiii}); their full tables and the dose-only development
+probe fields are in supplement~S5.3.
 
 \begin{figure*}[t]
 \centering
@@ -897,11 +1031,17 @@ tag \texttt{m1-freeze}.}
 
 \begin{table*}[t]
 \centering
-\caption{Cross-arm summary (descriptive; the gates are the
-\textsc{RIDGE-SCAT32} primary and speed comparisons and the deployed-design
-certificate). All entries fill from the frozen M1 analyzer after tag
-\texttt{m1-freeze}; ``---'' marks a paired metric that does not apply to a
-reference or context arm.}
+\caption{Cross-arm summary at the primary dwell $\nu = 2000$ (descriptive;
+means over $24$ scenes $\times\,5$ seeds). Achieved $\rhobar$ and incident-dose
+ratio are read from the imaging shards; the incident-dose ratio is normalized
+to the \textsc{SCAT32-060} comparator. Ceiling fraction is the predicted
+count-saturation probability $p_{\mathrm{ceil}} = \mathrm{P}(N=\nu)$ from the
+frozen renewal kernel at the achieved mean load (realized dark-count fraction
+is $0$ for every arm). Mean $\Jex$ is the exact per-slot count information
+evaluated at the achieved mean load via the same frozen kernel. The gates are
+the \textsc{RIDGE-SCAT32} primary and speed comparisons and the
+deployed-design certificate; ``---'' marks a paired metric that does not
+apply to a reference or context arm.}
 \label{tab:crossarm}
 \footnotesize
 \setlength{\tabcolsep}{5pt}
@@ -910,11 +1050,11 @@ reference or context arm.}
 Arm & Role & achieved $\rhobar$ & inc.-dose ratio & ceiling frac.
 & mean $\Jex$ & $\Delta Q^{\mathrm{ridge}}$\,/\,$S_{\mathrm{gate}}$ \\
 \hline
-\textsc{SCAT32-SAFE}  & safe ref.\ / speed base & \SPH{M1} & \SPH{M1} & \SPH{M1} & \SPH{M1} & --- \\
-\textsc{SCAT32-060}   & primary comparator      & \SPH{M1} & \SPH{M1} & \SPH{M1} & \SPH{M1} & --- \\
-\textsc{RIDGE-SCAT32} & ridge policy (gated)    & \SPH{M1} & \SPH{M1} & \SPH{M1} & \SPH{M1} & \SPH{M1} \\
-\textsc{SCAT16}       & context                 & \SPH{M1} & \SPH{M1} & \SPH{M1} & \SPH{M1} & --- \\
-\textsc{LBLOB16}      & context                 & \SPH{M1} & \SPH{M1} & \SPH{M1} & \SPH{M1} & --- \\
+\textsc{SCAT32-SAFE}  & safe ref.\ / speed base & $0.05$  & $0.08\times$ & $<10^{-6}$ & $0.048$ & --- \\
+\textsc{SCAT32-060}   & primary comparator      & $0.60$  & $1.00\times$ & $<10^{-6}$ & $0.375$ & --- \\
+\textsc{RIDGE-SCAT32} & ridge policy (gated)    & $22.25$ & $37.1\times$ & $<10^{-6}$ & $0.935$ & $+1.87$\,/\,$0.276$ \\
+\textsc{SCAT16}       & context                 & $0.60$  & $1.00\times$ & $<10^{-6}$ & $0.375$ & --- \\
+\textsc{LBLOB16}      & context                 & $0.60$  & $1.01\times$ & $<10^{-6}$ & $0.375$ & --- \\
 \hline
 \end{tabular}
 \end{table*}
@@ -934,21 +1074,26 @@ one program clarifies that the large fixed-dwell gains of the companion are an
 operating-point effect, not evidence that a design must spatially redistribute
 dose into the ridge.
 
-Contingent on the frozen verdicts (\SPH{M1: RIDGE\_OPERATING\_PASS,
-RIDGE\_SPEED\_PASS, and FULL\_STACK\_CERT\_PASS calls}), the campaign is
-preregistered to license only the governing ruling's frozen conclusions.
-Global operating-point control remains the deployed positive arm; geometry
-selection is now known to retain dose-feasible headroom outside the
-conditioning stack (Section~\ref{sec:devprobe}), so operating-point control
-and geometry adaptation are not presented as an exhaustive either--or.
-\SPH{M1 conditional wording --- if FULL\_STACK\_CERT\_PASS passes, insert
-verbatim:\ ``Within the frozen full-stack class at the preregistered anchor
-cells, balanced SCAT32 was certified within 1\% local D-efficiency of the
-best admissible design. The useful deployed positive control was the global
-detector operating point; geometry optimization under relaxed conditioning
-remains a separate opportunity.'' If it fails, that paragraph is
-forbidden --- report the distribution of certified, counterexample, and
-unresolved cells without a categorical collapse claim.} The certificate is
+The frozen verdicts are settled:\ the ridge operating-point primary
+\emph{passes} ($\texttt{RIDGE\_OPERATING\_PASS} = $ PASS, median
+$1.87$~dB), the ridge speed secondary \emph{fails} as a preregistered
+negative ($\texttt{RIDGE\_SPEED\_PASS} = $ FAIL, median $S_{\mathrm{gate}}
+0.276$), and the full-stack certificate \emph{fails} to certify
+($\texttt{FULL\_STACK\_CERT\_PASS} = $ FAIL, $0/480$ cells certified); the
+campaign is preregistered to license only the governing ruling's frozen
+conclusions. Global operating-point control remains the deployed positive
+arm; geometry selection is now known to retain dose-feasible headroom outside
+the conditioning stack (Section~\ref{sec:devprobe}), so operating-point
+control and geometry adaptation are not presented as an exhaustive
+either--or. Because \texttt{FULL\_STACK\_CERT\_PASS} did not pass, the
+certificate licenses no categorical near-optimality statement and no collapse
+claim:\ across the $480$ confirmatory cells, $0$ certified, $299$
+counterexample, and $181$ numerically unresolved
+(Section~\ref{sec:results}), so within the frozen full-stack class balanced
+\textsc{SCAT32} is \emph{not} certified near-optimal, and the confirmatory
+counterexample cohort descriptively shows that scene-adapted geometry
+headroom survives the full deployed conditioning stack --- a localized,
+better-defined open problem, not a rescued outcome. The certificate is
 comparator- and subspace-relative:\ it is stated relative to the frozen
 expanded dictionary, the local pre-scan estimate, the declared resource
 model, and the directions \textsc{SCAT32} resolves. The line's thesis, in
@@ -958,6 +1103,20 @@ The operative restriction is the full deployed conditioning stack:\ balanced
 SCAT32 is tested for certified near-optimality within that frozen class,
 while time-limited image gains are tested separately by global ridge
 tracking.
+
+The primary gain is scene-dependent, and its one negative-median family is
+diagnostic:\ on \texttt{contour} the balanced $0.60$ design outperforms the
+ridge on three of four instances (median $\Delta Q^{\mathrm{ridge}} =
+-4.18$~dB, versus $+6.37$ on \texttt{maze}), the separating covariate being
+bucket-brightness contrast (losing instances $\Cu\in[0.21,0.25]$ against the
+winning instance's $0.33$; across all $24$ scenes $\Delta Q^{\mathrm{ridge}}$
+correlates with $\Cu$ at $+0.64$), with no guard, trust, dark-count, or
+ceiling flag firing, consistent with the alignment condition of
+Section~\ref{sec:alignment} under which a single global flux multiplier is
+least effective where bucket brightness is weakly aligned with directional
+value; the residual family-geometry dependence --- \texttt{contour} loses
+where an equally low-contrast \texttt{chirp} scene gains --- is left as a
+hypothesis.
 
 The jitter-capped ridge is the practical caution. The cube-root ridge is a
 property of the zero-jitter critical manifold; the moment a detector's hold
