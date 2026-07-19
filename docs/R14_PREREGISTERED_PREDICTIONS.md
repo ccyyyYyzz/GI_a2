@@ -61,3 +61,13 @@ Log-log fit slope = -0.642 vs theory -2/3 (3.7% off, well inside
 per-point noise). Constant consistent with 2^(-1/3) within ~10%.
 Honest state: EXPONENT confirmed; CONSTANT pending the Colab 400k
 replication + bootstrap error bars.
+
+## COLAB 400k REPLICATION + POOLED FIT (final for tonight)
+
+Colab (400k): (0.02, 9.610) (0.05, 5.700) (0.1, 3.399) (0.2, 2.051).
+Cross-run: ends replicate (cv=0.02 both -7.5%; cv=0.2 -8/-11%), middle
+scatters (flat-top noise). POOLED 8-measurement log-log fit:
+slope = -0.658 vs -2/3 (1.3%); constant ~5% below 2^(-1/3) (noise-edge).
+Paper statement: exponent confirmed at 1.3%; constant consistent within
+5-10%; reproducible mild low-bias at the end points left as an open
+higher-order note (candidate: lognormal third-moment correction).
