@@ -1,0 +1,70 @@
+diff --git a/paper/main_oe.tex b/paper/main_oe.tex
+index 198994b..a577068 100644
+--- a/paper/main_oe.tex
++++ b/paper/main_oe.tex
+@@ -796,9 +796,8 @@ natural optical-bench extension. More broadly, architectures that retain
+ per-photon timing \cite{rapp2019deadtime,rapp2021highflux} occupy a different
+ information regime than the count-only channel analyzed here; the map
+ presented in this work is the count-only baseline against which such
+-richer architectures can be costed. The proposed operating map, the
+-deployment-legal reconstruction rule, and the frozen open benchmark open
+-up an avenue for dwell-time-limited and photon-budget-limited
++richer architectures can be costed. These results have established a
++bench-testable operating map for dwell-time-limited and photon-budget-limited
+ single-pixel systems operating deep in the dead-time regime.
+ 
+ \section*{Code and data availability}
+diff --git a/paper2/main_m1.tex b/paper2/main_m1.tex
+index b44dc2e..57bea23 100644
+--- a/paper2/main_m1.tex
++++ b/paper2/main_m1.tex
+@@ -357,7 +357,6 @@ count-only exponent pair or the extensive/terminal crossover.
+ \label{sec:verification}
+ % Three-stage evidence, condensed; full run specifications and both-run
+ % tables in supplement S4. Sources of record in the header comment.
+-\iffalse % machinery summary retained in supplement S3 for venue compression
+ \begin{table}[t]
+ \centering
+ \caption{Scalar count information $J(\rho,\nu=2000,c_v)$ for lognormal hold
+@@ -641,30 +640,7 @@ frozen constraint, not a tunable proxy; the full guard mathematics, expanded
+ dictionary listing, exact rounding, and budget accounting are in supplement
+ S3.
+ 
+-% The frozen machinery table is retained in supplement S3; the main text
+-% carries the governing class and certificate threshold above.
+-\hline
+-Element & Frozen rule \\
+-\hline
+-Dictionary & all cyclic translates of the 13 R10 support families
+-  (scattered $k=16/32$, solid $4\times4$, Lblob, bars, compact-32, ring);
+-  weight powers $p\in\{0,1\}$; the certificate scan adds gain-coupled copies
+-  $a_{g,\gamma}=\gamma a_g^{\mathrm{base}}$, $\gamma\in\{0.2,0.5,1,2,5\}$,
+-  emergent load ($D_{\mathrm{cert}}=D_{\mathrm{load}}\cup D_{\mathrm{gain}}$) \\
+-Budget & incident-signal inequality $\int\rho_s\,d\xi \le 0.60$; detected
+-  counts dual-reported, never the sole budget \\
+-Peak & shape:\ $w_j\in[\tfrac14,4]$, $k\ge16$; physical:\
+-  $\max a_{ij}\le1536$ \\
+-Dose & per-pixel mean exposure within $\pm5\%$ of image mean, re-verified
+-  post-rounding \\
+-Floors & spectral $V(\xi)\succeq0.5\,V_{\text{FIXED}^\ast}$; A-risk
+-  $\mathrm{tr}(V^{-1})\le1.05\,\mathrm{tr}(V_{\text{FIXED}^\ast}^{-1})$
+-  --- global design constraints of the certified class
+-  $\mathcal{C}_{\mathrm{stack}}$, LMI-priced in the certificate dual \\
+-Kernel trust & exact-PMF certification; $J_{\mathrm{mean}}/\Jex\ge0.90$;
+-  RQL log-load bias $\le0.05$; $p_{\mathrm{ceil}}\le0.05$ per atom,
+-  $\le0.01$ design-weighted \\
+-Certificate & $G_{\mathrm{stack}}/r\le10^{-2}$ (full-stack conic dual,
++\\iffalse % redundant machinery table retained in supplement S3
+   expanded $D_{\mathrm{cert}}$ scan; per-cell status
+   \texttt{CERTIFIED}\,/\,\texttt{COUNTEREXAMPLE}\,/\,%
+   \texttt{NUMERICAL\_UNRESOLVED}; local D-eff.\ $\ge0.99005$) \\
+@@ -672,8 +648,8 @@ Rounding & exact $972$-row design, $\mathrm{Eff}_D\ge0.95$ \\
+ \hline
+ \end{tabular}
+ \end{table}
++\\fi
+ 
+-\fi
+ \subsection{The conjugacy doctrine: photon budget versus time budget}
+ \label{sec:conjugacy}
+ % Frozen R11/R13 §8(f) wording preserved verbatim. The operating doctrine.
