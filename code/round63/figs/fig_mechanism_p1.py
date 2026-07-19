@@ -136,7 +136,7 @@ def object_highcontrast(n=64):
 # ----------------------------------------------------------------------------
 # panel (a) : the single-pixel imaging chain
 # ----------------------------------------------------------------------------
-def rounded_box(ax, cx, cy, w, h, fc=BOXFC, ec=BOXEC, lw=1.1, z=2):
+def rounded_box(ax, cx, cy, w, h, fc="none", ec=BOXEC, lw=0.8, z=2):
     box = FancyBboxPatch((cx - w / 2, cy - h / 2), w, h,
                          boxstyle="round,pad=0.0,rounding_size=2.2",
                          linewidth=lw, edgecolor=ec, facecolor=fc, zorder=z,
@@ -211,7 +211,7 @@ def panel_a(ax):
 
     # --- object: low- vs high-contrast pair ---
     ow = 16.5
-    rounded_box(ax, centers["obj"], cy, ow, bh, fc="#FFFFFF")
+    rounded_box(ax, centers["obj"], cy, ow, bh)
     iax = icon_inset(ax, centers["obj"] - 3.9, cy + 3.2, 0.30)
     iax.imshow(object_lowcontrast(), cmap="gray", vmin=0, vmax=1, aspect="auto",
                interpolation="bilinear")
@@ -240,16 +240,9 @@ def panel_a(ax):
             fontsize=8.0, color=INK, fontweight="bold")
     ax.text(centers["spd"], cy - bh / 2 - 12.0, "photon-\ncounting",
             ha="center", va="top", fontsize=7.0, color=INK)
-    # dead-time callout that points down to panel (b)
-    ax.annotate(r"dead time $\tau$  $\rightarrow$ (b)",
-                xy=(centers["spd"], cy - bh / 2 - 0.5),
-                xytext=(centers["spd"], cy + bh / 2 + 8.5), ha="center",
-                va="bottom", fontsize=7.2, color=ORANGE,
-                arrowprops=dict(arrowstyle="-|>", color=ORANGE, lw=1.2,
-                                shrinkA=1, shrinkB=1))
 
     # --- RQL reconstruction ---
-    rounded_box(ax, centers["rec"], cy, bw, bh, fc="#EAF7F2", ec=GREEN, lw=1.2)
+    rounded_box(ax, centers["rec"], cy, bw, bh, ec=GREEN, lw=0.9)
     iax = icon_inset(ax, centers["rec"], cy + 1.0, 0.34, ec=GREEN)
     iax.imshow(object_highcontrast(48), cmap="gray", vmin=0, vmax=1,
                aspect="auto", interpolation="nearest")
@@ -258,17 +251,10 @@ def panel_a(ax):
     ax.text(centers["rec"], cy - bh / 2 - 12.0, r"recon. $\hat{x}$",
             ha="center", va="top", fontsize=7.0, color=INK)
 
-    # --- path labels ---
-    ax.text((centers["src"] + centers["dmd"]) / 2, cy + 3.4, "structured\nillumination",
-            ha="center", va="bottom", fontsize=6.4, color=INK)
+    # --- counts-path label (data-path name; other prose lives in the caption)
     ax.text((centers["spd"] + centers["rec"]) / 2, cy + 3.4,
             r"bucket counts $N_i$", ha="center", va="bottom", fontsize=6.6,
             color=BLUE)
-
-    # --- forward model strip along the bottom ---
-    ax.text(50, 8.0, r"forward model:  $\lambda_i = \Phi\, a_i^{\top} x + d$,"
-            r"   exposure $T = \nu\tau$,   load $\rho = \lambda\tau$",
-            ha="center", va="center", fontsize=8.2, color=BLACK)
 
 
 # ----------------------------------------------------------------------------
@@ -309,19 +295,13 @@ def panel_b_pulses(ax):
                 arrowprops=dict(arrowstyle="<->", color=INK, lw=1.0))
     ax.text((b0 + b1) / 2, 1.20, r"$\tau$", ha="center", va="bottom",
             fontsize=13.0, color=ORANGE, clip_on=False)
-    # compact legend spread across the axis (no overlap)
-    ax.text(0.0, -0.16, r"$\vert$ registered count", color=GREEN, fontsize=6.3,
-            ha="left", va="top")
-    ax.text(tmax, -0.16, r"$\times$ lost (blind)", color=ORANGE, fontsize=6.3,
-            ha="right", va="top")
-    ax.text(tmax, 1.56, r"exposure $T=\nu\tau$", ha="right", va="top",
-            fontsize=6.6, color=INK)
+    # (registered/lost/blind symbols and the exposure are glossed in the
+    #  caption; no in-figure legend or title)
     ax.set_yticks([])
     ax.set_xticks([])
     for s in ("top", "right", "left"):
         ax.spines[s].set_visible(False)
     ax.spines["bottom"].set_visible(False)
-    ax.set_title("photon arrivals censored by dead time", fontsize=7.8, pad=3)
 
 
 # ----------------------------------------------------------------------------
@@ -339,20 +319,19 @@ def panel_b_saturation(ax):
     # information ridge rho*(nu) band, nu in [100, 2000]
     r_lo, r_hi = rho_star(100.0), rho_star(2000.0)
     ax.axvspan(r_lo, r_hi, color=ORANGE, alpha=0.12, zorder=0)
-    ax.text(np.sqrt(r_lo * r_hi), 0.16,
-            r"count-information" "\n" r"ridge $\rho^{*}(\nu)$", ha="center",
+    ax.text(np.sqrt(r_lo * r_hi), 0.16, r"ridge $\rho^{*}(\nu)$", ha="center",
             va="bottom", fontsize=6.2, color=ORANGE)
 
-    # operating points
+    # operating points (terse value labels; roles named in the caption)
     ax.plot([RHO_CONV], [detected_fraction(RHO_CONV)], marker="o", color=GREEN,
             ms=5.5, mec="k", mew=0.5, zorder=6)
     ax.plot([RHO_HIFLUX], [detected_fraction(RHO_HIFLUX)], marker="o", color=PINK,
             ms=6.0, mec="k", mew=0.5, zorder=6)
-    ax.annotate(r"$\rho{=}0.05$" "\n(conventional)", xy=(RHO_CONV, detected_fraction(RHO_CONV)),
-                xytext=(0.024, 0.60), fontsize=6.2, color=GREEN, ha="left", va="center",
+    ax.annotate(r"$\rho{=}0.05$", xy=(RHO_CONV, detected_fraction(RHO_CONV)),
+                xytext=(0.024, 0.55), fontsize=6.2, color=GREEN, ha="left", va="center",
                 arrowprops=dict(arrowstyle="-|>", color=GREEN, lw=0.9))
-    ax.annotate(r"$\bar{\rho}{=}0.6$" "\n(high flux)", xy=(RHO_HIFLUX, detected_fraction(RHO_HIFLUX)),
-                xytext=(0.9, 0.20), fontsize=6.2, color=PINK, ha="left", va="center",
+    ax.annotate(r"$\bar{\rho}{=}0.6$", xy=(RHO_HIFLUX, detected_fraction(RHO_HIFLUX)),
+                xytext=(0.9, 0.22), fontsize=6.2, color=PINK, ha="left", va="center",
                 arrowprops=dict(arrowstyle="-|>", color=PINK, lw=0.9))
 
     ax.set_xscale("log")
@@ -433,19 +412,17 @@ def panel_c(ax):
     ax.text(lab_x, CU_DENSE, "dense (Study 1)", ha="right", va="center",
             fontsize=6.2, color=INK)
 
-    # region + boundary labels
-    ax.text(0.011, 1.52, "high-flux operation helps", fontsize=7.2, color=GREEN,
+    # minimal region / boundary names (full descriptions live in the caption)
+    ax.text(0.011, 1.52, "high-flux helps", fontsize=7.2, color=GREEN,
             ha="left", va="center", fontweight="bold")
-    ax.text(0.011, 0.037, r"multiplex-limited ($\Gamma<1$)", fontsize=6.4,
+    ax.text(0.011, 0.037, "multiplex-limited", fontsize=6.4,
             color="#555555", ha="left", va="center")
     ax.text(0.155, gamma_boundary_cu(0.155) * 1.16, r"$\Gamma=1$", fontsize=7.4,
             color=BLACK, ha="left", va="bottom", rotation=-24)
     ax.text(0.011, 0.275, "transition band", fontsize=5.8,
             color="#8a6d00", ha="left", va="center")
-    ax.text(RHO_HIFLUX, ymax * 0.96, r"$\bar{\rho}=0.6$ (high flux)", fontsize=6.4,
+    ax.text(RHO_HIFLUX, ymax * 0.96, r"$\bar{\rho}=0.6$", fontsize=6.4,
             color=PINK, ha="center", va="top")
-    ax.text(0.0135, 0.95, "conventional\nlow flux", fontsize=5.8, color=BLUE,
-            ha="left", va="top")
 
     ax.set_xscale("log")
     ax.set_yscale("log")

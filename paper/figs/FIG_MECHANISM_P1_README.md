@@ -101,6 +101,20 @@ contrast 1.270 and per-occupancy Γ (6.07/8.66/34.79) are Study-2 ladder
 numbers not needed by this schematic; exact-PMF ρ* values (4.53 … 22.16) are
 replaced by the closed-form law the panel actually draws.
 
+## Design pass (user directive, 2026-07-19): ink is data, words in the caption
+
+The figure was de-chromed to the repo-wide figure rule: the in-figure
+forward-model strip, the "structured illumination" path label, the
+"dead time τ → (b)" callout, the panel-(b1) title and registered/lost legend,
+the "exposure T = ντ" note, and the verbose region/operating-point
+parentheticals in (b2)/(c) were removed — every one of them is already carried
+verbatim by the LaTeX caption block above, so no caption edits were required.
+Component boxes are hairline outlines (no fills). Retained: component names,
+the big τ glyph, the (b2) two-series legend (frameless), terse
+threshold/region tags ("Γ = 1", "ρ̄ = 0.6", "ridge ρ*(ν)", "transition band",
+"high-flux helps", "multiplex-limited"), family labels with pass counts, and
+the low/high C_u object labels (data labels).
+
 ## Housekeeping / honesty notes baked into the design
 - The family markers all sit at the single operating load ρ̄ = 0.6 (the
   Study-2 high-flux point); the horizontal spread is cosmetic, only to keep

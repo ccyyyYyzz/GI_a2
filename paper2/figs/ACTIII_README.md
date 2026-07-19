@@ -21,6 +21,15 @@ Style follows the round-63 paper figure scripts (`code/round63/figs/fig_*.py`):
 serif fonts, colourblind-safe Wong palette (`#0072B2`, `#D55E00`, `#009E73`,
 `#56B4E9`, `#CC79A7`, `#E69F00`), `pdf.fonttype 42`, large legible labels.
 
+**Design rule (user directive, applied to every figure here and to
+`paper/figs/fig_mechanism_p1`):** in-figure ink is data; prose lives in the
+LaTeX captions (the blocks below). No in-figure titles or explanatory
+sentences, no badge boxes/halos/filled component boxes (hairline outlines
+only), frameless legends. Retained by design: axis/tick labels, component
+names, genuinely needed series legends, in-image PSNR values in panel (d)
+(data, Chen-style), guard/threshold lines with terse labels, and the
+ruling-mandated development tags on (a)/(b) as small corner tags.
+
 Two auditable precompute caches are written to `results/round63_m1/` and read
 back by the figure script (regenerated automatically if absent):
 `ACTIII_A_GUARD_TRAJECTORY.json` (panel a) and `ACTIII_D_RECON.npz` (panel d).

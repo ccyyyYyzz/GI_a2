@@ -187,7 +187,7 @@ def panel_a():
     o = np.argsort(alpha)
     alpha, dose, arisk, mu = alpha[o], dose[o], arisk[o], mu[o]
 
-    fig, ax = plt.subplots(figsize=(4.1, 3.4))
+    fig, ax = plt.subplots(figsize=(4.1, 2.9))
     ax.set_yscale("log")
     # any adaptive fraction (alpha>0) is dose-infeasible: shade the band
     ax.axvspan(alpha[alpha > 0].min(), 1.02, color=RED, alpha=0.05, zorder=0)
@@ -207,7 +207,7 @@ def panel_a():
             (bars["arisk_ratio"], BLUE, r"1.05$\times$  A-risk cap",
              "bottom")):
         ax.axhline(val, color=col, ls="--", lw=1.0, alpha=0.85)
-        ax.text(0.02, val, txt, color=col, fontsize=6.6, va=va, ha="left",
+        ax.text(0.055, val, txt, color=col, fontsize=6.6, va=va, ha="left",
                 zorder=6, bbox=dict(boxstyle="round,pad=0.1", fc="white",
                                     ec="none", alpha=0.8))
 
@@ -215,27 +215,20 @@ def panel_a():
     ax.set_ylim(0.03, 15)
     ax.set_xlabel(r"path-specific OED fraction $\alpha = m/972$")
     ax.set_ylabel("guard quantity (log)")
-    ax.set_title("(a) Adaptive mixture collapses under the conditioning "
-                 "stack\n(development evidence, DEV glyph, "
-                 r"$\nu{=}2000,\,b{=}0.60$)", fontsize=8.4)
-    # only the trivial balanced endpoint is dose-feasible; it fails effD
+    # mandatory ruling tag (small corner tag, not a banner)
+    ax.text(0.99, 0.985, "development evidence", transform=ax.transAxes,
+            fontsize=6.2, color=GREY, ha="right", va="top", style="italic")
+    # the trivial balanced endpoint (only dose-feasible point on the path)
     ax.plot([0.0], [dose[0]], "o", color=ORANGE, ms=6, mec="black",
             mew=0.6, zorder=6)
-    ax.annotate(r"only $\alpha{=}0$ (balanced) is dose-feasible," "\n"
-                r"but fails the effD $\geq 0.95$ floor", xy=(0.008, dose[0]),
-                xytext=(0.24, 0.135), fontsize=6.6, ha="left", va="center",
-                arrowprops=dict(arrowstyle="->", color=GREY, lw=0.7))
-    ax.text(0.60, 6.0, r"dose 2–11$\times$ over cap" "\n"
-            r"for every $\alpha>0$", fontsize=6.8, color=ORANGE, ha="center")
-    ax.text(0.97, 0.42, "PATH_FEASIBLE_ALPHA = None\n"
-            "NO_FEASIBLE_POINT_ON_PATH", fontsize=6.9, fontweight="bold",
-            va="center", ha="right",
-            bbox=dict(boxstyle="round,pad=0.25", fc="#fff3f0", ec=RED,
-                      lw=0.9), zorder=6)
+    # terse verdict (result, not explanation; details in the caption)
+    ax.text(0.97, 0.015, "PATH_FEASIBLE_ALPHA = None",
+            fontsize=6.8, fontweight="bold", color=RED, va="bottom",
+            ha="right", transform=ax.transAxes, zorder=6)
     ax.legend(loc="upper center", bbox_to_anchor=(0.5, -0.20), ncol=1,
               frameon=False, fontsize=7.0, handlelength=1.8,
               borderpad=0.2, labelspacing=0.25)
-    fig.subplots_adjust(left=0.14, right=0.97, top=0.84, bottom=0.36)
+    fig.subplots_adjust(left=0.14, right=0.97, top=0.97, bottom=0.38)
     _save(fig, "actiii_a")
 
 
@@ -271,21 +264,19 @@ def panel_b():
     ax.axhline(0.0, color="black", lw=0.6)
     ax.set_xticks(x)
     ax.set_xticklabels(fams, rotation=30, ha="right", fontsize=8)
-    ax.set_ylabel(r"dose-only primal gap / $r$   ($\log\det$ per dim.)")
+    ax.set_ylabel(r"dose-only primal gap / $r$")
     ax.set_ylim(0.0, 1.05)
     ax.set_xlim(-0.5, len(fams) - 0.5)
-    ax.set_title("(b) Dose-only geometry headroom is real\n"
-                 "(development-only lower bound; no gate)", fontsize=9)
+    # mandatory ruling tag (small corner tag, not a banner)
+    ax.text(0.02, 0.97, "development only; no gate", transform=ax.transAxes,
+            fontsize=6.2, color=GREY, ha="left", va="top", style="italic")
     # right axis: D-efficiency lower bound = exp(gap)
     sec = ax.secondary_yaxis("right", functions=(np.exp, np.log))
-    sec.set_ylabel(r"$D$-efficiency lower bound  $\exp(\mathrm{gap})$")
+    sec.set_ylabel(r"$D$-efficiency lower bound")
     sec.set_yticks([1.0, 1.5, 2.0, 2.5])
     ax.legend(loc="lower center", frameon=False, fontsize=7.6,
               handletextpad=0.4, ncol=1)
-    ax.text(0.02, 0.03, "support-preserving construction: existence, "
-            "not optimum", transform=ax.transAxes, fontsize=6.6,
-            color=GREY, style="italic")
-    fig.subplots_adjust(left=0.15, right=0.85, top=0.86, bottom=0.22)
+    fig.subplots_adjust(left=0.15, right=0.85, top=0.95, bottom=0.22)
     with np.errstate(divide="ignore", invalid="ignore"):
         _save(fig, "actiii_b")
 
@@ -327,9 +318,8 @@ def panel_c():
                  color="white", fontsize=8)
     ax0.set_xticks(x)
     ax0.set_xticklabels(labels, fontsize=7.5)
-    ax0.set_ylabel("certificate cells (of 120 per anchor)")
+    ax0.set_ylabel("certificate cells per anchor")
     ax0.set_ylim(0, 128)
-    ax0.set_title("status by anchor: 0/480 CERTIFIED", fontsize=9)
     ax0.legend(loc="upper center", bbox_to_anchor=(0.5, -0.16), ncol=1,
                frameon=False, fontsize=7.0, handlelength=1.2)
 
@@ -338,21 +328,14 @@ def panel_c():
     ecdf = np.arange(1, xs.size + 1) / xs.size
     ax1.step(xs, ecdf, where="post", color=ORANGE, lw=1.8)
     ax1.axvline(1e-2, color=GREEN, ls="--", lw=1.2)
-    ax1.annotate("near-optimality bar\n"
-                 r"$G_{\rm stack}/r \leq 10^{-2}$",
-                 xy=(1.05e-2, 0.5), xytext=(2.2e-2, 0.62), fontsize=7.2,
-                 color=GREEN, ha="left", va="center",
-                 arrowprops=dict(arrowstyle="->", color=GREEN, lw=0.8))
+    ax1.text(1.25e-2, 0.52, r"bar $10^{-2}$", fontsize=7.0, color=GREEN,
+             ha="left", va="center")
     ax1.set_xscale("log")
     ax1.set_xlim(5e-3, 3.0)
     ax1.set_ylim(0, 1.02)
     ax1.set_xlabel(r"primal gap / $r$  (COUNTEREXAMPLE cells)")
     ax1.set_ylabel("ECDF")
-    ax1.set_title("all %d gaps exceed the bar\n(median %.2f)"
-                  % (xs.size, float(np.median(xs))), fontsize=9)
-    fig.suptitle("(c) FULL_STACK_CERT confirmatory distribution "
-                 "(descriptive branch)", fontsize=9.5, y=1.0)
-    fig.subplots_adjust(left=0.10, right=0.97, top=0.80, bottom=0.28,
+    fig.subplots_adjust(left=0.10, right=0.97, top=0.93, bottom=0.28,
                         wspace=0.32)
     _save(fig, "actiii_c")
 
@@ -406,7 +389,7 @@ def panel_d():
     gs = gridspec.GridSpec(
         3, 5, width_ratios=[1, 1, 1, 0.42, 1.55],
         height_ratios=[1, 1, 1], wspace=0.06, hspace=0.10,
-        left=0.10, right=0.915, top=0.845, bottom=0.115)
+        left=0.10, right=0.915, top=0.925, bottom=0.115)
     col_titles = ["ground truth", "SCAT32-060\n" r"($\bar\rho{=}0.60$)",
                   "RIDGE-SCAT32\n" r"($\bar\rho^\ast{\approx}22$)"]
     row_note = {"median": "median dQ", "max": "best (max dQ)",
@@ -440,18 +423,14 @@ def panel_d():
             if ci == 0:
                 ax.set_ylabel("%s\n%s" % (img.replace("m1_", ""),
                                           row_note[tag]), fontsize=8.2)
-        # per-row dQ badge (green +, red -)
+        # per-row dQ readout (plain colored text; no badge chrome)
         axb = fig.add_subplot(gs[ri, 3])
         axb.axis("off")
         dqi = (float(z["%s__RIDGE-SCAT32__psnr_rad" % tag])
                - float(z["%s__SCAT32-060__psnr_rad" % tag]))
         col = GREEN if dqi >= 0 else RED
-        axb.add_patch(FancyBboxPatch(
-            (0.08, 0.30), 0.84, 0.40, transform=axb.transAxes,
-            boxstyle="round,pad=0.02,rounding_size=0.08",
-            fc=col, ec="none", alpha=0.92, clip_on=False))
         axb.text(0.5, 0.5, "%+.1f\ndB" % dqi, transform=axb.transAxes,
-                 ha="center", va="center", color="white", fontsize=9,
+                 ha="center", va="center", color=col, fontsize=10,
                  fontweight="bold")
 
     # side strip: compact 24-point dQ dot plot grouped by family
@@ -480,10 +459,7 @@ def panel_d():
     axs.yaxis.tick_right()
     axs.yaxis.set_label_position("right")
     axs.set_xlim(-0.7, 5.7)
-    axs.set_title(r"24-image dQ ($%d/24{>}0$)" % n_pos, fontsize=8.2, pad=4)
-
-    fig.suptitle(r"(d) Ridge power knob sharpens detail at fixed dwell "
-                 r"($\nu{=}2000$, seed 0)", fontsize=10.5, y=0.965)
+    _ = n_pos                      # 19/24 > 0 is stated in the caption
     _save(fig, "actiii_d")
 
 
@@ -528,34 +504,23 @@ def panel_e():
     ax.text(0.2, 9.6, "acquisition-time budget", rotation=90, va="top",
             fontsize=8.5)
 
-    # corner 1: photon-budgeted (low power, high time)
-    ax.text(2.8, 8.9, "Photon-budgeted corner", ha="center", fontsize=9.2,
+    # corner 1: photon-budgeted (low power, high time) — minimal name only
+    ax.text(2.8, 8.9, "photon-budgeted", ha="center", fontsize=9.2,
             fontweight="bold", color=BLUE)
-    ax.text(2.8, 8.3, "(Q90 count-time secondary)", ha="center", fontsize=7.6,
-            color=BLUE)
     ax.plot([2.1], [7.55], "o", color=BLUE, ms=11, zorder=5)
-    ax.text(2.1, 6.98, "SCAT32-SAFE comparator",
-            ha="center", va="top", fontsize=7.6)
-    # badge: corrected elapsed-time speed verdict
-    ax.add_patch(FancyBboxPatch((0.9, 5.35), 3.9, 0.72,
-                 boxstyle="round,pad=0.03,rounding_size=0.10", fc="white",
-                 ec=RED, lw=1.3, zorder=5))
+    ax.text(2.1, 6.98, "SCAT32-SAFE", ha="center", va="top", fontsize=7.6)
+    # verdict mark (R19-corrected elapsed-time speed verdict), no box chrome
     _check(ax, 1.35, 5.71, 0.16, GREEN)
     ax.text(1.75, 5.71, "elapsed T_opt speed = PASS", va="center", fontsize=8,
             color=GREEN, fontweight="bold", zorder=6)
 
     # corner 2: time-limited, power-available (high power, low time)
-    ax.text(7.2, 4.55, "Time-limited, power-available", ha="center",
+    ax.text(7.2, 4.55, "time-limited, power-available", ha="center",
             fontsize=9.2, fontweight="bold", color=ORANGE)
-    ax.text(7.2, 4.0, "(fixed-dwell quality primary)", ha="center",
-            fontsize=7.6, color=ORANGE)
     ax.plot([8.0], [2.7], "o", color=ORANGE, ms=11, zorder=5)
-    ax.text(8.0, 2.12, r"ridge point $\bar\rho^\ast$: +1.87 dB median",
-            ha="center", va="top", fontsize=7.6)
-    # badge: RIDGE_OPERATING_PASS = TRUE
-    ax.add_patch(FancyBboxPatch((5.1, 0.7), 4.2, 0.72,
-                 boxstyle="round,pad=0.03,rounding_size=0.10", fc="white",
-                 ec=GREEN, lw=1.3, zorder=5))
+    ax.text(8.0, 2.12, r"ridge $\bar\rho^\ast$", ha="center", va="top",
+            fontsize=7.6)
+    # verdict mark, no box chrome
     _check(ax, 5.55, 1.06, 0.16, GREEN)
     ax.text(5.95, 1.06, "RIDGE_OPERATING_PASS = TRUE", va="center",
             fontsize=8, color=GREEN, fontweight="bold", zorder=6)
@@ -567,9 +532,7 @@ def panel_e():
     ax.text(5.0, 5.55, "global power knob", ha="center", fontsize=8,
             style="italic", rotation=-27)
 
-    ax.set_title("(e) Conjugate-corners doctrine: one knob, two regimes",
-                 fontsize=9.6)
-    fig.subplots_adjust(left=0.02, right=0.98, top=0.92, bottom=0.02)
+    fig.subplots_adjust(left=0.02, right=0.98, top=0.99, bottom=0.02)
     _save(fig, "actiii_e")
 
 
@@ -621,7 +584,7 @@ def fig_mechanism():
     axm.set_ylim(0, 52)
     axm.axis("off")
 
-    def rbox(x, y, w, h, fc=BOXFC, ec=BOXEC, lw=1.2):
+    def rbox(x, y, w, h, fc="none", ec=BOXEC, lw=0.8):
         axm.add_patch(FancyBboxPatch(
             (x, y), w, h, boxstyle="round,pad=0.3,rounding_size=1.4",
             fc=fc, ec=ec, lw=lw, zorder=2))
@@ -653,7 +616,7 @@ def fig_mechanism():
         iax.set_yticks([])
         for s in iax.spines.values():
             s.set_edgecolor(ec)
-            s.set_linewidth(1.1)
+            s.set_linewidth(0.7)
         if title:
             iax.set_title(title, fontsize=6.4, color=ec, pad=1.5)
         return iax
@@ -679,11 +642,8 @@ def fig_mechanism():
         return (dcx + dr * r_frac * np.cos(a),
                 dcy + dr * r_frac * kx2y * np.sin(a))
 
-    axm.add_patch(Ellipse((dcx, dcy), 2 * (dr + 1.7),
-                          2 * (dr + 1.7) * kx2y, fc=GREEN, ec="none",
-                          alpha=0.16, zorder=3))                 # green halo
-    axm.add_patch(Ellipse((dcx, dcy), 2 * dr, 2 * dr * kx2y, fc="white",
-                          ec=GREEN, lw=2.0, zorder=4))
+    axm.add_patch(Ellipse((dcx, dcy), 2 * dr, 2 * dr * kx2y, fc="none",
+                          ec=GREEN, lw=1.6, zorder=4))
     for ang in np.linspace(215, -35, 9):                         # tick marks
         x0, y0 = dial_xy(0.78, ang)
         x1, y1 = dial_xy(0.95, ang)
@@ -693,14 +653,9 @@ def fig_mechanism():
                   arrowstyle="-|>", mutation_scale=10, color=GREEN, lw=2.3,
                   zorder=6))                                     # needle
     axm.plot([dcx], [dcy], "o", color=GREEN, ms=3.5, zorder=6)
-    axm.text(dcx + dr + 3.2, dcy + 3.0, "GLOBAL POWER KNOB",
-             fontsize=9.2, color=GREEN, fontweight="bold", va="center",
-             ha="left", zorder=6)
-    axm.text(dcx + dr + 3.2, dcy - 0.4,
-             r"$\Phi$: one scalar source multiplier"
-             "\n" r"sets the load $\bar\rho = \tau\,\mathbb{E}[\lambda]$",
-             fontsize=6.8, color=GREEN, va="center", ha="left", zorder=6)
-    axm.plot([dcx, dcx], [yb + bh, dcy - (dr + 1.0) * kx2y - 1.0],
+    axm.text(dcx + dr + 2.2, dcy, r"power knob $\Phi$", fontsize=8.6,
+             color=GREEN, fontweight="bold", va="center", ha="left", zorder=6)
+    axm.plot([dcx, dcx], [yb + bh, dcy - dr * kx2y],
              color=GREEN, lw=1.4, zorder=3)       # dial stem onto the source
 
     beam(15.4, 21.6, yc)                                         # LS -> DMD
@@ -732,28 +687,19 @@ def fig_mechanism():
     axm.text(80.0, yc + 2.0, "bucket\ncounts $N_i$", ha="center",
              va="bottom", fontsize=6.6, color=BLUE)
 
-    # 5) reconstruction box (green, like the paper-1 RQL box) with the
-    #    RIDGE-SCAT32 maze reconstruction inside
-    rbox(85, yb, 13, bh, fc="#EAF7F2", ec=GREEN)
+    # 5) reconstruction box (green hairline, like the paper-1 RQL box) with
+    #    the RIDGE-SCAT32 maze reconstruction inside
+    rbox(85, yb, 13, bh, ec=GREEN, lw=0.9)
     vm = float(np.percentile(scene, 99.7)) or 1.0
     img_inset(91.5, yc, 7.6, recon, GREEN, vmax=vm)
     label_below(91.5, yb - 1.2, "RQL recon. $\\hat{x}$")
 
-    # ---- dead-time timeline inset (enlarged, legend attached below) ------- #
-    axm.text(68.5, yb - 5.0, r"dead time $\tau$  $\rightarrow$ timeline",
-             fontsize=6.6, color=ORANGE, ha="center", va="center")
-    axm.add_patch(FancyArrowPatch((62.5, yb - 5.0), (54.0, 20.6),
-                  arrowstyle="-|>", mutation_scale=8, color=ORANGE, lw=1.1,
-                  ls=":", zorder=3))
+    # ---- dead-time timeline inset (symbols glossed in the caption) -------- #
     axt = axm.inset_axes([0.06, 0.035, 0.47, 0.355])
     axt.set_xlim(0, 10)
-    axt.set_ylim(-1.05, 3.2)
+    axt.set_ylim(-0.35, 3.2)
     axt.axis("off")
-    axt.set_title("photon arrivals censored by dead time", fontsize=7.4,
-                  color=BOXEC, pad=2)
     axt.plot([0.2, 9.8], [0.0, 0.0], color="black", lw=1.1)
-    axt.text(9.8, 2.62, r"exposure $T=\nu\tau$", fontsize=6.8, ha="right",
-             color=BOXEC)
     arrivals = [0.9, 1.5, 2.9, 3.35, 3.8, 5.3, 6.9, 7.4, 8.7]
     ready, tau_w = 0.0, 0.85
     first_hold = None
@@ -768,9 +714,6 @@ def fig_mechanism():
             axt.plot([t], [1.55], marker="v", color=GREEN, ms=4.5, zorder=4)
             if first_hold is None:
                 first_hold = (t, w)
-            if jit:
-                axt.text(t + w / 2, 1.78, "jitter", fontsize=6.2,
-                         color=ORANGE, ha="center")
             ready = t + w
         else:                                 # lost inside the blind interval
             axt.plot([t], [0.78], marker="x", color=ORANGE, ms=6.0, mew=1.7,
@@ -783,16 +726,8 @@ def fig_mechanism():
         axt.plot([xe, xe], [1.94, 2.26], color=BOXEC, lw=1.0)
     axt.text(t0 + w0 / 2, 2.34, r"$\tau$", fontsize=14.0, color=ORANGE,
              ha="center", va="bottom", clip_on=False)
-    # legend ATTACHED BELOW the timeline (two rows, no overlap)
-    axt.text(0.2, -0.42, r"$\blacktriangledown$ recorded count",
-             color=GREEN, fontsize=6.4, ha="left", va="center")
-    axt.text(9.8, -0.42, r"$\times$ lost (blind)", color=ORANGE,
-             fontsize=6.4, ha="right", va="center")
-    axt.text(0.2, -0.85, r"shaded: $\tau$ hold (darker: jitter-broadened)",
-             color=ORANGE, fontsize=6.4, ha="left", va="center")
 
-    axm.set_title("(a) Dead-time-aware single-pixel imaging pipeline",
-                  fontsize=9.4, loc="left")
+    axm.set_title("(a)", fontsize=10, loc="left", fontweight="bold")
 
     # ---- right: count-information ridge law (dense exact evaluation) ------ #
     axr = fig.add_subplot(gs[0, 1])
@@ -816,15 +751,14 @@ def fig_mechanism():
     axr.set_ylim(0, 1.05)
     axr.set_xlabel(r"detector load  $\bar\rho = \tau\,\mathbb{E}[\lambda]$")
     axr.set_ylabel(r"count-information efficiency  $J(\bar\rho;\nu)$")
-    axr.set_title(r"(b) Ridge law $\bar\rho^\ast(\nu)=(6\nu)^{1/3}-2/3$",
-                  fontsize=9.4)
-    axr.text(0.03, 0.975, r"zero-jitter limit ($c=0$)",
-             transform=axr.transAxes, fontsize=6.8, color=GREY,
-             va="top", ha="left")
+    axr.set_title("(b)", fontsize=10, loc="left", fontweight="bold")
+    # mandatory precision tag: the drawn rho* values are the c=0 law
+    axr.text(0.03, 0.975, r"zero-jitter ($c=0$)", transform=axr.transAxes,
+             fontsize=6.2, color=GREY, va="top", ha="left")
     # operating-map knob arrow toward the ridge
     axr.annotate("", xy=(18, 0.30), xytext=(1.1, 0.30),
                  arrowprops=dict(arrowstyle="-|>", color=GREEN, lw=1.8))
-    axr.text(1.25, 0.345, "global power knob", fontsize=7.4, color=GREEN,
+    axr.text(1.25, 0.345, r"power knob $\Phi$", fontsize=7.4, color=GREEN,
              fontweight="bold")
     axr.legend(loc="lower right", frameon=False, fontsize=8)
     _save(fig, "fig_mechanism")
