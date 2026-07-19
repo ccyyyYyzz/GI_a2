@@ -37,7 +37,13 @@ SIDE = 64
 M = 4096
 PATTERN = "bern50"
 SEED = 0
-IMAGE = "stl_02"
+# Subject selection RULE (post-hoc display selection, disclosed in the
+# caption): the STL photo whose fixed-dwell gain is closest to the
+# cohort median (+1.44 dB); ties toward the larger gain -> stl_16
+# (+1.46). stl_02 remains the FROZEN subject of the Study-1 main
+# figure; this standalone natural-pair display is the R9 addition
+# whose subject was never frozen.
+IMAGE = "stl_16"
 IMAGESET = "conf"
 
 # (arm, rho, nu, label)
