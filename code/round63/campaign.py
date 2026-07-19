@@ -1,6 +1,10 @@
 """ROUND63 campaign cell runner — the run_cell(cell) contract consumed by
 shard_runner.py (spec §3, §5).
 
+R19 documentation note: the S7 ensemble/undersampling pilot is a separate,
+descriptive supplementary artifact. It is not an M1 endpoint and must not be
+routed through the frozen verdict machinery.
+
 A cell is a dict of grid coordinates:
   side (16/32/64/128), pattern ('bern50'|'hadpair'|'gam4'|'sparsek'), rho_bar,
   nu, M (signed measurements), seed, arms (list of solver arm names),

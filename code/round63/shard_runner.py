@@ -29,6 +29,8 @@ For each not-yet-done cell the runner calls run_cell(cell) -> list[dict], each
 dict one CSV row of metrics (spec §4).  run_cell is imported from
 code/round63/campaign.py, which does NOT exist yet; the import lives inside
 main() and fails cleanly (exit 3) so this skeleton is runnable/testable now.
+R19 note: S7 ensemble/undersampling artifacts remain descriptive and are
+outside the M1 frozen verdict path.
 
 META-as-truth + sanitize (copied from code/phase_b.py; retained under R19):
 the meta JSON records
