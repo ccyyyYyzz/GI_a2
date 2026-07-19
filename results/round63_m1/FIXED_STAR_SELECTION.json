@@ -1,9 +1,49 @@
 {
- "FIXED_STAR": "MATCH1",
- "rule": "DEV information score: sum log top-200 eigenvalues of the candidate information matrix (balanced pre-scan + 972 main rows, fast terminal convention, synthetic DEV estimate); tie rule: lexicographic candidate name",
- "scores": {
-  "LBLOB16": 3736.2567728335307,
-  "MATCH1": 3736.8217992402356,
-  "SCAT32": 3591.569198387657
- }
+ "FIXED_STAR": "SCAT32",
+ "per_image_means_dB": {
+  "LBLOB16": [
+   12.59348,
+   4.86216,
+   12.38912,
+   29.693,
+   9.9589,
+   11.42652
+  ],
+  "MATCH1": [
+   12.815760000000001,
+   4.436400000000001,
+   9.2957,
+   9.0659,
+   8.8275,
+   10.9232
+  ],
+  "SCAT32": [
+   27.953639999999996,
+   10.241459999999998,
+   18.479899999999997,
+   24.238999999999997,
+   14.003840000000002,
+   16.51542
+  ]
+ },
+ "rule_id": "R10_PSNR_L801",
+ "rule_text": "Before confirmatory freeze, select one global fixed comparator FIXED* from {SCAT32, LBLOB16, MATCH1} using the six development images only. The selection score is the median fixed-dwell radiometric PSNR at (rho=0.60, nu=2000), averaged over development seeds. Tie within 0.05 dB is resolved in order SCAT32 -> LBLOB16 -> MATCH1, favoring the least scene-dependent rule. [ROUND63_GPT_ROUND10_RULING_RAW.md Sec 7 / line 801]",
+ "scores_dB": {
+  "LBLOB16": 11.907820000000001,
+  "MATCH1": 9.1808,
+  "SCAT32": 17.497659999999996
+ },
+ "seeds": [
+  0,
+  1,
+  2,
+  3,
+  4
+ ],
+ "tie_order": [
+  "SCAT32",
+  "LBLOB16",
+  "MATCH1"
+ ],
+ "tie_window_dB": 0.05
 }

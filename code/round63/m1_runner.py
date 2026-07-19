@@ -590,12 +590,12 @@ def fast_rho_for(arm, nu, image, seed):
     return float(d["rho_fast"][grid.index(float(nu))])
 
 
-def m1_cell(arm, image, seed, rho, nu, C0=None):
+def m1_cell(arm, image, seed, rho, nu, C0=None, imageset="m1"):
     kind = "m1pat:%s:%s" % (arm, image)
     cid = "M1_%s_%s_s%d_r%.4g_nu%g" % (arm, image, seed, rho, nu)
     return dict(side=SIDE, pattern=kind, rho_bar=float(rho), nu=float(nu),
                 M=M_TOTAL, seed=int(seed), arms=["RQL"], images=[image],
-                imageset="m1", tau=TAU, sigma_b=0.0, fista_iters=200,
+                imageset=imageset, tau=TAU, sigma_b=0.0, fista_iters=200,
                 select_iter=60, select_rule="discrepancy", use_lpips=False,
                 audit=False, C0=C0, cell_id=cid, stage="M1_%s" % arm)
 
