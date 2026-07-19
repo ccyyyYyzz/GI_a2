@@ -1,0 +1,14 @@
+{
+ "2000": {
+  "J_exact_at_target": 0.9354485157891212,
+  "J_q_at_target": 0.9350006789625339,
+  "compute_s": 4.1,
+  "nu": 2000,
+  "p_ceiling_scalar": 0.0,
+  "rho_R_production": 22.254302974942682,
+  "rho_ridge_exact_unconstrained": 22.254444234501754,
+  "ridge_clip_reason": "NONE",
+  "trust_at_target": 0.9995212597817748,
+  "verdict": "OK"
+ }
+}

@@ -1,0 +1,9 @@
+{
+ "FIXED_STAR": "MATCH1",
+ "rule": "DEV information score: sum log top-200 eigenvalues of the candidate information matrix (balanced pre-scan + 972 main rows, fast terminal convention, synthetic DEV estimate); tie rule: lexicographic candidate name",
+ "scores": {
+  "LBLOB16": 3736.2567728335307,
+  "MATCH1": 3736.8217992402356,
+  "SCAT32": 3591.569198387657
+ }
+}

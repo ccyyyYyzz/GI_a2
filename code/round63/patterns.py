@@ -59,6 +59,14 @@ PATTERN_SUBSTREAM = 1  # pattern layer sub-stream (images63 uses sub-stream 2)
 
 # stable kind ids for RNG derivation (frozen)
 KIND_IDS = {"bern50": 1, "hadpair": 2, "gam4": 3, "sparsek": 4}
+# M1 additive registration (M1 spec §6; deterministic, no RNG stream consumed)
+KIND_IDS["lblob16"] = 5
+
+# lblob16: the committed 16-pixel L-shaped blob (oed_design._default_shapes
+# "Lblob6x6", frozen since R10) — the M1 LBLOB16 / RIDGE-FIXED support family.
+LBLOB16_OFFSETS = [(0, 0), (0, 1), (0, 2), (1, 0), (1, 1), (2, 0),
+                   (2, 1), (3, 0), (3, 1), (3, 2), (4, 1), (4, 2),
+                   (4, 3), (5, 2), (5, 3), (5, 4)]
 
 # sparsek: number of accepted degree-preserving 2-switches per pixel (ruling §3
 # "apply 20n = 20480 accepted degree-preserving 2-switches"); n = 1024 -> 20480.
@@ -224,6 +232,49 @@ def make_patterns(kind, M, n, seed, k=None):
         meta["n_switch_accepted"] = int(n_sw)
         meta["n_switch_attempts"] = int(n_att)
         meta["switch_target"] = int(SPARSEK_SWITCHES_PER_N * n)
+        meta["n_physical_rows"] = M
+        meta["total_exposures"] = M
+
+    elif kind == "lblob16":
+        # M1 additive kind (M1 spec §6): the FULL cyclic-translate family of
+        # the committed Lblob6x6 16-pixel support on the side x side torus,
+        # photon-budget normalized A = (n/k) B exactly like sparsek. Fully
+        # DETERMINISTIC — no RNG is consumed (the seeded rng above is unused);
+        # row t = sy*side + sx is the translation by (sy, sx) (the oed_design
+        # _shape_support ordering). Every row and every column sums to k = 16
+        # (each pixel is covered by exactly 16 translates), so the family has
+        # EXACT unit mean load for a sum-normalized truth — the property the
+        # R11 RIDGE-FIXED scene-independent calibration relies on.
+        if int(M) != int(n):
+            raise ValueError("lblob16 requires the square geometry M == n; "
+                             "got M=%d, n=%d" % (M, n))
+        side = int(round(np.sqrt(n)))
+        if side * side != n:
+            raise ValueError("lblob16 requires a square pixel grid; n=%d" % n)
+        kblob = len(LBLOB16_OFFSETS)
+        sy = np.repeat(np.arange(side), side)
+        sx = np.tile(np.arange(side), side)
+        oy = np.array([o[0] for o in LBLOB16_OFFSETS])[None, :]
+        ox = np.array([o[1] for o in LBLOB16_OFFSETS])[None, :]
+        cols = ((oy + sy[:, None]) % side) * side + (ox + sx[:, None]) % side
+        B = np.zeros((n, n), dtype=np.uint8)
+        B[np.arange(n)[:, None], cols] = 1
+        A = (float(n) / float(kblob)) * B.astype(np.float64)
+        exposures_per_row = 1
+        b_sha = hashlib.sha256(
+            np.ascontiguousarray(B, dtype=np.uint8).tobytes()).hexdigest()
+        meta["construction"] = (
+            "all %d cyclic translations of the frozen Lblob6x6 16-pixel "
+            "support; A = (n/k) B; row/col sums == 16 exactly; deterministic "
+            "(no RNG)" % n)
+        meta["k"] = kblob
+        meta["occupancy"] = float(kblob) / float(n)
+        meta["row_sum"] = kblob
+        meta["col_sum"] = kblob
+        meta["normalization"] = "A = (n/k) * B"
+        meta["offsets"] = list(LBLOB16_OFFSETS)
+        meta["B_sha256"] = b_sha
+        meta["deterministic"] = True
         meta["n_physical_rows"] = M
         meta["total_exposures"] = M
 

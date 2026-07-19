@@ -338,3 +338,62 @@ def run_cell(cell):
                 "k_occupancy": k_occ,
             })
     return rows
+
+
+# =========================================================================== #
+# M1 APPENDIX (method campaign, docs/ROUND63_METHOD_SPEC_M1.md) — ADD-only.
+# Nothing above this line is modified. Two additive registrations:
+#
+# 1. imageset routes 'm1' / 'm1_dev' -> m1_scenes.build_m1_set /
+#    build_m1_dev_set (lazy import to avoid cycles), mirroring the detail32
+#    registrations.
+# 2. pattern kinds 'm1pat:<ARM>:<image>' -> m1_runner.load_m1_pattern.
+#    Rationale (logged as M1 ambiguity A8): the frozen Colab infra
+#    (session_driver -> remote_lane -> shard_runner) hardcodes
+#    `from campaign import run_cell`, so M1 cells whose pattern matrices are
+#    the 52-row pre-scan stack + cached OED/RIDGE designs can only run
+#    "unchanged" if campaign itself can resolve those kinds. The additive
+#    seam: rebind the module-level `_patterns` name with a dispatching
+#    wrapper and wrap KIND_IDS in a dict subclass that derives stable ids
+#    for 'm1pat:*' kinds. run_cell resolves both names at call time, so the
+#    appendix changes no existing code path for non-M1 cells.
+# =========================================================================== #
+def _m1_images(side=32):
+    import m1_scenes
+    return m1_scenes.build_m1_set(side)
+
+
+def _m1_dev_images(side=32):
+    import m1_scenes
+    return m1_scenes.build_m1_dev_set(side)
+
+
+_IMG_BUILDERS["m1"] = _m1_images
+_IMG_BUILDERS["m1_dev"] = _m1_dev_images
+
+_patterns_base_m1 = _patterns
+
+
+def _patterns(kind, M, n, seed, k=None):  # noqa: F811 (deliberate rebind)
+    if isinstance(kind, str) and kind.startswith("m1pat:"):
+        import m1_runner
+        key = (kind, M, n, seed, k)
+        if key not in _PAT_CACHE:
+            _PAT_CACHE.clear()
+            _PAT_CACHE[key] = m1_runner.load_m1_pattern(kind, M, n, seed)
+        return _PAT_CACHE[key]
+    return _patterns_base_m1(kind, M, n, seed, k=k)
+
+
+class _M1KindIds(dict):
+    """KIND_IDS view deriving stable ids for m1pat kinds (>= 100000, from a
+    deterministic digest of the kind string; disjoint from the frozen ids)."""
+
+    def __missing__(self, key):
+        if isinstance(key, str) and key.startswith("m1pat:"):
+            import zlib
+            return 100000 + (zlib.adler32(key.encode("utf-8")) % 900000)
+        raise KeyError(key)
+
+
+KIND_IDS = _M1KindIds(KIND_IDS)

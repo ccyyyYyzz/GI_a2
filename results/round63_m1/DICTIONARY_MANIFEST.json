@@ -1,0 +1,123 @@
+{
+ "families": {
+  "bar16x1": {
+   "k": 16,
+   "n_translations": 1024,
+   "powers": [
+    0,
+    1
+   ],
+   "sha256": "892aa54478a533bd3146e235d0b2396bcc0af0fdc94df3f6b6ade3bb7625b808"
+  },
+  "bar1x16": {
+   "k": 16,
+   "n_translations": 1024,
+   "powers": [
+    0,
+    1
+   ],
+   "sha256": "62f5d65571e96242f3162a4cfe24474a89a5f3335613a443a31c68b381a6dc23"
+  },
+  "bar2x8": {
+   "k": 16,
+   "n_translations": 1024,
+   "powers": [
+    0,
+    1
+   ],
+   "sha256": "4f4616f368ca2d56daf0ba237778c81c33b8025ef71e73ecd946d8273c990b44"
+  },
+  "bar8x2": {
+   "k": 16,
+   "n_translations": 1024,
+   "powers": [
+    0,
+    1
+   ],
+   "sha256": "2be2e8ea7880bdc6d4499da1b9223231abdfea7a4e0d68d1c8e316dae2bd8c12"
+  },
+  "lblob6x6": {
+   "k": 16,
+   "n_translations": 1024,
+   "powers": [
+    0,
+    1
+   ],
+   "sha256": "e2261d7098b73b20be18b4fc8fc2fa949ed672d6a5d045861ac7ce90be57abd7"
+  },
+  "rect4x4": {
+   "k": 16,
+   "n_translations": 1024,
+   "powers": [
+    0,
+    1
+   ],
+   "sha256": "2bc35923988d0e1fd645b6b622b881c9321270200f5f06630b0b848c05cc7a0b"
+  },
+  "rect4x8": {
+   "k": 32,
+   "n_translations": 1024,
+   "powers": [
+    0,
+    1
+   ],
+   "sha256": "436e94bf76eb0dcb5780d85bcf026ce3c2c82b1683f5c0e2afae0846a8fcca65"
+  },
+  "rect8x4": {
+   "k": 32,
+   "n_translations": 1024,
+   "powers": [
+    0,
+    1
+   ],
+   "sha256": "540f069c3956a4ce5a4eea56d1ed62faae7ad8166d8c2127b757d83468d13a49"
+  },
+  "ring16": {
+   "k": 16,
+   "n_translations": 1024,
+   "powers": [
+    0,
+    1
+   ],
+   "sha256": "32055e8a55e8039c63e1d8c80739c3560b198cf19b21041063e25cd3cb27c1ae"
+  },
+  "scat16": {
+   "k": 16,
+   "n_translations": 1024,
+   "powers": [
+    0,
+    1
+   ],
+   "sha256": "7fa66fafe1b0b0eace0e314895642b53c75ba9cb451303bb9c6eb73892c9f58a"
+  },
+  "scat32": {
+   "k": 32,
+   "n_translations": 1024,
+   "powers": [
+    0,
+    1
+   ],
+   "sha256": "0c8058a065c75d694ffc5173a058720fb8a720dc33c746d867f55fb3333ce54e"
+  },
+  "solid4x4": {
+   "k": 16,
+   "n_translations": 1024,
+   "powers": [
+    0,
+    1
+   ],
+   "sha256": "2bc35923988d0e1fd645b6b622b881c9321270200f5f06630b0b848c05cc7a0b"
+  },
+  "sq32c": {
+   "k": 32,
+   "n_translations": 1024,
+   "powers": [
+    0,
+    1
+   ],
+   "sha256": "e2177346883872d35fdd96808a7f6f23e629ae4e95122678ccbb219eab6255df"
+  }
+ },
+ "sha256_global": "710aa49f43d02acbcdfd49d1dad0f9e62d5a33e5e7bb343f3159f58fb15a52e8",
+ "side": 32
+}
