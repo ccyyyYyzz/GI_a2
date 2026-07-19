@@ -305,9 +305,52 @@ $\rho$, not its mean: spread-occupancy patterns distribute per-frame load,
 and the deployment guarantee must hold for the loaded tail, not the average.
 
 \subsection{Relation to prior work}
-\SPH{X.5 — BLOCKED until the Gr\"onberg 2018 equation-by-equation full-text
-check (S5 hard item); wording constraint: ``We derive a finite-window
-count-information ridge...'', no priority adjectives}
+% R12 frozen wording (issue #4), verbatim with our BibTeX keys. R12 access
+% caveat: the Groenberg full text was paywalled for the checking agent;
+% verdict "no ridge/identity found" at moderate-high confidence from the
+% accessible record. Optional hardening: re-verify from a library PDF.
+M\"uller systematized renewal-theoretic analysis of extended and
+nonextended dead-time counters, relating distorted interarrival laws to
+the resulting count statistics and measurement-origin
+effects~\cite{muller1973deadtime}. Yu and Fessler derived exact first and
+second moments for several dead-time counting models and used those
+moments to study intensity correction and the adequacy of Poisson
+reconstruction models~\cite{yu2000mean}. Wang et al.\ derived pileup
+count statistics for idealized energy-discriminating nonparalyzable x-ray
+detectors and evaluated task-specific Cram\'er--Rao performance as a
+function of input rate, establishing substantial high-rate degradation of
+spectral-counting advantages~\cite{wang2011pileup}. Alvarez used
+renewal-process large-count moments and multivariate-Gaussian count
+models to quantify pileup-induced covariance, signal-to-noise loss, and
+material-estimation Cram\'er--Rao bounds~\cite{alvarez2014pileup}.
+Task-specific finite-rate optima also arise in nuclear counting; for
+example, B\'ecares and Bl\'azquez optimized counting rate by balancing
+dead-time losses, counting uncertainty, source multiplicity, and
+dead-time-calibration uncertainty~\cite{becares2012deadtime}. Gr\"onberg
+et al.\ derived an analytical count-statistics model for nonparalyzable
+detectors with nonzero pulse length, validated it by Monte Carlo
+simulation, and used the model and a Gaussian approximation to compute
+spectral-CT Fisher-performance metrics~\cite{gronberg2018deadtime}.
+
+A complementary line retains richer event information. Rapp et al.\
+modeled the sequence of dead-time-distorted detection times as a Markov
+chain, enabling accurate high-flux single-photon lidar and large
+acquisition-time reductions~\cite{rapp2021highflux}. Jorgensen and
+Johnson derived asymptotic Fisher-information rates and efficient
+estimators for periodic dead-time event-detection processes, showing that
+activation and event statistics can retain information discarded by
+conventional histogram summaries~\cite{jorgensen2026deadtime}.
+
+Here we consider a different observation:\ one finite active-start
+exposure from which only the integrated scalar count is retained. For the
+ideal nonparalyzable model, we derive the exact finite-window Fisher
+information of that count as a function of $\rho = \lambda\tau$ and
+$\nu = T/\tau$, the missing-information identity of
+Eq.~(\ref{eq:missing}), and the principal information ridge of
+Eq.~(\ref{eq:cuberoot}). These statements are restricted to the
+finite-window scalar count-only observation and do not replace
+task-specific spectral-CT analyses or information bounds for
+time-resolved dead-time event records.
 
 \section{Study 1: dense patterns --- the multiplex-limited phase}
 \label{sec:study1}
@@ -358,7 +401,11 @@ protocol, no confirmatory gate), the acquisition-speed endpoint was
 safe-range-uninformative for $12/30$ scenes, while the fixed-dwell gain was
 larger and more uniform than on the detail cohort:\ median $+1.44$~dB,
 $29/30$ scenes positive, family-stratified bootstrap lower bound
-$+1.18$~dB. Smooth, prior-limited scenes thus occupy the low-benefit
+$+1.18$~dB. For context, classical correlation ghost imaging on the
+identical measurement records scores $4.8$--$6.3$~dB --- at this photon
+budget ($\approx 95$ detected photons per pixel over the full
+acquisition) the likelihood-based reconstruction, not the sampling ratio,
+is what renders the data usable. Smooth, prior-limited scenes thus occupy the low-benefit
 region of the acquisition-speed map even where the fixed-dwell radiometric
 benefit of high-flux operation is substantial.
 \begin{figure}[t]
