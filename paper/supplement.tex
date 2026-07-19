@@ -97,8 +97,10 @@ squared-residual term stays bounded. Objective~\eqref{eq:gaussnll} is then
 \emph{unbounded below} in $\lambda_i$: the Gaussian estimator can lower its loss
 without limit by inflating the brightness of any saturated measurement, so the
 maximum-likelihood/MAP problem is non-coercive and its minimizer is ill-posed.
-No amount of convex-in-$x$ regularization on a fixed grid repairs a data term
-that is itself unbounded below in the forward rate.
+The exhibited heteroscedastic-Gaussian pseudo-likelihood is noncoercive along
+the displayed high-load direction, and the tested TV settings did not remove
+the resulting failure. Sufficiently coercive penalties can bound such a
+direction, so no universal claim is made over all convex regularizers.
 
 RQL removes the pathology at its source. Its data term (main-text Eq.~(main~2)),
 $\frac{1}{M}\sum_i\big[(T-N_i\tau)\lambda_i(x)-N_i\log\lambda_i(x)\big]$, retains
@@ -207,8 +209,9 @@ pairs (\texttt{hadpair}) and gamma-modulated patterns (\texttt{gam4}) at $M=2048
 $\nu\in\{100,500,2000\}$. Consistent with the multiplex-limited reading of the
 dense regime, the RQL quality is stable across sampling budgets and pattern
 ensembles and rises modestly with load at long dwell. (Provenance note: the S2C
-pilot table is currently a regenerated, git-untracked artifact; its fragment
-records the commit as \textsc{untracked}.)
+pilot table is a regenerated supplementary artifact; its fragment records its
+provenance separately from the frozen campaign outputs. The R19 correction
+route applies only to the paper-2 elapsed-time endpoint.)
 
 \input{supp_tables/S7_ensemble.tex}
 

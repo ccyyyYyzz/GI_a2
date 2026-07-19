@@ -30,7 +30,8 @@ dict one CSV row of metrics (spec §4).  run_cell is imported from
 code/round63/campaign.py, which does NOT exist yet; the import lives inside
 main() and fails cleanly (exit 3) so this skeleton is runnable/testable now.
 
-META-as-truth + sanitize (copied from code/phase_b.py): the meta JSON records
+META-as-truth + sanitize (copied from code/phase_b.py; retained under R19):
+the meta JSON records
 which cells are fully appended; it is written only AFTER a cell's rows are
 flushed+fsync'd.  On restart, CSV rows whose cell_id is not marked complete
 (crash mid-append) are dropped, so pivots are never biased by partial rows and

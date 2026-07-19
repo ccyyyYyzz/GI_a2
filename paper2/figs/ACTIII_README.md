@@ -110,7 +110,7 @@ back by the figure script (regenerated automatically if absent):
 - **Pure drawing** (no data dependency). The two verdicts are read from
   `results/round63_m1/M1_VERDICTS.json`: `RIDGE_OPERATING_PASS = True`
   (+1.87 dB median, fixed-dwell primary) and `RIDGE_SPEED_PASS = False` (Q90
-  photon-time secondary).
+  elapsed-optical-time secondary).
 
 ### `fig_mechanism.pdf` — hero mechanism figure
 - **Drawing** for the pipeline and the dead-time timeline (illustrative
@@ -231,10 +231,10 @@ and each row shares a common grayscale scale.
 **Fig. E (e).** Conjugate-corners operating doctrine for the global power knob.
 The plane is spanned by the optical-power/flux budget (horizontal) and the
 acquisition-time budget (vertical). In the photon-budgeted corner (low power,
-ample time; Q90 count-time secondary) the balanced SCAT32-060 design with the
-full-stack certificate is preferred and RIDGE_SPEED_PASS = FALSE, whereas in
+ample time; Q90 elapsed-time secondary) the SCAT32-SAFE comparator is used and
+the corrected elapsed T_opt speed verdict passes, whereas in
 the time-limited, power-available corner (ample power, little time; fixed-dwell
-quality primary) the ridge operating point ρ̄* is preferred, delivering a
+quality primary) the ridge operating point ρ̄* delivers a
 +1.87 dB median gain, and RIDGE_OPERATING_PASS = TRUE; the curved arrow marks
 the single global power knob that moves the system between the two conjugate
 corners. The color is used only for display purposes.

@@ -534,15 +534,15 @@ def panel_e():
     ax.text(2.8, 8.3, "(Q90 count-time secondary)", ha="center", fontsize=7.6,
             color=BLUE)
     ax.plot([2.1], [7.55], "o", color=BLUE, ms=11, zorder=5)
-    ax.text(2.1, 6.98, "balanced SCAT32-060 (+ certificate)",
+    ax.text(2.1, 6.98, "SCAT32-SAFE comparator",
             ha="center", va="top", fontsize=7.6)
-    # badge: RIDGE_SPEED_PASS = FALSE
+    # badge: corrected elapsed-time speed verdict
     ax.add_patch(FancyBboxPatch((0.9, 5.35), 3.9, 0.72,
                  boxstyle="round,pad=0.03,rounding_size=0.10", fc="white",
                  ec=RED, lw=1.3, zorder=5))
-    _cross(ax, 1.35, 5.71, 0.16, RED)
-    ax.text(1.75, 5.71, "RIDGE_SPEED_PASS = FALSE", va="center", fontsize=8,
-            color=RED, fontweight="bold", zorder=6)
+    _check(ax, 1.35, 5.71, 0.16, GREEN)
+    ax.text(1.75, 5.71, "elapsed T_opt speed = PASS", va="center", fontsize=8,
+            color=GREEN, fontweight="bold", zorder=6)
 
     # corner 2: time-limited, power-available (high power, low time)
     ax.text(7.2, 4.55, "Time-limited, power-available", ha="center",

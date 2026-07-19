@@ -14,7 +14,7 @@
 % PLACEHOLDER_LEDGER.md as the main text.
 % ============================================================================
 \documentclass[10pt]{article}
-\usepackage{amsmath,amssymb,bm}
+\usepackage{amsmath,amssymb,amsthm,bm}
 \usepackage{graphicx}
 \usepackage[margin=2.5cm]{geometry}
 \usepackage{xcolor}
@@ -373,13 +373,11 @@ and the realized dark-count/timing-error fractions are $0$ at every dwell. The
 ridge advantage over \textsc{SCAT32-060} grows with dwell (crossing positive
 near $\nu = 20$) and peaks near $\nu = 1000$--$2000$; the advantage over the
 $0.05$ safe reference is larger at fixed dwell. This fixed-dwell picture does
-not survive photon-time normalization:\ the nine-dwell $Q_{90}$ time-to-%
-quality verdict \texttt{RIDGE\_SPEED\_PASS} is FAIL, with median
-$S_{\mathrm{gate}} = 0.276$ (bar $\ge 3$), $2.5\%$ bootstrap lower bound
-$0.172$ (bar $> 1$), and $1/24$ scenes with $S_{\mathrm{gate}} > 1$ (bar
-$\ge 18/24$), because $S_{\mathrm{gate}}$ is measured in optical (photon) time
-$\nu\rho$ and the ridge spends a $37\times$ larger incident budget than the
-balanced comparator (larger still than the safe reference) at $\nu = 2000$.
+Using the preregistered elapsed optical-time coordinate
+$T_{\mathrm{opt}}=M_{\mathrm{total}}\nu\tau$ and the frozen Q90/PAVA/censoring
+procedure, the corrected ridge time-to-quality endpoint passed: median
+$S_{\mathrm{gate}}=19.127043091646133$, family-stratified nested-bootstrap
+2.5th-percentile bound $18.328492357080282$, and 21/24 scenes above one.
 
 \begin{table}[t]
 \centering
@@ -409,8 +407,10 @@ $\Delta Q$ vs SAFE (dB) & $n_{>0}$ vs 060 \\
 \end{tabular}
 \end{table}
 
-\subsection{Full-stack certificate distribution}
-The confirmatory certificate returns \texttt{FULL\_STACK\_CERT\_PASS} $=$ FAIL
+\subsection{Descriptive full-stack analysis distribution}
+The preregistered 24-cell development feasibility screen selected the
+\texttt{FALLBACK\_DESCRIPTIVE} branch before freeze. The post-freeze full-stack
+computation is therefore descriptive and has no PASS/FAIL endpoint. It returns
 over the $480$ frozen cells ($D_{\mathrm{cert}}$ SHA
 \texttt{908cfccbd249de22}). The terminal-status distribution is $0$
 \texttt{CERTIFIED}, $299$ \texttt{COUNTEREXAMPLE}, $181$
@@ -466,13 +466,101 @@ confirmatory dose-only verdict exists.
 % ===========================================================================
 \section{Proofs}
 \label{sec:s-proofs}
-\SPH{supplement proofs at manuscript rigor: Theorems 1--3 (missing-information
-identity via the martingale/law-of-total-variance argument; long-window rate
-via the renewal local normal approximation; cubic optimum and small-jitter
-expansion) and Proposition~\ref{prop:s-alignment}; per the R14 ruling these
-are provable immediately, while the uniform two-parameter crossover requires
-a dedicated triangular-array renewal local-limit argument or retains its
-prediction label.}
+\paragraph{Installed proofs.} Theorem~\ref{thm:identity} follows from the
+complete-path martingale score and the law of total variance. Theorem~\ref{thm:rate}
+uses the delayed-renewal local normal approximation under the regularity stated
+below, and Theorem~\ref{thm:cubic} follows by differentiating the limiting
+information rate. The alignment result uses a projected KKT residual at box
+boundaries. The crossover proposition is conditional on a uniform $C^2$
+triangular-array expansion; its matched-asymptotic-prediction label is retained.
+
+\begin{proposition}[Uniform crossover constant from the triangular expansion]
+\label{prop:s-uniform-crossover}
+Let $t=\nu^{-1/3}$, $x=12\nu c_v^2$, and $\rho=t^{-1}y$. Assume that,
+uniformly on compact $x$- and $y$-sets containing
+$y_0(x)=(6/(1+x))^{1/3}$,
+\[
+J_{\nu,c_v}(t^{-1}y)=1-tF_1(y,x)+t^2F_2(y,x)+R_t(y,x),
+\]
+where $F_1=y^{-1}+(1+x)y^2/12$, $F_2=y^{-2}+(x-2)y/12+(1+x)^2y^4/144$,
+and $R_t$ and its first two $y$-derivatives are $O(t^3)$. Then the principal
+maximizer is unique for sufficiently large $\nu$ and
+\[
+\rho_*=(2c_v^2+(6\nu)^{-1})^{-1/3}
+-\frac{12\nu c_v^2+4}{6(12\nu c_v^2+1)}+O(\nu^{-1/3}).
+\]
+\end{proposition}
+
+\begin{proof}
+$F_1'=-y^{-2}+(1+x)y/6$ has the unique minimizer $y_0$ and
+$F_1''(y_0,x)=(1+x)/2>0$. The uniform $C^2$ remainder and the implicit
+function theorem give $y_*=y_0+t y_1+O(t^2)$, with
+$y_1=F_2'(y_0,x)/F_1''(y_0,x)=-(x+4)/(6(x+1))$. Substitution of
+$x=12\nu c_v^2$ and $t=\nu^{-1/3}$ gives the displayed expansion.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:identity}]
+Let $A_t$ be the predictable detector-active indicator and
+$L_T=\int_0^T A_t\,dt$. Conditional on the state path, the score for
+$\theta=\log\lambda$ is $U_T=N_T-\lambda L_T$. The compensated count is a
+martingale with quadratic variation $\lambda L_T$, hence
+$I_{\rm path}=\mathbb E N_T$. For $\mathcal G_T=\sigma(N_T)$,
+$U_N=\mathbb E(U_T\mid\mathcal G_T)$, and total variance gives
+\[
+I_N(\theta;T)=\mathbb E N_T-\lambda^2\mathbb E\!\left[\operatorname{Var}(L_T\mid N_T)\right].
+\]
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:rate}]
+Rescale by $\tau$, so $\mathbb EB=1$, $\operatorname{Var}B=c_v^2$, and an
+ordinary cycle is $C=B+X$ with $X\sim\operatorname{Exp}(\rho)$. Thus
+$\mu_C=1+\rho^{-1}$ and $\sigma_C^2=c_v^2+\rho^{-2}$. Delayed-renewal
+asymptotics give $m_\nu=\nu\rho/(1+\rho)+O(1)$,
+$v_\nu=\nu\rho(1+c_v^2\rho^2)/(1+\rho)^3+O(1)$, and
+$\dot m_\nu=\nu\rho/(1+\rho)^2+O(1)$. Under the regular nonlattice
+local-limit/LAN assumptions, $I_N=\dot m_\nu^2/v_\nu+O(1)$, so
+$I_N/\nu\to J_\infty=\rho/[(1+\rho)(1+c_v^2\rho^2)]$. Subtracting this
+from the complete-path rate $\rho/(1+\rho)$ gives the stated missing rate.
+\end{proof}
+
+\emph{Regularity assumption.} The local-limit step assumes a regular nonlattice
+delayed-renewal family with finite $3+\epsilon$ moment and parameter derivatives
+controlled on compact load intervals. It is not asserted for infinite-variance,
+correlated, observed, or load-dependent holds.
+
+\begin{proof}[Proof of Theorem~\ref{thm:cubic}]
+For $J_\infty=\rho/[(1+\rho)(1+c_v^2\rho^2)]$,
+\[
+\frac{d}{d\rho}\log J_\infty=\frac{1-c_v^2\rho^2(1+2\rho)}
+{\rho(1+\rho)(1+c_v^2\rho^2)}.
+\]
+The numerator has one zero, which is the unique global maximum because the
+rate vanishes at both endpoints. Setting $\varepsilon=c_v^{2/3}$ and solving
+$\varepsilon^3\rho^2(1+2\rho)=1$ by powers gives
+$\rho=2^{-1/3}c_v^{-2/3}-1/6+2^{1/3}c_v^{2/3}/36+O(c_v^{4/3})$.
+\end{proof}
+
+\begin{proposition}[Alignment and projected-residual bound]
+\label{prop:s-alignment}
+Let $F(\rho)=\sum_i\pi_i\ell_iJ(\rho_i)$ subject to
+$\sum_i\pi_i\rho_i=B$ and box bounds. If $-\ell_iJ''\ge m>0$, a feasible
+$\widetilde\rho$ is optimal iff there are $\beta$ and
+$s_i\in N_{[\underline\rho_i,\overline\rho_i]}(\widetilde\rho_i)$ with
+$\ell_iJ'(\widetilde\rho_i)-\beta-s_i=0$. For any such closest normal-cone
+elements, $r_i=\ell_iJ'(\widetilde\rho_i)-\beta-s_i$ satisfies
+\[
+0\le F(\rho^*)-F(\widetilde\rho)\le\frac1{2m}\sum_i\pi_i r_i^2.
+\]
+\end{proposition}
+
+\begin{proof}
+Strict concavity makes the feasible optimum unique and KKT conditions
+necessary and sufficient. With $\Delta_i=\rho_i^*-\widetilde\rho_i$, strong
+concavity gives $f_i(\rho_i^*)-f_i(\widetilde\rho_i)\le
+f_i'(\widetilde\rho_i)\Delta_i-m\Delta_i^2/2$. The budget equality removes
+the $\beta$ term, normal-cone monotonicity gives $s_i\Delta_i\le0$, and
+$r_i\Delta_i-m\Delta_i^2/2\le r_i^2/(2m)$. Summing proves the bound.
+\end{proof}
 
 \bibliographystyle{unsrt}
 \bibliography{refs}

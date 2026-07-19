@@ -400,7 +400,8 @@ KIND_IDS = _M1KindIds(KIND_IDS)
 
 
 # --------------------------------------------------------------------------- #
-# M1 appendix extension (R17 amendment; ADD-only): certificate-cell dispatch
+# M1 appendix extension (R17 amendment; ADD-only; retained under R19):
+# certificate-cell dispatch
 # and runtime RIDGE-SCAT32 load resolution, so R17 cert cells and dynamic
 # ridge cells run UNCHANGED through the frozen shard infra (shard_runner ->
 # campaign.run_cell). Logged as interpretation A8 continuation.

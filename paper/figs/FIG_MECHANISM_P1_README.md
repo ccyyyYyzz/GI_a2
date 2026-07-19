@@ -55,8 +55,9 @@ block is provided for you to paste; no `.tex` file was modified.**
   $\nu=100$ and $2000$, respectively), well beyond the conventional
   $\rho=0.05$ and the high-flux $\rhobar=0.6$ operating points.
   (c)~Operating map in the contrast--load plane: the photon-limited onset
-  $\Gamma=1$ separates the multiplex-limited region ($\Gamma<1$, below) from
-  the region where high-flux operation helps (above); the six Study-2
+  $\Gamma=1$ is a descriptive photon-limited-onset proxy, marking bucket
+  modulation comparable to count noise; it is not a predicted or validated
+  boundary for high-flux image benefit. The six Study-2
   structural families are placed at the high-flux operating load
   $\rhobar=0.6$ by their measured bucket contrast and coloured by the frozen
   acquisition-speed gate outcome, with the number of accelerating instances

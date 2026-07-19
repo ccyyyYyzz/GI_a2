@@ -1,0 +1,407 @@
+{
+  "analysis_version": "R19_SPEC_CORRECTION_V1",
+  "title": "M1 spec-conformant corrected verdicts (R19 dated correction)",
+  "date": "2026-07-19",
+  "ruling": "docs/ROUND63_GPT_ROUND19_RULING_RAW.md (R19 ruling, GitHub issue #11, 2026-07-19T17:53:11Z)",
+  "scope_note": "Additive, provenance-preserving implementation-to-specification correction. The immutable tag m1-freeze @ 6f00932, the raw shard cells, the frozen endpoint definitions, the scene cohort, all reconstructions, and all thresholds are unchanged. This artifact recomputes the preregistered M1 endpoints from the SAME frozen raw cells using the frozen elapsed optical-time axis T_opt = M_total * nu * tau and the full spec-conformant Q90 / equal-weight-PAVA / censoring-taxonomy / nested family-stratified bootstrap machinery. It does not introduce a new endpoint, an alternative analysis choice, or a threshold change. This file is the corrected source of record; the original nonconformant frozen outputs remain unchanged in results/round63_m1/M1_VERDICTS.json and are quoted here only inside provenance.original_analyzer_outputs_frozen.",
+  "verdicts": {
+    "RIDGE_OPERATING_PASS": true,
+    "RIDGE_SPEED_PASS": true,
+    "posthoc_nu_rho_sensitivity_verdict": null
+  },
+  "RIDGE_OPERATING": {
+    "endpoint": "Terminal (nu=2000) mean quality gain dQ = RIDGE-SCAT32 - SCAT32-060, paired over the 5 frozen seeds per image.",
+    "median_dQ_dB": 1.86692,
+    "dQ_LB2.5": 1.41348975,
+    "n_dQ_pos": 19,
+    "n_images": 24,
+    "thresholds": {
+      "median_dB_min": 1.0,
+      "LB_gt": 0.0,
+      "breadth_min": 18
+    },
+    "PASS": true,
+    "bootstrap": {
+      "rng_tag": 13,
+      "B": 10000,
+      "estimator": "nested family-stratified bootstrap: paired within-image resampling of the 5 seeds, then 4-of-4 image resampling inside each of the 6 fixed families; family labels never resampled.",
+      "lb2.5": 1.41348975,
+      "median_of_bootstrap_medians": 1.868265,
+      "n_unique": 7267
+    },
+    "per_image_delta": {
+      "m1_chirp_0": 2.36118,
+      "m1_chirp_1": 1.2704200000000003,
+      "m1_chirp_2": 1.0050199999999996,
+      "m1_chirp_3": 1.5388399999999998,
+      "m1_contour_0": -3.612180000000001,
+      "m1_contour_1": -5.79446,
+      "m1_contour_2": -4.738300000000001,
+      "m1_contour_3": 4.151299999999999,
+      "m1_glyph_0": 4.7343,
+      "m1_glyph_1": 6.005160000000001,
+      "m1_glyph_2": 2.4306599999999996,
+      "m1_glyph_3": 2.21258,
+      "m1_maze_0": 6.32974,
+      "m1_maze_1": 6.436420000000001,
+      "m1_maze_2": 5.583480000000001,
+      "m1_maze_3": 6.408240000000001,
+      "m1_microtexture_0": 1.5295200000000002,
+      "m1_microtexture_1": 1.2526799999999998,
+      "m1_microtexture_2": 1.525840000000001,
+      "m1_microtexture_3": 1.4487599999999987,
+      "m1_spokes_0": -0.76524,
+      "m1_spokes_1": -5.08472,
+      "m1_spokes_2": 4.530259999999999,
+      "m1_spokes_3": 2.195
+    }
+  },
+  "RIDGE_SPEED_optical_time": {
+    "endpoint": "Q90 time-to-quality ratio S_gate on elapsed optical time T_opt = M_total * nu * tau; comparator SCAT32-SAFE, fast arm RIDGE-SCAT32; first Q90 crossing interpolated linearly in log T_opt after equal-weight PAVA; full frozen censoring taxonomy applied.",
+    "median_S_gate": 19.127043091646133,
+    "S_LB2.5": 18.328492357080282,
+    "n_S_gt1": 21,
+    "n_images": 24,
+    "thresholds": {
+      "median_min": 3.0,
+      "LB_gt": 1.0,
+      "breadth_min": 18
+    },
+    "PASS": true,
+    "bootstrap": {
+      "rng_tag": 14,
+      "B": 10000,
+      "estimator": "nested family-stratified bootstrap rebuilding PAVA, Q90 target, crossing, and censoring inside every replicate; paired within-image seed resampling, 4-of-4 image resampling inside each of the 6 fixed families.",
+      "lb2.5": 18.328492357080282,
+      "median_of_bootstrap_medians": 19.35163240161379,
+      "n_unique": 8083
+    },
+    "censoring_note": "m1_microtexture_1 is SAFE_RANGE_UNINFORMATIVE (fitted safe dynamic range 0.27336 dB < 0.50 dB) and is clamped to S_gate=1; this censoring step (not PAVA) sets breadth to 21/24. m1_contour_1 and m1_contour_2 are FAST_RIGHT_CENSORED (S_gate=0). All 24 images are retained; none deleted.",
+    "per_image_s_gate": {
+      "m1_chirp_0": 17.80020264332746,
+      "m1_chirp_1": 20.45972087286894,
+      "m1_chirp_2": 18.43146768941798,
+      "m1_chirp_3": 19.26164631681156,
+      "m1_contour_0": 2.9406347979068683,
+      "m1_contour_1": 0.0,
+      "m1_contour_2": 0.0,
+      "m1_contour_3": 18.784826464194364,
+      "m1_glyph_0": 18.992439866480705,
+      "m1_glyph_1": 21.50015506865851,
+      "m1_glyph_2": 18.31275582718563,
+      "m1_glyph_3": 20.593897434671184,
+      "m1_maze_0": 21.4405433164537,
+      "m1_maze_1": 26.814231104265964,
+      "m1_maze_2": 26.844183295157023,
+      "m1_maze_3": 29.012397929969485,
+      "m1_microtexture_0": 18.14211379023442,
+      "m1_microtexture_1": 1.0,
+      "m1_microtexture_2": 18.01458982519933,
+      "m1_microtexture_3": 15.355502924160017,
+      "m1_spokes_0": 46.15082365983873,
+      "m1_spokes_1": 20.38441004338325,
+      "m1_spokes_2": 21.208912460562292,
+      "m1_spokes_3": 22.034110816519803
+    },
+    "per_image_status": {
+      "m1_chirp_0": "NORMAL",
+      "m1_chirp_1": "NORMAL",
+      "m1_chirp_2": "NORMAL",
+      "m1_chirp_3": "NORMAL",
+      "m1_contour_0": "NORMAL",
+      "m1_contour_1": "FAST_RIGHT_CENSORED",
+      "m1_contour_2": "FAST_RIGHT_CENSORED",
+      "m1_contour_3": "NORMAL",
+      "m1_glyph_0": "NORMAL",
+      "m1_glyph_1": "NORMAL",
+      "m1_glyph_2": "NORMAL",
+      "m1_glyph_3": "NORMAL",
+      "m1_maze_0": "NORMAL",
+      "m1_maze_1": "NORMAL",
+      "m1_maze_2": "NORMAL",
+      "m1_maze_3": "NORMAL",
+      "m1_microtexture_0": "NORMAL",
+      "m1_microtexture_1": "SAFE_RANGE_UNINFORMATIVE",
+      "m1_microtexture_2": "NORMAL",
+      "m1_microtexture_3": "NORMAL",
+      "m1_spokes_0": "NORMAL",
+      "m1_spokes_1": "NORMAL",
+      "m1_spokes_2": "NORMAL",
+      "m1_spokes_3": "NORMAL"
+    },
+    "per_image_target": {
+      "m1_chirp_0": 6.9147940000000006,
+      "m1_chirp_1": 7.38989,
+      "m1_chirp_2": 7.261996,
+      "m1_chirp_3": 7.404890000000001,
+      "m1_contour_0": 9.099688,
+      "m1_contour_1": 9.584149999999998,
+      "m1_contour_2": 10.442378000000001,
+      "m1_contour_3": 15.186056,
+      "m1_glyph_0": 17.97096,
+      "m1_glyph_1": 18.454511999999998,
+      "m1_glyph_2": 9.343497999999999,
+      "m1_glyph_3": 9.230493999999998,
+      "m1_maze_0": 13.789081999999999,
+      "m1_maze_1": 18.569958,
+      "m1_maze_2": 15.161556000000001,
+      "m1_maze_3": 15.054803999999999,
+      "m1_microtexture_0": 14.435742000000001,
+      "m1_microtexture_1": null,
+      "m1_microtexture_2": 14.874426,
+      "m1_microtexture_3": 15.629622,
+      "m1_spokes_0": 7.989012,
+      "m1_spokes_1": 9.191172,
+      "m1_spokes_2": 11.20758,
+      "m1_spokes_3": 8.462385999999999
+    },
+    "targets_undefined_images": [
+      "m1_microtexture_1"
+    ]
+  },
+  "posthoc_nu_rho_sensitivity": {
+    "label": "Post-hoc incident-exposure sensitivity on the coordinate proportional to nu*rho (= lambda*T, an incident-photon-exposure coordinate). This is NOT the preregistered speed endpoint, is NOT optical time, is NOT a preregistered speed negative, and is NOT a universal photon-efficiency theorem. It carries no PASS/FAIL verdict.",
+    "median": 0.27864687917406294,
+    "LB2.5": 0.23974692258639926,
+    "n_above_1": 1,
+    "verdict": null,
+    "bootstrap": {
+      "rng_tag": 14,
+      "B": 10000,
+      "lb2.5": 0.23974692258639926,
+      "median_of_bootstrap_medians": 0.2755934515970494,
+      "n_unique": 8320
+    },
+    "per_image_s_gate": {
+      "m1_chirp_0": 0.2092622162533673,
+      "m1_chirp_1": 0.31004034454634954,
+      "m1_chirp_2": 0.27886757116407174,
+      "m1_chirp_3": 0.24887555556386273,
+      "m1_contour_0": 0.01035106092221535,
+      "m1_contour_1": 0.0,
+      "m1_contour_2": 0.0,
+      "m1_contour_3": 0.3052847682391263,
+      "m1_glyph_0": 0.2294465567560087,
+      "m1_glyph_1": 0.28024433693533163,
+      "m1_glyph_2": 0.2477601214868459,
+      "m1_glyph_3": 0.2733903221397004,
+      "m1_maze_0": 0.29345792733633297,
+      "m1_maze_1": 0.4140362514296814,
+      "m1_maze_2": 0.42520169719335943,
+      "m1_maze_3": 0.47481254847358995,
+      "m1_microtexture_0": 0.18951162935383378,
+      "m1_microtexture_1": 1.0,
+      "m1_microtexture_2": 0.2045345672846258,
+      "m1_microtexture_3": 0.15260493984785983,
+      "m1_spokes_0": 1.4010201999413263,
+      "m1_spokes_1": 0.2784261871840542,
+      "m1_spokes_2": 0.2823173769646349,
+      "m1_spokes_3": 0.31198909717809087
+    },
+    "per_image_status": {
+      "m1_chirp_0": "NORMAL",
+      "m1_chirp_1": "NORMAL",
+      "m1_chirp_2": "NORMAL",
+      "m1_chirp_3": "NORMAL",
+      "m1_contour_0": "NORMAL",
+      "m1_contour_1": "FAST_RIGHT_CENSORED",
+      "m1_contour_2": "FAST_RIGHT_CENSORED",
+      "m1_contour_3": "NORMAL",
+      "m1_glyph_0": "NORMAL",
+      "m1_glyph_1": "NORMAL",
+      "m1_glyph_2": "NORMAL",
+      "m1_glyph_3": "NORMAL",
+      "m1_maze_0": "NORMAL",
+      "m1_maze_1": "NORMAL",
+      "m1_maze_2": "NORMAL",
+      "m1_maze_3": "NORMAL",
+      "m1_microtexture_0": "NORMAL",
+      "m1_microtexture_1": "SAFE_RANGE_UNINFORMATIVE",
+      "m1_microtexture_2": "NORMAL",
+      "m1_microtexture_3": "NORMAL",
+      "m1_spokes_0": "NORMAL",
+      "m1_spokes_1": "NORMAL",
+      "m1_spokes_2": "NORMAL",
+      "m1_spokes_3": "NORMAL"
+    }
+  },
+  "full_stack_certificate_descriptive": {
+    "branch": "FALLBACK_DESCRIPTIVE",
+    "note": "Preregistered/frozen descriptive three-status analysis, NOT a PASS/FAIL certificate gate. The 24-cell development feasibility screen selected FALLBACK_DESCRIPTIVE before the immutable tag; FULL_STACK_CERT_PASS was removed before freeze. Reported descriptively; no categorical certificate verdict.",
+    "n_cert_cells": 480,
+    "n_certified": 0,
+    "n_counterexample": 299,
+    "n_numerical_unresolved": 181,
+    "descriptive_certified_fraction": 0.0,
+    "status_distribution": {
+      "NUMERICAL_UNRESOLVED": 181,
+      "COUNTEREXAMPLE": 299
+    },
+    "by_anchor": {
+      "nu200_b0.05": {
+        "NUMERICAL_UNRESOLVED": 43,
+        "COUNTEREXAMPLE": 77
+      },
+      "nu200_b0.6": {
+        "COUNTEREXAMPLE": 67,
+        "NUMERICAL_UNRESOLVED": 53
+      },
+      "nu2000_b0.05": {
+        "COUNTEREXAMPLE": 84,
+        "NUMERICAL_UNRESOLVED": 36
+      },
+      "nu2000_b0.6": {
+        "COUNTEREXAMPLE": 71,
+        "NUMERICAL_UNRESOLVED": 49
+      }
+    },
+    "cross_reference": "Per-status field availability and the coefficient-range distribution are disclosed in results/round63_m1/CERT_DISCLOSURE_ADDENDUM_2026-07-19.md."
+  },
+  "per_family_median_dQ": {
+    "chirp": 1.4046299999999983,
+    "contour": -4.17524,
+    "glyph": 3.5824799999999986,
+    "maze": 6.368990000000002,
+    "microtexture": 1.4872999999999994,
+    "spokes": 0.71488
+  },
+  "provenance": {
+    "immutable_input_tag": "m1-freeze",
+    "immutable_input_commit": "6f00932710dff5ea3afefc0faee54f231e9b915a",
+    "immutable_input_commit_short": "6f00932",
+    "raw_shard_sha256": {
+      "imaging": {
+        "M1_LBLOB16_00.csv": "19d37d7f7939123305987d3eabce014e05a5ccd6b3f49e8593a952aaff736a7b",
+        "M1_RIDGE-SCAT32_00.csv": "ad18b3c8e8d475ea3810de8fc6ef30b9fd33d4d7a1891cb41c65aa8696fc3e39",
+        "M1_SCAT16_00.csv": "8f752d44f391fe4c43d9b6b616dd4d268e1bb541e6f9033a82aedd5b4ae9bb0f",
+        "M1_SCAT32-060_00.csv": "6263f379cb9cef2762f4b8f3ce90dde8156304c64673e32e7b66ca9d1864aa13",
+        "M1_SCAT32-SAFE_00.csv": "2c770f71358d74365194e5cf054a6961b6c6ece87df1eafd0a48a5b3ae275668"
+      },
+      "cert": {
+        "M1_CERT_00.csv": "17d52aaa6b1ff808cc3b0e3b24027fb649c49c64089635c768660269a94044b6",
+        "M1_CERT_01.csv": "b089c7992e44ee733dcd193aa789cd7c00fd87ea60d3e8cbd2b92e433ac7486d",
+        "M1_CERT_02.csv": "486330ed577b13d972d7eaaa775375783f8349f275f61d99267010657211d5c2",
+        "M1_CERT_03.csv": "28c0c9a978422d0341f82e4aea8a11bca6c4bf706abf3fba253f2f0d1aa4e027",
+        "M1_CERT_04.csv": "4a21744756ff46e4e62e3a5bad71a4ba58f5b5b529b0f0ecfd480978958bf2be",
+        "M1_CERT_05.csv": "3c4828cf73a1a33e13b8157e7a51978f5647c48eb97550f7dfaf5f15fcb2d6fd",
+        "M1_CERT_06.csv": "31e0fa71417ff88676efe011d0185f0931bf7d3f12551babc823085fc5f41243",
+        "M1_CERT_07.csv": "9b7fa31f06860b9ed5ed5f0524018d48d55b87183fc8aed2fb7b8a2a3c431fa4",
+        "M1_CERT_08.csv": "7ba7f3f78e7e96393c0c2c2c52d68cee6b0b3e62f481a9f1e86706e74061ed95",
+        "M1_CERT_09.csv": "6931f9844687b71147ef9d6758d2b158dff0f1eaec15e87ff9c7647eb6081e2a",
+        "M1_CERT_10.csv": "a176c818cfb41b7ebefe3bb9c4b399a85b49165f2966e66d6fb2bfc9b9a0be67",
+        "M1_CERT_11.csv": "af590b63fffec5c877d7b270bd148c3475f97ed82a16ab76a1ac46eab0c2ec8a",
+        "M1_CERT_12.csv": "68dd355853d6f38f7b12d8467c5900914ca97da353cc542d1aae29eae59adaa6",
+        "M1_CERT_13.csv": "2979f8ddd3ea2571a690fcd8bbe719a307b3690da3cdab1e5839fdc8fc89ca25",
+        "M1_CERT_14.csv": "2e41491b49c52d3277059c33b00ad5942ea24b8e9818f4b7792b6a3dcaf2048e",
+        "M1_CERT_15.csv": "1c42bfb6260b4e4dcd508fd734c075e90f2848692206f5d6338fdeac6266a8fb",
+        "M1_CERT_16.csv": "8e7418ba430ec268f068a7513cedc2e35b71a028b7298c12aa7d3bf2cce076fe",
+        "M1_CERT_17.csv": "c33c5b4dda25bc9fe214f53210a8e1e9ecdbae5471ae0b2314f4bd9e3286d46a",
+        "M1_CERT_18.csv": "7f0f3fdb16d05985141e64f0908e9d6445323ffec972d913314cbad00513f957",
+        "M1_CERT_19.csv": "0635ccc09a92f55dd52f6c416aa26fad70abaf3e9e18bedca25de1c7dfb001dc",
+        "M1_CERT_20.csv": "ca1e90e3df8b58f277dbc2e7e82f6410a2498cf538a6bd63dcb30024b78fe705",
+        "M1_CERT_21.csv": "da315e02fe357f761a4b7eff883176c1347f02976ad67814d79a8048febb2a01",
+        "M1_CERT_22.csv": "22eb3f6ec8820033414ebabd4714b7060ad2223b1a4295c21f4ea826da38fc92",
+        "M1_CERT_23.csv": "90f061e25dd0c5823ce62a8491ebba78fb65818ba5858761fe7110b027107d60",
+        "M1_CERT_24.csv": "076612b4fc41c69a141aed7dcb8b48ed7e5b8ebf951777cb7b7177318a58dc98",
+        "M1_CERT_25.csv": "9016ff131ce66fdc957903b49f5e10edb1c792a5f565d9bd73c2a1da52ea02d1",
+        "M1_CERT_26.csv": "68dd14e9119dd203619f50fc5da4eb0cf303dd673be60b35aa78287e1acf915c",
+        "M1_CERT_27.csv": "9771a705461e302db319797a04ec19a3303c1a35e19a7a17db6d1aae85cdc145",
+        "M1_CERT_28.csv": "8581d3de77e39413bf79cd58ba5440646a2dd64db988552a13f9eb1b3e950129",
+        "M1_CERT_29.csv": "654cc917916add5e292ed869b05943f7d538136a97a1d0dd3ea2351fefde0948",
+        "M1_CERT_30.csv": "4f069179fd8692811b96dd7b1c7e21ac858c274150efb10e81876bbef32c9b13",
+        "M1_CERT_31.csv": "f93ce6eddc31e8696c5840508157d3650103c043de80ec2e5a736a246840c302",
+        "M1_CERT_32.csv": "0b51150bb99ffc9a79404a20fcdc7891f729ef68332bd7ac270dffb3cbcb5331",
+        "M1_CERT_33.csv": "3e7b74d38751af29d57117b4b66a40bb578d0b98252c5e172868179c4bd7bbff",
+        "M1_CERT_34.csv": "42ec56660e1a9312751ed6d91cd57983eebe50982c7c286fac0f8043ceb5337b",
+        "M1_CERT_35.csv": "48a4b92509012c92509931f9b6064978df611982b99c925e8aa59736410e98f8",
+        "M1_CERT_36.csv": "6b3911b518e816a74abdd7f28db3bb94bc194b5bdd6050af8364330f7cd82acc",
+        "M1_CERT_37.csv": "8b834d831f8586d8de62184de9495614cb1d1305bf78315d833ff3175f775a3e"
+      }
+    },
+    "original_analyzer_outputs_frozen": {
+      "source_file": "results/round63_m1/M1_VERDICTS.json",
+      "note": "Frozen nonconformant-implementation outputs, preserved unchanged and shown only for provenance.",
+      "RIDGE_OPERATING_PASS": true,
+      "RIDGE_SPEED_PASS": false,
+      "median_dQ_dB": 1.8669199999999986,
+      "dQ_LB2.5": 0.11989000000000072,
+      "n_dQ_pos": 19,
+      "median_S": 0.2759082546618772,
+      "S_LB2.5": 0.17225913049832775,
+      "n_S_gt1": 1,
+      "speed_axis_used_by_frozen_analyzer": "log(nu*rho) incident-exposure coordinate (nonconformant)"
+    },
+    "discrepancies": {
+      "D1": {
+        "severity": "critical",
+        "title": "Wrong speed horizontal axis",
+        "frozen_behavior": "The frozen analyzer _q90_time fit Q90 crossings on log(nu*rho), an incident-photon-exposure coordinate (nu*rho = lambda*T).",
+        "spec_requirement": "The frozen spec defines elapsed optical time T_opt = M_total*nu*tau (ROUND63_METHOD_SPEC_M1.md); R17/R18 retain the Q90 machinery unchanged; raw rows persist optical_time_s = M*nu*tau to numerical precision.",
+        "effect": "Flipped RIDGE_SPEED from PASS on the frozen elapsed-time endpoint to FAIL on a different resource endpoint.",
+        "resolution": "Restore elapsed T_opt as the confirmatory speed endpoint; retain nu*rho only as a labeled post-hoc incident-exposure sensitivity with no verdict."
+      },
+      "D2": {
+        "severity": "high",
+        "title": "Non-frozen bootstrap",
+        "frozen_behavior": "The frozen analyzer averaged seeds first, then resampled the six family labels themselves followed by images; it never resampled seeds or rebuilt an endpoint. This reproduces the published operating LB 0.11989 and lets whole declared strata disappear (245/10000 medians <= 0).",
+        "spec_requirement": "Retain all six fixed strata; resample the 5 seeds pairwise within each image; rebuild curves/target/crossing/censoring inside every replicate; sample 4-of-4 images within each of the six families; family labels never resampled (R7/R8 rulings).",
+        "effect": "Operating verdict remains PASS, but the reported LB is not the preregistered estimator; the frozen fixed-strata nested protocol gives operating LB 1.41348975.",
+        "resolution": "Use the frozen nested family-stratified bootstrap with tags 13/14 and B=10000."
+      },
+      "D3": {
+        "severity": "high",
+        "title": "Incomplete PAVA / Q90 target / censoring",
+        "frozen_behavior": "The frozen _pava duplicated pooled weights rather than collapsing blocks (for [3,2,1] it returned ~[2.145898,2.145898,2.145898] instead of [2,2,2]); the safe range was derived from raw endpoints and failed crossings were reduced to zero without the frozen statuses.",
+        "spec_requirement": "Ordinary equal-weight block-collapse PAVA; PAVA-derived safe range and Q90 target; the 0.50 dB SAFE_RANGE_UNINFORMATIVE rule; and the complete censoring taxonomy (NORMAL, FAST_LEFT_CENSORED, BOTH_LEFT_CENSORED, SAFE_LEFT_FAST_INTERIOR, FAST_RIGHT_CENSORED, SAFE_RANGE_UNINFORMATIVE, ANALYSIS_FAILURE).",
+        "effect": "m1_microtexture_1 must enter as SAFE_RANGE_UNINFORMATIVE with S_gate=1; this censoring step changes breadth from 22 (axis-only) to 21 under the full taxonomy.",
+        "resolution": "Use a tested block-collapse PAVA (unit test [3,2,1]->[2,2,2]), derive Q90 from PAVA safe endpoints, and apply every censoring status on every bootstrap replicate."
+      }
+    },
+    "auditor": {
+      "identity": "independent peer auditor, docs2/01, 2026-07-19",
+      "discovery_date": "2026-07-19",
+      "independence": "The independent implementation was written before reading code/round63/m1_score.py.",
+      "findings_document": "results/round63_m1/AUDIT_2026-07-19/2026-07-19_M1_INDEPENDENT_AUDIT.md"
+    },
+    "promoted_implementation": {
+      "recompute_script": "scripts/m1_independent_recompute.py",
+      "recompute_script_sha256": "0901ddaa092cf037b42394488bdc1693cee51b4573e36fdc2fc5abe70f7ea3b2",
+      "frozen_and_axis_only_script": "scripts/m1_frozen_and_axis_only.py",
+      "frozen_and_axis_only_script_sha256": "e71637efef519b65ee8084675897a67ffe3a2f6c99a2001b7f69e8c199b783ad",
+      "recompute_output": "outputs/m1_independent_output.json",
+      "recompute_output_sha256": "57bb3ca8cdb0487b9950dbd1df483dac9d1ef21119d8d039f1b72dceb10cbbcf",
+      "frozen_and_axis_only_output": "outputs/m1_frozen_and_axis_only_output.json",
+      "frozen_and_axis_only_output_sha256": "f9fd195f6a24ccd0f93b09125ac3efddef46d5fc17249d0c0797ad8a3a6b1cb0",
+      "origin": "Copied byte-verbatim (sha256-verified) from results/round63_m1/AUDIT_2026-07-19/, itself promoted from E:\\GAN_FCC_WORK\\.codex_tmp\\."
+    },
+    "verification": {
+      "audited_numbers_checked": 18,
+      "audited_numbers_matched": 18,
+      "deep_diff_leaves_differing": 0,
+      "statement": "The promoted independent implementation and an in-project rerun agreed on all 18 audited numerical outputs (six analyses x median/LB2.5/breadth) with no deep differences; a recursive deep-diff over the entire JSON structure of both outputs found zero differing leaves.",
+      "report": "results/round63_m1/AUDIT_2026-07-19/RERUN_REPORT.md",
+      "rerun_outputs": [
+        "outputs/m1_independent_output_RERUN.json",
+        "outputs/m1_frozen_and_axis_only_output_RERUN.json"
+      ]
+    },
+    "environment": {
+      "os": "Windows 11 (win32)",
+      "python": "3.11.5 (Anaconda, MSC v.1916 64-bit)",
+      "numpy": "1.24.4",
+      "pandas": "1.5.3",
+      "working_directory": "D:\\GI_another"
+    },
+    "rng": {
+      "operating_tag": 13,
+      "speed_tag": 14,
+      "B": 10000,
+      "generator": "numpy.random.default_rng([20260717, 63, seed_tag]) (PCG64 via SeedSequence; version-stable, bit-for-bit reproducible)."
+    },
+    "diagnostic_only": {
+      "axis_only_speed_lb2.5": 16.577852783743403,
+      "axis_only_speed_breadth": 22,
+      "note": "The 'axis-only' lower bound 16.5778528 (breadth 22/24) replaces only the axis but preserves the other analyzer defects (D2/D3). It is diagnostic only and is not a manuscript result."
+    }
+  }
+}

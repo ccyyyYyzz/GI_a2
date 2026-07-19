@@ -98,18 +98,18 @@ and survives, one power knob that tracks the jitter-capped ridge. A
 preregistered simulation campaign (M1) tests the doctrine with a paired
 fixed-dwell ridge operating-point primary (\textsc{RIDGE-SCAT32} versus
 \textsc{SCAT32-060}, a power-for-time comparison), a nine-dwell
-time-to-quality secondary, the full-stack certificate, five arms, and a
-mandatory disclosure ledger. The three verdicts are mutually non-rescuing:\
-the ridge operating-point primary passes (median fixed-dwell radiometric gain
-$1.87$~dB at $\nu=2000$, $19/24$ scenes positive, $2.5\%$ bootstrap lower
-bound $0.12$~dB, at a $37\times$ incident-dose multiplier over the balanced
-comparator); the photon-time-to-quality secondary is a preregistered negative
-(median speed ratio $0.28$, $1/24$ scenes above unity), the two operating
-verdicts jointly instantiating the conjugate photon- and time-budget resource
-corners; and the full-stack certificate does not certify near-optimality
-($0/480$ cells certified, $299$ full-stack-feasible counterexamples exceeding
-the bar and $181$ numerically unresolved), leaving the balanced design's
-scene-adapted geometry headroom intact under the full conditioning stack. The
+time-to-quality secondary, the full-stack descriptive analysis, five arms, and a
+mandatory disclosure ledger. Using the preregistered elapsed optical-time
+coordinate, $T_{\mathrm{opt}}=M_{\mathrm{total}}\nu\tau$, and the frozen
+Q90/PAVA/censoring procedure, the ridge time-to-quality endpoint passed: the
+median conservative speed ratio was $19.13\times$, the
+family-stratified nested-bootstrap 2.5th-percentile bound was $18.33\times$,
+and 21 of 24 scenes had $S_{\mathrm{gate}}>1$. The ridge operating-point
+primary also passes (median fixed-dwell radiometric gain $1.87$~dB at
+$\nu=2000$, $19/24$ scenes positive, $2.5\%$ bootstrap lower bound
+$1.41348975$~dB). The full-stack computation is descriptive: across 480 cells,
+none was certified, 299 produced feasible counterexamples, and 181 were
+numerically unresolved. The
 result is an operating handbook:\ measure the jitter, let the law set the
 load, read the certificate as a geometry diagnostic, and tune the global
 operating point when time is the scarce resource.
@@ -198,9 +198,9 @@ photon-budget versus time-budget conjugacy as its operating doctrine; (iii)~a pr
 load grid, guards, endpoints, and three mutually non-rescuing verdicts were
 frozen in an immutable commit before any confirmatory reconstruction existed
 and are reported as frozen:\ the ridge operating-point primary passes, the
-photon-time-to-quality secondary is a preregistered negative, and the
-full-stack certificate returns confirmatory counterexamples rather than
-certification; and (iv)~an operating handbook for real
+elapsed-optical-time speed endpoint passes, and the full-stack computation is a
+descriptive analysis returning counterexamples rather than certification; and
+(iv)~an operating handbook for real
 detectors (Table~\ref{tab:handbook}), ending in a bench-testable
 prediction. All code, frozen preregistration documents, and per-cell
 evidence bundles are openly released; full derivations, guard machinery,
@@ -248,7 +248,9 @@ The recovery-time law of the detector determines a scalar
 count-information kernel; everything else in this paper allocates
 illumination against that kernel. The companion's deterministic
 detector~\cite{companion} is the zero-jitter critical manifold of the
-theory below. Proofs at manuscript rigor are given in the supplement.
+theory below. The supplement gives the installed proofs with their stated
+regularity and conditionality assumptions; the crossover law remains a
+matched-asymptotic prediction rather than a universal finite-window theorem.
 
 \subsection{Random-hold count information}
 \label{sec:jitter}
@@ -339,8 +341,9 @@ is superseded. Per the frozen claim discipline, the exact identity and the
 long-window limit \emph{imply} the jitter exponent $-2/3$; the full
 finite-window crossover of Eq.~(\ref{eq:crossover}) is a matched-asymptotic
 \emph{prediction} until a uniform two-parameter (triangular-array renewal
-local-limit) proof is complete~\SPH{supplement: uniform crossover proof, or
-the prediction label is retained}.
+local-limit) proof is complete. Proposition~\ref{prop:s-uniform-crossover}
+below is conditional on the stated uniform $C^2$ expansion; absent a separate
+proof of that expansion, the crossover remains a matched-asymptotic prediction.
 
 The exponent pair $(1/3, -2/3)$ is universal within the regular
 finite-variance iid hidden-hold class:\ iid hidden nonnegative holds whose
@@ -603,11 +606,12 @@ full-stack certificate}
 % cutting-plane implementation; R18 §4.3 frozen paragraph verbatim. Full
 % construction in supp S3.
 The deployable class is defined by the conditioning safeguards, and the
-balanced design's near-optimality within it is certified, not trusted. By
+balanced design's local near-optimality within it is evaluated rather than
+assumed. By
 concavity, optimality is equivalent to a bounded reduced sensitivity (the
 constrained Kiefer--Wolfowitz / general equivalence condition for nonlinear
-models~\cite{kiefer1959optimum,white1973equivalence}). The frozen certificate
-wording is exact. The confirmatory certificate therefore targeted the full
+models~\cite{kiefer1959optimum,white1973equivalence}). The descriptive
+full-stack analysis therefore targeted the full
 deployed stack:\ the frozen dictionary and local pre-scan linearization,
 incident budget, $\pm5\%$ per-pixel dose band, A-risk cap, and spectral
 floor. Global ridge tracking was evaluated separately as the time-limited,
@@ -931,7 +935,7 @@ The primary verdict is \texttt{RIDGE\_OPERATING\_PASS} $=$ \textbf{PASS}. At
 $\nu = 2000$ the median paired radiometric gain of \textsc{RIDGE-SCAT32} over
 \textsc{SCAT32-060} is $\operatorname{median}_j \Delta Q^{\mathrm{ridge}}_j =
 1.87$~dB (frozen bar $\ge 1.0$~dB); the $2.5\%$ nested family-stratified
-bootstrap lower bound on the median is $0.12$~dB (bar $> 0$); and $19/24$
+bootstrap lower bound on the median is $1.41348975$~dB (bar $> 0$); and $19/24$
 scenes are positive (bar $\ge 18/24$). All three conditions pass. The gain is
 bought with incident power, not photons:\ the ridge policy reaches its target
 mean load $\rhobar = \rhoR(2000) = 22.25$ (the global safety clip does not
@@ -971,34 +975,50 @@ Family & median $\Delta Q^{\mathrm{ridge}}$ (dB) & scenes $>0$ \\
 \end{table}
 
 \subsection{Secondary: ridge time-to-quality}
-The secondary verdict is \texttt{RIDGE\_SPEED\_PASS} $=$ \textbf{FAIL}, a
-preregistered negative reported plainly. Against the \textsc{SCAT32-SAFE}
-reference at load $0.05$, the dwell-dependent \textsc{RIDGE-SCAT32} policy has
-median photon-time-to-quality ratio $S_{\mathrm{gate}} = 0.276$ (frozen bar
-$\ge 3$), $2.5\%$ bootstrap lower bound $0.172$ (bar $> 1$), and only $1/24$
-scenes with $S_{\mathrm{gate}} > 1$ (bar $\ge 18/24$); none of the three
-conditions passes. The direction of the failure is mechanistic, not anomalous.
-The $Q_{90}$ secondary is measured in optical (photon) time $\nu\rho$, where
-the ridge policy's large incident-power multiplier --- a $37\times$
-incident-dose ratio over the balanced comparator at $\nu = 2000$, and larger
-still over the $0.05$ safe reference --- dominates, so the fixed-dwell quality
-gains of the primary do not survive photon-time normalization. The two
-operating verdicts therefore instantiate the conjugate resource corners of
-Section~\ref{sec:conjugacy} empirically:\ when power is available and time is
-scarce, the ridge wins fixed-dwell quality (primary PASS); when the photon
-budget is scarce, the low-load balanced design wins time-to-quality
-(secondary FAIL). Neither rescues the other.
+Using the preregistered elapsed optical-time coordinate,
+$T_{\mathrm{opt}}=M_{\mathrm{total}}\nu\tau$, and the frozen Q90/PAVA/censoring
+procedure, the ridge time-to-quality endpoint passed: the median conservative
+speed ratio was $19.13\times$, the family-stratified nested-bootstrap
+2.5th-percentile bound was $18.33\times$, and 21 of 24 scenes had
+$S_{\mathrm{gate}}>1$.
 
-\subsection{Confirmatory certificate: near-optimality over the full
-deployed stack}
-The confirmatory structural secondary does not certify:\
-\texttt{FULL\_STACK\_CERT\_PASS} $=$ \textbf{FAIL}. Of the $480$ frozen
+\paragraph{Analysis correction.} After the campaign was unblinded, an independent
+peer audit found that the frozen scoring implementation did not reproduce three
+parts of the preregistered analysis. It placed the Q90 crossings on
+$\log(\nu\rho)$ rather than on the frozen elapsed optical time
+$\log T_{\mathrm{opt}}$; it resampled family labels rather than retaining all
+six fixed strata with paired within-image seed resampling; and it used a
+nonstandard isotonic implementation while omitting the frozen censoring
+taxonomy. The immutable tag, raw cells, and original analyzer outputs were
+preserved unchanged. A dated correction artifact recomputed the endpoints from
+the same frozen raw cells using the preregistered axis and machinery; the
+promoted independent implementation and an in-project rerun agreed on all 18
+audited numerical outputs with no deep differences. Scientific claims and tables
+use the spec-conformant corrected results, while the original outputs remain
+available in the provenance record. The source-of-record bundle is
+\texttt{results/round63\_m1/CORRECTION\_2026-07-19/}, specifically
+\texttt{M1\_VERDICTS\_SPEC\_CORRECTED\_R19.json} and
+\texttt{ANALYSIS\_CORRECTION\_DISCLOSURE.md}.
+
+As a post-hoc resource sensitivity, we repeated the corrected Q90 machinery on
+the incident-exposure coordinate proportional to $\nu\rho$. It yielded a median
+ratio of $0.279$, a 2.5th-percentile bound of $0.240$, and only 1 of 24 scenes
+above one. Thus ridge tracking greatly reduced elapsed dwell in this campaign
+but did not reduce incident exposure to Q90 under this coordinate. This
+sensitivity was not the preregistered speed endpoint and carries no PASS/FAIL
+verdict.
+
+\subsection{Structural secondary: descriptive full-stack analysis}
+Before the immutable campaign tag, the required 24-cell development feasibility
+screen selected the preregistered \texttt{FALLBACK\_DESCRIPTIVE} branch.
+Consequently, \texttt{FULL\_STACK\_CERT\_PASS} was removed before freeze, and
+the post-freeze full-stack computation was specified only as a descriptive
+three-status analysis, not as a PASS/FAIL endpoint. Across the $480$ frozen
 certificate cells ($24$ confirmatory scenes $\times\,5$ seeds
 $\times\,\nu\in\{200,2000\}\times b\in\{0.05,0.60\}$), $0$ are
 \texttt{CERTIFIED}, $299$ are \texttt{COUNTEREXAMPLE}, and $181$ are
 \texttt{NUMERICAL\_UNRESOLVED}; the fraction certified at
-$G_{\mathrm{stack}}/r \le 10^{-2}$ is $0$. The gate requires $480/480$
-\texttt{CERTIFIED}, so it fails. The status split is stable across the four
+$G_{\mathrm{stack}}/r \le 10^{-2}$ is $0$. The status split is stable across the four
 anchors ($(\nu,b)=(200,0.05)$:\ $77$/$43$; $(200,0.60)$:\ $67$/$53$;
 $(2000,0.05)$:\ $84$/$36$; $(2000,0.60)$:\ $71$/$49$ counterexample/%
 unresolved). Every cell is deployed-design feasible for budget, dose
@@ -1013,8 +1033,8 @@ range $1.19$--$1.87$ per dimension, found by the frozen support-expanding
 primal screen); the $181$ unresolved cells returned an infeasible
 cutting-plane master under the frozen numerical protocol and are not
 certified --- which is not the same as scientifically refuted. Under the
-frozen failure-branch rule no categorical near-optimality claim and no
-collapse claim is made. Descriptively, the counterexample cohort is
+pre-freeze descriptive branch had already been selected, this distribution is
+reported without a categorical certificate verdict. Descriptively, the counterexample cohort is
 confirmatory evidence that the balanced design's scene-adapted geometry
 headroom survives the full deployed conditioning stack --- now over fresh
 confirmatory scenes and the complete stack, consistent with the
@@ -1126,8 +1146,8 @@ is reported descriptively and no categorical near-optimality claim is made.
 is spanned by the optical-power/flux budget (horizontal) and the
 acquisition-time budget (vertical); in the photon-budgeted corner (low power,
 ample time; Q90 count-time secondary) the balanced \textsc{SCAT32-060} design
-with the full-stack certificate is preferred and \texttt{RIDGE\_SPEED\_PASS}
-is \textsc{false}, whereas in the time-limited, power-available corner (ample
+with the SCAT32-SAFE comparator representing the post-hoc incident-exposure
+sensitivity, whereas in the time-limited, power-available corner (ample
 power, little time; fixed-dwell quality primary) the ridge operating point
 $\rhobar^{*}$ delivers a $+1.87$~dB median gain and
 \texttt{RIDGE\_OPERATING\_PASS} is \textsc{true}, with the curved arrow
@@ -1159,7 +1179,7 @@ Arm & Role & achieved $\rhobar$ & inc.-dose ratio & ceiling frac.
 \hline
 \textsc{SCAT32-SAFE}  & safe ref.\ / speed base & $0.05$  & $0.08\times$ & $<10^{-6}$ & $0.048$ & --- \\
 \textsc{SCAT32-060}   & primary comparator      & $0.60$  & $1.00\times$ & $<10^{-6}$ & $0.375$ & --- \\
-\textsc{RIDGE-SCAT32} & ridge policy (gated)    & $22.25$ & $37.1\times$ & $<10^{-6}$ & $0.935$ & $+1.87$\,/\,$0.276$ \\
+\textsc{RIDGE-SCAT32} & ridge policy (gated)    & $22.25$ & $37.1\times$ & $<10^{-6}$ & $0.935$ & $+1.87$\,/\,$19.127$ \\
 \textsc{SCAT16}       & context                 & $0.60$  & $1.00\times$ & $<10^{-6}$ & $0.375$ & --- \\
 \textsc{LBLOB16}      & context                 & $0.60$  & $1.01\times$ & $<10^{-6}$ & $0.375$ & --- \\
 \hline
@@ -1181,12 +1201,12 @@ one program clarifies that the large fixed-dwell gains of the companion are an
 operating-point effect, not evidence that a design must spatially redistribute
 dose into the ridge.
 
-The frozen verdicts are settled:\ the ridge operating-point primary
+The corrected verdicts are settled:\ the ridge operating-point primary
 \emph{passes} ($\texttt{RIDGE\_OPERATING\_PASS} = $ PASS, median
-$1.87$~dB), the ridge speed secondary \emph{fails} as a preregistered
-negative ($\texttt{RIDGE\_SPEED\_PASS} = $ FAIL, median $S_{\mathrm{gate}}
-0.276$), and the full-stack certificate \emph{fails} to certify
-($\texttt{FULL\_STACK\_CERT\_PASS} = $ FAIL, $0/480$ cells certified); the
+$1.87$~dB), the ridge speed secondary \emph{passes}
+($S_{\mathrm{gate}}=19.13\times$, lower bound $18.33\times$,
+$21/24$ above one), and the full-stack analysis remains descriptive
+($0/480$ cells certified); the
 campaign is preregistered to license only the governing ruling's frozen
 conclusions. Global operating-point control remains the deployed positive
 arm; geometry selection is now known to retain dose-feasible headroom outside
