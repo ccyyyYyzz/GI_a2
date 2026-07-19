@@ -1,0 +1,53 @@
+
+===== cell (m1_dev_glyph, s0, nu=2000, b=0.6) =====
+  setup 25s; deployed SCAT32: logdet=3646.4255 mean_load=0.600000
+  gamma-atom loads (admissible): min=0.0059 med=0.5473 max=13.1122 (budget b=0.6); gamma=5 admissible: 26580 atoms, load range [0.146, 13.112]
+      [cert] round=0 set=840 t=-62927999809069.1719 scan_max=-368639997622.5561 viol=6.26e+13 theta=7.07e+13 |mu|=1024
+      [cert] round=1 set=940 t=-165615626916.5070 scan_max=28245784147785.8984 viol=2.84e+13 theta=0 |mu|=950
+      [cert] round=2 set=1040 t=-145996721884.8873 scan_max=16418647278627.4258 viol=1.66e+13 theta=0 |mu|=875
+      [cert] round=3 set=1140 t=-132001925472.5659 scan_max=14716368799938.8848 viol=1.48e+13 theta=0 |mu|=877
+  TIGHT dual: status=LP_FAIL:The HiGHS status code was not recognized. (HiGHS Status 15: model_status is Unknown; primal_status is Basic) G_full/r=inf theta=-1 MU_CAP_ACTIVE=None n_active_mu=None wall=19s
+      [probe] it=0 load=0.3000 dev=0.0378 best_ld=3743.929
+      [probe] it=20 load=0.3000 dev=0.0379 best_ld=3798.479
+      [probe] it=40 load=0.3000 dev=0.0379 best_ld=3800.799
+      [probe] it=60 load=0.3000 dev=0.0379 best_ld=3801.401
+  PRIMAL probe: best feasible logdet=3801.5772 (it=79, 239s); SCAT32=3646.4255; primal gap/r = 0.7758
+  probe composition: D_load mass=1.000 D_gain mass=0.000; support loads q5/q50/q95 = 0.300/0.300/0.300; budget used=0.3000 (cap 0.6)
+
+===== cell (m1_dev_glyph, s0, nu=200, b=0.05) =====
+  setup 13s; deployed SCAT32: logdet=2788.8337 mean_load=0.050000
+  gamma-atom loads (admissible): min=0.0005 med=0.0405 max=1.5044 (budget b=0.05); gamma=5 admissible: 26624 atoms, load range [0.012, 1.504]
+      [cert] round=0 set=853 t=-4211440436646.6050 scan_max=-20479974224.7320 viol=4.19e+12 theta=4.38e+13 |mu|=1024
+      [cert] round=1 set=953 t=-13751672419.0279 scan_max=1383585937078.2393 viol=1.40e+12 theta=0 |mu|=979
+      [cert] round=2 set=1053 t=-13276443508.2614 scan_max=1295240934489.2896 viol=1.31e+12 theta=0 |mu|=948
+      [cert] round=3 set=1153 t=-12953386980.4267 scan_max=995865347059.1342 viol=1.01e+12 theta=0 |mu|=934
+      [cert] round=4 set=1253 t=-12672953848.2745 scan_max=916465815864.9771 viol=9.29e+11 theta=0 |mu|=906
+      [cert] round=5 set=1353 t=-12554135905.5486 scan_max=562168805544.5382 viol=5.75e+11 theta=0 |mu|=899
+      [cert] round=6 set=1453 t=-12480587004.5082 scan_max=426370730090.4438 viol=4.39e+11 theta=0 |mu|=884
+      [cert] round=7 set=1553 t=-12331668331.6396 scan_max=298133026564.3109 viol=3.10e+11 theta=0 |mu|=870
+      [cert] round=8 set=1653 t=-9739403730.4653 scan_max=604940390338.8676 viol=6.15e+11 theta=0 |mu|=823
+      [cert] round=9 set=1753 t=-5146818109.3513 scan_max=450076516859.1166 viol=4.55e+11 theta=0 |mu|=793
+      [cert] round=10 set=1853 t=-2964694086.4334 scan_max=603725854434.4454 viol=6.07e+11 theta=1.15e+10 |mu|=632
+      [cert] round=11 set=1953 t=-3030936380.8747 scan_max=252177700598.0762 viol=2.55e+11 theta=3.72e+10 |mu|=577
+      [cert] round=12 set=2053 t=-2073087057.7605 scan_max=233675037084.8607 viol=2.36e+11 theta=3.2e+10 |mu|=514
+      [cert] round=13 set=2153 t=-955775509.6659 scan_max=119931159223.2571 viol=1.21e+11 theta=1.68e+10 |mu|=481
+      [cert] round=14 set=2253 t=-471101823.4485 scan_max=80084088638.7394 viol=8.06e+10 theta=9e+09 |mu|=487
+      [cert] round=15 set=2353 t=18043.5017 scan_max=446308.5694 viol=4.28e+05 theta=5.85e+04 |mu|=475
+      [cert] round=16 set=2453 t=18043.5017 scan_max=366648.5749 viol=3.49e+05 theta=6.01e+04 |mu|=498
+      [cert] round=17 set=2553 t=18043.5017 scan_max=257328.4010 viol=2.39e+05 theta=6.23e+04 |mu|=502
+      [cert] round=18 set=2653 t=18043.5017 scan_max=172484.5911 viol=1.54e+05 theta=6.28e+04 |mu|=515
+      [cert] round=19 set=2753 t=18043.5017 scan_max=124339.6894 viol=1.06e+05 theta=6.37e+04 |mu|=535
+      [cert] round=20 set=2853 t=18043.5017 scan_max=147468.0702 viol=1.29e+05 theta=6.44e+04 |mu|=521
+      [cert] round=21 set=2953 t=18043.5017 scan_max=87806.6791 viol=6.98e+04 theta=6.54e+04 |mu|=612
+      [cert] round=22 set=3053 t=18043.5017 scan_max=162968.1561 viol=1.45e+05 theta=6.72e+04 |mu|=612
+      [cert] round=23 set=3153 t=18043.5017 scan_max=73877.8688 viol=5.58e+04 theta=6.74e+04 |mu|=625
+      [cert] round=24 set=3253 t=18043.5017 scan_max=52583.7159 viol=3.45e+04 theta=6.76e+04 |mu|=612
+  TIGHT dual: status=OK G_full/r=106.2085 theta=6.755e+04 MU_CAP_ACTIVE=False n_active_mu=612 wall=1133s
+      [probe] it=0 load=0.0250 dev=0.0378 best_ld=2914.427
+      [probe] it=20 load=0.0250 dev=0.0379 best_ld=2968.119
+      [probe] it=40 load=0.0250 dev=0.0378 best_ld=2969.248
+      [probe] it=60 load=0.0250 dev=0.0378 best_ld=2969.345
+  PRIMAL probe: best feasible logdet=2969.3461 (it=67, 240s); SCAT32=2788.8337; primal gap/r = 0.9026
+  probe composition: D_load mass=1.000 D_gain mass=0.000; support loads q5/q50/q95 = 0.025/0.025/0.025; budget used=0.0250 (cap 0.05)
+
+[probe] DONE

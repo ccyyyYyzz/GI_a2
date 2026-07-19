@@ -140,7 +140,8 @@ def lin_from_duals(ctx, theta, mup, mum):
 # ========================================================================== #
 def full_constrained_cert(ctx, xi, budget, seed_atoms=None, max_rounds=12,
                           verbose=False, V_override=None, dbar_override=None,
-                          dose_override=None, load_override=None):
+                          dose_override=None, load_override=None,
+                          n_pix0=256, mu_cap=1e6, lp_time=120):
     """xi-measure certificate; pass xi=None with the *_override arguments to
     certify an ARBITRARY deployed row set (R17: the exact SCAT32 design) --
     V, d^T xi, dose vector and mean load are then supplied by the caller and
@@ -210,7 +211,7 @@ def full_constrained_cert(ctx, xi, budget, seed_atoms=None, max_rounds=12,
                             for j in range(n)]
     lvl_best = np.argmax(np.where(ctx["ALLOW"], D, -np.inf), axis=1)
     theta, mup, mum, t_val = 0.0, np.zeros(n), np.zeros(n), np.inf
-    n_pix = 256
+    n_pix = int(n_pix0)
     d_scale = max(float(np.max(D[np.isfinite(D)])), 1.0)
     for rnd in range(max_rounds):
         pix = np.sort(pix_rank[:n_pix])
@@ -242,10 +243,10 @@ def full_constrained_cert(ctx, xi, budget, seed_atoms=None, max_rounds=12,
         c_obj = np.zeros(2 + 2 * npx)
         c_obj[0] = 1.0
         c_obj[1] = budget
-        MU_CAP = 1e6          # restricting the dual cone only loosens the
+        MU_CAP = float(mu_cap)  # restricting the dual cone only loosens
         bounds = [(None, None), (0, None)] + [(0, MU_CAP)] * (2 * npx)
         res = linprog(c_obj, A_ub=A_ub, b_ub=b_ub, bounds=bounds,
-                      method="highs", options={"time_limit": 120})
+                      method="highs", options={"time_limit": float(lp_time)})
         if not res.success:
             return {"G_full": float("inf"), "status": "LP_FAIL:" + res.message}
         t_val = float(res.x[0]) * d_scale
@@ -301,7 +302,8 @@ def full_constrained_cert(ctx, xi, budget, seed_atoms=None, max_rounds=12,
             "comp_budget": float(comp_budget),
             "comp_dose": float(comp_dose),
             "dbar": dbar, "t": t_val,
-            "MU_CAP_ACTIVE": bool(max(mup.max(), mum.max()) >= 1e6 - 1e-6),
+            "MU_CAP_ACTIVE": bool(max(mup.max(), mum.max())
+                                  >= float(mu_cap) * (1 - 1e-9)),
             "n_active_mu": int((mup > 1e-12).sum() + (mum > 1e-12).sum())}
 
 
@@ -593,12 +595,12 @@ def _dose_project(ctx, xi, budget, dose_band, verbose=False):
         xi = xi * fac[:, None]
         xi[~ctx["ALLOW"]] = 0.0
         xi /= xi.sum()
-        cur = float((xi @ ctx["levels"]).sum())
+        cur = float((xi * ctx["C"]).sum())
         if cur > budget + 1e-15:
             low = np.zeros_like(xi)
             lo_idx = np.argmax(ctx["ALLOW"], axis=1)
             low[np.arange(ctx["G_tot"]), lo_idx] = xi.sum(axis=1)
-            lmin = float((low @ ctx["levels"]).sum())
+            lmin = float((low * ctx["C"]).sum())
             t_ = 1.0 if lmin >= budget else (cur - budget) / (cur - lmin)
             xi = (1 - t_) * xi + t_ * low
     if it_p >= 399:
@@ -1199,7 +1201,9 @@ def d_cert_sha(side=32):
     return h.hexdigest()
 
 
-def cert_deployed_rows(ctx, rows_rel, budget, verbose=False):
+def cert_deployed_rows(ctx, rows_rel, budget, verbose=False,
+                       kw_rounds=12, kw_npix=256, kw_mucap=1e6,
+                       kw_lptime=120):
     """R17 Sec 4.4-4.5: full dose-constrained certificate of a DEPLOYED
     physical row multiset (rows_rel: relative rows, ~unit-mean-load frame;
     deployed at global mean load = budget). Returns the full_constrained_cert
@@ -1228,7 +1232,9 @@ def cert_deployed_rows(ctx, rows_rel, budget, verbose=False):
     out = full_constrained_cert(
         ctx, None, budget, verbose=verbose, V_override=V,
         dbar_override=dbar, dose_override=dose,
-        load_override=float(loads.mean()))
+        load_override=float(loads.mean()),
+        max_rounds=kw_rounds, n_pix0=kw_npix, mu_cap=kw_mucap,
+        lp_time=kw_lptime)
     out["deployed_mean_load"] = float(loads.mean())
     out["deployed_dose_dev"] = float(np.abs(dose / dose.mean() - 1.0).max())
     out["deployed_peak"] = float(rows_abs.max())
