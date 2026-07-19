@@ -327,10 +327,14 @@ Task-specific finite-rate optima also arise in nuclear counting; for
 example, B\'ecares and Bl\'azquez optimized counting rate by balancing
 dead-time losses, counting uncertainty, source multiplicity, and
 dead-time-calibration uncertainty~\cite{becares2012deadtime}. Gr\"onberg
-et al.\ derived an analytical count-statistics model for nonparalyzable
-detectors with nonzero pulse length, validated it by Monte Carlo
-simulation, and used the model and a Gaussian approximation to compute
-spectral-CT Fisher-performance metrics~\cite{gronberg2018deadtime}.
+et al.\ derived an exact finite-frame count probability mass function for
+a seminonparalyzable detector with nonzero pulse length, validated its
+moments against an electronic Monte Carlo model, and used the exact
+distribution together with Poisson and Gaussian approximations to
+evaluate Fisher information for a single-threshold soft-tissue-density
+task as a function of count rate; their fixed-frame Fisher curve exhibits
+an interior maximum followed by high-rate
+decline~\cite{gronberg2018deadtime}.
 
 A complementary line retains richer event information. Rapp et al.\
 modeled the sequence of dead-time-distorted detection times as a Markov
@@ -341,15 +345,16 @@ estimators for periodic dead-time event-detection processes, showing that
 activation and event statistics can retain information discarded by
 conventional histogram summaries~\cite{jorgensen2026deadtime}.
 
-Here we consider a different observation:\ one finite active-start
-exposure from which only the integrated scalar count is retained. For the
-ideal nonparalyzable model, we derive the exact finite-window Fisher
-information of that count as a function of $\rho = \lambda\tau$ and
-$\nu = T/\tau$, the missing-information identity of
+Here we isolate a different detector-channel question:\ an ideal
+nonparalyzable detector is active at the start of a finite exposure, only
+its integrated scalar count is retained, and the parameter of interest is
+the log arrival rate itself. Treating $\rho = \lambda\tau$ and
+$\nu = T/\tau$ as independent axes, we derive the exact finite-window
+information surface, the terminal-phase missing-information identity of
 Eq.~(\ref{eq:missing}), and the principal information ridge of
-Eq.~(\ref{eq:cuberoot}). These statements are restricted to the
-finite-window scalar count-only observation and do not replace
-task-specific spectral-CT analyses or information bounds for
+Eq.~(\ref{eq:cuberoot}). These statements concern the active-start ideal
+count-only channel and do not replace task-specific finite-rate optima
+for nonzero-pulse-length detectors or information bounds for
 time-resolved dead-time event records.
 
 \section{Study 1: dense patterns --- the multiplex-limited phase}
@@ -521,6 +526,24 @@ effects compete --- $k = 32$ combines most of the contrast benefit with
 half the conditioning burden of $k = 16$ and attains the largest gain. The
 dense-rung value reproduces the Study-1 magnitude, confirming that the
 $64^{2}$-to-$32^{2}$ re-parameterization did not manufacture the effect.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\linewidth]{figs/fig_s2_gallery.pdf}
+  \caption{Study-2 reconstructions at the gate-carrying occupancy
+  ($k = 16$, RQL, seed~0), all through the frozen production path.
+  Row subjects by disclosed rule:\ the preregistered display subject
+  (spokes), the largest fixed-dwell gain in the frozen verdict table
+  (maze, $+9.7$~dB seed-mean --- a best case, labeled as such), and a
+  failing-family representative (microtexture). Columns:\ truth; safe
+  operating point at full dwell; high flux at one tenth of the dwell;
+  high flux at full dwell. On contrast-adequate scenes the high-flux arm
+  matches the safe arm's quality in a tenth of the acquisition time and
+  far exceeds it at equal time ($22.0 \to 32.4$~dB on the maze), while
+  the low-contrast microtexture is indifferent to flux at every dwell ---
+  the operating map in three rows.}
+  \label{fig:gallery}
+\end{figure}
 
 \subsection{Mechanism separation: equal-load gain is not rate starvation}
 % Numbers: separation CSVs (commit b0a70ad). The closest-prior killer
