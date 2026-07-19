@@ -1,0 +1,170 @@
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex)
+ restricted \write18 enabled.
+entering extended mode
+(./main_oe.tex
+LaTeX2e <2023-11-01> patch level 1
+L3 programming layer <2024-02-20>
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2023/05/17 v1.4n Standard LaTeX document class
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/base/size10.clo))
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/amsmath/amsmath.sty
+For additional information on amsmath, use the `?' option.
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/amsmath/amstext.sty
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/amsmath/amsgen.sty))
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/amsmath/amsbsy.sty)
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/amsmath/amsopn.sty))
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/amsfonts/amssymb.sty
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/amsfonts/amsfonts.sty))
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/tools/bm.sty)
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/graphics/graphicx.sty
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/graphics/keyval.sty)
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/graphics/graphics.sty
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/graphics/trig.sty)
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/graphics-cfg/graphics.cfg)
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/graphics-def/pdftex.def)))
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/geometry/geometry.sty
+(d:/Program Files/texlive/2024/texmf-dist/tex/generic/iftex/ifvtex.sty
+(d:/Program Files/texlive/2024/texmf-dist/tex/generic/iftex/iftex.sty)))
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/xcolor/xcolor.sty
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/graphics-cfg/color.cfg)
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/graphics/mathcolor.ltx))
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/hyperref/hyperref.sty
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/kvsetkeys/kvsetkeys.sty)
+(d:/Program Files/texlive/2024/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys
+.sty)
+(d:/Program Files/texlive/2024/texmf-dist/tex/generic/pdfescape/pdfescape.sty
+(d:/Program Files/texlive/2024/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty)
+(d:/Program Files/texlive/2024/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty
+(d:/Program Files/texlive/2024/texmf-dist/tex/generic/infwarerr/infwarerr.sty))
+) (d:/Program Files/texlive/2024/texmf-dist/tex/latex/hycolor/hycolor.sty)
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/auxhook/auxhook.sty)
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/hyperref/nameref.sty
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/refcount/refcount.sty)
+(d:/Program Files/texlive/2024/texmf-dist/tex/generic/gettitlestring/gettitlest
+ring.sty
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/kvoptions/kvoptions.sty)))
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/etoolbox/etoolbox.sty)
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/hyperref/pd1enc.def)
+(d:/Program Files/texlive/2024/texmf-dist/tex/generic/intcalc/intcalc.sty)
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/hyperref/puenc.def)
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/url/url.sty)
+(d:/Program Files/texlive/2024/texmf-dist/tex/generic/bitset/bitset.sty
+(d:/Program Files/texlive/2024/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty
+)) (d:/Program Files/texlive/2024/texmf-dist/tex/latex/base/atbegshi-ltx.sty))
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/hyperref/hpdftex.def
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/base/atveryend-ltx.sty)
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/rerunfilecheck/rerunfileche
+ck.sty
+(d:/Program Files/texlive/2024/texmf-dist/tex/generic/uniquecounter/uniquecount
+er.sty)))
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/l3backend/l3backend-pdftex.
+def) (tmp/main_oe.aux)
+(d:/Program Files/texlive/2024/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+)
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.
+sty
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cf
+g))
+*geometry* driver: auto-detecting
+*geometry* detected driver: pdftex
+(tmp/main_oe.out) (tmp/main_oe.out)
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/amsfonts/umsa.fd)
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/amsfonts/umsb.fd)
+Underfull \vbox (badness 10000) has occurred while \output is active
+Underfull \hbox (badness 1194) in paragraph at lines 93--103
+\OT1/cmr/m/n/10 CRLB degra-da-tion, task-specific op-ti-mal op-er-at-ing
+
+Overfull \hbox (117.65833pt too wide) detected at line 133
+[][][]\OML/cmm/m/it/10 P\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 N[] \OMS/cmsy/m/n/10 
+^^U \OML/cmm/m/it/10 m\OT1/cmr/m/n/10 ) = \OML/cmm/m/it/10 F[] []T \OMS/cmsy/m/
+n/10 ^^@ \OT1/cmr/m/n/10 (\OML/cmm/m/it/10 m \OMS/cmsy/m/n/10 ^^@ \OT1/cmr/m/n/
+10 1)\OML/cmm/m/it/10 ^^\[] \OT1/cmr/m/n/10 = \OML/cmm/m/it/10 P[][]\OT1/cmr/m/
+n/10 (\OML/cmm/m/it/10 z[]\OT1/cmr/m/n/10 ) \OMS/cmsy/m/n/10 ^^U \OML/cmm/m/it/
+10 m[];  z[] \OT1/cmr/m/n/10 = \OML/cmm/m/it/10 ^^U[] \OT1/cmr/m/n/10 (\OML/cmm
+/m/it/10 T \OMS/cmsy/m/n/10 ^^@ \OT1/cmr/m/n/10 (\OML/cmm/m/it/10 m \OMS/cmsy/m
+/n/10 ^^@ \OT1/cmr/m/n/10 1)\OML/cmm/m/it/10 ^^\\OT1/cmr/m/n/10 )\OML/cmm/m/it/
+10 :
+[1{d:/Program Files/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+
+Underfull \hbox (badness 2245) in paragraph at lines 140--140
+[]\OT1/cmr/bx/n/14.4 Renewal quasi-likelihood re-
+
+Overfull \hbox (35.7315pt too wide) detected at line 151
+[][][][] \OT1/cmr/m/n/10 = [] []  [] [][](\OML/cmm/m/it/10 T \OMS/cmsy/m/n/10 ^
+^@ \OML/cmm/m/it/10 N[]^^\\OT1/cmr/m/n/10 ) \OML/cmm/m/it/10 ^^U[]\OT1/cmr/m/n/
+10 (\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) \OMS/cmsy/m/n/10 ^^@ \OML/cmm/m/it/10 N
+[] [] ^^U[]\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 )[] + \OML/cmm/m/
+it/10 ^^U[] []\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 )\OML/cmm/m/it
+/10 ;
+
+Underfull \hbox (badness 10000) in paragraph at lines 187--187
+[]\OT1/cmr/bx/n/14.4 The finite-window count-
+
+Overfull \hbox (114.49747pt too wide) detected at line 237
+[][][]\OML/cmm/m/it/10 J\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 ^^Z[]\OT1/cmr/m/n/10 
+) = 1 \OMS/cmsy/m/n/10 ^^@ []\OML/cmm/m/it/10 c[] \OT1/cmr/m/n/10 + \OML/cmm/m/
+it/10 c[]=\OT1/cmr/m/n/10 12[] \OML/cmm/m/it/10 ^^W[] \OT1/cmr/m/n/10 + \OML/cm
+m/m/it/10 o\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 ^^W[]\OT1/cmr/m/n/10 ) = 1 \OMS/cm
+sy/m/n/10 ^^@ \OT1/cmr/m/n/10 0\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 8255 \OML/cmm/
+m/it/10 ^^W[] \OT1/cmr/m/n/10 + \OML/cmm/m/it/10 o\OT1/cmr/m/n/10 (\OML/cmm/m/i
+t/10 ^^W[]\OT1/cmr/m/n/10 )\OML/cmm/m/it/10 ;  c \OT1/cmr/m/n/10 = 6[]\OML/cmm/
+m/it/10 :
+[2]
+Underfull \hbox (badness 1112) in paragraph at lines 273--274
+\OT1/cmr/m/n/10 by-equation full-text check (S5 hard item); word-
+
+Underfull \hbox (badness 3260) in paragraph at lines 304--304
+[]\OT1/cmr/bx/n/12 Natural-scene co-hort (sec-ondary,
+
+Underfull \hbox (badness 10000) in paragraph at lines 307--316
+\OT1/cmr/m/n/10 On the pre-reg-is-tered natural-image co-hort (30
+
+Underfull \hbox (badness 2213) in paragraph at lines 307--316
+\OT1/cmr/m/n/10 co-hort: me-dian $+1\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 44$ dB, $
+29\OML/cmm/m/it/10 =\OT1/cmr/m/n/10 30$ scenes pos-i-tive,
+
+Underfull \hbox (badness 1331) in paragraph at lines 307--316
+\OT1/cmr/m/n/10 family-stratified boot-strap lower bound $+1\OML/cmm/m/it/10 :\
+OT1/cmr/m/n/10 18$ dB.
+
+Underfull \hbox (badness 2261) in paragraph at lines 307--316
+\OT1/cmr/m/n/10 benefit re-gion of the acquisition-speed map even
+
+Underfull \hbox (badness 2285) in paragraph at lines 318--327
+\OT1/cmr/m/n/10 con-trast of dense mul-ti-plexed il-lu-mi-na-tion. For
+[3]
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 359.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 359.
+
+[4]
+Underfull \hbox (badness 1038) in paragraph at lines 470--480
+\OT1/cmr/m/n/10 suf-fi-ciently many, pre-reg-is-tered scenes to pass the
+[5] [6{d:/Program Files/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-sup
+er-ts1.enc}] (tmp/main_oe.aux) )
+(see the transcript file for additional information)<d:/Program Files/texlive/2
+024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><d:/Program Files/texl
+ive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><d:/Program File
+s/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><d:/Program
+ Files/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><d:/Pr
+ogram Files/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><
+d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.p
+fb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmm
+i7.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm
+/cmr10.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/amsfont
+s/cm/cmr12.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmr17.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public
+/amsfonts/cm/cmr7.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/pub
+lic/amsfonts/cm/cmsy10.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type
+1/public/amsfonts/cm/cmsy7.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmti10.pfb><d:/Program Files/texlive/2024/texmf-dist/f
+onts/type1/public/amsfonts/symbols/msam10.pfb><d:/Program Files/texlive/2024/te
+xmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb><d:/Program Files/texli
+ve/2024/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb>
+Output written on tmp/main_oe.pdf (6 pages, 223497 bytes).
+Transcript written on tmp/main_oe.log.

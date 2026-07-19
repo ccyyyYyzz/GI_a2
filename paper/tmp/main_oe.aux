@@ -1,0 +1,109 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\citation{duarte2008singlepixel}
+\citation{shapiro2008computational}
+\citation{edgar2019principles}
+\citation{hao2025photonlimited}
+\citation{hao2025randommedia}
+\citation{hao2025complexfield}
+\citation{rapp2019deadtime}
+\citation{rapp2021highflux}
+\citation{gupta2019photonflooded}
+\citation{gupta2019asynchronous}
+\citation{liu2021photoncounting}
+\citation{jorgensen2026deadtime}
+\citation{wang2011pileup}
+\citation{becares2012deadtime}
+\citation{gupta2019photonflooded}
+\citation{rapp2019deadtime}
+\citation{jorgensen2026deadtime}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{section.1}\protected@file@percent }
+\citation{liu2019pileup}
+\citation{han2025sparsehadamard}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Physical model and problem statement}{2}{section.2}\protected@file@percent }
+\newlabel{sec:model}{{2}{2}{Physical model and problem statement}{section.2}{}}
+\newlabel{eq:exactpmf}{{1}{2}{Physical model and problem statement}{equation.2.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3}Renewal quasi-likelihood reconstruction}{2}{section.3}\protected@file@percent }
+\newlabel{sec:rql}{{3}{2}{Renewal quasi-likelihood reconstruction}{section.3}{}}
+\newlabel{eq:rql}{{2}{2}{Renewal quasi-likelihood reconstruction}{equation.3.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Truth-free regularization selection and descriptive audit}{2}{subsection.3.1}\protected@file@percent }
+\newlabel{sec:selection}{{3.1}{2}{Truth-free regularization selection and descriptive audit}{subsection.3.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Contrast--dead-time operating map for high-flux single-pixel imaging. DMD: digital micromirror device; SPD: single-pixel (bucket) photon-counting detector; RQL: renewal quasi-likelihood reconstruction; $a_i$: binary illumination pattern; $x$: scene; $N_i$: integrated bucket count; $\hat  {x}$: reconstruction; $\Phi $: incident-flux scale; $d$: dark rate; $\tau $: detector dead time; $\rho =\lambda \tau $: per-slot detector load; $\nu =T/\tau $: dead-time slots per exposure $T$; $C_{u}=\mathrm  {sd}_i(u_i) /\mathrm  {mean}_i(u_i)$: measured bucket-energy contrast of $u_i=a_i^{\top }x$; $\Gamma =C_{u}\sqrt  {\nu \rho /(1+\rho )}$: contrast-to-count-noise index. (a)~Single-pixel imaging chain: structured illumination from a DMD probes a low- or high-contrast scene $x$, and the bucket counts $N_i$ feed the RQL reconstruction $\hat  {x}$ under the forward model $\lambda _i=\Phi \,a_i^{\top }x+d$, exposure $T=\nu \tau $. (b)~Dead-time mechanism: after each registered count the detector is blind for $\tau $ (shaded), censoring later arrivals ($\times $); the mean detected counts per slot $\nu _{\det }/\nu =\rho /(1+\rho )$ bend away from the ideal (dashed) as the load rises, while the exact count-information peaks on the ridge $\rho ^{*}(\nu )=(6\nu )^{1/3}-2/3$ ($\rho ^{*}\approx 7.8$ and $22.2$ at $\nu =100$ and $2000$, respectively), well beyond the conventional $\rho =0.05$ and the high-flux $\bar  {\rho }=0.6$ operating points. (c)~Operating map in the contrast--load plane: the photon-limited onset $\Gamma =1$ separates the multiplex-limited region ($\Gamma <1$, below) from the region where high-flux operation helps (above); the six Study-2 structural families are placed at the high-flux operating load $\bar  {\rho }=0.6$ by their measured bucket contrast and coloured by the frozen acquisition-speed gate outcome, with the number of accelerating instances shown as a green wedge: maze ($C_{u}=0.53$), glyph ($0.41$) and spokes ($0.38$) accelerate $4/4$, chirp ($0.28$) $3/4$, contour ($0.27$) $1/4$, and microtexture ($0.17$) $0/4$, respectively, while the dense $k=512$ rung ($C_{u}=0.040$) sits at the $\Gamma =1$ multiplex-limited boundary. All six family markers share the single operating load $\bar  {\rho }=0.6$; the horizontal offsets are cosmetic, applied only to separate near-coincident markers (chirp and contour differ by $0.01$ in $C_{u}$), and thin leader lines tie each family label to its marker. The contrast-controlled transition band is descriptive and does not estimate a universal critical contrast. Grayscale object icons are for display purposes.}}{3}{figure.1}\protected@file@percent }
+\newlabel{fig:mechanism}{{1}{3}{Contrast--dead-time operating map for high-flux single-pixel imaging. DMD: digital micromirror device; SPD: single-pixel (bucket) photon-counting detector; RQL: renewal quasi-likelihood reconstruction; $a_i$: binary illumination pattern; $x$: scene; $N_i$: integrated bucket count; $\hat {x}$: reconstruction; $\Phi $: incident-flux scale; $d$: dark rate; $\tau $: detector dead time; $\rho =\lambda \tau $: per-slot detector load; $\nu =T/\tau $: dead-time slots per exposure $T$; $\Cu =\mathrm {sd}_i(u_i) /\mathrm {mean}_i(u_i)$: measured bucket-energy contrast of $u_i=a_i^{\top }x$; $\Gamma =\Cu \sqrt {\nu \rho /(1+\rho )}$: contrast-to-count-noise index. (a)~Single-pixel imaging chain: structured illumination from a DMD probes a low- or high-contrast scene $x$, and the bucket counts $N_i$ feed the RQL reconstruction $\hat {x}$ under the forward model $\lambda _i=\Phi \,a_i^{\top }x+d$, exposure $T=\nu \tau $. (b)~Dead-time mechanism: after each registered count the detector is blind for $\tau $ (shaded), censoring later arrivals ($\times $); the mean detected counts per slot $\nu _{\det }/\nu =\rho /(1+\rho )$ bend away from the ideal (dashed) as the load rises, while the exact count-information peaks on the ridge $\rho ^{*}(\nu )=(6\nu )^{1/3}-2/3$ ($\rho ^{*}\approx 7.8$ and $22.2$ at $\nu =100$ and $2000$, respectively), well beyond the conventional $\rho =0.05$ and the high-flux $\rhobar =0.6$ operating points. (c)~Operating map in the contrast--load plane: the photon-limited onset $\Gamma =1$ separates the multiplex-limited region ($\Gamma <1$, below) from the region where high-flux operation helps (above); the six Study-2 structural families are placed at the high-flux operating load $\rhobar =0.6$ by their measured bucket contrast and coloured by the frozen acquisition-speed gate outcome, with the number of accelerating instances shown as a green wedge: maze ($\Cu =0.53$), glyph ($0.41$) and spokes ($0.38$) accelerate $4/4$, chirp ($0.28$) $3/4$, contour ($0.27$) $1/4$, and microtexture ($0.17$) $0/4$, respectively, while the dense $k=512$ rung ($\Cu =0.040$) sits at the $\Gamma =1$ multiplex-limited boundary. All six family markers share the single operating load $\rhobar =0.6$; the horizontal offsets are cosmetic, applied only to separate near-coincident markers (chirp and contour differ by $0.01$ in $\Cu $), and thin leader lines tie each family label to its marker. The contrast-controlled transition band is descriptive and does not estimate a universal critical contrast. Grayscale object icons are for display purposes}{figure.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}The finite-window count-information ridge}{3}{section.4}\protected@file@percent }
+\newlabel{sec:ridge}{{4}{3}{The finite-window count-information ridge}{section.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}The missing-information identity}{3}{subsection.4.1}\protected@file@percent }
+\citation{muller1973deadtime}
+\citation{yu2000mean}
+\citation{wang2011pileup}
+\citation{alvarez2014pileup}
+\citation{becares2012deadtime}
+\citation{gronberg2018deadtime}
+\citation{rapp2021highflux}
+\citation{jorgensen2026deadtime}
+\newlabel{eq:missing}{{3}{4}{The missing-information identity}{equation.4.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}The cube-root law}{4}{subsection.4.2}\protected@file@percent }
+\newlabel{eq:Jexpansion}{{4}{4}{The cube-root law}{equation.4.4}{}}
+\newlabel{eq:cuberoot}{{5}{4}{The cube-root law}{equation.4.5}{}}
+\newlabel{eq:peakJ}{{6}{4}{The cube-root law}{equation.4.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Deployment zoning and the CLT trust boundary}{4}{subsection.4.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Relation to prior work}{4}{subsection.4.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5}Study 1: dense patterns --- the multiplex-limited phase}{5}{section.5}\protected@file@percent }
+\newlabel{sec:study1}{{5}{5}{Study 1: dense patterns --- the multiplex-limited phase}{section.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Preregistered design}{5}{subsection.5.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Preregistered outcome}{5}{subsection.5.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Natural-cohort representative:\ truth, safe operating point at full dwell ($13.8$~dB), and high-flux RQL at equal dwell ($15.9$~dB). Display subject selected by rule (disclosed):\ the photograph whose fixed-dwell gain lies closest to the cohort median of $+1.44$~dB (\texttt  {stl\_16}, $+1.46$~dB) --- a median representative, not a best case. The cohort is prior-limited at the studied photon budget:\ reconstructions are spatially smoothed and the high-flux benefit is radiometric, visible both in the recovered coarse structure and in the center-row intensity profile (right):\ the safe arm is nearly flat while the high-flux arm tracks the scene's intensity excursions at equal dwell.}}{5}{figure.2}\protected@file@percent }
+\newlabel{fig:natpair}{{2}{5}{Natural-cohort representative:\ truth, safe operating point at full dwell ($13.8$~dB), and high-flux RQL at equal dwell ($15.9$~dB). Display subject selected by rule (disclosed):\ the photograph whose fixed-dwell gain lies closest to the cohort median of $+1.44$~dB (\texttt {stl\_16}, $+1.46$~dB) --- a median representative, not a best case. The cohort is prior-limited at the studied photon budget:\^^Mreconstructions are spatially smoothed and the high-flux benefit is radiometric, visible both in the recovered coarse structure and in the center-row intensity profile (right):\ the safe arm is nearly flat while the high-flux arm tracks the scene's intensity excursions at equal dwell}{figure.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Natural-scene cohort (secondary, no gate)}{5}{subsection.5.3}\protected@file@percent }
+\citation{liu2019pileup}
+\citation{han2025sparsehadamard}
+\citation{hao2025photonlimited}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.4}Mechanism: bucket multiplex contrast}{6}{subsection.5.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6}Study 2: the contrast ladder --- equal load, equal dose}{6}{section.6}\protected@file@percent }
+\newlabel{sec:study2}{{6}{6}{Study 2: the contrast ladder --- equal load, equal dose}{section.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Preregistered design}{6}{subsection.6.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}The measured contrast ladder}{6}{subsection.6.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.3}Primary confirmatory outcome ($k = 16$)}{6}{subsection.6.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.4}Fixed-dwell gain along the ladder}{6}{subsection.6.4}\protected@file@percent }
+\citation{hao2025photonlimited}
+\citation{hao2025photonlimited}
+\citation{hao2025photonlimited}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Study-2 reconstructions at the gate-carrying occupancy ($k = 16$, RQL, seed~0), all through the frozen production path. Row subjects by disclosed rule:\ the preregistered display subject (spokes), the largest fixed-dwell gain in the frozen verdict table (maze, $+9.7$~dB seed-mean --- a best case, labeled as such), and a failing-family representative (microtexture). Columns:\ truth; safe operating point at full dwell; high flux at one tenth of the dwell; high flux at full dwell. On contrast-adequate scenes the high-flux arm matches the safe arm's quality in a tenth of the acquisition time and far exceeds it at equal time ($22.0 \to 32.4$~dB on the maze), while the low-contrast microtexture is indifferent to flux at every dwell --- the operating map in three rows.}}{7}{figure.3}\protected@file@percent }
+\newlabel{fig:gallery}{{3}{7}{Study-2 reconstructions at the gate-carrying occupancy ($k = 16$, RQL, seed~0), all through the frozen production path. Row subjects by disclosed rule:\ the preregistered display subject (spokes), the largest fixed-dwell gain in the frozen verdict table (maze, $+9.7$~dB seed-mean --- a best case, labeled as such), and a failing-family representative (microtexture). Columns:\ truth; safe operating point at full dwell; high flux at one tenth of the dwell; high flux at full dwell. On contrast-adequate scenes the high-flux arm matches the safe arm's quality in a tenth of the acquisition time and far exceeds it at equal time ($22.0 \to 32.4$~dB on the maze), while the low-contrast microtexture is indifferent to flux at every dwell --- the operating map in three rows}{figure.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.5}Mechanism separation: equal-load gain is not rate starvation}{7}{subsection.6.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.6}Dynamic scattering}{7}{subsection.6.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.7}Robustness to detector mismatch}{7}{subsection.6.7}\protected@file@percent }
+\newlabel{sec:mismatch}{{6.7}{7}{Robustness to detector mismatch}{subsection.6.7}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.8}Exact-likelihood reference at small scale}{7}{subsection.6.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {7}Discussion}{7}{section.7}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Study~1:\ the dense-pattern multiplex-limited regime (frozen preregistered display subjects). (a)~Image arrays for the confirmatory detail subject \texttt  {detail\_glyph\_0} (top, with the frozen zoom crop) and the natural-cohort boundary subject \texttt  {stl\_02} (bottom):\ truth, safe operating point at full and short dwell, and the three high-flux arms at $\bar  {\rho }= 0.6$, $\nu = 50$. Dense multiplexing leaves the detail subject prior-limited in every arm (the frozen negative made visible), while on the natural subject the naive and pre-corrected arms collapse ($9.1$ and $1.0$~dB) and RQL retains full quality ($18.0$~dB). (b)~Seed-mean radiometric PSNR versus optical integration time for all 24 detail scenes (thin lines) with cohort medians (thick):\ the safe-arm median spans less than $0.2$~dB --- the safe-range-uninformative verdict. (c)~Per-scene acquisition-speed bounds versus fast-arm load:\ every scene sits at the $S = 1$ censoring bound, below the preregistered gate bar, while the count-rate ratio (dotted) shows what the detector alone would permit --- the gap between the two is the multiplex limitation.}}{8}{figure.4}\protected@file@percent }
+\newlabel{fig:study1}{{4}{8}{Study~1:\ the dense-pattern multiplex-limited regime (frozen preregistered display subjects). (a)~Image arrays for the confirmatory detail subject \texttt {detail\_glyph\_0} (top, with the frozen zoom crop) and the natural-cohort boundary subject \texttt {stl\_02} (bottom):\^^Mtruth, safe operating point at full and short dwell, and the three high-flux arms at $\rhobar = 0.6$, $\nu = 50$. Dense multiplexing leaves the detail subject prior-limited in every arm (the frozen negative made visible), while on the natural subject the naive and pre-corrected arms collapse ($9.1$ and $1.0$~dB) and RQL retains full quality ($18.0$~dB). (b)~Seed-mean radiometric PSNR versus optical integration time for all 24 detail scenes (thin lines) with cohort medians (thick):\^^Mthe safe-arm median spans less than $0.2$~dB --- the safe-range-uninformative verdict. (c)~Per-scene acquisition-speed bounds versus fast-arm load:\ every scene sits at the $S = 1$ censoring bound, below the preregistered gate bar, while the count-rate ratio (dotted) shows what the detector alone would permit --- the gap between the two is the multiplex limitation}{figure.4}{}}
+\citation{rapp2019deadtime}
+\citation{rapp2021highflux}
+\bibstyle{unsrt}
+\bibdata{refs}
+\bibcite{duarte2008singlepixel}{1}
+\bibcite{shapiro2008computational}{2}
+\bibcite{edgar2019principles}{3}
+\bibcite{hao2025photonlimited}{4}
+\bibcite{hao2025randommedia}{5}
+\bibcite{hao2025complexfield}{6}
+\bibcite{rapp2019deadtime}{7}
+\bibcite{rapp2021highflux}{8}
+\bibcite{gupta2019photonflooded}{9}
+\bibcite{gupta2019asynchronous}{10}
+\bibcite{liu2021photoncounting}{11}
+\bibcite{jorgensen2026deadtime}{12}
+\bibcite{wang2011pileup}{13}
+\bibcite{becares2012deadtime}{14}
+\bibcite{liu2019pileup}{15}
+\bibcite{han2025sparsehadamard}{16}
+\bibcite{muller1973deadtime}{17}
+\bibcite{yu2000mean}{18}
+\bibcite{alvarez2014pileup}{19}
+\bibcite{gronberg2018deadtime}{20}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces The contrast--dead-time operating map (Study~2). (a)~Exact count-Fisher-information map with the cube-root ridge $\rho ^{*}(\nu )$. (b)~Representative occupancy-ladder masks ($k = 512/32/16/1$) under equal mean detector load and equal incident dose ($A = (n/k)B$, $\Phi = \bar  {\rho }/\tau $). (c)~Measured bucket contrast $C_{u}$ and photon-limited index $\Gamma $ versus occupancy; the dense rung sits at the $\Gamma = 1$ threshold. (d)~Radiometric PSNR and CNR versus dwell for the preregistered resolution-target subject (\texttt  {detail32\_spokes\_0}, $k = 16$); the ridge of panel~(a) is a scalar count-information result and no coincidence with the image optimum is claimed. (e)~Fixed-dwell gain by occupancy (top; the dotted line is the $k = 16$ preregistered bar) and per-scene acquisition speedups on the gate-carrying $k = 16$ arm (bottom); open markers are fast-arm-censored scenes. (f)~Dynamic-scattering secondary in measured-photons units; the shaded band is the experimental range of Ref.~\cite  {hao2025photonlimited}.}}{11}{figure.5}\protected@file@percent }
+\newlabel{fig:ladder}{{5}{11}{The contrast--dead-time operating map (Study~2). (a)~Exact count-Fisher-information map with the cube-root ridge $\rho ^{*}(\nu )$. (b)~Representative occupancy-ladder masks ($k = 512/32/16/1$) under equal mean detector load and equal incident dose ($A = (n/k)B$, $\Phi = \rhobar /\tau $). (c)~Measured bucket contrast $\Cu $ and photon-limited index $\Gamma $ versus occupancy; the dense rung sits at the $\Gamma = 1$ threshold. (d)~Radiometric PSNR and CNR versus dwell for the preregistered resolution-target subject (\texttt {detail32\_spokes\_0}, $k = 16$); the ridge of panel~(a) is a scalar count-information result and no coincidence with the image optimum is claimed. (e)~Fixed-dwell gain by occupancy (top; the dotted line is the $k = 16$ preregistered bar) and per-scene acquisition speedups on the gate-carrying $k = 16$ arm (bottom); open markers are fast-arm-censored scenes. (f)~Dynamic-scattering secondary in measured-photons units; the shaded band is the experimental range of Ref.~\cite {hao2025photonlimited}}{figure.5}{}}
+\gdef \@abspage@last{11}

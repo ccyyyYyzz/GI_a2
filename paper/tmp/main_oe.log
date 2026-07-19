@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.9.25)  19 JUL 2026 19:14
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.9.25)  19 JUL 2026 19:18
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**supplement_m1.tex
-(./supplement_m1.tex
+**main_oe.tex
+(./main_oe.tex
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-02-20>
 (d:/Program Files/texlive/2024/texmf-dist/tex/latex/base/article.cls
@@ -313,47 +313,45 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 )
 \Hy@SectionHShift=\skip53
 )
-\c@proposition=\count289
-
 (d:/Program Files/texlive/2024/texmf-dist/tex/latex/l3backend/l3backend-pdftex.
 def
 File: l3backend-pdftex.def 2024-02-20 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count290
+\l__color_backend_stack_int=\count289
 \l__pdf_internal_box=\box53
-) (tmp/supplement_m1.aux)
-\openout1 = `supplement_m1.aux'.
+) (tmp/main_oe.aux)
+\openout1 = `main_oe.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 38.
-LaTeX Font Info:    ... okay on input line 38.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 38.
-LaTeX Font Info:    ... okay on input line 38.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 38.
-LaTeX Font Info:    ... okay on input line 38.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 38.
-LaTeX Font Info:    ... okay on input line 38.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 38.
-LaTeX Font Info:    ... okay on input line 38.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 38.
-LaTeX Font Info:    ... okay on input line 38.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 38.
-LaTeX Font Info:    ... okay on input line 38.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 38.
-LaTeX Font Info:    ... okay on input line 38.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 38.
-LaTeX Font Info:    ... okay on input line 38.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
 
 (d:/Program Files/texlive/2024/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count291
+\scratchcounter=\count290
 \scratchdimen=\dimen164
 \scratchbox=\box54
-\nofMPsegments=\count292
-\nofMParguments=\count293
+\nofMPsegments=\count291
+\nofMParguments=\count292
 \everyMPshowfont=\toks24
-\MPscratchCnt=\count294
+\MPscratchCnt=\count293
 \MPscratchDim=\dimen165
-\MPnumerator=\count295
-\makeMPintoPDFobject=\count296
+\MPnumerator=\count294
+\makeMPintoPDFobject=\count295
 \everyMPtoPDFconversion=\toks25
 )
 (d:/Program Files/texlive/2024/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.
@@ -375,112 +373,290 @@ e
 * layout: <same size as paper>
 * layoutoffset:(h,v)=(0.0pt,0.0pt)
 * modes: 
-* h-part:(L,W,R)=(71.13188pt, 472.03123pt, 71.13188pt)
-* v-part:(T,H,B)=(71.13188pt, 652.70622pt, 71.13188pt)
+* h-part:(L,W,R)=(62.59596pt, 489.10307pt, 62.59596pt)
+* v-part:(T,H,B)=(62.59596pt, 669.77806pt, 62.59596pt)
 * \paperwidth=614.295pt
 * \paperheight=794.96999pt
-* \textwidth=472.03123pt
-* \textheight=652.70622pt
-* \oddsidemargin=-1.1381pt
-* \evensidemargin=-1.1381pt
-* \topmargin=-38.1381pt
+* \textwidth=489.10307pt
+* \textheight=669.77806pt
+* \oddsidemargin=-9.67403pt
+* \evensidemargin=-9.67403pt
+* \topmargin=-46.67403pt
 * \headheight=12.0pt
 * \headsep=25.0pt
 * \topskip=10.0pt
 * \footskip=30.0pt
-* \marginparwidth=65.0pt
-* \marginparsep=11.0pt
+* \marginparwidth=4.0pt
+* \marginparsep=10.0pt
 * \columnsep=10.0pt
 * \skip\footins=9.0pt plus 4.0pt minus 2.0pt
 * \hoffset=0.0pt
 * \voffset=0.0pt
 * \mag=1000
-* \@twocolumnfalse
+* \@twocolumntrue
 * \@twosidefalse
 * \@mparswitchfalse
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-Package hyperref Info: Link coloring OFF on input line 38.
-(tmp/supplement_m1.out) (tmp/supplement_m1.out)
+Package hyperref Info: Link coloring OFF on input line 33.
+(tmp/main_oe.out) (tmp/main_oe.out)
 \@outlinefile=\write3
-\openout3 = `supplement_m1.out'.
+\openout3 = `main_oe.out'.
 
-LaTeX Font Info:    Trying to load font information for U+msa on input line 40.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 35.
 
 
 (d:/Program Files/texlive/2024/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 40.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 35.
 
 
 (d:/Program Files/texlive/2024/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-) [1
+)
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-{d:/Program Files/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [
-2{d:/Program Files/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts
-1.enc}] [3]
-Overfull \hbox (51.70941pt too wide) in paragraph at lines 413--442
-\OT1/cmtt/m/n/10 908cfccbd249de22\OT1/cmr/m/n/10 ). The terminal-status dis-tri
--bu-tion is $0$ \OT1/cmtt/m/n/10 CERTIFIED\OT1/cmr/m/n/10 , $299$ \OT1/cmtt/m/n
-/10 COUNTEREXAMPLE\OT1/cmr/m/n/10 , $181$ \OT1/cmtt/m/n/10 NUMERICAL[]UNRESOLVE
-D\OT1/cmr/m/n/10 ,
+
+Underfull \hbox (badness 1194) in paragraph at lines 114--124
+\OT1/cmr/m/n/10 CRLB degra-da-tion, task-specific op-ti-mal op-er-at-ing
+ []
+
+[1{d:/Program Files/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
+
+
+]
+<figs/fig_mechanism_p1.pdf, id=151, 517.45322pt x 361.35pt>
+File: figs/fig_mechanism_p1.pdf Graphic file (type pdf)
+<use figs/fig_mechanism_p1.pdf>
+Package pdftex.def Info: figs/fig_mechanism_p1.pdf  used on input line 154.
+(pdftex.def)             Requested size: 489.10307pt x 341.56027pt.
+
+Overfull \hbox (117.65833pt too wide) detected at line 210
+[][][]\OML/cmm/m/it/10 P\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 N[] \OMS/cmsy/m/n/10 
+^^U \OML/cmm/m/it/10 m\OT1/cmr/m/n/10 ) = \OML/cmm/m/it/10 F[] []T \OMS/cmsy/m/
+n/10 ^^@ \OT1/cmr/m/n/10 (\OML/cmm/m/it/10 m \OMS/cmsy/m/n/10 ^^@ \OT1/cmr/m/n/
+10 1)\OML/cmm/m/it/10 ^^\[] \OT1/cmr/m/n/10 = \OML/cmm/m/it/10 P[][]\OT1/cmr/m/
+n/10 (\OML/cmm/m/it/10 z[]\OT1/cmr/m/n/10 ) \OMS/cmsy/m/n/10 ^^U \OML/cmm/m/it/
+10 m[];  z[] \OT1/cmr/m/n/10 = \OML/cmm/m/it/10 ^^U[] \OT1/cmr/m/n/10 (\OML/cmm
+/m/it/10 T \OMS/cmsy/m/n/10 ^^@ \OT1/cmr/m/n/10 (\OML/cmm/m/it/10 m \OMS/cmsy/m
+/n/10 ^^@ \OT1/cmr/m/n/10 1)\OML/cmm/m/it/10 ^^\\OT1/cmr/m/n/10 )\OML/cmm/m/it/
+10 :
  []
 
 
-Overfull \hbox (19.86525pt too wide) in paragraph at lines 413--442
-\OT1/cmr/m/n/10 sta-ble across the four an-chors (or-dered CER-TI-FIED/COUNTERE
-XAMPLE/UNRESOLVED: $(\OML/cmm/m/it/10 ^^W; b\OT1/cmr/m/n/10 ) = (200\OML/cmm/m/
-it/10 ; \OT1/cmr/m/n/10 0\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 05)$:
+Underfull \hbox (badness 2245) in paragraph at lines 222--222
+[]\OT1/cmr/bx/n/14.4 Renewal quasi-likelihood re-
  []
 
-[4] (tmp/supplement_m1.bbl [5]) [6] (tmp/supplement_m1.aux)
+
+Overfull \hbox (35.7315pt too wide) detected at line 233
+[][][][] \OT1/cmr/m/n/10 = [] []  [] [][](\OML/cmm/m/it/10 T \OMS/cmsy/m/n/10 ^
+^@ \OML/cmm/m/it/10 N[]^^\\OT1/cmr/m/n/10 ) \OML/cmm/m/it/10 ^^U[]\OT1/cmr/m/n/
+10 (\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) \OMS/cmsy/m/n/10 ^^@ \OML/cmm/m/it/10 N
+[] [] ^^U[]\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 )[] + \OML/cmm/m/
+it/10 ^^U[] []\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 )\OML/cmm/m/it
+/10 ;
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 269--269
+[]\OT1/cmr/bx/n/14.4 The finite-window count-
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [2{d:/Program Files/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-
+ts1.enc}]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Overfull \vbox (38.08772pt too high) has occurred while \output is active []
+
+
+[3 <./figs/fig_mechanism_p1.pdf>]
+Overfull \hbox (114.49747pt too wide) detected at line 319
+[][][]\OML/cmm/m/it/10 J\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 ^^Z[]\OT1/cmr/m/n/10 
+) = 1 \OMS/cmsy/m/n/10 ^^@ []\OML/cmm/m/it/10 c[] \OT1/cmr/m/n/10 + \OML/cmm/m/
+it/10 c[]=\OT1/cmr/m/n/10 12[] \OML/cmm/m/it/10 ^^W[] \OT1/cmr/m/n/10 + \OML/cm
+m/m/it/10 o\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 ^^W[]\OT1/cmr/m/n/10 ) = 1 \OMS/cm
+sy/m/n/10 ^^@ \OT1/cmr/m/n/10 0\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 8255 \OML/cmm/
+m/it/10 ^^W[] \OT1/cmr/m/n/10 + \OML/cmm/m/it/10 o\OT1/cmr/m/n/10 (\OML/cmm/m/i
+t/10 ^^W[]\OT1/cmr/m/n/10 )\OML/cmm/m/it/10 ;  c \OT1/cmr/m/n/10 = 6[]\OML/cmm/
+m/it/10 :
+ []
+
+[4]
+Underfull \hbox (badness 3260) in paragraph at lines 446--446
+[]\OT1/cmr/bx/n/12 Natural-scene co-hort (sec-ondary,
+ []
+
+<figs/fig_nat_pair.pdf, id=227, 462.52798pt x 133.6995pt>
+File: figs/fig_nat_pair.pdf Graphic file (type pdf)
+<use figs/fig_nat_pair.pdf>
+Package pdftex.def Info: figs/fig_nat_pair.pdf  used on input line 463.
+(pdftex.def)             Requested size: 239.55153pt x 69.24667pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 449--477
+\OT1/cmr/m/n/10 On the pre-reg-is-tered natural-image co-hort (30
+ []
+
+
+Underfull \hbox (badness 2213) in paragraph at lines 449--477
+\OT1/cmr/m/n/10 co-hort: me-dian $+1\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 44$ dB, $
+29\OML/cmm/m/it/10 =\OT1/cmr/m/n/10 30$ scenes pos-i-tive,
+ []
+
+
+Underfull \hbox (badness 2285) in paragraph at lines 479--488
+\OT1/cmr/m/n/10 con-trast of dense mul-ti-plexed il-lu-mi-na-tion. For
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [5 <./figs/fig_nat_pair.pdf>]
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 528.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 528.
+
+<figs/fig_s2_gallery.pdf, id=255, 462.52798pt x 368.57701pt>
+File: figs/fig_s2_gallery.pdf Graphic file (type pdf)
+<use figs/fig_s2_gallery.pdf>
+Package pdftex.def Info: figs/fig_s2_gallery.pdf  used on input line 577.
+(pdftex.def)             Requested size: 239.55153pt x 190.89627pt.
+[6]
+<figs/fig_s1b_images.pdf, id=263, 585.38701pt x 314.37451pt>
+File: figs/fig_s1b_images.pdf Graphic file (type pdf)
+<use figs/fig_s1b_images.pdf>
+Package pdftex.def Info: figs/fig_s1b_images.pdf  used on input line 658.
+(pdftex.def)             Requested size: 303.24152pt x 162.85207pt.
+<figs/fig_s1c_curves.pdf, id=264, 245.718pt x 195.129pt>
+File: figs/fig_s1c_curves.pdf Graphic file (type pdf)
+<use figs/fig_s1c_curves.pdf>
+Package pdftex.def Info: figs/fig_s1c_curves.pdf  used on input line 662.
+(pdftex.def)             Requested size: 176.0774pt x 139.83177pt.
+<figs/fig_s1d_svsrho.pdf, id=265, 260.17201pt x 209.58301pt>
+File: figs/fig_s1d_svsrho.pdf Graphic file (type pdf)
+<use figs/fig_s1d_svsrho.pdf>
+Package pdftex.def Info: figs/fig_s1d_svsrho.pdf  used on input line 664.
+(pdftex.def)             Requested size: 176.0774pt x 141.84618pt.
+<../results/round63_theory/fig_a_ridge_map.pdf, id=266, 242.10449pt x 234.8775p
+t>
+File: ../results/round63_theory/fig_a_ridge_map.pdf Graphic file (type pdf)
+<use ../results/round63_theory/fig_a_ridge_map.pdf>
+Package pdftex.def Info: ../results/round63_theory/fig_a_ridge_map.pdf  used on
+ input line 692.
+(pdftex.def)             Requested size: 156.51656pt x 151.84784pt.
+<figs/fig_b_masks.pdf, id=267, 505.89pt x 158.99399pt>
+File: figs/fig_b_masks.pdf Graphic file (type pdf)
+<use figs/fig_b_masks.pdf>
+Package pdftex.def Info: figs/fig_b_masks.pdf  used on input line 696.
+(pdftex.def)             Requested size: 313.02567pt x 98.38116pt.
+<figs/fig_c_ladder.pdf, id=268, 245.718pt x 187.902pt>
+File: figs/fig_c_ladder.pdf Graphic file (type pdf)
+<use figs/fig_c_ladder.pdf>
+Package pdftex.def Info: figs/fig_c_ladder.pdf  used on input line 700.
+(pdftex.def)             Requested size: 156.51656pt x 119.6949pt.
+<figs/fig_d_dwell.pdf, id=269, 245.718pt x 187.902pt>
+File: figs/fig_d_dwell.pdf Graphic file (type pdf)
+<use figs/fig_d_dwell.pdf>
+Package pdftex.def Info: figs/fig_d_dwell.pdf  used on input line 704.
+(pdftex.def)             Requested size: 156.51656pt x 119.6949pt.
+<figs/fig_f_scattering.pdf, id=270, 245.718pt x 187.902pt>
+File: figs/fig_f_scattering.pdf Graphic file (type pdf)
+<use figs/fig_f_scattering.pdf>
+Package pdftex.def Info: figs/fig_f_scattering.pdf  used on input line 708.
+(pdftex.def)             Requested size: 156.51656pt x 119.6949pt.
+<figs/fig_e_gate.pdf, id=271, 245.718pt x 231.26399pt>
+File: figs/fig_e_gate.pdf Graphic file (type pdf)
+<use figs/fig_e_gate.pdf>
+Package pdftex.def Info: figs/fig_e_gate.pdf  used on input line 712.
+(pdftex.def)             Requested size: 244.55153pt x 230.17653pt.
+
+Underfull \hbox (badness 1038) in paragraph at lines 739--749
+\OT1/cmr/m/n/10 suf-fi-ciently many, pre-reg-is-tered scenes to pass the
+ []
+
+[7 <./figs/fig_s2_gallery.pdf>]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [8 <./figs/fig_s1b_images.pdf> <./figs/fig_s1c_curves.pdf> <./figs/fig_s1d_svs
+rho.pdf>]
+(tmp/main_oe.bbl
+Underfull \hbox (badness 1205) in paragraph at lines 15--18
+[]\OT1/cmr/m/n/10 Matthew P. Edgar, Gra-ham M. Gib-son, and
+ []
+
+
+Underfull \hbox (badness 1142) in paragraph at lines 54--58
+[]\OT1/cmr/m/n/10 Anant Gupta, Atul In-gle, and Mo-hit Gupta.
+ []
+
+
+Underfull \hbox (badness 1237) in paragraph at lines 54--58
+\OT1/cmr/m/it/10 IEEE/CVF In-ter-na-tional Con-fer-ence on Com-
+ []
+
+
+Underfull \hbox (badness 1521) in paragraph at lines 66--70
+\OT1/cmr/m/n/10 with ap-pli-ca-tion to single-photon li-dar, 2026.
+ []
+
+[9]) [10
+
+] [11 <../results/round63_theory/fig_a_ridge_map.pdf> <./figs/fig_b_masks.pdf> 
+<./figs/fig_c_ladder.pdf> <./figs/fig_d_dwell.pdf> <./figs/fig_f_scattering.pdf
+> <./figs/fig_e_gate.pdf>] (tmp/main_oe.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-02-20>
  ***********
-Package rerunfilecheck Info: File `supplement_m1.out' has not changed.
-(rerunfilecheck)             Checksum: 4F4CDECDF7853DD5AE2498AAD7B9B6EE;2943.
+Package rerunfilecheck Info: File `main_oe.out' has not changed.
+(rerunfilecheck)             Checksum: 6F039102F839CF361B892226D679FE28;5553.
  ) 
 Here is how much of TeX's memory you used:
- 10728 strings out of 476023
- 162955 string characters out of 5790298
- 1946190 words of memory out of 5000000
- 32662 multiletter control sequences out of 15000+600000
+ 10859 strings out of 476023
+ 166317 string characters out of 5790298
+ 1949190 words of memory out of 5000000
+ 32758 multiletter control sequences out of 15000+600000
  571993 words of font info for 87 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 75i,11n,79p,497b,564s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,8n,79p,2745b,552s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx
-10.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm
-/cmbx12.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/amsfon
-ts/cm/cmcsc10.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/
-amsfonts/cm/cmex10.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/pu
-blic/amsfonts/cm/cmmi10.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/typ
-e1/public/amsfonts/cm/cmmi6.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts
+12.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm
+/cmcsc10.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/amsfo
+nts/cm/cmex10.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/
+amsfonts/cm/cmmi10.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/pu
+blic/amsfonts/cm/cmmi12.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/typ
+e1/public/amsfonts/cm/cmmi5.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts
 /type1/public/amsfonts/cm/cmmi7.pfb><d:/Program Files/texlive/2024/texmf-dist/f
-onts/type1/public/amsfonts/cm/cmmi8.pfb><d:/Program Files/texlive/2024/texmf-di
-st/fonts/type1/public/amsfonts/cm/cmr10.pfb><d:/Program Files/texlive/2024/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><d:/Program Files/texlive/2024/
-texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb><d:/Program Files/texlive/2
-024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb><d:/Program Files/texliv
-e/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><d:/Program Files/tex
-live/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb><d:/Program Files/
-texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><d:/Program Fil
-es/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><d:/Progra
-m Files/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb><d:/Pr
-ogram Files/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb><d
-:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pf
-b><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmti
-10.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm
-/cmtt10.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/amsfon
-ts/symbols/msbm10.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/pub
-lic/cm-super/sfrm1000.pfb>
-Output written on tmp/supplement_m1.pdf (6 pages, 312258 bytes).
+onts/type1/public/amsfonts/cm/cmr10.pfb><d:/Program Files/texlive/2024/texmf-di
+st/fonts/type1/public/amsfonts/cm/cmr12.pfb><d:/Program Files/texlive/2024/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb><d:/Program Files/texlive/2024/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb><d:/Program Files/texlive/20
+24/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><d:/Program Files/texlive
+/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><d:/Program Files/te
+xlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb><d:/Program File
+s/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb><d:/Program
+ Files/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb><d:/Pr
+ogram Files/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.
+pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbo
+ls/msbm10.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/cm-s
+uper/sfrm1000.pfb>
+Output written on tmp/main_oe.pdf (11 pages, 754343 bytes).
 PDF statistics:
- 237 PDF objects out of 1000 (max. 8388607)
- 181 compressed objects within 2 object streams
- 35 named destinations out of 1000 (max. 500000)
- 113 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 690 PDF objects out of 1000 (max. 8388607)
+ 464 compressed objects within 5 object streams
+ 71 named destinations out of 1000 (max. 500000)
+ 253 words of extra memory for PDF output out of 10000 (max. 10000000)
 

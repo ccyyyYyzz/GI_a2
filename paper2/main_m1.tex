@@ -136,6 +136,9 @@ cube-root load $\rho^{*}(\nu) = (6\nu)^{1/3} - 2/3 + O(\nu^{-1/3})$, and
 that work mapped when driving a fixed illumination family toward the ridge
 helps. The trap above is the sharp edge of that map:\ the deterministic
 ridge is not where a \emph{real} detector should operate.
+Figure~\ref{fig:hero} sets out the dead-time-aware imaging pipeline, the
+global power knob, and the count-information ridge law that anchors the
+paper.
 
 % ¶2 -- the two questions.
 Two questions therefore remain open. First, a \emph{deployment}
@@ -202,6 +205,34 @@ detectors (Table~\ref{tab:handbook}), ending in a bench-testable
 prediction. All code, frozen preregistration documents, and per-cell
 evidence bundles are openly released; full derivations, guard machinery,
 and verification detail are in the supplement.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{figs/fig_mechanism.pdf}
+\caption{Schematic of the dead-time-aware single-pixel imaging pipeline and
+the count-information ridge law. (a)~Imaging pipeline:\ the global power knob
+$\Phi$ (dial) is the single scalar source multiplier setting the detector load
+$\rhobar=\tau\,\mathbb{E}[\lambda]$; the beam (orange arrows) passes from the
+laser source through the DMD, which displays the \textsc{SCAT32}
+scattered-sparse illumination patterns $a_i$ (inset), to the object $x$
+(inset:\ the confirmatory maze scene), and the SPD photon-counting detector
+feeds the bucket counts $N_i$ (blue arrow) to the RQL reconstruction $\hat{x}$
+(inset:\ the \textsc{RIDGE-SCAT32} reconstruction of the same scene, seed $0$,
+$\nu=2000$). DMD:\ digital micromirror device; SPD:\ single-pixel (bucket)
+detector; RQL:\ renewal quasi-likelihood reconstruction. In the
+photon-arrival timeline (lower inset), recorded counts (green markers) each
+open a non-paralyzable dead-time hold of length $\tau$ (shaded; one hold is
+jitter-broadened, darker), and arrivals inside a hold are lost ($\times$); the
+exposure is $T=\nu\tau$, so $\nu=T/\tau$ is the dwell budget.
+(b)~Count-information efficiency $J(\rhobar;\nu)$ versus detector load,
+evaluated from the exact finite-window count law for $\nu=2000$ and
+$\nu=200$, whose optimal-load ridges are $\rhobar^{*}=22.2$ and
+$\rhobar^{*}=10.0$, respectively; the ridge follows the finite-window law
+$\rhobar^{*}(\nu)=(6\nu)^{1/3}-2/3$ (zero-jitter limit, $c=0$), and the global
+power knob (arrow) moves the operating point onto the ridge. The colour is
+used only for display purposes.}
+\label{fig:hero}
+\end{figure*}
 
 % ===========================================================================
 \section{The law: driving a jittery detector}
@@ -908,7 +939,8 @@ bind), a $37\times$ incident-dose ratio and a $2.6\times$ detected-count ratio
 over the balanced \textsc{SCAT32-060} comparator, with no count-ceiling
 saturation (predicted $p_{\mathrm{ceil}} < 10^{-6}$; realized dark-count and
 timing-error fractions $0$) and no \texttt{RIDGE\_GUARD\_CLIPPED} event. The
-gain is strongly scene-dependent (Table~\ref{tab:family}), from $+6.37$~dB on
+gain is strongly scene-dependent (Table~\ref{tab:family},
+Figure~\ref{fig:actiii-main}), from $+6.37$~dB on
 \texttt{maze} to $-4.18$~dB on \texttt{contour}, the sole negative-median
 family (Section~\ref{sec:discussion}). This is a fixed-dwell, power-for-time
 operating-point test. It is not an equal-photon-budget or photon-efficiency
@@ -1009,23 +1041,98 @@ probe fields are in supplement~S5.3.
 
 \begin{figure*}[t]
 \centering
-\fbox{\parbox[c][4.0cm][c]{0.95\textwidth}{\centering
-\SPH{M1 (Act III, five panels):\ (a)~dose deviation, A-risk, and spectral
-guard versus path-specific $\alpha$ on a DEV representative, labeled
-development evidence; (b)~the constructive dose-only primal lower bound
-(development-only:\ per-cell $\Delta\log\det V/r$ of the probe designs
-vs.\ deployed \textsc{SCAT32}); (c)~confirmatory $G_{\mathrm{stack}}/r$ and
-terminal-status distributions over the full-stack class, labeled
-\texttt{FULL\_STACK\_CERT\_PASS} (480 cells); (d)~ridge-versus-$0.60$
-fixed-dwell reconstructions and per-scene quality gains at $\nu=2000$;
-(e)~a schematic distinguishing the photon-budgeted and time-limited resource
-corners.}}}
-\caption{Act III:\ information rewards scene-adapted geometry, uniform dose
-alone does not eliminate that headroom (development evidence, panels a--b),
-the conditioning stack defines the deployable class tested by the full-stack
-certificate (panel c), and global operating-point control survives
-orthogonally (panels d--e). Panels fill from the frozen M1 analyzer after
-tag \texttt{m1-freeze}.}
+\includegraphics[width=\textwidth]{figs/actiii_d.pdf}
+\caption{Fixed-dwell reconstruction quality of the global power knob:\
+\textsc{RIDGE-SCAT32} against balanced \textsc{SCAT32-060} at $\nu=2000$,
+seed $0$ (the centrepiece of the operating-point primary). Each row shows,
+left to right, the ground truth, the \textsc{SCAT32-060} reconstruction
+($\rhobar=0.60$), and the \textsc{RIDGE-SCAT32} reconstruction
+($\rhobar^{*}\approx22$), annotated with the per-row $\Delta Q$ badge:\ the
+median-$\Delta Q$ scene \texttt{m1\_chirp\_3} (radiometric
+$\mathrm{PSNR}_{\mathrm{rad}}$ of $9.4$ and $10.9$~dB, respectively;
+$\Delta Q=+1.5$~dB), the best-$\Delta Q$ scene \texttt{m1\_maze\_1} ($28.7$
+and $35.4$~dB; $\Delta Q=+6.7$~dB), and the worst-$\Delta Q$ scene
+\texttt{m1\_contour\_1}, a contour ($13.6$ and $7.7$~dB; $\Delta Q=-5.8$~dB).
+The right panel plots the per-image $\Delta Q$ (seed-mean over five seeds) for
+all $24$ confirmatory scenes grouped by family; the solid line is the campaign
+median $1.87$~dB, the dashed line the $1.0$~dB operating bar, and $19/24$
+scenes exceed zero. $\mathrm{PSNR}_{\mathrm{rad}}$ denotes the radiometric peak
+signal-to-noise ratio and $\Delta Q=\mathrm{PSNR}_{\mathrm{rad}}
+(\textsc{RIDGE-SCAT32})-\mathrm{PSNR}_{\mathrm{rad}}(\textsc{SCAT32-060})$; the
+thumbnail values are the seed-$0$ realization. The colour is used only for
+display purposes, and each row shares a common grayscale scale.}
+\label{fig:actiii-main}
+\end{figure*}
+
+\begin{figure*}[t]
+\centering
+\begin{minipage}[t]{0.49\textwidth}\centering
+  \includegraphics[width=\linewidth]{figs/actiii_a.pdf}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.49\textwidth}\centering
+  \includegraphics[width=\linewidth]{figs/actiii_b.pdf}
+\end{minipage}\\[1.5ex]
+\begin{minipage}[t]{0.49\textwidth}\centering
+  \includegraphics[width=\linewidth]{figs/actiii_c.pdf}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.49\textwidth}\centering
+  \includegraphics[width=\linewidth]{figs/actiii_e.pdf}
+\end{minipage}
+\caption{Act III design doctrine:\ information rewards scene-adapted geometry,
+uniform dose alone does not eliminate that headroom (development evidence,
+panels~a--b), the conditioning stack defines the deployable class tested by
+the full-stack certificate (panel~c), and global operating-point control
+survives orthogonally (panel~e; the operating-point reconstructions are
+Figure~\ref{fig:actiii-main}).
+(a)~Guard collapse of the adaptive \textsc{OED-DT} mixture along the descending
+exact-rounding path for the development glyph scene at the fast anchor
+($\nu=2000$, $b=0.60$); development-only evidence, not a confirmatory endpoint.
+The dose deviation $\max|d/\bar d-1|$ (orange), the spectral floor
+$\mu_{\min}$ (green), and the A-risk ratio $\mathrm{tr}(V^{-1})/
+\mathrm{tr}(V_{\mathrm{fix}}^{-1})$ (blue) are shown versus the path-specific
+OED fraction $\alpha=m/972$, with the dashed guard bars the $\pm5\%$ dose band
+($0.05$), the spectral floor ($0.5\times$), and the A-risk cap ($1.05\times$),
+respectively; every $\alpha>0$ exceeds the dose band by $2$--$11\times$ and, by
+$\alpha\approx0.06$, breaches the spectral floor, while the A-risk cap never
+binds and only the balanced endpoint $\alpha=0$ is dose-feasible (failing the
+separate efficiency floor $\mathrm{eff}_D\ge0.95$), so
+\texttt{PATH\_FEASIBLE\_ALPHA} is \textsc{None}
+(\texttt{NO\_FEASIBLE\_POINT\_ON\_PATH}).
+(b)~Constructive dose-only geometry headroom over the six development
+families; development-only lower bound, not a confirmatory endpoint or
+population estimate. The per-dimension dose-only primal gap
+$[\log\det V(\xi)-\log\det V_{\mathrm{SCAT32}}]/r$ within the $\pm5\%$ dose
+band is shown at anchor~A ($\nu=2000$, $b=0.60$; circles) and anchor~B
+($\nu=200$, $b=0.05$; diamonds), the right axis reporting the D-efficiency
+lower bound $\exp(\mathrm{gap})$; across glyph, chirp, maze, spokes, contour,
+and microtexture the gaps are $0.78$, $0.86$, $0.59$, $0.90$, $0.90$, and
+$0.92$ at anchor~A and $0.90$, $0.50$, $0.51$, $0.79$, $0.59$, and $0.72$ at
+anchor~B, respectively (D-efficiency lower bounds $1.6$--$2.5\times$). The
+construction is support-preserving and establishes existence, not the
+dose-only optimum.
+(c)~Confirmatory \texttt{FULL\_STACK\_CERT} certificate distribution under the
+fallback-descriptive branch ($0/480$ \texttt{CERTIFIED}). The left bars give
+the terminal status of the $480$ certificate cells split by the four
+$(\nu,b)$ anchors ($120$ cells each):\ at $(\nu200,b0.05)$, $(\nu200,b0.60)$,
+$(\nu2000,b0.05)$, and $(\nu2000,b0.60)$ the cells are $77$, $67$, $84$, and
+$71$ \texttt{COUNTEREXAMPLE} and $43$, $53$, $36$, and $49$
+\texttt{NUMERICAL\_UNRESOLVED}, respectively, with no \texttt{CERTIFIED} cell;
+the right panel is the empirical cumulative distribution of the finite primal
+gap per dimension for the $299$ \texttt{COUNTEREXAMPLE} cells (median $1.43$),
+the dashed line the near-optimality bar $G_{\mathrm{stack}}/r\le10^{-2}$, which
+every counterexample exceeds by about two orders of magnitude. The certificate
+is reported descriptively and no categorical near-optimality claim is made.
+(e)~Conjugate-corners operating doctrine for the global power knob:\ the plane
+is spanned by the optical-power/flux budget (horizontal) and the
+acquisition-time budget (vertical); in the photon-budgeted corner (low power,
+ample time; Q90 count-time secondary) the balanced \textsc{SCAT32-060} design
+with the full-stack certificate is preferred and \texttt{RIDGE\_SPEED\_PASS}
+is \textsc{false}, whereas in the time-limited, power-available corner (ample
+power, little time; fixed-dwell quality primary) the ridge operating point
+$\rhobar^{*}$ delivers a $+1.87$~dB median gain and
+\texttt{RIDGE\_OPERATING\_PASS} is \textsc{true}, with the curved arrow
+marking the single global power knob that moves the system between the two
+corners. The colour is used only for display purposes.}
 \label{fig:actiii}
 \end{figure*}
 

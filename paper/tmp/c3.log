@@ -1,7 +1,7 @@
 This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex)
  restricted \write18 enabled.
 entering extended mode
-(./supplement_m1.tex
+(./main_oe.tex
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-02-20>
 (d:/Program Files/texlive/2024/texmf-dist/tex/latex/base/article.cls
@@ -58,7 +58,7 @@ ck.sty
 (d:/Program Files/texlive/2024/texmf-dist/tex/generic/uniquecounter/uniquecount
 er.sty)))
 (d:/Program Files/texlive/2024/texmf-dist/tex/latex/l3backend/l3backend-pdftex.
-def) (tmp/supplement_m1.aux)
+def) (tmp/main_oe.aux)
 (d:/Program Files/texlive/2024/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 )
@@ -68,47 +68,89 @@ sty
 g))
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
-(tmp/supplement_m1.out) (tmp/supplement_m1.out)
+(tmp/main_oe.out) (tmp/main_oe.out)
 (d:/Program Files/texlive/2024/texmf-dist/tex/latex/amsfonts/umsa.fd)
-(d:/Program Files/texlive/2024/texmf-dist/tex/latex/amsfonts/umsb.fd) [1{d:/Pro
-gram Files/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2{d:/Pr
-ogram Files/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}]
- [3]
-Overfull \hbox (51.70941pt too wide) in paragraph at lines 413--442
-\OT1/cmtt/m/n/10 908cfccbd249de22\OT1/cmr/m/n/10 ). The terminal-status dis-tri
--bu-tion is $0$ \OT1/cmtt/m/n/10 CERTIFIED\OT1/cmr/m/n/10 , $299$ \OT1/cmtt/m/n
-/10 COUNTEREXAMPLE\OT1/cmr/m/n/10 , $181$ \OT1/cmtt/m/n/10 NUMERICAL[]UNRESOLVE
-D\OT1/cmr/m/n/10 ,
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/amsfonts/umsb.fd)
+Underfull \vbox (badness 10000) has occurred while \output is active
+Underfull \hbox (badness 1194) in paragraph at lines 87--97
+\OT1/cmr/m/n/10 CRLB degra-da-tion, task-specific op-ti-mal op-er-at-ing
 
-Overfull \hbox (19.86525pt too wide) in paragraph at lines 413--442
-\OT1/cmr/m/n/10 sta-ble across the four an-chors (or-dered CER-TI-FIED/COUNTERE
-XAMPLE/UNRESOLVED: $(\OML/cmm/m/it/10 ^^W; b\OT1/cmr/m/n/10 ) = (200\OML/cmm/m/
-it/10 ; \OT1/cmr/m/n/10 0\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 05)$:
-[4] (tmp/supplement_m1.bbl [5]) [6] (tmp/supplement_m1.aux) )
+Overfull \hbox (117.65833pt too wide) detected at line 127
+[][][]\OML/cmm/m/it/10 P\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 N[] \OMS/cmsy/m/n/10 
+^^U \OML/cmm/m/it/10 m\OT1/cmr/m/n/10 ) = \OML/cmm/m/it/10 F[] []T \OMS/cmsy/m/
+n/10 ^^@ \OT1/cmr/m/n/10 (\OML/cmm/m/it/10 m \OMS/cmsy/m/n/10 ^^@ \OT1/cmr/m/n/
+10 1)\OML/cmm/m/it/10 ^^\[] \OT1/cmr/m/n/10 = \OML/cmm/m/it/10 P[][]\OT1/cmr/m/
+n/10 (\OML/cmm/m/it/10 z[]\OT1/cmr/m/n/10 ) \OMS/cmsy/m/n/10 ^^U \OML/cmm/m/it/
+10 m[];  z[] \OT1/cmr/m/n/10 = \OML/cmm/m/it/10 ^^U[] \OT1/cmr/m/n/10 (\OML/cmm
+/m/it/10 T \OMS/cmsy/m/n/10 ^^@ \OT1/cmr/m/n/10 (\OML/cmm/m/it/10 m \OMS/cmsy/m
+/n/10 ^^@ \OT1/cmr/m/n/10 1)\OML/cmm/m/it/10 ^^\\OT1/cmr/m/n/10 )\OML/cmm/m/it/
+10 :
+[1{d:/Program Files/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+
+Underfull \hbox (badness 2245) in paragraph at lines 134--134
+[]\OT1/cmr/bx/n/14.4 Renewal quasi-likelihood re-
+
+Overfull \hbox (35.7315pt too wide) detected at line 145
+[][][][] \OT1/cmr/m/n/10 = [] []  [] [][](\OML/cmm/m/it/10 T \OMS/cmsy/m/n/10 ^
+^@ \OML/cmm/m/it/10 N[]^^\\OT1/cmr/m/n/10 ) \OML/cmm/m/it/10 ^^U[]\OT1/cmr/m/n/
+10 (\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) \OMS/cmsy/m/n/10 ^^@ \OML/cmm/m/it/10 N
+[] [] ^^U[]\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 )[] + \OML/cmm/m/
+it/10 ^^U[] []\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 )\OML/cmm/m/it
+/10 ;
+
+Underfull \hbox (badness 10000) in paragraph at lines 181--181
+[]\OT1/cmr/bx/n/14.4 The finite-window count-
+
+Overfull \hbox (114.49747pt too wide) detected at line 231
+[][][]\OML/cmm/m/it/10 J\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 ^^Z[]\OT1/cmr/m/n/10 
+) = 1 \OMS/cmsy/m/n/10 ^^@ []\OML/cmm/m/it/10 c[] \OT1/cmr/m/n/10 + \OML/cmm/m/
+it/10 c[]=\OT1/cmr/m/n/10 12[] \OML/cmm/m/it/10 ^^W[] \OT1/cmr/m/n/10 + \OML/cm
+m/m/it/10 o\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 ^^W[]\OT1/cmr/m/n/10 ) = 1 \OMS/cm
+sy/m/n/10 ^^@ \OT1/cmr/m/n/10 0\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 8255 \OML/cmm/
+m/it/10 ^^W[] \OT1/cmr/m/n/10 + \OML/cmm/m/it/10 o\OT1/cmr/m/n/10 (\OML/cmm/m/i
+t/10 ^^W[]\OT1/cmr/m/n/10 )\OML/cmm/m/it/10 ;  c \OT1/cmr/m/n/10 = 6[]\OML/cmm/
+m/it/10 :
+[2]
+Underfull \hbox (badness 1112) in paragraph at lines 267--268
+\OT1/cmr/m/n/10 by-equation full-text check (S5 hard item); word-
+
+Underfull \hbox (badness 2285) in paragraph at lines 299--308
+\OT1/cmr/m/n/10 con-trast of dense mul-ti-plexed il-lu-mi-na-tion. For
+[3]
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 340.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 340.
+
+
+Underfull \vbox (badness 1389) has occurred while \output is active [4]
+[5] [6{d:/Program Files/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-sup
+er-ts1.enc}] (tmp/main_oe.aux)
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+ )
 (see the transcript file for additional information)<d:/Program Files/texlive/2
-024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><d:/Program Files/texl
-ive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><d:/Program Files
-/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><d:/Program
- Files/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><d:/Pr
-ogram Files/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><
-d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.p
+024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><d:/Program Files/texl
+ive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><d:/Program File
+s/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><d:/Program
+ Files/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><d:/Pr
+ogram Files/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><
+d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.p
 fb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmm
 i7.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm
-/cmmi8.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmr10.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/ams
-fonts/cm/cmr12.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public
-/amsfonts/cm/cmr17.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/pu
-blic/amsfonts/cm/cmr5.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1
-/public/amsfonts/cm/cmr6.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/ty
-pe1/public/amsfonts/cm/cmr7.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts
-/type1/public/amsfonts/cm/cmr8.pfb><d:/Program Files/texlive/2024/texmf-dist/fo
-nts/type1/public/amsfonts/cm/cmsy10.pfb><d:/Program Files/texlive/2024/texmf-di
-st/fonts/type1/public/amsfonts/cm/cmsy5.pfb><d:/Program Files/texlive/2024/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb><d:/Program Files/texlive/2024/
-texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><d:/Program Files/texlive/2
-024/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb><d:/Program Files/texl
-ive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb><d:/Program Files
-/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb><d:/Pro
-gram Files/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb>
-Output written on tmp/supplement_m1.pdf (6 pages, 312258 bytes).
-Transcript written on tmp/supplement_m1.log.
+/cmr10.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/amsfont
+s/cm/cmr12.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmr17.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public
+/amsfonts/cm/cmr7.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/pub
+lic/amsfonts/cm/cmsy10.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type
+1/public/amsfonts/cm/cmsy7.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmti10.pfb><d:/Program Files/texlive/2024/texmf-dist/f
+onts/type1/public/amsfonts/symbols/msam10.pfb><d:/Program Files/texlive/2024/te
+xmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb><d:/Program Files/texli
+ve/2024/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb>
+Output written on tmp/main_oe.pdf (6 pages, 218915 bytes).
+Transcript written on tmp/main_oe.log.
