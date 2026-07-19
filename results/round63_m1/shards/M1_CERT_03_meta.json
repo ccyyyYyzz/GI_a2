@@ -1,0 +1,100 @@
+{
+  "shard_id": "M1_CERT_03",
+  "stage": "M1_CERT",
+  "cells_done": {
+    "M1_CERT_03_c0001": {
+      "wall_s": 73.83,
+      "n_rows": 1
+    },
+    "M1_CERT_03_c0002": {
+      "wall_s": 71.84,
+      "n_rows": 1
+    },
+    "M1_CERT_03_c0003": {
+      "wall_s": 74.25,
+      "n_rows": 1
+    },
+    "M1_CERT_03_c0004": {
+      "wall_s": 82.38,
+      "n_rows": 1
+    },
+    "M1_CERT_03_c0005": {
+      "wall_s": 73.07,
+      "n_rows": 1
+    },
+    "M1_CERT_03_c0006": {
+      "wall_s": 73.73,
+      "n_rows": 1
+    },
+    "M1_CERT_03_c0007": {
+      "wall_s": 71.18,
+      "n_rows": 1
+    },
+    "M1_CERT_03_c0008": {
+      "wall_s": 74.83,
+      "n_rows": 1
+    },
+    "M1_CERT_03_c0009": {
+      "wall_s": 72.47,
+      "n_rows": 1
+    },
+    "M1_CERT_03_c0010": {
+      "wall_s": 72.16,
+      "n_rows": 1
+    },
+    "M1_CERT_03_c0011": {
+      "wall_s": 71.35,
+      "n_rows": 1
+    },
+    "M1_CERT_03_c0012": {
+      "wall_s": 73.07,
+      "n_rows": 1
+    },
+    "M1_CERT_03_c0013": {
+      "wall_s": 73.2,
+      "n_rows": 1
+    },
+    "M1_CERT_03_c0014": {
+      "wall_s": 72.16,
+      "n_rows": 1
+    },
+    "M1_CERT_03_c0015": {
+      "wall_s": 73.05,
+      "n_rows": 1
+    },
+    "M1_CERT_03_c0016": {
+      "wall_s": 70.59,
+      "n_rows": 1
+    }
+  },
+  "fieldnames": [
+    "cell_id",
+    "shard_id",
+    "image",
+    "seed",
+    "nu",
+    "b",
+    "status",
+    "dual_gap_upper_per_r",
+    "primal_gap_lower_per_r",
+    "solver_status_primary",
+    "solver_status_retry",
+    "wall_seconds",
+    "coefficient_dynamic_range",
+    "n_dictionary_scans",
+    "n_arisk_cuts",
+    "n_spectral_cuts",
+    "full_dictionary_scan_residual",
+    "min_generalized_eigenvalue",
+    "arisk_ratio",
+    "MU_CAP_ACTIVE",
+    "dep_feasible",
+    "dep_dose_dev",
+    "d_cert_sha",
+    "stage"
+  ],
+  "wall_accum_s": 1173.33,
+  "aborted_over_budget": false,
+  "wall_s": 1173.33,
+  "process_cpu_s": 1173.07
+}

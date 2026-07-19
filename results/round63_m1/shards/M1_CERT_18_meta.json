@@ -1,0 +1,84 @@
+{
+  "shard_id": "M1_CERT_18",
+  "stage": "M1_CERT",
+  "cells_done": {
+    "M1_CERT_18_c0001": {
+      "wall_s": 72.14,
+      "n_rows": 1
+    },
+    "M1_CERT_18_c0002": {
+      "wall_s": 72.34,
+      "n_rows": 1
+    },
+    "M1_CERT_18_c0003": {
+      "wall_s": 76.4,
+      "n_rows": 1
+    },
+    "M1_CERT_18_c0004": {
+      "wall_s": 80.13,
+      "n_rows": 1
+    },
+    "M1_CERT_18_c0005": {
+      "wall_s": 72.48,
+      "n_rows": 1
+    },
+    "M1_CERT_18_c0006": {
+      "wall_s": 73.03,
+      "n_rows": 1
+    },
+    "M1_CERT_18_c0007": {
+      "wall_s": 73.29,
+      "n_rows": 1
+    },
+    "M1_CERT_18_c0008": {
+      "wall_s": 73.29,
+      "n_rows": 1
+    },
+    "M1_CERT_18_c0009": {
+      "wall_s": 71.72,
+      "n_rows": 1
+    },
+    "M1_CERT_18_c0010": {
+      "wall_s": 73.61,
+      "n_rows": 1
+    },
+    "M1_CERT_18_c0011": {
+      "wall_s": 70.62,
+      "n_rows": 1
+    },
+    "M1_CERT_18_c0012": {
+      "wall_s": 73.13,
+      "n_rows": 1
+    }
+  },
+  "fieldnames": [
+    "cell_id",
+    "shard_id",
+    "image",
+    "seed",
+    "nu",
+    "b",
+    "status",
+    "dual_gap_upper_per_r",
+    "primal_gap_lower_per_r",
+    "solver_status_primary",
+    "solver_status_retry",
+    "wall_seconds",
+    "coefficient_dynamic_range",
+    "n_dictionary_scans",
+    "n_arisk_cuts",
+    "n_spectral_cuts",
+    "full_dictionary_scan_residual",
+    "min_generalized_eigenvalue",
+    "arisk_ratio",
+    "MU_CAP_ACTIVE",
+    "dep_feasible",
+    "dep_dose_dev",
+    "d_cert_sha",
+    "stage"
+  ],
+  "wall_accum_s": 882.32,
+  "aborted_over_budget": false,
+  "wall_s": 882.32,
+  "process_cpu_s": 882.18
+}

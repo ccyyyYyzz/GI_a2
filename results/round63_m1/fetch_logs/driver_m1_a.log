@@ -1,0 +1,54 @@
+[driver m1_a] 11 shards, 6 lanes, bundle=/content/round63_m1_bundle
+[keepalive m1_a 2026-07-19T15:06:20Z]
+[driver m1_a] lane 0 <- results/round63_m1/manifests/M1_CERT_00.json (pid 7370)
+[driver m1_a] lane 1 <- results/round63_m1/manifests/M1_CERT_05.json (pid 7373)
+[driver m1_a] lane 2 <- results/round63_m1/manifests/M1_CERT_14.json (pid 7376)
+[driver m1_a] lane 3 <- results/round63_m1/manifests/M1_CERT_19.json (pid 7379)
+[driver m1_a] lane 4 <- results/round63_m1/manifests/M1_CERT_24.json (pid 7382)
+[driver m1_a] lane 5 <- results/round63_m1/manifests/M1_CERT_29.json (pid 7385)
+[keepalive m1_a 2026-07-19T15:07:20Z]
+[keepalive m1_a 2026-07-19T15:08:20Z]
+[keepalive m1_a 2026-07-19T15:09:20Z]
+[keepalive m1_a 2026-07-19T15:10:20Z]
+[keepalive m1_a 2026-07-19T15:11:20Z]
+[keepalive m1_a 2026-07-19T15:12:20Z]
+[keepalive m1_a 2026-07-19T15:13:20Z]
+[keepalive m1_a 2026-07-19T15:14:20Z]
+[keepalive m1_a 2026-07-19T15:15:20Z]
+[keepalive m1_a 2026-07-19T15:16:20Z]
+[keepalive m1_a 2026-07-19T15:17:20Z]
+[keepalive m1_a 2026-07-19T15:18:20Z]
+[keepalive m1_a 2026-07-19T15:19:20Z]
+[keepalive m1_a 2026-07-19T15:20:20Z]
+[driver m1_a] lane 4 done: results/round63_m1/manifests/M1_CERT_24.json rc=0
+[driver m1_a] lane 4 <- results/round63_m1/manifests/M1_CERT_34.json (pid 11665)
+[driver m1_a] lane 5 done: results/round63_m1/manifests/M1_CERT_29.json rc=0
+[driver m1_a] lane 5 <- results/round63_m1/manifests/M1_LBLOB16_00.json (pid 11694)
+[driver m1_a] lane 2 done: results/round63_m1/manifests/M1_CERT_14.json rc=0
+[driver m1_a] lane 3 done: results/round63_m1/manifests/M1_CERT_19.json rc=0
+[driver m1_a] lane 2 <- results/round63_m1/manifests/M1_SCAT16_00.json (pid 11726)
+[driver m1_a] lane 3 <- results/round63_m1/manifests/M1_SCAT32-060_00.json (pid 11729)
+[keepalive m1_a 2026-07-19T15:21:20Z]
+[keepalive m1_a 2026-07-19T15:22:20Z]
+[keepalive m1_a 2026-07-19T15:23:20Z]
+[driver m1_a] lane 3 done: results/round63_m1/manifests/M1_SCAT32-060_00.json rc=0
+[driver m1_a] lane 3 <- results/round63_m1/manifests/M1_SCAT32-SAFE_00.json (pid 12614)
+[keepalive m1_a 2026-07-19T15:24:20Z]
+[keepalive m1_a 2026-07-19T15:25:20Z]
+[driver m1_a] lane 1 done: results/round63_m1/manifests/M1_CERT_05.json rc=0
+[driver m1_a] lane 0 done: results/round63_m1/manifests/M1_CERT_00.json rc=0
+[keepalive m1_a 2026-07-19T15:26:20Z]
+[driver m1_a] lane 3 done: results/round63_m1/manifests/M1_SCAT32-SAFE_00.json rc=0
+[keepalive m1_a 2026-07-19T15:27:20Z]
+[keepalive m1_a 2026-07-19T15:28:20Z]
+[keepalive m1_a 2026-07-19T15:29:20Z]
+[keepalive m1_a 2026-07-19T15:30:20Z]
+[keepalive m1_a 2026-07-19T15:31:20Z]
+[driver m1_a] lane 2 done: results/round63_m1/manifests/M1_SCAT16_00.json rc=0
+[keepalive m1_a 2026-07-19T15:32:20Z]
+[keepalive m1_a 2026-07-19T15:33:20Z]
+[keepalive m1_a 2026-07-19T15:34:20Z]
+[keepalive m1_a 2026-07-19T15:35:20Z]
+[driver m1_a] lane 5 done: results/round63_m1/manifests/M1_LBLOB16_00.json rc=0
+[driver m1_a] lane 4 done: results/round63_m1/manifests/M1_CERT_34.json rc=0
+[driver m1_a] all lanes drained: 11/11 shards, session_fail=0

@@ -1,0 +1,19 @@
+{
+  "session": "m1_p1a",
+  "ts": 1784475432,
+  "ts_utc": "2026-07-19T15:37:12Z",
+  "n_lanes": 6,
+  "plan_file": "/content/round63_m1_bundle/code/round63/colab/plans/session_m1_p1a.txt",
+  "total_shards": 8,
+  "queued_remaining": 0,
+  "completed_count": 8,
+  "completed": [{"shard": "results/round63_m1/manifests/M1_CERT_08.json", "rc": 0}, {"shard": "results/round63_m1/manifests/M1_CERT_12.json", "rc": 0}, {"shard": "results/round63_m1/manifests/M1_CERT_17.json", "rc": 0}, {"shard": "results/round63_m1/manifests/M1_CERT_22.json", "rc": 0}, {"shard": "results/round63_m1/manifests/M1_CERT_27.json", "rc": 0}, {"shard": "results/round63_m1/manifests/M1_CERT_03.json", "rc": 0}, {"shard": "results/round63_m1/manifests/M1_CERT_37.json", "rc": 0}, {"shard": "results/round63_m1/manifests/M1_CERT_32.json", "rc": 0}],
+  "lanes": [
+    {"lane": 0, "shard": "-", "state": "idle"},
+    {"lane": 1, "shard": "-", "state": "idle"},
+    {"lane": 2, "shard": "-", "state": "idle"},
+    {"lane": 3, "shard": "-", "state": "idle"},
+    {"lane": 4, "shard": "-", "state": "idle"},
+    {"lane": 5, "shard": "-", "state": "idle"}
+  ]
+}

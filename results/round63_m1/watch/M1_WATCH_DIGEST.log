@@ -1,0 +1,33 @@
+=== M1 watchdog armed 2026-07-19T15:11:58Z (pid 10058, cycle 300s, stall 900s; counts+rc only) ===
+--- 2026-07-19T15:12:10Z cycle 1 digest ---
+  m1_a  state=OK  done=0/11 busy=6 cells=0 rows=0 max_hb=-1s status_age=101s bad_rc=-
+  m1_b  state=OK  done=0/8 busy=6 cells=0 rows=0 max_hb=-1s status_age=78s bad_rc=-
+  m1_c  state=OK  done=0/8 busy=6 cells=0 rows=0 max_hb=-1s status_age=51s bad_rc=-
+  m1_p1a  state=OK  done=0/8 busy=6 cells=0 rows=0 max_hb=-1s status_age=23s bad_rc=-
+  m1_p1b  state=OK  done=0/8 busy=6 cells=0 rows=0 max_hb=-1s status_age=116s bad_rc=-
+=== M1 watchdog v2 armed 2026-07-19T15:15:06Z (pid 10270, cycle 300s, stall 900s; VM ground-truth exec; counts+rc only) ===
+--- 2026-07-19T15:15:27Z cycle 1 digest ---
+  m1_a  state=OK  done=0 fail=- inflight=6 cells=36/80 rows=36 max_hb=51 csv=6 total=11
+  m1_b  state=OK  done=0 fail=- inflight=6 cells=36/76 rows=36 max_hb=27 csv=6 total=8
+  m1_c  state=OK  done=0 fail=- inflight=6 cells=36/76 rows=36 max_hb=2 csv=6 total=8
+  m1_p1a  state=OK  done=0 fail=- inflight=6 cells=30/76 rows=30 max_hb=36 csv=6 total=8
+  m1_p1b  state=OK  done=0 fail=- inflight=6 cells=30/76 rows=30 max_hb=12 csv=6 total=8
+--- 2026-07-19T15:22:55Z cycle 2 ALERT ---
+  m1_a  state=TOKEN/CLI  summarizer exec failed after rebind
+  m1_b  state=OK  done=0 fail=- inflight=6 cells=66/76 rows=66 max_hb=32 csv=6 total=8
+  m1_c  state=OK  done=0 fail=- inflight=6 cells=66/76 rows=66 max_hb=8 csv=6 total=8
+  m1_p1a  state=TOKEN/CLI  summarizer exec failed after rebind
+  m1_p1b  state=OK  done=0 fail=- inflight=6 cells=66/76 rows=66 max_hb=40 csv=6 total=8
+--- 2026-07-19T15:41:48Z cycle 6 ALERT ---
+  m1_a  state=TOKEN/CLI  summarizer exec failed after rebind
+  m1_b  state=COMPLETE  done=8 fail=- inflight=0 cells=0/0 rows=0 max_hb=-1 csv=8 total=8
+  m1_c  state=COMPLETE  done=8 fail=- inflight=0 cells=0/0 rows=0 max_hb=-1 csv=8 total=8
+  m1_p1a  state=TOKEN/CLI  summarizer exec failed after rebind
+  m1_p1b  state=COMPLETE  done=8 fail=- inflight=0 cells=0/0 rows=0 max_hb=-1 csv=8 total=8
+--- 2026-07-19T15:43:55Z cycle 7 digest ---
+  m1_a  state=COMPLETE  done=11 fail=- inflight=0 cells=0/0 rows=0 max_hb=-1 csv=11 total=11
+  m1_b  state=COMPLETE  done=8 fail=- inflight=0 cells=0/0 rows=0 max_hb=-1 csv=8 total=8
+  m1_c  state=COMPLETE  done=8 fail=- inflight=0 cells=0/0 rows=0 max_hb=-1 csv=8 total=8
+  m1_p1a  state=COMPLETE  done=8 fail=- inflight=0 cells=0/0 rows=0 max_hb=-1 csv=8 total=8
+  m1_p1b  state=COMPLETE  done=8 fail=- inflight=0 cells=0/0 rows=0 max_hb=-1 csv=8 total=8
+=== FLEET_COMPLETE 2026-07-19T15:43:55Z — all 5 sessions done==total; watchdog exiting ===

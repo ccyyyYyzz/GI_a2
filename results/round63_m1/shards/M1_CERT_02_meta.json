@@ -1,0 +1,100 @@
+{
+  "shard_id": "M1_CERT_02",
+  "stage": "M1_CERT",
+  "cells_done": {
+    "M1_CERT_02_c0001": {
+      "wall_s": 75.0,
+      "n_rows": 1
+    },
+    "M1_CERT_02_c0002": {
+      "wall_s": 73.51,
+      "n_rows": 1
+    },
+    "M1_CERT_02_c0003": {
+      "wall_s": 74.97,
+      "n_rows": 1
+    },
+    "M1_CERT_02_c0004": {
+      "wall_s": 81.65,
+      "n_rows": 1
+    },
+    "M1_CERT_02_c0005": {
+      "wall_s": 72.09,
+      "n_rows": 1
+    },
+    "M1_CERT_02_c0006": {
+      "wall_s": 71.9,
+      "n_rows": 1
+    },
+    "M1_CERT_02_c0007": {
+      "wall_s": 74.22,
+      "n_rows": 1
+    },
+    "M1_CERT_02_c0008": {
+      "wall_s": 73.32,
+      "n_rows": 1
+    },
+    "M1_CERT_02_c0009": {
+      "wall_s": 72.55,
+      "n_rows": 1
+    },
+    "M1_CERT_02_c0010": {
+      "wall_s": 73.72,
+      "n_rows": 1
+    },
+    "M1_CERT_02_c0011": {
+      "wall_s": 73.06,
+      "n_rows": 1
+    },
+    "M1_CERT_02_c0012": {
+      "wall_s": 73.33,
+      "n_rows": 1
+    },
+    "M1_CERT_02_c0013": {
+      "wall_s": 71.16,
+      "n_rows": 1
+    },
+    "M1_CERT_02_c0014": {
+      "wall_s": 72.79,
+      "n_rows": 1
+    },
+    "M1_CERT_02_c0015": {
+      "wall_s": 72.63,
+      "n_rows": 1
+    },
+    "M1_CERT_02_c0016": {
+      "wall_s": 73.3,
+      "n_rows": 1
+    }
+  },
+  "fieldnames": [
+    "cell_id",
+    "shard_id",
+    "image",
+    "seed",
+    "nu",
+    "b",
+    "status",
+    "dual_gap_upper_per_r",
+    "primal_gap_lower_per_r",
+    "solver_status_primary",
+    "solver_status_retry",
+    "wall_seconds",
+    "coefficient_dynamic_range",
+    "n_dictionary_scans",
+    "n_arisk_cuts",
+    "n_spectral_cuts",
+    "full_dictionary_scan_residual",
+    "min_generalized_eigenvalue",
+    "arisk_ratio",
+    "MU_CAP_ACTIVE",
+    "dep_feasible",
+    "dep_dose_dev",
+    "d_cert_sha",
+    "stage"
+  ],
+  "wall_accum_s": 1179.36,
+  "aborted_over_budget": false,
+  "wall_s": 1179.36,
+  "process_cpu_s": 1179.14
+}

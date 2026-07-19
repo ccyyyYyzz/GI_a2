@@ -1,0 +1,48 @@
+[driver m1_b] 8 shards, 6 lanes, bundle=/content/round63_m1_bundle
+[keepalive m1_b 2026-07-19T15:06:48Z]
+[driver m1_b] lane 0 <- results/round63_m1/manifests/M1_CERT_01.json (pid 9963)
+[driver m1_b] lane 1 <- results/round63_m1/manifests/M1_CERT_06.json (pid 9966)
+[driver m1_b] lane 2 <- results/round63_m1/manifests/M1_CERT_10.json (pid 9969)
+[driver m1_b] lane 3 <- results/round63_m1/manifests/M1_CERT_15.json (pid 9972)
+[driver m1_b] lane 4 <- results/round63_m1/manifests/M1_CERT_20.json (pid 9975)
+[driver m1_b] lane 5 <- results/round63_m1/manifests/M1_CERT_25.json (pid 9978)
+[keepalive m1_b 2026-07-19T15:07:48Z]
+[keepalive m1_b 2026-07-19T15:08:48Z]
+[keepalive m1_b 2026-07-19T15:09:48Z]
+[keepalive m1_b 2026-07-19T15:10:48Z]
+[keepalive m1_b 2026-07-19T15:11:48Z]
+[keepalive m1_b 2026-07-19T15:12:48Z]
+[keepalive m1_b 2026-07-19T15:13:48Z]
+[keepalive m1_b 2026-07-19T15:14:48Z]
+[keepalive m1_b 2026-07-19T15:15:48Z]
+[keepalive m1_b 2026-07-19T15:16:48Z]
+[keepalive m1_b 2026-07-19T15:17:48Z]
+[keepalive m1_b 2026-07-19T15:18:48Z]
+[keepalive m1_b 2026-07-19T15:19:48Z]
+[keepalive m1_b 2026-07-19T15:20:48Z]
+[driver m1_b] lane 4 done: results/round63_m1/manifests/M1_CERT_20.json rc=0
+[driver m1_b] lane 4 <- results/round63_m1/manifests/M1_CERT_30.json (pid 14191)
+[driver m1_b] lane 1 done: results/round63_m1/manifests/M1_CERT_06.json rc=0
+[driver m1_b] lane 3 done: results/round63_m1/manifests/M1_CERT_15.json rc=0
+[driver m1_b] lane 5 done: results/round63_m1/manifests/M1_CERT_25.json rc=0
+[driver m1_b] lane 1 <- results/round63_m1/manifests/M1_CERT_35.json (pid 14231)
+[driver m1_b] lane 2 done: results/round63_m1/manifests/M1_CERT_10.json rc=0
+[keepalive m1_b 2026-07-19T15:21:48Z]
+[keepalive m1_b 2026-07-19T15:22:48Z]
+[keepalive m1_b 2026-07-19T15:23:48Z]
+[keepalive m1_b 2026-07-19T15:24:48Z]
+[keepalive m1_b 2026-07-19T15:25:48Z]
+[driver m1_b] lane 0 done: results/round63_m1/manifests/M1_CERT_01.json rc=0
+[keepalive m1_b 2026-07-19T15:26:48Z]
+[keepalive m1_b 2026-07-19T15:27:48Z]
+[keepalive m1_b 2026-07-19T15:28:48Z]
+[keepalive m1_b 2026-07-19T15:29:48Z]
+[keepalive m1_b 2026-07-19T15:30:48Z]
+[keepalive m1_b 2026-07-19T15:31:48Z]
+[keepalive m1_b 2026-07-19T15:32:48Z]
+[keepalive m1_b 2026-07-19T15:33:48Z]
+[keepalive m1_b 2026-07-19T15:34:48Z]
+[keepalive m1_b 2026-07-19T15:35:48Z]
+[driver m1_b] lane 4 done: results/round63_m1/manifests/M1_CERT_30.json rc=0
+[driver m1_b] lane 1 done: results/round63_m1/manifests/M1_CERT_35.json rc=0
+[driver m1_b] all lanes drained: 8/8 shards, session_fail=0
