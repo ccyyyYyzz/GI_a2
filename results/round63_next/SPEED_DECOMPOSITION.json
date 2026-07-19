@@ -1,0 +1,954 @@
+{
+  "label": "POST-HOC DESCRIPTIVE",
+  "title": "Speed-ratio decomposition of the corrected elapsed-time speedup (R19 S_gate)",
+  "provenance": {
+    "immutable_input_tag": "m1-freeze @ 6f00932",
+    "frozen_verdict_source": "results/round63_m1/CORRECTION_2026-07-19/M1_VERDICTS_SPEC_CORRECTED_R19.json",
+    "imaging_shards": "results/round63_m1/shards/M1_{SCAT32-SAFE,RIDGE-SCAT32,SCAT32-060}_00.csv",
+    "kernel_table": "results/round63_theory/fisher_ridge.csv (I_exact_log=J_nu, I_clt_log=f=rho/(1+rho), ratio=J/f)",
+    "ridge_requested_load": "rho_R(nu) from ridge design npz / ridge_targets.json (global per dwell)",
+    "no_new_simulation": true
+  },
+  "definitions": {
+    "detected_rate": "mean_counts / optical_time_s (per row; campaign normalization)",
+    "T_opt_s": "M*nu*tau, M=1024, tau=50e-9",
+    "quality": "PSNR_rad; Q90 target = safe_pava[0]+0.9*(safe_pava[-1]-safe_pava[0])",
+    "S_gate": "T_safe_cross / T_ridge_cross (frozen elapsed-optical-time endpoint)",
+    "identity": "S_gate = (rate_ridge_cross/rate_safe_cross) x (N_safe_cross/N_ridge_cross); N=rate*T",
+    "residual_factor": "N_safe_cross/N_ridge_cross = detected photons to reach the SAME Q90 (per-photon informativeness x estimator/censoring efficiency)",
+    "interpolation": "linear in log(T_opt), identical bracket & fraction as the frozen quality crossing"
+  },
+  "validation_vs_frozen": {
+    "n_normal": 21,
+    "max_abs_S_diff": 4.6419436472433517e-07,
+    "note": "recomputed S_gate reproduces frozen per_image_s_gate for all NORMAL scenes"
+  },
+  "headline": {
+    "median_S_gate_frozen_all24": 19.127043091646133,
+    "median_S_gate_recomputed_all24": 19.127043091646133,
+    "median_S_gate_NORMAL21": 20.38441,
+    "terminal_detected_rate_ratio_theory_f(22.254)/f(0.05)": 20.09694,
+    "terminal_detected_rate_ratio_empirical_median(nu2000)": 20.084826122421788,
+    "terminal_detected_rate_ratio_empirical_q1q3": [
+      20.06539576710317,
+      20.11003913316849
+    ]
+  },
+  "censoring_attribution": {
+    "NORMAL21_median_S": 20.38441,
+    "all24_median_S": 19.127043091646133,
+    "censored_scenes": [
+      {
+        "image": "m1_contour_1",
+        "status": "FAST_RIGHT_CENSORED",
+        "S": 0.0
+      },
+      {
+        "image": "m1_contour_2",
+        "status": "FAST_RIGHT_CENSORED",
+        "S": 0.0
+      },
+      {
+        "image": "m1_microtexture_1",
+        "status": "SAFE_RANGE_UNINFORMATIVE",
+        "S": 1.0
+      }
+    ],
+    "note": "The 3 censored scenes (2x FAST_RIGHT_CENSORED->0, 1x SAFE_RANGE_UNINFORMATIVE->1) pull the median from 20.38 (21 NORMAL) to 19.13 (all 24). The net 20.1->19.13 move is the censoring step, not the clip."
+  },
+  "decomposition_medians": {
+    "S_gate_median": 20.38441,
+    "rate_ratio_cross_median": 16.2708,
+    "residual_factor_median": 1.25282,
+    "residual_quartiles": {
+      "median": 1.25282,
+      "q1": 1.11872,
+      "q3": 1.32264,
+      "min": 0.14965,
+      "max": 3.59081,
+      "n": 21
+    },
+    "rate_ratio_cross_quartiles": {
+      "median": 16.2708,
+      "q1": 15.95963,
+      "q3": 16.67282,
+      "min": 12.85249,
+      "max": 19.65005,
+      "n": 21
+    },
+    "residual_by_family": {
+      "chirp": {
+        "median": 1.158355,
+        "n": 4
+      },
+      "contour": {
+        "median": 0.67934,
+        "n": 2
+      },
+      "glyph": {
+        "median": 1.1972,
+        "n": 4
+      },
+      "maze": {
+        "median": 1.7606600000000001,
+        "n": 4
+      },
+      "microtexture": {
+        "median": 1.04638,
+        "n": 3
+      },
+      "spokes": {
+        "median": 1.3400500000000002,
+        "n": 4
+      }
+    }
+  },
+  "clip_attribution_20.1_to_19.13": {
+    "terminal_f_ratio": 20.09694,
+    "S_gate_median_NORMAL21": 20.38441,
+    "S_gate_median_all24": 19.127043091646133,
+    "rate_ratio_cross_median": 16.2708,
+    "residual_factor_median": 1.25282,
+    "clip_effect_rate_ratio/terminal": 0.80962,
+    "residual_offset": 1.25282,
+    "net_NORMAL_median/terminal": 1.0143,
+    "n_ridge_crossings_at_clipped_dwell": 20,
+    "n_ridge_crossings_total": 21,
+    "note": "At the Q90 crossing the ridge runs at clipped mid-ladder load (rho_ach median ~3.8), so the detected-rate ratio there (median 16.27) is ~0.81x the terminal 20.1. The residual factor (median 1.25, ridge reaches Q90 with ~25% fewer detected photons) nearly cancels this, leaving NORMAL-scene median S=20.38 (slightly ABOVE 20.1). Thus the clip does NOT explain a net shortfall on NORMAL scenes; it is offset by per-photon efficiency. The 20.1->19.13 net move is the censoring of 3 hard scenes. Per-scene identity S=rate_ratio*residual is exact (see check_product)."
+  },
+  "clip_info_cost_J(ach)/J(req)": {
+    "note": "finite-nu Fisher info cost of the trust clip at clipped dwells with kernel rows (nu in {20,50,100}); nu=5,10 absent from fisher_ridge.csv",
+    "by_dwell": {
+      "20": {
+        "J(ach)/J(req)_median": 0.7542501266817286,
+        "J(ach)/J(req)_min": 0.6581884894259623,
+        "clip_ratio_median": 0.4903235317992011,
+        "req_rho": 1.98324543
+      },
+      "50": {
+        "J(ach)/J(req)_median": 0.8843394347622224,
+        "J(ach)/J(req)_min": 0.8187410582040648,
+        "clip_ratio_median": 0.49081577011980526,
+        "req_rho": 4.91758651
+      },
+      "100": {
+        "J(ach)/J(req)_median": 0.9688882294605847,
+        "J(ach)/J(req)_min": 0.9312098049898063,
+        "clip_ratio_median": 0.609807515621201,
+        "req_rho": 7.87670295
+      }
+    }
+  },
+  "empirical_vs_theoretical_rate_ratio_by_dwell": {
+    "empirical(median rateR/rateS)": {
+      "5": {
+        "median": 4.181967213114754,
+        "q1": 4.0096410256410255,
+        "q3": 4.294077134986225
+      },
+      "10": {
+        "median": 6.859467299578059,
+        "q1": 6.681018395094641,
+        "q3": 7.233208851234602
+      },
+      "20": {
+        "median": 10.285984199399133,
+        "q1": 10.103989361702128,
+        "q3": 10.444407955842156
+      },
+      "50": {
+        "median": 14.671616018148217,
+        "q1": 14.420689843526784,
+        "q3": 14.915110356536506
+      },
+      "100": {
+        "median": 17.30090259643231,
+        "q1": 17.0498281039843,
+        "q3": 17.387155230920087
+      },
+      "200": {
+        "median": 18.94916298502699,
+        "q1": 18.745863710509667,
+        "q3": 18.99785120740018
+      },
+      "500": {
+        "median": 19.535146554588117,
+        "q1": 19.49674660331955,
+        "q3": 19.59196808252589
+      },
+      "1000": {
+        "median": 19.866360066784072,
+        "q1": 19.82172779395569,
+        "q3": 19.910450369887904
+      },
+      "2000": {
+        "median": 20.084826122421788,
+        "q1": 20.06539576710317,
+        "q3": 20.11003913316849
+      }
+    },
+    "theory(median f(rho_ach)/f(rho_safe))": {
+      "5": {
+        "median": 4.158172538093604,
+        "q1": 4.039763718987954,
+        "q3": 4.367980237017139
+      },
+      "10": {
+        "median": 6.899053566191091,
+        "q1": 6.733800565792148,
+        "q3": 7.188132759508532
+      },
+      "20": {
+        "median": 10.353241844801126,
+        "q1": 10.164892738642965,
+        "q3": 10.677461291951154
+      },
+      "50": {
+        "median": 14.848185857342191,
+        "q1": 14.690896884845047,
+        "q3": 15.113352708827001
+      },
+      "100": {
+        "median": 17.381349521610083,
+        "q1": 17.272568714468918,
+        "q3": 17.562605213379676
+      },
+      "200": {
+        "median": 19.012717617545533,
+        "q1": 18.94718548901942,
+        "q3": 19.094656240486092
+      },
+      "500": {
+        "median": 19.581624288380894,
+        "q1": 19.581624288380894,
+        "q3": 19.581624288380894
+      },
+      "1000": {
+        "median": 19.867371232254253,
+        "q1": 19.867371232254253,
+        "q3": 19.867371232254253
+      },
+      "2000": {
+        "median": 20.09695083286866,
+        "q1": 20.09695083286866,
+        "q3": 20.09695083286866
+      }
+    }
+  },
+  "Jf_table_nu2000": {
+    "rows": [
+      {
+        "rho": 0.05,
+        "J": 0.04772,
+        "f": 0.047619,
+        "J_over_f": 1.000012
+      },
+      {
+        "rho": 0.6,
+        "J": 0.375253,
+        "f": 0.375,
+        "J_over_f": 1.00005
+      },
+      {
+        "rho": 5.0,
+        "J": 0.83215,
+        "f": 0.833333,
+        "J_over_f": 0.998646
+      },
+      {
+        "rho": 11.0,
+        "J": 0.910817,
+        "f": 0.916667,
+        "J_over_f": 0.993886
+      },
+      {
+        "rho": 22.25,
+        "J": 0.935116,
+        "f": 0.956989,
+        "J_over_f": 0.977259
+      },
+      {
+        "rho": 40.0,
+        "J": 0.909809,
+        "f": 0.97561,
+        "J_over_f": 0.932666
+      }
+    ],
+    "operating_points": {
+      "SAFE_rho0.05": {
+        "rho": 0.05,
+        "J_over_f": 1.000012
+      },
+      "SCAT32-060_rho0.60": {
+        "rho": 0.6,
+        "J_over_f": 1.00005
+      },
+      "RIDGE_rho22.254": {
+        "rho": 22.254302974942682,
+        "J_over_f": 0.97725
+      }
+    },
+    "drop_points": {
+      "J/f=0.99": 14.352565664058684,
+      "J/f=0.95": 33.966580177352725,
+      "J/f=0.9": 49.98655997143433
+    }
+  },
+  "mean_counts_anomalies_rel>0.25": [],
+  "per_scene": [
+    {
+      "image": "m1_chirp_0",
+      "family": "chirp",
+      "frozen_S": 17.80020264332746,
+      "frozen_status": "NORMAL",
+      "safe_range_dB": 1.20526,
+      "status": "NORMAL",
+      "S_recomputed": 17.800203,
+      "T_safe_cross_s": 0.0820612082616957,
+      "T_ridge_cross_s": 0.00461012775562186,
+      "nu_ridge_cross_equiv": 90.042,
+      "ridge_cross_bracket": [
+        50,
+        100
+      ],
+      "ridge_cross_clipped": true,
+      "rate_safe_cross": 927.0092786120142,
+      "rate_ridge_cross": 15712.852803470314,
+      "rate_ratio_cross": 16.95005,
+      "f_ratio_cross_theory": 17.08541,
+      "N_safe_cross": 76.0715014727048,
+      "N_ridge_cross": 72.43825882927925,
+      "residual_factor": 1.05016,
+      "rho_ach_ridge_cross": 4.36455,
+      "rho_req_ridge_cross": 7.42888,
+      "clip_ratio_at_cross": 0.58751,
+      "Jclip_cost_lo": 0.880213512153552,
+      "Jclip_cost_hi": 0.9665663196919821,
+      "check_product": 17.800203
+    },
+    {
+      "image": "m1_chirp_1",
+      "family": "chirp",
+      "frozen_S": 20.45972087286894,
+      "frozen_status": "NORMAL",
+      "safe_range_dB": 1.2197,
+      "status": "NORMAL",
+      "S_recomputed": 20.459721,
+      "T_safe_cross_s": 0.07460430504372793,
+      "T_ridge_cross_s": 0.003646398966403334,
+      "nu_ridge_cross_equiv": 71.219,
+      "ridge_cross_bracket": [
+        50,
+        100
+      ],
+      "ridge_cross_clipped": true,
+      "rate_safe_cross": 925.7088564883329,
+      "rate_ridge_cross": 14773.969452744057,
+      "rate_ratio_cross": 15.95963,
+      "f_ratio_cross_theory": 16.32894,
+      "N_safe_cross": 69.06186591113615,
+      "N_ridge_cross": 53.87178694216036,
+      "residual_factor": 1.28197,
+      "rho_ach_ridge_cross": 3.49576,
+      "rho_req_ridge_cross": 6.42771,
+      "clip_ratio_at_cross": 0.54386,
+      "Jclip_cost_lo": 0.8749432751769699,
+      "Jclip_cost_hi": 0.963776408285366,
+      "check_product": 20.459721
+    },
+    {
+      "image": "m1_chirp_2",
+      "family": "chirp",
+      "frozen_S": 18.43146768941798,
+      "frozen_status": "NORMAL",
+      "safe_range_dB": 1.28344,
+      "status": "NORMAL",
+      "S_recomputed": 18.431468,
+      "T_safe_cross_s": 0.08384532395491377,
+      "T_ridge_cross_s": 0.004549031328799363,
+      "nu_ridge_cross_equiv": 88.848,
+      "ridge_cross_bracket": [
+        50,
+        100
+      ],
+      "ridge_cross_clipped": true,
+      "rate_safe_cross": 926.7523258426978,
+      "rate_ridge_cross": 14818.569360312924,
+      "rate_ratio_cross": 15.98978,
+      "f_ratio_cross_theory": 16.22829,
+      "N_safe_cross": 77.7038489862508,
+      "N_ridge_cross": 67.41013626804983,
+      "residual_factor": 1.1527,
+      "rho_ach_ridge_cross": 3.40094,
+      "rho_req_ridge_cross": 7.37192,
+      "clip_ratio_at_cross": 0.46134,
+      "Jclip_cost_lo": 0.8187410582040648,
+      "Jclip_cost_hi": 0.9312098049898063,
+      "check_product": 18.431468
+    },
+    {
+      "image": "m1_chirp_3",
+      "family": "chirp",
+      "frozen_S": 19.26164631681156,
+      "frozen_status": "NORMAL",
+      "safe_range_dB": 1.5651,
+      "status": "NORMAL",
+      "S_recomputed": 19.261646,
+      "T_safe_cross_s": 0.06994279435643028,
+      "T_ridge_cross_s": 0.0036311950290243956,
+      "nu_ridge_cross_equiv": 70.922,
+      "ridge_cross_bracket": [
+        50,
+        100
+      ],
+      "ridge_cross_clipped": true,
+      "rate_safe_cross": 927.1602723750805,
+      "rate_ridge_cross": 15342.376754588846,
+      "rate_ratio_cross": 16.54771,
+      "f_ratio_cross_theory": 16.88284,
+      "N_safe_cross": 64.84818026618214,
+      "N_ridge_cross": 55.71116220468246,
+      "residual_factor": 1.16401,
+      "rho_ach_ridge_cross": 4.1006,
+      "rho_req_ridge_cross": 6.40987,
+      "clip_ratio_at_cross": 0.63973,
+      "Jclip_cost_lo": 0.911948913191511,
+      "Jclip_cost_hi": 0.9819730276740557,
+      "check_product": 19.261646
+    },
+    {
+      "image": "m1_contour_0",
+      "family": "contour",
+      "frozen_S": 2.9406347979068683,
+      "frozen_status": "NORMAL",
+      "safe_range_dB": 2.19332,
+      "status": "NORMAL",
+      "S_recomputed": 2.940635,
+      "T_safe_cross_s": 0.08174936441164506,
+      "T_ridge_cross_s": 0.02779990377242155,
+      "nu_ridge_cross_equiv": 542.967,
+      "ridge_cross_bracket": [
+        500,
+        1000
+      ],
+      "ridge_cross_clipped": false,
+      "rate_safe_cross": 926.3886370370383,
+      "rate_ridge_cross": 18203.586112451805,
+      "rate_ratio_cross": 19.65005,
+      "f_ratio_cross_theory": 19.62294,
+      "N_safe_cross": 75.73168227594803,
+      "N_ridge_cross": 506.0579422391495,
+      "residual_factor": 0.14965,
+      "rho_ach_ridge_cross": 14.24993,
+      "rho_req_ridge_cross": 14.24993,
+      "clip_ratio_at_cross": 1.0,
+      "Jclip_cost_lo": 1.0000000000001659,
+      "Jclip_cost_hi": 1.0000000000012876,
+      "check_product": 2.940635
+    },
+    {
+      "image": "m1_contour_1",
+      "family": "contour",
+      "frozen_S": 0.0,
+      "frozen_status": "FAST_RIGHT_CENSORED",
+      "safe_range_dB": 2.9005,
+      "status": "FAST_RIGHT_CENSORED"
+    },
+    {
+      "image": "m1_contour_2",
+      "family": "contour",
+      "frozen_S": 0.0,
+      "frozen_status": "FAST_RIGHT_CENSORED",
+      "safe_range_dB": 3.26362,
+      "status": "FAST_RIGHT_CENSORED"
+    },
+    {
+      "image": "m1_contour_3",
+      "family": "contour",
+      "frozen_S": 18.784826464194364,
+      "frozen_status": "NORMAL",
+      "safe_range_dB": 6.60784,
+      "status": "NORMAL",
+      "S_recomputed": 18.784826,
+      "T_safe_cross_s": 0.07879072163490829,
+      "T_ridge_cross_s": 0.004194381129103994,
+      "nu_ridge_cross_equiv": 81.922,
+      "ridge_cross_bracket": [
+        50,
+        100
+      ],
+      "ridge_cross_clipped": true,
+      "rate_safe_cross": 927.1635068145026,
+      "rate_ridge_cross": 14405.440351095613,
+      "rate_ratio_cross": 15.53711,
+      "f_ratio_cross_theory": 16.01594,
+      "N_safe_cross": 73.05188177546687,
+      "N_ridge_cross": 60.421907165068646,
+      "residual_factor": 1.20903,
+      "rho_ach_ridge_cross": 3.21343,
+      "rho_req_ridge_cross": 7.02541,
+      "clip_ratio_at_cross": 0.4574,
+      "Jclip_cost_lo": 0.8212325548433392,
+      "Jclip_cost_hi": 0.9327207099820756,
+      "check_product": 18.784826
+    },
+    {
+      "image": "m1_glyph_0",
+      "family": "glyph",
+      "frozen_S": 18.992439866480705,
+      "frozen_status": "NORMAL",
+      "safe_range_dB": 7.655,
+      "status": "NORMAL",
+      "S_recomputed": 18.99244,
+      "T_safe_cross_s": 0.08482182620439413,
+      "T_ridge_cross_s": 0.004466083704921767,
+      "nu_ridge_cross_equiv": 87.228,
+      "ridge_cross_bracket": [
+        50,
+        100
+      ],
+      "ridge_cross_clipped": true,
+      "rate_safe_cross": 922.9219199501051,
+      "rate_ridge_cross": 15387.707831854374,
+      "rate_ratio_cross": 16.67282,
+      "f_ratio_cross_theory": 17.01911,
+      "N_safe_cross": 78.28392269423357,
+      "N_ridge_cross": 68.72279120394187,
+      "residual_factor": 1.13913,
+      "rho_ach_ridge_cross": 4.2752,
+      "rho_req_ridge_cross": 7.29336,
+      "clip_ratio_at_cross": 0.58618,
+      "Jclip_cost_lo": 0.8812819631786525,
+      "Jclip_cost_hi": 0.9671319268393617,
+      "check_product": 18.99244
+    },
+    {
+      "image": "m1_glyph_1",
+      "family": "glyph",
+      "frozen_S": 21.50015506865851,
+      "frozen_status": "NORMAL",
+      "safe_range_dB": 8.50928,
+      "status": "NORMAL",
+      "S_recomputed": 21.500155,
+      "T_safe_cross_s": 0.08180452763009194,
+      "T_ridge_cross_s": 0.0038048343078856844,
+      "nu_ridge_cross_equiv": 74.313,
+      "ridge_cross_bracket": [
+        50,
+        100
+      ],
+      "ridge_cross_clipped": true,
+      "rate_safe_cross": 924.7501980325487,
+      "rate_ridge_cross": 15126.271430017792,
+      "rate_ratio_cross": 16.35714,
+      "f_ratio_cross_theory": 16.84431,
+      "N_safe_cross": 75.64875312588663,
+      "N_ridge_cross": 57.552956487322746,
+      "residual_factor": 1.31442,
+      "rho_ach_ridge_cross": 4.05331,
+      "rho_req_ridge_cross": 6.60928,
+      "clip_ratio_at_cross": 0.61328,
+      "Jclip_cost_lo": 0.8997711284732723,
+      "Jclip_cost_hi": 0.9767638114876682,
+      "check_product": 21.500155
+    },
+    {
+      "image": "m1_glyph_2",
+      "family": "glyph",
+      "frozen_S": 18.31275582718563,
+      "frozen_status": "NORMAL",
+      "safe_range_dB": 1.38222,
+      "status": "NORMAL",
+      "S_recomputed": 18.312756,
+      "T_safe_cross_s": 0.08674108184420196,
+      "T_ridge_cross_s": 0.00473664819554002,
+      "nu_ridge_cross_equiv": 92.513,
+      "ridge_cross_bracket": [
+        50,
+        100
+      ],
+      "ridge_cross_clipped": true,
+      "rate_safe_cross": 926.1410601479961,
+      "rate_ridge_cross": 15160.34328573027,
+      "rate_ratio_cross": 16.36937,
+      "f_ratio_cross_theory": 16.59704,
+      "N_safe_cross": 80.33447749757329,
+      "N_ridge_cross": 71.80921266812155,
+      "residual_factor": 1.11872,
+      "rho_ach_ridge_cross": 3.76951,
+      "rho_req_ridge_cross": 7.54446,
+      "clip_ratio_at_cross": 0.49964,
+      "Jclip_cost_lo": 0.8382827303868965,
+      "Jclip_cost_hi": 0.9431556339493299,
+      "check_product": 18.312756
+    },
+    {
+      "image": "m1_glyph_3",
+      "family": "glyph",
+      "frozen_S": 20.593897434671184,
+      "frozen_status": "NORMAL",
+      "safe_range_dB": 1.34526,
+      "status": "NORMAL",
+      "S_recomputed": 20.593897,
+      "T_safe_cross_s": 0.08793982709772478,
+      "T_ridge_cross_s": 0.004270188650627848,
+      "nu_ridge_cross_equiv": 83.402,
+      "ridge_cross_bracket": [
+        50,
+        100
+      ],
+      "ridge_cross_clipped": true,
+      "rate_safe_cross": 925.6818571357885,
+      "rate_ridge_cross": 15186.661714988382,
+      "rate_ratio_cross": 16.40592,
+      "f_ratio_cross_theory": 16.73391,
+      "N_safe_cross": 81.40430246402202,
+      "N_ridge_cross": 64.84991049626784,
+      "residual_factor": 1.25527,
+      "rho_ach_ridge_cross": 3.92254,
+      "rho_req_ridge_cross": 7.10188,
+      "clip_ratio_at_cross": 0.55232,
+      "Jclip_cost_lo": 0.8688190582212518,
+      "Jclip_cost_hi": 0.9605344245155147,
+      "check_product": 20.593897
+    },
+    {
+      "image": "m1_maze_0",
+      "family": "maze",
+      "frozen_S": 21.4405433164537,
+      "frozen_status": "NORMAL",
+      "safe_range_dB": 7.11658,
+      "status": "NORMAL",
+      "S_recomputed": 21.440543,
+      "T_safe_cross_s": 0.08631464260059622,
+      "T_ridge_cross_s": 0.004025767506290742,
+      "nu_ridge_cross_equiv": 78.628,
+      "ridge_cross_bracket": [
+        50,
+        100
+      ],
+      "ridge_cross_clipped": true,
+      "rate_safe_cross": 925.6346304096959,
+      "rate_ridge_cross": 15004.940487440368,
+      "rate_ratio_cross": 16.21044,
+      "f_ratio_cross_theory": 16.65901,
+      "N_safe_cross": 79.89582230254787,
+      "N_ridge_cross": 60.40640184816381,
+      "residual_factor": 1.32264,
+      "rho_ach_ridge_cross": 3.8376,
+      "rho_req_ridge_cross": 6.85024,
+      "clip_ratio_at_cross": 0.56021,
+      "Jclip_cost_lo": 0.8758275383960232,
+      "Jclip_cost_hi": 0.964244511722128,
+      "check_product": 21.440543
+    },
+    {
+      "image": "m1_maze_1",
+      "family": "maze",
+      "frozen_S": 26.814231104265964,
+      "frozen_status": "NORMAL",
+      "safe_range_dB": 9.72342,
+      "status": "NORMAL",
+      "S_recomputed": 26.814231,
+      "T_safe_cross_s": 0.08332911237271377,
+      "T_ridge_cross_s": 0.003107645042988359,
+      "nu_ridge_cross_equiv": 60.696,
+      "ridge_cross_bracket": [
+        50,
+        100
+      ],
+      "ridge_cross_clipped": true,
+      "rate_safe_cross": 919.9260575035482,
+      "rate_ridge_cross": 13958.243662739544,
+      "rate_ratio_cross": 15.17322,
+      "f_ratio_cross_theory": 16.23905,
+      "N_safe_cross": 76.65662182030073,
+      "N_ridge_cross": 43.37726672733622,
+      "residual_factor": 1.76721,
+      "rho_ach_ridge_cross": 3.41088,
+      "rho_req_ridge_cross": 5.74519,
+      "clip_ratio_at_cross": 0.59369,
+      "Jclip_cost_lo": 0.9067354480486388,
+      "Jclip_cost_hi": 0.9797428957052468,
+      "check_product": 26.814231
+    },
+    {
+      "image": "m1_maze_2",
+      "family": "maze",
+      "frozen_S": 26.844183295157023,
+      "frozen_status": "NORMAL",
+      "safe_range_dB": 6.67544,
+      "status": "NORMAL",
+      "S_recomputed": 26.844183,
+      "T_safe_cross_s": 0.08566553655477047,
+      "T_ridge_cross_s": 0.0031912141119312125,
+      "nu_ridge_cross_equiv": 62.328,
+      "ridge_cross_bracket": [
+        50,
+        100
+      ],
+      "ridge_cross_clipped": true,
+      "rate_safe_cross": 921.9465514756366,
+      "rate_ridge_cross": 14109.103876912719,
+      "rate_ratio_cross": 15.3036,
+      "f_ratio_cross_theory": 16.15538,
+      "N_safe_cross": 78.97904600698072,
+      "N_ridge_cross": 45.02517139870725,
+      "residual_factor": 1.75411,
+      "rho_ach_ridge_cross": 3.3347,
+      "rho_req_ridge_cross": 5.85847,
+      "clip_ratio_at_cross": 0.56921,
+      "Jclip_cost_lo": 0.8952865538850263,
+      "Jclip_cost_hi": 0.9748454725553691,
+      "check_product": 26.844183
+    },
+    {
+      "image": "m1_maze_3",
+      "family": "maze",
+      "frozen_S": 29.012397929969485,
+      "frozen_status": "NORMAL",
+      "safe_range_dB": 6.55956,
+      "status": "NORMAL",
+      "S_recomputed": 29.012398,
+      "T_safe_cross_s": 0.08582498382102802,
+      "T_ridge_cross_s": 0.0029582175188757735,
+      "nu_ridge_cross_equiv": 57.778,
+      "ridge_cross_bracket": [
+        50,
+        100
+      ],
+      "ridge_cross_clipped": true,
+      "rate_safe_cross": 919.3755863607513,
+      "rate_ridge_cross": 14004.911911876603,
+      "rate_ratio_cross": 15.23307,
+      "f_ratio_cross_theory": 15.99187,
+      "N_safe_cross": 78.90539482485963,
+      "N_ridge_cross": 41.42957576802537,
+      "residual_factor": 1.90457,
+      "rho_ach_ridge_cross": 3.19318,
+      "rho_req_ridge_cross": 5.53481,
+      "clip_ratio_at_cross": 0.57693,
+      "Jclip_cost_lo": 0.9046921376299896,
+      "Jclip_cost_hi": 0.9788688413552219,
+      "check_product": 29.012398
+    },
+    {
+      "image": "m1_microtexture_0",
+      "family": "microtexture",
+      "frozen_S": 18.14211379023442,
+      "frozen_status": "NORMAL",
+      "safe_range_dB": 1.09998,
+      "status": "NORMAL",
+      "S_recomputed": 18.142114,
+      "T_safe_cross_s": 0.08698480126640909,
+      "T_ridge_cross_s": 0.004794634311754414,
+      "nu_ridge_cross_equiv": 93.645,
+      "ridge_cross_bracket": [
+        50,
+        100
+      ],
+      "ridge_cross_clipped": true,
+      "rate_safe_cross": 928.4544315692417,
+      "rate_ridge_cross": 16097.465518979769,
+      "rate_ratio_cross": 17.33792,
+      "f_ratio_cross_theory": 17.42138,
+      "N_safe_cross": 80.7614242149673,
+      "N_ridge_cross": 77.18146050958397,
+      "residual_factor": 1.04638,
+      "rho_ach_ridge_cross": 4.86819,
+      "rho_req_ridge_cross": 7.59641,
+      "clip_ratio_at_cross": 0.64085,
+      "Jclip_cost_lo": 0.897965409920835,
+      "Jclip_cost_hi": 0.9759913903512254,
+      "check_product": 18.142114
+    },
+    {
+      "image": "m1_microtexture_1",
+      "family": "microtexture",
+      "frozen_S": 1.0,
+      "frozen_status": "SAFE_RANGE_UNINFORMATIVE",
+      "safe_range_dB": 0.27336,
+      "status": "SAFE_RANGE_UNINFORMATIVE"
+    },
+    {
+      "image": "m1_microtexture_2",
+      "family": "microtexture",
+      "frozen_S": 18.01458982519933,
+      "frozen_status": "NORMAL",
+      "safe_range_dB": 1.62894,
+      "status": "NORMAL",
+      "S_recomputed": 18.01459,
+      "T_safe_cross_s": 0.08385560783337875,
+      "T_ridge_cross_s": 0.004654871892563487,
+      "nu_ridge_cross_equiv": 90.915,
+      "ridge_cross_bracket": [
+        50,
+        100
+      ],
+      "ridge_cross_clipped": true,
+      "rate_safe_cross": 929.8504141396392,
+      "rate_ridge_cross": 15842.31795616636,
+      "rate_ratio_cross": 17.03749,
+      "f_ratio_cross_theory": 17.1885,
+      "N_safe_cross": 77.9731716717984,
+      "N_ridge_cross": 73.74396056721262,
+      "residual_factor": 1.05735,
+      "rho_ach_ridge_cross": 4.50964,
+      "rho_req_ridge_cross": 7.47011,
+      "clip_ratio_at_cross": 0.60369,
+      "Jclip_cost_lo": 0.8860458981549002,
+      "Jclip_cost_hi": 0.9699129884946626,
+      "check_product": 18.01459
+    },
+    {
+      "image": "m1_microtexture_3",
+      "family": "microtexture",
+      "frozen_S": 15.355502924160017,
+      "frozen_status": "NORMAL",
+      "safe_range_dB": 1.18618,
+      "status": "NORMAL",
+      "S_recomputed": 15.355503,
+      "T_safe_cross_s": 0.08402303394340997,
+      "T_ridge_cross_s": 0.0054718516455238625,
+      "nu_ridge_cross_equiv": 106.872,
+      "ridge_cross_bracket": [
+        100,
+        200
+      ],
+      "ridge_cross_clipped": true,
+      "rate_safe_cross": 928.5135913405455,
+      "rate_ridge_cross": 16238.029929992026,
+      "rate_ratio_cross": 17.4882,
+      "f_ratio_cross_theory": 17.58944,
+      "N_safe_cross": 78.01652900212416,
+      "N_ridge_cross": 88.8520907924926,
+      "residual_factor": 0.87805,
+      "rho_ach_ridge_cross": 5.15734,
+      "rho_req_ridge_cross": 8.08385,
+      "clip_ratio_at_cross": 0.63798,
+      "Jclip_cost_lo": 0.9662726152845686,
+      "Jclip_cost_hi": 0.9989807039024633,
+      "check_product": 15.355503
+    },
+    {
+      "image": "m1_spokes_0",
+      "family": "spokes",
+      "frozen_S": 46.15082365983873,
+      "frozen_status": "NORMAL",
+      "safe_range_dB": 1.66028,
+      "status": "NORMAL",
+      "S_recomputed": 46.150824,
+      "T_safe_cross_s": 0.0804621379332508,
+      "T_ridge_cross_s": 0.0017434604965300357,
+      "nu_ridge_cross_equiv": 34.052,
+      "ridge_cross_bracket": [
+        20,
+        50
+      ],
+      "ridge_cross_clipped": true,
+      "rate_safe_cross": 926.4206868885142,
+      "rate_ridge_cross": 11906.81145578041,
+      "rate_ratio_cross": 12.85249,
+      "f_ratio_cross_theory": 13.52021,
+      "N_safe_cross": 74.54178909264058,
+      "N_ridge_cross": 20.75905541278443,
+      "residual_factor": 3.59081,
+      "rho_ach_ridge_cross": 1.80757,
+      "rho_req_ridge_cross": 3.68743,
+      "clip_ratio_at_cross": 0.4902,
+      "Jclip_cost_lo": 0.7538651926531785,
+      "Jclip_cost_hi": 0.8841111005068695,
+      "check_product": 46.150824
+    },
+    {
+      "image": "m1_spokes_1",
+      "family": "spokes",
+      "frozen_S": 20.38441004338325,
+      "frozen_status": "NORMAL",
+      "safe_range_dB": 2.96808,
+      "status": "NORMAL",
+      "S_recomputed": 20.38441,
+      "T_safe_cross_s": 0.08305467932015213,
+      "T_ridge_cross_s": 0.004074421537998526,
+      "nu_ridge_cross_equiv": 79.579,
+      "ridge_cross_bracket": [
+        50,
+        100
+      ],
+      "ridge_cross_clipped": true,
+      "rate_safe_cross": 925.5961144075571,
+      "rate_ridge_cross": 15060.193126549619,
+      "rate_ratio_cross": 16.2708,
+      "f_ratio_cross_theory": 16.66076,
+      "N_safe_cross": 76.8750884620985,
+      "N_ridge_cross": 61.36157524123112,
+      "residual_factor": 1.25282,
+      "rho_ach_ridge_cross": 3.83955,
+      "rho_req_ridge_cross": 6.90153,
+      "clip_ratio_at_cross": 0.55633,
+      "Jclip_cost_lo": 0.8733575417350505,
+      "Jclip_cost_hi": 0.9629369667503609,
+      "check_product": 20.38441
+    },
+    {
+      "image": "m1_spokes_2",
+      "family": "spokes",
+      "frozen_S": 21.208912460562292,
+      "frozen_status": "NORMAL",
+      "safe_range_dB": 4.2798,
+      "status": "NORMAL",
+      "S_recomputed": 21.208912,
+      "T_safe_cross_s": 0.08418803408319905,
+      "T_ridge_cross_s": 0.003969464923755416,
+      "nu_ridge_cross_equiv": 77.529,
+      "ridge_cross_bracket": [
+        50,
+        100
+      ],
+      "ridge_cross_clipped": true,
+      "rate_safe_cross": 927.5719516180152,
+      "rate_ridge_cross": 14985.540784349749,
+      "rate_ratio_cross": 16.15566,
+      "f_ratio_cross_theory": 16.75982,
+      "N_safe_cross": 78.09045907743693,
+      "N_ridge_cross": 59.48457850698255,
+      "residual_factor": 1.31278,
+      "rho_ach_ridge_cross": 3.95262,
+      "rho_req_ridge_cross": 6.79012,
+      "clip_ratio_at_cross": 0.58211,
+      "Jclip_cost_lo": 0.8858433887244098,
+      "Jclip_cost_hi": 0.9697913782865143,
+      "check_product": 21.208912
+    },
+    {
+      "image": "m1_spokes_3",
+      "family": "spokes",
+      "frozen_S": 22.034110816519803,
+      "frozen_status": "NORMAL",
+      "safe_range_dB": 1.77314,
+      "status": "NORMAL",
+      "S_recomputed": 22.034111,
+      "T_safe_cross_s": 0.07835857281788475,
+      "T_ridge_cross_s": 0.003556239390388227,
+      "nu_ridge_cross_equiv": 69.458,
+      "ridge_cross_bracket": [
+        50,
+        100
+      ],
+      "ridge_cross_clipped": true,
+      "rate_safe_cross": 925.0703176879231,
+      "rate_ridge_cross": 14907.303858476147,
+      "rate_ratio_cross": 16.11478,
+      "f_ratio_cross_theory": 16.57363,
+      "N_safe_cross": 72.4871898502129,
+      "N_ridge_cross": 53.01394118599928,
+      "residual_factor": 1.36732,
+      "rho_ach_ridge_cross": 3.74429,
+      "rho_req_ridge_cross": 6.32083,
+      "clip_ratio_at_cross": 0.59237,
+      "Jclip_cost_lo": 0.8963055896838914,
+      "Jclip_cost_hi": 0.9752813792412548,
+      "check_product": 22.034111
+    }
+  ]
+}
