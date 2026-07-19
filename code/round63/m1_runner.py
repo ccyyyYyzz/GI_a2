@@ -1,88 +1,61 @@
-"""M1 method-campaign runner (docs/ROUND63_METHOD_SPEC_M1.md; R10+R11 frozen).
+"""M1 campaign runner — R17 re-architecture (OPERATIVE).
 
-Modeled on study2_runner.py. Six arms, each reconstructed by the frozen RQL
-production path through campaign.run_cell on the M1 imageset:
+Authority: docs/ROUND63_GPT_ROUND17_RULING_RAW.md (issue #9) via
+docs/ROUND63_METHOD_SPEC_M1_R17_AMENDMENT.md. Supersedes the pre-R17
+runner (the OED-DT / OED-EQLOAD / MATCH1 / RIDGE-FIXED arms and the
+retired adaptive speed gate are removed from every production path; the frozen
+rule m=0 => ADAPTIVE_COLLAPSE_UNDER_GUARDS != PASS lives in
+oed_design_v5.path_feasible_alpha).
 
-  SCAT16      pattern 'sparsek' k=16          (Study-2 bridge; no gate)
-  SCAT32      pattern 'sparsek' k=32          (ladder rung; no gate)
-  LBLOB16     pattern 'lblob16'               (strongest fixed baseline)
-  RIDGE-FIXED pattern 'lblob16', per-dwell global multiplier from
-              oed_design_v3.ridge_fixed_design on the cell's own pre-scan
-              estimate (fast rho_bar = achieved mean load rho_ach(nu))
-  OED-EQLOAD  v3 optimizer, ALL atoms at the arm rho (kernel ablation)
-  OED-DT      v3 optimizer, full R11 palette + incident budget + dose
-              machinery (the ONLY gate-carrying arm)
+Architecture (amendment §B):
+  Deployed spatial design  = the balanced exact 972-row SCAT32 multiset
+  (oed_design_v5.fixed_dose_scat32; scene-independent; SHA-frozen),
+  identical in all operating-point comparisons; plus the common balanced
+  52-row pre-scan charged to every arm (52 + 972 = 1024 rows per cell).
 
-DESIGN GRANULARITY (frozen semantics)
--------------------------------------
-ONE design per (image, seed, arm), computed at the TERMINAL dwell nu=2000
-palette and that arm's operating rho; the SAME pattern matrix is reused
-across the whole nu sweep (the Q90 time-to-quality endpoint compares fixed
-patterns swept over dwell). RIDGE-FIXED keeps fixed supports and varies only
-its GLOBAL multiplier per dwell (R11 §2: a ridge-tracking policy, not a
-servo); that multiplier enters the cell as its fast rho_bar. Designs are
-cached to results/round63_m1/designs/<image>_<seed>_<arm>.npz with a sha256
-and the full R11 disclosure block (rho_R, clip reasons, budget slack, dose
-residual, alpha-mixture, certificate gap).
+  Endpoint-carrying modes:  SCAT32-SAFE (global load 0.05),
+  SCAT32-060 (0.60), RIDGE-SCAT32 (one global source multiplier per dwell,
+  calibrated at run time from the common pre-scan estimate so the predicted
+  mean main-pattern load hits the exact production ridge rho_R(nu), then
+  only the frozen global safety clip; no per-pattern servo).
+  Context arms (no gate, descriptive): SCAT16, LBLOB16 at load 0.60.
 
-PRE-SCAN accounting (R10 Q7 §4)
--------------------------------
-Every arm's measurement of every cell = the frozen 52-row balanced multiscale
-pre-scan (v3's prescan_52_supports: 32 even-parity 4x4 blocks + 16 8x8
-blocks + 4 quadrants, each row unit-mean-load normalized (n/k_row) *
-indicator) at the cell's own (rho, nu), STACKED with the arm's 972 main
-patterns: A = vstack(prescan, main), 1024 physical exposures total; the
-pre-scan counts are folded into the reconstruction data for ALL arms (they
-are simply the first 52 rows of the cell's A). Only OED/RIDGE arms use the
-pre-scan RECONSTRUCTION (GI on the 52 rows, clipped nonneg, 4x4-block
-smoothed, sum-normalized) to parameterize their designs; that design-time
-estimate is simulated once per (image, seed) at the terminal (0.60, 2000)
-operating point on the dedicated rng_for(seed, 63, 9, ...) stream.
+Endpoints (amendment §C): RIDGE_OPERATING_PASS (primary, paired terminal-
+dwell), RIDGE_SPEED_PASS (nine-dwell Q90 secondary), DOSE_SAFE_CERT_PASS
+(480-cell expanded-class certificate) — emitted by m1_analyze_r17.
 
-Safe reference for EVERY arm = that arm's own patterns at rho = 0.05
-(spec §6). Fast operating point: 0.60 for the budget arms; rho_R(nu)
-achieved (post safety clip) for RIDGE-FIXED.
+Certificate cells (amendment §C.3) run through run_cert_cell — shardable
+via the existing manifest machinery (campaign.run_cell dispatches cells
+carrying m1_cert=True to run_cert_cell; one CSV row per cell).
 
-Ambiguity ledger (A6..A12; resolved toward the spec text)
----------------------------------------------------------
-A6  Design-time pre-scan estimate: the spec's "the cell's own 52-pattern
-    pre-scan estimate" conflicts with the frozen design granularity (one
-    design per (image, seed, arm) at terminal dwell) if read per-cell.
-    Resolved: ONE estimate per (image, seed), simulated at (0.60, 2000) on
-    the design stream (63, 9); every cell still FOLDS its own per-cell
-    pre-scan counts into reconstruction (data path unaffected).
-A7  Fixed arms' 972 main rows: the frozen square families have 1024 rows;
-    main = the FIRST 972 rows in the family's frozen order (deterministic;
-    the dropped 52 are the accounting cost of the pre-scan slots).
-A8  See campaign.py M1 appendix: pattern kinds 'm1pat:<ARM>:<image>' are
-    resolved by campaign at run time so the frozen Colab shard infra
-    (shard_runner -> campaign.run_cell) runs M1 manifests unchanged.
-A9  OED pattern matrices are handed to run_cell normalized to unit MEAN
-    predicted load (A_main / mean_i(a_i . xhat)), so the campaign's
-    rho_bar semantics (Phi = rho/tau at E[u] = 1) hold; the R11 relative
-    per-row load profile is preserved. At fast rho_bar = 0.60 the realized
-    incident budget sits exactly AT the cap 972*0.60 (<=, allowed) even
-    when the continuous design left slack.
-A10 CNR column: campaign only routes frozen ROIs for detail32*; M1 rows
-    carry blank cnr (the analyzer uses PSNR_rad; ROI wiring would touch
-    non-additive campaign code).
-A11 OED-EQLOAD palette: v3.design_v3 hardwires load_palette; the EQLOAD
-    single-level palette is injected by a scoped monkey-patch
-    (try/finally) — runtime-only, no file modified.
-A12 R11 disclosure columns are injected into the LOCAL per-arm CSVs by this
-    runner; Colab shard CSVs carry the core run_cell rows and the
-    disclosures are joined at merge time from the sha-frozen design caches
-    (the caches are declared frozen_inputs of their shards).
+HARD RULE (R17 §5): no confirmatory (633000+) image may be loaded and no
+confirmatory pre-scan count generated before the m1-freeze launch. Guarded
+here: imageset "m1" requires the M1_FREEZE_LAUNCHED environment gate (set
+by the post-freeze Colab launcher); DEV ("m1_dev") and synthetic paths are
+always allowed.
 
-Usage (repo root, py311):
-  python code/round63/m1_runner.py --designs [--arms OED-DT,OED-EQLOAD,RIDGE-FIXED]
-  python code/round63/m1_runner.py --arm OED-DT       # local resume-safe sweep
-  python code/round63/m1_runner.py --smoke            # item-6 end-to-end smoke
+Interpretations logged for the refreeze audit (I1..I5):
+  I1 context arms run at load 0.60 across all nine dwells (descriptive
+     occupancy-ladder columns; the amendment fixes only the load).
+  I2 ridge calibration uses ONE common pre-scan estimate per (image, seed)
+     at the (0.60, nu=2000) anchor for all dwells (design-granularity
+     precedent; §2.1 "calibrated from the common pre-scan estimate").
+  I3 certificate cells use their own (nu, b)-specific pre-scan realization
+     (stream rng_for(seed, 63, 9, img, nu, b)) — §4.5 "every actual
+     pre-scan realization" enumerates exactly 24x5x2x2 = 480 realizations.
+  I4 the declared r=200 task subspace is the top-200 eigenspace of the
+     DEPLOYED SCAT32 information matrix (pre-scan V0 + 972 rows) at the
+     cell's own budget corner — the campaign's reference design under R17;
+     eps0 = 1e-9 tr(B^T V B)/r as frozen.
+  I5 "PSNR_rad mean over the five frozen measurement seeds" pairs seeds
+     via identical pattern matrices and identical noise streams keyed by
+     the shared pattern kind prefix (only the global multiplier differs).
 """
 import argparse
 import csv
 import hashlib
 import json
+import math
 import os
 import sys
 import time
@@ -96,9 +69,8 @@ sys.path.insert(0, HERE)
 sys.path.insert(0, os.path.dirname(HERE))
 ROOT = os.path.dirname(os.path.dirname(HERE))
 
-import oed_design as v1                     # noqa: E402
-import oed_design_v2 as v2                  # noqa: E402
-import oed_design_v3 as v3                  # noqa: E402
+import oed_design_v4 as v4                  # noqa: E402
+import oed_design_v5 as v5                  # noqa: E402
 from gi_core.utils import rng_for           # noqa: E402
 from patterns import make_patterns          # noqa: E402
 from physics import Detector, simulate_counts  # noqa: E402
@@ -106,69 +78,81 @@ from solvers import ArmContext, run_arm     # noqa: E402
 from select_eta import frozen_C0            # noqa: E402
 import pilot_s1                             # noqa: E402
 
-# ---- frozen M1 geometry (spec §2) ----------------------------------------- #
+# ---- frozen geometry ------------------------------------------------------ #
 SIDE = 32
 N_PIX = SIDE * SIDE
-M_TOTAL = 1024
-M_PRE = 52
-M_MAIN = 972
+M_TOTAL, M_PRE, M_MAIN = 1024, 52, 972
 TAU = 50e-9
 NU_FULL = [5.0, 10.0, 20.0, 50.0, 100.0, 200.0, 500.0, 1000.0, 2000.0]
-RHO_SAFE = 0.05
-RHO_FAST = 0.60
-SEEDS5 = [0, 1, 2, 3, 4]
 NU_TERMINAL = 2000.0
+SEEDS5 = [0, 1, 2, 3, 4]
 
-ARMS_ALL = ["SCAT16", "SCAT32", "LBLOB16", "MATCH1", "RIDGE-FIXED",
-            "OED-EQLOAD", "OED-DT"]
-DESIGN_ARMS = ["MATCH1", "RIDGE-FIXED", "OED-EQLOAD", "OED-DT"]
+# ---- R17 arm roster ------------------------------------------------------- #
+MODE_ARMS = ["SCAT32-SAFE", "SCAT32-060", "RIDGE-SCAT32"]
+CONTEXT_ARMS = ["SCAT16", "LBLOB16"]
+ARMS_ALL = MODE_ARMS + CONTEXT_ARMS
+MODE_LOADS = {"SCAT32-SAFE": 0.05, "SCAT32-060": 0.60,
+              "SCAT16": 0.60, "LBLOB16": 0.60}
+RETIRED_ARMS = {"OED-DT", "OED-EQLOAD", "MATCH1", "RIDGE-FIXED"}
+CERT_NUS = [200.0, 2000.0]
+CERT_BUDGETS = [0.05, 0.60]
 
 OUT_DIR = os.path.join(ROOT, "results", "round63_m1")
 DESIGN_DIR = os.path.join(OUT_DIR, "designs")
-RIDGE_JSON = os.path.join(DESIGN_DIR, "ridge_targets.json")
+RIDGE_JSON = os.path.join(DESIGN_DIR, "ridge_targets_r17.json")
+SCAT32_NPZ = os.path.join(DESIGN_DIR, "scat32_deployed.npz")
 
-# ---- CSV schema ----------------------------------------------------------- #
 MECH_COLS = ["cnr", "C_u", "Gamma", "S_det", "S_inc", "k_occupancy"]
-PROV_COLS = ["m1_arm", "stage", "cell_id"]
+PROV_COLS = ["m1_arm", "stage", "cell_id", "descriptive_context"]
 DISC_COLS = ["rho_R_production", "ridge_clip_reason", "requested_mean_load",
-             "achieved_mean_load", "RIDGE_GUARD_CLIPPED", "min_trust",
-             "mean_J_exact", "incident_sum_rho", "budget_slack",
-             "budget_active", "detected_pred_exact", "dose_resid",
-             "baseline_dose_dev", "alpha_mixture", "cert_gap",
-             "cert_gap_v3_loop", "theta_degenerate", "mean_load_pred",
-             "rho_5", "rho_50", "rho_95", "rho_max", "design_sha"]
+             "achieved_mean_load", "RIDGE_GUARD_CLIPPED",
+             "incident_dose_ratio", "detected_count_ratio",
+             "load_q5", "load_q50", "load_q95", "load_max",
+             "physical_peak", "ceiling_fraction_pred", "deployed_sha"]
 M1_FIELDNAMES = list(pilot_s1.FIELDNAMES) + MECH_COLS + PROV_COLS + DISC_COLS
 RESUME_COLS = ["pattern", "rho_bar", "nu", "M", "seed", "image", "arm"]
 
+CERT_FIELDNAMES = ["image", "seed", "nu", "b", "G_full_per_r", "cell_pass",
+                   "status", "primal_feasible", "theta", "n_active_mu",
+                   "MU_CAP_ACTIVE", "budget_viol", "dose_excess",
+                   "comp_budget", "comp_dose", "deployed_mean_load",
+                   "deployed_dose_dev", "deployed_peak", "d_cert_sha",
+                   "wall_s", "cell_id", "stage"]
 
-# =========================================================================== #
-# frozen 52-row pre-scan matrix (unit-mean-load rows)                          #
-# =========================================================================== #
+
+def _confirmatory_guard(imageset):
+    """R17 §5 hard rule: confirmatory scenes only after the freeze launch."""
+    if imageset == "m1" and not os.environ.get("M1_FREEZE_LAUNCHED"):
+        raise RuntimeError(
+            "R17 launch policy: confirmatory imageset 'm1' is locked until "
+            "the m1-freeze tag launch sets M1_FREEZE_LAUNCHED (use 'm1_dev' "
+            "for development).")
+
+
+# ---- balanced pre-scan + estimate ----------------------------------------- #
 def prescan_matrix(side=SIDE):
-    """(52 x n) pre-scan rows. R13 Section 2 REPLACEMENT: the balanced,
-    scene-independent construction (32 paired-4x4-block rows + 16 8x8 rows +
-    4 quadrant rows) whose row average is exactly the all-ones vector and
-    whose per-pixel cumulative dose is exactly equal. Supersedes the v2/v3
-    unbalanced multiscale set for every M1 arm."""
-    import oed_design_v4 as v4
+    """The R13 Sec-2 balanced 52-row pre-scan (exact identities)."""
     return v4.balanced_prescan_52(side)
 
 
-# =========================================================================== #
-# design-time pre-scan estimate  (A6: one per (image, seed))                   #
-# =========================================================================== #
 def _img_tag(image):
     return zlib.adler32(image.encode("utf-8")) % 100000
 
 
-def prescan_estimate(x_true, image, seed, rho=RHO_FAST, nu=NU_TERMINAL):
-    """GI on the simulated 52-row pre-scan, clipped nonneg, 4x4-block
-    smoothed, sum-normalized (spec item 3). Design stream (63, 9, ...)."""
+def prescan_estimate(x_true, image, seed, rho, nu, per_cell=False):
+    """GI on the simulated balanced 52-row pre-scan, clipped nonneg,
+    4x4-block smoothed, floored (A13) and sum-normalized. Stream: (63, 9,
+    img) for the common per-(image, seed) estimate; (63, 9, img, nu, b) for
+    per-cell certificate realizations (I3)."""
     P = prescan_matrix()
     T = nu * TAU
     Phi = rho / TAU
     det = Detector(tau=TAU, dark=0.0)
-    rng = rng_for(int(seed), 63, 9, _img_tag(image))
+    if per_cell:
+        rng = rng_for(int(seed), 63, 9, _img_tag(image), int(nu),
+                      int(round(rho * 1000)))
+    else:
+        rng = rng_for(int(seed), 63, 9, _img_tag(image))
     u = P @ x_true
     b, _N = simulate_counts(u, Phi, T, det, rng, sigma_b=0.0)
     ctx = ArmContext(Phi=Phi, det=det, T=T, side=SIDE, sigma_b=0.0,
@@ -180,20 +164,34 @@ def prescan_estimate(x_true, image, seed, rho=RHO_FAST, nu=NU_TERMINAL):
     xhat = np.repeat(np.repeat(blk, 4, axis=0), 4, axis=1).ravel()
     s = xhat.sum()
     xhat = xhat / s if s > 0 else np.full(N_PIX, 1.0 / N_PIX)
-    # A13: R10's chain rule is g = a / max(a.xhat, floor); the v3 machinery
-    # divides by support loads, so a real (clipped) GI estimate with zero
-    # blocks would produce zero-load atoms -> singular design. Floor every
-    # pixel at 5% of the uniform level, then renormalize. Design-time only;
-    # the reconstruction data path never sees this estimate.
     xhat = np.maximum(xhat, 0.05 / N_PIX)
     return xhat / xhat.sum()
 
 
-# =========================================================================== #
-# ridge-target cache (global per nu)                                           #
-# =========================================================================== #
+# ---- deployed SCAT32 multiset (frozen + hashed) --------------------------- #
+_SCAT32_CACHE = {}
+
+
+def deployed_scat32():
+    """The balanced exact 972-row SCAT32 multiset (R17 §2.1) + SHA256."""
+    if "rows" in _SCAT32_CACHE:
+        return _SCAT32_CACHE["rows"], _SCAT32_CACHE["sha"]
+    if os.path.exists(SCAT32_NPZ):
+        d = np.load(SCAT32_NPZ)
+        rows, sha = d["rows"], str(d["sha256"])
+    else:
+        rows, dev = v5.fixed_dose_scat32(SIDE)
+        sha = hashlib.sha256(np.ascontiguousarray(rows).tobytes()).hexdigest()
+        os.makedirs(DESIGN_DIR, exist_ok=True)
+        np.savez_compressed(SCAT32_NPZ, rows=rows, sha256=np.array(sha),
+                            dose_dev=np.array(dev))
+    _SCAT32_CACHE["rows"] = rows
+    _SCAT32_CACHE["sha"] = sha
+    return rows, sha
+
+
+# ---- exact ridge targets (A1-amended kernel) ------------------------------ #
 def ridge_targets(nu_list=NU_FULL):
-    """rho_R(nu) records for the dwell grid, cached to a JSON side file."""
     os.makedirs(DESIGN_DIR, exist_ok=True)
     cache = {}
     if os.path.exists(RIDGE_JSON):
@@ -203,438 +201,352 @@ def ridge_targets(nu_list=NU_FULL):
     for nu in nu_list:
         key = "%g" % nu
         if key not in cache:
-            t0 = time.time()
-            rr = v3.ridge_target(int(nu))
-            rr["compute_s"] = round(time.time() - t0, 1)
+            rr = v4.ridge_target4(int(nu))
             cache[key] = rr
             changed = True
-            print("[m1 ridge] nu=%g rho_R=%.4f clip=%s (%.1fs)"
+            print("[m1 ridge] nu=%g rho_R=%.4f clip=%s"
                   % (nu, rr.get("rho_R_production", float("nan")),
-                     rr.get("ridge_clip_reason"), rr["compute_s"]), flush=True)
+                     rr.get("ridge_clip_reason")), flush=True)
     if changed:
         with open(RIDGE_JSON, "w") as f:
             json.dump(cache, f, indent=1, sort_keys=True)
     return cache
 
 
-# =========================================================================== #
-# design caches                                                                #
-# =========================================================================== #
-def _design_path(image, seed, arm):
-    return os.path.join(DESIGN_DIR, "%s_%d_%s.npz" % (image, int(seed), arm))
+# ---- RIDGE-SCAT32 runtime calibration ------------------------------------- #
+def _ridge_cache_path(image, seed):
+    return os.path.join(DESIGN_DIR, "ridge_scat32_%s_%d.npz" % (image, seed))
 
 
-def _atoms_arrays(atoms):
-    names = np.array([a[0] for a in atoms])
-    t = np.array([a[1] for a in atoms], dtype=np.int64)
-    p = np.array([a[2] for a in atoms], dtype=np.float64)
-    rho = np.array([a[3] for a in atoms], dtype=np.float64)
-    cnt = np.array([a[4] for a in atoms], dtype=np.int64)
-    return names, t, p, rho, cnt
+def ridge_scat32_calibration(image, seed, imageset="m1_dev", x_true=None):
+    """Per (image, seed): the common pre-scan estimate (I2) + per-dwell
+    global multiplier so predicted mean main load = rho_R(nu), then ONLY
+    the frozen global safety clip (kernel-grid guards). Cached npz."""
+    path = _ridge_cache_path(image, seed)
+    if os.path.exists(path):
+        return dict(np.load(path, allow_pickle=False))
+    _confirmatory_guard(imageset)
+    if x_true is None:
+        import campaign
+        x_true = campaign._images(SIDE, "all", imageset=imageset)[image]
+    xhat = prescan_estimate(x_true, image, seed, MODE_LOADS["SCAT32-060"],
+                            NU_TERMINAL)
+    rows, sha = deployed_scat32()
+    base_load = rows @ xhat                       # relative predicted loads
+    rt = ridge_targets(NU_FULL)
+    nu_grid, mult, req, ach, clip, flags = [], [], [], [], [], []
+    for nu in NU_FULL:
+        kg = v5._kernel_grids(nu)
+        rho_R = rt["%g" % nu]["rho_R_production"]
+        m0 = rho_R / float(base_load.mean())
 
+        def ok(m_):
+            loads = m_ * base_load
+            ll = np.log(np.clip(loads, kg["lo"], kg["hi"]))
+            pc = np.interp(ll, kg["lg"], kg["pceil"])
+            return (pc.mean() <= v4.CEIL_TARGET and pc.max() <= v4.CEIL_ATOM
+                    and np.interp(ll, kg["lg"], kg["eff"]).min() >= v4.EFF_MIN
+                    and np.interp(ll, kg["lg"], kg["bias"]).max()
+                    <= v4.BIAS_MAX)
 
-def _sha_arrays(*arrays):
-    h = hashlib.sha256()
-    for a in arrays:
-        h.update(np.ascontiguousarray(a).tobytes())
-    return h.hexdigest()
-
-
-def rebuild_A_main(names, t, p, rho, cnt, xhat, side=SIDE):
-    """Deterministically rebuild the design's 972 main rows from its atom
-    list + xhat (mirrors v2._build_geometries' G4 pipeline exactly):
-    w = renorm(clip((xh_on/mean)^p, 1/4, 4)); g = w/(w.xh_on); row = rho*g."""
-    n = side * side
-    shapes = v1._default_shapes(side)
-    rows = np.zeros((int(cnt.sum()), n))
-    r = 0
-    for nm, t_, p_, rho_, c_ in zip(names, t, p, rho, cnt):
-        sidx = v1._shape_support(shapes[str(nm)], side)[int(t_)]
-        xh_on = xhat[sidx]
-        w0 = (xh_on / xh_on.mean()) ** float(p_)
-        w1 = np.clip(w0, 0.25, 4.0)
-        w = w1 / w1.mean()
-        g = w / (w * xh_on).sum()
-        row = np.zeros(n)
-        row[sidx] = float(rho_) * g
-        rows[r:r + int(c_)] = row
-        r += int(c_)
-    return rows
-
-
-def posthoc_cert(xhat, atoms, levels, budget=RHO_FAST, side=SIDE):
-    """A14: post-hoc constrained-polytope FW certificate of the DEPLOYED
-    rounded design (this is the ledger's cert_gap; the v3 in-loop Lagrangian
-    gap is kept as provenance only, because its theta comes from a damped
-    level-assignment bisection that degenerates to a 1e18 sentinel on real
-    scenes -> gap = inf, which certifies nothing).
-
-    gap = (LMO - <xi, d>) / <xi, d> with d(a) = nu*J(rho_a) * g_a^T V^-1 g_a,
-    V = V0 + sum_rows H(row) at the deployed counts, and the LMO taken over
-    the R11-feasible polytope {xi in simplex, <rho, xi> <= budget}: the best
-    single atom with rho <= budget or the best two-level boundary mixture.
-    By concavity of log det, gap upper-bounds the relative directional
-    improvement available inside the frozen dictionary + budget (dose
-    constraints are NOT priced -- same caveat as v3, stated in the ledger).
-
-    Also returns the scatter16@0.6-equivalent BASELINE dose deviation, the
-    evidence field for the A15 finding (on real scenes the +/-5% per-pixel
-    dose band is violated by the load-normalized BASELINE itself: equal
-    detector load makes physical dose anti-correlated with scene brightness,
-    so G5-as-frozen is scene-dependent-infeasible, flagged for R13)."""
-    n = side * side
-    shapes = v1._default_shapes(side)
-    levels = [float(l_) for l_ in levels]
-    rho_arr = np.asarray(levels)
-    IDX, GVAL, names_g, t_g, p_g, _A0, _g3, _g4 = v2._build_geometries(
-        xhat, shapes, (0, 1), side, (0.25, 4.0), np.inf, rho_arr)
-    sumg = GVAL.sum(axis=1)
-    geo_ok = GVAL.max(axis=1) * (16.0 / sumg) <= 4.0 + 1e-9   # A2 shape guard
-    nuJ = np.array([NU_TERMINAL * v3.kernel_eval(l_, int(NU_TERMINAL))["J_exact"]
-                    for l_ in levels])
-    # V = V0 + deployed information (one exposure per row)
-    V0, _ = v2.build_V0(xhat, NU_TERMINAL, RHO_FAST, v2.get_J_source(), side)
-    V = V0.copy()
-    lvl_of = {round(l_, 12): i for i, l_ in enumerate(levels)}
-    deployed = []                                   # (sidx, g_on, level, count)
-    for (nm, t_, p_, rho_, c_) in atoms:
-        sidx = v1._shape_support(shapes[str(nm)], side)[int(t_)]
-        xh_on = xhat[sidx]
-        w0 = (xh_on / xh_on.mean()) ** float(p_)
-        w = np.clip(w0, 0.25, 4.0)
-        w = w / w.mean()
-        g_on = w / (w * xh_on).sum()
-        li = lvl_of[round(float(rho_), 12)]
-        V[np.ix_(sidx, sidx)] += c_ * nuJ[li] * np.outer(g_on, g_on)
-        deployed.append((sidx, g_on, li, int(c_)))
-    eps = 1e-9 * np.trace(V) / n
-    V[np.diag_indices(n)] += eps
-    Vinv = np.linalg.inv(V)
-    sub = Vinv[IDX[:, :, None], IDX[:, None, :]]
-    dgeo = np.einsum('ai,aij,aj->a', GVAL, sub, GVAL)
-    D = np.where(geo_ok[:, None], dgeo[:, None] * nuJ[None, :], -np.inf)
-    M_dep = sum(c_ for _, _, _, c_ in deployed)
-    dbar = sum((c_ / M_dep) * nuJ[li] *
-               float(g_on @ Vinv[np.ix_(sidx, sidx)] @ g_on)
-               for (sidx, g_on, li, c_) in deployed)
-    # LMO over the budget polytope
-    best = -np.inf
-    dmax_l = D.max(axis=0)                          # best atom per level
-    for i, l_ in enumerate(levels):
-        if l_ <= budget + 1e-12:
-            best = max(best, dmax_l[i])
-    for i, lo in enumerate(levels):
-        for j, hi in enumerate(levels):
-            if lo <= budget < hi:
-                wlo = (hi - budget) / (hi - lo)
-                best = max(best, wlo * dmax_l[i] + (1 - wlo) * dmax_l[j])
-    gap = (best - dbar) / dbar if dbar > 0 else float("inf")
-    # baseline dose deviation (scatter16 p=0, level nearest 0.6, uniform)
-    sel = (np.asarray(names_g) == "scatter16") & (p_g == 0.0) & geo_ok
-    l6 = int(np.argmin(np.abs(rho_arr - 0.6)))
-    w_geo = np.where(sel, rho_arr[l6] / max(sel.sum(), 1), 0.0)
-    dose_fix = np.bincount(IDX.ravel(), weights=(w_geo[:, None] * GVAL).ravel(),
-                           minlength=n)
-    base_dev = float(np.abs(dose_fix / dose_fix.mean() - 1.0).max())
-    return {"gap": float(gap), "dbar": float(dbar), "lmo": float(best),
-            "baseline_dose_dev": base_dev}
-
-
-def _oed_disclosure(out, ridge_rec, xhat):
-    g5 = out["guards"]["G5"]
-    bud = out["guards"]["budget"]
-    loads = np.concatenate([[a[3]] * a[4] for a in out["atoms"]])
-    v3_gap = out["cert"]["final_gap_adjusted"]
-    cert = posthoc_cert(xhat, out["atoms"], out["cert"]["levels"])
-    return {
-        "rho_R_production": ridge_rec["rho_R_production"],
-        "ridge_clip_reason": ridge_rec["ridge_clip_reason"],
-        "incident_sum_rho": bud["incident_sum_rho"],
-        "budget_slack": bud["slack"],
-        "budget_active": bool(bud["slack"]
-                              <= 1e-6 * max(bud["cap_sum_rho"], 1.0)),
-        "detected_pred_exact": bud["detected_pred_exact"],
-        "dose_resid": g5["max_rel_dev_rounded"],
-        "baseline_dose_dev": cert["baseline_dose_dev"],
-        "alpha_mixture": (g5["alpha_mixture"] if g5["alpha_mixture"]
-                          is not None else ""),
-        "cert_gap": cert["gap"],
-        "cert_gap_v3_loop": (v3_gap if np.isfinite(v3_gap) else "inf"),
-        "theta_degenerate": bool(not np.isfinite(v3_gap)),
-        "mean_load_pred": float(loads.mean()),
-        "rho_5": float(np.percentile(loads, 5)),
-        "rho_50": float(np.percentile(loads, 50)),
-        "rho_95": float(np.percentile(loads, 95)),
-        "rho_max": float(loads.max()),
-        "mean_J_exact": float(np.mean(
-            [v3.kernel_eval(r_, int(NU_TERMINAL))["J_exact"]
-             for r_ in sorted(set(loads.tolist()))])),
-        "levels": out["cert"]["levels"],
-        "G5_pass_direct": g5["pass"],
-        "cert_note": ("cert_gap = post-hoc constrained-polytope FW gap of "
-                      "the DEPLOYED rounded design (A14); dose constraints "
-                      "not priced. cert_gap_v3_loop = v3 in-loop Lagrangian "
-                      "gap (inf when the damped level-assignment theta "
-                      "degenerated; provenance only)."),
-    }
-
-
-def build_design(image, seed, arm, x_true, force=False):
-    """Build (or load) the cached design for one (image, seed, arm)."""
-    path = _design_path(image, seed, arm)
-    if os.path.exists(path) and not force:
-        return dict(np.load(path, allow_pickle=False)), path
+        clipped = False
+        m_ = m0
+        if not ok(m_):
+            clipped = True
+            lo, hi = 0.0, m_
+            for _ in range(60):
+                mid = 0.5 * (lo + hi)
+                if ok(mid):
+                    lo = mid
+                else:
+                    hi = mid
+            m_ = lo
+        a_mean = float(m_ * base_load.mean())
+        nu_grid.append(float(nu))
+        mult.append(float(m_))
+        req.append(float(rho_R))
+        ach.append(a_mean)
+        clip.append(bool(clipped))
+        flags.append(bool(a_mean < 0.90 * rho_R))
+    arrs = dict(xhat=xhat, nu_grid=np.array(nu_grid),
+                multiplier=np.array(mult), requested=np.array(req),
+                achieved=np.array(ach),
+                clip_applied=np.array(clip, dtype=np.int64),
+                guard_clipped=np.array(flags, dtype=np.int64),
+                deployed_sha=np.array(sha))
     os.makedirs(DESIGN_DIR, exist_ok=True)
-    t0 = time.time()
-    xhat = prescan_estimate(x_true, image, seed)
-    ridge_rec = ridge_targets([NU_TERMINAL])["%g" % NU_TERMINAL]
-
-    if arm == "MATCH1":
-        arrs = dict(xhat=xhat)
-        disc = {"kind": "MATCH1 xhat cache (matched-intensity weights)",
-                "design_wall_s": round(time.time() - t0, 1)}
-    elif arm == "RIDGE-FIXED":
-        nu_grid, rho_fast, mult, req, clipped, bis = [], [], [], [], [], []
-        detail = {}
-        for nu in NU_FULL:
-            rf = v3.ridge_fixed_design(xhat, int(nu), side=SIDE)
-            nu_grid.append(float(nu))
-            rho_fast.append(rf["achieved_mean_load"])
-            mult.append(rf["global_multiplier"])
-            req.append(rf["requested_mean_load"])
-            clipped.append(bool(rf["RIDGE_GUARD_CLIPPED"]))
-            bis.append(bool(rf["bisection_clip_applied"]))
-            detail["%g" % nu] = {
-                "ridge": {k_: rf["ridge"][k_] for k_ in
-                          ("rho_ridge_exact_unconstrained", "rho_R_production",
-                           "ridge_clip_reason", "J_exact_at_target",
-                           "J_q_at_target", "p_ceiling_scalar")},
-                "mean_p_ceil": rf["mean_p_ceil"], "max_p_ceil": rf["max_p_ceil"],
-                "min_trust": rf["min_trust"], "mean_J_exact": rf["mean_J_exact"],
-                "rho_quantiles": rf["rho_quantiles"]}
-        arrs = dict(xhat=xhat, nu_grid=np.array(nu_grid),
-                    rho_fast=np.array(rho_fast), multiplier=np.array(mult),
-                    requested=np.array(req),
-                    guard_clipped=np.array(clipped, dtype=np.int64),
-                    bisection_applied=np.array(bis, dtype=np.int64))
-        disc = {"per_nu": detail, "design_wall_s": round(time.time() - t0, 1)}
-    else:
-        if arm == "OED-DT":
-            out = v3.design_v3(xhat, nu=NU_TERMINAL, M_rows=M_MAIN,
-                               budget_mean=RHO_FAST)
-        elif arm == "OED-EQLOAD":
-            orig = v3.load_palette
-
-            def _single(nu, ridge=None):                      # A11 scoped patch
-                pal = orig(nu, ridge)
-                recs = [r for r in pal["records"]
-                        if abs(r["rho"] - RHO_FAST) < 1e-9] or pal["records"]
-                return {"nu": pal["nu"], "levels": [RHO_FAST],
-                        "records": recs, "ridge": pal["ridge"]}
-
-            v3.load_palette = _single
-            try:
-                out = v3.design_v3(xhat, nu=NU_TERMINAL, M_rows=M_MAIN,
-                                   budget_mean=RHO_FAST)
-            finally:
-                v3.load_palette = orig
-        else:
-            raise ValueError("unknown design arm %r" % (arm,))
-        names, t, p, rho, cnt = _atoms_arrays(out["atoms"])
-        assert int(cnt.sum()) == M_MAIN
-        loads = np.concatenate([[r_] * int(c_) for r_, c_ in zip(rho, cnt)])
-        arrs = dict(xhat=xhat, atom_shape=names.astype("U16"), atom_t=t,
-                    atom_p=p, atom_rho=rho, atom_count=cnt,
-                    mean_load_pred=np.array(float(loads.mean())))
-        disc = _oed_disclosure(out, ridge_rec, xhat)
-        disc["design_wall_s"] = round(time.time() - t0, 1)
-
-    sha = _sha_arrays(*[arrs[k] for k in sorted(arrs)])
-    arrs["disclosure_json"] = np.array(json.dumps(disc, sort_keys=True))
-    arrs["sha256"] = np.array(sha)
     np.savez_compressed(path, **arrs)
-    print("[m1 design] %s seed=%d %s -> %s (%.1fs, sha %s..)"
-          % (image, seed, arm, os.path.basename(path),
-             time.time() - t0, sha[:12]), flush=True)
-    return dict(np.load(path, allow_pickle=False)), path
+    return dict(np.load(path, allow_pickle=False))
 
 
-def design_disclosure(image, seed, arm, nu=None):
-    """Disclosure column dict for CSV injection ('' for fixed arms)."""
-    blank = {c: "" for c in DISC_COLS}
-    if arm not in DESIGN_ARMS:
-        return blank
-    path = _design_path(image, seed, arm)
-    if not os.path.exists(path):
-        return blank
-    d = dict(np.load(path, allow_pickle=False))
-    disc = json.loads(str(d["disclosure_json"]))
-    out = dict(blank)
-    out["design_sha"] = str(d["sha256"])[:16]
-    if arm == "RIDGE-FIXED":
-        key = "%g" % (nu if nu is not None else NU_TERMINAL)
-        per = disc["per_nu"].get(key, {})
-        rid = per.get("ridge", {})
-        i = list(d["nu_grid"]).index(float(key)) if float(key) in d["nu_grid"] \
-            else None
-        out.update({
-            "rho_R_production": rid.get("rho_R_production", ""),
-            "ridge_clip_reason": rid.get("ridge_clip_reason", ""),
-            "requested_mean_load": (float(d["requested"][i])
-                                    if i is not None else ""),
-            "achieved_mean_load": (float(d["rho_fast"][i])
-                                   if i is not None else ""),
-            "RIDGE_GUARD_CLIPPED": (int(d["guard_clipped"][i])
-                                    if i is not None else ""),
-            "min_trust": per.get("min_trust", ""),
-            "mean_J_exact": per.get("mean_J_exact", ""),
-            "rho_5": per.get("rho_quantiles", {}).get("rho_5", ""),
-            "rho_50": per.get("rho_quantiles", {}).get("rho_50", ""),
-            "rho_95": per.get("rho_quantiles", {}).get("rho_95", ""),
-            "rho_max": per.get("rho_quantiles", {}).get("rho_max", "")})
-    else:
-        for c in DISC_COLS:
-            if c in disc:
-                out[c] = disc[c]
-    return out
+def ridge_scat32_rho(image, seed, nu, imageset="m1_dev", x_true=None):
+    cal = ridge_scat32_calibration(image, seed, imageset, x_true)
+    i = list(cal["nu_grid"]).index(float(nu))
+    return float(cal["achieved"][i]), cal
 
 
-# =========================================================================== #
-# pattern loader (called from campaign._patterns via the M1 appendix)          #
-# =========================================================================== #
+# ---- pattern loader (via the campaign M1 appendix) ------------------------ #
 def load_m1_pattern(kind, M, n, seed):
-    """'m1pat:<ARM>:<image>' -> {A, exposures_per_row, meta}: the 52-row
-    pre-scan stacked over the arm's 972 main rows (A7/A9 conventions)."""
+    """'m1pat:<ARM>:<image>' -> 52-row balanced pre-scan + the arm's 972
+    main rows. R17: the three SCAT32 modes share ONE deployed multiset."""
     _tag, arm, image = kind.split(":", 2)
+    if arm in RETIRED_ARMS:
+        raise ValueError("arm %r RETIRED_BY_R17 (issue #9); no production "
+                         "path may build its patterns" % arm)
     if M != M_TOTAL or n != N_PIX:
-        raise ValueError("M1 cells are frozen at M=%d, n=%d (got %d, %d)"
-                         % (M_TOTAL, N_PIX, M, n))
+        raise ValueError("M1 cells are frozen at M=%d, n=%d" % (M_TOTAL, N_PIX))
     P = prescan_matrix()
     meta = {"kind": kind, "M_signed": M, "n": n, "seed": int(seed),
             "m1_arm": arm, "image": image, "prescan_rows": M_PRE,
             "main_rows": M_MAIN, "nonneg": True,
             "n_physical_rows": M_TOTAL, "total_exposures": M_TOTAL,
             "pixel_mean_target": 1.0}
-    if arm in ("SCAT16", "SCAT32"):
-        k = 16 if arm == "SCAT16" else 32
-        base = make_patterns("sparsek", N_PIX, N_PIX, seed, k=k)
-        A_main = base["A"][:M_MAIN]
-        meta["main_construction"] = base["meta"]["construction"]
-        meta["k"] = k
-    elif arm in ("LBLOB16", "RIDGE-FIXED"):
-        base = make_patterns("lblob16", N_PIX, N_PIX, seed)
-        A_main = base["A"][:M_MAIN]
-        meta["main_construction"] = base["meta"]["construction"]
+    if arm in ("SCAT32-SAFE", "SCAT32-060", "RIDGE-SCAT32"):
+        rows, sha = deployed_scat32()
+        A_main = rows
+        meta["main_construction"] = ("deployed balanced exact 972-row "
+                                     "SCAT32 multiset sha %s.." % sha[:12])
+        meta["deployed_sha256"] = sha
+        meta["k"] = 32
+    elif arm == "SCAT16":
+        A_main = make_patterns("sparsek", N_PIX, N_PIX, seed, k=16)["A"][:972]
         meta["k"] = 16
-    elif arm == "MATCH1":
-        # R10 mandatory matched-intensity no-gate arm: LBLOB16 first-972
-        # multiset, p=1 weights from the cached pre-scan estimate,
-        # G4-clipped [1/4,4] + support-renormalized; no servo.
-        path = _design_path(image, seed, arm)
-        if not os.path.exists(path):
-            raise FileNotFoundError(
-                "MATCH1 xhat cache missing: %s (run m1_runner.py --designs)"
-                % path)
-        d = dict(np.load(path, allow_pickle=False))
-        xhat_m = np.asarray(d["xhat"], dtype=float)
-        base = make_patterns("lblob16", N_PIX, N_PIX, seed)["A"][:M_MAIN]
-        A_main = np.zeros_like(base)
-        for s_ in range(M_MAIN):
-            idx = np.nonzero(base[s_])[0]
-            w0 = xhat_m[idx] / xhat_m[idx].mean()
-            w = np.clip(w0, 0.25, 4.0)
-            w = w / w.mean()
-            A_main[s_, idx] = (N_PIX / 16.0) * w
-        meta["main_construction"] = ("MATCH1: lblob16 first-972 x G4-clipped "
-                                     "p=1 matched weights from cached xhat")
+    elif arm == "LBLOB16":
+        A_main = make_patterns("lblob16", N_PIX, N_PIX, seed)["A"][:972]
         meta["k"] = 16
-    elif arm in ("OED-DT", "OED-EQLOAD"):
-        path = _design_path(image, seed, arm)
-        if not os.path.exists(path):
-            raise FileNotFoundError(
-                "M1 design cache missing: %s (run m1_runner.py --designs)"
-                % path)
-        d = dict(np.load(path, allow_pickle=False))
-        A_rows = rebuild_A_main(d["atom_shape"], d["atom_t"], d["atom_p"],
-                                d["atom_rho"], d["atom_count"], d["xhat"])
-        A_main = A_rows / float(d["mean_load_pred"])          # A9 unit mean
-        meta["main_construction"] = ("v3 design cache %s (sha %s..), rows "
-                                     "rebuilt from atoms, mean-load "
-                                     "normalized" % (os.path.basename(path),
-                                                     str(d["sha256"])[:12]))
-        meta["design_sha256"] = str(d["sha256"])
     else:
-        raise ValueError("unknown M1 arm in pattern kind %r" % (kind,))
+        raise ValueError("unknown M1 arm %r" % arm)
     A = np.vstack([P, A_main])
     assert A.shape == (M_TOTAL, N_PIX)
     meta["exposures_per_row"] = 1
     return {"A": A, "exposures_per_row": 1, "meta": meta}
 
 
-# =========================================================================== #
-# cell grid                                                                    #
-# =========================================================================== #
+# ---- cells ---------------------------------------------------------------- #
 def m1_images():
     import m1_scenes
     return [name for name, _f, _s in m1_scenes._m1_conf_table()]
 
 
-def fast_rho_for(arm, nu, image, seed):
-    if arm != "RIDGE-FIXED":
-        return RHO_FAST
-    path = _design_path(image, seed, arm)
-    if not os.path.exists(path):
-        return None                     # design cache required
-    d = np.load(path, allow_pickle=False)
-    grid = list(d["nu_grid"])
-    return float(d["rho_fast"][grid.index(float(nu))])
-
-
 def m1_cell(arm, image, seed, rho, nu, C0=None, imageset="m1"):
     kind = "m1pat:%s:%s" % (arm, image)
-    cid = "M1_%s_%s_s%d_r%.4g_nu%g" % (arm, image, seed, rho, nu)
-    return dict(side=SIDE, pattern=kind, rho_bar=float(rho), nu=float(nu),
+    cid = "M1_%s_%s_s%d_nu%g" % (arm, image, seed, nu)
+    cell = dict(side=SIDE, pattern=kind, rho_bar=float(rho), nu=float(nu),
                 M=M_TOTAL, seed=int(seed), arms=["RQL"], images=[image],
                 imageset=imageset, tau=TAU, sigma_b=0.0, fista_iters=200,
                 select_iter=60, select_rule="discrepancy", use_lpips=False,
                 audit=False, C0=C0, cell_id=cid, stage="M1_%s" % arm)
+    if arm == "RIDGE-SCAT32":
+        cell["m1_ridge_dynamic"] = True       # rho_bar resolved at run time
+    return cell
 
 
-def cells_for_arm(arm, C0, images=None, seeds=None):
+def cert_cell(image, seed, nu, b, imageset="m1"):
+    return {"m1_cert": True, "image": image, "seed": int(seed),
+            "nu": float(nu), "b": float(b), "imageset": imageset,
+            "images": [image],
+            "cell_id": "M1CERT_%s_s%d_nu%g_b%g" % (image, seed, nu, b),
+            "stage": "M1_CERT"}
+
+
+def cells_for_arm(arm, C0, images=None, seeds=None, imageset="m1"):
     cells = []
     for image in (images or m1_images()):
         for seed in (seeds or SEEDS5):
             for nu in NU_FULL:
-                cells.append(m1_cell(arm, image, seed, RHO_SAFE, nu, C0))
-            for nu in NU_FULL:
-                rf = fast_rho_for(arm, nu, image, seed)
-                if rf is None:
-                    raise SystemExit(
-                        "[m1] RIDGE-FIXED design cache missing for %s seed %d "
-                        "(run --designs first)" % (image, seed))
-                cells.append(m1_cell(arm, image, seed, rf, nu, C0))
+                rho = MODE_LOADS.get(arm, -1.0)   # ridge: sentinel, dynamic
+                cells.append(m1_cell(arm, image, seed, rho, nu, C0,
+                                     imageset=imageset))
     return cells
 
 
-# =========================================================================== #
-# local resume-safe sweep (modeled on study2_runner.run_mode)                  #
-# =========================================================================== #
+def cert_cells_confirmatory():
+    return [cert_cell(img, s, nu, b)
+            for img in m1_images() for s in SEEDS5
+            for nu in CERT_NUS for b in CERT_BUDGETS]
+
+
+# ---- certificate cell runner (dispatched from campaign.run_cell) ---------- #
+def run_cert_cell(cell):
+    """One R17 §C.3 certificate cell -> [one CSV row dict]."""
+    t0 = time.time()
+    imageset = cell.get("imageset", "m1")
+    _confirmatory_guard(imageset)
+    import campaign
+    image, seed = cell["image"], int(cell["seed"])
+    nu, b = float(cell["nu"]), float(cell["b"])
+    x_true = campaign._images(SIDE, "all", imageset=imageset)[image]
+    xhat = prescan_estimate(x_true, image, seed, b, nu, per_cell=True)  # I3
+    rows, sha_dep = deployed_scat32()
+    # I4: declared r=200 subspace from the DEPLOYED design's info matrix
+    V_full = v4.info_matrix_full(rows, xhat, int(nu), b, P=prescan_matrix())
+    B, eps0, _tr = v4.subspace_from_fixedstar(V_full)
+    ctx = v5.setup_ctx_cert(xhat, nu, b, B, eps0, SIDE)
+    out = v5.cert_deployed_rows(ctx, rows, b)
+    row = {"image": image, "seed": seed, "nu": nu, "b": b,
+           "G_full_per_r": (out["G_full"] / ctx["r"]
+                            if np.isfinite(out.get("G_full", np.inf))
+                            else ""),
+           "cell_pass": bool(out.get("cell_pass", False)),
+           "status": out.get("status", ""),
+           "primal_feasible": out.get("primal_feasible", ""),
+           "theta": out.get("theta", ""),
+           "n_active_mu": out.get("n_active_mu", ""),
+           "MU_CAP_ACTIVE": out.get("MU_CAP_ACTIVE", ""),
+           "budget_viol": out.get("budget_viol", ""),
+           "dose_excess": out.get("dose_excess", ""),
+           "comp_budget": out.get("comp_budget", ""),
+           "comp_dose": out.get("comp_dose", ""),
+           "deployed_mean_load": out.get("deployed_mean_load", ""),
+           "deployed_dose_dev": out.get("deployed_dose_dev", ""),
+           "deployed_peak": out.get("deployed_peak", ""),
+           "d_cert_sha": v5.d_cert_sha()[:16],
+           "wall_s": round(time.time() - t0, 1),
+           "cell_id": cell.get("cell_id", ""),
+           "stage": cell.get("stage", "M1_CERT")}
+    return [row]
+
+
+# ---- R17 analyzer --------------------------------------------------------- #
+def _family_of(image):
+    parts = image.split("_")
+    return parts[1] if len(parts) >= 3 else image
+
+
+def _nested_boot_lb(per_image, families, B=10000, q=2.5, seed_tag=13):
+    """10k nested family-stratified bootstrap LB of the median (families
+    resampled with replacement; images within family resampled)."""
+    fam_map = {}
+    for img, v_ in per_image.items():
+        fam_map.setdefault(families[img], []).append(v_)
+    fams = sorted(fam_map)
+    rng = rng_for(0, 63, seed_tag)
+    meds = np.empty(B)
+    for b_ in range(B):
+        fsel = rng.integers(0, len(fams), size=len(fams))
+        vals = []
+        for fi in fsel:
+            arr = fam_map[fams[fi]]
+            isel = rng.integers(0, len(arr), size=len(arr))
+            vals.extend(arr[k] for k in isel)
+        meds[b_] = np.median(vals)
+    return float(np.percentile(meds, q))
+
+
+def _pava(y):
+    y = list(y)
+    w = [1.0] * len(y)
+    i = 0
+    while i < len(y) - 1:
+        if y[i] > y[i + 1] + 1e-12:
+            m = (y[i] * w[i] + y[i + 1] * w[i + 1]) / (w[i] + w[i + 1])
+            y[i] = y[i + 1] = m
+            w[i] = w[i + 1] = w[i] + w[i + 1]
+            i = max(i - 1, 0)
+        else:
+            i += 1
+    return np.array(y)
+
+
+def _q90_time(nus, rhos, q, target):
+    """Optical-time crossing with per-dwell loads (ridge policy: rho(nu))."""
+    qf = _pava(q)
+    lt = np.log(np.array(nus) * np.array(rhos))
+    if qf[-1] < target:
+        return None
+    return float(np.exp(np.interp(target, qf, lt)))
+
+
+def m1_analyze_r17(curves, n_images=24, boot_B=10000):
+    """The three R17 verdicts from per-image curve data.
+
+    curves: dict image -> {"family": str,
+        "safe": (nus, rhos, psnr_by_nu), "ridge": (nus, rhos, psnr_by_nu),
+        "q060_terminal": float, "ridge_terminal": float,
+        "cert_cells": [bool, ...]}  (means over seeds already applied; ITT:
+    a failed cell enters as nonpositive dQ / censored curve)."""
+    families = {img: c["family"] for img, c in curves.items()}
+    dQ = {img: (c["ridge_terminal"] - c["q060_terminal"]
+                if np.isfinite(c["ridge_terminal"])
+                and np.isfinite(c["q060_terminal"]) else 0.0)
+          for img, c in curves.items()}
+    med = float(np.median(list(dQ.values())))
+    lb = _nested_boot_lb(dQ, families, B=boot_B, seed_tag=13)
+    n_pos = sum(1 for v_ in dQ.values() if v_ > 0)
+    operating = bool(med >= 1.0 and lb > 0 and n_pos >= math.ceil(
+        0.75 * n_images))
+    S = {}
+    for img, c in curves.items():
+        nus_s, rhos_s, qs = c["safe"]
+        nus_f, rhos_f, qf = c["ridge"]
+        R = qs[-1] - qs[0]
+        tgt = qs[0] + 0.9 * R
+        Ts = _q90_time(nus_s, rhos_s, qs, tgt)
+        Tf = _q90_time(nus_f, rhos_f, qf, tgt)
+        S[img] = (Ts / Tf) if (Ts and Tf) else 0.0    # ITT nonpositive
+    medS = float(np.median(list(S.values())))
+    lbS = _nested_boot_lb(S, families, B=boot_B, seed_tag=14)
+    nS = sum(1 for v_ in S.values() if v_ > 1)
+    speed = bool(medS >= 3.0 and lbS > 1 and nS >= math.ceil(0.75 * n_images))
+    cert_flags = [bool(f) for c in curves.values()
+                  for f in c.get("cert_cells", [])]
+    cert = bool(cert_flags and all(cert_flags))
+    return {"RIDGE_OPERATING_PASS": operating,
+            "RIDGE_SPEED_PASS": speed,
+            "DOSE_SAFE_CERT_PASS": cert,
+            "median_dQ_dB": med, "dQ_LB2.5": lb, "n_dQ_pos": n_pos,
+            "median_S": medS, "S_LB2.5": lbS, "n_S_gt1": nS,
+            "n_cert_cells": len(cert_flags),
+            "n_cert_pass": sum(cert_flags)}
+
+
+# ---- resumable local sweep ------------------------------------------------ #
 def _resume_key_row(r):
     return tuple(str(r[c]) for c in RESUME_COLS)
 
 
-def _expected_row_keys(cell):
-    return [(cell["pattern"], str(float(cell["rho_bar"])),
-             str(float(cell["nu"])), str(int(cell["M"])),
-             str(int(cell["seed"])), img, arm)
-            for img in cell["images"] for arm in cell["arms"]]
+def ridge_disclosure(image, seed, nu, imageset="m1_dev"):
+    blank = {c: "" for c in DISC_COLS}
+    try:
+        cal = ridge_scat32_calibration(image, seed, imageset)
+    except (RuntimeError, FileNotFoundError):
+        return blank
+    i = list(cal["nu_grid"]).index(float(nu))
+    rt = ridge_targets([nu])["%g" % nu]
+    rows, sha = deployed_scat32()
+    ach = float(cal["achieved"][i])
+    rel = rows @ cal["xhat"]
+    loads = ach * rel / float(rel.mean())
+    out = dict(blank)
+    out.update({
+        "rho_R_production": rt["rho_R_production"],
+        "ridge_clip_reason": rt["ridge_clip_reason"],
+        "requested_mean_load": float(cal["requested"][i]),
+        "achieved_mean_load": ach,
+        "RIDGE_GUARD_CLIPPED": int(cal["guard_clipped"][i]),
+        "incident_dose_ratio": ach / MODE_LOADS["SCAT32-060"],
+        "detected_count_ratio": float(
+            (nu * loads / (1 + loads)).mean() / (nu * 0.60 / 1.60)),
+        "load_q5": float(np.percentile(loads, 5)),
+        "load_q50": float(np.percentile(loads, 50)),
+        "load_q95": float(np.percentile(loads, 95)),
+        "load_max": float(loads.max()),
+        "physical_peak": float((rows * (ach / float(rel.mean()))).max()),
+        "ceiling_fraction_pred": float(np.mean(
+            [v4.p_ceil_exact(l_, int(nu)) for l_ in
+             np.percentile(loads, [5, 50, 95])])),
+        "deployed_sha": sha[:16]})
+    return out
 
 
-def run_arm_grid(arm, out_dir=OUT_DIR, images=None, seeds=None):
+def run_arm_grid(arm, out_dir=OUT_DIR, images=None, seeds=None,
+                 imageset="m1"):
     from campaign import run_cell
+    _confirmatory_guard(imageset)
     os.makedirs(out_dir, exist_ok=True)
     C0 = frozen_C0()
-    cells = cells_for_arm(arm, C0, images=images, seeds=seeds)
+    cells = cells_for_arm(arm, C0, images=images, seeds=seeds,
+                          imageset=imageset)
     path = os.path.join(out_dir, "M1_%s_rows.csv" % arm.replace("-", "_"))
     errlog = os.path.join(out_dir, "M1_%s_errors.log" % arm.replace("-", "_"))
     done = set()
@@ -642,8 +554,6 @@ def run_arm_grid(arm, out_dir=OUT_DIR, images=None, seeds=None):
     if header_present:
         with open(path, newline="") as f:
             rd = csv.DictReader(f)
-            if rd.fieldnames is not None and list(rd.fieldnames) != M1_FIELDNAMES:
-                raise SystemExit("[m1:%s] incompatible header in %s" % (arm, path))
             for r in rd:
                 done.add(_resume_key_row(r))
     t0 = time.time()
@@ -653,9 +563,6 @@ def run_arm_grid(arm, out_dir=OUT_DIR, images=None, seeds=None):
             w.writeheader()
             f.flush()
         for ci, cell in enumerate(cells):
-            if all(k_ in done for k_ in _expected_row_keys(cell)):
-                continue
-            tc = time.time()
             try:
                 rows = run_cell(cell)
             except Exception:
@@ -663,17 +570,17 @@ def run_arm_grid(arm, out_dir=OUT_DIR, images=None, seeds=None):
                     ef.write("[%s] %s\n%s\n" % (
                         time.strftime("%Y-%m-%d %H:%M:%S"), cell["cell_id"],
                         traceback.format_exc()))
-                print("[m1:%s] ERROR %d/%d %s (logged)"
-                      % (arm, ci + 1, len(cells), cell["cell_id"]), flush=True)
                 continue
-            disc = design_disclosure(cell["images"][0], cell["seed"], arm,
-                                     nu=cell["nu"])
+            disc = (ridge_disclosure(cell["images"][0], cell["seed"],
+                                     cell["nu"], imageset)
+                    if arm == "RIDGE-SCAT32" else {c: "" for c in DISC_COLS})
             n_new = 0
             for r in rows:
                 r.update(disc)
                 r["m1_arm"] = arm
                 r["stage"] = cell["stage"]
                 r["cell_id"] = cell["cell_id"]
+                r["descriptive_context"] = int(arm in CONTEXT_ARMS)
                 k_ = _resume_key_row(r)
                 if k_ in done:
                     continue
@@ -682,130 +589,35 @@ def run_arm_grid(arm, out_dir=OUT_DIR, images=None, seeds=None):
                 n_new += 1
             f.flush()
             os.fsync(f.fileno())
-            print("[m1:%s] cell %d/%d %s -> +%d rows (%.1fs, total %.0fs)"
+            print("[m1:%s] cell %d/%d %s -> +%d rows (%.0fs)"
                   % (arm, ci + 1, len(cells), cell["cell_id"], n_new,
-                     time.time() - tc, time.time() - t0), flush=True)
-    print("[m1:%s] SWEEP DONE wall=%.0fs -> %s" % (arm, time.time() - t0, path),
-          flush=True)
+                     time.time() - t0), flush=True)
     return path
 
 
-# =========================================================================== #
-# design-cache builder                                                         #
-# =========================================================================== #
-def build_all_designs(arms=None, images=None, seeds=None, force=False):
-    import campaign
-    arms = arms or DESIGN_ARMS
-    images = images or m1_images()
-    seeds = seeds if seeds is not None else SEEDS5
-    imgs = campaign._images(SIDE, "all", imageset="m1")
-    ridge_targets(NU_FULL)
-    for image in images:
-        for seed in seeds:
-            for arm in arms:
-                build_design(image, seed, arm, imgs[image], force=force)
-
-
-# =========================================================================== #
-# smoke (deliverable item 6)                                                   #
-# =========================================================================== #
-def smoke():
-    import campaign
-    from campaign import run_cell
-    t0 = time.time()
-    C0 = frozen_C0()
-    imgs = campaign._images(SIDE, "all", imageset="m1")
-    image = m1_images()[0]
-    seed = 0
-    print("[m1 smoke] image=%s seed=%d C0=%s" % (image, seed, C0), flush=True)
-
-    print("\n[m1 smoke] === designs (OED-DT + RIDGE-FIXED) ===", flush=True)
-    for arm in ("OED-DT", "RIDGE-FIXED"):
-        d, path = build_design(image, seed, arm, imgs[image])
-        disc = json.loads(str(d["disclosure_json"]))
-        print("  %s cache: %s" % (arm, os.path.basename(path)))
-        if arm == "OED-DT":
-            for k_ in ("rho_R_production", "ridge_clip_reason",
-                       "incident_sum_rho", "budget_slack", "budget_active",
-                       "detected_pred_exact", "dose_resid",
-                       "baseline_dose_dev", "alpha_mixture", "cert_gap",
-                       "cert_gap_v3_loop", "theta_degenerate",
-                       "mean_load_pred", "rho_5", "rho_50",
-                       "rho_95", "rho_max", "mean_J_exact", "levels",
-                       "G5_pass_direct", "design_wall_s"):
-                print("    %-22s = %s" % (k_, disc.get(k_)))
-        else:
-            for nu in (20.0, 2000.0):
-                per = disc["per_nu"]["%g" % nu]
-                i = list(d["nu_grid"]).index(nu)
-                print("    nu=%-5g rho_R=%.4f clip=%s requested=%.4f "
-                      "achieved=%.4f mult=%.4f GUARD_CLIPPED=%d min_trust=%.4f"
-                      % (nu, per["ridge"]["rho_R_production"],
-                         per["ridge"]["ridge_clip_reason"],
-                         float(d["requested"][i]), float(d["rho_fast"][i]),
-                         float(d["multiplier"][i]),
-                         int(d["guard_clipped"][i]), per["min_trust"]))
-
-    print("\n[m1 smoke] === cells through campaign.run_cell (imageset m1) ===",
-          flush=True)
-    cells = []
-    for nu in (20.0, 2000.0):
-        cells.append(("OED-DT safe", m1_cell("OED-DT", image, seed,
-                                             RHO_SAFE, nu, C0)))
-        cells.append(("OED-DT fast", m1_cell("OED-DT", image, seed,
-                                             RHO_FAST, nu, C0)))
-    rf2000 = fast_rho_for("RIDGE-FIXED", 2000.0, image, seed)
-    cells.append(("RIDGE-FIXED fast", m1_cell("RIDGE-FIXED", image, seed,
-                                              rf2000, 2000.0, C0)))
-    cells.append(("SCAT16 fast", m1_cell("SCAT16", image, seed,
-                                         RHO_FAST, 2000.0, C0)))
-    ok = True
-    for label, cell in cells:
-        tc = time.time()
-        rows = run_cell(cell)
-        arm = cell["stage"].replace("M1_", "")
-        disc = design_disclosure(image, seed, arm, nu=cell["nu"])
-        r = rows[0]
-        print("  %-17s nu=%-5g rho=%.4g  PSNR_rad=%s  PSNR=%s  "
-              "mean_counts=%s  (%.1fs)"
-              % (label, cell["nu"], cell["rho_bar"], r["PSNR_rad"], r["PSNR"],
-                 r["mean_counts"], time.time() - tc), flush=True)
-        keys = [k_ for k_ in DISC_COLS if disc.get(k_) not in ("", None)]
-        if keys:
-            print("      disclosure: " + ", ".join(
-                "%s=%s" % (k_, disc[k_]) for k_ in keys))
-        ok = ok and (r["PSNR_rad"] != "")
-    print("\n[m1 smoke] wall=%.1fs  RESULT: %s"
-          % (time.time() - t0, "SMOKE PASS" if ok else "*** SMOKE FAIL ***"),
-          flush=True)
-    return 0 if ok else 1
-
-
-# =========================================================================== #
+# ---- CLI ------------------------------------------------------------------ #
 def main(argv=None):
-    ap = argparse.ArgumentParser(description="M1 method-campaign runner.")
-    ap.add_argument("--designs", action="store_true")
-    ap.add_argument("--arm", type=str, default=None,
-                    help="run one arm's full local grid (%s)" % "|".join(ARMS_ALL))
-    ap.add_argument("--arms", type=str, default=None,
-                    help="comma list for --designs (default all design arms)")
+    ap = argparse.ArgumentParser(description="M1 runner (R17 architecture).")
+    ap.add_argument("--arm", type=str, default=None, help="|".join(ARMS_ALL))
+    ap.add_argument("--imageset", type=str, default="m1")
     ap.add_argument("--images", type=str, default=None)
     ap.add_argument("--seeds", type=str, default=None)
-    ap.add_argument("--force", action="store_true")
-    ap.add_argument("--smoke", action="store_true")
+    ap.add_argument("--ridge-tables", action="store_true",
+                    help="precompute the nine-dwell ridge target table")
     a = ap.parse_args(sys.argv[1:] if argv is None else argv)
-    images = a.images.split(",") if a.images else None
-    seeds = [int(s) for s in a.seeds.split(",")] if a.seeds else None
-    if a.smoke:
-        return smoke()
-    if a.designs:
-        build_all_designs(arms=(a.arms.split(",") if a.arms else None),
-                          images=images, seeds=seeds, force=a.force)
+    if a.ridge_tables:
+        ridge_targets(NU_FULL)
         return 0
     if a.arm:
+        if a.arm in RETIRED_ARMS:
+            raise SystemExit("arm %r RETIRED_BY_R17" % a.arm)
         if a.arm not in ARMS_ALL:
             raise SystemExit("unknown arm %r" % a.arm)
-        run_arm_grid(a.arm, images=images, seeds=seeds)
+        run_arm_grid(a.arm,
+                     images=a.images.split(",") if a.images else None,
+                     seeds=[int(s) for s in a.seeds.split(",")]
+                     if a.seeds else None,
+                     imageset=a.imageset)
         return 0
     ap.print_help()
     return 2

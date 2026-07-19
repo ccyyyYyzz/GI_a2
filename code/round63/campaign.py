@@ -397,3 +397,26 @@ class _M1KindIds(dict):
 
 
 KIND_IDS = _M1KindIds(KIND_IDS)
+
+
+# --------------------------------------------------------------------------- #
+# M1 appendix extension (R17 amendment; ADD-only): certificate-cell dispatch
+# and runtime RIDGE-SCAT32 load resolution, so R17 cert cells and dynamic
+# ridge cells run UNCHANGED through the frozen shard infra (shard_runner ->
+# campaign.run_cell). Logged as interpretation A8 continuation.
+# --------------------------------------------------------------------------- #
+_run_cell_base_m1r17 = run_cell
+
+
+def run_cell(cell):  # noqa: F811 (deliberate additive rebind)
+    if cell.get("m1_cert"):
+        import m1_runner
+        return m1_runner.run_cert_cell(cell)
+    if cell.get("m1_ridge_dynamic"):
+        import m1_runner
+        rho, _cal = m1_runner.ridge_scat32_rho(
+            cell["images"][0], cell["seed"], cell["nu"],
+            imageset=cell.get("imageset", "m1"))
+        cell = dict(cell)
+        cell["rho_bar"] = float(rho)
+    return _run_cell_base_m1r17(cell)

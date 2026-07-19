@@ -28,6 +28,7 @@ constrained optimum by an independent solver, dual-bound agreement <= 1e-8.
 """
 
 import hashlib
+import json
 import math
 import os
 import sys
@@ -68,15 +69,21 @@ def setup_ctx(xhat, nu, palette, B, eps0, rho_prescan, M_rows=972, side=32):
     gsum = np.concatenate([m["GVAL"].sum(axis=1) for m in metas])
     ALLOW = shape_ok[:, None] & (gmax[:, None] * levels[None, :]
                                  <= v4.PEAK_PHYSICAL + 1e-9)
+    # per-atom load matrix C (G, L) and per-atom nu*J matrix NUJ: for the
+    # D_load palette both are column-constant; the R17 D_gain extension
+    # (setup_ctx_cert) appends gamma columns with per-geometry emergent loads.
+    C = np.tile(levels[None, :], (G_tot, 1))
+    NUJ = np.tile(nuJ[None, :], (G_tot, 1))
     V0 = v4.V0_prescan(v4.balanced_prescan_52(side), xhat, nu, rho_prescan, B)
     return {"n": n, "r": r, "levels": levels, "L": L, "nuJ": nuJ,
+            "C": C, "NUJ": NUJ, "gmax": gmax,
             "metas": metas, "QB": QB, "G_tot": G_tot, "gsum": gsum,
             "ALLOW": ALLOW, "V0": V0, "eps0": eps0, "M_rows": M_rows,
             "nu": nu, "xhat": xhat, "side": side, "B": B}
 
 
 def assemble(ctx, xi):
-    u = ctx["M_rows"] * (xi * ctx["nuJ"][None, :]).sum(axis=1)
+    u = ctx["M_rows"] * (xi * ctx["NUJ"]).sum(axis=1)
     nz = np.nonzero(u)[0]
     M = (ctx["QB"][nz] * u[nz, None]).T @ ctx["QB"][nz]
     V = ctx["V0"] + M
@@ -86,12 +93,12 @@ def assemble(ctx, xi):
 
 def dvals(ctx, Vinv):
     quad = np.einsum('gr,rs,gs->g', ctx["QB"], Vinv, ctx["QB"])
-    D = ctx["M_rows"] * quad[:, None] * ctx["nuJ"][None, :]
+    D = ctx["M_rows"] * quad[:, None] * ctx["NUJ"]
     return np.where(ctx["ALLOW"], D, -np.inf)
 
 
 def dose_of(ctx, xi):
-    w = (xi * ctx["levels"][None, :]).sum(axis=1)
+    w = (xi * ctx["C"]).sum(axis=1)
     d = np.zeros(ctx["n"])
     off = 0
     for mb in ctx["metas"]:
@@ -124,8 +131,7 @@ def lin_from_duals(ctx, theta, mup, mum):
     Am = mu_dots(ctx, mum)
     zb = ctx["gsum"] / ctx["n"]                       # zbar per unit load
     per_g = (Ap - (1 + DELTA) * zb * Sp) + ((1 - DELTA) * zb * Sm - Am)
-    lin = (theta * ctx["levels"][None, :]
-           + per_g[:, None] * ctx["levels"][None, :])
+    lin = (theta + per_g[:, None]) * ctx["C"]
     return lin
 
 
@@ -133,31 +139,43 @@ def lin_from_duals(ctx, theta, mup, mum):
 #  Sec 2: full constrained certificate (epigraph LP + column generation)      #
 # ========================================================================== #
 def full_constrained_cert(ctx, xi, budget, seed_atoms=None, max_rounds=12,
-                          verbose=False):
+                          verbose=False, V_override=None, dbar_override=None,
+                          dose_override=None, load_override=None):
+    """xi-measure certificate; pass xi=None with the *_override arguments to
+    certify an ARBITRARY deployed row set (R17: the exact SCAT32 design) --
+    V, d^T xi, dose vector and mean load are then supplied by the caller and
+    the bound max_a s_a - dbar + theta*b is taken over the same dictionary."""
     n, r, L = ctx["n"], ctx["r"], ctx["L"]
     levels = ctx["levels"]
-    V = assemble(ctx, xi)
+    if V_override is not None:
+        V = V_override
+        dbar = float(dbar_override)
+    else:
+        V = assemble(ctx, xi)
     Vinv = np.linalg.inv(V)
     D = dvals(ctx, Vinv)
-    dbar = float((xi * np.where(ctx["ALLOW"], D, 0.0)).sum())
+    if V_override is None:
+        dbar = float((xi * np.where(ctx["ALLOW"], D, 0.0)).sum())
     # candidate set: support + top by d + caller seeds
     flat = np.argsort(D, axis=None)[::-1][:600]
     cand = set(map(tuple, np.column_stack(
         np.unravel_index(flat, D.shape)).tolist()))
-    cand |= set(map(tuple, np.column_stack(np.nonzero(xi > 1e-12)).tolist()))
+    if xi is not None:
+        cand |= set(map(tuple,
+                        np.column_stack(np.nonzero(xi > 1e-12)).tolist()))
     if seed_atoms:
         cand |= set(seed_atoms)
     cand = sorted(a for a in cand if ctx["ALLOW"][a[0], a[1]])
 
     def atom_dose_row(g, l_):
-        """(z dense, zbar) for atom (g, l)."""
+        """(z dense, zbar) for atom (g, l); load from the per-atom C."""
         off = 0
         for mb in ctx["metas"]:
             g_ = mb["IDX"].shape[0]
             if g < off + g_:
                 z = np.zeros(n)
-                z[mb["IDX"][g - off]] = levels[l_] * mb["GVAL"][g - off]
-                return z, levels[l_] * ctx["gsum"][g] / n
+                z[mb["IDX"][g - off]] = ctx["C"][g, l_] * mb["GVAL"][g - off]
+                return z, ctx["C"][g, l_] * ctx["gsum"][g] / n
             off += g_
         raise IndexError(g)
 
@@ -167,7 +185,7 @@ def full_constrained_cert(ctx, xi, budget, seed_atoms=None, max_rounds=12,
     # (256 -> 512 -> 1024) while the bound stays above the gate. This keeps
     # the epigraph LP small (HiGHS ground >180s on the full 2*1024 dense,
     # degenerate mu block -- the freeze-8 LP_FAIL:time-limit root cause).
-    dv0 = dose_of(ctx, xi)
+    dv0 = dose_override if dose_override is not None else dose_of(ctx, xi)
     dm0 = dv0.mean()
     edge = np.maximum(dv0 - (1 + DELTA) * dm0, (1 - DELTA) * dm0 - dv0)
     pix_rank = np.argsort(-edge, kind="stable")
@@ -193,6 +211,7 @@ def full_constrained_cert(ctx, xi, budget, seed_atoms=None, max_rounds=12,
     lvl_best = np.argmax(np.where(ctx["ALLOW"], D, -np.inf), axis=1)
     theta, mup, mum, t_val = 0.0, np.zeros(n), np.zeros(n), np.inf
     n_pix = 256
+    d_scale = max(float(np.max(D[np.isfinite(D)])), 1.0)
     for rnd in range(max_rounds):
         pix = np.sort(pix_rank[:n_pix])
         npx = pix.size
@@ -215,10 +234,11 @@ def full_constrained_cert(ctx, xi, budget, seed_atoms=None, max_rounds=12,
         for i, (g, l_) in enumerate(cand):
             z, zb = atom_dose_row(g, l_)
             A_ub[i, 0] = -1.0                          # t
-            A_ub[i, 1] = -levels[l_]                   # theta
+            A_ub[i, 1] = -ctx["C"][g, l_]              # theta
             A_ub[i, 2:2 + npx] = -(z[pix] - (1 + DELTA) * zb)     # mu+
             A_ub[i, 2 + npx:] = -((1 - DELTA) * zb - z[pix])      # mu-
-            b_ub[i] = -float(D[g, l_])
+            b_ub[i] = -float(D[g, l_]) / d_scale
+        A_ub[:, 2:] /= d_scale               # mu columns share the row scale
         c_obj = np.zeros(2 + 2 * npx)
         c_obj[0] = 1.0
         c_obj[1] = budget
@@ -228,8 +248,8 @@ def full_constrained_cert(ctx, xi, budget, seed_atoms=None, max_rounds=12,
                       method="highs", options={"time_limit": 120})
         if not res.success:
             return {"G_full": float("inf"), "status": "LP_FAIL:" + res.message}
-        t_val = float(res.x[0])
-        theta = float(res.x[1])
+        t_val = float(res.x[0]) * d_scale
+        theta = float(res.x[1]) * d_scale
         mup = np.zeros(n)
         mum = np.zeros(n)
         mup[pix] = np.maximum(res.x[2:2 + npx], 0.0)
@@ -265,11 +285,12 @@ def full_constrained_cert(ctx, xi, budget, seed_atoms=None, max_rounds=12,
         else:
             return {"G_full": float(G_full), "status": "NEGATIVE_BOUND_FAIL"}
     # primal residuals (R15 mandatory checks)
-    dv = dose_of(ctx, xi)
+    dv = dose_override if dose_override is not None else dose_of(ctx, xi)
     dm = dv.mean()
     dose_excess = float(max(np.max(dv - (1 + DELTA) * dm),
                             np.max((1 - DELTA) * dm - dv), 0.0))
-    load = float((xi @ levels).sum())
+    load = (float(load_override) if load_override is not None
+            else float((xi * ctx["C"]).sum()))
     comp_budget = theta * (budget - load)
     comp_dose = float((mup * np.maximum(dv - (1 + DELTA) * dm, -np.inf)).sum()
                       + (mum * ((1 - DELTA) * dm - dv)).sum())
@@ -280,6 +301,7 @@ def full_constrained_cert(ctx, xi, budget, seed_atoms=None, max_rounds=12,
             "comp_budget": float(comp_budget),
             "comp_dose": float(comp_dose),
             "dbar": dbar, "t": t_val,
+            "MU_CAP_ACTIVE": bool(max(mup.max(), mum.max()) >= 1e6 - 1e-6),
             "n_active_mu": int((mup > 1e-12).sum() + (mum > 1e-12).sum())}
 
 
@@ -1083,3 +1105,223 @@ def fixed_dose_scat32(side=32, band=0.045, n_iter=1500):
     dose = out.sum(axis=0)
     dev = float(np.abs(dose / dose.mean() - 1.0).max())
     return out, dev
+
+
+# ========================================================================== #
+#  R17 SECTION (docs/ROUND63_METHOD_SPEC_M1_R17_AMENDMENT.md)                 #
+# ========================================================================== #
+GAMMAS = (0.2, 0.5, 1.0, 2.0, 5.0)
+
+
+def _kernel_grids(nu, lo=1e-3, hi=64.0, n_nodes=61):
+    """Per-nu exact-kernel interpolation grids for per-atom admission
+    (mean_info_efficiency, rql_logload_bias, p_ceil) at arbitrary emergent
+    loads (D_gain). Exact kernel at the nodes, linear interp in log rho."""
+    grid = np.geomspace(lo, hi, n_nodes)
+    kv = [v4.kernel_eval4(r_, int(nu)) for r_ in grid]
+    return {"lg": np.log(grid),
+            "eff": np.array([k["mean_info_efficiency"] for k in kv]),
+            "bias": np.array([k["rql_logload_bias"] for k in kv]),
+            "pceil": np.array([k["p_ceil"] for k in kv]),
+            "lo": grid[0], "hi": grid[-1]}
+
+
+def _adm_at_loads(loads, kg):
+    ll = np.log(np.clip(loads, kg["lo"], kg["hi"]))
+    eff = np.interp(ll, kg["lg"], kg["eff"])
+    bias = np.interp(ll, kg["lg"], kg["bias"])
+    pc = np.interp(ll, kg["lg"], kg["pceil"])
+    return ((loads > 0) & (loads <= v4.RHO_CAP)
+            & (pc <= v4.CEIL_ATOM) & (eff >= v4.EFF_MIN)
+            & (bias <= v4.BIAS_MAX))
+
+
+def setup_ctx_cert(xhat, nu, b, B, eps0, side=32):
+    """R17 Sec 4.2-4.3 certificate context: D_cert = D_load (the palette at
+    this (nu, b) corner: safe palette for b<=0.05, fast otherwise) UNION
+    D_gain (per frozen base geometry, gamma in GAMMAS, physical rows
+    gamma*a_base with the scene-independent frame convention a_base =
+    (n/k)*w; predicted load EMERGENT: rho_rel = gamma*(a_base . xhat) =
+    gamma*n/gsum_g, deployed load = b*rho_rel -- never target-rescaled).
+    Existing admission guards (shape, physical peak, rho cap, ceiling,
+    trust, bias) on both parts."""
+    pal = v4.palette4(int(nu), fast=(b > 0.05 + 1e-12))
+    ctx = setup_ctx(xhat, float(nu), pal, B, eps0, b, 972, side)
+    G_tot, L = ctx["G_tot"], ctx["L"]
+    kg = _kernel_grids(nu)
+    for l_ in range(L):
+        ok_l = _adm_at_loads(np.full(G_tot, ctx["levels"][l_]), kg)
+        ctx["ALLOW"][:, l_] &= ok_l
+    n = ctx["n"]
+    base_load = n / ctx["gsum"]                # (a_base . xhat) exactly
+    Cg = np.empty((G_tot, len(GAMMAS)))
+    NUJg = np.empty((G_tot, len(GAMMAS)))
+    ALLOWg = np.empty((G_tot, len(GAMMAS)), dtype=bool)
+    gmax = ctx["gmax"]
+    for i, gam in enumerate(GAMMAS):
+        loads = b * gam * base_load            # emergent deployed loads
+        Cg[:, i] = loads
+        NUJg[:, i] = nu * np.array([v4._J(l_, nu) for l_ in loads])
+        # physical peak of the deployed gamma atom: identity a = load * g
+        # holds for D_gain too (same direction), so peak = load * gmax
+        ALLOWg[:, i] = (_adm_at_loads(loads, kg)
+                        & (loads * gmax <= v4.PEAK_PHYSICAL + 1e-9))
+    ctx["C"] = np.hstack([ctx["C"], Cg])
+    ctx["NUJ"] = np.hstack([ctx["NUJ"], NUJg])
+    ctx["ALLOW"] = np.hstack([ctx["ALLOW"], ALLOWg])
+    ctx["L"] = L + len(GAMMAS)
+    ctx["L_load"] = L
+    ctx["gammas"] = list(GAMMAS)
+    ctx["budget_corner"] = float(b)
+    return ctx
+
+
+def d_cert_sha(side=32):
+    """Scene-independent SHA256 of the D_cert DEFINITION: family manifest
+    (supports + translations + powers), palette construction rule, gamma
+    set, and admission constants. The per-cell atom VALUES depend on the
+    local pre-scan estimate by frozen construction (R13); the frozen object
+    is this definition (interpretation logged in the ledger)."""
+    man = v4.dictionary_manifest(side)
+    h = hashlib.sha256()
+    h.update(man["sha256_global"].encode())
+    h.update(json.dumps({
+        "palette_rule": "v4.palette4(nu, fast=b>0.05); levels + admission "
+                        "as frozen in R13/R15",
+        "gammas": list(GAMMAS),
+        "gain_load_rule": "rho = b*gamma*(a_base.xhat), a_base=(n/k)w frame "
+                          "convention, emergent, never target-rescaled",
+        "guards": {"rho_cap": v4.RHO_CAP, "peak_physical": v4.PEAK_PHYSICAL,
+                   "ceil_atom": v4.CEIL_ATOM, "eff_min": v4.EFF_MIN,
+                   "bias_max": v4.BIAS_MAX, "w_clip": [0.25, 4.0],
+                   "dose_delta": DELTA},
+    }, sort_keys=True).encode())
+    return h.hexdigest()
+
+
+def cert_deployed_rows(ctx, rows_rel, budget, verbose=False):
+    """R17 Sec 4.4-4.5: full dose-constrained certificate of a DEPLOYED
+    physical row multiset (rows_rel: relative rows, ~unit-mean-load frame;
+    deployed at global mean load = budget). Returns the full_constrained_cert
+    dict + primal feasibility of the deployed design itself."""
+    n, r = ctx["n"], ctx["r"]
+    B = ctx["B"]
+    xhat = ctx["xhat"]
+    loads_rel = rows_rel @ xhat
+    scale = budget / float(loads_rel.mean())
+    rows_abs = rows_rel * scale * (1.0 - 1e-12)
+    loads = rows_abs @ xhat
+    M = rows_abs.shape[0]
+    V = ctx["V0"].copy()
+    qs = []
+    for s in range(M):
+        idx = np.nonzero(rows_abs[s])[0]
+        q = B[idx].T @ (rows_abs[s, idx] / loads[s])
+        qs.append((q, float(loads[s])))
+        V += ctx["nu"] * v4._J(float(loads[s]), ctx["nu"]) * np.outer(q, q)
+    V[np.diag_indices(r)] += ctx["eps0"]
+    Vinv = np.linalg.inv(V)
+    dbar = 0.0
+    for q, ld in qs:
+        dbar += ctx["nu"] * v4._J(ld, ctx["nu"]) * float(q @ Vinv @ q)
+    dose = rows_abs.sum(axis=0) / M
+    out = full_constrained_cert(
+        ctx, None, budget, verbose=verbose, V_override=V,
+        dbar_override=dbar, dose_override=dose,
+        load_override=float(loads.mean()))
+    out["deployed_mean_load"] = float(loads.mean())
+    out["deployed_dose_dev"] = float(np.abs(dose / dose.mean() - 1.0).max())
+    out["deployed_peak"] = float(rows_abs.max())
+    out["primal_feasible"] = bool(
+        loads.mean() <= budget + 1e-9
+        and out["deployed_dose_dev"] <= DELTA)
+    out["cell_pass"] = bool(out["status"] == "OK" and out["primal_feasible"]
+                            and out["G_full"] / r <= GFULL_TOL_PER_R)
+    return out
+
+
+def path_feasible_alpha(mix_result):
+    """R17 Sec 3.2 semantics: the descending exact scan is ONLY the
+    path-specific descriptive diagnostic PATH_FEASIBLE_ALPHA. m=0 emits
+    ADAPTIVE_COLLAPSE_UNDER_GUARDS and can never PASS; the retired
+    production strings (COMPLIANT_VIA_MIXTURE / mixture PASS / alpha=0
+    deployment) must never be derived from this result."""
+    m = mix_result.get("m")
+    if m is None:
+        return {"PATH_FEASIBLE_ALPHA": None,
+                "verdict": "NO_FEASIBLE_POINT_ON_PATH",
+                "is_pass": False,
+                "descriptive_only": True, "dev_supplement_only": True}
+    alpha = m / 972.0
+    return {"PATH_FEASIBLE_ALPHA": float(alpha),
+            "verdict": ("ADAPTIVE_COLLAPSE_UNDER_GUARDS" if m == 0
+                        else "PATH_FEASIBLE_ALPHA=%.4f" % alpha),
+            "is_pass": False,               # never a PASS (R17 Sec 1.1)
+            "descriptive_only": True, "dev_supplement_only": True}
+
+
+def toy_full_cert_check_gain():
+    """R15 active-dose toy EXTENDED with a gain-family atom (R17 Sec 4.2):
+    a 4th atom = 2x atom-3 base row (gamma-coupled: same direction, double
+    load and dose). The constrained optimum is re-solved independently
+    (SLSQP) over all 4 atoms and the dual bound must agree <= 1e-8."""
+    X = np.array([[1.0, 0.0], [0.0, 1.0],
+                  [1.0 / math.sqrt(2), 1.0 / math.sqrt(2)],
+                  [2.0 / math.sqrt(2), 2.0 / math.sqrt(2)]])
+    Z = np.array([[3.0, 0.0], [0.0, 1.0], [1.0, 1.0], [2.0, 2.0]])
+    c_load = np.array([1.0, 1.0, 1.0, 2.0])
+    budget = 1.0
+    eps = 1e-9
+
+    def negld(w):
+        Mm = sum(wi * np.outer(x, x) for wi, x in zip(w, X)) + eps * np.eye(2)
+        s_, ld = np.linalg.slogdet(Mm)
+        return -ld
+
+    def grad(w):
+        Mm = sum(wi * np.outer(x, x) for wi, x in zip(w, X)) + eps * np.eye(2)
+        Mi = np.linalg.inv(Mm)
+        return -np.array([x @ Mi @ x for x in X])
+
+    def dose_cons(w):
+        dv = Z.T @ w
+        dm = dv.mean()
+        return np.concatenate([(1 + DELTA) * dm - dv, dv - (1 - DELTA) * dm])
+
+    cons = [{"type": "eq", "fun": lambda w: w.sum() - 1.0,
+             "jac": lambda w: np.ones(4)},
+            {"type": "ineq", "fun": dose_cons},
+            {"type": "ineq", "fun": lambda w: budget - float(c_load @ w),
+             "jac": lambda w: -c_load}]
+    best = None
+    for w0 in ([0.25] * 4, [0.2, 0.5, 0.2, 0.1], [0.3, 0.4, 0.2, 0.1]):
+        res = minimize(negld, np.array(w0), jac=grad, method="SLSQP",
+                       bounds=[(0, 1)] * 4, constraints=cons,
+                       options={"maxiter": 600, "ftol": 1e-14})
+        if res.success and (best is None or res.fun < best.fun):
+            best = res
+    w_star = np.maximum(best.x, 0.0)
+    Mm = sum(wi * np.outer(x, x) for wi, x in zip(w_star, X)) + eps * np.eye(2)
+    Mi = np.linalg.inv(Mm)
+    d = np.array([x @ Mi @ x for x in X])
+    zb = Z.mean(axis=1)
+    n2 = 2
+    A_ub = np.zeros((4, 2 + 2 * n2))
+    for i in range(4):
+        A_ub[i, 0] = -1.0
+        A_ub[i, 1] = -c_load[i]
+        A_ub[i, 2:2 + n2] = -(Z[i] - (1 + DELTA) * zb[i])
+        A_ub[i, 2 + n2:] = -((1 - DELTA) * zb[i] - Z[i])
+    b_ub = -d
+    c_obj = np.zeros(2 + 2 * n2)
+    c_obj[0] = 1.0
+    c_obj[1] = budget
+    res = linprog(c_obj, A_ub=A_ub, b_ub=b_ub,
+                  bounds=[(None, None)] + [(0, None)] * (1 + 2 * n2),
+                  method="highs")
+    G = float(res.x[0]) + float(res.x[1]) * budget - float(d @ w_star)
+    dv = Z.T @ w_star
+    active = float(np.min(np.concatenate(
+        [(1 + DELTA) * dv.mean() - dv, dv - (1 - DELTA) * dv.mean()])))
+    return {"G_at_opt": G, "dose_active": bool(abs(active) < 1e-6),
+            "w_star": w_star.tolist(), "agreement_ok": bool(abs(G) <= 1e-8)}

@@ -1,341 +1,400 @@
 {
-  "blocked_shards": [
-    {
-      "account_hint": "pro1",
-      "blocked_by": "m1_design_cache_missing",
-      "est_hours": 0.198,
-      "n_cells": 360,
-      "shard_id": "M1_MATCH1_00",
-      "stage": "M1_MATCH1"
-    },
-    {
-      "account_hint": "pro2",
-      "blocked_by": "m1_design_cache_missing",
-      "est_hours": 0.198,
-      "n_cells": 360,
-      "shard_id": "M1_MATCH1_01",
-      "stage": "M1_MATCH1"
-    },
-    {
-      "account_hint": "pro1",
-      "blocked_by": "m1_design_cache_missing",
-      "est_hours": 0.198,
-      "n_cells": 360,
-      "shard_id": "M1_MATCH1_02",
-      "stage": "M1_MATCH1"
-    },
-    {
-      "account_hint": "pro2",
-      "blocked_by": "m1_design_cache_missing",
-      "est_hours": 0.198,
-      "n_cells": 360,
-      "shard_id": "M1_MATCH1_03",
-      "stage": "M1_MATCH1"
-    },
-    {
-      "account_hint": "pro1",
-      "blocked_by": "m1_design_cache_missing",
-      "est_hours": 0.198,
-      "n_cells": 360,
-      "shard_id": "M1_MATCH1_04",
-      "stage": "M1_MATCH1"
-    },
-    {
-      "account_hint": "pro2",
-      "blocked_by": "m1_design_cache_missing",
-      "est_hours": 0.198,
-      "n_cells": 360,
-      "shard_id": "M1_MATCH1_05",
-      "stage": "M1_MATCH1"
-    },
-    {
-      "account_hint": "pro1",
-      "blocked_by": "m1_design_cache_missing",
-      "est_hours": 0.225,
-      "n_cells": 1080,
-      "shard_id": "M1_RIDGE-FIXED_00",
-      "stage": "M1_RIDGE-FIXED"
-    },
-    {
-      "account_hint": "pro2",
-      "blocked_by": "m1_design_cache_missing",
-      "est_hours": 0.224,
-      "n_cells": 1080,
-      "shard_id": "M1_RIDGE-FIXED_01",
-      "stage": "M1_RIDGE-FIXED"
-    },
-    {
-      "account_hint": "pro1",
-      "blocked_by": "m1_design_cache_missing",
-      "est_hours": 0.2,
-      "n_cells": 198,
-      "shard_id": "M1_OED-EQLOAD_00",
-      "stage": "M1_OED-EQLOAD"
-    },
-    {
-      "account_hint": "pro2",
-      "blocked_by": "m1_design_cache_missing",
-      "est_hours": 0.2,
-      "n_cells": 198,
-      "shard_id": "M1_OED-EQLOAD_01",
-      "stage": "M1_OED-EQLOAD"
-    },
-    {
-      "account_hint": "pro1",
-      "blocked_by": "m1_design_cache_missing",
-      "est_hours": 0.2,
-      "n_cells": 198,
-      "shard_id": "M1_OED-EQLOAD_02",
-      "stage": "M1_OED-EQLOAD"
-    },
-    {
-      "account_hint": "pro2",
-      "blocked_by": "m1_design_cache_missing",
-      "est_hours": 0.2,
-      "n_cells": 198,
-      "shard_id": "M1_OED-EQLOAD_03",
-      "stage": "M1_OED-EQLOAD"
-    },
-    {
-      "account_hint": "pro1",
-      "blocked_by": "m1_design_cache_missing",
-      "est_hours": 0.2,
-      "n_cells": 198,
-      "shard_id": "M1_OED-EQLOAD_04",
-      "stage": "M1_OED-EQLOAD"
-    },
-    {
-      "account_hint": "pro2",
-      "blocked_by": "m1_design_cache_missing",
-      "est_hours": 0.2,
-      "n_cells": 198,
-      "shard_id": "M1_OED-EQLOAD_05",
-      "stage": "M1_OED-EQLOAD"
-    },
-    {
-      "account_hint": "pro1",
-      "blocked_by": "m1_design_cache_missing",
-      "est_hours": 0.2,
-      "n_cells": 198,
-      "shard_id": "M1_OED-EQLOAD_06",
-      "stage": "M1_OED-EQLOAD"
-    },
-    {
-      "account_hint": "pro2",
-      "blocked_by": "m1_design_cache_missing",
-      "est_hours": 0.2,
-      "n_cells": 198,
-      "shard_id": "M1_OED-EQLOAD_07",
-      "stage": "M1_OED-EQLOAD"
-    },
-    {
-      "account_hint": "pro1",
-      "blocked_by": "m1_design_cache_missing",
-      "est_hours": 0.2,
-      "n_cells": 198,
-      "shard_id": "M1_OED-EQLOAD_08",
-      "stage": "M1_OED-EQLOAD"
-    },
-    {
-      "account_hint": "pro2",
-      "blocked_by": "m1_design_cache_missing",
-      "est_hours": 0.2,
-      "n_cells": 198,
-      "shard_id": "M1_OED-EQLOAD_09",
-      "stage": "M1_OED-EQLOAD"
-    },
-    {
-      "account_hint": "pro1",
-      "blocked_by": "m1_design_cache_missing",
-      "est_hours": 0.182,
-      "n_cells": 180,
-      "shard_id": "M1_OED-EQLOAD_10",
-      "stage": "M1_OED-EQLOAD"
-    },
-    {
-      "account_hint": "pro2",
-      "blocked_by": "m1_design_cache_missing",
-      "est_hours": 0.235,
-      "n_cells": 144,
-      "shard_id": "M1_OED-DT_00",
-      "stage": "M1_OED-DT"
-    },
-    {
-      "account_hint": "pro1",
-      "blocked_by": "m1_design_cache_missing",
-      "est_hours": 0.205,
-      "n_cells": 126,
-      "shard_id": "M1_OED-DT_01",
-      "stage": "M1_OED-DT"
-    },
-    {
-      "account_hint": "pro2",
-      "blocked_by": "m1_design_cache_missing",
-      "est_hours": 0.205,
-      "n_cells": 126,
-      "shard_id": "M1_OED-DT_02",
-      "stage": "M1_OED-DT"
-    },
-    {
-      "account_hint": "pro1",
-      "blocked_by": "m1_design_cache_missing",
-      "est_hours": 0.205,
-      "n_cells": 126,
-      "shard_id": "M1_OED-DT_03",
-      "stage": "M1_OED-DT"
-    },
-    {
-      "account_hint": "pro2",
-      "blocked_by": "m1_design_cache_missing",
-      "est_hours": 0.205,
-      "n_cells": 126,
-      "shard_id": "M1_OED-DT_04",
-      "stage": "M1_OED-DT"
-    },
-    {
-      "account_hint": "pro1",
-      "blocked_by": "m1_design_cache_missing",
-      "est_hours": 0.205,
-      "n_cells": 126,
-      "shard_id": "M1_OED-DT_05",
-      "stage": "M1_OED-DT"
-    },
-    {
-      "account_hint": "pro2",
-      "blocked_by": "m1_design_cache_missing",
-      "est_hours": 0.205,
-      "n_cells": 126,
-      "shard_id": "M1_OED-DT_06",
-      "stage": "M1_OED-DT"
-    },
-    {
-      "account_hint": "pro1",
-      "blocked_by": "m1_design_cache_missing",
-      "est_hours": 0.205,
-      "n_cells": 126,
-      "shard_id": "M1_OED-DT_07",
-      "stage": "M1_OED-DT"
-    },
-    {
-      "account_hint": "pro2",
-      "blocked_by": "m1_design_cache_missing",
-      "est_hours": 0.205,
-      "n_cells": 126,
-      "shard_id": "M1_OED-DT_08",
-      "stage": "M1_OED-DT"
-    },
-    {
-      "account_hint": "pro1",
-      "blocked_by": "m1_design_cache_missing",
-      "est_hours": 0.205,
-      "n_cells": 126,
-      "shard_id": "M1_OED-DT_09",
-      "stage": "M1_OED-DT"
-    },
-    {
-      "account_hint": "pro2",
-      "blocked_by": "m1_design_cache_missing",
-      "est_hours": 0.205,
-      "n_cells": 126,
-      "shard_id": "M1_OED-DT_10",
-      "stage": "M1_OED-DT"
-    },
-    {
-      "account_hint": "pro1",
-      "blocked_by": "m1_design_cache_missing",
-      "est_hours": 0.205,
-      "n_cells": 126,
-      "shard_id": "M1_OED-DT_11",
-      "stage": "M1_OED-DT"
-    },
-    {
-      "account_hint": "pro2",
-      "blocked_by": "m1_design_cache_missing",
-      "est_hours": 0.205,
-      "n_cells": 126,
-      "shard_id": "M1_OED-DT_12",
-      "stage": "M1_OED-DT"
-    },
-    {
-      "account_hint": "pro1",
-      "blocked_by": "m1_design_cache_missing",
-      "est_hours": 0.205,
-      "n_cells": 126,
-      "shard_id": "M1_OED-DT_13",
-      "stage": "M1_OED-DT"
-    },
-    {
-      "account_hint": "pro2",
-      "blocked_by": "m1_design_cache_missing",
-      "est_hours": 0.205,
-      "n_cells": 126,
-      "shard_id": "M1_OED-DT_14",
-      "stage": "M1_OED-DT"
-    },
-    {
-      "account_hint": "pro1",
-      "blocked_by": "m1_design_cache_missing",
-      "est_hours": 0.205,
-      "n_cells": 126,
-      "shard_id": "M1_OED-DT_15",
-      "stage": "M1_OED-DT"
-    },
-    {
-      "account_hint": "pro2",
-      "blocked_by": "m1_design_cache_missing",
-      "est_hours": 0.205,
-      "n_cells": 126,
-      "shard_id": "M1_OED-DT_16",
-      "stage": "M1_OED-DT"
-    }
-  ],
+  "architecture": "R17 (issue #9): SCAT32 modes + context + 480 cert",
+  "blocked_shards": [],
   "cost_model": {
-    "C0_S": 0.3,
+    "C0_S": 0.35,
     "C1_S": 8.4e-05,
-    "design_amort_s": {
-      "LBLOB16": 1.0,
-      "MATCH1": 30.0,
-      "OED-DT": 100.0,
-      "OED-EQLOAD": 60.0,
-      "RIDGE-FIXED": 8.0,
-      "SCAT16": 2.5,
-      "SCAT32": 4.0
-    },
-    "provenance": "m1_runner --smoke local calibration"
+    "CERT_CELL_S": 240.0,
+    "RIDGE_CAL_S": 25.0
   },
   "default_shards": [
     {
       "account_hint": "pro1",
-      "est_hours": 0.27,
-      "n_cells": 2160,
+      "descriptive": false,
+      "est_hours": 1.067,
+      "n_cells": 16,
+      "priority": 2,
+      "shard_id": "M1_CERT_00",
+      "stage": "M1_CERT"
+    },
+    {
+      "account_hint": "pro2",
+      "descriptive": false,
+      "est_hours": 1.067,
+      "n_cells": 16,
+      "priority": 2,
+      "shard_id": "M1_CERT_01",
+      "stage": "M1_CERT"
+    },
+    {
+      "account_hint": "pro1",
+      "descriptive": false,
+      "est_hours": 1.067,
+      "n_cells": 16,
+      "priority": 2,
+      "shard_id": "M1_CERT_02",
+      "stage": "M1_CERT"
+    },
+    {
+      "account_hint": "pro2",
+      "descriptive": false,
+      "est_hours": 1.067,
+      "n_cells": 16,
+      "priority": 2,
+      "shard_id": "M1_CERT_03",
+      "stage": "M1_CERT"
+    },
+    {
+      "account_hint": "pro1",
+      "descriptive": false,
+      "est_hours": 1.067,
+      "n_cells": 16,
+      "priority": 2,
+      "shard_id": "M1_CERT_04",
+      "stage": "M1_CERT"
+    },
+    {
+      "account_hint": "pro2",
+      "descriptive": false,
+      "est_hours": 1.067,
+      "n_cells": 16,
+      "priority": 2,
+      "shard_id": "M1_CERT_05",
+      "stage": "M1_CERT"
+    },
+    {
+      "account_hint": "pro1",
+      "descriptive": false,
+      "est_hours": 0.8,
+      "n_cells": 12,
+      "priority": 2,
+      "shard_id": "M1_CERT_06",
+      "stage": "M1_CERT"
+    },
+    {
+      "account_hint": "pro2",
+      "descriptive": false,
+      "est_hours": 0.8,
+      "n_cells": 12,
+      "priority": 2,
+      "shard_id": "M1_CERT_07",
+      "stage": "M1_CERT"
+    },
+    {
+      "account_hint": "pro1",
+      "descriptive": false,
+      "est_hours": 0.8,
+      "n_cells": 12,
+      "priority": 2,
+      "shard_id": "M1_CERT_08",
+      "stage": "M1_CERT"
+    },
+    {
+      "account_hint": "pro2",
+      "descriptive": false,
+      "est_hours": 0.8,
+      "n_cells": 12,
+      "priority": 2,
+      "shard_id": "M1_CERT_09",
+      "stage": "M1_CERT"
+    },
+    {
+      "account_hint": "pro1",
+      "descriptive": false,
+      "est_hours": 0.8,
+      "n_cells": 12,
+      "priority": 2,
+      "shard_id": "M1_CERT_10",
+      "stage": "M1_CERT"
+    },
+    {
+      "account_hint": "pro2",
+      "descriptive": false,
+      "est_hours": 0.8,
+      "n_cells": 12,
+      "priority": 2,
+      "shard_id": "M1_CERT_11",
+      "stage": "M1_CERT"
+    },
+    {
+      "account_hint": "pro1",
+      "descriptive": false,
+      "est_hours": 0.8,
+      "n_cells": 12,
+      "priority": 2,
+      "shard_id": "M1_CERT_12",
+      "stage": "M1_CERT"
+    },
+    {
+      "account_hint": "pro2",
+      "descriptive": false,
+      "est_hours": 0.8,
+      "n_cells": 12,
+      "priority": 2,
+      "shard_id": "M1_CERT_13",
+      "stage": "M1_CERT"
+    },
+    {
+      "account_hint": "pro1",
+      "descriptive": false,
+      "est_hours": 0.8,
+      "n_cells": 12,
+      "priority": 2,
+      "shard_id": "M1_CERT_14",
+      "stage": "M1_CERT"
+    },
+    {
+      "account_hint": "pro2",
+      "descriptive": false,
+      "est_hours": 0.8,
+      "n_cells": 12,
+      "priority": 2,
+      "shard_id": "M1_CERT_15",
+      "stage": "M1_CERT"
+    },
+    {
+      "account_hint": "pro1",
+      "descriptive": false,
+      "est_hours": 0.8,
+      "n_cells": 12,
+      "priority": 2,
+      "shard_id": "M1_CERT_16",
+      "stage": "M1_CERT"
+    },
+    {
+      "account_hint": "pro2",
+      "descriptive": false,
+      "est_hours": 0.8,
+      "n_cells": 12,
+      "priority": 2,
+      "shard_id": "M1_CERT_17",
+      "stage": "M1_CERT"
+    },
+    {
+      "account_hint": "pro1",
+      "descriptive": false,
+      "est_hours": 0.8,
+      "n_cells": 12,
+      "priority": 2,
+      "shard_id": "M1_CERT_18",
+      "stage": "M1_CERT"
+    },
+    {
+      "account_hint": "pro2",
+      "descriptive": false,
+      "est_hours": 0.8,
+      "n_cells": 12,
+      "priority": 2,
+      "shard_id": "M1_CERT_19",
+      "stage": "M1_CERT"
+    },
+    {
+      "account_hint": "pro1",
+      "descriptive": false,
+      "est_hours": 0.8,
+      "n_cells": 12,
+      "priority": 2,
+      "shard_id": "M1_CERT_20",
+      "stage": "M1_CERT"
+    },
+    {
+      "account_hint": "pro2",
+      "descriptive": false,
+      "est_hours": 0.8,
+      "n_cells": 12,
+      "priority": 2,
+      "shard_id": "M1_CERT_21",
+      "stage": "M1_CERT"
+    },
+    {
+      "account_hint": "pro1",
+      "descriptive": false,
+      "est_hours": 0.8,
+      "n_cells": 12,
+      "priority": 2,
+      "shard_id": "M1_CERT_22",
+      "stage": "M1_CERT"
+    },
+    {
+      "account_hint": "pro2",
+      "descriptive": false,
+      "est_hours": 0.8,
+      "n_cells": 12,
+      "priority": 2,
+      "shard_id": "M1_CERT_23",
+      "stage": "M1_CERT"
+    },
+    {
+      "account_hint": "pro1",
+      "descriptive": false,
+      "est_hours": 0.8,
+      "n_cells": 12,
+      "priority": 2,
+      "shard_id": "M1_CERT_24",
+      "stage": "M1_CERT"
+    },
+    {
+      "account_hint": "pro2",
+      "descriptive": false,
+      "est_hours": 0.8,
+      "n_cells": 12,
+      "priority": 2,
+      "shard_id": "M1_CERT_25",
+      "stage": "M1_CERT"
+    },
+    {
+      "account_hint": "pro1",
+      "descriptive": false,
+      "est_hours": 0.8,
+      "n_cells": 12,
+      "priority": 2,
+      "shard_id": "M1_CERT_26",
+      "stage": "M1_CERT"
+    },
+    {
+      "account_hint": "pro2",
+      "descriptive": false,
+      "est_hours": 0.8,
+      "n_cells": 12,
+      "priority": 2,
+      "shard_id": "M1_CERT_27",
+      "stage": "M1_CERT"
+    },
+    {
+      "account_hint": "pro1",
+      "descriptive": false,
+      "est_hours": 0.8,
+      "n_cells": 12,
+      "priority": 2,
+      "shard_id": "M1_CERT_28",
+      "stage": "M1_CERT"
+    },
+    {
+      "account_hint": "pro2",
+      "descriptive": false,
+      "est_hours": 0.8,
+      "n_cells": 12,
+      "priority": 2,
+      "shard_id": "M1_CERT_29",
+      "stage": "M1_CERT"
+    },
+    {
+      "account_hint": "pro1",
+      "descriptive": false,
+      "est_hours": 0.8,
+      "n_cells": 12,
+      "priority": 2,
+      "shard_id": "M1_CERT_30",
+      "stage": "M1_CERT"
+    },
+    {
+      "account_hint": "pro2",
+      "descriptive": false,
+      "est_hours": 0.8,
+      "n_cells": 12,
+      "priority": 2,
+      "shard_id": "M1_CERT_31",
+      "stage": "M1_CERT"
+    },
+    {
+      "account_hint": "pro1",
+      "descriptive": false,
+      "est_hours": 0.8,
+      "n_cells": 12,
+      "priority": 2,
+      "shard_id": "M1_CERT_32",
+      "stage": "M1_CERT"
+    },
+    {
+      "account_hint": "pro2",
+      "descriptive": false,
+      "est_hours": 0.8,
+      "n_cells": 12,
+      "priority": 2,
+      "shard_id": "M1_CERT_33",
+      "stage": "M1_CERT"
+    },
+    {
+      "account_hint": "pro1",
+      "descriptive": false,
+      "est_hours": 0.8,
+      "n_cells": 12,
+      "priority": 2,
+      "shard_id": "M1_CERT_34",
+      "stage": "M1_CERT"
+    },
+    {
+      "account_hint": "pro2",
+      "descriptive": false,
+      "est_hours": 0.8,
+      "n_cells": 12,
+      "priority": 2,
+      "shard_id": "M1_CERT_35",
+      "stage": "M1_CERT"
+    },
+    {
+      "account_hint": "pro1",
+      "descriptive": false,
+      "est_hours": 0.8,
+      "n_cells": 12,
+      "priority": 2,
+      "shard_id": "M1_CERT_36",
+      "stage": "M1_CERT"
+    },
+    {
+      "account_hint": "pro2",
+      "descriptive": false,
+      "est_hours": 0.8,
+      "n_cells": 12,
+      "priority": 2,
+      "shard_id": "M1_CERT_37",
+      "stage": "M1_CERT"
+    },
+    {
+      "account_hint": "pro1",
+      "descriptive": true,
+      "est_hours": 0.112,
+      "n_cells": 1080,
+      "priority": 3,
+      "shard_id": "M1_LBLOB16_00",
+      "stage": "M1_LBLOB16"
+    },
+    {
+      "account_hint": "pro2",
+      "descriptive": false,
+      "est_hours": 1.14,
+      "n_cells": 1080,
+      "priority": 1,
+      "shard_id": "M1_RIDGE-SCAT32_00",
+      "stage": "M1_RIDGE-SCAT32"
+    },
+    {
+      "account_hint": "pro1",
+      "descriptive": true,
+      "est_hours": 0.112,
+      "n_cells": 1080,
       "priority": 3,
       "shard_id": "M1_SCAT16_00",
       "stage": "M1_SCAT16"
     },
     {
       "account_hint": "pro2",
-      "est_hours": 0.16,
+      "descriptive": false,
+      "est_hours": 0.112,
       "n_cells": 1080,
-      "priority": 4,
-      "shard_id": "M1_SCAT32_00",
-      "stage": "M1_SCAT32"
+      "priority": 1,
+      "shard_id": "M1_SCAT32-060_00",
+      "stage": "M1_SCAT32-060"
     },
     {
       "account_hint": "pro1",
-      "est_hours": 0.16,
+      "descriptive": false,
+      "est_hours": 0.106,
       "n_cells": 1080,
-      "priority": 4,
-      "shard_id": "M1_SCAT32_01",
-      "stage": "M1_SCAT32"
-    },
-    {
-      "account_hint": "pro2",
-      "est_hours": 0.22,
-      "n_cells": 2160,
-      "priority": 3,
-      "shard_id": "M1_LBLOB16_00",
-      "stage": "M1_LBLOB16"
+      "priority": 1,
+      "shard_id": "M1_SCAT32-SAFE_00",
+      "stage": "M1_SCAT32-SAFE"
     }
   ],
-  "n_expected_rows": 15120
+  "n_expected_rows": 5880
 }

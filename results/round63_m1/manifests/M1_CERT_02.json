@@ -1,0 +1,242 @@
+{
+  "account_hint": "pro1",
+  "cells": [
+    {
+      "b": 0.05,
+      "cell_id": "M1_CERT_02_c0001",
+      "image": "m1_chirp_0",
+      "images": [
+        "m1_chirp_0"
+      ],
+      "imageset": "m1",
+      "m1_cert": true,
+      "nu": 200.0,
+      "seed": 2,
+      "stage": "M1_CERT"
+    },
+    {
+      "b": 0.6,
+      "cell_id": "M1_CERT_02_c0002",
+      "image": "m1_chirp_0",
+      "images": [
+        "m1_chirp_0"
+      ],
+      "imageset": "m1",
+      "m1_cert": true,
+      "nu": 200.0,
+      "seed": 2,
+      "stage": "M1_CERT"
+    },
+    {
+      "b": 0.05,
+      "cell_id": "M1_CERT_02_c0003",
+      "image": "m1_chirp_0",
+      "images": [
+        "m1_chirp_0"
+      ],
+      "imageset": "m1",
+      "m1_cert": true,
+      "nu": 2000.0,
+      "seed": 2,
+      "stage": "M1_CERT"
+    },
+    {
+      "b": 0.6,
+      "cell_id": "M1_CERT_02_c0004",
+      "image": "m1_chirp_0",
+      "images": [
+        "m1_chirp_0"
+      ],
+      "imageset": "m1",
+      "m1_cert": true,
+      "nu": 2000.0,
+      "seed": 2,
+      "stage": "M1_CERT"
+    },
+    {
+      "b": 0.05,
+      "cell_id": "M1_CERT_02_c0005",
+      "image": "m1_glyph_0",
+      "images": [
+        "m1_glyph_0"
+      ],
+      "imageset": "m1",
+      "m1_cert": true,
+      "nu": 200.0,
+      "seed": 0,
+      "stage": "M1_CERT"
+    },
+    {
+      "b": 0.6,
+      "cell_id": "M1_CERT_02_c0006",
+      "image": "m1_glyph_0",
+      "images": [
+        "m1_glyph_0"
+      ],
+      "imageset": "m1",
+      "m1_cert": true,
+      "nu": 200.0,
+      "seed": 0,
+      "stage": "M1_CERT"
+    },
+    {
+      "b": 0.05,
+      "cell_id": "M1_CERT_02_c0007",
+      "image": "m1_glyph_0",
+      "images": [
+        "m1_glyph_0"
+      ],
+      "imageset": "m1",
+      "m1_cert": true,
+      "nu": 2000.0,
+      "seed": 0,
+      "stage": "M1_CERT"
+    },
+    {
+      "b": 0.6,
+      "cell_id": "M1_CERT_02_c0008",
+      "image": "m1_glyph_0",
+      "images": [
+        "m1_glyph_0"
+      ],
+      "imageset": "m1",
+      "m1_cert": true,
+      "nu": 2000.0,
+      "seed": 0,
+      "stage": "M1_CERT"
+    },
+    {
+      "b": 0.05,
+      "cell_id": "M1_CERT_02_c0009",
+      "image": "m1_maze_3",
+      "images": [
+        "m1_maze_3"
+      ],
+      "imageset": "m1",
+      "m1_cert": true,
+      "nu": 200.0,
+      "seed": 3,
+      "stage": "M1_CERT"
+    },
+    {
+      "b": 0.6,
+      "cell_id": "M1_CERT_02_c0010",
+      "image": "m1_maze_3",
+      "images": [
+        "m1_maze_3"
+      ],
+      "imageset": "m1",
+      "m1_cert": true,
+      "nu": 200.0,
+      "seed": 3,
+      "stage": "M1_CERT"
+    },
+    {
+      "b": 0.05,
+      "cell_id": "M1_CERT_02_c0011",
+      "image": "m1_maze_3",
+      "images": [
+        "m1_maze_3"
+      ],
+      "imageset": "m1",
+      "m1_cert": true,
+      "nu": 2000.0,
+      "seed": 3,
+      "stage": "M1_CERT"
+    },
+    {
+      "b": 0.6,
+      "cell_id": "M1_CERT_02_c0012",
+      "image": "m1_maze_3",
+      "images": [
+        "m1_maze_3"
+      ],
+      "imageset": "m1",
+      "m1_cert": true,
+      "nu": 2000.0,
+      "seed": 3,
+      "stage": "M1_CERT"
+    },
+    {
+      "b": 0.05,
+      "cell_id": "M1_CERT_02_c0013",
+      "image": "m1_spokes_3",
+      "images": [
+        "m1_spokes_3"
+      ],
+      "imageset": "m1",
+      "m1_cert": true,
+      "nu": 200.0,
+      "seed": 1,
+      "stage": "M1_CERT"
+    },
+    {
+      "b": 0.6,
+      "cell_id": "M1_CERT_02_c0014",
+      "image": "m1_spokes_3",
+      "images": [
+        "m1_spokes_3"
+      ],
+      "imageset": "m1",
+      "m1_cert": true,
+      "nu": 200.0,
+      "seed": 1,
+      "stage": "M1_CERT"
+    },
+    {
+      "b": 0.05,
+      "cell_id": "M1_CERT_02_c0015",
+      "image": "m1_spokes_3",
+      "images": [
+        "m1_spokes_3"
+      ],
+      "imageset": "m1",
+      "m1_cert": true,
+      "nu": 2000.0,
+      "seed": 1,
+      "stage": "M1_CERT"
+    },
+    {
+      "b": 0.6,
+      "cell_id": "M1_CERT_02_c0016",
+      "image": "m1_spokes_3",
+      "images": [
+        "m1_spokes_3"
+      ],
+      "imageset": "m1",
+      "m1_cert": true,
+      "nu": 2000.0,
+      "seed": 1,
+      "stage": "M1_CERT"
+    }
+  ],
+  "descriptive": false,
+  "est_hours": 1.067,
+  "frozen_inputs": [
+    {
+      "path": "data/r63_images_m1/32/m1_chirp_0.png",
+      "sha256": "c30c22ca5353d502e0affbad10410ca617ea72943e5124343a82461a261af50f"
+    },
+    {
+      "path": "data/r63_images_m1/32/m1_glyph_0.png",
+      "sha256": "8f63c3b5147895c6cf47fdc5973635c08323ea6c193ac21b69741c9e3f7b3291"
+    },
+    {
+      "path": "data/r63_images_m1/32/m1_maze_3.png",
+      "sha256": "f1af8bec6f0db0f29476d2cc354bbc59ed79e1b66ac33c97cc268c34395ac1f2"
+    },
+    {
+      "path": "data/r63_images_m1/32/m1_spokes_3.png",
+      "sha256": "8f39194571e72166000fcf79ca384654b10841bcf33c67b94602d52aff17813c"
+    },
+    {
+      "path": "results/round63_m1/designs/scat32_deployed.npz",
+      "sha256": "abe37ef1bf866a4dbf090ed25d0fb97de66ee70203aa845436a2aac99285978a"
+    }
+  ],
+  "meta_json": "results/round63_m1/shards/M1_CERT_02_meta.json",
+  "output_csv": "results/round63_m1/shards/M1_CERT_02.csv",
+  "priority": 2,
+  "shard_id": "M1_CERT_02",
+  "stage": "M1_CERT"
+}

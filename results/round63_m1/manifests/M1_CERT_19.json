@@ -1,0 +1,186 @@
+{
+  "account_hint": "pro2",
+  "cells": [
+    {
+      "b": 0.05,
+      "cell_id": "M1_CERT_19_c0001",
+      "image": "m1_chirp_3",
+      "images": [
+        "m1_chirp_3"
+      ],
+      "imageset": "m1",
+      "m1_cert": true,
+      "nu": 200.0,
+      "seed": 4,
+      "stage": "M1_CERT"
+    },
+    {
+      "b": 0.6,
+      "cell_id": "M1_CERT_19_c0002",
+      "image": "m1_chirp_3",
+      "images": [
+        "m1_chirp_3"
+      ],
+      "imageset": "m1",
+      "m1_cert": true,
+      "nu": 200.0,
+      "seed": 4,
+      "stage": "M1_CERT"
+    },
+    {
+      "b": 0.05,
+      "cell_id": "M1_CERT_19_c0003",
+      "image": "m1_chirp_3",
+      "images": [
+        "m1_chirp_3"
+      ],
+      "imageset": "m1",
+      "m1_cert": true,
+      "nu": 2000.0,
+      "seed": 4,
+      "stage": "M1_CERT"
+    },
+    {
+      "b": 0.6,
+      "cell_id": "M1_CERT_19_c0004",
+      "image": "m1_chirp_3",
+      "images": [
+        "m1_chirp_3"
+      ],
+      "imageset": "m1",
+      "m1_cert": true,
+      "nu": 2000.0,
+      "seed": 4,
+      "stage": "M1_CERT"
+    },
+    {
+      "b": 0.05,
+      "cell_id": "M1_CERT_19_c0005",
+      "image": "m1_glyph_3",
+      "images": [
+        "m1_glyph_3"
+      ],
+      "imageset": "m1",
+      "m1_cert": true,
+      "nu": 200.0,
+      "seed": 2,
+      "stage": "M1_CERT"
+    },
+    {
+      "b": 0.6,
+      "cell_id": "M1_CERT_19_c0006",
+      "image": "m1_glyph_3",
+      "images": [
+        "m1_glyph_3"
+      ],
+      "imageset": "m1",
+      "m1_cert": true,
+      "nu": 200.0,
+      "seed": 2,
+      "stage": "M1_CERT"
+    },
+    {
+      "b": 0.05,
+      "cell_id": "M1_CERT_19_c0007",
+      "image": "m1_glyph_3",
+      "images": [
+        "m1_glyph_3"
+      ],
+      "imageset": "m1",
+      "m1_cert": true,
+      "nu": 2000.0,
+      "seed": 2,
+      "stage": "M1_CERT"
+    },
+    {
+      "b": 0.6,
+      "cell_id": "M1_CERT_19_c0008",
+      "image": "m1_glyph_3",
+      "images": [
+        "m1_glyph_3"
+      ],
+      "imageset": "m1",
+      "m1_cert": true,
+      "nu": 2000.0,
+      "seed": 2,
+      "stage": "M1_CERT"
+    },
+    {
+      "b": 0.05,
+      "cell_id": "M1_CERT_19_c0009",
+      "image": "m1_microtexture_3",
+      "images": [
+        "m1_microtexture_3"
+      ],
+      "imageset": "m1",
+      "m1_cert": true,
+      "nu": 200.0,
+      "seed": 0,
+      "stage": "M1_CERT"
+    },
+    {
+      "b": 0.6,
+      "cell_id": "M1_CERT_19_c0010",
+      "image": "m1_microtexture_3",
+      "images": [
+        "m1_microtexture_3"
+      ],
+      "imageset": "m1",
+      "m1_cert": true,
+      "nu": 200.0,
+      "seed": 0,
+      "stage": "M1_CERT"
+    },
+    {
+      "b": 0.05,
+      "cell_id": "M1_CERT_19_c0011",
+      "image": "m1_microtexture_3",
+      "images": [
+        "m1_microtexture_3"
+      ],
+      "imageset": "m1",
+      "m1_cert": true,
+      "nu": 2000.0,
+      "seed": 0,
+      "stage": "M1_CERT"
+    },
+    {
+      "b": 0.6,
+      "cell_id": "M1_CERT_19_c0012",
+      "image": "m1_microtexture_3",
+      "images": [
+        "m1_microtexture_3"
+      ],
+      "imageset": "m1",
+      "m1_cert": true,
+      "nu": 2000.0,
+      "seed": 0,
+      "stage": "M1_CERT"
+    }
+  ],
+  "descriptive": false,
+  "est_hours": 0.8,
+  "frozen_inputs": [
+    {
+      "path": "data/r63_images_m1/32/m1_chirp_3.png",
+      "sha256": "e837e39b42917c08237e8f80c58b089115c056b23a39888947ffae33834e3e1b"
+    },
+    {
+      "path": "data/r63_images_m1/32/m1_glyph_3.png",
+      "sha256": "9b46e59888b91ee9cb51f2296d251f4194f2335854c6038cf3c786cb2806fbd8"
+    },
+    {
+      "path": "data/r63_images_m1/32/m1_microtexture_3.png",
+      "sha256": "7682ef3d11a05fa1452370ec6f3da83e6f5d4c00d73db22bfe6e476220524bd6"
+    },
+    {
+      "path": "results/round63_m1/designs/scat32_deployed.npz",
+      "sha256": "abe37ef1bf866a4dbf090ed25d0fb97de66ee70203aa845436a2aac99285978a"
+    }
+  ],
+  "meta_json": "results/round63_m1/shards/M1_CERT_19_meta.json",
+  "output_csv": "results/round63_m1/shards/M1_CERT_19.csv",
+  "priority": 2,
+  "shard_id": "M1_CERT_19",
+  "stage": "M1_CERT"
+}
