@@ -1,0 +1,6 @@
+[zoom] nu=2000 n_mc=150k local grids +-22%, quad-interp peaks
+[zoom] cv=0.02  pred= 10.40  measured rho*= 9.645 dev= -7.3%  (grid argmax 9.517, Jmax=0.8745)
+[zoom] cv=0.05  pred=  5.69  measured rho*= 5.154 dev= -9.4%  (grid argmax 5.207, Jmax=0.7919)
+[zoom] cv=0.1   pred=  3.50  measured rho*= 3.752 dev= +7.2%  (grid argmax 3.758, Jmax=0.6988)
+[zoom] cv=0.2   pred=  2.30  measured rho*= 2.106 dev= -8.4%  (grid argmax 2.105, Jmax=0.5828)
+[zoom] DONE

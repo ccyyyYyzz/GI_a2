@@ -52,3 +52,12 @@ the record. Correct treatment: per-point peak-location error bars
 (bootstrap), then weighted log-log fit of rho* vs c across all points +
 the Colab 400k replication before any constant-level claim. The -2/3
 exponent claim from rows 1-2 ratio must also carry these error bars.
+
+## LOCAL ZOOM COMPLETE (150k, 4 points)
+
+Continuous peaks: (0.02, 9.645) (0.05, 5.154) (0.1, 3.752) (0.2, 2.106);
+devs vs R14: -7.3/-9.4/+7.2/-8.4% (scatter, no resolvable systematic).
+Log-log fit slope = -0.642 vs theory -2/3 (3.7% off, well inside
+per-point noise). Constant consistent with 2^(-1/3) within ~10%.
+Honest state: EXPONENT confirmed; CONSTANT pending the Colab 400k
+replication + bootstrap error bars.
