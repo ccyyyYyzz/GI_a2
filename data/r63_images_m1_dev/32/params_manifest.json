@@ -1,0 +1,246 @@
+{
+  "families_order": [
+    "glyph",
+    "chirp",
+    "spokes",
+    "maze",
+    "contour",
+    "microtexture"
+  ],
+  "params": {
+    "chirp": {
+      "bg_level": 0.0,
+      "fg_level": 1.0,
+      "gap_range": [
+        1,
+        4
+      ],
+      "grid_choices": [
+        2,
+        3,
+        4
+      ],
+      "orientations": [
+        "h",
+        "v",
+        "d",
+        "ad"
+      ],
+      "width_range": [
+        1,
+        4
+      ]
+    },
+    "contour": {
+      "bg_level_range": [
+        0.05,
+        0.15
+      ],
+      "center_frac_range": [
+        0.28,
+        0.72
+      ],
+      "curve_freq_range": [
+        1.0,
+        3.0
+      ],
+      "fg_level": 1.0,
+      "n_shapes_range": [
+        4,
+        7
+      ],
+      "outline_width_choices": [
+        1,
+        2
+      ],
+      "polygon_vertices_range": [
+        3,
+        6
+      ],
+      "radius_frac_range": [
+        0.14,
+        0.42
+      ],
+      "shape_types": [
+        "ellipse",
+        "polygon",
+        "curve"
+      ]
+    },
+    "dtype": "float64",
+    "glyph": {
+      "alphabet": "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
+      "bg_level": 0.06,
+      "char_gap_font_px": 1,
+      "chars_per_row_range": [
+        4,
+        9
+      ],
+      "fg_level": 1.0,
+      "left_margin": 2,
+      "n_rows_range": [
+        3,
+        6
+      ],
+      "row_gap_font_px": 2,
+      "scale_choices": [
+        1,
+        2
+      ],
+      "top_margin": 3
+    },
+    "maze": {
+      "bg_level": 0.0,
+      "fg_level": 1.0,
+      "fill_factor_range": [
+        0.05,
+        0.55
+      ],
+      "margin": 3,
+      "step_choices": [
+        6,
+        8
+      ],
+      "stroke_width_choices": [
+        1,
+        2
+      ]
+    },
+    "microtexture": {
+      "conv_mode": "reflect",
+      "fg_level": 1.0,
+      "rectify": "abs",
+      "renorm": "peak",
+      "sigma_pairs": [
+        [
+          0.8,
+          1.6
+        ],
+        [
+          1.0,
+          2.0
+        ],
+        [
+          1.2,
+          2.4
+        ],
+        [
+          1.5,
+          3.0
+        ]
+      ]
+    },
+    "peak": 1.0,
+    "sanity": {
+      "max_frac_above_half": 0.9,
+      "min_frac_above_half": 0.01,
+      "require_positive_variance": true
+    },
+    "seeds": {
+      "conf_base": 631000,
+      "conf_family_stride": 4,
+      "dev_base": 630900
+    },
+    "side_default": 64,
+    "spokes": {
+      "bg_level": 0.0,
+      "center_offset_px_range": [
+        -6,
+        6
+      ],
+      "fg_level": 1.0,
+      "n_spokes_choices": [
+        8,
+        12,
+        16,
+        20,
+        24,
+        32
+      ],
+      "r_inner_frac": 0.12,
+      "r_outer_frac": 0.92
+    }
+  },
+  "params32": {
+    "roi": {
+      "background_guard_iters": 2,
+      "background_rule": "complement of binary_dilation(core, 3x3 full, 2 iterations) = pixels at least 2 px from any signal core pixel; deterministic fallback when that complement is empty (fully-filled scene) = outer 2 px border minus the signal ROI",
+      "border_width": 2,
+      "connectivity": "8 (3x3 full structuring element)",
+      "signal_dilate_iters": 1,
+      "signal_half_max_frac": 0.5,
+      "signal_rule": "binary_dilation(truth > 0.5*max, 3x3 full structuring element, 1 iteration)"
+    },
+    "sanity": {
+      "max_frac_above_half": 0.9,
+      "min_frac_above_half": 0.01,
+      "require_positive_variance": true,
+      "roi_disjoint": true,
+      "roi_nonempty": true
+    },
+    "seeds": {
+      "conf_base": 632000,
+      "conf_family_mult": 100,
+      "dev_base": 631900
+    },
+    "side": 32
+  },
+  "roi_mode": {
+    "m1_dev_chirp": "border_minus_signal",
+    "m1_dev_contour": "far_complement",
+    "m1_dev_glyph": "far_complement",
+    "m1_dev_maze": "far_complement",
+    "m1_dev_microtexture": "far_complement",
+    "m1_dev_spokes": "far_complement"
+  },
+  "roi_sha256": {
+    "m1_dev_chirp": "01bef29cfcc37b4b2c4b882d0e82114cc53ceb812e4ad642b42bba7706699d21",
+    "m1_dev_contour": "a1edd0b64a98822bd46c30e9b36e5c8b288c2aa4a8c0277efd8d8a5a8fb0cf8e",
+    "m1_dev_glyph": "a72065d250f01cc8b248b0da50116c85f4170a01cf8478db4c3292d9c805ae7c",
+    "m1_dev_maze": "cea16613340ee18de67e2dd6c7426e477456c1dd2f131957f135d90ac4d09aa8",
+    "m1_dev_microtexture": "f08ea8007821dc1667a3ea43602fbf87442b90dffb826e7e568862dc977c6812",
+    "m1_dev_spokes": "0ca0adbc6bde4fdf1384ef4f7817906484cb9a8211206c04eef86c7478965709"
+  },
+  "ruling": "M1 spec \u00a73 dev instances",
+  "seed_table": [
+    {
+      "family": "glyph",
+      "name": "m1_dev_glyph",
+      "seed": 632900
+    },
+    {
+      "family": "chirp",
+      "name": "m1_dev_chirp",
+      "seed": 632901
+    },
+    {
+      "family": "spokes",
+      "name": "m1_dev_spokes",
+      "seed": 632902
+    },
+    {
+      "family": "maze",
+      "name": "m1_dev_maze",
+      "seed": 632903
+    },
+    {
+      "family": "contour",
+      "name": "m1_dev_contour",
+      "seed": 632904
+    },
+    {
+      "family": "microtexture",
+      "name": "m1_dev_microtexture",
+      "seed": 632905
+    }
+  ],
+  "sha256": {
+    "m1_dev_chirp": "1e0ee0a8929f01fc54b7f122eebc67e8315903d6d50d9de54d9b0f017f38e0d8",
+    "m1_dev_contour": "ca9c1239b154426ba34fa8637787d2625637275f2819bf5fd44bfab49dcdfde5",
+    "m1_dev_glyph": "7b2bce2d46f90eb57fcc1ea2689765d091ed51b4da37d7515b17d153cb848795",
+    "m1_dev_maze": "3fd1a841a552fbd31ce6d415ef4e30a604a4acf3c7404145b499eff47f9055c9",
+    "m1_dev_microtexture": "6f4ff99045a7cb128fb13495bc39366a15347c8409eb4b8dc0bd2ed154ea1fdb",
+    "m1_dev_spokes": "f0e8f9e033344b036bc09180e7a2671fa7e61d81215bd07b50dd09c881632856"
+  },
+  "side": 32
+}
