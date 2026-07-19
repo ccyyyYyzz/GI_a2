@@ -588,8 +588,19 @@ confirmatory gate; the others are ablations, baselines, or the descriptive
 ridge-tracking demonstration. The R13 freeze audit additionally mandates
 \textsc{MATCH1} as a no-gate arm and a committed selection of the global fixed
 comparator $\text{FIXED}^\ast$ from $\{\textsc{SCAT32}, \textsc{LBLOB16},
-\textsc{MATCH1}\}$ by the frozen development rule~\SPH{M1: committed
-$\text{FIXED}^\ast$ selection record}. Reconstruction (RQL with the frozen
+\textsc{MATCH1}\}$ by the frozen development rule (median fixed-dwell
+radiometric PSNR at $(\rhobar,\nu) = (0.60, 2000)$, averaged over development
+seeds, evaluated in the order
+\textsc{SCAT32}$\rightarrow$\textsc{LBLOB16}$\rightarrow$\textsc{MATCH1} with
+ties resolved within $0.05$~dB). The committed record is
+$\text{FIXED}^\ast = \textsc{SCAT32}$, with development scores $17.498$,
+$11.908$, and $9.181$~dB for \textsc{SCAT32}, \textsc{LBLOB16}, and
+\textsc{MATCH1}, respectively; no tie occurred. An earlier
+information-score-based selection was invalidated by external audit (R15) for
+departing from the frozen rule, and the selection was re-run under the original
+R10 prescription. The frozen radiometric-PSNR rule independently selects the
+$k=32$ occupancy rung, consistent with the companion's Study~2 fixed-dwell
+optimum at the same rung~\cite{companion}. Reconstruction (RQL with the frozen
 analytic $\lambda_{\mathrm{TV}}$ rule and pooled initialization) is identical
 across arms; the primary comparison is each arm's own fast curve against the
 common safe ($\rhobar = 0.05$) reference of its own pattern set.

@@ -62,7 +62,7 @@ Classes: **M1** (campaign outputs after tag `m1-freeze`), **R14-SUPP**
 | 2 | ~94  | abstract | primary/secondary verdicts + cross-arm numbers | M1 |
 | 3 | ~173 | intro (contrib iii) | campaign outcomes (incl. any negative primary) | M1 |
 | 4 | ~284 | §2.2 crossover ¶ | uniform two-parameter crossover proof, or prediction label retained | R14-SUPP |
-| 5 | ~591 | §4 arms | committed FIXED* selection record {SCAT32,LBLOB16,MATCH1} | M1 |
+| 5 | ~591 | §4 arms | ~~committed FIXED* selection record {SCAT32,LBLOB16,MATCH1}~~ **FILLED** (FIXED*=SCAT32; source of record: `results/round63_m1/FREEZE_CHECKLIST_LEDGER.md` box 5, frozen R10 DEV radiometric-PSNR rule, R15-remedied) | M1 |
 | 6 | ~653 | §5.1 | METHOD_SPEED_PASS: median S, LB, count>1, PASS/FAIL | M1 |
 | 7 | ~657 | §5.2 | METHOD_DESIGN_PASS: median design gain (dB), LB, count | M1 |
 | 8 | ~661 | §5.3 | METHOD_FIXED_DWELL_PASS: median terminal gain (dB), count, LB | M1 |
@@ -81,9 +81,9 @@ Classes: **M1** (campaign outputs after tag `m1-freeze`), **R14-SUPP**
 | S-4 | ~287 | S5.3 | certificate/rounding diagnostics per designed cell | M1 |
 | S-5 | ~293 | S6 | proofs of Theorems 1–3 + Proposition S1; uniform crossover proof or prediction label | R14-SUPP |
 
-**Counts.** 17 sites (main 12 + supplement 5); raw `\SPH` commands: main 53
-(11 single + 42 table cells), supplement 5, total 58. By class: M1 ×11,
-R14-SUPP ×2, USER ×4.
+**Counts.** 16 open sites (main 11 + supplement 5; site #5 FILLED 2026-07-19);
+raw `\SPH` commands: main 52 (10 single + 42 table cells), supplement 5, total
+57. By class (open): M1 ×10, R14-SUPP ×2, USER ×4.
 
 ## Fill order (suggested)
 

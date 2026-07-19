@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.9.25)  19 JUL 2026 10:28
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.9.25)  19 JUL 2026 12:16
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -495,137 +495,158 @@ Underfull \hbox (badness 1917) in paragraph at lines 565--572
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 609--610
+Underfull \hbox (badness 2600) in paragraph at lines 586--607
+\OT1/cmr/m/n/10 demon-stra-tion. The R13 freeze au-dit ad-di-tion-
+ []
+
+
+Underfull \hbox (badness 1783) in paragraph at lines 586--607
+\OT1/cmr/m/n/10 com-mit-ted se-lec-tion of the global fixed com-para-
+ []
+
+
+Underfull \hbox (badness 1275) in paragraph at lines 586--607
+\OT1/cmr/m/n/10 ra-dio-met-ric PSNR at $([]\OML/cmm/m/it/10 ; ^^W\OT1/cmr/m/n/1
+0 ) = (0\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 60\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 
+2000)$, av-er-
+ []
+
+[5]
+Underfull \hbox (badness 10000) in paragraph at lines 620--621
 []\OT1/cmr/m/n/9 variable-load exact-kernel
  []
 
 
-Underfull \hbox (badness 1810) in paragraph at lines 609--610
+Underfull \hbox (badness 1810) in paragraph at lines 620--621
 \OT1/cmr/m/n/9 relaxed-KW cer-tifi-cate vs.
  []
 
 
-Underfull \hbox (badness 1430) in paragraph at lines 613--613
+Underfull \hbox (badness 1430) in paragraph at lines 624--624
 []\OT1/cmr/m/n/9 frozen scat-tered $\OML/cmm/m/it/9 k \OT1/cmr/m/n/9 = 16$
  []
 
 
-Underfull \hbox (badness 5064) in paragraph at lines 615--616
+Underfull \hbox (badness 5064) in paragraph at lines 626--627
 []\OT1/cmr/m/n/9 committed clus-tered sup-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 617--618
+Underfull \hbox (badness 10000) in paragraph at lines 628--629
 []\OT1/cmr/m/n/9 dwell-dependent ridge-
  []
 
 
-Underfull \hbox (badness 1796) in paragraph at lines 624--636
+Underfull \hbox (badness 1796) in paragraph at lines 635--647
  []\OT1/cmr/bx/n/10 Endpoints and gate.[] \OT1/cmr/m/n/10 The frozen $\OML/cmm/
 m/it/10 Q[]$ \OT1/cmr/m/n/10 time-to-
  []
 
-[5]
-Underfull \hbox (badness 1881) in paragraph at lines 654--655
+
+Underfull \hbox (badness 1881) in paragraph at lines 665--666
 []\OT1/cmr/m/n/10 [M1: METHOD[]SPEED[]PASS ver-dict --- me-dian
  []
 
 
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 656.
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `superscript' on input line 656.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\ast' on input line 656.
+(hyperref)                removing `math shift' on input line 667.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 656.
+(hyperref)                removing `superscript' on input line 667.
 
 
-Underfull \hbox (badness 1521) in paragraph at lines 662--663
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\ast' on input line 667.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 667.
+
+
+Underfull \hbox (badness 1521) in paragraph at lines 673--674
 []\OT1/cmr/m/n/10 [M1: METHOD[]FIXED[]DWELL[]PASS --- me-dian
  []
 
 
-Underfull \hbox (badness 7540) in paragraph at lines 693--693
+Underfull \hbox (badness 7540) in paragraph at lines 704--704
 []\OT1/cmr/bx/n/14.4 Discussion: the op-er-at-ing
  []
 
 
-Underfull \hbox (badness 1789) in paragraph at lines 697--706
+Underfull \hbox (badness 1789) in paragraph at lines 708--717
 \OT1/cmr/m/n/10 The two arms ex-pose con-ju-gate re-source regimes
  []
 
 
-Underfull \hbox (badness 1371) in paragraph at lines 697--706
+Underfull \hbox (badness 1371) in paragraph at lines 708--717
 \OT1/cmr/m/n/10 of the same dead-time in-for-ma-tion map. Un-der
  []
 
 
-Underfull \hbox (badness 1014) in paragraph at lines 697--706
+Underfull \hbox (badness 1014) in paragraph at lines 708--717
 \OT1/cmr/m/n/10 and \OT1/cmr/m/it/10 avoids \OT1/cmr/m/n/10 the ridge; the ridg
 e be-longs to time-
  []
 
-
-Underfull \hbox (badness 1038) in paragraph at lines 738--742
+[6]
+Underfull \hbox (badness 1038) in paragraph at lines 749--753
 []\OT1/cmr/m/n/8 jitter-capped op-ti-mum from $\OML/cmm/m/it/8 c[]^^Z[]\OT1/cmr
 /m/n/8 (1 +
  []
 
 
-Underfull \hbox (badness 1038) in paragraph at lines 742--745
+Underfull \hbox (badness 1038) in paragraph at lines 753--756
 []\OT1/cmr/m/n/8 common $52$-pattern pre-scan $\OMS/cmsy/m/n/8 !$ \OT1/cmr/m/n/
 8 mea-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 745--749
+Underfull \hbox (badness 10000) in paragraph at lines 756--760
 []\OT1/cmr/m/n/8 photon-budgeted: cer-ti-fied \OT1/cmr/m/sc/8 OED-DT
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 745--749
+Underfull \hbox (badness 10000) in paragraph at lines 756--760
 \OT1/cmr/m/n/8 frozen dic-tio-nary); time-budgeted:
  []
 
 
-Underfull \hbox (badness 2035) in paragraph at lines 756--762
+Underfull \hbox (badness 2035) in paragraph at lines 767--773
 []\OT1/cmr/m/n/10 Two scope bound-aries stand. All re-sults are
  []
 
-[6]
-Underfull \hbox (badness 1831) in paragraph at lines 778--800
+
+Underfull \hbox (badness 1831) in paragraph at lines 789--811
 \OT1/cmr/m/n/10 zone load ar-chi-tec-ture and incident-budget con-ju-
  []
 
 
-Underfull \hbox (badness 1122) in paragraph at lines 778--800
+Underfull \hbox (badness 1122) in paragraph at lines 789--811
 \OT1/cmr/m/n/10 gacy (R11), the M1 freeze au-dit (R13), and the
  []
 
 
-Underfull \hbox (badness 1314) in paragraph at lines 778--800
+Underfull \hbox (badness 1314) in paragraph at lines 789--811
 \OT1/cmr/m/n/10 uni-fi-ca-tion rul-ing (R14, is-sue ``R14 rul-ing: uni-fi-
  []
 
 
-Underfull \hbox (badness 1303) in paragraph at lines 778--800
+Underfull \hbox (badness 1303) in paragraph at lines 789--811
 \OT1/cmr/m/n/10 rows, were reg-is-tered be-fore the sweep com-pleted
  []
 
 
-Underfull \hbox (badness 1803) in paragraph at lines 778--800
+Underfull \hbox (badness 1803) in paragraph at lines 789--811
 \OT1/cmr/m/n/10 (\OT1/cmtt/m/n/10 docs/R14[]PREREGISTERED[]PREDICTIONS.md\OT1/c
 mr/m/n/10 , com-mit
  []
 
-(tmp/main_m1.bbl
+(tmp/main_m1.bbl [7]
 Underfull \hbox (badness 1205) in paragraph at lines 21--24
 []\OT1/cmr/m/n/10 Matthew P. Edgar, Gra-ham M. Gib-son, and
  []
@@ -635,7 +656,7 @@ Underfull \hbox (badness 1067) in paragraph at lines 31--35
 []\OT1/cmr/m/n/10 Ma, Xu, and Maleki.  Sensing-matrix de-sign
  []
 
-[7]
+
 Underfull \hbox (badness 1584) in paragraph at lines 49--53
 []\OT1/cmr/m/n/10 Ery Arias-Castro, Em-manuel J. Cand^^Res, and
  []
@@ -668,11 +689,11 @@ Package rerunfilecheck Info: File `main_m1.out' has not changed.
 Here is how much of TeX's memory you used:
  10824 strings out of 476023
  164125 string characters out of 5790298
- 1951190 words of memory out of 5000000
+ 1949190 words of memory out of 5000000
  32714 multiletter control sequences out of 15000+600000
  575663 words of font info for 100 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 75i,15n,79p,1355b,558s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,15n,79p,1355b,556s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx
 10.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm
 /cmbx12.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/amsfon
@@ -704,10 +725,10 @@ type1/public/amsfonts/cm/cmtt10.pfb><d:/Program Files/texlive/2024/texmf-dist/f
 onts/type1/public/amsfonts/symbols/msam10.pfb><d:/Program Files/texlive/2024/te
 xmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb><d:/Program Files/texli
 ve/2024/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb>
-Output written on tmp/main_m1.pdf (8 pages, 404892 bytes).
+Output written on tmp/main_m1.pdf (8 pages, 405380 bytes).
 PDF statistics:
- 380 PDF objects out of 1000 (max. 8388607)
- 305 compressed objects within 4 object streams
+ 381 PDF objects out of 1000 (max. 8388607)
+ 306 compressed objects within 4 object streams
  72 named destinations out of 1000 (max. 500000)
  153 words of extra memory for PDF output out of 10000 (max. 10000000)
 
