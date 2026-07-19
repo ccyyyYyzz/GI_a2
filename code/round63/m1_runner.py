@@ -21,7 +21,7 @@ Architecture (amendment §B):
   Context arms (no gate, descriptive): SCAT16, LBLOB16 at load 0.60.
 
 Endpoints (amendment §C): RIDGE_OPERATING_PASS (primary, paired terminal-
-dwell), RIDGE_SPEED_PASS (nine-dwell Q90 secondary), DOSE_SAFE_CERT_PASS
+dwell), RIDGE_SPEED_PASS (nine-dwell Q90 secondary), FULL_STACK_CERT_PASS
 (480-cell expanded-class certificate) — emitted by m1_analyze_r17.
 
 Certificate cells (amendment §C.3) run through run_cert_cell — shardable
@@ -112,12 +112,15 @@ DISC_COLS = ["rho_R_production", "ridge_clip_reason", "requested_mean_load",
 M1_FIELDNAMES = list(pilot_s1.FIELDNAMES) + MECH_COLS + PROV_COLS + DISC_COLS
 RESUME_COLS = ["pattern", "rho_bar", "nu", "M", "seed", "image", "arm"]
 
-CERT_FIELDNAMES = ["image", "seed", "nu", "b", "G_full_per_r", "cell_pass",
-                   "status", "primal_feasible", "theta", "n_active_mu",
-                   "MU_CAP_ACTIVE", "budget_viol", "dose_excess",
-                   "comp_budget", "comp_dose", "deployed_mean_load",
-                   "deployed_dose_dev", "deployed_peak", "d_cert_sha",
-                   "wall_s", "cell_id", "stage"]
+CERT_FIELDNAMES = ["image", "seed", "nu", "b", "status",
+                   "dual_gap_upper_per_r", "primal_gap_lower_per_r",
+                   "solver_status_primary", "solver_status_retry",
+                   "wall_seconds", "coefficient_dynamic_range",
+                   "n_dictionary_scans", "n_arisk_cuts", "n_spectral_cuts",
+                   "full_dictionary_scan_residual",
+                   "min_generalized_eigenvalue", "arisk_ratio",
+                   "MU_CAP_ACTIVE", "dep_feasible", "dep_dose_dev",
+                   "d_cert_sha", "cell_id", "stage"]
 
 
 def _confirmatory_guard(imageset):
@@ -382,26 +385,29 @@ def run_cert_cell(cell):
     V_full = v4.info_matrix_full(rows, xhat, int(nu), b, P=prescan_matrix())
     B, eps0, _tr = v4.subspace_from_fixedstar(V_full)
     ctx = v5.setup_ctx_cert(xhat, nu, b, B, eps0, SIDE)
-    out = v5.cert_deployed_rows(ctx, rows, b)
+    out = v5.full_stack_cert_cell(ctx, rows, b)      # R18 Sec 5 protocol
     row = {"image": image, "seed": seed, "nu": nu, "b": b,
-           "G_full_per_r": (out["G_full"] / ctx["r"]
-                            if np.isfinite(out.get("G_full", np.inf))
-                            else ""),
-           "cell_pass": bool(out.get("cell_pass", False)),
-           "status": out.get("status", ""),
-           "primal_feasible": out.get("primal_feasible", ""),
-           "theta": out.get("theta", ""),
-           "n_active_mu": out.get("n_active_mu", ""),
-           "MU_CAP_ACTIVE": out.get("MU_CAP_ACTIVE", ""),
-           "budget_viol": out.get("budget_viol", ""),
-           "dose_excess": out.get("dose_excess", ""),
-           "comp_budget": out.get("comp_budget", ""),
-           "comp_dose": out.get("comp_dose", ""),
-           "deployed_mean_load": out.get("deployed_mean_load", ""),
-           "deployed_dose_dev": out.get("deployed_dose_dev", ""),
-           "deployed_peak": out.get("deployed_peak", ""),
+           "status": out["status"],
+           "dual_gap_upper_per_r": out.get("dual_gap_upper_per_r", ""),
+           "primal_gap_lower_per_r": out.get("primal_gap_lower_per_r", ""),
+           "solver_status_primary": out.get("solver_status_primary", ""),
+           "solver_status_retry": out.get("solver_status_retry", ""),
+           "wall_seconds": round(out.get("wall_seconds",
+                                         time.time() - t0), 1),
+           "coefficient_dynamic_range":
+               out.get("coefficient_dynamic_range", ""),
+           "n_dictionary_scans": out.get("n_dictionary_scans", ""),
+           "n_arisk_cuts": out.get("n_arisk_cuts", ""),
+           "n_spectral_cuts": out.get("n_spectral_cuts", ""),
+           "full_dictionary_scan_residual":
+               out.get("full_dictionary_scan_residual", ""),
+           "min_generalized_eigenvalue":
+               out.get("min_generalized_eigenvalue", ""),
+           "arisk_ratio": out.get("arisk_ratio", ""),
+           "MU_CAP_ACTIVE": out.get("MU_CAP_ACTIVE", False),
+           "dep_feasible": out.get("dep_feasible", ""),
+           "dep_dose_dev": out.get("dep_dose_dev", ""),
            "d_cert_sha": v5.d_cert_sha()[:16],
-           "wall_s": round(time.time() - t0, 1),
            "cell_id": cell.get("cell_id", ""),
            "stage": cell.get("stage", "M1_CERT")}
     return [row]
@@ -457,6 +463,18 @@ def _q90_time(nus, rhos, q, target):
     return float(np.exp(np.interp(target, qf, lt)))
 
 
+CERT_BRANCH_JSON = os.path.join(OUT_DIR, "CERT_BRANCH.json")
+
+
+def cert_branch():
+    """R18 Sec 5.4 predetermined branch: 'CERTIFICATE_RETAINED' or
+    'FALLBACK_DESCRIPTIVE' (written by the DEV gate; default retained)."""
+    if os.path.exists(CERT_BRANCH_JSON):
+        with open(CERT_BRANCH_JSON) as f:
+            return json.load(f).get("branch", "CERTIFICATE_RETAINED")
+    return "CERTIFICATE_RETAINED"
+
+
 def m1_analyze_r17(curves, n_images=24, boot_B=10000):
     """The three R17 verdicts from per-image curve data.
 
@@ -488,16 +506,25 @@ def m1_analyze_r17(curves, n_images=24, boot_B=10000):
     lbS = _nested_boot_lb(S, families, B=boot_B, seed_tag=14)
     nS = sum(1 for v_ in S.values() if v_ > 1)
     speed = bool(medS >= 3.0 and lbS > 1 and nS >= math.ceil(0.75 * n_images))
-    cert_flags = [bool(f) for c in curves.values()
-                  for f in c.get("cert_cells", [])]
+    # cert_cells entries: True/False (mock) or R18 status strings
+    cert_flags = [(f == "CERTIFIED" if isinstance(f, str) else bool(f))
+                  for c in curves.values() for f in c.get("cert_cells", [])]
     cert = bool(cert_flags and all(cert_flags))
-    return {"RIDGE_OPERATING_PASS": operating,
-            "RIDGE_SPEED_PASS": speed,
-            "DOSE_SAFE_CERT_PASS": cert,
-            "median_dQ_dB": med, "dQ_LB2.5": lb, "n_dQ_pos": n_pos,
-            "median_S": medS, "S_LB2.5": lbS, "n_S_gt1": nS,
-            "n_cert_cells": len(cert_flags),
-            "n_cert_pass": sum(cert_flags)}
+    out = {"RIDGE_OPERATING_PASS": operating,
+           "RIDGE_SPEED_PASS": speed,
+           "median_dQ_dB": med, "dQ_LB2.5": lb, "n_dQ_pos": n_pos,
+           "median_S": medS, "S_LB2.5": lbS, "n_S_gt1": nS,
+           "n_cert_cells": len(cert_flags),
+           "n_cert_certified": sum(cert_flags),
+           "cert_branch": cert_branch()}
+    if out["cert_branch"] == "CERTIFICATE_RETAINED":
+        out["FULL_STACK_CERT_PASS"] = cert          # gated verdict
+    else:
+        # R18 Sec 5.4 fallback: certificate analyses DESCRIPTIVE only --
+        # no categorical verdict may be emitted
+        out["full_stack_cert_descriptive_fraction"] = (
+            sum(cert_flags) / len(cert_flags) if cert_flags else None)
+    return out
 
 
 # ---- resumable local sweep ------------------------------------------------ #

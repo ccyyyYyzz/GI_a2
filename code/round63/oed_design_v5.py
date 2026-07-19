@@ -1331,3 +1331,704 @@ def toy_full_cert_check_gain():
         [(1 + DELTA) * dv.mean() - dv, dv - (1 - DELTA) * dv.mean()])))
     return {"G_at_opt": G, "dose_active": bool(abs(active) < 1e-6),
             "w_star": w_star.tolist(), "agreement_ok": bool(abs(G) <= 1e-8)}
+
+
+# ========================================================================== #
+#  R18 SECTION (docs/ROUND63_METHOD_SPEC_M1_R18_AMENDMENT.md)                 #
+#  Full-stack certificate: C_stack = {simplex, budget, +/-5% dose, A-risk    #
+#  tr(V^-1) <= 1.05 tr(V_fix^-1), spectral V >= 0.5 V_fix} with the          #
+#  certified cutting-plane outer approximation (ruling Sec 3.3) and the      #
+#  mandatory support-expanding primal discriminator (Sec 3.4).               #
+# ========================================================================== #
+GSTACK_TOL_PER_R = 1e-2
+CERT_PRIMAL_SCREEN_S = 60.0
+CERT_PRIMARY_S = 180.0
+CERT_RETRY_S = 180.0
+CERT_CELL_WALL_CAP = 420.0
+
+
+class StackCertProblem:
+    """Callback container for one full-stack certificate instance. Both the
+    real cells and the toy suite implement exactly this interface, so the
+    cutting-plane engine is shared verbatim (R18 Sec 3.5 requirement)."""
+
+    def __init__(self, d, c, n_pix, V_pre, eps0, V_fix, b, r,
+                 h_of, dose_cols, spec_coeff, ar_coeff):
+        self.d = np.asarray(d, dtype=float)          # (A,) objective scores
+        self.c = np.asarray(c, dtype=float)          # (A,) budget loads
+        self.n_pix = int(n_pix)
+        self.V_pre = V_pre                           # (r,r) incl. nothing else
+        self.eps0 = float(eps0)
+        self.V_fix = V_fix
+        self.b = float(b)
+        self.r = int(r)
+        self.h_of = h_of                             # cols -> (k, r) h rows
+        self.dose_cols = dose_cols                   # cols -> (2n, k) U rows
+        self.spec_coeff = spec_coeff                 # z (r,) -> (A,) coeffs
+        self.ar_coeff = ar_coeff                     # Vk_inv -> (A,) coeffs
+        self.h_fix = float(np.trace(np.linalg.inv(V_fix)))
+
+    def V_of(self, cols, w):
+        H = self.h_of(cols)                          # (k, r)
+        return (self.V_pre + (H * np.asarray(w)[:, None]).T @ H
+                + self.eps0 * np.eye(self.r))
+
+
+def stack_cert_engine(prob, dbar_d, time_cap=CERT_PRIMARY_S, lp_time=60.0,
+                      max_rounds=60, verbose=False, d_scale=None):
+    """Certified cutting-plane outer approximation of
+    G_stack = sup_{C_stack} (d^T xi) - dbar_d  (linear objective; dose and
+    budget exact in the master LP; spectral eigenvector cuts + A-risk
+    tangent cuts added on violation; column generation with a FULL-
+    dictionary reduced-score scan each round). Finite cut sets are an OUTER
+    relaxation, so the returned bound is conservative (ruling Sec 3.3)."""
+    import time as _t
+    t0 = _t.time()
+    A = prob.d.size
+    n = prob.n_pix
+    if d_scale is None:
+        d_scale = max(float(np.max(np.abs(prob.d[np.isfinite(prob.d)]))), 1.0)
+    W = list(np.argsort(prob.d)[::-1][:min(400, A)])
+    spec_cuts = []                    # (coeffs_A, rhs)
+    ar_cuts = []
+    n_scans = 0
+    scan_resid = np.inf
+    V_anchor = prob.V_fix.copy()   # strictly feasible for both LMIs
+    status = "RUNNING"
+    G = np.inf
+    xi_W = None
+    dyn_range = 0.0
+    for rnd in range(max_rounds):
+        if _t.time() - t0 > time_cap:
+            status = "TIME_CAP"
+            break
+        k = len(W)
+        Wa = np.array(W)
+        # ---- master LP: maximize d^T xi over the outer polytope ---------- #
+        Ud = prob.dose_cols(Wa)                      # (2n, k)
+        rows = [np.ones((1, k)), prob.c[Wa][None, :], Ud]
+        rhs = [np.array([1.0]), np.array([prob.b]), np.zeros(2 * n)]
+        eqs = [True, False, False]
+        for coeffs, cr in spec_cuts:
+            rows.append(-coeffs[Wa][None, :])        # >= -> <= by negation
+            rhs.append(np.array([-cr]))
+            eqs.append(False)
+        for coeffs, cr in ar_cuts:
+            rows.append(-coeffs[Wa][None, :])
+            rhs.append(np.array([-cr]))
+            eqs.append(False)
+        A_all = np.vstack(rows)
+        b_all = np.concatenate(rhs)
+        is_eq = np.concatenate([[e] * r_.shape[0]
+                                for e, r_ in zip(eqs, rows)])
+        A_ub = A_all[~is_eq]
+        b_ub = b_all[~is_eq]
+        A_eq = A_all[is_eq]
+        b_eq = b_all[is_eq]
+        cvec = -prob.d[Wa] / d_scale
+        finite = np.abs(np.concatenate(
+            [A_ub.ravel(), cvec, b_ub]))
+        finite = finite[finite > 0]
+        dyn_range = (float(finite.max() / finite.min())
+                     if finite.size else 0.0)
+        res = linprog(cvec, A_ub=A_ub, b_ub=b_ub, A_eq=A_eq, b_eq=b_eq,
+                      bounds=[(0, None)] * k, method="highs",
+                      options={"time_limit": float(lp_time)})
+        if not res.success:
+            if xi_W is not None and "infeasible" in str(res.message).lower():
+                # over-cutting at a degenerate vertex: the PREVIOUS master's
+                # G was computed over a LOOSER outer set (fewer cuts), hence
+                # remains a valid conservative upper bound (ruling Sec 3.3)
+                status = "CONVERGED_OUTER"
+            else:
+                status = "LP_FAIL:" + str(res.message)[:60]
+            break
+        xi_W = np.maximum(res.x, 0.0)
+        n_spec_lp = len(spec_cuts)
+        n_ar_lp = len(ar_cuts)
+        G = float(prob.d[Wa] @ xi_W) - dbar_d
+        # ---- true-constraint checks at xi* ------------------------------- #
+        V = prob.V_of(Wa, xi_W)
+        S = V - 0.5 * prob.V_fix
+        evals, evecs = np.linalg.eigh(S)
+        Vinv = np.linalg.inv(V)
+        h_now = float(np.trace(Vinv))
+        feas_now = (evals[0] >= -1e-9
+                    and h_now <= 1.05 * prob.h_fix * (1 + 1e-9))
+        if feas_now:
+            V_anchor = V.copy()
+        added = False
+        if evals[0] < -1e-9:
+            V_cut = V
+            if V_anchor is not None:      # bisect to the spectral boundary
+                lo_t, hi_t = 0.0, 1.0
+                for _ in range(60):
+                    mid = 0.5 * (lo_t + hi_t)
+                    Vm = (1 - mid) * V_anchor + mid * V
+                    if np.linalg.eigvalsh(Vm - 0.5 * prob.V_fix)[0] < 0:
+                        hi_t = mid
+                    else:
+                        lo_t = mid
+                V_cut = (1 - hi_t) * V_anchor + hi_t * V
+            for zc in (np.linalg.eigh(V_cut - 0.5 * prob.V_fix)[1][:, 0],
+                       evecs[:, 0]):     # boundary (depth) + argmax (cutoff)
+                coeffs = prob.spec_coeff(zc)
+                crhs = 0.5 * float(zc @ prob.V_fix @ zc)                     - float(zc @ (prob.V_pre
+                                  + prob.eps0 * np.eye(prob.r)) @ zc)
+                spec_cuts.append((coeffs, crhs))
+            added = True
+        if h_now > 1.05 * prob.h_fix * (1 + 1e-9):
+            V_cut = V
+            if V_anchor is not None:      # bisect to the A-risk boundary
+                lo_t, hi_t = 0.0, 1.0
+                for _ in range(60):
+                    mid = 0.5 * (lo_t + hi_t)
+                    Vm = (1 - mid) * V_anchor + mid * V
+                    if float(np.trace(np.linalg.inv(Vm)))                             > 1.05 * prob.h_fix:
+                        hi_t = mid
+                    else:
+                        lo_t = mid
+                V_cut = (1 - hi_t) * V_anchor + hi_t * V
+            for Vki in (np.linalg.inv(V_cut), Vinv):   # depth + cutoff
+                Vk2 = Vki @ Vki
+                coeffs = prob.ar_coeff(Vki)
+                crhs = (2.0 * float(np.trace(Vki))
+                        - 1.05 * prob.h_fix
+                        - float(np.trace(Vk2 @ (prob.V_pre
+                                                + prob.eps0
+                                                * np.eye(prob.r)))))
+                ar_cuts.append((coeffs, crhs))
+            added = True
+        # ---- full-dictionary column-generation scan ----------------------- #
+        duals = _lp_duals(res, A_ub.shape[0], A_eq.shape[0])
+        rc = prob.d.copy()
+        rc -= duals["eq"][0]                          # simplex price
+        iu = 0
+        rc -= duals["ub"][iu] * prob.c
+        iu += 1
+        du = duals["ub"][iu:iu + 2 * n]
+        rc -= _dose_dual_dot(prob, du)
+        iu += 2 * n
+        for coeffs, _cr in spec_cuts[:n_spec_lp]:
+            rc += duals["ub"][iu] * coeffs
+            iu += 1
+        for coeffs, _cr in ar_cuts[:n_ar_lp]:
+            rc += duals["ub"][iu] * coeffs
+            iu += 1
+        rc[Wa] = -np.inf
+        n_scans += 1
+        j = int(np.argmax(rc))
+        scan_resid = float(rc[j]) if np.isfinite(rc[j]) else 0.0
+        if scan_resid > 1e-7 * d_scale:
+            order = np.argsort(rc)[::-1][:50]
+            W.extend(int(x) for x in order if np.isfinite(rc[x]))
+            added = True
+        if verbose:
+            print("      [stack] rnd=%d |W|=%d G=%.6g cuts=%d/%d "
+                  "scan_rc=%.2e eig=%.3e h=%.4g (%.0fs)"
+                  % (rnd, k, G, len(spec_cuts), len(ar_cuts),
+                     scan_resid, evals[0], h_now / prob.h_fix,
+                     _t.time() - t0), flush=True)
+        if not added:
+            status = "CONVERGED"
+            break
+    comp_resid = np.nan
+    try:
+        du = duals["ub"]
+        slacks = b_ub - A_ub @ xi_W
+        comp_resid = float(np.abs(du * slacks).max()
+                           / max(abs(G) + abs(dbar_d), 1.0))
+    except Exception:
+        pass
+    return {"G": G, "status": status, "n_spec_cuts": len(spec_cuts),
+            "n_arisk_cuts": len(ar_cuts), "n_scans": n_scans,
+            "scan_residual": scan_resid, "xi_W": xi_W,
+            "W": list(W), "dyn_range": dyn_range,
+            "wall": _t.time() - t0,
+            "complementarity_residual": comp_resid,
+            "psd_residual": float(evals[0]) if xi_W is not None else np.nan,
+            "spec_cuts": spec_cuts, "ar_cuts": ar_cuts}
+
+
+def _lp_duals(res, n_ub, n_eq):
+    ub = np.zeros(n_ub)
+    eq = np.zeros(max(n_eq, 1))
+    try:
+        ub = -np.asarray(res.ineqlin.marginals)
+        eq = -np.asarray(res.eqlin.marginals)
+    except Exception:
+        pass
+    return {"ub": ub, "eq": eq}
+
+
+def _dose_dual_dot(prob, du):
+    """sum_j du_j * U_{j,a} over BOTH dose blocks for every atom (A,)."""
+    return prob.dose_dual_dot(du)
+
+
+# ---- real-cell problem builder ------------------------------------------- #
+def build_stack_problem(ctx, V_fix, b):
+    A_flat = ctx["G_tot"] * ctx["L"]
+    G_tot, L, n, r = ctx["G_tot"], ctx["L"], ctx["n"], ctx["r"]
+    QB, C, NUJ, M = ctx["QB"], ctx["C"], ctx["NUJ"], ctx["M_rows"]
+    allow = ctx["ALLOW"].ravel()
+    d_full = np.full(A_flat, -np.inf)
+    zb = ctx["gsum"] / n                              # zbar per unit load
+
+    def h_of(cols):
+        g = cols // L
+        l_ = cols % L
+        return (np.sqrt(M * NUJ[g, l_])[:, None] * QB[g])
+
+    def dose_cols(cols):
+        g = cols // L
+        l_ = cols % L
+        k = cols.size
+        U = np.zeros((2 * n, k))
+        off = 0
+        gi = 0
+        for mb in ctx["metas"]:
+            gg = mb["IDX"].shape[0]
+            sel = np.nonzero((g >= off) & (g < off + gg))[0]
+            for s in sel:
+                t = g[s] - off
+                load = C[g[s], l_[s]]
+                z = np.zeros(n)
+                z[mb["IDX"][t]] = load * mb["GVAL"][t]
+                zbar = load * ctx["gsum"][g[s]] / n
+                U[:n, s] = z - (1 + DELTA) * zbar
+                U[n:, s] = (1 - DELTA) * zbar - z
+            off += gg
+        return U
+
+    def spec_coeff(z):
+        w = QB @ z                                    # (G,)
+        return (M * NUJ * (w ** 2)[:, None]).ravel()
+
+    def ar_coeff(Vinv):
+        T = QB @ Vinv                                 # (G, r)
+        q2 = (T * T).sum(axis=1)
+        return (M * NUJ * q2[:, None]).ravel()
+
+    def dose_dual_dot(du):
+        dup = du[:n]
+        dum = du[n:]
+        Sp, Sm = float(dup.sum()), float(dum.sum())
+        Ap = mu_dots(ctx, dup)
+        Am = mu_dots(ctx, dum)
+        per_g = (Ap - (1 + DELTA) * zb * Sp) + ((1 - DELTA) * zb * Sm - Am)
+        return (per_g[:, None] * C).ravel()
+
+    prob = StackCertProblem(d_full, C.ravel(), n, ctx["V0"], ctx["eps0"],
+                            V_fix, b, r, h_of, dose_cols, spec_coeff,
+                            ar_coeff)
+    prob.dose_dual_dot = dose_dual_dot
+    prob.allow = allow
+    return prob
+
+
+def stack_primal_probe(ctx, V_fix, b, ld_dep, time_cap=CERT_PRIMAL_SCREEN_S,
+                       verbose=False):
+    """R18 Sec 3.4 SUPPORT-EXPANDING primal discriminator over C_stack:
+    positive initialization on ALL admitted atoms (fixes the R18-flagged
+    support-preserving flaw), multiplicative ascent + dose/budget
+    projection, steps violating the GLOBAL A-risk/spectral constraints are
+    damped/rejected. Records the best fully C_stack-feasible logdet."""
+    import time as _t
+    t0 = _t.time()
+    h_fix = float(np.trace(np.linalg.inv(V_fix)))
+    Lf = np.linalg.cholesky(V_fix)
+    xi = np.where(ctx["ALLOW"], 1.0, 0.0)
+    xi /= xi.sum()
+    xi = _dose_project(ctx, xi, b, DELTA)
+    best = (-np.inf, None)
+    xi_ok = None
+
+    def stack_ok(V):
+        ar = float(np.trace(np.linalg.inv(V)))
+        Cw = np.linalg.solve(Lf, np.linalg.solve(Lf, V.T).T)
+        mu = float(np.linalg.eigvalsh(Cw).min())
+        return (ar <= 1.05 * h_fix and mu >= 0.5), ar, mu
+
+    it = 0
+    while _t.time() - t0 < time_cap:
+        it += 1
+        V = assemble(ctx, xi)
+        Vinv = np.linalg.inv(V)
+        D = dvals(ctx, Vinv)
+        pos = np.where(ctx["ALLOW"], np.maximum(D, 0.0), 0.0)
+        zb_ = float((xi * pos).sum())
+        if zb_ <= 0:
+            break
+        xi_new = xi * np.sqrt(pos / zb_)
+        xi_new[~ctx["ALLOW"]] = 0.0
+        xi_new /= xi_new.sum()
+        xi_new = _dose_project(ctx, xi_new, b, DELTA)
+        V_new = assemble(ctx, xi_new)
+        ok, ar, mu = stack_ok(V_new)
+        if not ok and xi_ok is not None:
+            xi_new = 0.5 * (xi_ok + xi_new)
+            xi_new = _dose_project(ctx, xi_new, b, DELTA)
+            V_new = assemble(ctx, xi_new)
+            ok, ar, mu = stack_ok(V_new)
+        load = float((xi_new * ctx["C"]).sum())
+        dv = dose_of(ctx, xi_new)
+        dev = float(np.abs(dv / dv.mean() - 1.0).max())
+        if ok and load <= b + 1e-9 and dev <= DELTA:
+            xi_ok = xi_new.copy()
+            ld = float(np.linalg.slogdet(V_new)[1])
+            if ld > best[0]:
+                best = (ld, xi_new.copy())
+        xi = xi_new
+    gap = (best[0] - ld_dep) / ctx["r"] if np.isfinite(best[0]) else -np.inf
+    comp = {}
+    if best[1] is not None:
+        xi_b = best[1]
+        Ll = ctx.get("L_load", ctx["L"])
+        lu = ctx["C"][xi_b > 1e-6]
+        dvb = dose_of(ctx, xi_b)
+        Vb = assemble(ctx, xi_b)
+        arb = float(np.trace(np.linalg.inv(Vb)))
+        Cw = np.linalg.solve(Lf, np.linalg.solve(Lf, Vb.T).T)
+        comp = {"budget_used": float((xi_b * ctx["C"]).sum()),
+                "dose_dev": float(np.abs(dvb / dvb.mean() - 1.0).max()),
+                "gain_mass": float(xi_b[:, Ll:].sum()) if Ll < ctx["L"]
+                else 0.0,
+                "load_q50": float(np.median(lu)) if lu.size else np.nan,
+                "load_q95": float(np.percentile(lu, 95)) if lu.size
+                else np.nan,
+                "arisk_ratio": arb / h_fix,
+                "mu_min": float(np.linalg.eigvalsh(Cw).min())}
+    return {"ld_best": best[0], "gap_lower_per_r": float(gap),
+            "found_feasible": bool(np.isfinite(best[0])),
+            "iters": it, "wall": _t.time() - t0, "composition": comp}
+
+
+def full_stack_cert_cell(ctx, rows_rel, b, verbose=False):
+    """R18 Sec 5 per-cell protocol: 60 s support-expanding primal screen,
+    180 s primary cutting-plane dual, one deterministic rescaled retry,
+    CERT_CELL_WALL_CAP total; terminal status CERTIFIED / COUNTEREXAMPLE /
+    NUMERICAL_UNRESOLVED with the full Sec-5.3 disclosure set."""
+    import time as _t
+    t0 = _t.time()
+    n, r = ctx["n"], ctx["r"]
+    xhat = ctx["xhat"]
+    loads_rel = rows_rel @ xhat
+    rows_abs = rows_rel * (b / float(loads_rel.mean())) * (1 - 1e-12)
+    loads = rows_abs @ xhat
+    V_d = ctx["V0"].copy()
+    for s in range(rows_abs.shape[0]):
+        idx = np.nonzero(rows_abs[s])[0]
+        q = ctx["B"][idx].T @ (rows_abs[s, idx] / loads[s])
+        V_d += ctx["nu"] * v4._J(float(loads[s]), ctx["nu"]) * np.outer(q, q)
+    V_d[np.diag_indices(r)] += ctx["eps0"]
+    ld_dep = float(np.linalg.slogdet(V_d)[1])
+    V_fix = V_d                                       # load-matched comparator
+    Vdinv = np.linalg.inv(V_d)
+    dbar_d = float(np.trace(
+        Vdinv @ (V_d - ctx["V0"] - ctx["eps0"] * np.eye(r))))
+    # deployed-design C_stack feasibility (trivially so vs itself + dose)
+    dose_dep = rows_abs.sum(axis=0) / rows_abs.shape[0]
+    dep_dose_dev = float(np.abs(dose_dep / dose_dep.mean() - 1.0).max())
+    dep_feasible = bool(loads.mean() <= b + 1e-9 and dep_dose_dev <= DELTA)
+    # atom scores
+    D = dvals(ctx, Vdinv)
+    prob = build_stack_problem(ctx, V_fix, b)
+    prob.d = np.where(prob.allow, D.ravel(), -np.inf)
+    # ---- 1) primal screen ------------------------------------------------ #
+    scr = stack_primal_probe(ctx, V_fix, b, ld_dep,
+                             time_cap=CERT_PRIMAL_SCREEN_S, verbose=verbose)
+    out = {"ld_dep": ld_dep, "dep_feasible": dep_feasible,
+           "dep_dose_dev": dep_dose_dev,
+           "primal_gap_lower_per_r": scr["gap_lower_per_r"],
+           "primal_found_feasible": scr["found_feasible"],
+           "primal_composition": scr.get("composition", {}),
+           "MU_CAP_ACTIVE": False}
+    if scr["found_feasible"] and scr["gap_lower_per_r"] > GSTACK_TOL_PER_R:
+        out.update({"status": "COUNTEREXAMPLE",
+                    "dual_gap_upper_per_r": float("nan"),
+                    "solver_status_primary": "SKIPPED_COUNTEREXAMPLE",
+                    "solver_status_retry": "",
+                    "wall_seconds": _t.time() - t0})
+        return out
+    # ---- 2) primary dual + one frozen rescaled retry ---------------------- #
+    attempts = []
+    for attempt in (0, 1):
+        if attempt == 1 and attempts and attempts[0]["ok"]:
+            break
+        d_scale = None
+        if attempt == 1:      # frozen equilibration: scores/r, budget/b,
+            d_scale = max(float(np.max(prob.d[np.isfinite(prob.d)])), 1.0) / r
+        eng = stack_cert_engine(prob, dbar_d,
+                                time_cap=(CERT_PRIMARY_S if attempt == 0
+                                          else CERT_RETRY_S),
+                                verbose=verbose, d_scale=d_scale)
+        Gpr = eng["G"] / r if np.isfinite(eng["G"]) else float("inf")
+        ok = (eng["status"] in ("CONVERGED", "CONVERGED_OUTER")
+              and np.isfinite(eng["G"]) and eng["dyn_range"] < 1e10)
+        attempts.append({"eng": eng, "ok": ok, "Gpr": Gpr})
+        if ok or _t.time() - t0 > CERT_CELL_WALL_CAP:
+            break
+    eng = attempts[-1]["eng"]
+    ok = attempts[-1]["ok"]
+    Gpr = attempts[-1]["Gpr"]
+    if ok and dep_feasible and Gpr <= GSTACK_TOL_PER_R:
+        status = "CERTIFIED"
+    elif scr["found_feasible"] and scr["gap_lower_per_r"] > GSTACK_TOL_PER_R:
+        status = "COUNTEREXAMPLE"
+    else:
+        # frozen taxonomy (R18 Sec 5.1): a converged outer bound above the
+        # tolerance is NOT a counterexample and NOT certified -> unresolved
+        status = "NUMERICAL_UNRESOLVED"
+    out.update({
+        "status": status,
+        "dual_gap_upper_per_r": Gpr,
+        "solver_status_primary": attempts[0]["eng"]["status"],
+        "solver_status_retry": (attempts[1]["eng"]["status"]
+                                if len(attempts) > 1 else ""),
+        "wall_seconds": _t.time() - t0,
+        "coefficient_dynamic_range": eng["dyn_range"],
+        "n_dictionary_scans": eng["n_scans"],
+        "n_arisk_cuts": eng["n_arisk_cuts"],
+        "n_spectral_cuts": eng["n_spec_cuts"],
+        "full_dictionary_scan_residual": eng["scan_residual"],
+        "min_generalized_eigenvalue": eng.get("psd_residual", float("nan")),
+        "arisk_ratio": 1.0})
+    return out
+
+
+# ========================================================================== #
+#  R18 Sec 3.5 four-toy suite (shared engine, independent primal solves)      #
+# ========================================================================== #
+def _toy_problem(hX, Z, c_load, V_pre_s, eps, V_fix, b):
+    """Small dense StackCertProblem (r=2, n_pix=2) running through the SAME
+    stack_cert_engine as the real cells."""
+    hX = np.asarray(hX, dtype=float)
+    Z = np.asarray(Z, dtype=float)
+    A = hX.shape[0]
+    n = Z.shape[1]
+    V_pre = V_pre_s * np.eye(2)
+    zbar = Z.mean(axis=1)
+
+    def h_of(cols):
+        return hX[cols]
+
+    def dose_cols(cols):
+        k = cols.size
+        U = np.zeros((2 * n, k))
+        for i, a in enumerate(cols):
+            U[:n, i] = Z[a] - (1 + DELTA) * zbar[a]
+            U[n:, i] = (1 - DELTA) * zbar[a] - Z[a]
+        return U
+
+    def spec_coeff(z):
+        return (hX @ z) ** 2
+
+    def ar_coeff(Vinv):
+        T = hX @ Vinv
+        return (T * T).sum(axis=1)
+
+    def dose_dual_dot(du):
+        Up = np.zeros(A)
+        for a in range(A):
+            Up[a] = float(du[:n] @ (Z[a] - (1 + DELTA) * zbar[a])
+                          + du[n:] @ ((1 - DELTA) * zbar[a] - Z[a]))
+        return Up
+
+    d = np.array([hX[a] @ hX[a] for a in range(A)])   # placeholder; caller
+    prob = StackCertProblem(d, c_load, n, V_pre, eps, V_fix, b, 2,
+                            h_of, dose_cols, spec_coeff, ar_coeff)
+    prob.dose_dual_dot = dose_dual_dot
+    prob.allow = np.ones(A, dtype=bool)
+    prob.hX = hX
+    prob.Z = Z
+    return prob
+
+
+def _toy_primal_grid(prob, d, b, step=2e-3, w_extra=None):
+    """Independent global primal: dense simplex grid (closed-form 2x2 checks)
+    + SLSQP polish. Returns sup d^T xi over C_stack."""
+    A = prob.hX.shape[0]
+    hX, Z = prob.hX, prob.Z
+    zbar = Z.mean(axis=1)
+
+    def feasible(w):
+        if w.min() < -1e-12 or abs(w.sum() - 1) > 1e-9:
+            return False
+        if float(prob.c @ w) > b + 1e-12:
+            return False
+        dv = Z.T @ w
+        dm = dv.mean()
+        if np.max(dv - (1 + DELTA) * dm) > 1e-12 \
+                or np.max((1 - DELTA) * dm - dv) > 1e-12:
+            return False
+        V = prob.V_pre + (hX * w[:, None]).T @ hX + prob.eps0 * np.eye(2)
+        if float(np.trace(np.linalg.inv(V))) > 1.05 * prob.h_fix + 1e-12:
+            return False
+        S = V - 0.5 * prob.V_fix
+        if np.linalg.eigvalsh(S)[0] < -1e-12:
+            return False
+        return True
+
+    best = (-np.inf, None)
+    if A == 3:
+        g = np.arange(0.0, 1.0 + step / 2, step)
+        for w1 in g:
+            for w2 in np.arange(0.0, 1.0 - w1 + step / 2, step):
+                w = np.array([w1, w2, 1.0 - w1 - w2])
+                if feasible(w):
+                    v = float(d @ w)
+                    if v > best[0]:
+                        best = (v, w)
+    else:
+        rng = np.random.RandomState(63)
+        for _ in range(200000):
+            w = rng.dirichlet(np.ones(A))
+            if feasible(w):
+                v = float(d @ w)
+                if v > best[0]:
+                    best = (v, w)
+    # SLSQP polish (independent solver)
+    def negobj(w):
+        return -float(d @ w)
+
+    def gr(w):
+        return -d
+
+    cons = [{"type": "eq", "fun": lambda w: w.sum() - 1.0,
+             "jac": lambda w: np.ones(A)},
+            {"type": "ineq", "fun": lambda w: b - float(prob.c @ w)},
+            {"type": "ineq", "fun": lambda w: np.concatenate([
+                (1 + DELTA) * (Z.T @ w).mean() - Z.T @ w,
+                Z.T @ w - (1 - DELTA) * (Z.T @ w).mean()])},
+            {"type": "ineq", "fun": lambda w: 1.05 * prob.h_fix - np.trace(
+                np.linalg.inv(prob.V_pre + (hX * w[:, None]).T @ hX
+                              + prob.eps0 * np.eye(2)))},
+            {"type": "ineq", "fun": lambda w: np.linalg.eigvalsh(
+                prob.V_pre + (hX * w[:, None]).T @ hX
+                + prob.eps0 * np.eye(2) - 0.5 * prob.V_fix)[0]}]
+    starts = [best[1] if best[1] is not None else np.ones(A) / A]
+    if w_extra is not None:
+        starts.append(np.asarray(w_extra, dtype=float))
+    for w0 in starts:
+        res = minimize(negobj, w0, jac=gr, method="SLSQP",
+                       bounds=[(0, 1)] * A, constraints=cons,
+                       options={"maxiter": 500, "ftol": 1e-16})
+        cand = np.maximum(res.x, 0)
+        if feasible(cand):
+            v = float(d @ cand)
+            if v > best[0]:
+                best = (v, cand)
+        # direct acceptance of a feasible engine/master solution
+        if feasible(w0):
+            v = float(d @ w0)
+            if v > best[0]:
+                best = (v, w0)
+    return best
+
+
+def r18_toy_suite(verbose=False):
+    """Four toys (ruling Sec 3.5): (1) budget+dose active; (2) A-risk only;
+    (3) spectral only; (4) all active + a dose-feasible design rejected by
+    conditioning. Engine bound vs independent primal <=1e-8; PSD residual
+    >= -1e-9; complementarity <=1e-8; full-dict scan residual <=1e-8."""
+    out = []
+    s2 = 1.0 / math.sqrt(2)
+    toys = {}
+    # (1) budget+dose active; conditioning inactive (tiny V_fix, huge cap)
+    toys["budget_dose"] = dict(
+        hX=[[2.0, 0.0], [0.0, 1.0], [1.2 * s2, 1.2 * s2]],
+        Z=[[3.0, 0.2], [0.2, 3.0], [1.0, 1.0]],
+        c=[1.2, 0.9, 2.0], Vfix=0.02 * np.eye(2), Vpre=0.05, b=1.045)
+    # (2) A-risk only: dose uniform per atom (never binds), budget huge,
+    #     V_fix = balanced reference; favored atom concentrates -> cap binds
+    toys["arisk_only"] = dict(
+        hX=[[2.0, 0.0], [0.0, 2.0], [s2, s2]],
+        Z=[[1.0, 1.0], [1.0, 1.0], [1.0, 1.0]],
+        c=[1.0, 1.0, 1.0], Vfix=np.diag([1.2, 1.2]), Vpre=0.05, b=10.0)
+    # (3) spectral only: as (2) but arisk cap slack via larger V_fix trace
+    #     margin and a tight spectral floor in direction 2
+    toys["spectral_only"] = dict(
+        hX=[[2.0, 0.0], [0.0, 1.1], [s2, s2]],
+        Z=[[1.0, 1.0], [1.0, 1.0], [1.0, 1.0]],
+        c=[1.0, 1.0, 1.0], Vfix=np.diag([0.2, 1.1]), Vpre=0.05, b=10.0,
+        hfix_relax=40.0)
+    # (4) all active: GENERIC 5-atom problem (4 dof -> non-degenerate
+    #     4-active vertex with moderate dual prices); atom 1 alone is dose-
+    #     and budget-feasible but conditioning-rejected (the witness)
+    toys["all_active"] = dict(
+        hX=[[4.0, 0.0], [0.0, 1.6], [0.6, 0.6], [1.2, 0.3], [0.3, 1.2]],
+        Z=[[1.5, 1.5], [2.3, 0.7], [0.7, 2.3], [1.9, 1.1], [1.1, 1.9]],
+        c=[0.75, 0.8, 0.8, 0.7, 0.7], Vfix=np.diag([2.2, 1.0]), Vpre=0.02,
+        b=0.80)
+    for name, t in toys.items():
+        prob = _toy_problem(t["hX"], t["Z"], np.array(t["c"], float),
+                            t["Vpre"], 1e-9, np.asarray(t["Vfix"]), t["b"])
+        if "hfix_relax" in t:
+            prob.h_fix = t["hfix_relax"]
+        # objective: local scores at the balanced reference design
+        Vref = prob.V_pre + prob.V_fix + prob.eps0 * np.eye(2)
+        Vri = np.linalg.inv(Vref)
+        d = np.array([h @ Vri @ h for h in prob.hX])
+        prob.d = d
+        eng = stack_cert_engine(prob, 0.0, time_cap=60.0, lp_time=20.0,
+                                max_rounds=500, verbose=False)
+        w_eng = None
+        if eng["xi_W"] is not None:
+            w_eng = np.zeros(len(prob.d))
+            for wi, ai in zip(eng["xi_W"], eng["W"][:len(eng["xi_W"])]):
+                w_eng[ai] += wi
+        best_v, best_w = _toy_primal_grid(prob, d, t["b"], w_extra=w_eng)
+        scale = max(abs(best_v), 1.0)
+        agree = abs(eng["G"] - best_v) / scale
+        rec = {"toy": name, "engine_G": eng["G"], "primal_G": best_v,
+               "agreement": agree, "status": eng["status"],
+               "psd_residual": eng["psd_residual"],
+               "complementarity": eng["complementarity_residual"],
+               "scan_residual": abs(eng["scan_residual"]) / scale,
+               "n_cuts": (eng["n_spec_cuts"], eng["n_arisk_cuts"]),
+               "pass": bool(agree <= 1e-8
+                            and eng["psd_residual"] >= -1e-9
+                            and (not np.isfinite(eng["complementarity_residual"])
+                                 or eng["complementarity_residual"] <= 1e-8)
+                            and abs(eng["scan_residual"]) / scale <= 1e-8)}
+        # activity disclosure at the accepted optimum (ledger evidence)
+        if best_w is not None:
+            wv = best_w
+            Vv = prob.V_of(np.arange(len(prob.d)), wv)
+            dvv = prob.Z.T @ wv
+            dmv = dvv.mean()
+            rec["active_at_optimum"] = {
+                "budget": bool(t["b"] - float(prob.c @ wv) <= 1e-7),
+                "dose": bool(max(np.max(dvv - (1 + DELTA) * dmv),
+                                 np.max((1 - DELTA) * dmv - dvv)) >= -1e-7),
+                "arisk": bool(float(np.trace(np.linalg.inv(Vv)))
+                              >= 1.05 * prob.h_fix - 1e-6),
+                "spectral": bool(np.linalg.eigvalsh(
+                    Vv - 0.5 * prob.V_fix)[0] <= 1e-6)}
+        # toy-4 requirement: a dose-feasible design rejected by conditioning
+        if name == "all_active":
+            w_rej = np.zeros(len(prob.d))
+            w_rej[0] = 1.0
+            dv = prob.Z.T @ w_rej
+            dm = dv.mean()
+            dose_ok = (np.max(dv - (1 + DELTA) * dm) <= 1e-12
+                       and np.max((1 - DELTA) * dm - dv) <= 1e-12)
+            V1 = prob.V_pre + np.outer(prob.hX[0], prob.hX[0]) \
+                + prob.eps0 * np.eye(2)
+            cond_reject = (
+                float(np.trace(np.linalg.inv(V1))) > 1.05 * prob.h_fix
+                or np.linalg.eigvalsh(V1 - 0.5 * prob.V_fix)[0] < 0)
+            rec["dose_feasible_conditioning_rejected_witness"] = bool(
+                dose_ok and cond_reject)
+            rec["pass"] = rec["pass"] and rec[
+                "dose_feasible_conditioning_rejected_witness"]
+        if verbose:
+            print("  [toy %s] G_eng=%.10f G_pri=%.10f agree=%.1e psd=%.1e "
+                  "comp=%s scan=%.1e cuts=%s %s"
+                  % (name, eng["G"], best_v, agree, eng["psd_residual"],
+                     eng["complementarity_residual"], rec["scan_residual"],
+                     rec["n_cuts"], "PASS" if rec["pass"] else "FAIL"),
+                  flush=True)
+        out.append(rec)
+    return out

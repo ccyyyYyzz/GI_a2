@@ -1,8 +1,10 @@
-"""M1 refreeze-authorization selftest — maps 1:1 onto R17 §7 / amendment §E.
+"""M1 refreeze selftest — maps 1:1 onto the R18 §7 ten-item checklist.
 
-Outcome-blind, DEV-only (synthetic scene + m1_dev 632900+ scenes; the
-confirmatory guard is itself exercised as evidence). Writes
-results/round63_m1/FREEZE_CHECKLIST_LEDGER.md with the nine §E items.
+Outcome-blind, DEV-only (synthetic + 632900 DEV scenes; the confirmatory
+lock is exercised as evidence). Includes the R18 §5.4 24-cell DEV
+full-stack feasibility/runtime gate, whose predetermined outcome selects
+the campaign branch (certificate retained vs FALLBACK_DESCRIPTIVE) — either
+branch is a valid deliverable and is recorded in CERT_BRANCH.json.
 
 Usage:  python code/round63/m1_freeze_selftest.py
 """
@@ -25,9 +27,11 @@ import m1_runner as m1                      # noqa: E402
 
 OUT = os.path.join(ROOT, "results", "round63_m1")
 LEDGER = os.path.join(OUT, "FREEZE_CHECKLIST_LEDGER.md")
+BRANCH_JSON = os.path.join(OUT, "CERT_BRANCH.json")
 
 SIDE, N = 32, 1024
 CHECKS = []
+RETIRED_TOKEN = "DOSE_SAFE" + "_CERT_PASS"      # avoid self-matching
 
 
 def check(name, ok, detail=""):
@@ -37,20 +41,7 @@ def check(name, ok, detail=""):
     return ok
 
 
-def synth_dev_scene():
-    yy, xx = np.mgrid[0:SIDE, 0:SIDE]
-    s = np.ones((SIDE, SIDE))
-    for (cy, cx) in [(8, 9), (10, 23), (22, 7), (24, 21)]:
-        s += 0.6 * np.exp(-(((yy - cy) ** 2 + (xx - cx) ** 2) / (2 * 3.5 ** 2)))
-    x = (s / s.sum()).ravel()
-    c = x.reshape(SIDE, SIDE).reshape(8, 4, 8, 4).mean(axis=(1, 3))
-    xh = np.repeat(np.repeat(c, 4, 0), 4, 1).ravel()
-    return x, xh / xh.sum()
-
-
 def mock_curves(n_images=24, positive=True):
-    """DEV-only synthetic per-image curve set for the analyzer emission test
-    (§E item 3). Family labels = 6 families x 4 instances."""
     from gi_core.utils import rng_for
     fams = ["glyph", "chirp", "spokes", "maze", "contour", "micro"]
     nus = np.array(m1.NU_FULL)
@@ -62,241 +53,266 @@ def mock_curves(n_images=24, positive=True):
         shift = (200.0 if positive else 1.0) + 10.0 * r.random()
         ridge_q = base + 6 * (1 - np.exp(-nus * shift / 500.0)) + \
             (1.5 if positive else -0.3)
-        rho_r = np.full(nus.size, 1.3)
         img = "m1_%s_%d" % (fams[u % 6], u // 6)
         curves[img] = {
             "family": fams[u % 6],
             "safe": (nus, np.full(nus.size, 0.05), safe_q),
-            "ridge": (nus, rho_r, ridge_q),
+            "ridge": (nus, np.full(nus.size, 1.3), ridge_q),
             "q060_terminal": float(base + 6 * (1 - np.exp(-4.0))),
-            "ridge_terminal": float(ridge_q[-1] + (0.6 if positive else -0.5)),
-            "cert_cells": [positive] * 4}
+            "ridge_terminal": float(ridge_q[-1]
+                                    + (0.6 if positive else -0.5)),
+            "cert_cells": ["CERTIFIED" if positive else "COUNTEREXAMPLE"] * 4}
     return curves
 
 
 def main():
     t0 = time.time()
     os.makedirs(OUT, exist_ok=True)
-    x_true, xhat = synth_dev_scene()
-    print("[refreeze selftest R17] outcome-blind, DEV-only.", flush=True)
+    print("[R18 refreeze selftest] outcome-blind, DEV-only.", flush=True)
 
-    # ---- E1: retired semantics removed ------------------------------------ #
-    print("\n== E1: retirements ==")
-    prod_files = ["m1_runner.py", "m1_make_manifests.py", "campaign.py"]
-    bad = []
-    for fn in prod_files:
-        src = open(os.path.join(HERE, fn), encoding="utf-8").read()
-        for tok in ("METHOD_SPEED_PASS", "COMPLIANT_VIA_MIXTURE"):
-            if tok in src:
-                bad.append("%s:%s" % (fn, tok))
-    ok = not bad
-    ok &= not (set(m1.ARMS_ALL) & m1.RETIRED_ARMS)
-    try:
-        m1.load_m1_pattern("m1pat:OED-DT:x", 1024, 1024, 0)
-        ok = False
-        ret_msg = "OED-DT pattern NOT rejected"
-    except ValueError as e:
-        ret_msg = "retired-arm loader raises: %s" % str(e)[:40]
-    pfa0 = v5.path_feasible_alpha({"m": 0})
-    ok &= (pfa0["verdict"] == "ADAPTIVE_COLLAPSE_UNDER_GUARDS"
-           and pfa0["is_pass"] is False and pfa0["dev_supplement_only"])
-    check("oed_dt_and_m0_pass_semantics_removed", ok,
-          "prod tokens absent%s; ARMS=%s; %s; m=0 -> %s (is_pass=%s)"
-          % ("" if not bad else " EXCEPT %s" % bad, m1.ARMS_ALL, ret_msg,
-             pfa0["verdict"], pfa0["is_pass"]))
+    # ---- item 1: rename wired through everything --------------------------- #
+    print("\n== R18-1: verdict rename wired ==")
+    prod = ["m1_runner.py", "m1_make_manifests.py", "campaign.py",
+            "oed_design_v5.py"]
+    stale = [fn for fn in prod
+             if RETIRED_TOKEN in open(os.path.join(HERE, fn),
+                                      encoding="utf-8").read()]
+    an_src = open(os.path.join(HERE, "m1_runner.py"), encoding="utf-8").read()
+    paper = os.path.join(OUT, "PAPER2_ACT3_WORDING_R18.md")
+    paper_ok = (os.path.exists(paper)
+                and "FULL_STACK_CERT_PASS" in open(paper).read()
+                and RETIRED_TOKEN not in open(paper).read())
+    check("rename_wired_spec_analyzer_paper_manifests", not stale
+          and "FULL_STACK_CERT_PASS" in an_src and paper_ok,
+          "retired token absent from %s; FULL_STACK_CERT_PASS in analyzer + "
+          "paper skeleton" % prod)
 
-    # ---- E2: deployed matrix + three modes frozen and hashed -------------- #
-    print("\n== E2: deployed SCAT32 + operating modes ==")
-    rows, sha = m1.deployed_scat32()
-    dose = rows.sum(axis=0)
-    dev = float(np.abs(dose / dose.mean() - 1.0).max())
-    P = m1.prescan_matrix()
-    import hashlib
-    sha_p = hashlib.sha256(np.ascontiguousarray(P).tobytes()).hexdigest()
-    ok = (rows.shape == (972, N) and dev <= 0.05
-          and m1.MODE_LOADS["SCAT32-SAFE"] == 0.05
-          and m1.MODE_LOADS["SCAT32-060"] == 0.60)
-    check("deployed_scat32_and_modes_frozen_hashed", ok,
-          "972x1024 sha=%s.. dose_dev=%.4f; modes SAFE=0.05 060=0.60 "
-          "RIDGE=rho_R(nu) policy; prescan sha=%s.." % (sha[:12], dev,
-                                                        sha_p[:12]))
+    # ---- item 2: C_stack exact -------------------------------------------- #
+    print("\n== R18-2: C_stack class exact ==")
+    src5 = open(os.path.join(HERE, "oed_design_v5.py"),
+                encoding="utf-8").read()
+    ok2 = ("1.05 * h_fix" in src5 and "0.5 * prob.V_fix" in src5
+           and "1.05 * prob.h_fix" in src5)
+    # A-risk/spectral must be GLOBAL: the atom-admission code must not
+    # reference them (admission = shape/peak/ceiling/trust/bias only)
+    adm = src5[src5.index("def _adm_at_loads"):src5.index(
+        "def setup_ctx_cert")]
+    ok2 &= ("arisk" not in adm and "spectral" not in adm)
+    check("c_stack_constraints_exact_and_global", ok2,
+          "budget + +/-5%% dose + A-risk 1.05x + spectral 0.5x as GLOBAL "
+          "constraints (engine cuts + probe checks); atom admission "
+          "untouched by conditioning")
 
-    # ---- E3: verdict emission on positive AND negative mocks/toys --------- #
-    print("\n== E3: analyzer + certificate verdict emission ==")
+    # ---- item 3: four-toy suite ------------------------------------------- #
+    print("\n== R18-3: four-toy suite ==")
+    toys = v5.r18_toy_suite(verbose=True)
+    ok3 = all(r["pass"] for r in toys)
+    check("four_toy_suite", ok3,
+          "agreements %s; INTERPRETATION (logged): R18 Sec 3.5 item 4 "
+          "'budget, dose, A-risk, and spectral all active simultaneously' "
+          "-- implemented as all four families present and enforced with "
+          "dose+A-risk binding at the optimum and spectral shaping the "
+          "solve path (cuts engaged); a strictly simultaneous 4-binding "
+          "vertex proved numerically incompatible with the 1e-8 agreement "
+          "bar in every non-degenerate instance tried (razor-edge duals); "
+          "flagged for coordinator/R19 review"
+          % ["%.0e" % r["agreement"] for r in toys])
+
+    # ---- item 4: full-dictionary scan + residual checks -------------------- #
+    print("\n== R18-4: scan + residuals implemented ==")
+    ok4 = all(abs(r["scan_residual"]) <= 1e-8 for r in toys)
+    ok4 &= all(r["psd_residual"] >= -1e-9 for r in toys)
+    check("full_dict_scan_and_residuals", ok4,
+          "toys: scan residuals %s, psd %s; real-cell scans exercised by "
+          "the item-5 gate below"
+          % (["%.0e" % abs(r["scan_residual"]) for r in toys],
+             ["%.0e" % r["psd_residual"] for r in toys]))
+
+    # ---- item 5: 24-cell DEV full-stack gate ------------------------------ #
+    print("\n== R18-5: 24-cell DEV gate (final predetermined stop rule) ==")
+    import campaign
+    import m1_scenes
+    dev_imgs = campaign._images(SIDE, "all", imageset="m1_dev")
+    names = [nm for nm, _f, _s in m1_scenes._m1_dev_table()]
+    rows_dep, _sha = m1.deployed_scat32()
+    table = []
+    reuse = None
+    if os.path.exists(BRANCH_JSON):
+        with open(BRANCH_JSON) as f:
+            prev = json.load(f)
+        if len(prev.get("cells", [])) == 24:
+            reuse = prev
+            print("    (reusing the deterministic 24-cell gate table from "
+                  "CERT_BRANCH.json; protocol is frozen + deterministic)",
+                  flush=True)
+    if reuse is not None:
+        names = []                       # skip recompute
+        table = [{"image": c_["image"], "nu": float(c_["nu"]),
+                  "b": float(c_["b"]), "status": c_["status"],
+                  "primal_gap_lower_per_r":
+                      (float(c_["primal_gap_lower_per_r"])
+                       if c_["primal_gap_lower_per_r"]
+                       not in ("-inf", "nan") else float("-inf")),
+                  "dual_gap_upper_per_r": float("nan"),
+                  "wall_seconds": float(c_["wall_seconds"])}
+                 for c_ in reuse["cells"]]
+    for img in names:
+        for nu in (200.0, 2000.0):
+            for b in (0.05, 0.60):
+                tc = time.time()
+                xhat = m1.prescan_estimate(dev_imgs[img], img, 0, b, nu,
+                                           per_cell=True)
+                Vf = v4.info_matrix_full(rows_dep, xhat, int(nu), b,
+                                         P=m1.prescan_matrix())
+                B, eps0, _tr = v4.subspace_from_fixedstar(Vf)
+                ctx = v5.setup_ctx_cert(xhat, nu, b, B, eps0, SIDE)
+                out = v5.full_stack_cert_cell(ctx, rows_dep, b)
+                out["image"], out["nu"], out["b"] = img, nu, b
+                out["wall_total"] = time.time() - tc
+                table.append(out)
+                print("    %s nu=%g b=%g: %s primal_gap=%.4f dual=%s "
+                      "wall=%.0fs"
+                      % (img, nu, b, out["status"],
+                         out.get("primal_gap_lower_per_r", float("nan")),
+                         ("%.3f" % out["dual_gap_upper_per_r"])
+                         if np.isfinite(out.get("dual_gap_upper_per_r",
+                                                np.inf)) else "-",
+                         out["wall_seconds"]), flush=True)
+    n_cert = sum(1 for o in table if o["status"] == "CERTIFIED")
+    n_ce = sum(1 for o in table if o["status"] == "COUNTEREXAMPLE")
+    n_unres = len(table) - n_cert - n_ce
+    walls = sorted(o["wall_seconds"] for o in table)
+    med_wall = walls[len(walls) // 2]
+    max_wall = walls[-1]
+    gate_pass = (n_cert == 24 and n_ce == 0 and med_wall <= 120
+                 and max_wall <= 420)
+    branch = "CERTIFICATE_RETAINED" if gate_pass else "FALLBACK_DESCRIPTIVE"
+    with open(BRANCH_JSON, "w") as f:
+        json.dump({"branch": branch,
+                   "gate": {"n_certified": n_cert,
+                            "n_counterexample": n_ce,
+                            "n_unresolved": n_unres,
+                            "median_wall_s": med_wall,
+                            "max_wall_s": max_wall},
+                   "cells": [{k_: (float(o[k_]) if isinstance(
+                       o.get(k_), (int, float)) and np.isfinite(
+                       float(o[k_])) else str(o.get(k_)))
+                       for k_ in ("image", "nu", "b", "status",
+                                  "primal_gap_lower_per_r",
+                                  "dual_gap_upper_per_r", "wall_seconds")}
+                       for o in table]}, f, indent=1)
+    # gate item passes if EITHER branch executed per the predetermined rule
+    check("dev_gate_24_cells_branch_decided", True,
+          "CERTIFIED=%d COUNTEREXAMPLE=%d UNRESOLVED=%d; median wall=%.0fs "
+          "max=%.0fs -> BRANCH: %s (R18 Sec 5.4: either branch launches; "
+          "no third option)"
+          % (n_cert, n_ce, n_unres, med_wall, max_wall, branch))
+    if branch == "FALLBACK_DESCRIPTIVE":
+        pos_an = m1.m1_analyze_r17(mock_curves(24, True), 24, boot_B=500)
+        ok5b = ("FULL_STACK_CERT_PASS" not in pos_an
+                and "full_stack_cert_descriptive_fraction" in pos_an)
+        check("fallback_removes_categorical_gate", ok5b,
+              "analyzer under FALLBACK emits descriptive fraction only "
+              "(keys: %s)" % sorted(k for k in pos_an if "cert" in k.lower()))
+
+    # ---- item 6: dose-only DEV evidence stored ----------------------------- #
+    print("\n== R18-6: dose-only no-gate DEV evidence ==")
+    md = os.path.join(OUT, "R18_GAP_PROBE_REPLICATION.md")
+    md_src = open(md, encoding="utf-8").read() if os.path.exists(md) else ""
+    ok6 = ("support-preserving" in md_src
+           and "DOSE_ONLY_PRIMAL_GAP_PER_R" in md_src
+           and "Development-only constructive analysis" in md_src
+           and md_src.count("m1_dev_") >= 12
+           and "PASS verdict" in md_src)
+    check("dose_only_dev_evidence_with_caveat", ok6,
+          "frozen 6-scene x 2-anchor table + R18 Sec 1.2 caveat verbatim + "
+          "no DOSE_ONLY_*_PASS verdict")
+
+    # ---- item 7: paper wording corrected ----------------------------------- #
+    print("\n== R18-7: paper wording ==")
+    p_src = " ".join(open(paper, encoding="utf-8").read().split())
+    ok7 = ("does not eliminate scene-adapted geometry selection"
+           in p_src.replace("> ", "")
+           and "full deployed conditioning stack" in p_src.replace("> ", "")
+           and "DOES NOT SURVIVE" in p_src)
+    check("paper_wording_r18", ok7,
+          "R17 collapse wording removed; R18 Sec 4.3/4.4 frozen text in "
+          "results/round63_m1/PAPER2_ACT3_WORDING_R18.md")
+
+    # ---- item 8: empirical modes/endpoints unchanged ----------------------- #
+    print("\n== R18-8: empirical arms unchanged ==")
     pos = m1.m1_analyze_r17(mock_curves(24, True), 24, boot_B=2000)
     neg = m1.m1_analyze_r17(mock_curves(24, False), 24, boot_B=2000)
-    names_v = ("RIDGE_OPERATING_PASS", "RIDGE_SPEED_PASS",
-               "DOSE_SAFE_CERT_PASS")
-    print("    positive: %s (medS=%.1f dQ=%.2f)"
-          % ({k: pos[k] for k in names_v}, pos["median_S"],
-             pos["median_dQ_dB"]))
-    print("    negative: %s (all three emitted with FAIL values)"
-          % {k: neg[k] for k in names_v})
-    ok = all(pos[k] for k in names_v) and not any(neg[k] for k in names_v)
-    tg = v5.toy_full_cert_check_gain()
-    # negative certificate toy: the dual bound at a deliberately suboptimal
-    # design must exceed the gate scale (verdict machinery emits FAIL)
-    w_bad = np.array([1.0, 0.0, 0.0, 0.0])
-    X = np.array([[1.0, 0.0], [0.0, 1.0],
-                  [1 / math.sqrt(2), 1 / math.sqrt(2)],
-                  [2 / math.sqrt(2), 2 / math.sqrt(2)]])
-    Mm = np.outer(X[0], X[0]) + 1e-9 * np.eye(2)
-    d_bad = np.array([x @ np.linalg.inv(Mm) @ x for x in X])
-    G_bad = float(d_bad.max() - d_bad @ w_bad)      # theta=mu=0 dual point
-    ok &= tg["agreement_ok"] and tg["dose_active"] and G_bad > 1.0
-    print("    cert toys: optimum G=%.1e (PASS emission), suboptimal "
-          "G>=%.1f (FAIL emission)" % (tg["G_at_opt"], G_bad))
-    check("three_verdicts_emitted_pos_and_neg", ok,
-          "RIDGE_OPERATING/RIDGE_SPEED/DOSE_SAFE_CERT on both cohorts; "
-          "gain toy %.1e; negative toy G=%.1f" % (tg["G_at_opt"], G_bad))
+    ok8 = (m1.MODE_ARMS == ["SCAT32-SAFE", "SCAT32-060", "RIDGE-SCAT32"]
+           and m1.MODE_LOADS["SCAT32-SAFE"] == 0.05
+           and m1.MODE_LOADS["SCAT32-060"] == 0.60
+           and pos["RIDGE_OPERATING_PASS"] and pos["RIDGE_SPEED_PASS"]
+           and not neg["RIDGE_OPERATING_PASS"]
+           and not neg["RIDGE_SPEED_PASS"])
+    check("empirical_modes_endpoints_unchanged", ok8,
+          "3 modes + loads frozen; RIDGE_OPERATING/RIDGE_SPEED emitted "
+          "correctly on positive AND negative mocks")
 
-    # ---- E4: D_cert complete + SHA-frozen --------------------------------- #
-    print("\n== E4: D_cert = D_load U D_gain ==")
-    t1 = time.time()
-    ctxc = v5.setup_ctx_cert(xhat, 2000.0, 0.60, np.eye(N)[:, :200], 1e-6,
-                             SIDE)
-    sha_cert = v5.d_cert_sha(SIDE)
-    n_load = int(ctxc["ALLOW"][:, :ctxc["L_load"]].sum())
-    n_gain = int(ctxc["ALLOW"][:, ctxc["L_load"]:].sum())
-    ok = (ctxc["L"] == ctxc["L_load"] + 5
-          and ctxc["gammas"] == [0.2, 0.5, 1.0, 2.0, 5.0]
-          and n_gain > 0 and n_load > 0)
-    with open(os.path.join(OUT, "D_CERT_SHA.json"), "w") as f:
-        json.dump({"sha256": sha_cert, "gammas": ctxc["gammas"],
-                   "n_load_atoms_dev": n_load, "n_gain_atoms_dev": n_gain},
-                  f, indent=1)
-    check("d_cert_complete_and_sha_frozen", ok,
-          "L=%d (load %d + gain 5); admissible: %d load + %d gain atoms; "
-          "sha=%s.. (%.0fs)" % (ctxc["L"], ctxc["L_load"], n_load, n_gain,
-                                sha_cert[:16], time.time() - t1))
-
-    # ---- E5: expanded-class toy + scan tests ------------------------------ #
-    print("\n== E5: expanded-class certificate toys ==")
-    tb = v5.toy_full_cert_check()
-    ok = (tb["agreement_ok"] and tg["agreement_ok"]
-          and tb["dose_active"] and tg["dose_active"])
-    check("expanded_class_cert_toys", ok,
-          "base toy %.1e, gain-atom toy %.1e, dose band ACTIVE in both"
-          % (tb["G_at_opt"], tg["G_at_opt"]))
-
-    # ---- E6: DEV-only expanded-class feasibility + runtime ---------------- #
-    print("\n== E6: DEV certificate cells (m1_dev scenes) ==")
-    import m1_scenes
-    dev_img = [nm for nm, _f, _s in m1_scenes._m1_dev_table()][0]
-    results6 = []
-    for (nu_c, b_c) in ((2000.0, 0.60), (200.0, 0.05)):
-        cell = m1.cert_cell(dev_img, 0, nu_c, b_c, imageset="m1_dev")
-        t2 = time.time()
-        row = m1.run_cert_cell(cell)[0]
-        row["wall_s"] = round(time.time() - t2, 1)
-        results6.append(row)
-        print("    (%s, s0, nu=%g, b=%g): status=%s G_full/r=%s "
-              "primal=%s peak=%.1f wall=%.0fs"
-              % (dev_img, nu_c, b_c, row["status"], row["G_full_per_r"],
-                 row["primal_feasible"], row["deployed_peak"] or -1,
-                 row["wall_s"]), flush=True)
-    # HARD: the pipeline must terminate WITH a certified finite bound
-    # (status OK, finite G_full/r, primal-feasible); an LP failure is NOT
-    # "feasibility confirmed" (the freeze-8/9 lesson applies here too).
-    ok = all(r["status"] == "OK" and r["G_full_per_r"] != ""
-             and np.isfinite(float(r["G_full_per_r"]))
-             and r["primal_feasible"] for r in results6)
-    terminated = all(r["wall_s"] < 3600 for r in results6)
-    gate_untouched = (v5.GFULL_TOL_PER_R == 1e-2)
-    check("dev_expanded_class_feasibility_runtime", ok and terminated
-          and gate_untouched,
-          "certified finite bounds (walls: %s s); gate bar 1e-2 UNCHANGED; "
-          "G_full/r: %s" % ([r["wall_s"] for r in results6],
-                            [r["G_full_per_r"] for r in results6]))
-
-    # ---- E7: 52+972 accounting + ridge disclosures ------------------------ #
-    print("\n== E7: accounting + ridge disclosures ==")
-    ok = P.shape[0] == 52
+    # ---- item 9: accounting/SHAs/ridge/locks ------------------------------- #
+    print("\n== R18-9: accounting + SHAs + ridge + locks ==")
+    P = m1.prescan_matrix()
+    ok9 = (P.shape[0] == 52
+           and np.abs(P.mean(axis=0) - 1.0).max() < 1e-12)
     for arm in m1.ARMS_ALL:
-        pat = m1.load_m1_pattern("m1pat:%s:devimg" % arm, 1024, 1024, 0)
-        ok &= pat["A"].shape == (1024, N)
-        ok &= pat["meta"]["prescan_rows"] == 52
-        ok &= pat["meta"]["main_rows"] == 972
-    import campaign
-    dev_imgs = campaign._images(SIDE, "all", imageset="m1_dev")
-    cal = m1.ridge_scat32_calibration(dev_img, 0, imageset="m1_dev",
-                                      x_true=dev_imgs[dev_img])
-    print("    ridge calibration (%s, s0): " % dev_img)
-    for i, nu in enumerate(cal["nu_grid"]):
-        print("      nu=%-5g requested=%.4f achieved=%.4f clip=%d "
-              "GUARD_CLIPPED=%d" % (nu, cal["requested"][i],
-                                    cal["achieved"][i],
-                                    cal["clip_applied"][i],
-                                    cal["guard_clipped"][i]))
-    disc = m1.ridge_disclosure(dev_img, 0, 2000.0, imageset="m1_dev")
-    ok &= all(disc[c] != "" for c in ("achieved_mean_load",
-                                     "incident_dose_ratio", "load_q95",
-                                     "physical_peak", "deployed_sha"))
-    check("accounting_52_plus_972_and_ridge_disclosures", ok,
-          "5 arms x (52+972); 9-dwell calibration + full disclosure block "
-          "(achieved=%.3f at nu=2000, ratio=%.2fx)"
-          % (float(cal["achieved"][-1]), disc["incident_dose_ratio"] or -1))
+        pat = m1.load_m1_pattern("m1pat:%s:x" % arm, 1024, 1024, 0)
+        ok9 &= pat["A"].shape == (1024, N)
+    rows_dep2, sha_dep = m1.deployed_scat32()
+    man = v4.dictionary_manifest(SIDE)
+    rt = m1.ridge_targets([2000.0])
+    ok9 &= (len(sha_dep) == 64 and len(man["sha256_global"]) == 64
+            and len(v5.d_cert_sha()) == 64
+            and abs(rt["2000"]["rho_R_production"] - 22.2545) < 0.01)
+    check("accounting_shas_ridge_locks", ok9,
+          "52+972 all arms; deployed sha %s..; dict sha %s..; D_cert sha "
+          "%s..; rho_R(2000)=%.4f"
+          % (sha_dep[:8], man["sha256_global"][:8], v5.d_cert_sha()[:8],
+             rt["2000"]["rho_R_production"]))
 
-    # ---- E8: manifests + expected cells regenerated ----------------------- #
-    print("\n== E8: manifests + expected-cell ledger ==")
-    import m1_make_manifests as mm
-    blocks = mm.build_blocks()
-    shards = mm.pack(blocks, mm.TARGET_SHARDS)
-    idx, _l = mm.write_manifests(shards)
-    n_exp = mm.write_expected_cells(shards)
-    n_cert = sum(1 for s in shards if s["stage"] == "M1_CERT"
-                 for _ in s["cells"])
-    stale = []
-    for s in shards:
-        for e in mm.shard_frozen_inputs(s):
-            if "designs/" in e["path"] and "scat32_deployed" not in e["path"]:
-                stale.append(e["path"])
-    ok = (n_cert == 480 and not stale and n_exp == idx["n_expected_rows"])
-    check("manifests_and_expected_cells_r17", ok,
-          "%d cells (%d cert of 480 required), %d shards; stale design "
-          "frozen_inputs: %s" % (n_exp, n_cert, len(idx["default_shards"]),
-                                 stale or "none"))
-
-    # ---- E9: no confirmatory data opened ---------------------------------- #
-    print("\n== E9: outcome-blindness / confirmatory lock ==")
-    guard_fired = False
+    # ---- item 10: no confirmatory data ------------------------------------- #
+    print("\n== R18-10: confirmatory lock ==")
+    fired = False
     try:
         m1.run_cert_cell(m1.cert_cell("m1_glyph_0", 0, 2000.0, 0.60,
                                       imageset="m1"))
     except RuntimeError:
-        guard_fired = True
-    check("no_confirmatory_data_opened", guard_fired,
-          "confirmatory-imageset guard raises pre-freeze; selftest touched "
-          "only the synthetic scene and m1_dev (632900+) instances")
+        fired = True
+    check("no_confirmatory_data_opened", fired,
+          "M1_FREEZE_LAUNCHED lock raises pre-freeze; selftest touched only "
+          "synthetic + m1_dev scenes")
 
     # ---- ledger ------------------------------------------------------------ #
     n_pass = sum(1 for _, ok_, _ in CHECKS if ok_)
     all_ok = n_pass == len(CHECKS)
-    lines = ["# M1 REFREEZE CHECKLIST LEDGER (R17 §7 / amendment §E)", "",
-             "Outcome-blind selftest, %s. %d/%d items PASS."
-             % (time.strftime("%Y-%m-%d %H:%M"), n_pass, len(CHECKS)), "",
-             "Architecture: R17 (issue #9). Deployed design = balanced "
-             "exact 972-row SCAT32 multiset (sha %s..). Modes: SCAT32-SAFE "
-             "0.05 / SCAT32-060 0.60 / RIDGE-SCAT32 rho_R(nu) policy. "
-             "Context: SCAT16, LBLOB16 (descriptive). D_cert sha %s.."
-             % (sha[:12], sha_cert[:12]), "",
-             "Interpretations I1-I5 logged in m1_runner.py docstring.", "",
-             "| # | item (R17 Sec 7) | verdict | detail |",
+    with open(BRANCH_JSON) as f:
+        branch = json.load(f)["branch"]
+    lines = ["# M1 REFREEZE CHECKLIST LEDGER (R18 §7, ten items)", "",
+             "Outcome-blind selftest, %s. %d/%d items PASS. Campaign "
+             "branch: **%s**."
+             % (time.strftime("%Y-%m-%d %H:%M"), n_pass, len(CHECKS),
+                branch), "",
+             "| # | item (R18 §7) | verdict | detail |",
              "|---|---|---|---|"]
     for i, (name, ok_, det) in enumerate(CHECKS, 1):
         lines.append("| %d | %s | %s | %s |"
                      % (i, name, "PASS" if ok_ else "FAIL", det))
-    lines += ["", ("**REFREEZE_READY** -- every Sec-7 item passes; one "
-                   "immutable revised m1-freeze tag may be created and all "
-                   "arms launched together (R17 Sec 5)."
+    lines += ["", ("**REFREEZE_READY_R18 (branch: %s)** -- per R18 §5.4/§7 "
+                   "one immutable tag may be created and all arms launched "
+                   "together." % branch
                    if all_ok else "HOLD REMAINS (failures above)."),
               "", "wall time: %.1f s" % (time.time() - t0)]
     with open(LEDGER, "w") as f:
         f.write("\n".join(lines) + "\n")
-    print("\n[refreeze selftest] %d/%d PASS -> %s (%.1fs)"
-          % (n_pass, len(CHECKS), LEDGER, time.time() - t0), flush=True)
+    print("\n[R18 selftest] %d/%d PASS, branch=%s -> %s (%.0fs)"
+          % (n_pass, len(CHECKS), branch, LEDGER, time.time() - t0),
+          flush=True)
     if all_ok:
-        print("[refreeze selftest] REFREEZE_READY", flush=True)
+        print("[R18 selftest] REFREEZE_READY_R18 branch=%s" % branch,
+              flush=True)
     return 0 if all_ok else 1
 
 
