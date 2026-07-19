@@ -172,7 +172,9 @@ def main():
 
     # ---------------- figure ----------------
     plt.rcParams.update({
-        "font.family": "serif",
+        "font.family": "sans-serif",
+        "font.sans-serif": ["DejaVu Sans", "Arial", "Helvetica"],
+        "mathtext.fontset": "dejavusans",
         "font.size": 8,
         "axes.linewidth": 0.6,
         "pdf.fonttype": 42,

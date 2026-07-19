@@ -61,17 +61,17 @@ OUT_PNG = os.path.join(OUT_DIR, "fig_mechanism_p1.png")
 # Okabe-Ito / Wong colourblind-safe palette (matched to the paper's other figs)
 # ----------------------------------------------------------------------------
 BLACK  = "#000000"
-BLUE   = "#0072B2"
-ORANGE = "#D55E00"
-GREEN  = "#009E73"
-PINK   = "#CC79A7"
+BLUE   = "#0072B2"   # ridge / high-flux (the one saturated colour)
+ORANGE = "#D55E00"   # dead time / secondary
+GREEN  = "#009E73"   # (retained only for the RQL recon box edge)
 SKY    = "#56B4E9"
 YELLOW = "#F0E442"
 INK    = "#222222"
+GRAY   = "#6E6E6E"   # safe / baseline (reduced palette, R20 SF8)
 BOXFC  = "#EAF2F8"   # light box fill
 BOXEC  = "#34495E"   # box edge
 GRIDGY = "#BBBBBB"
-FAILGY = "#D9D9D9"   # "non-accelerating" pie wedge
+FAILGY = "#D9D9D9"
 
 # ----------------------------------------------------------------------------
 # Manuscript constants (see NUMBER PROVENANCE header)
@@ -323,16 +323,16 @@ def panel_b_saturation(ax):
             va="bottom", fontsize=6.2, color=ORANGE)
 
     # operating points (terse value labels; roles named in the caption)
-    ax.plot([RHO_CONV], [detected_fraction(RHO_CONV)], marker="o", color=GREEN,
+    ax.plot([RHO_CONV], [detected_fraction(RHO_CONV)], marker="o", color=GRAY,
             ms=5.5, mec="k", mew=0.5, zorder=6)
-    ax.plot([RHO_HIFLUX], [detected_fraction(RHO_HIFLUX)], marker="o", color=PINK,
+    ax.plot([RHO_HIFLUX], [detected_fraction(RHO_HIFLUX)], marker="o", color=BLUE,
             ms=6.0, mec="k", mew=0.5, zorder=6)
     ax.annotate(r"$\rho{=}0.05$", xy=(RHO_CONV, detected_fraction(RHO_CONV)),
-                xytext=(0.024, 0.55), fontsize=6.2, color=GREEN, ha="left", va="center",
-                arrowprops=dict(arrowstyle="-|>", color=GREEN, lw=0.9))
+                xytext=(0.024, 0.55), fontsize=6.2, color=GRAY, ha="left", va="center",
+                arrowprops=dict(arrowstyle="-|>", color=GRAY, lw=0.9))
     ax.annotate(r"$\bar{\rho}{=}0.6$", xy=(RHO_HIFLUX, detected_fraction(RHO_HIFLUX)),
-                xytext=(0.9, 0.22), fontsize=6.2, color=PINK, ha="left", va="center",
-                arrowprops=dict(arrowstyle="-|>", color=PINK, lw=0.9))
+                xytext=(0.9, 0.22), fontsize=6.2, color=BLUE, ha="left", va="center",
+                arrowprops=dict(arrowstyle="-|>", color=BLUE, lw=0.9))
 
     ax.set_xscale("log")
     ax.set_xlim(0.02, 30.0)
@@ -349,80 +349,41 @@ def panel_b_saturation(ax):
 # ----------------------------------------------------------------------------
 # panel (c) : the contrast--dead-time operating map
 # ----------------------------------------------------------------------------
-def _pie_marker(ax, x, y, frac, base=150.0, ec="k", lw=0.7, z=6):
-    """Circular pass-fraction pie: green = accelerating instances, grey = rest."""
-    ax.scatter([x], [y], s=base, marker="o", facecolor=FAILGY, edgecolor=ec,
-               linewidths=lw, zorder=z)
-    if frac > 0:
-        ang = np.linspace(np.pi / 2, np.pi / 2 - 2 * np.pi * frac,
-                          max(3, int(80 * frac) + 2))
-        verts = np.vstack([[0, 0], np.column_stack([np.cos(ang), np.sin(ang)])])
-        scale = np.abs(verts).max()
-        ax.scatter([x], [y], s=base * scale ** 2, marker=verts, facecolor=GREEN,
-                   edgecolor="none", zorder=z + 1)
-    ax.scatter([x], [y], s=base, marker="o", facecolor="none", edgecolor=ec,
-               linewidths=lw, zorder=z + 2)
-
-
 def panel_c(ax):
+    """Neutral contrast-to-count-noise schematic (R20 M12).
+
+    The photon-limited onset Gamma = 1 in the (rho, C_u) plane, labelled a
+    DESCRIPTIVE ONSET PROXY -- not a validated boundary. The six Study-2 family
+    outcomes and the descriptive transition band have been MOVED to a small
+    Results figure (`fig_p1_families`); no region claim is asserted here."""
     rho = np.geomspace(0.01, 1.2, 200)
     ymin, ymax = 0.03, 1.75
 
-    # photon-limited onset Gamma = 1 (at nu = 2000)
-    ax.plot(rho, gamma_boundary_cu(rho), color=BLACK, lw=1.3, zorder=4)
-    # multiplex-limited region: below the Gamma=1 curve
-    ax.fill_between(rho, ymin, gamma_boundary_cu(rho), color=GRIDGY, alpha=0.30,
+    # photon-limited onset Gamma = 1 (at nu = 2000) -- descriptive onset proxy
+    ax.plot(rho, gamma_boundary_cu(rho), color=INK, lw=1.4, zorder=4)
+    # light shading of the sub-onset region (visual aid only; no region label)
+    ax.fill_between(rho, ymin, gamma_boundary_cu(rho), color=GRIDGY, alpha=0.22,
                     zorder=1)
 
-    # "high-flux operation helps" region (above the descriptive transition)
-    ax.fill_between(rho, 0.285, ymax, color=GREEN, alpha=0.09, zorder=0)
-    # descriptive contrast-controlled transition band (contour 0.27 <-> chirp 0.28)
-    ax.axhspan(0.265, 0.285, color=YELLOW, alpha=0.5, zorder=1)
+    # conventional low-flux zone (rho <= 0.05) and high-flux operating column
+    ax.axvspan(0.01, 0.05, color=GRAY, alpha=0.10, zorder=0)
+    ax.axvline(RHO_HIFLUX, color=BLUE, lw=1.1, ls="--", zorder=2)
+    ax.plot([RHO_CONV], [gamma_boundary_cu(RHO_CONV)], marker="o", color=GRAY,
+            ms=4.5, mec="k", mew=0.4, zorder=5)
+    ax.plot([RHO_HIFLUX], [gamma_boundary_cu(RHO_HIFLUX)], marker="o",
+            color=BLUE, ms=4.5, mec="k", mew=0.4, zorder=5)
 
-    # conventional low-flux zone
-    ax.axvspan(0.01, 0.05, color=SKY, alpha=0.13, zorder=0)
-    # high-flux operating column
-    ax.axvline(RHO_HIFLUX, color=PINK, lw=1.1, ls="--", zorder=2)
-
-    # marker x-positions: every family sits at the operating load rho_bar = 0.6;
-    # the horizontal offsets are purely cosmetic, applied only so the six pies
-    # never overlap (chirp/contour are 0.01 apart in C_u) — housekeeping note
-    # in the caption. y = true measured bucket contrast C_u, never offset.
-    XPOS = {"maze": 0.60, "glyph": 0.74, "spokes": 0.49,
-            "chirp": 0.53, "contour": 0.87, "microtexture": 0.60}
-    # tidy left-hand label column, evenly spaced in log-C_u; a thin leader runs
-    # from each label to the CENTRE of its pie (under the marker) so the
-    # label-marker association is unambiguous.
-    order = sorted(FAMILIES, key=lambda t: t[1])          # ascending C_u
-    label_y = np.geomspace(0.165, 0.575, len(order))
-    lab_x = 0.42
-    for (name, cu, npass), ly in zip(order, label_y):
-        mx = XPOS[name]
-        ax.plot([lab_x * 1.05, mx], [ly, cu], color="#888888", lw=0.6,
-                zorder=3)
-        _pie_marker(ax, mx, cu, npass / 4.0, base=125.0)
-        ax.text(lab_x, ly, r"%s  %d/4" % (name, npass), ha="right", va="center",
-                fontsize=6.7, color=INK)
-
-    # dense multiplex-limited anchor (Study 1)
-    ax.scatter([RHO_HIFLUX], [CU_DENSE], marker="D", s=30, facecolor="white",
-               edgecolor=BLACK, linewidths=0.9, zorder=6)
-    ax.plot([lab_x * 1.05, RHO_HIFLUX], [CU_DENSE, CU_DENSE],
-            color="#888888", lw=0.6, zorder=3)
-    ax.text(lab_x, CU_DENSE, "dense (Study 1)", ha="right", va="center",
-            fontsize=6.2, color=INK)
-
-    # minimal region / boundary names (full descriptions live in the caption)
-    ax.text(0.011, 1.52, "high-flux helps", fontsize=7.2, color=GREEN,
-            ha="left", va="center", fontweight="bold")
-    ax.text(0.011, 0.037, "multiplex-limited", fontsize=6.4,
-            color="#555555", ha="left", va="center")
-    ax.text(0.155, gamma_boundary_cu(0.155) * 1.16, r"$\Gamma=1$", fontsize=7.4,
-            color=BLACK, ha="left", va="bottom", rotation=-24)
-    ax.text(0.011, 0.275, "transition band", fontsize=5.8,
-            color="#8a6d00", ha="left", va="center")
-    ax.text(RHO_HIFLUX, ymax * 0.96, r"$\bar{\rho}=0.6$", fontsize=6.4,
-            color=PINK, ha="center", va="top")
+    # terse threshold labels only (descriptive-onset language; no region claim)
+    ax.text(0.115, gamma_boundary_cu(0.115) * 1.18, r"$\Gamma=1$",
+            fontsize=7.8, color=INK, ha="left", va="bottom", rotation=-30)
+    ax.text(0.30, 0.55, "descriptive\nonset proxy", fontsize=6.2, color=GRAY,
+            ha="center", va="center", style="italic")
+    ax.text(0.028, 0.042, r"$\rho{\leq}0.05$", fontsize=6.2, color=GRAY,
+            ha="center", va="center")
+    ax.text(RHO_HIFLUX, ymax * 0.88, r"$\bar{\rho}{=}0.6$", fontsize=6.4,
+            color=BLUE, ha="center", va="top",
+            bbox=dict(boxstyle="round,pad=0.1", fc="white", ec="none",
+                      alpha=0.8))
 
     ax.set_xscale("log")
     ax.set_yscale("log")
@@ -445,12 +406,13 @@ def panel_c(ax):
 # ----------------------------------------------------------------------------
 def main():
     plt.rcParams.update({
-        "font.family": "serif",
+        "font.family": "sans-serif",
+        "font.sans-serif": ["DejaVu Sans", "Arial", "Helvetica"],
         "font.size": 8,
         "axes.linewidth": 0.6,
         "pdf.fonttype": 42,
         "ps.fonttype": 42,
-        "mathtext.fontset": "dejavuserif",
+        "mathtext.fontset": "dejavusans",
     })
 
     fig = plt.figure(figsize=(7.16, 5.0))

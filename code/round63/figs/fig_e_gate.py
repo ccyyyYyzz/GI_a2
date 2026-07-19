@@ -154,7 +154,9 @@ def report(dq_by_k, sg16):
 
 def make_figure(dq_by_k, sg16):
     plt.rcParams.update({
-        "font.family": "serif",
+        "font.family": "sans-serif",
+        "font.sans-serif": ["DejaVu Sans", "Arial", "Helvetica"],
+        "mathtext.fontset": "dejavusans",
         "font.size": 8,
         "axes.linewidth": 0.6,
         "pdf.fonttype": 42,

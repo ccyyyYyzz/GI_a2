@@ -137,7 +137,9 @@ def report(data_by_rho):
 
 def make_figure(data_by_rho):
     plt.rcParams.update({
-        "font.family": "serif",
+        "font.family": "sans-serif",
+        "font.sans-serif": ["DejaVu Sans", "Arial", "Helvetica"],
+        "mathtext.fontset": "dejavusans",
         "font.size": 8,
         "axes.linewidth": 0.6,
         "pdf.fonttype": 42,
