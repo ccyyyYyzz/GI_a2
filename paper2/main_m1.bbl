@@ -1,0 +1,48 @@
+\begin{thebibliography}{1}
+
+\bibitem{duarte2008singlepixel}
+Marco~F. Duarte, Mark~A. Davenport, Dharmpal Takhar, Jason~N. Laska, Ting Sun,
+  Kevin~F. Kelly, and Richard~G. Baraniuk.
+\newblock Single-pixel imaging via compressive sampling.
+\newblock {\em IEEE Signal Processing Magazine}, 25(2):83--91, 2008.
+
+\bibitem{shapiro2008computational}
+Jeffrey~H. Shapiro.
+\newblock Computational ghost imaging.
+\newblock {\em Physical Review A}, 78(6):061802, 2008.
+
+\bibitem{edgar2019principles}
+Matthew~P. Edgar, Graham~M. Gibson, and Miles~J. Padgett.
+\newblock Principles and prospects for single-pixel imaging.
+\newblock {\em Nature Photonics}, 13(1):13--20, 2019.
+
+\bibitem{companion}
+{Companion manuscript (paper~1)}.
+\newblock When high flux helps single-pixel imaging: a contrast--dead-time
+  operating map, 2026.
+\newblock in submission; author block per paper~1 (user decision).
+
+\bibitem{rapp2019deadtime}
+Joshua Rapp, Yanting Ma, Robin M.~A. Dawson, and Vivek~K. Goyal.
+\newblock Dead time compensation for high-flux ranging.
+\newblock {\em IEEE Transactions on Signal Processing}, 67(13):3471--3486,
+  2019.
+
+\bibitem{rapp2021highflux}
+Joshua Rapp, Yanting Ma, Robin M.~A. Dawson, and Vivek~K. Goyal.
+\newblock High-flux single-photon lidar.
+\newblock {\em Optica}, 8(1):30, 2021.
+
+\bibitem{jorgensen2026deadtime}
+Frederic J.~N. Jorgensen and Steven~G. Johnson.
+\newblock Fundamental bounds and efficient estimation for dead-time-constrained
+  event detection, with application to single-photon lidar, 2026.
+\newblock arXiv:2605.23210.
+
+\bibitem{alvarez2014pileup}
+Robert~E. Alvarez.
+\newblock Signal to noise ratio of energy selective x-ray photon counting
+  systems with pileup.
+\newblock {\em Medical Physics}, 41(11):111909, 2014.
+
+\end{thebibliography}
