@@ -120,5 +120,16 @@ prejudice if it underperforms. Runs only during campaign idle time.
 (c) the 52-row pre-scan implementation as committed in v2/v3 (even-parity
 choice documented there);
 (d) analyzer naming/cohort conventions;
-(e) anything the v3 selftest surfaces (rho_R values, constrained-gap
-certificate convention) — appended before freeze.
+(e) v3 selftest results: ρ_R(200) = 10.0369 (clip NONE), ρ_R(2000) =
+22.2543 (clip NONE) — both G7-certified; RQL-trust ratio holds even at
+the ν=2000 ridge. Constrained-gap certificate convention as implemented
+in v3 (to be quoted verbatim in the freeze).
+(f) **Photon-economics discovery (v3 selftest, needs R13 blessing of the
+framing):** under the R11 total-incident-budget inequality the per-photon
+information efficiency J(ρ)/ρ falls monotonically (0.55 at ρ=0.6 vs
+0.036 at ρ=22), so the OED-DT optimizer RATIONALLY avoids ridge-zone
+atoms — ridge operation is a TIME-constrained regime, not a
+photon-constrained one. Proposed framing: OED-DT (photon-budgeted) and
+RIDGE-FIXED (time-budgeted) are the two conjugate corners of the same
+resource trade; the campaign measures both. The "ridge atoms selected"
+selftest check is demoted to a diagnostic accordingly.
