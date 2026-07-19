@@ -488,8 +488,22 @@ comparison with single-photon underwater single-pixel experiments
 
 \subsection{Robustness to detector mismatch}
 \label{sec:mismatch}
-\SPH{S3: tau error, dark, afterpulsing, start modes, guard; radiometric
-degradation envelopes; descriptive audit distributions (supplement)}
+% Descriptive (R9: no late robustness gate). Numbers:
+% results/round63_s2_s3/S3_ANCHORS.md, paired vs the no-mismatch baseline.
+Detector-mismatch consequences were quantified descriptively on the
+$64^{2}$ cohort at the preregistered anchor ($M/n = 0.5$, $\nu = 500$),
+pairing each perturbed cell with its no-mismatch baseline. Every anchor
+perturbation leaves the RQL radiometric PSNR within $0.34$~dB of
+baseline at both operating points:\ dead-time miscalibration
+$\hat\tau = \tau(1 \pm 0.1)$ costs at most $0.12$~dB (with a
+$\pm 6\%$ radiometric flux bias, the largest observed); a $10\%$ dark
+rate costs $0.16$~dB when calibrated and $0.34$~dB when unmodeled;
+afterpulsing at $2$--$5\%$ costs at most $0.09$~dB. Under the same
+perturbations the pre-correction arm degrades more in five of six
+anchors (up to $0.79$~dB, unmodeled dark). Start-mode, guard-time, and
+dead-time-jitter axes, severity sweeps to $50\%$ dark, and the
+descriptive measurement-audit distributions are tabulated in the
+supplement.
 
 \subsection{Exact-likelihood reference at small scale}
 % Frozen S4(ii) grid (spec D2); results/round63_s4 (864 paired cells).
