@@ -139,9 +139,11 @@ $\epsilon_0 = 10^{-9}\,\mathrm{tr}(B^{\top}V_{\text{FIXED}^\ast}B)/r$
 (R13~\S6). A design-dependent ridge is not permitted:\ it would change the
 objective derivative and invalidate the sensitivity calculation.
 
-\subsection{The near-optimality certificate}
-% R17 §4: full dose-constrained dual over the EXPANDED class D_cert; the
-% deployed balanced SCAT32 is the certified design, not an OED optimizer.
+\subsection{The full-stack near-optimality certificate}
+% R18 §2-§3: certified class C_stack = full deployed conditioning stack;
+% support-function bound G_stack; exact conic LMI representation; certified
+% cutting-plane outer approximation; mandatory primal discriminator; status
+% taxonomy + frozen compute protocol.
 By concavity of $\log\det$ and affineness of $\xi\mapsto V(\xi)$, a feasible
 design $\xi^\ast$ is optimal iff there exist constraint multipliers such that
 the reduced sensitivity
@@ -151,34 +153,90 @@ equality on the support (the constrained Kiefer--Wolfowitz / general
 equivalence theorem for nonlinear
 models~\cite{kiefer1959optimum,white1973equivalence}). The confirmatory
 certificate evaluates this gap for the \emph{deployed} balanced \textsc{SCAT32}
-design against the continuous optimum of the dose-safe class over the
-expanded dictionary $D_{\mathrm{cert}} = D_{\mathrm{load}}\cup D_{\mathrm{gain}}$
-(\S\ref{sec:s-dict}). With per-atom design value
-$d_a = \mathrm{tr}(V^{-1} M_{\mathrm{main}} H_a)$, one incident-budget
-multiplier $\theta\ge0$, budget $b$, and upper/lower per-pixel-dose multipliers
-$\mu^+,\mu^-\ge0$, the full dose-constrained dual is
+design against the continuous optimum of the \emph{full deployed conditioning
+stack} over the expanded dictionary
+$D_{\mathrm{cert}} = D_{\mathrm{load}}\cup D_{\mathrm{gain}}$
+(\S\ref{sec:s-dict}). With
+$V(\xi) = V_{\mathrm{pre}} + M_{\mathrm{main}}\sum_{a} \xi_a H_a
++ \epsilon_0 I$ on the frozen $r = 200$ subspace and $V_{\mathrm{fix}}$ the
+load-matched deployed \textsc{SCAT32} information matrix for the same
+pre-scan, dwell, budget, subspace, and numerical ridge, the certified class
+is
 \begin{equation}
-  G_{\mathrm{full}} = \min_{\theta,\mu^+,\mu^-\ge0}
-  \Bigl[\max_{a\in D_{\mathrm{cert}}} s_a(\theta,\mu^+,\mu^-)
-  - d^{\top}\xi + \theta b\Bigr],
-  \qquad G_{\mathrm{full}}/r \le 10^{-2},
+  \mathcal{C}_{\mathrm{stack}} = \left\{\xi:
+  \begin{array}{l}
+  \xi \ge 0,\quad \mathbf{1}^{\top}\xi = 1,\quad c^{\top}\xi \le b,\quad
+  U^{+}\xi \le 0,\quad U^{-}\xi \le 0,\\[2pt]
+  \mathrm{tr}\{V(\xi)^{-1}\} \le 1.05\,\mathrm{tr}(V_{\mathrm{fix}}^{-1}),
+  \quad V(\xi) \succeq 0.5\,V_{\mathrm{fix}}
+  \end{array}\right\},
+  \label{eq:s-cstack}
+\end{equation}
+where $U^{\pm}$ encode the $\pm5\%$ per-pixel dose band. Pointwise peak,
+ceiling, support, weight, and RQL-trust restrictions remain atom-admission
+guards; the A-risk and spectral conditions are \emph{global design
+constraints} and are never approximated by dropping individual atoms. With
+atom sensitivity $d_a = M_{\mathrm{main}}\,\mathrm{tr}(V_d^{-1}H_a)$ at the
+deployed matrix $V_d$ and
+$\bar d_d = \mathrm{tr}[V_d^{-1}(V_d - V_{\mathrm{pre}} - \epsilon_0 I)]$,
+concavity gives $\log\det V(\xi) - \log\det V_d \le d^{\top}\xi - \bar d_d$
+for every feasible $\xi$, so the support-function bound
+\begin{equation}
+  G_{\mathrm{stack}} = \sup_{\xi\in\mathcal{C}_{\mathrm{stack}}}
+  \bigl\{d^{\top}\xi - \bar d_d\bigr\},
+  \qquad G_{\mathrm{stack}}/r \le 10^{-2},
   \label{eq:s-relkw}
 \end{equation}
-where $s_a(\theta,\mu^+,\mu^-) = d_a - \theta\rho_a
-- \sum_j(\mu^+_j - \mu^-_j)\,\partial d_j/\partial\xi_a$ is the dose- and
-budget-priced reduced sensitivity, the inner maximum uses coverage-seeded
-column generation and finishes with an exact scan over all of
-$D_{\mathrm{cert}}$~\cite{jaggi2013frankwolfe}, and every upper and lower
-pixel-dose inequality carries its own multiplier (R15 / R17~\S4.4). The bar
-$G_{\mathrm{full}}/r \le 10^{-2}$ certifies local D-efficiency of at least
-$\exp(-0.01) = 0.99005$ relative to the continuous optimum of the expanded
-dose-safe class. A-risk and spectral constraints are deliberately excluded
-from the dual target class, making the certified class larger and the result
-stronger; the deployed \textsc{SCAT32} rows still satisfy the A-risk,
-spectral, peak, and ceiling disclosures separately. Retained numerics:
-active-dose toy agreement $\le 10^{-8}$, primal dose/budget feasibility, the
-full-dictionary scan residual, dual/complementarity reporting, and the finite
-$\mu$ cap as a conservative restriction disclosed as \texttt{MU\_CAP\_ACTIVE}.
+upper-bounds the optimality gap and certifies local D-efficiency
+$\mathrm{Eff}_D \ge \exp(-G_{\mathrm{stack}}/r) \ge e^{-0.01} = 0.99005$.
+The spectral constraint enters exactly as the linear matrix inequality
+$V(\xi) - 0.5\,V_{\mathrm{fix}} \succeq 0$, and the A-risk cap through the
+Schur block
+$\bigl[\begin{smallmatrix} V(\xi) & I \\ I & W \end{smallmatrix}\bigr]
+\succeq 0$ with $\mathrm{tr}\,W \le 1.05\,\mathrm{tr}
+(V_{\mathrm{fix}}^{-1})$; the dual of the resulting conic linear program
+carries one nonnegative budget multiplier, upper/lower pixel-dose
+multipliers, a positive-semidefinite matrix price for the spectral LMI, a
+positive-semidefinite block price and trace multiplier for the A-risk LMI,
+and a full-dictionary maximum reduced sensitivity. The frozen implementation
+is a certified cutting-plane outer approximation:\ spectral eigenvector cuts
+$z^{\top}\{V(\xi) - 0.5\,V_{\mathrm{fix}}\}z \ge 0$ for every discovered
+violating generalized eigenvector $z$; A-risk tangent cuts
+$h(V_k) - \mathrm{tr}\{V_k^{-2}(V - V_k)\} \le 1.05\,h(V_{\mathrm{fix}})$
+for the convex $h(V) = \mathrm{tr}(V^{-1})$ with gradient $-V^{-2}$; a
+linear master with budget/dose prices and coverage-seeded column
+generation~\cite{jaggi2013frankwolfe}; and an exact scan over all of
+$D_{\mathrm{cert}}$ each round. A finite cut set defines an \emph{outer}
+relaxation of $\mathcal{C}_{\mathrm{stack}}$, so a small master bound
+remains conservative; a large bound is never called a counterexample unless
+a feasible primal design is constructed. To that end every cell also runs a
+frozen \emph{support-expanding} primal search over
+$\mathcal{C}_{\mathrm{stack}}$ (positive initialization on all admitted
+columns or Frank--Wolfe atom injection); a feasible design with actual
+$[\log\det V(\xi) - \log\det V_d]/r > 10^{-2}$ classifies the cell
+\texttt{COUNTEREXAMPLE}, and a primal lower bound never certifies
+near-optimality --- it can only refute it. Each of the 480 cells receives
+exactly one terminal status --- \texttt{CERTIFIED}, \texttt{COUNTEREXAMPLE},
+or \texttt{NUMERICAL\_UNRESOLVED} --- under the frozen compute protocol
+($60$~s primal screen, $180$~s primary cutting-plane solve, one
+deterministic rescaled retry of $180$~s under frozen equilibration;
+\texttt{CERT\_CELL\_WALL\_CAP} $= 420$~s; no third attempt, no threshold
+change, no imputation, no cell deletion), and records solver status
+(primary and retry), wall seconds, coefficient dynamic range,
+dictionary-scan and A-risk/spectral cut counts, the full-dictionary scan
+residual, primal and dual gaps per $r$, the minimum generalized eigenvalue,
+the A-risk ratio, and \texttt{MU\_CAP\_ACTIVE} (an active finite dual cap
+certifies only after a $\times100$ cap-stability rerun changes the bound by
+at most $10^{-4}r$ with all residuals still passing). Before freeze the
+pipeline must pass a four-toy suite (budget+dose active; A-risk only;
+spectral only; all four active with a dose-feasible design rejected by
+conditioning) with independent primal solves, primal--dual agreement
+$\le10^{-8}$, minimum PSD residual $\ge-10^{-9}$, normalized
+complementarity $\le10^{-8}$, and full-dictionary scan residual
+$\le10^{-8}$. The certificate is comparator- and subspace-relative by
+construction:\ it preserves the predeclared conditioning of \textsc{SCAT32}
+on the directions \textsc{SCAT32} resolves, and it is not a global optimum
+over all images, subspaces, risk tradeoffs, or physical patterns.
 Continuous weights are rounded to an exact $972$-row design by efficient
 rounding followed by deterministic
 exchange~\cite{pukelsheim1992rounding,nikolov2022volume,sagnol2015exact},
@@ -307,17 +365,26 @@ achieved mean load, \texttt{RIDGE\_GUARD\_CLIPPED} flags, ceiling fractions,
 and the nine-dwell $S_{\mathrm{gate}}$ curves for
 \texttt{RIDGE\_SPEED\_PASS}.}
 
-\subsection{Near-optimality certificate distribution}
-\SPH{M1: per-cell full dose-constrained dual $G_{\mathrm{full}}/r$ over the
-480 certificate cells, primal feasibility, exact D-efficiency,
-dual/complementarity, and \texttt{MU\_CAP\_ACTIVE} incidence, for
-\texttt{DOSE\_SAFE\_CERT\_PASS}.}
+\subsection{Full-stack certificate distribution}
+\SPH{M1: per-cell full-stack dual bound $G_{\mathrm{stack}}/r$ over the 480
+certificate cells, terminal statuses
+(\texttt{CERTIFIED}/\texttt{COUNTEREXAMPLE}/\texttt{NUMERICAL\_UNRESOLVED}),
+primal feasibility, exact D-efficiency, dual/complementarity, cut and scan
+counts, wall-time summary against the frozen 420~s cap, and
+\texttt{MU\_CAP\_ACTIVE} incidence, for \texttt{FULL\_STACK\_CERT\_PASS}.}
 
 \subsection{Context arms and design diagnostics}
 \SPH{M1: \textsc{SCAT16}/\textsc{LBLOB16} context ladder, the dose-relaxed and
 dose-constrained OED design diagnostics, and the development-cell
 guard-versus-$\alpha$ collapse (\texttt{PATH\_FEASIBLE\_ALPHA}) --- all
-no-endpoint.}
+no-endpoint.} The dose-only class is retained only as a no-gate development
+analysis with source-of-record fields
+\texttt{DOSE\_ONLY\_PRIMAL\_GAP\_PER\_R},
+\texttt{DOSE\_ONLY\_D\_EFFICIENCY\_LOWER},
+\texttt{DOSE\_ONLY\_DUAL\_UPPER\_IF\_AVAILABLE}, and
+\texttt{DOSE\_ONLY\_SOLVER\_STATUS}; its current values are lower bounds on
+available headroom, not estimates of the global dose-only optimum, and no
+confirmatory dose-only verdict exists.
 
 % ===========================================================================
 \section{Proofs}

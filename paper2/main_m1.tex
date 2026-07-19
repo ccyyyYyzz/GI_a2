@@ -83,25 +83,28 @@ out-of-sample at both fresh points ($3\%$ and $6\%$), and a pooled two-run
 continuous-peak fit measures the jitter exponent at $-0.658$ ($1.3\%$ from
 $-2/3$). The design principle:\ hand-designed sparse and matched patterns
 are atoms of one concave experiment-design program whose per-atom
-information is the exact renewal kernel, and under uniform-dose safety that
-program yields a sharp doctrine. Unconstrained, information wants to
-concentrate load; a uniform $\pm5\%$ per-pixel dose constraint removes that
-degree of freedom and collapses the tested target-load-normalized adaptive
-design toward a balanced pattern family; the near-optimality of that
-balanced design (\textsc{SCAT32}) over an expanded gain-coupled dictionary
-is certified, not assumed, by a full dose-constrained dual bound; and the
-surviving useful control is the global detector operating point, one power
-knob that tracks the jitter-capped ridge. A preregistered simulation
-campaign (M1) tests the doctrine with a paired fixed-dwell ridge
-operating-point primary (\textsc{RIDGE-SCAT32} versus \textsc{SCAT32-060}, a
-power-for-time comparison), a nine-dwell time-to-quality secondary, a
-480-cell near-optimality certificate, five arms, and a mandatory disclosure
-ledger; the three verdicts are mutually non-rescuing and all outcomes are
-reported as frozen \SPH{M1: ridge operating-point, speed, and certificate
-verdicts with cross-arm numbers}. The result is an operating handbook:\
-measure the jitter, let the law set the load, let the certificate vouch for
-the balanced patterns, and tune the global operating point when time is the
-scarce resource.
+information is the exact renewal kernel, and under deployment safety that
+program yields a sharply localized doctrine. Information rewards
+scene-adapted measurement geometry; a uniform $\pm5\%$ per-pixel dose
+constraint controls cumulative exposure but does not eliminate that
+geometry headroom --- a development-only constructive probe exhibits a
+dose-uniform, budget-feasible design with more than twice the local
+D-information of the balanced family in audited development cells; whether
+the headroom survives the full deployed conditioning stack --- incident
+budget, dose band, A-risk cap, and spectral floor --- is tested by a
+480-cell conic near-optimality certificate of the balanced
+(\textsc{SCAT32}) design; and global operating-point control is orthogonal
+and survives, one power knob that tracks the jitter-capped ridge. A
+preregistered simulation campaign (M1) tests the doctrine with a paired
+fixed-dwell ridge operating-point primary (\textsc{RIDGE-SCAT32} versus
+\textsc{SCAT32-060}, a power-for-time comparison), a nine-dwell
+time-to-quality secondary, the full-stack certificate, five arms, and a
+mandatory disclosure ledger; the three verdicts are mutually non-rescuing
+and all outcomes are reported as frozen \SPH{M1: ridge operating-point,
+speed, and full-stack certificate verdicts with cross-arm numbers}. The
+result is an operating handbook:\ measure the jitter, let the law set the
+load, let the certificate arbitrate the geometry question, and tune the
+global operating point when time is the scarce resource.
 \end{abstract}
 
 % ===========================================================================
@@ -144,12 +147,14 @@ zero-jitter critical manifold of a two-parameter crossover
 refined Monte-Carlo sweep existed, were confirmed out-of-sample. One
 certified design principle answers the second:\ hand-designed patterns are
 atoms of a single concave experiment-design program over design measures
-with the exact renewal kernel, and under uniform-dose safety that program
-collapses toward a balanced pattern family whose near-optimality is
-certified against an expanded frozen dictionary, leaving the global detector
-operating point as the surviving useful control (Section~\ref{sec:design}).
+with the exact renewal kernel; uniform dose alone controls cumulative
+exposure without eliminating scene-adapted geometry headroom, so the
+operative restriction is the full deployed conditioning stack, against which
+the balanced design's near-optimality is tested by a certified conic dual
+bound over an expanded frozen dictionary, with the global detector operating
+point as the orthogonal surviving control (Section~\ref{sec:design}).
 A preregistered campaign (M1) seals both with a ridge operating-point
-primary, a time-to-quality secondary, a near-optimality certificate, and a
+primary, a time-to-quality secondary, the full-stack certificate, and a
 mandatory disclosure ledger (Sections~\ref{sec:campaign}--\ref{sec:results}).
 
 % ¶4 -- frozen novelty wording (R10 Q6, verbatim; no "first"). DO NOT REWORD.
@@ -174,11 +179,11 @@ small-jitter coefficient $2^{-1/3}$, and the matched crossover prediction
 $(6\nu)^{1/3}(1+12\nu c_v^{2})^{-1/3}$, verified out-of-sample against
 preregistered predictions with a pooled jitter-exponent measurement of
 $-0.658$; (ii)~the certified design principle (Section~\ref{sec:design}):\
-one concave program with the exact renewal kernel whose uniform-dose-constrained
-optimum collapses to a balanced pattern family, a full dose-constrained dual
-near-optimality certificate over an expanded gain-coupled dictionary, frozen
-guards, and the photon-budget versus time-budget conjugacy as its operating
-doctrine; (iii)~a preregistered simulation campaign (M1) whose scenes, atoms,
+one concave program with the exact renewal kernel, a constructive
+development-stage localization showing that uniform dose alone leaves
+scene-adapted geometry headroom, a full-stack conic near-optimality
+certificate over an expanded gain-coupled dictionary, frozen guards, and the
+photon-budget versus time-budget conjugacy as its operating doctrine; (iii)~a preregistered simulation campaign (M1) whose scenes, atoms,
 load grid, guards, endpoints, and three mutually non-rescuing verdicts were
 frozen in an immutable commit before any confirmatory reconstruction existed,
 reported as frozen including any negative primary
@@ -378,22 +383,25 @@ extension are given in the supplement.
 % ===========================================================================
 \section{The certified design principle}
 \label{sec:design}
-% Act 3a: master program; four-beat doctrine (R17 6.1) -- (1) information
-% wants concentration; (2) uniform-dose safety collapses it; (3) simplicity
-% certified over the EXPANDED class; (4) global operating point survives.
+% Act 3a: master program; four-beat doctrine (R18 4.2) -- (1) information
+% rewards scene-adapted geometry; (2) uniform dose is NOT enough to remove
+% that headroom; (3) conditioning safeguards define the deployable class;
+% (4) global operating-point control is orthogonal and survives.
 % Full machinery -> supplement S3.
-The design principle is a doctrine in four movements. Unconstrained, the
-information geometry wants to concentrate illumination load on the brightest,
-most valuable directions (Section~\ref{sec:program}). A uniform per-pixel dose
-constraint removes that degree of freedom:\ within the frozen
-target-load-normalized atom family the adaptive concentration collapses toward
-the balanced design (Section~\ref{sec:collapse}). The simplicity of that
-balanced design is then certified rather than assumed, by a full
-dose-constrained dual bound over an expanded gain-coupled dictionary
-(Section~\ref{sec:certificate}). What survives as useful control is not
-spatial redistribution of dose but the global detector operating point, a
-single power knob that tracks the jitter-capped ridge
-(Sections~\ref{sec:conjugacy} and~\ref{sec:alignment}).
+The design principle is a doctrine in four movements. Information rewards
+scene-adapted measurement geometry:\ the dose-relaxed optimum and a
+constructive dose-only probe expose substantial local D-information headroom
+(Sections~\ref{sec:program} and~\ref{sec:devprobe}). Uniform dose is not
+enough to eliminate that headroom:\ a balanced cumulative exposure can
+coexist with scene-adapted measurement directions
+(Section~\ref{sec:devprobe}). Conditioning safeguards define the deployable
+class:\ the A-risk and spectral anchors test whether the geometry headroom
+survives reconstruction-trust requirements, and the full-stack certificate
+quantifies what remains (Section~\ref{sec:certificate}). Global
+operating-point control is orthogonal and survives:\ ridge tracking changes
+one global source multiplier and is evaluated by the empirical
+power-for-time endpoints (Sections~\ref{sec:conjugacy}
+and~\ref{sec:alignment}).
 
 \subsection{One concave program over design measures}
 \label{sec:program}
@@ -435,67 +443,124 @@ every atom obeys a pointwise equal-load constraint the scalar kernel factors
 out and the geometry reduces to ordinary linear
 D-optimality~\cite{kiefer1959optimum}; genuine dead-time-aware design
 therefore requires controlled load variation. Unconstrained, this geometry
-rewards concentrating load on the brightest, highest-value directions --- the
-incentive whose fate under safety constraints the rest of this section traces.
+rewards scene-adapted concentration of measurement effort on the brightest,
+highest-value directions --- the incentive whose fate under deployment
+safety the rest of this section traces.
 
-\subsection{Uniform-dose safety and the collapse of adaptive concentration}
+\subsection{Safety guards and the retirement of the adaptive arm}
 \label{sec:collapse}
-The unconstrained incentive to concentrate load does not survive the safety
-constraints. The earlier variable-load adaptive arm (\textsc{OED-DT}) is
-therefore retired as a proposed or gated imaging method:\ its speed gate was
-withdrawn before the campaign freeze as infeasible, not recorded as a
-confirmatory failure. Within the frozen target-load-normalized atom family,
-under the incident-signal budget and the $\pm5\%$ per-pixel dose constraint,
-no nonzero adaptive mixture is admissible in the audited development cell ---
-the descending exact mixture scan terminates at zero adaptive rows,
-\texttt{ADAPTIVE\_COLLAPSE\_UNDER\_GUARDS}. This is development evidence about
-one parameterization, explicitly not a confirmatory theorem and not a claim
-that adaptivity is foreclosed:\ the target-load-normalized atomization fixes
-each pattern's amplitude to hit a predicted load, which on dim supports
-demands large physical amplitude and anti-aligns the dose vector with
-brightness, so the collapse could be an artifact of that anti-brightness
-parameterization. Removing that possibility is exactly why the near-optimality
-certificate below is run over an \emph{expanded} gain-coupled class. The
-descending scan survives only as a path-specific descriptive diagnostic
-(\texttt{PATH\_FEASIBLE\_ALPHA}, relative to the frozen row ordering, reported
-in the methods-development supplement), never an estimator, fallback, or
-certificate. The dose-relaxed and dose-constrained continuous OED solutions
-are retained as no-endpoint design diagnostics that illustrate the incentive
-and the safety frontier (Figure~\ref{fig:actiii}); neither is the proposed
-imaging method.
+The scene-adapted incentive collides with the deployed safety guards in the
+audited development evidence. The earlier variable-load adaptive arm
+(\textsc{OED-DT}) is retired as a proposed or gated imaging method:\ its
+speed gate was withdrawn before the campaign freeze as infeasible, not
+recorded as a confirmatory failure. Within the frozen target-load-normalized
+atom family, under the declared guard stack --- incident budget, $\pm5\%$
+per-pixel dose, A-risk cap, and spectral floor --- no nonzero adaptive
+mixture is admissible in the audited development cell:\ the descending exact
+mixture scan terminates at zero adaptive rows
+(\texttt{ADAPTIVE\_COLLAPSE\_UNDER\_GUARDS}), every nonzero mixture violating
+at least one of the dose, A-risk, or spectral guards. This is development
+evidence about one parameterization under the joint guard stack, explicitly
+not a confirmatory theorem; the target-load-normalized atomization fixes each
+pattern's amplitude to hit a predicted load, which on dim supports demands
+large physical amplitude and anti-aligns the dose vector with brightness.
+Two consequences are drawn, and they are separated deliberately. First, the
+constructive development probe of Section~\ref{sec:devprobe} shows that the
+dose constraint \emph{alone} does not produce the collapse:\ dose-uniform,
+budget-feasible geometry headroom exists. The operative restriction is
+therefore the conditioning stack, and the near-optimality certificate of
+Section~\ref{sec:certificate} targets exactly that full stack over an
+\emph{expanded} gain-coupled class. Second, the descending scan survives only
+as a path-specific descriptive diagnostic (\texttt{PATH\_FEASIBLE\_ALPHA},
+relative to the frozen row ordering, reported in the methods-development
+supplement), never an estimator, fallback, or certificate. The dose-relaxed
+and dose-constrained continuous OED solutions are retained as no-endpoint
+design diagnostics that illustrate the incentive and the safety frontier
+(Figure~\ref{fig:actiii}); neither is the proposed imaging method.
 
-\subsection{Simplicity certified, not assumed}
+\subsection{Development evidence:\ the dose-only constructive probe}
+\label{sec:devprobe}
+% R18 §1, §6: existence-only DEV evidence; mandatory label + support-
+% preserving-initialization caveat + approved future-work sentence VERBATIM.
+% Source of record: results/round63_m1/R18_GAP_PROBE_LOG.txt.
+\emph{Development-only constructive analysis; not a confirmatory endpoint or
+population estimate.} A development-only constructive probe showed that the
+$\pm5\%$ per-pixel dose constraint alone did not eliminate scene-adapted
+geometry selection:\ a feasible low-load geometry design achieved a
+substantially larger local determinant than SCAT32 in the audited cells.
+This was a lower-bound construction, not an estimate of the dose-only
+optimum. Concretely, on the glyph development scene
+(\texttt{m1\_dev\_glyph}, measurement seed $0$), at the two audited cells
+$(\nu,b) = (2000, 0.60)$ and $(200, 0.05)$, the probe produced probability
+designs over the frozen $D_{\mathrm{cert}}$ satisfying the incident budget
+and the $\pm5\%$ dose band with log-determinant improvements over deployed
+\textsc{SCAT32} of $\Delta\log\det V/r = 0.776$ and $0.903$, certifying
+local D-efficiency ratios of at least $e^{0.776}\approx2.17$ and
+$e^{0.903}\approx2.47$, respectively. The construction is existence-only,
+and its composition must not be over-read:\ the probe initializes positive
+mass only on the lowest-load $D_{\mathrm{load}}$ column, and its
+multiplicative update is support-preserving (an exactly zero column can
+never activate), so the reported designs --- all mass on
+$D_{\mathrm{load}}$, uniform low support loads, roughly half the photon
+budget spent --- establish neither that the dose-only optimum avoids gain
+atoms nor that it prefers low loads or a partial budget. The dose-only class
+is retained only as a no-gate development analysis; no confirmatory
+dose-only verdict exists. A frozen six-image replication (all six
+development images, the declared seeds, the same two anchor cells, every
+result reported without selection) is \SPH{R18-DEV: frozen six-image
+dose-only replication table --- in flight; set frozen before any aggregate
+is read}. The dose-only construction shows that uniform exposure still
+permits scene-adapted geometry selection. Optimizing and validating that
+geometry under relaxed or task-specific conditioning constraints is left to
+a separate follow-up; no such arm or endpoint is added to the present
+campaign.
+
+\subsection{Conditioning safeguards define the deployable class:\ the
+full-stack certificate}
 \label{sec:certificate}
-% ONE paragraph + Table 2; full dose-constrained dual over D_cert in supp S3.
-The balanced design's near-optimality is certified, not trusted. By concavity,
-optimality is equivalent to a bounded reduced sensitivity (the constrained
-Kiefer--Wolfowitz / general equivalence condition for nonlinear
-models~\cite{kiefer1959optimum,white1973equivalence}). The confirmatory
-quantity is the full dose-constrained dual upper bound $G_{\mathrm{full}}$ of
-the deployed balanced \textsc{SCAT32} design against the continuous optimum of
-the dose-safe class, evaluated over an \emph{expanded} dictionary
-$D_{\mathrm{cert}} = D_{\mathrm{load}}\cup D_{\mathrm{gain}}$:\ to the frozen
-target-load-normalized atoms $D_{\mathrm{load}}$ it adds a certificate-only
-gain-coupled family $D_{\mathrm{gain}}$ in which each base geometry is scaled
-by $\gamma\in\{0.2,0.5,1,2,5\}$ with its predicted load allowed to
-\emph{emerge} rather than be rescaled to a target, so fixed-flux
-self-water-filling and bounded per-pattern gain control lie inside the
-comparison class. The dual carries one incident-budget multiplier and every
-upper and lower per-pixel-dose multiplier, uses coverage-seeded column
-generation, and finishes with an exact scan over all of $D_{\mathrm{cert}}$;
-the frozen bar is $G_{\mathrm{full}}/r \le 10^{-2}$, certifying local
-D-efficiency of at least $\exp(-0.01) = 0.99005$ relative to the continuous
-optimum of the expanded dose-safe class (full dual in the supplement). A-risk
-and spectral constraints are deliberately excluded from the dual target class,
-so that the certified class is larger and the near-optimality statement
-stronger; the deployed \textsc{SCAT32} rows still satisfy every physical and
-conditioning disclosure separately. The frozen certificate wording is exact.
-Within the frozen nonnegative illumination dictionary, local pre-scan
-linearization, incident budget, and $\pm5\%$ per-pixel dose constraint, the
-balanced SCAT32 design was tested against a full constrained dual upper bound.
-Global ridge tracking was evaluated separately as the time-limited,
-power-available control. Continuous weights are rounded to an exact $972$-row
-design by efficient rounding and deterministic
+% R18 §2-§3: C_stack class, support-function bound G_stack, conic LMI dual,
+% cutting-plane implementation; R18 §4.3 frozen paragraph verbatim. Full
+% construction in supp S3.
+The deployable class is defined by the conditioning safeguards, and the
+balanced design's near-optimality within it is certified, not trusted. By
+concavity, optimality is equivalent to a bounded reduced sensitivity (the
+constrained Kiefer--Wolfowitz / general equivalence condition for nonlinear
+models~\cite{kiefer1959optimum,white1973equivalence}). The frozen certificate
+wording is exact. The confirmatory certificate therefore targeted the full
+deployed stack:\ the frozen dictionary and local pre-scan linearization,
+incident budget, $\pm5\%$ per-pixel dose band, A-risk cap, and spectral
+floor. Global ridge tracking was evaluated separately as the time-limited,
+power-available control. Explicitly, the certified class
+$\mathcal{C}_{\mathrm{stack}}$ contains every probability design over the
+expanded dictionary $D_{\mathrm{cert}} = D_{\mathrm{load}}\cup
+D_{\mathrm{gain}}$ --- the frozen target-load-normalized atoms plus a
+certificate-only gain-coupled family in which each base geometry is scaled by
+$\gamma\in\{0.2,0.5,1,2,5\}$ with its predicted load allowed to \emph{emerge}
+rather than be rescaled to a target, so fixed-flux self-water-filling and
+bounded per-pattern gain control lie inside the comparison class --- that
+satisfies the incident budget, the $\pm5\%$ per-pixel dose band, the A-risk
+cap $\mathrm{tr}\{V(\xi)^{-1}\}\le1.05\,\mathrm{tr}(V_{\mathrm{fix}}^{-1})$,
+and the spectral floor $V(\xi)\succeq0.5\,V_{\mathrm{fix}}$, with
+$V_{\mathrm{fix}}$ the load-matched deployed \textsc{SCAT32} information
+matrix. The A-risk and spectral conditions are \emph{global design
+constraints} of the class, represented exactly as linear matrix inequalities
+and priced in the dual by positive-semidefinite multipliers; they are never
+approximated by dropping individual atoms. The certificate quantity is the
+support-function upper bound $G_{\mathrm{stack}}$ on the log-determinant gap
+between the deployed design and the continuous optimum of
+$\mathcal{C}_{\mathrm{stack}}$, computed by a certified cutting-plane outer
+approximation (spectral eigenvector cuts, convex A-risk tangent cuts,
+budget/dose prices, column generation, and an exact full-dictionary scan; a
+finite cut set is an outer relaxation, so a small bound remains
+conservative); the frozen bar is $G_{\mathrm{stack}}/r \le 10^{-2}$,
+certifying local D-efficiency of at least $\exp(-0.01) = 0.99005$ (full
+construction, primal discriminator, and numerical protocol in the
+supplement). The certificate is comparator- and subspace-relative by
+construction:\ it preserves the predeclared conditioning of \textsc{SCAT32}
+on the directions \textsc{SCAT32} resolves, and it is not a global optimum
+over all images, subspaces, risk tradeoffs, or physical patterns. Continuous
+weights are rounded to an exact $972$-row design by efficient rounding and
+deterministic
 exchange~\cite{pukelsheim1992rounding,nikolov2022volume,sagnol2015exact},
 admissible only at exact D-efficiency $\ge 0.95$. Every remaining guard is a
 frozen constraint, not a tunable proxy (Table~\ref{tab:machinery}); the full
@@ -504,7 +569,7 @@ are in the supplement.
 
 \begin{table}[t]
 \centering
-\caption{The frozen design machinery at a glance (R10/R11/R13/R17; full
+\caption{The frozen design machinery at a glance (R10/R11/R13/R17/R18; full
 statements in the supplement).}
 \label{tab:machinery}
 \footnotesize
@@ -524,14 +589,17 @@ Peak & shape:\ $w_j\in[\tfrac14,4]$, $k\ge16$; physical:\
   $\max a_{ij}\le1536$ \\
 Dose & per-pixel mean exposure within $\pm5\%$ of image mean, re-verified
   post-rounding \\
-Floors & $V_{\mathrm{OED}}\succeq0.5\,V_{\text{FIXED}^\ast}$;
+Floors & spectral $V(\xi)\succeq0.5\,V_{\text{FIXED}^\ast}$; A-risk
   $\mathrm{tr}(V^{-1})\le1.05\,\mathrm{tr}(V_{\text{FIXED}^\ast}^{-1})$
-  (disclosed separately; not in the dual target class) \\
+  --- global design constraints of the certified class
+  $\mathcal{C}_{\mathrm{stack}}$, LMI-priced in the certificate dual \\
 Kernel trust & exact-PMF certification; $J_{\mathrm{mean}}/\Jex\ge0.90$;
   RQL log-load bias $\le0.05$; $p_{\mathrm{ceil}}\le0.05$ per atom,
   $\le0.01$ design-weighted \\
-Certificate & $G_{\mathrm{full}}/r\le10^{-2}$ (full dose-constrained dual,
-  expanded $D_{\mathrm{cert}}$ scan; local D-eff.\ $\ge0.99005$) \\
+Certificate & $G_{\mathrm{stack}}/r\le10^{-2}$ (full-stack conic dual,
+  expanded $D_{\mathrm{cert}}$ scan; per-cell status
+  \texttt{CERTIFIED}\,/\,\texttt{COUNTEREXAMPLE}\,/\,%
+  \texttt{NUMERICAL\_UNRESOLVED}; local D-eff.\ $\ge0.99005$) \\
 Rounding & exact $972$-row design, $\mathrm{Eff}_D\ge0.95$ \\
 \hline
 \end{tabular}
@@ -541,7 +609,7 @@ Rounding & exact $972$-row design, $\mathrm{Eff}_D\ge0.95$ \\
 \label{sec:conjugacy}
 % Frozen R11/R13 §8(f) wording preserved verbatim. The operating doctrine.
 The doctrine has two conjugate resource corners of the same dead-time
-information map. In the \emph{photon-budgeted} corner the near-optimality
+information map. In the \emph{photon-budgeted} corner the full-stack
 certificate holds the incident-signal resource as a hard \emph{inequality},
 \begin{equation}
   \int \rho_s(a)\,d\xi(a) \le 0.60,
@@ -610,10 +678,12 @@ negative beyond it, so fixed flux can overdrive the brightest directions
 and explicit gain control becomes necessary. The full proposition, its
 residual near-optimality bound, and its failure modes are in the
 supplement. Naive per-pattern load equalization was thus refuted (R11) for
-destroying this brightness--information alignment, while the dose-safe
-analysis of Section~\ref{sec:collapse} shows the opposite extreme ---
-adaptive concentration --- conflicting with strict dose and conditioning
-safety; the balanced global-flux policy is the robust middle.
+destroying this brightness--information alignment, while the development
+evidence of Section~\ref{sec:collapse} shows the opposite extreme ---
+adaptive concentration --- colliding with the deployed conditioning stack;
+the balanced global-flux policy is the robust middle of the tested extremes,
+with dose-feasible geometry headroom outside the conditioning stack left to
+a separate follow-up (Section~\ref{sec:devprobe}).
 
 % ===========================================================================
 \section{Preregistered campaign (M1)}
@@ -687,7 +757,7 @@ arms.
 \caption{The five M1 arms over the common balanced \textsc{SCAT32} design.
 The paired \textsc{RIDGE-SCAT32} vs.\ \textsc{SCAT32-060} comparison carries
 the primary gate and \textsc{RIDGE-SCAT32} vs.\ \textsc{SCAT32-SAFE} the speed
-gate; the near-optimality certificate (\texttt{DOSE\_SAFE\_CERT\_PASS})
+gate; the full-stack certificate (\texttt{FULL\_STACK\_CERT\_PASS})
 applies to the deployed design itself. \textsc{SCAT16} and \textsc{LBLOB16}
 are descriptive context.}
 \label{tab:arms}
@@ -737,21 +807,34 @@ seed-mean radiometric PSNR, equal-weight PAVA isotonic curves, $0.50$~dB
 safe-range informativeness floor, and censoring taxonomy transfer verbatim),
 with median $S_{\mathrm{gate}} \ge 3$, bootstrap lower bound $> 1$, and
 $\ge 18/24$ images with $S_{\mathrm{gate}} > 1$. The \emph{confirmatory
-structural secondary} is the near-optimality certificate
-(\texttt{DOSE\_SAFE\_CERT\_PASS}, Section~\ref{sec:certificate}):\ PASS iff
-every one of the $24\times5\times2\times2 = 480$ certificate cells
-($\nu\in\{200,2000\}$, $b\in\{0.05,0.60\}$) is primal-feasible, numerically
-certified, and satisfies $G_{\mathrm{full}}/r \le 10^{-2}$. No verdict can
-rescue another.
+structural secondary} is the full-stack near-optimality certificate
+(\texttt{FULL\_STACK\_CERT\_PASS}, Section~\ref{sec:certificate}). Every one
+of the $24\times5\times2\times2 = 480$ certificate cells
+($\nu\in\{200,2000\}$, $b\in\{0.05,0.60\}$) receives exactly one terminal
+status --- \texttt{CERTIFIED} (deployed design and class primal-feasible,
+all residual checks passed, $G_{\mathrm{stack}}/r \le 10^{-2}$),
+\texttt{COUNTEREXAMPLE} (a concrete full-stack-feasible design with actual
+log-determinant improvement per dimension $>10^{-2}$, found by the frozen
+support-expanding primal screen), or \texttt{NUMERICAL\_UNRESOLVED} (neither
+conclusion within the frozen numerical protocol) --- under a frozen per-cell
+wall cap of $420$~s (a $60$~s primal screen, a $180$~s cutting-plane solve,
+and one deterministic rescaled retry; no third attempt, no threshold change,
+no imputation, no cell deletion). PASS iff all $480$ cells are
+\texttt{CERTIFIED}; \texttt{NUMERICAL\_UNRESOLVED} means not certified, not
+scientifically refuted. No verdict can rescue another.
 
 \paragraph{Disclosure ledger.}
 Every cell discloses incident and detected photons (predicted and realized),
 the incident-dose and detected-count ratios, source/peak-irradiance ratio, the
 achieved mean load and its quantiles $\rho_5$, $\rho_{50}$, $\rho_{95}$,
 $\rho_{\max}$, the physical peak, predicted and realized ceiling fractions, any
-\texttt{RIDGE\_GUARD\_CLIPPED} flag, and mean $\Jex$; certificate cells add the
-full dose-constrained dual $G_{\mathrm{full}}$, the exact D-efficiency, the
-dual/complementarity report, and the \texttt{MU\_CAP\_ACTIVE} disclosure. The
+\texttt{RIDGE\_GUARD\_CLIPPED} flag, and mean $\Jex$; certificate cells add
+the terminal status, the full-stack dual bound $G_{\mathrm{stack}}$, the
+exact D-efficiency, solver status for the primary solve and the single
+retry, wall seconds, coefficient dynamic range, dictionary-scan and
+A-risk/spectral cut counts, the full-dictionary scan residual, the primal
+and dual gaps per $r$, the minimum generalized eigenvalue, the A-risk ratio,
+and the \texttt{MU\_CAP\_ACTIVE} disclosure. The
 full nine-dwell kernel/ridge certification table and the SHA256 of
 $D_{\mathrm{cert}} = D_{\mathrm{load}}\cup D_{\mathrm{gain}}$ are frozen before
 any confirmatory scene is opened.
@@ -776,10 +859,13 @@ an equal-photon-budget or photon-efficiency comparison.
 bound, count of scenes with $S_{\mathrm{gate}}>1$, and PASS/FAIL, for
 \textsc{SCAT32-SAFE} against the dwell-dependent \textsc{RIDGE-SCAT32} policy.}
 
-\subsection{Confirmatory certificate: near-optimality of the balanced design}
-\SPH{M1: DOSE\_SAFE\_CERT\_PASS --- distribution of $G_{\mathrm{full}}/r$
-across the 480 certificate cells, the fraction certified at $\le10^{-2}$,
-primal feasibility, and the frozen PASS/FAIL call.}
+\subsection{Confirmatory certificate: near-optimality over the full
+deployed stack}
+\SPH{M1: FULL\_STACK\_CERT\_PASS --- distribution of $G_{\mathrm{stack}}/r$
+and of terminal statuses (\texttt{CERTIFIED}\,/\,\texttt{COUNTEREXAMPLE}\,/\,%
+\texttt{NUMERICAL\_UNRESOLVED}) across the 480 certificate cells, the
+fraction certified at $\le10^{-2}$, wall-time summary against the frozen
+420~s cap, and the frozen PASS/FAIL call.}
 
 \subsection{Context arms and design diagnostics}
 \SPH{M1: \textsc{SCAT16}/\textsc{LBLOB16} context ladder, the dose-relaxed and
@@ -790,16 +876,22 @@ tables in the supplement.}
 \begin{figure*}[t]
 \centering
 \fbox{\parbox[c][4.0cm][c]{0.95\textwidth}{\centering
-\SPH{M1 (Act III, four panels):\ (a)~dose deviation, A-risk, and spectral
+\SPH{M1 (Act III, five panels):\ (a)~dose deviation, A-risk, and spectral
 guard versus path-specific $\alpha$ on a DEV representative, labeled
-development evidence; (b)~confirmatory $G_{\mathrm{full}}/r$ distributions over
-the expanded dose-safe class (480 cells); (c)~ridge-versus-$0.60$ fixed-dwell
-reconstructions and per-scene quality gains at $\nu=2000$; (d)~a schematic
-distinguishing the photon-budgeted and time-limited resource corners.}}}
-\caption{Act III:\ uniform-dose safety collapses adaptive concentration
-(development evidence), the balanced design's near-optimality is certified
-over the expanded class, and global operating-point control survives. Panels
-fill from the frozen M1 analyzer after tag \texttt{m1-freeze}.}
+development evidence; (b)~the constructive dose-only primal lower bound
+(development-only:\ per-cell $\Delta\log\det V/r$ of the probe designs
+vs.\ deployed \textsc{SCAT32}); (c)~confirmatory $G_{\mathrm{stack}}/r$ and
+terminal-status distributions over the full-stack class, labeled
+\texttt{FULL\_STACK\_CERT\_PASS} (480 cells); (d)~ridge-versus-$0.60$
+fixed-dwell reconstructions and per-scene quality gains at $\nu=2000$;
+(e)~a schematic distinguishing the photon-budgeted and time-limited resource
+corners.}}}
+\caption{Act III:\ information rewards scene-adapted geometry, uniform dose
+alone does not eliminate that headroom (development evidence, panels a--b),
+the conditioning stack defines the deployable class tested by the full-stack
+certificate (panel c), and global operating-point control survives
+orthogonally (panels d--e). Panels fill from the frozen M1 analyzer after
+tag \texttt{m1-freeze}.}
 \label{fig:actiii}
 \end{figure*}
 
@@ -843,22 +935,29 @@ operating-point effect, not evidence that a design must spatially redistribute
 dose into the ridge.
 
 Contingent on the frozen verdicts (\SPH{M1: RIDGE\_OPERATING\_PASS,
-RIDGE\_SPEED\_PASS, and DOSE\_SAFE\_CERT\_PASS calls}), the campaign is
-preregistered to license the governing ruling's frozen conclusions. Under the
-declared dose-safety constraints, per-pattern load adaptation provided no
-certified material D-information advantage over the balanced design at the
-preregistered anchor dwells. The useful surviving control was the global
-operating point rather than spatial redistribution of incident dose. This does
-not assert that adaptivity is universally foreclosed or that the balanced
-design is optimal over all physical patterns:\ the collapse is a structural
-statement about the tested target-load-normalized family under strict
-uniform-dose safety, and the certificate is stated relative to the frozen
-expanded dictionary, the local pre-scan estimate, and the declared resource
-model. The line's thesis, in the frozen wording of the governing ruling, is
-this. Strict uniform-dose safety collapses the tested adaptive design space
-toward a balanced pattern family, for which near-optimality can be certified;
-high-flux benefit is then recovered by tuning the global detector operating
-point.
+RIDGE\_SPEED\_PASS, and FULL\_STACK\_CERT\_PASS calls}), the campaign is
+preregistered to license only the governing ruling's frozen conclusions.
+Global operating-point control remains the deployed positive arm; geometry
+selection is now known to retain dose-feasible headroom outside the
+conditioning stack (Section~\ref{sec:devprobe}), so operating-point control
+and geometry adaptation are not presented as an exhaustive either--or.
+\SPH{M1 conditional wording --- if FULL\_STACK\_CERT\_PASS passes, insert
+verbatim:\ ``Within the frozen full-stack class at the preregistered anchor
+cells, balanced SCAT32 was certified within 1\% local D-efficiency of the
+best admissible design. The useful deployed positive control was the global
+detector operating point; geometry optimization under relaxed conditioning
+remains a separate opportunity.'' If it fails, that paragraph is
+forbidden --- report the distribution of certified, counterexample, and
+unresolved cells without a categorical collapse claim.} The certificate is
+comparator- and subspace-relative:\ it is stated relative to the frozen
+expanded dictionary, the local pre-scan estimate, the declared resource
+model, and the directions \textsc{SCAT32} resolves. The line's thesis, in
+the frozen wording of the governing ruling, is this. Uniform dose controls
+cumulative exposure but does not eliminate scene-adapted geometry selection.
+The operative restriction is the full deployed conditioning stack:\ balanced
+SCAT32 is tested for certified near-optimality within that frozen class,
+while time-limited image gains are tested separately by global ridge
+tracking.
 
 The jitter-capped ridge is the practical caution. The cube-root ridge is a
 property of the zero-jitter critical manifold; the moment a detector's hold
@@ -899,9 +998,10 @@ Step & Rule \\
   $\Gamma = \Cu\sqrt{\nu\rho/(1+\rho)} \gtrsim 1$ marks the photon-limited
   regime \\
 4.\ Pick patterns & photon-budgeted:\ the balanced \textsc{SCAT32} design,
-  certified near-optimal over the expanded dose-safe class
-  ($G_{\mathrm{full}}/r\le10^{-2}$); time-budgeted:\ \textsc{RIDGE-SCAT32} ---
-  one global multiplier to $\rhoR(\nu)$ (Section~\ref{sec:alignment}) \\
+  tested for certified near-optimality within the full deployed conditioning
+  class ($G_{\mathrm{stack}}/r\le10^{-2}$); time-budgeted:\
+  \textsc{RIDGE-SCAT32} --- one global multiplier to $\rhoR(\nu)$
+  (Section~\ref{sec:alignment}) \\
 5.\ Doctrine & photon-constrained $\to$ stay below the ridge
   ($\Jex/\rho$ falls); time-constrained $\to$ track the jitter-capped
   ridge \\
@@ -931,16 +1031,21 @@ experiment for the line.
 % ===========================================================================
 \section{Reproducibility}
 \label{sec:repro}
-The design formulation, guards, and campaign follow five frozen rulings:\ the
+The design formulation, guards, and campaign follow six frozen rulings:\ the
 dead-time OED formulation and equivalence certificate (R10), the ridge-zone
 load architecture and incident-budget conjugacy (R11), the M1 freeze audit
 (R13), the unification ruling (R14, issue ``R14 ruling: unification
-architecture''), whose theorem hierarchy Section~\ref{sec:theory} follows, and
+architecture''), whose theorem hierarchy Section~\ref{sec:theory} follows,
 the safety-constrained refreeze (R17, issue ``R17 ruling:
 safety-constrained OED collapse and coherent refreeze''), which retired the
-adaptive imaging arm, re-architected the campaign around the ridge
-operating-point primary and the expanded-class near-optimality certificate,
-and froze the manuscript claim discipline of Section~\ref{sec:design}.
+adaptive imaging arm and re-architected the campaign around the ridge
+operating-point primary and a structural near-optimality certificate, and
+the full-stack localization (R18, issue ``R18 ruling: full-stack certificate
+localization and final refreeze''), which redefined the confirmatory
+certificate over the full deployed conditioning stack
+(\texttt{FULL\_STACK\_CERT\_PASS}), admitted the dose-only constructive
+probe as development-only evidence, and froze the corrected claim discipline
+of Section~\ref{sec:design}.
 Exact-law peak predictions for the refined jitter sweep, including the two
 out-of-sample rows, were registered before the sweep completed
 (\texttt{docs/R14\_PREREGISTERED\_PREDICTIONS.md}, commit \texttt{8a627bb})
