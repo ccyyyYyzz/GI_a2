@@ -85,7 +85,9 @@ crossover $\rho^{*}(\nu,c_v)\sim(6\nu)^{1/3}(1+12\nu c_v^{2})^{-1/3}$ ---
 zero jitter is the critical manifold on which the ridge grows as $\nu^{1/3}$,
 and the exact-law peak predictions, registered before the refined
 Monte-Carlo sweep completed, were confirmed out-of-sample at both fresh
-points ($3\%$ and $6\%$ at $c_v = 0.02$ and $0.2$). We report a preregistered simulation campaign (M1) with a single
+points ($3\%$ and $6\%$ at $c_v = 0.02$ and $0.2$), with a pooled two-run
+continuous-peak fit measuring the jitter exponent at $-0.658$ ($1.3\%$ from
+$-2/3$). We report a preregistered simulation campaign (M1) with a single
 gate on the optimized arm, a common charged pre-scan, six arms, and a
 mandatory per-cell disclosure ledger; all outcomes are reported as frozen
 \SPH{M1: primary/secondary verdicts and cross-arm numbers}.
@@ -323,7 +325,9 @@ fallback is the fixed comparator; no threshold is retuned after freeze.
 % were REGISTERED before the refined sweep completed
 % (docs/R14_PREREGISTERED_PREDICTIONS.md, commit 8a627bb) and CONFIRMED
 % out-of-sample by the sweep (verdict commit 1d8d7aa; both fresh points hit,
-% 3% and 6%).
+% 3% and 6%); pooled zoom+Colab exponent -0.658, 1.3% from -2/3 (4d8310d,
+% bd731d5); k=4/3 intermediate hypothesis preregistered 5e51088, refuted
+% 1a32758.
 The theory spine follows the frozen unification ruling:\ the random-hold
 count-information results of Section~\ref{sec:jitter} are the headline
 theorems, the master design program of Section~\ref{sec:onelagrangian} is the
@@ -448,56 +452,62 @@ optima~\cite{muller1973deadtime,yu2000mean,gronberg2018deadtime,
 alvarez2014pileup,jorgensen2026deadtime}; we found no source stating the
 count-only exponent pair or the extensive/terminal crossover.
 
-% ---- Refined sweep vs. registered exact-law predictions --------------------
-% Source of record: results/round63_study2/jitter_sfi_v2_nu2000.log (+ nu200);
-% predictions registered PRE-DATA at commit 8a627bb, verdict at 1d8d7aa.
+% ---- Three-stage measurement vs. registered exact-law predictions ----------
+% Sources of record: grid = results/round63_study2/jitter_sfi_v2_nu2000.log;
+% zoom (local 150k) + Colab replication (400k) + pooled fit = the appended
+% sections of docs/R14_PREREGISTERED_PREDICTIONS.md (commits 4d8310d,
+% bd731d5). Predictions registered PRE-DATA at 8a627bb; grid verdict 1d8d7aa;
+% k=4/3 intermediate hypothesis preregistered 5e51088, REFUTED 1a32758.
 \begin{table}[t]
 \centering
-\caption{Refined-sweep scalar count information $J(\rho,\nu=2000,c_v)$ for
-lognormal hold times (\texttt{jitter\_sfi\_v2}:\ $100{,}000$ frames per
-cell, common random numbers, 25-point log grid of geometric spacing
-$1.157$), against the exact-law peak predictions of
-Theorem~\ref{thm:cubic}/Eq.~(\ref{eq:crossover}) registered \emph{before}
-the sweep completed (\texttt{docs/R14\_PREREGISTERED\_PREDICTIONS.md},
-commit \texttt{8a627bb}; verdict at commit \texttt{1d8d7aa}). Both
-out-of-sample rows hit ($c_v = 0.02$:\ $3\%$; $c_v = 0.2$:\ $6\%$), and
-every in-sample peak lies within one grid notch of its prediction. The
-earlier coarse-grid fit $c_0 \approx 0.72$ was an effective finite-grid
-coefficient; the exact asymptotic coefficient is $2^{-1/3} = 0.794$.
-Hardware warning:\ at the deterministic ridge ($\rho = 22.3$), $5\%$ jitter
-leaves $J = 0.43$ vs.\ $0.95$ --- about $55\%$ of the scalar count
-information forfeited.
-Source:\ \texttt{results/round63\_study2/}\allowbreak
-\texttt{jitter\_sfi\_v2\_nu2000.log}.}
+\caption{Scalar count information $J(\rho,\nu=2000,c_v)$ for lognormal hold
+times:\ three-stage peak measurement against the exact-law predictions of
+Theorem~\ref{thm:cubic}/Eq.~(\ref{eq:crossover}), registered \emph{before}
+the data (\texttt{docs/R14\_PREREGISTERED\_PREDICTIONS.md}, commit
+\texttt{8a627bb}; verdicts at \texttt{1d8d7aa}, \texttt{4d8310d},
+\texttt{bd731d5}). Grid:\ \texttt{jitter\_sfi\_v2}, $100{,}000$ frames,
+25-point log grid (spacing $1.157$). Zoom:\ continuous
+quadratic-interpolated peaks, local run, $150{,}000$ frames.
+Replication:\ independent Colab run, $400{,}000$ frames. Both out-of-sample
+(o.o.s.)\ grid rows hit ($c_v = 0.02$:\ $3\%$; $c_v = 0.2$:\ $6\%$); the pooled
+eight-measurement log-log fit gives slope $-0.658$ vs.\ $-2/3$ ($1.3\%$),
+with the constant consistent with $2^{-1/3} = 0.794$ within $5$--$10\%$
+(the earlier coarse-grid fit $0.72$ was a finite-grid artifact) and a
+reproducible mild $\approx{-8}\%$ low bias at the end points (open
+higher-order note). Hardware warning:\ at the deterministic ridge
+($\rho = 22.3$), $5\%$ jitter leaves $J = 0.43$ vs.\ $0.95$ --- about
+$55\%$ of the scalar count information forfeited. $J$ at peak from the
+grid run.}
 \label{tab:jitter}
-\small
-\setlength{\tabcolsep}{4pt}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
 \begin{tabular}{@{}lccc@{}}
 \hline
-$c_v$ & measured peak $\rho$ & exact-law prediction & $J$ at peak \\
+$c_v$ & peak $\rho$ (grid\,/\,zoom\,/\,replic.) & exact law & $J$ at peak \\
 \hline
-$0$    & $22.297$ & $22.25$ (exact ridge)          & $0.9452$ \\
-$0.02$ & $10.739$ & $\approx10.4$ (out-of-sample)  & $0.8731$ \\
-$0.05$ & $5.173$  & $5.69$                         & $0.7848$ \\
-$0.1$  & $3.862$  & $3.50$                         & $0.6989$ \\
-$0.2$  & $2.153$  & $\approx2.30$ (out-of-sample)  & $0.5882$ \\
-$0.3$  & $1.607$  & $1.63$                         & $0.5042$ \\
+$0$    & $22.297$ / --- / ---         & $22.25$ (ridge)        & $0.9452$ \\
+$0.02$ & $10.739$ / $9.645$ / $9.610$ & $\approx10.4$ (o.o.s.) & $0.8731$ \\
+$0.05$ & $5.173$ / $5.154$ / $5.700$  & $5.69$                 & $0.7848$ \\
+$0.1$  & $3.862$ / $3.752$ / $3.399$  & $3.50$                 & $0.6989$ \\
+$0.2$  & $2.153$ / $2.106$ / $2.051$  & $\approx2.30$ (o.o.s.) & $0.5882$ \\
+$0.3$  & $1.607$ / --- / ---          & $1.63$                 & $0.5042$ \\
 \hline
 \end{tabular}
 \end{table}
 
 The exact-law column of Table~\ref{tab:jitter}, including the two
-out-of-sample rows, was registered before the refined sweep completed
-(commit \texttt{8a627bb}); the sweep then confirmed the law at both
+out-of-sample rows, was registered before any refined measurement existed
+(commit \texttt{8a627bb}); the grid sweep then confirmed the law at both
 registered fresh points --- $c_v = 0.02$:\ predicted $\approx10.4$, measured
 $10.739$ ($3\%$); $c_v = 0.2$:\ predicted $\approx2.30$, measured $2.153$
 ($6\%$) --- with every in-sample peak within one notch of the $\times1.157$
-grid (verdict at commit \texttt{1d8d7aa}). The $\nu = 200$ column is
-consistent including the crossover correction of
-Eq.~(\ref{eq:crossover}):\ the $c_v = 0$ peak sits at $9.28$ against the
-exact ridge $10.04$, and $c_v = 0.3$ measures $1.86$ against the predicted
-$1.77$. Section~\ref{sec:results} restates the verdict with the campaign
-results.
+grid (verdict at commit \texttt{1d8d7aa}), and the $\nu = 200$ column is
+consistent including the crossover correction of Eq.~(\ref{eq:crossover}).
+The continuous-peak zoom and its independent replication then measured the
+exponent itself:\ the pooled eight-measurement log-log fit of $\rho_{*}$
+against $c_v$ gives slope $-0.658$, within $1.3\%$ of the predicted $-2/3$,
+with the constant consistent with $2^{-1/3}$ within $5$--$10\%$.
+Section~\ref{sec:results} reports the full three-stage verdict.
 
 \subsection{One master concave program}
 \label{sec:onelagrangian}
@@ -729,7 +739,25 @@ within one grid notch of its exact-law value (commits \texttt{8a627bb},
 predictions registered pre-data; \texttt{1d8d7aa}, verdict). The $\nu = 200$
 column is consistent with the crossover correction:\ the $c_v = 0$ peak at
 $9.28$ tracks the exact ridge $10.04$, and $c_v = 0.3$ measures $1.86$
-against the predicted $1.77$. The fuller three-hold-family exponent battery
+against the predicted $1.77$.
+
+A continuous-peak zoom (quadratic interpolation, local run, $150{,}000$
+frames) and an independent replication (Colab, $400{,}000$ frames) then
+measured the four jittered peaks twice each at $\nu = 2000$:\ local
+$(9.645,\ 5.154,\ 3.752,\ 2.106)$ and replicated
+$(9.610,\ 5.700,\ 3.399,\ 2.051)$ at $c_v = (0.02,\ 0.05,\ 0.1,\ 0.2)$,
+respectively. The pooled eight-measurement log-log fit gives slope $-0.658$
+vs.\ the predicted $-2/3$ ($1.3\%$); the constant sits about $5\%$ below
+$2^{-1/3}$, at the edge of the run-to-run noise, so the frozen statement
+is:\ exponent confirmed at $1.3\%$, constant consistent within $5$--$10\%$.
+The end points replicate a mild $\approx{-8}\%$ low bias across both runs,
+left as an open higher-order note (candidate:\ a lognormal third-moment
+correction to the leading finite-variance law). One intermediate hypothesis
+is on the record:\ after the first two zoom points, an effective jitter-cost
+multiplier $k = 4/3$ was preregistered (commit \texttt{5e51088}) and was
+refuted by the very next measured point, whose deviation flipped sign
+(commit \texttt{1a32758}) --- peak-location noise on flat information tops,
+not a systematic constant. The fuller three-hold-family exponent battery
 frozen in the ruling (tests E1--E5, with matched-CV gamma and bounded
 two-point holds and cross-fitted conditional-score estimation) remains a
 preregistered extension beyond this verdict.
@@ -803,7 +831,10 @@ architecture''), whose theorem hierarchy Section~\ref{sec:theory} follows.
 Exact-law peak predictions for the refined jitter sweep, including the two
 out-of-sample rows, were registered before the sweep completed
 (\texttt{docs/R14\_PREREGISTERED\_PREDICTIONS.md}, commit \texttt{8a627bb})
-and confirmed by the sweep (verdict at commit \texttt{1d8d7aa}).
+and confirmed in three stages (grid verdict \texttt{1d8d7aa}; local zoom
+\texttt{4d8310d}; pooled Colab replication \texttt{bd731d5}), with the
+intermediate $k = 4/3$ hypothesis preregistered at \texttt{5e51088} and
+refuted at \texttt{1a32758}.
 The campaign freezes at tag \texttt{m1-freeze} once the R13
 checklist passes outcome-blind self-tests; the companion is frozen at tag
 \texttt{paper1-freeze-v1}. Source-of-record documents for every frozen

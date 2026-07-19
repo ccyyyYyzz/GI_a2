@@ -58,6 +58,26 @@ appended to `docs/R14_PREREGISTERED_PREDICTIONS.md`, commit 1d8d7aa):
 preregistered extension beyond this verdict — as a scope sentence, not a
 placeholder.
 
+**Pooled zoom + Colab replication addendum (third revision, same day):**
+§5.7, Table 1, §3.1, abstract, and Reproducibility now carry the three-stage
+result (sources: the appended sections of
+`docs/R14_PREREGISTERED_PREDICTIONS.md`, commits 4d8310d local zoom /
+bd731d5 pooled fit):
+
+- continuous quadratic-interpolated peaks at ν=2000, two independent runs —
+  local 150k: (9.645, 5.154, 3.752, 2.106); Colab 400k: (9.610, 5.700,
+  3.399, 2.051) at c_v = (0.02, 0.05, 0.1, 0.2); Table 1 shows
+  grid/zoom/replication side by side;
+- pooled 8-measurement log-log fit: slope −0.658 vs −2/3 (1.3%); constant
+  consistent with 2^(−1/3) within 5–10% (~5% below, noise-edge);
+- ends replicate a mild ≈−8% low bias across both runs — kept as an OPEN
+  higher-order note (candidate: lognormal third-moment correction), prose
+  not placeholder;
+- the intermediate k=4/3 jitter-cost-multiplier hypothesis was preregistered
+  mid-sweep (commit 5e51088) and REFUTED by the next measured point
+  (sign flip; commit 1a32758) — reported in §5.7 as an on-the-record
+  discipline demonstration.
+
 ## Open placeholders
 
 Three fill classes remain:
@@ -73,20 +93,20 @@ Three fill classes remain:
 | # | tex line | Location | Placeholder | Fills from | Class |
 |---|----------|----------|-------------|-----------|-------|
 | 1 | ~48  | title page | author block | user decision | USER |
-| 2 | ~91  | abstract | primary/secondary verdicts + cross-arm numbers (frozen) | M1 campaign | M1 |
-| 3 | ~168 | intro (contrib iv) | campaign outcomes (incl. any negative primary) | M1 campaign | M1 |
-| 4 | ~339 | §3 intro | supplement: proofs of Theorems 1–3 + Proposition 1 | supplement writing | R14-SUPP |
-| 5 | ~430 | §3.1 crossover ¶ | uniform two-parameter crossover proof, or prediction label retained | dedicated proof effort | R14-SUPP |
-| 6 | ~633 | §Campaign (arms) | committed FIXED* selection record {SCAT32,LBLOB16,MATCH1} | M1 (DEV selection, R13 §3) | M1 |
-| 7 | ~694 | §5.1 Results | METHOD_SPEED_PASS: median S, LB, count>1, PASS/FAIL | M1 campaign | M1 |
-| 8 | ~698 | §5.2 Results | METHOD_DESIGN_PASS: median design gain (dB), LB, count | M1 campaign | M1 |
-| 9 | ~702 | §5.3 Results | METHOD_FIXED_DWELL_PASS: median terminal gain (dB), count, LB | M1 campaign | M1 |
-| 10 | ~706 | §5.4 Results | RIDGE-FIXED per-dwell gain, realized loads, ceiling fractions | M1 campaign | M1 |
-| 11 | ~710 | §5.5 Results | OED-EQLOAD kernel ablation (geometry diff + noise disclosure) | M1 campaign | M1 |
-| 12 | ~715 | §5.6 Results | relaxed-KW gap, exact D-efficiency, A-risk, spectral margin | M1 campaign | M1 |
-| 13 | ~750–755 | §5 cross-arm table | 6 arms × 7 columns = 42 cells | M1 campaign | M1 |
-| 14 | ~812 | §7 Reproducibility | repo URL wording | user decision | USER |
-| 15 | ~813 | §7 Reproducibility | funding / acknowledgments | user decision | USER |
+| 2 | ~93  | abstract | primary/secondary verdicts + cross-arm numbers (frozen) | M1 campaign | M1 |
+| 3 | ~170 | intro (contrib iv) | campaign outcomes (incl. any negative primary) | M1 campaign | M1 |
+| 4 | ~343 | §3 intro | supplement: proofs of Theorems 1–3 + Proposition 1 | supplement writing | R14-SUPP |
+| 5 | ~434 | §3.1 crossover ¶ | uniform two-parameter crossover proof, or prediction label retained | dedicated proof effort | R14-SUPP |
+| 6 | ~643 | §Campaign (arms) | committed FIXED* selection record {SCAT32,LBLOB16,MATCH1} | M1 (DEV selection, R13 §3) | M1 |
+| 7 | ~704 | §5.1 Results | METHOD_SPEED_PASS: median S, LB, count>1, PASS/FAIL | M1 campaign | M1 |
+| 8 | ~708 | §5.2 Results | METHOD_DESIGN_PASS: median design gain (dB), LB, count | M1 campaign | M1 |
+| 9 | ~712 | §5.3 Results | METHOD_FIXED_DWELL_PASS: median terminal gain (dB), count, LB | M1 campaign | M1 |
+| 10 | ~716 | §5.4 Results | RIDGE-FIXED per-dwell gain, realized loads, ceiling fractions | M1 campaign | M1 |
+| 11 | ~720 | §5.5 Results | OED-EQLOAD kernel ablation (geometry diff + noise disclosure) | M1 campaign | M1 |
+| 12 | ~725 | §5.6 Results | relaxed-KW gap, exact D-efficiency, A-risk, spectral margin | M1 campaign | M1 |
+| 13 | ~778–783 | §5 cross-arm table | 6 arms × 7 columns = 42 cells | M1 campaign | M1 |
+| 14 | ~843 | §7 Reproducibility | repo URL wording | user decision | USER |
+| 15 | ~844 | §7 Reproducibility | funding / acknowledgments | user decision | USER |
 
 **Counts.** 15 placeholder sites (site 13 holds 42 `\SPH{M1}` cells, so the
 raw `\SPH` command count in the tex body is 56). By class: R14-SUPP ×2,
