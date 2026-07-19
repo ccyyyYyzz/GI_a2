@@ -38,8 +38,28 @@ Sketch of what we believe happens (please verify or correct):
    integers times 10, i.e. within our reachable grid. We can run a
    dev-legal jitter-ridge sweep within hours of your derivation.
 
+**NUMERICAL CONFIRMATION (added before dispatch; scratchpad
+jitter_scalar_fi.py, results/round63_study2/jitter_scalar_fi.log):**
+Monte-Carlo scalar J(ρ, ν=2000, cv) for lognormal hold times, common
+random numbers, 60k frames, validated against the exact table at cv=0
+(J(2)=0.676 vs exact 0.667+corr):
+
+| cv | peak location | J at peak |
+|---|---|---|
+| 0 | ≈22–24 (exact ridge 22.25) | 0.948 |
+| 0.05 | ≈5.43 | 0.796 |
+| 0.1 | ≈3.30 | 0.701 |
+| 0.3 | ≤2 (grid edge) | 0.499 |
+
+Exponent check: cap(0.05)/cap(0.1) = 1.65 vs 2^{2/3} = 1.587 (−2/3 law
+within MC noise); constant fit c ≈ 0.72 from both points. Additional
+finding: beyond the cap J FALLS steeply — at ρ = 24 with cv = 0.05, J =
+0.38 vs deterministic 0.95, i.e. ~60% information loss from 5% jitter at
+the deterministic ridge. Hardware-relevant headline.
+
 Questions: (a) verify/correct the extensive-term derivation and the
-crossover law, giving the constants for exponential and lognormal H;
+crossover law, giving the constants for exponential and lognormal H —
+your derived c should match the measured 0.72 for lognormal;
 (b) is the ν^{1/3} critical exponent universal across ALL hold-time
 distributions with cv = 0 (i.e., deterministic is the only cv=0 case —
 so state it as: the exponent pair (1/3, −2/3) characterizes the family);

@@ -1,0 +1,48 @@
+[jr] 1/40 cv=0.0 rho_t=0.6 s0 PSNR_rad=10.64
+[jr] 2/40 cv=0.0 rho_t=0.6 s1 PSNR_rad=10.64
+[jr] 3/40 cv=0.0 rho_t=2.0 s0 PSNR_rad=21.39
+[jr] 4/40 cv=0.0 rho_t=2.0 s1 PSNR_rad=21.43
+[jr] 5/40 cv=0.0 rho_t=6.0 s0 PSNR_rad=22.80
+[jr] 6/40 cv=0.0 rho_t=6.0 s1 PSNR_rad=22.79
+[jr] 7/40 cv=0.0 rho_t=10.0 s0 PSNR_rad=22.69
+[jr] 8/40 cv=0.0 rho_t=10.0 s1 PSNR_rad=22.69
+[jr] 9/40 cv=0.0 rho_t=22.0 s0 PSNR_rad=22.36
+[jr] 10/40 cv=0.0 rho_t=22.0 s1 PSNR_rad=22.54
+[jr] 11/40 cv=0.05 rho_t=0.6 s0 PSNR_rad=10.65
+[jr] 12/40 cv=0.05 rho_t=0.6 s1 PSNR_rad=10.63
+[jr] 13/40 cv=0.05 rho_t=2.0 s0 PSNR_rad=21.36
+[jr] 14/40 cv=0.05 rho_t=2.0 s1 PSNR_rad=21.37
+[jr] 15/40 cv=0.05 rho_t=6.0 s0 PSNR_rad=22.81
+[jr] 16/40 cv=0.05 rho_t=6.0 s1 PSNR_rad=22.87
+[jr] 17/40 cv=0.05 rho_t=10.0 s0 PSNR_rad=22.66
+[jr] 18/40 cv=0.05 rho_t=10.0 s1 PSNR_rad=22.76
+[jr] 19/40 cv=0.05 rho_t=22.0 s0 PSNR_rad=22.99
+[jr] 20/40 cv=0.05 rho_t=22.0 s1 PSNR_rad=22.39
+[jr] 21/40 cv=0.1 rho_t=0.6 s0 PSNR_rad=10.65
+[jr] 22/40 cv=0.1 rho_t=0.6 s1 PSNR_rad=10.63
+[jr] 23/40 cv=0.1 rho_t=2.0 s0 PSNR_rad=21.38
+[jr] 24/40 cv=0.1 rho_t=2.0 s1 PSNR_rad=21.56
+[jr] 25/40 cv=0.1 rho_t=6.0 s0 PSNR_rad=22.76
+[jr] 26/40 cv=0.1 rho_t=6.0 s1 PSNR_rad=22.89
+[jr] 27/40 cv=0.1 rho_t=10.0 s0 PSNR_rad=22.69
+[jr] 28/40 cv=0.1 rho_t=10.0 s1 PSNR_rad=22.63
+[jr] 29/40 cv=0.1 rho_t=22.0 s0 PSNR_rad=22.43
+[jr] 30/40 cv=0.1 rho_t=22.0 s1 PSNR_rad=21.85
+[jr] 31/40 cv=0.3 rho_t=0.6 s0 PSNR_rad=10.65
+[jr] 32/40 cv=0.3 rho_t=0.6 s1 PSNR_rad=10.64
+[jr] 33/40 cv=0.3 rho_t=2.0 s0 PSNR_rad=21.23
+[jr] 34/40 cv=0.3 rho_t=2.0 s1 PSNR_rad=21.39
+[jr] 35/40 cv=0.3 rho_t=6.0 s0 PSNR_rad=22.59
+[jr] 36/40 cv=0.3 rho_t=6.0 s1 PSNR_rad=22.70
+[jr] 37/40 cv=0.3 rho_t=10.0 s0 PSNR_rad=22.75
+[jr] 38/40 cv=0.3 rho_t=10.0 s1 PSNR_rad=22.08
+[jr] 39/40 cv=0.3 rho_t=22.0 s0 PSNR_rad=20.68
+[jr] 40/40 cv=0.3 rho_t=22.0 s1 PSNR_rad=20.28
+
+[jr] === PSNR_rad vs rho_t per jitter cv (dev maze, nu=2000) ===
+  cv \ rho:     0.6       2       6      10      22
+  cv=0    :  10.64   21.41   22.79   22.69   22.45   peak@rho=6.0
+  cv=0.05 :  10.64   21.37   22.84   22.71   22.69   peak@rho=6.0
+  cv=0.1  :  10.64   21.47   22.83   22.66   22.14   peak@rho=6.0
+  cv=0.3  :  10.64   21.31   22.64   22.41   20.48   peak@rho=6.0
+[jr] DONE
