@@ -9,11 +9,14 @@
    "bad": []
   },
   "coverage": {
-   "expected": 1296,
-   "got": 1296,
+   "mode": "key7",
+   "expected": 2592,
+   "got": 2592,
    "missing": 0,
    "extras": 0,
-   "dupes": 1296
+   "dupes": 0
   }
- }
+ },
+ "rows": 2592,
+ "ALL_GATES_PASS": true
 }
