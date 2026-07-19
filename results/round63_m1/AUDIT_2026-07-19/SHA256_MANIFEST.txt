@@ -1,0 +1,27 @@
+SHA256 MANIFEST -- M1 independent audit promotion
+Generated: 2026-07-19
+Source (read-only): E:\GAN_FCC_WORK\.codex_tmp
+Destination: D:\GI_another\results\round63_m1\AUDIT_2026-07-19
+
+Byte-for-byte verification (source sha256 == copy sha256):
+
+FILE                                       SOURCE_SHA256                                                    COPY_SHA256                                                      MATCH
+m1_independent_recompute.py                0901ddaa092cf037b42394488bdc1693cee51b4573e36fdc2fc5abe70f7ea3b2 0901ddaa092cf037b42394488bdc1693cee51b4573e36fdc2fc5abe70f7ea3b2 OK
+m1_independent_output.json                 57bb3ca8cdb0487b9950dbd1df483dac9d1ef21119d8d039f1b72dceb10cbbcf 57bb3ca8cdb0487b9950dbd1df483dac9d1ef21119d8d039f1b72dceb10cbbcf OK
+m1_frozen_and_axis_only.py                 e71637efef519b65ee8084675897a67ffe3a2f6c99a2001b7f69e8c199b783ad e71637efef519b65ee8084675897a67ffe3a2f6c99a2001b7f69e8c199b783ad OK
+m1_frozen_and_axis_only_output.json        f9fd195f6a24ccd0f93b09125ac3efddef46d5fc17249d0c0797ad8a3a6b1cb0 f9fd195f6a24ccd0f93b09125ac3efddef46d5fc17249d0c0797ad8a3a6b1cb0 OK
+2026-07-19_M1_INDEPENDENT_AUDIT.md         c8d5c863a3858c990944a4f0d2ca1c443d0b74808c19ea64fbc0bd703129d648 c8d5c863a3858c990944a4f0d2ca1c443d0b74808c19ea64fbc0bd703129d648 OK
+
+Verbatim source hashes (sha256sum format):
+0901ddaa092cf037b42394488bdc1693cee51b4573e36fdc2fc5abe70f7ea3b2 *E:/GAN_FCC_WORK/.codex_tmp/m1_independent_recompute.py
+57bb3ca8cdb0487b9950dbd1df483dac9d1ef21119d8d039f1b72dceb10cbbcf *E:/GAN_FCC_WORK/.codex_tmp/m1_independent_output.json
+e71637efef519b65ee8084675897a67ffe3a2f6c99a2001b7f69e8c199b783ad *E:/GAN_FCC_WORK/.codex_tmp/m1_frozen_and_axis_only.py
+f9fd195f6a24ccd0f93b09125ac3efddef46d5fc17249d0c0797ad8a3a6b1cb0 *E:/GAN_FCC_WORK/.codex_tmp/m1_frozen_and_axis_only_output.json
+c8d5c863a3858c990944a4f0d2ca1c443d0b74808c19ea64fbc0bd703129d648 *E:/GAN_FCC_WORK/.codex_tmp/2026-07-19_M1_INDEPENDENT_AUDIT.md
+
+Promoted copy hashes (sha256sum format):
+0901ddaa092cf037b42394488bdc1693cee51b4573e36fdc2fc5abe70f7ea3b2 *D:/GI_another/results/round63_m1/AUDIT_2026-07-19/m1_independent_recompute.py
+57bb3ca8cdb0487b9950dbd1df483dac9d1ef21119d8d039f1b72dceb10cbbcf *D:/GI_another/results/round63_m1/AUDIT_2026-07-19/m1_independent_output.json
+e71637efef519b65ee8084675897a67ffe3a2f6c99a2001b7f69e8c199b783ad *D:/GI_another/results/round63_m1/AUDIT_2026-07-19/m1_frozen_and_axis_only.py
+f9fd195f6a24ccd0f93b09125ac3efddef46d5fc17249d0c0797ad8a3a6b1cb0 *D:/GI_another/results/round63_m1/AUDIT_2026-07-19/m1_frozen_and_axis_only_output.json
+c8d5c863a3858c990944a4f0d2ca1c443d0b74808c19ea64fbc0bd703129d648 *D:/GI_another/results/round63_m1/AUDIT_2026-07-19/2026-07-19_M1_INDEPENDENT_AUDIT.md

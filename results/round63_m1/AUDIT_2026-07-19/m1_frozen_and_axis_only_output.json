@@ -1,0 +1,21 @@
+{
+  "frozen_reproduction": {
+    "RIDGE_OPERATING": {
+      "median": 1.8669199999999986,
+      "lb2.5": 0.11989000000000072,
+      "n_positive_bar": 19
+    },
+    "RIDGE_SPEED_nu_rho": {
+      "median": 0.2759082546618772,
+      "lb2.5": 0.17225913049832775,
+      "n_positive_bar": 1
+    }
+  },
+  "axis_only_sensitivity_keep_all_other_frozen_code": {
+    "RIDGE_SPEED_nu": {
+      "median": 19.127043091645646,
+      "lb2.5": 16.577852783743403,
+      "n_positive_bar": 22
+    }
+  }
+}
