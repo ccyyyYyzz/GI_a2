@@ -12,7 +12,7 @@ D:/Anacondar/anaconda3/python.exe code/round63/figs/fig_actiii_panels.py
 |---|---|
 | `actiii_a.pdf` | (a) guard-collapse DEV plot (development evidence) |
 | `actiii_b.pdf` | (b) constructive dose-only primal lower bounds (DEV-only) |
-| `actiii_c.pdf` | (c) confirmatory FULL_STACK_CERT distribution (descriptive) |
+| `actiii_c.pdf` | (c) descriptive full-stack three-status distribution |
 | `actiii_d.pdf` | (d) ridge-vs-0.60 fixed-dwell result (CENTREPIECE) |
 | `actiii_e.pdf` | (e) resource-corner schematic (conjugate-corners doctrine) |
 | `fig_mechanism.pdf` | hero Fig.-1: dead-time SPI pipeline + count-information ridge law |
@@ -65,7 +65,7 @@ back by the figure script (regenerated automatically if absent):
   lower bound; the construction is support-preserving (existence, not the
   dose-only optimum) per R18 §1.2.
 
-### (c) `actiii_c.pdf` — confirmatory FULL_STACK_CERT distribution
+### (c) `actiii_c.pdf` — descriptive full-stack three-status distribution
 - **Source.** `results/round63_m1/shards/M1_CERT_*.csv` (480 rows). Parsed
   with the overflow-merge reader (`_read_cert_csv`, mirroring
   `code/round63/m1_score.py`) because the `solver_status_primary` /
@@ -107,10 +107,10 @@ back by the figure script (regenerated automatically if absent):
   cached on first call under `results/round63_m1/designs/ridge_scat32_m1_*.npz`.
 
 ### (e) `actiii_e.pdf` — resource-corner schematic
-- **Pure drawing** (no data dependency). The two verdicts are read from
-  `results/round63_m1/M1_VERDICTS.json`: `RIDGE_OPERATING_PASS = True`
-  (+1.87 dB median, fixed-dwell primary) and `RIDGE_SPEED_PASS = False` (Q90
-  elapsed-optical-time secondary).
+- **Pure drawing** (no data dependency). The two corrected verdicts are read
+  from the dated R19 correction artifact: `RIDGE_OPERATING_PASS = True`
+  (+1.87 dB median, fixed-dwell primary) and `RIDGE_SPEED_PASS = True` (Q90
+  elapsed-optical-time secondary; 19.127 median, 18.328 lower bound, 21/24).
 
 ### `fig_mechanism.pdf` — hero mechanism figure
 - **Drawing** for the pipeline and the dead-time timeline (illustrative
@@ -202,7 +202,7 @@ and 0.90, 0.50, 0.51, 0.79, 0.59, and 0.72 at anchor B, respectively
 (D-efficiency lower bounds 1.6–2.5×). The construction is support-preserving
 and establishes the existence of headroom, not the dose-only optimum.
 
-**Fig. C (c).** Confirmatory FULL_STACK_CERT certificate distribution under the
+**Fig. C (c).** Descriptive full-stack three-status distribution under the
 fallback-descriptive branch (0/480 CERTIFIED). (a) Terminal status of the 480
 certificate cells split by the four (ν, b) anchors (120 cells each): at
 (ν200, b0.05), (ν200, b0.60), (ν2000, b0.05), and (ν2000, b0.60) the cells are
@@ -232,7 +232,7 @@ and each row shares a common grayscale scale.
 The plane is spanned by the optical-power/flux budget (horizontal) and the
 acquisition-time budget (vertical). In the photon-budgeted corner (low power,
 ample time; Q90 elapsed-time secondary) the SCAT32-SAFE comparator is used and
-the corrected elapsed T_opt speed verdict passes, whereas in
+the corrected preregistered elapsed-$T_{\rm opt}$ speed verdict passes, whereas in
 the time-limited, power-available corner (ample power, little time; fixed-dwell
 quality primary) the ridge operating point ρ̄* delivers a
 +1.87 dB median gain, and RIDGE_OPERATING_PASS = TRUE; the curved arrow marks

@@ -8,8 +8,8 @@
 %   S3 design machinery in full (certificate math, guards, dictionary,
 %      subspace conventions, budget accounting)  [R10/R11/R13]
 %   S4 Monte-Carlo verification detail (grid + zoom + replication runs)
-%   S5 secondary-arm full results (M1 \SPH placeholders)
-%   S6 proofs (R14-SUPP \SPH)
+%   S5 secondary-arm full results (M1 filled from the R19 correction artifact)
+%   S6 proofs (R14-SUPP installed and independently checked)
 % PLACEHOLDER DISCIPLINE: \SPH sites here are indexed in the same
 % PLACEHOLDER_LEDGER.md as the main text.
 % ============================================================================
@@ -88,23 +88,56 @@ water-filling optimum satisfies $\ell_i J'(\rho_i^{*}) = \beta$ at every
 interior coordinate. A single global source induces
 $\tilde\rho_i = \kappa u_i$, with $u_i = a_i^{\top}x$ the bucket brightness.
 
-\begin{proposition}[alignment and residual bound]
+\begin{proposition}[Alignment and projected-residual bound]
 \label{prop:s-alignment}
-The fixed-flux allocation is exactly optimal for this scalar subproblem if
-and only if there exists $\beta$ with
-\begin{equation}
-  \ell_i\,J'(\kappa u_i) = \beta
-  \label{eq:s-alignment}
-\end{equation}
-for all interior active directions, with KKT-compatible inequalities at the
-bounds. If moreover $-\ell_i J''(\rho) \ge m > 0$ throughout the admitted
-interval, then, with residuals $r_i = \ell_i J'(\kappa u_i) - \beta$,
+Let $\pi_i>0$, $\sum_i\pi_i=1$, and consider
+\[
+  \max_{\rho} F(\rho)=\sum_i\pi_i\ell_iJ(\rho_i)
+  \quad\text{subject to}\quad
+  \sum_i\pi_i\rho_i=B,
+  \qquad \rho_i\in[\underline\rho_i,\overline\rho_i].
+\]
+Assume $J\in C^2$ on the admitted interval and
+$-\ell_iJ''(\rho)\ge m>0$ for every $i$ and every admitted $\rho$.
+Let the feasible fixed-flux allocation be $\widetilde\rho_i=\kappa u_i$.
+
+The fixed-flux allocation is optimal if and only if there exist a scalar
+$\beta$ and normal-cone elements
+$s_i\in N_{[\underline\rho_i,\overline\rho_i]}(\widetilde\rho_i)$ such that
+\[
+  \ell_iJ'(\widetilde\rho_i)-\beta-s_i=0
+\]
+for every $i$. For any $\beta$, choose $s_i$ as a closest normal-cone element
+and define the projected KKT residual
+\[
+  r_i=\ell_iJ'(\widetilde\rho_i)-\beta-s_i.
+\]
 \begin{equation}
   0 \;\le\; F(\rho^{*}) - F(\tilde\rho)
   \;\le\; \frac{1}{2m}\sum_i \pi_i\, r_i^{2}.
   \label{eq:s-residual}
 \end{equation}
+If every $\widetilde\rho_i$ is interior, $s_i=0$ and
+$r_i=\ell_iJ'(\kappa u_i)-\beta$, recovering the interior alignment condition.
 \end{proposition}
+
+\begin{proof}
+The feasible set is convex and compact, and $F$ is strictly concave under the
+curvature assumption, so the KKT conditions are necessary and sufficient and
+the optimum is unique. The equality multiplier is $\beta$; the box constraints
+contribute the normal-cone elements $s_i$. This proves the first statement.
+
+Let $\Delta_i=\rho_i^*-\widetilde\rho_i$. Strong concavity of each
+$f_i(\rho)=\ell_iJ(\rho)$ gives
+\[
+  f_i(\rho_i^*)-f_i(\widetilde\rho_i)
+  \le f_i'(\widetilde\rho_i)\Delta_i-\frac m2\Delta_i^2.
+\]
+Write $f_i'(\widetilde\rho_i)=\beta+s_i+r_i$ and sum with weights $\pi_i$.
+The budget equality gives $\sum_i\pi_i\Delta_i=0$, while the normal-cone
+property gives $s_i\Delta_i\le0$. Completing the square term by term proves
+the stated bound; the lower bound follows from optimality of $\rho^*$.
+\end{proof}
 
 A computable projected-KKT residual --- not $\Cu$ alone --- therefore
 certifies whether one global flux knob is close to the scalar water-filling
@@ -466,10 +499,10 @@ confirmatory dose-only verdict exists.
 % ===========================================================================
 \section{Proofs}
 \label{sec:s-proofs}
-\paragraph{Installed proofs.} Theorem~\ref{thm:identity} follows from the
-complete-path martingale score and the law of total variance. Theorem~\ref{thm:rate}
+\paragraph{Installed proofs.} Theorem 1 follows from the complete-path
+martingale score and the law of total variance. Theorem 2
 uses the delayed-renewal local normal approximation under the regularity stated
-below, and Theorem~\ref{thm:cubic} follows by differentiating the limiting
+below, and Theorem 3 follows by differentiating the limiting
 information rate. The alignment result uses a projected KKT residual at box
 boundaries. The crossover proposition is conditional on a uniform $C^2$
 triangular-array expansion; its matched-asymptotic-prediction label is retained.
@@ -499,7 +532,7 @@ $y_1=F_2'(y_0,x)/F_1''(y_0,x)=-(x+4)/(6(x+1))$. Substitution of
 $x=12\nu c_v^2$ and $t=\nu^{-1/3}$ gives the displayed expansion.
 \end{proof}
 
-\begin{proof}[Proof of Theorem~\ref{thm:identity}]
+\begin{proof}[Proof of Theorem 1 (missing-information identity)]
 Let $A_t$ be the predictable detector-active indicator and
 $L_T=\int_0^T A_t\,dt$. Conditional on the state path, the score for
 $\theta=\log\lambda$ is $U_T=N_T-\lambda L_T$. The compensated count is a
@@ -511,7 +544,7 @@ I_N(\theta;T)=\mathbb E N_T-\lambda^2\mathbb E\!\left[\operatorname{Var}(L_T\mid
 \]
 \end{proof}
 
-\begin{proof}[Proof of Theorem~\ref{thm:rate}]
+\begin{proof}[Proof of Theorem 2 (long-window rate)]
 Rescale by $\tau$, so $\mathbb EB=1$, $\operatorname{Var}B=c_v^2$, and an
 ordinary cycle is $C=B+X$ with $X\sim\operatorname{Exp}(\rho)$. Thus
 $\mu_C=1+\rho^{-1}$ and $\sigma_C^2=c_v^2+\rho^{-2}$. Delayed-renewal
@@ -523,12 +556,13 @@ $I_N/\nu\to J_\infty=\rho/[(1+\rho)(1+c_v^2\rho^2)]$. Subtracting this
 from the complete-path rate $\rho/(1+\rho)$ gives the stated missing rate.
 \end{proof}
 
-\emph{Regularity assumption.} The local-limit step assumes a regular nonlattice
-delayed-renewal family with finite $3+\epsilon$ moment and parameter derivatives
-controlled on compact load intervals. It is not asserted for infinite-variance,
-correlated, observed, or load-dependent holds.
+The local-limit step is invoked for a regular nonlattice delayed-renewal family
+with a finite $3+\epsilon$ moment and parameter derivatives controlled on
+compact load intervals; lognormal, gamma/exponential, and bounded regular hold
+families satisfy the intended conditions. The theorem is not asserted for
+infinite-variance, correlated, observed, or load-dependent holds.
 
-\begin{proof}[Proof of Theorem~\ref{thm:cubic}]
+\begin{proof}[Proof of Theorem 3 (cubic optimum)]
 For $J_\infty=\rho/[(1+\rho)(1+c_v^2\rho^2)]$,
 \[
 \frac{d}{d\rho}\log J_\infty=\frac{1-c_v^2\rho^2(1+2\rho)}
@@ -541,7 +575,7 @@ $\rho=2^{-1/3}c_v^{-2/3}-1/6+2^{1/3}c_v^{2/3}/36+O(c_v^{4/3})$.
 \end{proof}
 
 \begin{proposition}[Alignment and projected-residual bound]
-\label{prop:s-alignment}
+\label{prop:s-alignment-summary}
 Let $F(\rho)=\sum_i\pi_i\ell_iJ(\rho_i)$ subject to
 $\sum_i\pi_i\rho_i=B$ and box bounds. If $-\ell_iJ''\ge m>0$, a feasible
 $\widetilde\rho$ is optimal iff there are $\beta$ and

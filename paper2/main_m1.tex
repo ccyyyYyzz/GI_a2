@@ -1,4 +1,4 @@
-% ============================================================================
+﻿% ============================================================================
 % PAPER 2 (method line) -- M1 campaign manuscript, editorial restructure.
 % Working title (NOT final):
 %   "Information-optimal illumination for dead-time-limited single-pixel
@@ -92,7 +92,7 @@ dose-uniform, budget-feasible design with more than twice the local
 D-information of the balanced family in audited development cells; whether
 the headroom survives the full deployed conditioning stack --- incident
 budget, dose band, A-risk cap, and spectral floor --- is tested by a
-480-cell conic near-optimality certificate of the balanced
+480-cell descriptive full-stack analysis of the balanced
 (\textsc{SCAT32}) design; and global operating-point control is orthogonal
 and survives, one power knob that tracks the jitter-capped ridge. A
 preregistered simulation campaign (M1) tests the doctrine with a paired
@@ -341,8 +341,8 @@ is superseded. Per the frozen claim discipline, the exact identity and the
 long-window limit \emph{imply} the jitter exponent $-2/3$; the full
 finite-window crossover of Eq.~(\ref{eq:crossover}) is a matched-asymptotic
 \emph{prediction} until a uniform two-parameter (triangular-array renewal
-local-limit) proof is complete. Proposition~\ref{prop:s-uniform-crossover}
-below is conditional on the stated uniform $C^2$ expansion; absent a separate
+local-limit) proof is complete. The supplement's crossover proposition is
+conditional on the stated uniform $C^2$ expansion; absent a separate
 proof of that expansion, the crossover remains a matched-asymptotic prediction.
 
 The exponent pair $(1/3, -2/3)$ is universal within the regular
@@ -606,8 +606,12 @@ full-stack certificate}
 % cutting-plane implementation; R18 §4.3 frozen paragraph verbatim. Full
 % construction in supp S3.
 The deployable class is defined by the conditioning safeguards, and the
-balanced design's local near-optimality within it is evaluated rather than
-assumed. By
+balanced design's local near-optimality is evaluated rather than assumed.
+Before the immutable campaign tag, the required 24-cell development
+feasibility screen selected the preregistered \texttt{FALLBACK\_DESCRIPTIVE}
+branch. Consequently, \texttt{FULL\_STACK\_CERT\_PASS} was removed before
+freeze, and the post-freeze full-stack computation was specified only as a
+descriptive three-status analysis, not as a PASS/FAIL endpoint. By
 concavity, optimality is equivalent to a bounded reduced sensitivity (the
 constrained Kiefer--Wolfowitz / general equivalence condition for nonlinear
 models~\cite{kiefer1959optimum,white1973equivalence}). The descriptive
@@ -842,8 +846,8 @@ arms.
 \caption{The five M1 arms over the common balanced \textsc{SCAT32} design.
 The paired \textsc{RIDGE-SCAT32} vs.\ \textsc{SCAT32-060} comparison carries
 the primary gate and \textsc{RIDGE-SCAT32} vs.\ \textsc{SCAT32-SAFE} the speed
-gate; the full-stack certificate (\texttt{FULL\_STACK\_CERT\_PASS})
-applies to the deployed design itself. \textsc{SCAT16} and \textsc{LBLOB16}
+comparison; the full-stack computation is descriptive and applies to the
+deployed design itself. \textsc{SCAT16} and \textsc{LBLOB16}
 are descriptive context.}
 \label{tab:arms}
 \small
@@ -867,7 +871,8 @@ Arm & Role & Gate \\
 \end{table}
 
 \paragraph{Endpoints and gates.}
-Three preregistered, mutually non-rescuing verdicts govern the campaign. The
+Two preregistered empirical verdicts govern the campaign, alongside one
+descriptive structural analysis. The
 \emph{primary} is a paired fixed-dwell ridge operating-point test
 (\texttt{RIDGE\_OPERATING\_PASS}). At terminal dwell $\nu = 2000$, for each
 confirmatory image $j$ define
@@ -892,8 +897,8 @@ seed-mean radiometric PSNR, equal-weight PAVA isotonic curves, $0.50$~dB
 safe-range informativeness floor, and censoring taxonomy transfer verbatim),
 with median $S_{\mathrm{gate}} \ge 3$, bootstrap lower bound $> 1$, and
 $\ge 18/24$ images with $S_{\mathrm{gate}} > 1$. The \emph{confirmatory
-structural secondary} is the full-stack near-optimality certificate
-(\texttt{FULL\_STACK\_CERT\_PASS}, Section~\ref{sec:certificate}). Every one
+structural secondary} is the full-stack descriptive analysis
+(Section~\ref{sec:certificate}). Every one
 of the $24\times5\times2\times2 = 480$ certificate cells
 ($\nu\in\{200,2000\}$, $b\in\{0.05,0.60\}$) receives exactly one terminal
 status --- \texttt{CERTIFIED} (deployed design and class primal-feasible,
@@ -904,9 +909,10 @@ support-expanding primal screen), or \texttt{NUMERICAL\_UNRESOLVED} (neither
 conclusion within the frozen numerical protocol) --- under a frozen per-cell
 wall cap of $420$~s (a $60$~s primal screen, a $180$~s cutting-plane solve,
 and one deterministic rescaled retry; no third attempt, no threshold change,
-no imputation, no cell deletion). PASS iff all $480$ cells are
-\texttt{CERTIFIED}; \texttt{NUMERICAL\_UNRESOLVED} means not certified, not
-scientifically refuted. No verdict can rescue another.
+no imputation, no cell deletion). The three statuses are descriptive:
+\texttt{COUNTEREXAMPLE} supplies constructive evidence of local geometry
+headroom, while \texttt{NUMERICAL\_UNRESOLVED} supplies neither certification
+nor refutation. No categorical certificate verdict is assigned.
 
 \paragraph{Disclosure ledger.}
 Every cell discloses incident and detected photons (predicted and realized),
@@ -927,7 +933,7 @@ any confirmatory scene is opened.
 % ===========================================================================
 \section{Results}
 \label{sec:results}
-% Skeleton: ridge operating-point primary + speed secondary + certificate
+% Skeleton: ridge operating-point primary + speed secondary + descriptive analysis
 % + one combined context/diagnostics subsection + Act III figure + cross-arm
 % table. All numbers \SPH; fill from the M1 campaign after tag m1-freeze.
 \subsection{Primary: ridge operating-point gain}
@@ -1130,7 +1136,7 @@ $0.92$ at anchor~A and $0.90$, $0.50$, $0.51$, $0.79$, $0.59$, and $0.72$ at
 anchor~B, respectively (D-efficiency lower bounds $1.6$--$2.5\times$). The
 construction is support-preserving and establishes existence, not the
 dose-only optimum.
-(c)~Confirmatory \texttt{FULL\_STACK\_CERT} certificate distribution under the
+(c)~Descriptive full-stack analysis distribution under the
 fallback-descriptive branch ($0/480$ \texttt{CERTIFIED}). The left bars give
 the terminal status of the $480$ certificate cells split by the four
 $(\nu,b)$ anchors ($120$ cells each):\ at $(\nu200,b0.05)$, $(\nu200,b0.60)$,
@@ -1145,9 +1151,9 @@ is reported descriptively and no categorical near-optimality claim is made.
 (e)~Conjugate-corners operating doctrine for the global power knob:\ the plane
 is spanned by the optical-power/flux budget (horizontal) and the
 acquisition-time budget (vertical); in the photon-budgeted corner (low power,
-ample time; Q90 count-time secondary) the balanced \textsc{SCAT32-060} design
-with the SCAT32-SAFE comparator representing the post-hoc incident-exposure
-sensitivity, whereas in the time-limited, power-available corner (ample
+ample time; Q90 elapsed-time secondary) the \textsc{SCAT32-SAFE} comparator is
+used for the corrected preregistered speed endpoint, whereas in the
+time-limited, power-available corner (ample
 power, little time; fixed-dwell quality primary) the ridge operating point
 $\rhobar^{*}$ delivers a $+1.87$~dB median gain and
 \texttt{RIDGE\_OPERATING\_PASS} is \textsc{true}, with the curved arrow
@@ -1212,12 +1218,12 @@ conclusions. Global operating-point control remains the deployed positive
 arm; geometry selection is now known to retain dose-feasible headroom outside
 the conditioning stack (Section~\ref{sec:devprobe}), so operating-point
 control and geometry adaptation are not presented as an exhaustive
-either--or. Because \texttt{FULL\_STACK\_CERT\_PASS} did not pass, the
+either--or. Because the descriptive branch was selected before freeze, the
 certificate licenses no categorical near-optimality statement and no collapse
 claim:\ across the $480$ confirmatory cells, $0$ certified, $299$
 counterexample, and $181$ numerically unresolved
 (Section~\ref{sec:results}), so within the frozen full-stack class balanced
-\textsc{SCAT32} is \emph{not} certified near-optimal, and the confirmatory
+\textsc{SCAT32} is \emph{not} certified near-optimal, and the descriptive
 counterexample cohort descriptively shows that scene-adapted geometry
 headroom survives the full deployed conditioning stack --- a localized,
 better-defined open problem, not a rescued outcome. The certificate is
@@ -1227,7 +1233,7 @@ model, and the directions \textsc{SCAT32} resolves. The line's thesis, in
 the frozen wording of the governing ruling, is this. Uniform dose controls
 cumulative exposure but does not eliminate scene-adapted geometry selection.
 The operative restriction is the full deployed conditioning stack:\ balanced
-SCAT32 is tested for certified near-optimality within that frozen class,
+SCAT32 is evaluated descriptively within that frozen class,
 while time-limited image gains are tested separately by global ridge
 tracking.
 

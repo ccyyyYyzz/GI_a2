@@ -16,7 +16,7 @@ Panels (spec: R18 ruling Sec 4.5 / Sec 6, docs/ROUND63_GPT_ROUND18_RULING_RAW):
   (b) Constructive dose-only primal lower bounds (DEV-only): the frozen
       12-cell replication table (results/round63_m1/R18_GAP_PROBE_REPLICATION
       .md), all six families x two anchors, D-efficiency = exp(gap).
-  (c) Confirmatory FULL_STACK_CERT distribution (descriptive branch): status
+  (c) Descriptive full-stack three-status distribution: status
       counts by the four (nu,b) anchors + the COUNTEREXAMPLE primal-gap
       distribution, from results/round63_m1/shards/M1_CERT_*.csv (480 rows).
   (d) CENTREPIECE: ridge-vs-0.60 fixed-dwell result. Reconstruction thumbnails
@@ -291,7 +291,7 @@ def panel_b():
 
 
 # ========================================================================== #
-#  PANEL (c): confirmatory FULL_STACK_CERT distribution (descriptive)         #
+#  PANEL (c): descriptive full-stack three-status distribution                 #
 # ========================================================================== #
 def panel_c():
     cert = _load_cert()
