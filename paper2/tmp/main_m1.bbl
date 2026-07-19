@@ -1,0 +1,119 @@
+\begin{thebibliography}{10}
+
+\bibitem{companion}
+{Companion manuscript (paper~1)}.
+\newblock When high flux helps single-pixel imaging: a contrast--dead-time
+  operating map, 2026.
+\newblock in submission; author block per paper~1 (user decision).
+
+\bibitem{duarte2008singlepixel}
+Marco~F. Duarte, Mark~A. Davenport, Dharmpal Takhar, Jason~N. Laska, Ting Sun,
+  Kevin~F. Kelly, and Richard~G. Baraniuk.
+\newblock Single-pixel imaging via compressive sampling.
+\newblock {\em IEEE Signal Processing Magazine}, 25(2):83--91, 2008.
+
+\bibitem{shapiro2008computational}
+Jeffrey~H. Shapiro.
+\newblock Computational ghost imaging.
+\newblock {\em Physical Review A}, 78(6):061802, 2008.
+
+\bibitem{edgar2019principles}
+Matthew~P. Edgar, Graham~M. Gibson, and Miles~J. Padgett.
+\newblock Principles and prospects for single-pixel imaging.
+\newblock {\em Nature Photonics}, 13(1):13--20, 2019.
+
+\bibitem{feng2018adaptive}
+{Feng} et~al.
+\newblock Optimal illumination pattern design for single-pixel imaging, 2018.
+\newblock arXiv:1806.01340; authors/title VERIFY at submission.
+
+\bibitem{maxu2021sensing}
+{Ma}, {Xu}, and {Maleki}.
+\newblock Sensing-matrix design for generalized nonlinear inverse problems,
+  2021.
+\newblock arXiv:2111.03237; authors/title VERIFY at submission.
+
+\bibitem{attia2018goaloriented}
+Ahmed Attia, Alen Alexanderian, and Arvind~K. Saibaba.
+\newblock Goal-oriented optimal design of experiments for large-scale
+  {Bayesian} linear inverse problems.
+\newblock {\em Inverse Problems}, 34(9):095009, 2018.
+
+\bibitem{burger2021sequential}
+Martin Burger, Andreas Hauptmann, Tapio Helin, et~al.
+\newblock Sequentially optimized projections in {X}-ray imaging.
+\newblock {\em Inverse Problems}, 2021.
+\newblock authors/volume/pages VERIFY at submission.
+
+\bibitem{ariascastro2013adaptive}
+Ery Arias-Castro, Emmanuel~J. Cand{\`e}s, and Mark~A. Davenport.
+\newblock On the fundamental limits of adaptive sensing.
+\newblock {\em IEEE Transactions on Information Theory}, 59(1):472--481, 2013.
+\newblock arXiv:1111.4646.
+
+\bibitem{jorgensen2026deadtime}
+Frederic J.~N. Jorgensen and Steven~G. Johnson.
+\newblock Fundamental bounds and efficient estimation for dead-time-constrained
+  event detection, with application to single-photon lidar, 2026.
+\newblock arXiv:2605.23210.
+
+\bibitem{kiefer1959optimum}
+Jack Kiefer.
+\newblock Optimum experimental designs.
+\newblock {\em Journal of the Royal Statistical Society: Series B}, 1959.
+\newblock volume/pages VERIFY at submission.
+
+\bibitem{white1973equivalence}
+L.~V. White.
+\newblock An extension of the general equivalence theorem to nonlinear models.
+\newblock {\em Biometrika}, 60(2):345--348, 1973.
+
+\bibitem{jaggi2013frankwolfe}
+Martin Jaggi.
+\newblock Revisiting {Frank--Wolfe}: Projection-free sparse convex
+  optimization.
+\newblock In {\em Proceedings of the 30th International Conference on Machine
+  Learning (ICML)}, volume~28 of {\em PMLR}, pages 427--435, 2013.
+
+\bibitem{pukelsheim1992rounding}
+Friedrich Pukelsheim and Sabine Rieder.
+\newblock Efficient rounding of approximate designs.
+\newblock {\em Biometrika}, 79(4):763--770, 1992.
+
+\bibitem{nikolov2022volume}
+Aleksandar Nikolov, Mohit Singh, and Uthaipon Tantipongpipat.
+\newblock Proportional volume sampling and approximation algorithms for
+  {A}-optimal design.
+\newblock {\em Mathematics of Operations Research}, 2022.
+\newblock volume/pages VERIFY at submission.
+
+\bibitem{sagnol2015exact}
+Guillaume Sagnol and Radoslav Harman.
+\newblock Computing exact {D}-optimal designs by mixed integer second-order
+  cone programming.
+\newblock {\em The Annals of Statistics}, 43(5):2198--2224, 2015.
+\newblock arXiv:1307.4953.
+
+\bibitem{muller1973deadtime}
+J{\"o}rg~W. M{\"u}ller.
+\newblock Dead-time problems.
+\newblock {\em Nuclear Instruments and Methods}, 112(1--2):47--57, 1973.
+
+\bibitem{yu2000mean}
+Daniel~F. Yu and Jeffrey~A. Fessler.
+\newblock Mean and variance of single photon counting with deadtime.
+\newblock {\em Physics in Medicine and Biology}, 45(7):2043--2056, 2000.
+
+\bibitem{gronberg2018deadtime}
+Fredrik Gr{\"o}nberg, Mats Danielsson, and Martin Sj{\"o}lin.
+\newblock Count statistics of nonparalyzable photon-counting detectors with
+  nonzero pulse length.
+\newblock {\em Medical Physics}, 45(8):3800--3811, 2018.
+
+\bibitem{alvarez2014pileup}
+Robert~E. Alvarez.
+\newblock Signal to noise ratio of energy selective x-ray photon counting
+  systems with pileup.
+\newblock {\em Medical Physics}, 41(11):111909, 2014.
+
+\end{thebibliography}
