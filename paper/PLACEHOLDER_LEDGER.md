@@ -12,7 +12,7 @@ numbers, λ_TV analytic-rule paragraph (replaced the obsolete CV-rule text).
 
 | # | Location | Placeholder | Fills from | Blocked by |
 |---|----------|-------------|-----------|------------|
-| 1 | uthor | author block | user decision | USER |
+| 1 | author block (title page) | author block | user decision | USER |
 | 2 | availability | repo URL wording | user decision | USER |
 | 3 | acknowledgments | funding text | user decision | USER |
 
