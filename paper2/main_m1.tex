@@ -1,28 +1,37 @@
 % ============================================================================
-% PAPER 2 (method line) -- M1 campaign manuscript SKELETON.
+% PAPER 2 (method line) -- M1 campaign manuscript, editorial restructure.
 % Working title (NOT final):
 %   "Information-optimal illumination for dead-time-limited single-pixel
 %    imaging: certificates, water filling, and the jitter-capped ridge"
 % ----------------------------------------------------------------------------
+% SPINE (one sentence): How hard can you drive a real (jittery)
+% photon-counting detector, and with what illumination -- one law answers the
+% first half, one certified design principle the second, sealed by a
+% preregistered campaign.
+% Act 1 = the law (Sec 2.1-2.2); Act 2 = preregistered verification (Sec 2.3);
+% Act 3 = the certified design principle + campaign + operating handbook
+% (Sec 3-6). Full machinery, verification detail, framework theorem, and
+% alignment proposition live in supplement_m1.tex (same directory).
+% ----------------------------------------------------------------------------
 % RELATION TO PAPER 1: paper 1 (paper/main_oe.tex, frozen at tag
-%   paper1-freeze-v1) mapped WHEN raising flux helps for a given family of hand
-%   patterns. Paper 2 asks (a) WHAT illumination extracts the most information
-%   from a dead-time-limited detector under fixed physical resources, and
-%   (b) HOW HARD a real (jittered) detector can be driven before the ridge
-%   collapses. It is cited throughout as \cite{companion} = "[companion, in
-%   submission]".
+%   paper1-freeze-v1) mapped WHEN raising flux helps for a given family of
+%   hand patterns. Cited throughout as \cite{companion}.
 % ----------------------------------------------------------------------------
 % PLACEHOLDER DISCIPLINE (inherited, 2026-07-13 audit): every number/verdict
 %   that depends on an outstanding output is \SPH{...} and indexed in
-%   PLACEHOLDER_LEDGER.md. The manuscript is "filled" only when that ledger is
-%   EMPTY. Three fill classes: R14 (theory ruling, issue "R14 ruling:
-%   unification architecture"), M1 (confirmatory campaign outputs, tag
-%   m1-freeze), USER (author/repo/funding decisions).
-% NUMBER PROVENANCE: frozen concepts and constants are transcribed from the
-%   rulings named in each block comment (R10 = ROUND63_GPT_ROUND10_RULING_RAW,
-%   R11 = ..._ROUND11_..., R13 = ..._ROUND13_..., M1 spec =
-%   docs/ROUND63_METHOD_SPEC_M1.md, jitter table =
-%   docs/ROUND63_GPT_ROUND14_QUESTION.md). No campaign outcome is asserted.
+%   PLACEHOLDER_LEDGER.md (covers BOTH main and supplement). Fill classes:
+%   M1 (campaign, tag m1-freeze), R14-SUPP (supplement proofs), USER.
+% NUMBER PROVENANCE: frozen concepts from R10/R11/R13/R14 rulings + M1 spec
+%   (docs/ROUND63_*.md); theory evidence from
+%   docs/R14_PREREGISTERED_PREDICTIONS.md (commits 8a627bb registered
+%   pre-data; 1d8d7aa grid verdict; 4d8310d zoom; bd731d5 pooled fit;
+%   5e51088/1a32758 k=4/3 preregistration/refutation). No campaign outcome
+%   is asserted.
+% FROZEN WORDINGS preserved verbatim in this restructure (moved, not
+%   reworded): intro novelty ¶, R14 claim-discipline sentences (crossover
+%   prediction label, universality scope, critical-manifold statement),
+%   R13 §8(f) photon-economics wording, candidate-A discrete-optima caveat,
+%   candidate-C frozen wording, Theorems 1-3, Table 1 + provenance.
 % ----------------------------------------------------------------------------
 % PORTING NOTE: standard article class so it compiles anywhere; port to the
 %   target template (opticajnl.cls or an IEEE/TCI class) at submission prep.
@@ -39,7 +48,6 @@
 \newcommand{\rhoR}{\rho_{R}}                    % production ridge target (R11)
 \newcommand{\Jex}{J_{\mathrm{exact}}}          % exact per-slot count information
 \newtheorem{theorem}{Theorem}
-\newtheorem{proposition}{Proposition}
 
 \title{Information-optimal illumination for dead-time-limited
 single-pixel imaging:\\ certificates, water filling, and the jitter-capped ridge}
@@ -52,89 +60,89 @@ single-pixel imaging:\\ certificates, water filling, and the jitter-capped ridge
 \maketitle
 
 \begin{abstract}
-% Field-first opening, then the companion positioning, then the two method
-% questions, then the contribution close. NO "first" (R10 Q6 novelty
-% discipline). All outcome numbers are \SPH pending the M1 campaign.
-Single-pixel imaging with photon-counting detectors is conventionally
-operated at low flux to keep dead-time loss small. A companion study mapped
-\emph{when} deliberately raising the flux into the nonlinear dead-time
-regime helps a fixed family of illumination patterns, and located a
-finite-window count-information ridge at the cube-root load
-$\rho^{*}(\nu) = (6\nu)^{1/3} - 2/3 + O(\nu^{-1/3})$
-($\nu = T/\tau$ dead-time slots per exposure)~\cite{companion}. Here we ask
-two follow-up questions:\ what illumination extracts the most information
-from a dead-time-limited detector under fixed physical resources, and how
-hard a real, timing-jittered detector can be driven before that ridge
-collapses. We cast hand-designed sparse and matched patterns as atoms in a
-constrained experiment-design problem whose per-atom information is computed
-from the exact finite-window nonparalyzable renewal count law, and optimize a
-local D-optimal design under explicit detector-load, dose, per-pixel-exposure,
-and peak-irradiance constraints, with a generalized-equivalence /
-relaxed Kiefer--Wolfowitz certificate relative to a frozen structured
-dictionary. The design separates into two conjugate resource corners: a
-photon-budgeted variable-load optimizer (\textsc{OED-DT}) and a
-time-budgeted, power-available ridge-tracking policy (\textsc{RIDGE-FIXED}).
-On the theory side we derive an exact missing-information identity for hidden
-random hold times and the long-window count-information rate
+% Spine-first abstract. NO "first" (R10 Q6 novelty discipline). All outcome
+% numbers \SPH pending M1.
+A photon-counting detector operated at its deterministic information-optimal
+flux can forfeit more than half of its recorded information the moment its
+dead time carries a few percent of timing jitter. This paper asks how hard a
+real, jittery detector can be driven, and with what illumination --- one law
+answers the first half, one certified design principle the second, and a
+preregistered campaign seals both. The law:\ for hidden random hold times of
+coefficient of variation $c_v$, we derive an exact missing-information
+identity and the long-window count-information rate
 $J_\infty(\rho,c_v) = \rho/[(1+\rho)(1+c_v^{2}\rho^{2})]$, whose optimum is
-finite for every nonzero hold-time variance and solves the cubic
-$c_v^{2}\rho^{2}(1+2\rho) = 1$, scaling as $2^{-1/3}c_v^{-2/3}$ at small
-jitter ($c_v$ the hold-time coefficient of variation); matching this
-extensive loss to the deterministic terminal-phase loss predicts the smooth
-crossover $\rho^{*}(\nu,c_v)\sim(6\nu)^{1/3}(1+12\nu c_v^{2})^{-1/3}$ ---
-zero jitter is the critical manifold on which the ridge grows as $\nu^{1/3}$,
-and the exact-law peak predictions, registered before the refined
-Monte-Carlo sweep completed, were confirmed out-of-sample at both fresh
-points ($3\%$ and $6\%$ at $c_v = 0.02$ and $0.2$), with a pooled two-run
-continuous-peak fit measuring the jitter exponent at $-0.658$ ($1.3\%$ from
-$-2/3$). We report a preregistered simulation campaign (M1) with a single
-gate on the optimized arm, a common charged pre-scan, six arms, and a
-mandatory per-cell disclosure ledger; all outcomes are reported as frozen
-\SPH{M1: primary/secondary verdicts and cross-arm numbers}.
+finite for every nonzero hold-time variance, solves the cubic
+$c_v^{2}\rho^{2}(1+2\rho) = 1$, and scales as $2^{-1/3}c_v^{-2/3}$ at small
+jitter; matching this extensive loss to the deterministic terminal-phase
+loss of a companion study~\cite{companion} predicts the smooth crossover
+$\rho^{*}(\nu,c_v)\sim(6\nu)^{1/3}(1+12\nu c_v^{2})^{-1/3}$, with zero
+jitter the critical manifold on which the ridge grows as $\nu^{1/3}$
+($\nu = T/\tau$ dead-time slots per exposure). Exact-law peak predictions
+registered before the refined Monte-Carlo sweep completed were confirmed
+out-of-sample at both fresh points ($3\%$ and $6\%$), and a pooled two-run
+continuous-peak fit measures the jitter exponent at $-0.658$ ($1.3\%$ from
+$-2/3$). The design principle:\ hand-designed sparse and matched patterns
+are atoms of one concave experiment-design program whose per-atom
+information is the exact renewal kernel; the optimum is certified against a
+frozen structured dictionary under explicit load, dose, and peak
+constraints, and the program separates into two conjugate resource
+corners --- a photon-budgeted variable-load optimizer (\textsc{OED-DT}) and
+a time-budgeted ridge-tracking policy with a single global knob
+(\textsc{RIDGE-FIXED}). A preregistered simulation campaign (M1) with one
+gate, a common charged pre-scan, six arms, and a mandatory disclosure
+ledger tests the principle; all outcomes are reported as frozen
+\SPH{M1: primary/secondary verdicts and cross-arm numbers}. The result is
+an operating handbook:\ measure the jitter, let the law set the load, let
+the certificate set the patterns.
 \end{abstract}
 
 % ===========================================================================
 \section{Introduction}
-% Para 1 -- field-first.
-Single-pixel imaging (SPI) and computational ghost imaging reconstruct a
-scene from the responses of a single bucket detector to a sequence of
-structured illumination patterns~\cite{duarte2008singlepixel,
-shapiro2008computational,edgar2019principles}. In the photon-starved regime
-the bucket is a photon-counting device that is blind for a dead time $\tau$
-after each registered count, and the conventional response is to operate at
-low flux, keeping the per-slot load $\rho = \lambda\tau$ at the few-percent
-level and paying in acquisition time.
+\label{sec:intro}
+% ¶1 -- the hook: the 55%-loss trap, then field-first grounding.
+Drive a photon-counting detector to the flux where its count information
+peaks, and a five-percent timing jitter in its dead time silently forfeits
+about $55\%$ of that information (Table~\ref{tab:jitter}). Single-pixel
+imaging (SPI) and computational ghost imaging reconstruct a scene from the
+responses of a single bucket detector to structured
+illumination~\cite{duarte2008singlepixel,shapiro2008computational,
+edgar2019principles}; in the photon-starved regime the bucket is a
+photon-counting device that is blind for a dead time $\tau$ after each
+registered count, and the conventional response is to operate at low flux,
+keeping the per-slot load $\rho = \lambda\tau$ at the few-percent level and
+paying in acquisition time. A companion study~\cite{companion} showed that
+this convention leaves gains on the table:\ the exact Fisher information of
+the integrated nonparalyzable count possesses a principal ridge at the
+cube-root load $\rho^{*}(\nu) = (6\nu)^{1/3} - 2/3 + O(\nu^{-1/3})$, and
+that work mapped when driving a fixed illumination family toward the ridge
+helps. The trap above is the sharp edge of that map:\ the deterministic
+ridge is not where a \emph{real} detector should operate.
 
-% Para 2 -- position against the companion; state the two questions.
-A companion study reframed high-flux operation as an operating-map
-question and answered it for fixed hand patterns~\cite{companion}: dense
-multiplexed illumination is multiplex-limited, equal-load sparse
-illumination yields large but not uniformly broad gains, and the exact
-Fisher information of the integrated nonparalyzable count possesses a
-principal ridge at $\rho^{*}(\nu) = (6\nu)^{1/3} - 2/3 + O(\nu^{-1/3})$,
-beyond which no count-only estimator recovers information. That work took
-the illumination family as given. Two questions remain open. First, a
-\emph{design} question:\ under a fixed incident-photon and dose budget,
-which illumination extracts the most information from the dead-time channel,
-and by how much can a certified optimizer improve on a strong fixed
-hand design? Second, a \emph{deployment} question:\ the cube-root ridge is
-derived for an idealized detector with deterministic dead time; how far into
-the ridge can a real detector with timing jitter actually be driven?
+% ¶2 -- the two questions.
+Two questions therefore remain open. First, a \emph{deployment}
+question:\ how hard can a real detector --- whose dead time is a random
+hold time with some measurable coefficient of variation --- actually be
+driven before the ridge collapses? Second, a \emph{design} question:\ under
+a fixed incident-photon and dose budget, which illumination extracts the
+most information from the dead-time channel, and by how much can a
+certified optimizer improve on a strong fixed hand design?
 
-% Para 3 -- the approach.
-We answer both by treating each hand-designed sparse or matched pattern as an
-atom in a constrained local experiment-design problem. Each atom's
-information is the exact chain-rule renewal information of Section~\ref{sec:design},
-the design is optimized as a concave program over design measures, and the
-continuous optimum is certified against the frozen structured dictionary by a
-generalized-equivalence / relaxed Kiefer--Wolfowitz bound. The same
-formulation exposes a conjugacy: a photon-budgeted optimizer rations a fixed
-incident resource across directions (information water filling), whereas a
-time-budgeted policy that has power to spare tracks the ridge at every dwell.
-A parallel theory line asks how detector timing jitter modifies the ridge
-itself.
+% ¶3 -- the answers (the spine).
+One law answers the first question:\ hidden hold-time randomness adds an
+\emph{extensive} missing-information term, the long-window optimum becomes
+finite at the root of an exact cubic, and the deterministic ridge is the
+zero-jitter critical manifold of a two-parameter crossover
+(Section~\ref{sec:theory}); its peak predictions, registered before the
+refined Monte-Carlo sweep existed, were confirmed out-of-sample. One
+certified design principle answers the second:\ hand-designed patterns are
+atoms of a single concave experiment-design program over design measures
+with the exact renewal kernel, certified against a frozen dictionary, and
+the program separates cleanly into a photon-budgeted corner and a
+time-budgeted corner (Section~\ref{sec:design}). A preregistered campaign
+(M1) seals both with one gate and a mandatory disclosure ledger
+(Sections~\ref{sec:campaign}--\ref{sec:results}).
 
-% Para 4 -- frozen novelty wording (R10 Q6, verbatim intent; no "first").
+% ¶4 -- frozen novelty wording (R10 Q6, verbatim; no "first"). DO NOT REWORD.
 We formulate a local approximate-design framework for single-pixel
 illumination in which each pattern's information is computed from the exact
 finite-window nonparalyzable renewal count law, optimized under explicit
@@ -148,203 +156,43 @@ no prior framework combining these elements for integrated-count single-pixel
 illumination. The certificate is always stated relative to the frozen
 dictionary, the local pre-scan estimate, and the declared resource model.
 
-% Para 5 -- contributions.
-This work contributes:\ (i)~a master concave design program over design
-measures with the exact renewal kernel, and a generalized-equivalence /
-relaxed Kiefer--Wolfowitz certificate against a frozen structured dictionary
-(Section~\ref{sec:design}); (ii)~a photon-budget versus time-budget
-conjugacy that separates the design-allocation question (\textsc{OED-DT})
-from the operating-point question (\textsc{RIDGE-FIXED}), with the associated
-information-water-filling reading; (iii)~a random-hold count-information theory (Section~\ref{sec:theory}):\ an
-exact missing-information identity for hidden iid hold times, the long-window
-rate $J_\infty(\rho,c_v) = \rho/[(1+\rho)(1+c_v^{2}\rho^{2})]$ with its exact
-jitter-limited optimum $c_v^{2}\rho^{2}(1+2\rho) = 1$ and small-jitter law
-$2^{-1/3}c_v^{-2/3}$, and the matched crossover prediction
-$(6\nu)^{1/3}(1+12\nu c_v^{2})^{-1/3}$, organized per the frozen unification
-ruling with the master design program as framework and the alignment result
-as its conditional proposition; and (iv)~a
-preregistered simulation campaign (M1) whose scenes, atoms, load grid,
-guards, endpoints, and single gate were frozen in an immutable commit before
-any confirmatory reconstruction existed, reported as frozen including any
-negative primary (Sections~\ref{sec:campaign}--\ref{sec:results})
-\SPH{M1: campaign outcomes}. All code, frozen preregistration documents, and
-per-cell evidence bundles are openly released.
+% ¶5 -- contributions.
+This work contributes:\ (i)~the random-hold count-information law
+(Section~\ref{sec:theory}):\ an exact missing-information identity, the
+long-window rate with its exact jitter-limited cubic optimum and
+small-jitter coefficient $2^{-1/3}$, and the matched crossover prediction
+$(6\nu)^{1/3}(1+12\nu c_v^{2})^{-1/3}$, verified out-of-sample against
+preregistered predictions with a pooled jitter-exponent measurement of
+$-0.658$; (ii)~the certified design principle (Section~\ref{sec:design}):\
+one concave program with the exact renewal kernel, a conservative relaxed
+Kiefer--Wolfowitz certificate, frozen guards, and the photon-budget versus
+time-budget conjugacy as its operating doctrine; (iii)~a preregistered
+simulation campaign (M1) whose scenes, atoms, load grid, guards, endpoints,
+and single gate were frozen in an immutable commit before any confirmatory
+reconstruction existed, reported as frozen including any negative primary
+\SPH{M1: campaign outcomes}; and (iv)~an operating handbook for real
+detectors (Table~\ref{tab:handbook}), ending in a bench-testable
+prediction. All code, frozen preregistration documents, and per-cell
+evidence bundles are openly released; full derivations, guard machinery,
+and verification detail are in the supplement.
 
 % ===========================================================================
-\section{The design problem}
-\label{sec:design}
-% Master concave program (R10 Q1/Q4), certificate (R10 Thm R10.1 + R13 6.1),
-% conjugacy (R11 4 + R13 8f), guards as constraints (R10 Q4 + R11 7 + R13).
-
-\subsection{Master concave program over design measures}
-Freeze the coarse pre-scan reconstruction at $\hat x$ and parameterize the
-locally estimable image perturbation as $x(\theta) = \hat x + B\theta$, with
-$B \in \mathbb{R}^{n\times r}$ spanning a declared $r$-dimensional estimable
-subspace. For a nonnegative illumination atom $a$ the arrival rate is
-$\lambda(a) = \Phi\,a^{\top}\hat x + d$ and the load is $\rho(a) = \tau\lambda(a)$.
-Let $\Jex(\rho,\nu)$ be the exact per-slot Fisher information of the integrated
-nonparalyzable count for $\log\lambda$ derived in the companion
-work~\cite{companion}. The score direction for $\theta$ is
-$q(a) = \Phi\,B^{\top}a / \lambda(a)$, so the correct rank-one local
-information atom is the chain-rule form
-\begin{equation}
-  \begin{aligned}
-  H(a;\hat x) &= \nu\,\Jex(\rho(a),\nu)\,q(a)q(a)^{\top}\\
-  &= \nu\,\Jex(\rho(a),\nu)\,\frac{\Phi^{2}}{\lambda(a)^{2}}\,
-    B^{\top}a a^{\top}B .
-  \end{aligned}
-  \label{eq:atom}
-\end{equation}
-A raw sensitivity $g \propto \Phi a$ is incomplete unless the factor
-$\sqrt{\nu \Jex}/\lambda$ is absorbed into it. For a probability measure $\xi$
-over the compact feasible atom set $\mathcal{A}$, define
-$V(\xi) = V_0 + \int_{\mathcal{A}} H(a)\,d\xi(a)$ with $V_0 \succeq 0$ the
-frozen pre-scan information, and maximize the local D-criterion
-\begin{equation}
-  \max_{\xi}\; \log\det V(\xi)
-  \quad\text{s.t.\ linear resource constraints,}
-  \label{eq:master}
-\end{equation}
-subject to average load, cumulative dose, family allocation, and peak
-constraints. The objective is concave in $\xi$; it is a \emph{local
-information surrogate} and is not claimed to optimize reconstruction PSNR or
-any image-domain risk. The estimable subspace is frozen at $r = 200$: $B$ is
-the top-$200$ eigenbasis of the fixed comparator's information matrix under
-the same pre-scan, dwell, and resource convention, computed before the
-optimization and held fixed, with a fixed numerical ridge
-$\epsilon_0 = 10^{-9}\,\mathrm{tr}(B^{\top}V_{\text{FIXED}^\ast}B)/r$
-(R13~\S6). If every atom obeys a pointwise equal-load constraint the scalar
-kernel factors out and the geometry reduces to ordinary linear
-D-optimality~\cite{kiefer1959optimum}; genuine dead-time-aware design
-therefore requires controlled load variation.
-
-\subsection{The equivalence certificate}
-By concavity of $\log\det$ and affineness of $\xi\mapsto V(\xi)$, a feasible
-design $\xi^\ast$ is optimal iff there exist constraint multipliers such that
-the reduced sensitivity
-$s(a) = \mathrm{tr}[V(\xi^\ast)^{-1}H(a)] - \sum_j\alpha_j e_j(a)
-- \sum_k\beta_k c_k(a)$ satisfies $s(a) \le \eta^\ast$ over $\mathcal{A}$ with
-equality on the support (the constrained Kiefer--Wolfowitz / general
-equivalence theorem for nonlinear
-models~\cite{kiefer1959optimum,white1973equivalence}). Because a strict
-per-pixel-dose dual is not yet implemented, the frozen confirmatory quantity
-is the conservative additive budget-dual bound: with
-$d_a = \mathrm{tr}(V^{-1} M_{\mathrm{main}} H_a)$, $c_a = \rho_a$, budget
-$c^{\top}\xi \le b$, and $\theta \ge 0$,
-\begin{equation}
-  \begin{aligned}
-  G_{\mathrm{rel}} &= \max_a(d_a - \theta c_a) - \sum_a \xi_a(d_a - \theta c_a)
-  + \theta\{b - c^{\top}\xi\},\\
-  &\qquad\qquad G_{\mathrm{rel}}/r \le 10^{-3},
-  \end{aligned}
-  \label{eq:relkw}
-\end{equation}
-which upper-bounds the gap to the optimum of the relaxed (dose-free)
-problem and hence to the dose-constrained optimum (R13~\S6.1). It is reported
-as \texttt{RELAXED\_KW\_UPPER\_BOUND}, relative to the frozen dictionary and
-local estimate, not as a full per-pixel equivalence certificate. The maximum
-is taken by an exact scan of the frozen dictionary; a learned proposer may
-warm-start the search but the frozen run finishes with the exact
-oracle~\cite{jaggi2013frankwolfe}. Continuous weights are rounded to an exact
-$972$-row design by efficient rounding followed by deterministic
-exchange~\cite{pukelsheim1992rounding,nikolov2022volume,sagnol2015exact},
-admissible only if the exact D-efficiency $\ge 0.95$.
-
-\subsection{Photon-budget versus time-budget conjugacy}
-\label{sec:conjugacy}
-The design admits two conjugate resource corners of the same dead-time
-information map. The gate-carrying \textsc{OED-DT} arm holds the original
-incident-signal resource as a hard \emph{inequality},
-\begin{equation}
-  \int \rho_s(a)\,d\xi(a) \le 0.60,
-  \label{eq:budget}
-\end{equation}
-so a subset of high-value atoms may enter the ridge zone only if compensated
-by low-load or omitted atoms (R11~\S4); detected counts are dual-reported but
-are never the sole fairness budget, because
-$\mathbb{E}[N\mid\rho]\simeq\nu\rho/(1+\rho)$ has vanishing marginal cost at
-high load. The no-gate \textsc{RIDGE-FIXED} arm instead fixes the support and
-applies one global multiplier per dwell, calibrated on the pre-scan estimate
-to mean load $\rhoR(\nu)$, followed by a single global safety clip; it uses a
-deliberately larger incident budget and is therefore descriptive
-(R11~\S2). The exact production ridge is
-$\rhoR(\nu) = \min\arg\max_{\rho\in\mathcal{R}_{\mathrm{adm}}(\nu)}
-\Jex(\rho,\nu)$ over the admissible set
-$\mathcal{R}_{\mathrm{adm}}(\nu) = \{0<\rho\le 24:\ p_{\mathrm{ceil}}\le 0.01,\
-J_{\mathrm{mean}}/\Jex \ge 0.90\}$, using the exact numerical ridge rather
-than the asymptotic cube-root form (R11~\S1). Under the incident-photon
-budget the relevant scalar efficiency is $\Jex(\rho,\nu)/\rho$, which
-decreases across the admitted palette; a photon-budgeted optimizer therefore
-rationally spends on lower loads and \emph{avoids} the ridge, while the ridge
-belongs to the time-limited, power-available corner. This is a
-resource-regime statement, not a universal prohibition on ridge-zone
-allocation:\ sufficiently valuable directions may still receive larger loads
-in other cells (R13~\S8(f)).
-
-\subsection{Guards as constraints}
-\label{sec:guards}
-The raw optimum is admissible only after all frozen guards pass; each is a
-constraint of Eq.~(\ref{eq:master}) or a post-rounding check, not a tunable
-proxy. \emph{Peak (two-part, R13~A2):} a shape guard bounds unit-load support
-weights to $\tfrac14 \le w_j \le 4$ with support size $k \ge 16$, and a
-physical guard caps $\max_{i,j} a^{\mathrm{physical}}_{ij} \le 1536$ (the peak
-of a uniform $k=16$ atom at the absolute load cap $\rho = 24$), so
-matched-intensity ridge atoms cannot silently demand more peak power.
-\emph{Weight power (R10~G4):} the dictionary contains powers $p\in\{0,1\}$
-only; $p=2$ is excluded because dev evidence showed higher proxy contrast can
-worsen conditioning and endpoint quality. \emph{Per-pixel dose (R10~G5):}
-each pixel's mean exposure stays within $\pm5\%$ of the image mean, enforced
-in-optimizer and re-verified after rounding; a necessary row bound follows,
-$\rho_r \le 1.05\,M\bar d/\max_j g_{rj}$ (R13~A5). \emph{Spectral floor
-(R10~G6):} $V_{\mathrm{OED}} \succeq 0.5\,V_{\text{FIXED}^\ast}$ on $B$, with a
-convex-mixture fallback whose coefficient is fixed from information matrices
-before any image endpoint is seen. \emph{Kernel and trust (R11~G7--G8,
-R13~A1):} every $(\nu,\rho)$ node is certified for exact-PMF mass, score, and
-derivative agreement, mean-information efficiency
-$J_{\mathrm{mean}}/\Jex \ge 0.90$, finite-window RQL log-load bias
-$|\log(\rho^{\dagger}/\rho)| \le 0.05$, ceiling probability
-$p_{\mathrm{ceil}}(\rho,\nu)\le 0.05$ per atom and $\le 0.01$ design-weighted.
-\emph{A-risk (R10~G7):} $\mathrm{tr}(V_{\mathrm{exact}}^{-1}) \le 1.05\,
-\mathrm{tr}(V_{\text{FIXED}^\ast}^{-1})$. Any violation is a declared failure
-state (\texttt{DICTIONARY\_RANK\_FAIL}, \texttt{CONTINUOUS\_CERTIFICATE\_FAIL},
-\texttt{SPECTRAL\_GUARD\_FAIL}, \texttt{A\_RISK\_GUARD\_FAIL},
-\texttt{DOSE\_GUARD\_FAIL}, \texttt{ROUNDING\_FAIL}), whose predeclared
-fallback is the fixed comparator; no threshold is retuned after freeze.
-
-% ===========================================================================
-\section{Theory: the jitter-capped ridge and its unification}
+\section{The law: driving a jittery detector}
 \label{sec:theory}
-% R14-RULED (docs/ROUND63_GPT_ROUND14_RULING_RAW.md, issue "R14 ruling:
-% unification architecture"): B = headline theorems (random-hold count
-% information: identity R14.B1, rate R14.B2, exact cubic optimum),
-% A = framework theorem (master program / generalized KKT), C = conditional
-% proposition (brightness-information alignment). Corrections frozen by the
-% ruling: the smooth crossover REPLACES the earlier min{} conjecture (that
-% form is only the two-limit envelope, with an artificial kink); the leading
-% coefficient is 2^{-1/3} = 0.794, NOT the fitted 0.72. Exact-law predictions
-% were REGISTERED before the refined sweep completed
-% (docs/R14_PREREGISTERED_PREDICTIONS.md, commit 8a627bb) and CONFIRMED
-% out-of-sample by the sweep (verdict commit 1d8d7aa; both fresh points hit,
-% 3% and 6%); pooled zoom+Colab exponent -0.658, 1.3% from -2/3 (4d8310d,
-% bd731d5); k=4/3 intermediate hypothesis preregistered 5e51088, refuted
-% 1a32758.
-The theory spine follows the frozen unification ruling:\ the random-hold
-count-information results of Section~\ref{sec:jitter} are the headline
-theorems, the master design program of Section~\ref{sec:onelagrangian} is the
-unifying framework, and the brightness--information alignment of
-Section~\ref{sec:alignment} is the conditional proposition explaining
-\textsc{RIDGE-FIXED}. The deterministic detector of the
-companion~\cite{companion} is the zero-jitter critical manifold of the
-random-hold theory. In one sentence:\ the recovery-time law determines a
-scalar count-information kernel; constrained design allocates illumination
-directions and loads against that kernel; and fixed global flux is the
-special case in which scene brightness already satisfies the kernel's
-water-filling condition. Theorem statements are given here; proofs at
-manuscript rigor are deferred to the supplement~\SPH{supplement: proofs of
-Theorems~\ref{thm:identity}--\ref{thm:cubic} and
-Proposition~\ref{prop:alignment}}.
+% R14-RULED (docs/ROUND63_GPT_ROUND14_RULING_RAW.md): headline theorems =
+% random-hold count information (identity R14.B1, rate R14.B2, exact cubic).
+% Corrections frozen by the ruling: smooth crossover REPLACES the earlier
+% min{} conjecture; coefficient 2^{-1/3} = 0.794, NOT the fitted 0.72.
+% Evidence provenance: predictions registered PRE-DATA (8a627bb), grid
+% verdict (1d8d7aa), pooled zoom+Colab exponent -0.658 (4d8310d, bd731d5),
+% k=4/3 preregistered 5e51088 / refuted 1a32758. Proofs -> supplement.
+The recovery-time law of the detector determines a scalar
+count-information kernel; everything else in this paper allocates
+illumination against that kernel. The companion's deterministic
+detector~\cite{companion} is the zero-jitter critical manifold of the
+theory below. Proofs at manuscript rigor are given in the supplement.
 
-\subsection{The jitter-capped ridge}
+\subsection{Random-hold count information}
 \label{sec:jitter}
 Generalize the detector so that after each registered event it blocks for a
 hidden \emph{random} hold time $B_i \sim H$, iid, independent of the Poisson
@@ -413,7 +261,9 @@ positive root is $\rho_c = 0.6573\ldots$; gamma, bounded two-point, and
 lognormal holds sharing a small $c_v$ share the leading coefficient, with
 distribution shape entering at the next order.
 
-\paragraph{Matched crossover (prediction).}
+\subsection{The crossover and its universality class}
+\label{sec:crossover}
+% Frozen claim-discipline wording preserved verbatim below.
 Matching the extensive loss $c_v^{2}\rho^{2}$ against the deterministic
 terminal-boundary loss $\rho^{2}/(12\nu)$ in the joint regime $\nu\to\infty$,
 $c_v\to0$, $c_v^{2}\nu = O(1)$ gives
@@ -434,7 +284,6 @@ finite-window crossover of Eq.~(\ref{eq:crossover}) is a matched-asymptotic
 local-limit) proof is complete~\SPH{supplement: uniform crossover proof, or
 the prediction label is retained}.
 
-\paragraph{Universality class.}
 The exponent pair $(1/3, -2/3)$ is universal within the regular
 finite-variance iid hidden-hold class:\ iid hidden nonnegative holds whose
 law is independent of $\lambda$, with finite nonzero mean and finite
@@ -452,12 +301,10 @@ optima~\cite{muller1973deadtime,yu2000mean,gronberg2018deadtime,
 alvarez2014pileup,jorgensen2026deadtime}; we found no source stating the
 count-only exponent pair or the extensive/terminal crossover.
 
-% ---- Three-stage measurement vs. registered exact-law predictions ----------
-% Sources of record: grid = results/round63_study2/jitter_sfi_v2_nu2000.log;
-% zoom (local 150k) + Colab replication (400k) + pooled fit = the appended
-% sections of docs/R14_PREREGISTERED_PREDICTIONS.md (commits 4d8310d,
-% bd731d5). Predictions registered PRE-DATA at 8a627bb; grid verdict 1d8d7aa;
-% k=4/3 intermediate hypothesis preregistered 5e51088, REFUTED 1a32758.
+\subsection{Preregistered verification}
+\label{sec:verification}
+% Three-stage evidence, condensed; full run specifications and both-run
+% tables in supplement S4. Sources of record in the header comment.
 \begin{table}[t]
 \centering
 \caption{Scalar count information $J(\rho,\nu=2000,c_v)$ for lognormal hold
@@ -495,99 +342,202 @@ $0.3$  & $1.607$ / --- / ---          & $1.63$                 & $0.5042$ \\
 \end{tabular}
 \end{table}
 
-The exact-law column of Table~\ref{tab:jitter}, including the two
+The law was tested the way the campaigns are run:\ predictions first, data
+second. The exact-law column of Table~\ref{tab:jitter}, including two
 out-of-sample rows, was registered before any refined measurement existed
-(commit \texttt{8a627bb}); the grid sweep then confirmed the law at both
+(commit \texttt{8a627bb}). The grid sweep then confirmed the law at both
 registered fresh points --- $c_v = 0.02$:\ predicted $\approx10.4$, measured
 $10.739$ ($3\%$); $c_v = 0.2$:\ predicted $\approx2.30$, measured $2.153$
-($6\%$) --- with every in-sample peak within one notch of the $\times1.157$
-grid (verdict at commit \texttt{1d8d7aa}), and the $\nu = 200$ column is
-consistent including the crossover correction of Eq.~(\ref{eq:crossover}).
-The continuous-peak zoom and its independent replication then measured the
-exponent itself:\ the pooled eight-measurement log-log fit of $\rho_{*}$
-against $c_v$ gives slope $-0.658$, within $1.3\%$ of the predicted $-2/3$,
-with the constant consistent with $2^{-1/3}$ within $5$--$10\%$.
-Section~\ref{sec:results} reports the full three-stage verdict.
+($6\%$) --- with every in-sample peak within one grid notch and the
+$\nu = 200$ column consistent including the crossover correction of
+Eq.~(\ref{eq:crossover}). A continuous-peak zoom and an independent
+replication (Colab, $400{,}000$ frames) then measured the exponent
+itself:\ the pooled eight-measurement log-log fit gives slope $-0.658$,
+within $1.3\%$ of the predicted $-2/3$, with the constant consistent with
+$2^{-1/3}$ within $5$--$10\%$ and a reproducible mild $\approx{-8}\%$
+end-point low bias left as an open higher-order note (candidate:\ a
+lognormal third-moment correction). One honest beat from the record:\ a
+mid-sweep effective-multiplier hypothesis ($k = 4/3$) was preregistered and
+refuted by the very next measured point (commits \texttt{5e51088},
+\texttt{1a32758}). Run specifications, both-run peak tables, and the frozen
+three-family exponent battery (tests E1--E5) that remains a preregistered
+extension are given in the supplement.
 
-\subsection{One master concave program}
+% ===========================================================================
+\section{The certified design principle}
+\label{sec:design}
+% Act 3a, ~1 page: master program; ONE paragraph certificate/guards +
+% Table 2 (full machinery -> supplement S3); conjugacy doctrine; one
+% paragraph each for the framework theorem (A -> supplement S1) and the
+% alignment proposition (C -> supplement S2).
+
+\subsection{One concave program over design measures}
+Freeze the coarse pre-scan reconstruction at $\hat x$ and parameterize the
+locally estimable image perturbation as $x(\theta) = \hat x + B\theta$, with
+$B \in \mathbb{R}^{n\times r}$ spanning a declared $r$-dimensional estimable
+subspace. For a nonnegative illumination atom $a$ the arrival rate is
+$\lambda(a) = \Phi\,a^{\top}\hat x + d$ and the load is
+$\rho(a) = \tau\lambda(a)$. With $\Jex(\rho,\nu)$ the exact per-slot
+information of the integrated renewal count for $\log\lambda$ (generalized
+to the random-hold kernel of Theorem~\ref{thm:rate} when $c_v > 0$) and
+score direction $q(a) = \Phi\,B^{\top}a / \lambda(a)$, the rank-one local
+information atom is the chain-rule form
+\begin{equation}
+  \begin{aligned}
+  H(a;\hat x) &= \nu\,\Jex(\rho(a),\nu)\,q(a)q(a)^{\top}\\
+  &= \nu\,\Jex(\rho(a),\nu)\,\frac{\Phi^{2}}{\lambda(a)^{2}}\,
+    B^{\top}a a^{\top}B .
+  \end{aligned}
+  \label{eq:atom}
+\end{equation}
+A raw sensitivity $g \propto \Phi a$ is incomplete unless the factor
+$\sqrt{\nu \Jex}/\lambda$ is absorbed into it. For a probability measure
+$\xi$ over the compact feasible atom set $\mathcal{A}$, define
+$V(\xi) = V_0 + \int_{\mathcal{A}} H(a)\,d\xi(a)$ with $V_0 \succeq 0$ the
+frozen pre-scan information, and maximize the local D-criterion
+\begin{equation}
+  \max_{\xi}\; \log\det V(\xi)
+  \quad\text{s.t.\ linear resource constraints,}
+  \label{eq:master}
+\end{equation}
+subject to average load, cumulative dose, family allocation, and peak
+constraints. The objective is concave in $\xi$; it is a \emph{local
+information surrogate} and is not claimed to optimize reconstruction PSNR or
+any image-domain risk. The estimable subspace is frozen at $r = 200$ (the
+top eigenbasis of the fixed comparator's information matrix, fixed before
+the solve, with a fixed numerical ridge; conventions in the supplement). If
+every atom obeys a pointwise equal-load constraint the scalar kernel factors
+out and the geometry reduces to ordinary linear
+D-optimality~\cite{kiefer1959optimum}; genuine dead-time-aware design
+therefore requires controlled load variation.
+
+\subsection{Certificate and guards}
+\label{sec:guards}
+% ONE paragraph + Table 2; full machinery moved to supplement S3.
+The optimum is certified, not trusted. By concavity, optimality is
+equivalent to a bounded reduced sensitivity (the constrained
+Kiefer--Wolfowitz / general equivalence condition for nonlinear
+models~\cite{kiefer1959optimum,white1973equivalence}); because a strict
+per-pixel-dose dual is not yet implemented, the frozen confirmatory
+quantity is a conservative additive budget-dual bound,
+\texttt{RELAXED\_KW\_UPPER\_BOUND}, required to satisfy
+$G_{\mathrm{rel}}/r \le 10^{-3}$ against an exact scan of the frozen
+dictionary --- a learned proposer may warm-start the search, but every
+frozen run finishes with the exact
+oracle~\cite{jaggi2013frankwolfe}. Continuous weights are rounded to an
+exact $972$-row design by efficient rounding and deterministic
+exchange~\cite{pukelsheim1992rounding,nikolov2022volume,sagnol2015exact},
+admissible only at exact D-efficiency $\ge 0.95$. Every remaining guard is
+a frozen constraint, not a tunable proxy (Table~\ref{tab:machinery}); any
+violation is a declared failure state with the fixed comparator as the
+predeclared fallback, and no threshold is retuned after freeze. The full
+guard mathematics, the dictionary listing, and the budget accounting are in
+the supplement.
+
+\begin{table}[t]
+\centering
+\caption{The frozen design machinery at a glance (R10/R11/R13; full
+statements in the supplement).}
+\label{tab:machinery}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lp{5.3cm}@{}}
+\hline
+Element & Frozen rule \\
+\hline
+Dictionary & all cyclic translates of the 13 R10 support families
+  (scattered $k=16/32$, solid $4\times4$, Lblob, bars, compact-32, ring);
+  weight powers $p\in\{0,1\}$ only \\
+Budget & incident-signal inequality $\int\rho_s\,d\xi \le 0.60$; detected
+  counts dual-reported, never the sole budget \\
+Peak & shape:\ $w_j\in[\tfrac14,4]$, $k\ge16$; physical:\
+  $\max a_{ij}\le1536$ \\
+Dose & per-pixel mean exposure within $\pm5\%$ of image mean, re-verified
+  post-rounding \\
+Floors & $V_{\mathrm{OED}}\succeq0.5\,V_{\text{FIXED}^\ast}$;
+  $\mathrm{tr}(V^{-1})\le1.05\,\mathrm{tr}(V_{\text{FIXED}^\ast}^{-1})$ \\
+Kernel trust & exact-PMF certification; $J_{\mathrm{mean}}/\Jex\ge0.90$;
+  RQL log-load bias $\le0.05$; $p_{\mathrm{ceil}}\le0.05$ per atom,
+  $\le0.01$ design-weighted \\
+Certificate & $G_{\mathrm{rel}}/r\le10^{-3}$ (relaxed KW, exact dictionary
+  scan) \\
+Rounding & exact $972$-row design, $\mathrm{Eff}_D\ge0.95$ \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{The conjugacy doctrine: photon budget versus time budget}
+\label{sec:conjugacy}
+% Frozen R11/R13 §8(f) wording preserved verbatim. The operating doctrine.
+The design admits two conjugate resource corners of the same dead-time
+information map. The gate-carrying \textsc{OED-DT} arm holds the original
+incident-signal resource as a hard \emph{inequality},
+\begin{equation}
+  \int \rho_s(a)\,d\xi(a) \le 0.60,
+  \label{eq:budget}
+\end{equation}
+so a subset of high-value atoms may enter the ridge zone only if compensated
+by low-load or omitted atoms (R11~\S4); detected counts are dual-reported but
+are never the sole fairness budget, because
+$\mathbb{E}[N\mid\rho]\simeq\nu\rho/(1+\rho)$ has vanishing marginal cost at
+high load. The no-gate \textsc{RIDGE-FIXED} arm instead fixes the support and
+applies one global multiplier per dwell, calibrated on the pre-scan estimate
+to mean load $\rhoR(\nu)$, followed by a single global safety clip; it uses a
+deliberately larger incident budget and is therefore descriptive
+(R11~\S2). The exact production ridge is
+$\rhoR(\nu) = \min\arg\max_{\rho\in\mathcal{R}_{\mathrm{adm}}(\nu)}
+\Jex(\rho,\nu)$ over the admissible set
+$\mathcal{R}_{\mathrm{adm}}(\nu) = \{0<\rho\le 24:\ p_{\mathrm{ceil}}\le 0.01,\
+J_{\mathrm{mean}}/\Jex \ge 0.90\}$, using the exact numerical ridge rather
+than the asymptotic cube-root form (R11~\S1). Under the incident-photon
+budget the relevant scalar efficiency is $\Jex(\rho,\nu)/\rho$, which
+decreases across the admitted palette; a photon-budgeted optimizer therefore
+rationally spends on lower loads and \emph{avoids} the ridge, while the ridge
+belongs to the time-limited, power-available corner. This is a
+resource-regime statement, not a universal prohibition on ridge-zone
+allocation:\ sufficiently valuable directions may still receive larger loads
+in other cells (R13~\S8(f)).
+
+\subsection{One program behind every optimum}
 \label{sec:onelagrangian}
-% R14 Candidate A: APPROVED as the framework theorem, with the frozen
-% discrete-optima caveat (ruling §2.3) kept verbatim in spirit.
-The framework theorem generalizes Section~\ref{sec:design}:\ with the
-random-hold kernel $J_H(\rho,\nu)$ of Theorem~\ref{thm:rate} inside the
-rank-one atoms $H_z = \nu J_H(\rho_z,\nu)\,q_z q_z^{\top}$, the
-design-measure problem of Eq.~(\ref{eq:master}) remains concave, and every
-true interior optimum of the declared problem satisfies one generalized
-reduced-sensitivity/KKT system:\ the sensitivity
-$\psi(z) = M\,\mathrm{tr}[V^{-1}H_z] - \sum_m \beta_m c_m(z)$ obeys
-$\psi(z)\le\eta$ with equality on support atoms, and at any support atom
-interior in a smooth scalar coordinate $y$, $\partial_y\psi = 0$ with
-$\partial^2_y\psi \le 0$. The load coordinate yields the
-information-water-filling equation --- $M\nu J_H'(\rho)\,\ell$ equal to the
-marginal resource shadow price, with $\ell = q^{\top}V^{-1}q$ --- while the
-support-scale and weight-power coordinates equate
-$2M\nu J_H(\rho)\,q_y^{\top}V^{-1}q$ to the corresponding marginal
-dose/peak/dispersion price:\ the apparent ``conditioning penalty'' is not an
-ad hoc term but the $V^{-1}$ geometry inside the reduced sensitivity, which
-also explains why raising proxy contrast from $p=1$ to $p=2$ can lower the
-true objective. One caveat is kept deliberately:\ the master design problem
-places load, support scale, and intensity weighting in one constrained
-concave measure optimization, and its support atoms satisfy a common
-reduced-sensitivity condition; but the empirically observed occupancy
-($k\approx32$) and weighting ($p\approx1$) optima \emph{motivate} these
-coordinates and are not themselves claimed as continuous KKT theorems ---
-they were selected from discrete grids and judged by image endpoints, not by
-the master $\log\det$ objective.
+% Candidate A demoted to one paragraph; full generalized-KKT system in
+% supplement S1. Frozen discrete-optima caveat preserved VERBATIM.
+Every true interior optimum of the declared design problem --- over load,
+support scale, and intensity weighting --- satisfies one generalized
+reduced-sensitivity/KKT system of the master program, whose load coordinate
+is the information-water-filling equation and whose scale and weighting
+coordinates price conditioning through the $V^{-1}$ geometry (full system
+in the supplement); this also explains why raising proxy contrast from
+$p=1$ to $p=2$ can lower the true objective. One caveat is kept
+deliberately:\ the master design problem places load, support scale, and
+intensity weighting in one constrained concave measure optimization, and
+its support atoms satisfy a common reduced-sensitivity condition; but the
+empirically observed occupancy ($k\approx32$) and weighting ($p\approx1$)
+optima \emph{motivate} these coordinates and are not themselves claimed as
+continuous KKT theorems --- they were selected from discrete grids and
+judged by image endpoints, not by the master $\log\det$ objective.
 
-\subsection{Brightness--information alignment}
+\subsection{Why one global knob suffices for RIDGE-FIXED}
 \label{sec:alignment}
-% R14 Candidate C: APPROVED as a conditional proposition, NOT a universal
-% approximation theorem. Frozen wording: "without alignment, fixed flux can
-% be arbitrarily bad" (no universal constant factor).
-At a fixed design iterate with directional values
-$\ell_i = q_i^{\top}V^{-1}q_i$, allocate scalar loads under the budget
-$\sum_i \pi_i\rho_i = B$ to maximize $F(\rho) = \sum_i \pi_i\ell_i
-J(\rho_i)$; on an interval where $J$ is increasing and strictly concave, the
-water-filling optimum satisfies $\ell_i J'(\rho_i^{*}) = \beta$ at every
-interior coordinate. A single global source induces
-$\tilde\rho_i = \kappa u_i$, with $u_i = a_i^{\top}x$ the bucket brightness.
-
-\begin{proposition}[alignment and residual bound]
-\label{prop:alignment}
-The fixed-flux allocation is exactly optimal for this scalar subproblem if
-and only if there exists $\beta$ with
-\begin{equation}
-  \ell_i\,J'(\kappa u_i) = \beta
-  \label{eq:alignment}
-\end{equation}
-for all interior active directions, with KKT-compatible inequalities at the
-bounds. If moreover $-\ell_i J''(\rho) \ge m > 0$ throughout the admitted
-interval, then, with residuals $r_i = \ell_i J'(\kappa u_i) - \beta$,
-\begin{equation}
-  0 \;\le\; F(\rho^{*}) - F(\tilde\rho)
-  \;\le\; \frac{1}{2m}\sum_i \pi_i\, r_i^{2}.
-  \label{eq:residual}
-\end{equation}
-\end{proposition}
-
-A computable projected-KKT residual --- not $\Cu$ alone --- therefore
-certifies whether one global flux knob is close to the scalar water-filling
-optimum. In power-law form, if $J'(\rho)\asymp C\rho^{-s}$ and
-$\ell_i \asymp u_i^{\alpha}$, fixed flux aligns when $\alpha\approx s$; for
-the rising kernel $J = \rho/(1+\rho)$ the local slope
-$s(\rho) = 2\rho/(1+\rho)$ runs from $0$ toward $2$, so the often-invoked
-$\ell \propto u^{2}$ alignment is only a high-load approximation. Without the
-alignment condition there is no scene-independent constant-factor
-guarantee:\ two directions with $u_1/u_2\to\infty$ but $\ell_1/\ell_2\to0$
-drive the fixed-flux objective ratio to zero, so fixed flux can be
-arbitrarily bad. With random holds, $J'$ vanishes at the jitter cap and is
-negative beyond it, so fixed flux can overdrive the brightest directions and
-explicit gain control becomes necessary. This explains both sides of the
-companion's dev evidence~\cite{companion}:\ \textsc{RIDGE-FIXED} with one
-global knob is near-optimal exactly when its realized residuals are small
-(self-water-filling), while the uniform servo --- which loses by up to
-$\sim7$~dB on sparse-support scenes --- fails because forcing equal $\rho_i$
-discards a naturally favorable alignment between $u_i$ and $\ell_i$.
+% Candidate C demoted to one paragraph; full proposition, power-law reading,
+% and failure modes in supplement S2. R14 frozen wording preserved.
+Fixed flux performs implicit information water filling when bucket
+brightness and local directional value satisfy the marginal-information
+alignment condition $\ell_i\,J'(\kappa u_i) = \beta$ across active
+directions ($\ell_i = q_i^{\top}V^{-1}q_i$ the directional value,
+$u_i = a_i^{\top}x$ the bucket brightness); its adequacy is measured by a
+projected KKT residual --- not $\Cu$ alone --- and outside that condition,
+variable-load OED can improve without any universal bound on the fixed-flux
+approximation ratio. On nonnegative sparse-support scenes the
+source-induced load ordering naturally tracks directional value, which is
+why \textsc{RIDGE-FIXED} needs only a single global multiplier, and why the
+uniform per-pattern servo --- which loses by up to $\sim7$~dB in the
+companion's dev evidence~\cite{companion} --- fails by erasing exactly that
+alignment. With random holds, $J'$ vanishes at the jitter cap and is
+negative beyond it, so fixed flux can overdrive the brightest directions
+and explicit gain control becomes necessary. The full proposition, its
+residual near-optimality bound, and its failure modes are in the
+supplement.
 
 % ===========================================================================
 \section{Preregistered campaign (M1)}
@@ -638,9 +588,7 @@ confirmatory gate; the others are ablations, baselines, or the descriptive
 ridge-tracking demonstration. The R13 freeze audit additionally mandates
 \textsc{MATCH1} as a no-gate arm and a committed selection of the global fixed
 comparator $\text{FIXED}^\ast$ from $\{\textsc{SCAT32}, \textsc{LBLOB16},
-\textsc{MATCH1}\}$ by the frozen development rule (median fixed-dwell
-radiometric PSNR at $\rhobar=0.60$, $\nu=2000$); \textsc{LBLOB16} is the
-current spectral-floor reference~\SPH{M1: committed
+\textsc{MATCH1}\}$ by the frozen development rule~\SPH{M1: committed
 $\text{FIXED}^\ast$ selection record}. Reconstruction (RQL with the frozen
 analytic $\lambda_{\mathrm{TV}}$ rule and pooled initialization) is identical
 across arms; the primary comparison is each arm's own fast curve against the
@@ -698,8 +646,9 @@ before any confirmatory scene is opened.
 % ===========================================================================
 \section{Results}
 \label{sec:results}
-% Skeleton: one \SPH subsection per arm/endpoint + a cross-arm table. Numbers
-% fill from the M1 campaign after tag m1-freeze.
+% Skeleton: primary + two key secondaries + one combined secondary-arm
+% subsection (full tables in supplement S5) + cross-arm table. Numbers fill
+% from the M1 campaign after tag m1-freeze.
 \subsection{Primary: OED-DT time-to-quality}
 \SPH{M1: METHOD\_SPEED\_PASS verdict --- median $S_{\mathrm{gate}}$, bootstrap
 lower bound, count of scenes with $S_j>1$, and the frozen PASS/FAIL call.}
@@ -712,55 +661,10 @@ dwell, family-stratified lower bound, count positive.}
 \SPH{M1: METHOD\_FIXED\_DWELL\_PASS --- median terminal-dwell gain (dB),
 count positive, bootstrap lower bound, per-arm ladder.}
 
-\subsection{RIDGE-FIXED operating-point demonstration}
-\SPH{M1: fixed-dwell gain per dwell of the ridge-tracking policy over
-$\rhobar=0.60$ and safe references, realized loads, and ceiling fractions.}
-
-\subsection{OED-EQLOAD kernel ablation}
-\SPH{M1: equal-load geometry vs.\ variable-load geometry --- any design
-difference attributable to the renewal kernel, with numerical-noise
-disclosure.}
-
-\subsection{Certificate and rounding diagnostics}
-\SPH{M1: relaxed-KW gap $G_{\mathrm{rel}}/r$, exact D-efficiency, A-risk
-ratio, and spectral-floor margin per designed cell.}
-
-\subsection{Jitter-ridge refined sweep}
-The refined sweep (\texttt{jitter\_sfi\_v2}:\ lognormal holds, $100{,}000$
-frames per cell, common random numbers, 25-point log grid of spacing
-$1.157$, $\nu \in \{200, 2000\}$) confirmed the R14 law out-of-sample. At
-$\nu = 2000$ the measured peaks are $\rho_{*} = 22.297$, $10.739$, $5.173$,
-$3.862$, $2.153$, and $1.607$ at $c_v = 0$, $0.02$, $0.05$, $0.1$, $0.2$,
-and $0.3$, respectively (Table~\ref{tab:jitter}); both predictions
-registered before the data existed hit --- $c_v = 0.02$ predicted
-$\approx10.4$, measured $10.739$ ($3\%$); $c_v = 0.2$ predicted
-$\approx2.30$, measured $2.153$ ($6\%$) --- and every in-sample peak lies
-within one grid notch of its exact-law value (commits \texttt{8a627bb},
-predictions registered pre-data; \texttt{1d8d7aa}, verdict). The $\nu = 200$
-column is consistent with the crossover correction:\ the $c_v = 0$ peak at
-$9.28$ tracks the exact ridge $10.04$, and $c_v = 0.3$ measures $1.86$
-against the predicted $1.77$.
-
-A continuous-peak zoom (quadratic interpolation, local run, $150{,}000$
-frames) and an independent replication (Colab, $400{,}000$ frames) then
-measured the four jittered peaks twice each at $\nu = 2000$:\ local
-$(9.645,\ 5.154,\ 3.752,\ 2.106)$ and replicated
-$(9.610,\ 5.700,\ 3.399,\ 2.051)$ at $c_v = (0.02,\ 0.05,\ 0.1,\ 0.2)$,
-respectively. The pooled eight-measurement log-log fit gives slope $-0.658$
-vs.\ the predicted $-2/3$ ($1.3\%$); the constant sits about $5\%$ below
-$2^{-1/3}$, at the edge of the run-to-run noise, so the frozen statement
-is:\ exponent confirmed at $1.3\%$, constant consistent within $5$--$10\%$.
-The end points replicate a mild $\approx{-8}\%$ low bias across both runs,
-left as an open higher-order note (candidate:\ a lognormal third-moment
-correction to the leading finite-variance law). One intermediate hypothesis
-is on the record:\ after the first two zoom points, an effective jitter-cost
-multiplier $k = 4/3$ was preregistered (commit \texttt{5e51088}) and was
-refuted by the very next measured point, whose deviation flipped sign
-(commit \texttt{1a32758}) --- peak-location noise on flat information tops,
-not a systematic constant. The fuller three-hold-family exponent battery
-frozen in the ruling (tests E1--E5, with matched-CV gamma and bounded
-two-point holds and cross-fitted conditional-score estimation) remains a
-preregistered extension beyond this verdict.
+\subsection{Secondary arms and design diagnostics}
+\SPH{M1: RIDGE-FIXED operating-point demonstration, OED-EQLOAD kernel
+ablation, and per-cell certificate/rounding diagnostics --- summary here;
+full tables in the supplement.}
 
 \begin{table*}[t]
 \centering
@@ -786,10 +690,10 @@ Arm & median $S_{\mathrm{gate}}$ & design (dB) & fixed-dwell (dB)
 \end{table*}
 
 % ===========================================================================
-\section{Discussion}
+\section{Discussion: the operating handbook}
 \label{sec:discussion}
 % No separate limitations section (companion house style); honesty inside the
-% paragraphs. Photon economics + hardware warning + bench outlook.
+% paragraphs. Ends on the bench-testable prediction.
 The two arms expose conjugate resource regimes of the same dead-time
 information map. Under a linear incident-photon budget the per-photon
 efficiency $\Jex(\rho,\nu)/\rho$ falls monotonically, so a budget-constrained
@@ -812,13 +716,61 @@ deployment must therefore locate its operating point against the
 jitter-limited ceiling of the real detector, not the deterministic ridge; the
 safe conclusion is conditional on measured timing jitter.
 
-An optical extension follows the companion's discussion:\ a coarse
-complex-field estimate could synthesize an optical displacement that suppresses
-the predicted common mode before photon counting, removing photons ahead of
-dead-time loss rather than after it~\cite{companion}. All results here are
-simulation-based, and every certificate is stated relative to the frozen
-dictionary, the local pre-scan estimate, and the declared resource model;
-optical-bench validation remains outstanding.
+Together, the law and the design principle compress into the operating
+handbook of Table~\ref{tab:handbook}:\ characterize the detector, let the
+law set the load ceiling, check engagement with the pre-scan, and pick the
+pattern recipe by which resource is scarce.
+
+\begin{table}[t]
+\centering
+\caption{Operating handbook for dead-time-limited single-pixel imaging.
+The engagement index $\Gamma$ is descriptive (the companion's computable
+engagement criterion~\cite{companion}), never a confirmatory gate.}
+\label{tab:handbook}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lp{5.3cm}@{}}
+\hline
+Step & Rule \\
+\hline
+1.\ Characterize & measure $\tau$ and the hold-time $c_v$ from time-tagged
+  recovery intervals \\
+2.\ Set the load & jitter-capped optimum from
+  $c_v^{2}\rho^{2}(1+2\rho)=1$ (long window) or
+  $(6\nu)^{1/3}(1+12\nu c_v^{2})^{-1/3}$ (finite window); never operate a
+  jittered detector at the deterministic ridge \\
+3.\ Check engagement & common $52$-pattern pre-scan $\to$ measured $\Cu$;
+  $\Gamma = \Cu\sqrt{\nu\rho/(1+\rho)} \gtrsim 1$ marks the photon-limited
+  regime \\
+4.\ Pick patterns & photon-budgeted:\ certified \textsc{OED-DT} design
+  (relaxed-KW certificate vs.\ the frozen dictionary); time-budgeted:\
+  \textsc{RIDGE-FIXED} --- one global multiplier to $\rhoR(\nu)$
+  (Section~\ref{sec:alignment}) \\
+5.\ Doctrine & photon-constrained $\to$ stay below the ridge
+  ($\Jex/\rho$ falls); time-constrained $\to$ track the jitter-capped
+  ridge \\
+\hline
+\end{tabular}
+\end{table}
+
+Two scope boundaries stand. All results are simulation-based, and every
+certificate is stated relative to the frozen dictionary, the local pre-scan
+estimate, and the declared resource model; an optical extension along the
+companion's discussion --- a coarse complex-field estimate synthesizing an
+optical displacement that removes common-mode photons before dead-time
+loss --- remains a natural bench direction~\cite{companion}.
+
+The law itself, however, is bench-testable now, with no imaging required.
+For a real single-photon counting module, the hold-time coefficient of
+variation is directly measurable from time-tagged recovery intervals; the
+theory then predicts a count-information peak at the root of
+$c_v^{2}\rho^{2}(1+2\rho) = 1$ rather than at the deterministic ridge ---
+for $c_v = 0.05$, a peak near $\rho \approx 5.7$ instead of $\approx 22$ at
+$\nu = 2000$, with about half the information forfeited if the deterministic
+ridge is used instead (Table~\ref{tab:jitter}). Sweeping source power at
+fixed dwell and estimating the count information from repeated frames traces
+$J(\rho)$ directly; this single-detector power sweep is the immediate bench
+experiment for the line.
 
 % ===========================================================================
 \section{Reproducibility}
@@ -839,8 +791,10 @@ The campaign freezes at tag \texttt{m1-freeze} once the R13
 checklist passes outcome-blind self-tests; the companion is frozen at tag
 \texttt{paper1-freeze-v1}. Source-of-record documents for every frozen
 constant are cited by ruling number in the block comments of the manuscript
-source. All code, frozen preregistration documents, per-cell manifests, and
-evidence bundles are available at~\SPH{repo URL wording --- user decision};
+source; full machinery and proofs are in the supplement
+(\texttt{supplement\_m1.tex}). All code, frozen preregistration documents,
+per-cell manifests, and evidence bundles are available
+at~\SPH{repo URL wording --- user decision};
 funding and acknowledgments are~\SPH{funding/acknowledgments --- user
 decision}.
 

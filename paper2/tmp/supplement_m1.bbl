@@ -1,0 +1,46 @@
+\begin{thebibliography}{1}
+
+\bibitem{companion}
+{Companion manuscript (paper~1)}.
+\newblock When high flux helps single-pixel imaging: a contrast--dead-time
+  operating map, 2026.
+\newblock in submission; author block per paper~1 (user decision).
+
+\bibitem{kiefer1959optimum}
+Jack Kiefer.
+\newblock Optimum experimental designs.
+\newblock {\em Journal of the Royal Statistical Society: Series B}, 1959.
+\newblock volume/pages VERIFY at submission.
+
+\bibitem{white1973equivalence}
+L.~V. White.
+\newblock An extension of the general equivalence theorem to nonlinear models.
+\newblock {\em Biometrika}, 60(2):345--348, 1973.
+
+\bibitem{jaggi2013frankwolfe}
+Martin Jaggi.
+\newblock Revisiting {Frank--Wolfe}: Projection-free sparse convex
+  optimization.
+\newblock In {\em Proceedings of the 30th International Conference on Machine
+  Learning (ICML)}, volume~28 of {\em PMLR}, pages 427--435, 2013.
+
+\bibitem{pukelsheim1992rounding}
+Friedrich Pukelsheim and Sabine Rieder.
+\newblock Efficient rounding of approximate designs.
+\newblock {\em Biometrika}, 79(4):763--770, 1992.
+
+\bibitem{nikolov2022volume}
+Aleksandar Nikolov, Mohit Singh, and Uthaipon Tantipongpipat.
+\newblock Proportional volume sampling and approximation algorithms for
+  {A}-optimal design.
+\newblock {\em Mathematics of Operations Research}, 2022.
+\newblock volume/pages VERIFY at submission.
+
+\bibitem{sagnol2015exact}
+Guillaume Sagnol and Radoslav Harman.
+\newblock Computing exact {D}-optimal designs by mixed integer second-order
+  cone programming.
+\newblock {\em The Annals of Statistics}, 43(5):2198--2224, 2015.
+\newblock arXiv:1307.4953.
+
+\end{thebibliography}

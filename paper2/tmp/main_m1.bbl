@@ -57,6 +57,28 @@ Frederic J.~N. Jorgensen and Steven~G. Johnson.
   event detection, with application to single-photon lidar, 2026.
 \newblock arXiv:2605.23210.
 
+\bibitem{muller1973deadtime}
+J{\"o}rg~W. M{\"u}ller.
+\newblock Dead-time problems.
+\newblock {\em Nuclear Instruments and Methods}, 112(1--2):47--57, 1973.
+
+\bibitem{yu2000mean}
+Daniel~F. Yu and Jeffrey~A. Fessler.
+\newblock Mean and variance of single photon counting with deadtime.
+\newblock {\em Physics in Medicine and Biology}, 45(7):2043--2056, 2000.
+
+\bibitem{gronberg2018deadtime}
+Fredrik Gr{\"o}nberg, Mats Danielsson, and Martin Sj{\"o}lin.
+\newblock Count statistics of nonparalyzable photon-counting detectors with
+  nonzero pulse length.
+\newblock {\em Medical Physics}, 45(8):3800--3811, 2018.
+
+\bibitem{alvarez2014pileup}
+Robert~E. Alvarez.
+\newblock Signal to noise ratio of energy selective x-ray photon counting
+  systems with pileup.
+\newblock {\em Medical Physics}, 41(11):111909, 2014.
+
 \bibitem{kiefer1959optimum}
 Jack Kiefer.
 \newblock Optimum experimental designs.
@@ -93,27 +115,5 @@ Guillaume Sagnol and Radoslav Harman.
   cone programming.
 \newblock {\em The Annals of Statistics}, 43(5):2198--2224, 2015.
 \newblock arXiv:1307.4953.
-
-\bibitem{muller1973deadtime}
-J{\"o}rg~W. M{\"u}ller.
-\newblock Dead-time problems.
-\newblock {\em Nuclear Instruments and Methods}, 112(1--2):47--57, 1973.
-
-\bibitem{yu2000mean}
-Daniel~F. Yu and Jeffrey~A. Fessler.
-\newblock Mean and variance of single photon counting with deadtime.
-\newblock {\em Physics in Medicine and Biology}, 45(7):2043--2056, 2000.
-
-\bibitem{gronberg2018deadtime}
-Fredrik Gr{\"o}nberg, Mats Danielsson, and Martin Sj{\"o}lin.
-\newblock Count statistics of nonparalyzable photon-counting detectors with
-  nonzero pulse length.
-\newblock {\em Medical Physics}, 45(8):3800--3811, 2018.
-
-\bibitem{alvarez2014pileup}
-Robert~E. Alvarez.
-\newblock Signal to noise ratio of energy selective x-ray photon counting
-  systems with pileup.
-\newblock {\em Medical Physics}, 41(11):111909, 2014.
 
 \end{thebibliography}

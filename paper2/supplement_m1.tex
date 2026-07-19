@@ -1,0 +1,304 @@
+% ============================================================================
+% PAPER 2 SUPPLEMENT (method line, M1). Created in the editorial restructure
+% that compressed the main text to one storyline; every technical block here
+% was MOVED from main_m1.tex (or from the frozen rulings) verbatim, not
+% reworded. Sections:
+%   S1 framework theorem (R14 Candidate A, full generalized-KKT system)
+%   S2 alignment proposition (R14 Candidate C, full statement + failure modes)
+%   S3 design machinery in full (certificate math, guards, dictionary,
+%      subspace conventions, budget accounting)  [R10/R11/R13]
+%   S4 Monte-Carlo verification detail (grid + zoom + replication runs)
+%   S5 secondary-arm full results (M1 \SPH placeholders)
+%   S6 proofs (R14-SUPP \SPH)
+% PLACEHOLDER DISCIPLINE: \SPH sites here are indexed in the same
+% PLACEHOLDER_LEDGER.md as the main text.
+% ============================================================================
+\documentclass[10pt]{article}
+\usepackage{amsmath,amssymb,bm}
+\usepackage{graphicx}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\newcommand{\SPH}[1]{\textcolor{red}{[#1]}}   % unfilled campaign placeholder
+\newcommand{\rhobar}{\bar{\rho}}
+\newcommand{\Cu}{C_{u}}
+\newcommand{\rhoR}{\rho_{R}}
+\newcommand{\Jex}{J_{\mathrm{exact}}}
+\newtheorem{proposition}{Proposition}
+\renewcommand{\thesection}{S\arabic{section}}
+\renewcommand{\theequation}{S\arabic{equation}}
+\renewcommand{\thetable}{S\arabic{table}}
+\renewcommand{\theproposition}{S\arabic{proposition}}
+
+\title{Supplement:\ Information-optimal illumination for dead-time-limited
+single-pixel imaging}
+\author{\SPH{author block --- user decision (mirrors main text)}}
+\date{}
+
+\begin{document}
+\maketitle
+
+Numbering ``Theorem 1--3'' below refers to the main text; equations and
+propositions local to this supplement carry the S-prefix. All frozen
+constants trace to the R10/R11/R13/R14 rulings cited in the main-text source
+comments.
+
+% ===========================================================================
+\section{The framework theorem: one master concave program}
+\label{sec:s-framework}
+% MOVED verbatim from the pre-restructure main text (R14 Candidate A,
+% approved as the framework theorem; frozen discrete-optima caveat verbatim).
+The framework theorem generalizes the main-text design program:\ with the
+random-hold kernel $J_H(\rho,\nu)$ of Theorem~2 inside the
+rank-one atoms $H_z = \nu J_H(\rho_z,\nu)\,q_z q_z^{\top}$, the
+design-measure problem remains concave, and every
+true interior optimum of the declared problem satisfies one generalized
+reduced-sensitivity/KKT system:\ the sensitivity
+$\psi(z) = M\,\mathrm{tr}[V^{-1}H_z] - \sum_m \beta_m c_m(z)$ obeys
+$\psi(z)\le\eta$ with equality on support atoms, and at any support atom
+interior in a smooth scalar coordinate $y$, $\partial_y\psi = 0$ with
+$\partial^2_y\psi \le 0$. The load coordinate yields the
+information-water-filling equation --- $M\nu J_H'(\rho)\,\ell$ equal to the
+marginal resource shadow price, with $\ell = q^{\top}V^{-1}q$ --- while the
+support-scale and weight-power coordinates equate
+$2M\nu J_H(\rho)\,q_y^{\top}V^{-1}q$ to the corresponding marginal
+dose/peak/dispersion price:\ the apparent ``conditioning penalty'' is not an
+ad hoc term but the $V^{-1}$ geometry inside the reduced sensitivity, which
+also explains why raising proxy contrast from $p=1$ to $p=2$ can lower the
+true objective. One caveat is kept deliberately:\ the master design problem
+places load, support scale, and intensity weighting in one constrained
+concave measure optimization, and its support atoms satisfy a common
+reduced-sensitivity condition; but the empirically observed occupancy
+($k\approx32$) and weighting ($p\approx1$) optima \emph{motivate} these
+coordinates and are not themselves claimed as continuous KKT theorems ---
+they were selected from discrete grids and judged by image endpoints, not by
+the master $\log\det$ objective.
+
+% ===========================================================================
+\section{The alignment proposition}
+\label{sec:s-alignment}
+% MOVED verbatim from the pre-restructure main text (R14 Candidate C,
+% approved as a conditional proposition, NOT a universal approximation
+% theorem; frozen wording preserved).
+At a fixed design iterate with directional values
+$\ell_i = q_i^{\top}V^{-1}q_i$, allocate scalar loads under the budget
+$\sum_i \pi_i\rho_i = B$ to maximize $F(\rho) = \sum_i \pi_i\ell_i
+J(\rho_i)$; on an interval where $J$ is increasing and strictly concave, the
+water-filling optimum satisfies $\ell_i J'(\rho_i^{*}) = \beta$ at every
+interior coordinate. A single global source induces
+$\tilde\rho_i = \kappa u_i$, with $u_i = a_i^{\top}x$ the bucket brightness.
+
+\begin{proposition}[alignment and residual bound]
+\label{prop:s-alignment}
+The fixed-flux allocation is exactly optimal for this scalar subproblem if
+and only if there exists $\beta$ with
+\begin{equation}
+  \ell_i\,J'(\kappa u_i) = \beta
+  \label{eq:s-alignment}
+\end{equation}
+for all interior active directions, with KKT-compatible inequalities at the
+bounds. If moreover $-\ell_i J''(\rho) \ge m > 0$ throughout the admitted
+interval, then, with residuals $r_i = \ell_i J'(\kappa u_i) - \beta$,
+\begin{equation}
+  0 \;\le\; F(\rho^{*}) - F(\tilde\rho)
+  \;\le\; \frac{1}{2m}\sum_i \pi_i\, r_i^{2}.
+  \label{eq:s-residual}
+\end{equation}
+\end{proposition}
+
+A computable projected-KKT residual --- not $\Cu$ alone --- therefore
+certifies whether one global flux knob is close to the scalar water-filling
+optimum. In power-law form, if $J'(\rho)\asymp C\rho^{-s}$ and
+$\ell_i \asymp u_i^{\alpha}$, fixed flux aligns when $\alpha\approx s$; for
+the rising kernel $J = \rho/(1+\rho)$ the local slope
+$s(\rho) = 2\rho/(1+\rho)$ runs from $0$ toward $2$, so the often-invoked
+$\ell \propto u^{2}$ alignment is only a high-load approximation. Without the
+alignment condition there is no scene-independent constant-factor
+guarantee:\ two directions with $u_1/u_2\to\infty$ but $\ell_1/\ell_2\to0$
+drive the fixed-flux objective ratio to zero, so fixed flux can be
+arbitrarily bad. With random holds, $J'$ vanishes at the jitter cap and is
+negative beyond it, so fixed flux can overdrive the brightest directions and
+explicit gain control becomes necessary. This explains both sides of the
+companion's dev evidence~\cite{companion}:\ \textsc{RIDGE-FIXED} with one
+global knob is near-optimal exactly when its realized residuals are small
+(self-water-filling), while the uniform servo --- which loses by up to
+$\sim7$~dB on sparse-support scenes --- fails because forcing equal $\rho_i$
+discards a naturally favorable alignment between $u_i$ and $\ell_i$.
+
+% ===========================================================================
+\section{Design machinery in full}
+\label{sec:s-machinery}
+
+\subsection{Task subspace and numerical ridge}
+% From R13 §6 (moved from the pre-restructure main §2.1 tail).
+The estimable subspace is frozen at $r = 200$:\ $B$ is
+the top-$200$ eigenbasis of the fixed comparator's information matrix under
+the same pre-scan, dwell, and resource convention, computed before the
+optimization and held fixed, with a fixed numerical ridge
+$\epsilon_0 = 10^{-9}\,\mathrm{tr}(B^{\top}V_{\text{FIXED}^\ast}B)/r$
+(R13~\S6). A design-dependent ridge is not permitted:\ it would change the
+objective derivative and invalidate the sensitivity calculation.
+
+\subsection{The equivalence certificate}
+% MOVED verbatim from the pre-restructure main §2.2.
+By concavity of $\log\det$ and affineness of $\xi\mapsto V(\xi)$, a feasible
+design $\xi^\ast$ is optimal iff there exist constraint multipliers such that
+the reduced sensitivity
+$s(a) = \mathrm{tr}[V(\xi^\ast)^{-1}H(a)] - \sum_j\alpha_j e_j(a)
+- \sum_k\beta_k c_k(a)$ satisfies $s(a) \le \eta^\ast$ over $\mathcal{A}$ with
+equality on the support (the constrained Kiefer--Wolfowitz / general
+equivalence theorem for nonlinear
+models~\cite{kiefer1959optimum,white1973equivalence}). Because a strict
+per-pixel-dose dual is not yet implemented, the frozen confirmatory quantity
+is the conservative additive budget-dual bound: with
+$d_a = \mathrm{tr}(V^{-1} M_{\mathrm{main}} H_a)$, $c_a = \rho_a$, budget
+$c^{\top}\xi \le b$, and $\theta \ge 0$,
+\begin{equation}
+  \begin{aligned}
+  G_{\mathrm{rel}} &= \max_a(d_a - \theta c_a) - \sum_a \xi_a(d_a - \theta c_a)
+  + \theta\{b - c^{\top}\xi\},\\
+  &\qquad\qquad G_{\mathrm{rel}}/r \le 10^{-3},
+  \end{aligned}
+  \label{eq:s-relkw}
+\end{equation}
+which upper-bounds the gap to the optimum of the relaxed (dose-free)
+problem and hence to the dose-constrained optimum (R13~\S6.1). It is reported
+as \texttt{RELAXED\_KW\_UPPER\_BOUND}, relative to the frozen dictionary and
+local estimate, not as a full per-pixel equivalence certificate. The maximum
+is taken by an exact scan of the frozen dictionary; a learned proposer may
+warm-start the search but the frozen run finishes with the exact
+oracle~\cite{jaggi2013frankwolfe}. Continuous weights are rounded to an exact
+$972$-row design by efficient rounding followed by deterministic
+exchange~\cite{pukelsheim1992rounding,nikolov2022volume,sagnol2015exact},
+admissible only if the exact D-efficiency $\ge 0.95$.
+
+\subsection{Guards as constraints}
+% MOVED verbatim from the pre-restructure main §2.4.
+The raw optimum is admissible only after all frozen guards pass; each is a
+constraint of the master program or a post-rounding check, not a tunable
+proxy. \emph{Peak (two-part, R13~A2):} a shape guard bounds unit-load support
+weights to $\tfrac14 \le w_j \le 4$ with support size $k \ge 16$, and a
+physical guard caps $\max_{i,j} a^{\mathrm{physical}}_{ij} \le 1536$ (the peak
+of a uniform $k=16$ atom at the absolute load cap $\rho = 24$), so
+matched-intensity ridge atoms cannot silently demand more peak power.
+\emph{Weight power (R10~G4):} the dictionary contains powers $p\in\{0,1\}$
+only; $p=2$ is excluded because dev evidence showed higher proxy contrast can
+worsen conditioning and endpoint quality. \emph{Per-pixel dose (R10~G5):}
+each pixel's mean exposure stays within $\pm5\%$ of the image mean, enforced
+in-optimizer and re-verified after rounding; a necessary row bound follows,
+$\rho_r \le 1.05\,M\bar d/\max_j g_{rj}$ (R13~A5). \emph{Spectral floor
+(R10~G6):} $V_{\mathrm{OED}} \succeq 0.5\,V_{\text{FIXED}^\ast}$ on $B$, with a
+convex-mixture fallback whose coefficient is fixed from information matrices
+before any image endpoint is seen. \emph{Kernel and trust (R11~G7--G8,
+R13~A1):} every $(\nu,\rho)$ node is certified for exact-PMF mass, score, and
+derivative agreement, mean-information efficiency
+$J_{\mathrm{mean}}/\Jex \ge 0.90$, finite-window RQL log-load bias
+$|\log(\rho^{\dagger}/\rho)| \le 0.05$, ceiling probability
+$p_{\mathrm{ceil}}(\rho,\nu)\le 0.05$ per atom and $\le 0.01$ design-weighted.
+\emph{A-risk (R10~G7):} $\mathrm{tr}(V_{\mathrm{exact}}^{-1}) \le 1.05\,
+\mathrm{tr}(V_{\text{FIXED}^\ast}^{-1})$. Any violation is a declared failure
+state (\texttt{DICTIONARY\_RANK\_FAIL}, \texttt{CONTINUOUS\_CERTIFICATE\_FAIL},
+\texttt{SPECTRAL\_GUARD\_FAIL}, \texttt{A\_RISK\_GUARD\_FAIL},
+\texttt{DOSE\_GUARD\_FAIL}, \texttt{ROUNDING\_FAIL}), whose predeclared
+fallback is the fixed comparator; no threshold is retuned after freeze.
+
+\subsection{The frozen dictionary}
+% R10 Q7 §5 minimum dictionary as amended by R13 §3.
+The exact searchable dictionary includes all cyclic translates of:\
+scattered balanced supports at $k=16$ and $k=32$; the solid $4\times4$
+patch; the committed \textsc{Lblob}$6\times6$ 16-pixel support;
+bars/rectangles $1\times16$, $2\times8$, $4\times4$, $8\times2$,
+$16\times1$; compact 32-pixel square/rectangle variants; and the frozen
+16-pixel ring/annulus family --- with $p=0$ and guarded $p=1$ weights for
+every applicable support. The implementation supports variable $k$; all
+translation families use the circulant/FFT evaluator, and the dictionary
+manifest carries every family, translation, power, support size, and
+SHA256.
+
+\subsection{Budget accounting}
+% R11 §4.3 dual reporting.
+For every arm both the incident budget $B_{\mathrm{inc}} = \sum_i
+\lambda_{s,i} T$ and the detected budgets $B_{\mathrm{det}}^{\mathrm{pred}}
+= \sum_i \mathbb{E}[N_i]$, $B_{\mathrm{det}}^{\mathrm{obs}} = \sum_i N_i$
+are reported, together with total and maximum per-pixel dose.
+$B_{\mathrm{det}}$ may serve as an electronics-throughput guard if a
+hardware limit is frozen before confirmation, but it is never the sole
+fairness constraint:\ for a nonparalyzable detector
+$\mathbb{E}[N\mid\rho]\simeq\nu\rho/(1+\rho)$, whose marginal cost tends to
+zero at high load, so a detected-count-only budget can permit arbitrarily
+large incident power while appearing nearly cost-free.
+
+% ===========================================================================
+\section{Monte-Carlo verification detail}
+\label{sec:s-verification}
+% MOVED verbatim from the pre-restructure main §5.7 (grid + zoom/replication
+% paragraphs). Sources of record: results/round63_study2/
+% jitter_sfi_v2_nu2000.log + _nu200.log; docs/R14_PREREGISTERED_PREDICTIONS.md
+% (commits 8a627bb, 1d8d7aa, 5e51088, 1a32758, 4d8310d, bd731d5).
+The refined sweep (\texttt{jitter\_sfi\_v2}:\ lognormal holds, $100{,}000$
+frames per cell, common random numbers, 25-point log grid of spacing
+$1.157$, $\nu \in \{200, 2000\}$) confirmed the R14 law out-of-sample. At
+$\nu = 2000$ the measured peaks are $\rho_{*} = 22.297$, $10.739$, $5.173$,
+$3.862$, $2.153$, and $1.607$ at $c_v = 0$, $0.02$, $0.05$, $0.1$, $0.2$,
+and $0.3$, respectively; both predictions
+registered before the data existed hit --- $c_v = 0.02$ predicted
+$\approx10.4$, measured $10.739$ ($3\%$); $c_v = 0.2$ predicted
+$\approx2.30$, measured $2.153$ ($6\%$) --- and every in-sample peak lies
+within one grid notch of its exact-law value (commits \texttt{8a627bb},
+predictions registered pre-data; \texttt{1d8d7aa}, verdict). The $\nu = 200$
+column is consistent with the crossover correction:\ the $c_v = 0$ peak at
+$9.28$ tracks the exact ridge $10.04$, and $c_v = 0.3$ measures $1.86$
+against the predicted $1.77$.
+
+A continuous-peak zoom (quadratic interpolation, local run, $150{,}000$
+frames) and an independent replication (Colab, $400{,}000$ frames) then
+measured the four jittered peaks twice each at $\nu = 2000$:\ local
+$9.645$, $5.154$, $3.752$, $2.106$ and replicated $9.610$, $5.700$,
+$3.399$, $2.051$ at $c_v = 0.02$, $0.05$, $0.1$, $0.2$, respectively. The pooled eight-measurement log-log fit gives slope $-0.658$
+vs.\ the predicted $-2/3$ ($1.3\%$); the constant sits about $5\%$ below
+$2^{-1/3}$, at the edge of the run-to-run noise, so the frozen statement
+is:\ exponent confirmed at $1.3\%$, constant consistent within $5$--$10\%$.
+The end points replicate a mild $\approx{-8}\%$ low bias across both runs,
+left as an open higher-order note (candidate:\ a lognormal third-moment
+correction to the leading finite-variance law). One intermediate hypothesis
+is on the record:\ after the first two zoom points, an effective jitter-cost
+multiplier $k = 4/3$ was preregistered (commit \texttt{5e51088}) and was
+refuted by the very next measured point, whose deviation flipped sign
+(commit \texttt{1a32758}) --- peak-location noise on flat information tops,
+not a systematic constant. The fuller three-hold-family exponent battery
+frozen in the ruling (tests E1--E5, with matched-CV gamma and bounded
+two-point holds and cross-fitted conditional-score estimation) remains a
+preregistered extension beyond this verdict.
+
+% ===========================================================================
+\section{Secondary-arm full results}
+\label{sec:s-secondary}
+\subsection{RIDGE-FIXED operating-point demonstration}
+\SPH{M1: fixed-dwell gain per dwell of the ridge-tracking policy over
+$\rhobar=0.60$ and safe references, realized loads, requested vs.\ achieved
+mean load, RIDGE\_GUARD\_CLIPPED flags, and ceiling fractions.}
+
+\subsection{OED-EQLOAD kernel ablation}
+\SPH{M1: equal-load geometry vs.\ variable-load geometry --- any design
+difference attributable to the renewal kernel, with numerical-noise
+disclosure.}
+
+\subsection{Certificate and rounding diagnostics}
+\SPH{M1: relaxed-KW gap $G_{\mathrm{rel}}/r$, exact D-efficiency, A-risk
+ratio, and spectral-floor margin per designed cell.}
+
+% ===========================================================================
+\section{Proofs}
+\label{sec:s-proofs}
+\SPH{supplement proofs at manuscript rigor: Theorems 1--3 (missing-information
+identity via the martingale/law-of-total-variance argument; long-window rate
+via the renewal local normal approximation; cubic optimum and small-jitter
+expansion) and Proposition~\ref{prop:s-alignment}; per the R14 ruling these
+are provable immediately, while the uniform two-parameter crossover requires
+a dedicated triangular-array renewal local-limit argument or retains its
+prediction label.}
+
+\bibliographystyle{unsrt}
+\bibliography{refs}
+
+\end{document}
