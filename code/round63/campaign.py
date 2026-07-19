@@ -74,7 +74,7 @@ import select_eta
 PILOT8 = ["stl_00", "stl_01", "stl_02", "stl_03",
           "text", "usaf_bars", "fine_lines", "low_contrast"]
 PHYSICAL_ARMS = {"RQL", "POISSON-LIN", "SAT-POISSON", "PRECORRECT", "QMLE",
-                 "EXACT"}
+                 "EXACT", "EXACT-TV"}
 # RQL (the sigma_b=0 main production arm) reconstructs physical arrival rates
 # like the other count-likelihood arms, so its radiometric NRMSE is meaningful
 # and must be reported (it was previously omitted -> blank rad_nrmse for the

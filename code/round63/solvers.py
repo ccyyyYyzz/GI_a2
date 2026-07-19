@@ -424,7 +424,7 @@ class ArmContext:
 
 _LINEAR_ARMS = {"GI", "DGI"}
 _ITER_ARMS = {"POISSON-LIN", "SAT-POISSON", "RQL", "QMLE", "QMLE-FULLGAUSS",
-              "PRECORRECT"}
+              "PRECORRECT", "EXACT-TV"}
 # RQL = renewal quasi-likelihood, DIRECT convex objective (GPT round-3 final
 #       form; main production arm at sigma_b = 0);
 # QMLE = Wedderburn quasi-score IRLS (retained for sigma_b > 0 / moment-model
@@ -475,6 +475,15 @@ def _arm_factory(arm_name, ctx):
                                          ctx.Phi, ctx.det.dark,
                                          paralyzable=ctx.det.paralyzable)
             return fg
+        return factory
+    if arm_name == "EXACT-TV":
+        # S4 exact-renewal reference (R9 Q5 §1). Lazy import: exact_tv reads
+        # physics only, no cycle; kept out of module top to leave non-S4
+        # imports untouched.
+        from exact_tv import exact_f_grad_factory
+
+        def factory(A_sub, b_sub):
+            return exact_f_grad_factory(A_sub, b_sub, ctx)
         return factory
     return _phys_factory(arm_name, ctx)
 

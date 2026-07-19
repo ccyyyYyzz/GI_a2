@@ -480,6 +480,15 @@ def arm_score(arm_name, m, lam, T, tau, w_floor=1e-8):
         _, varN = qmle_mean_var(np.maximum(lam_hat, 1e-12 / T), T, tau, 0.0)
         w_raw = 1.0 / np.maximum(varN * dlam_dN ** 2, w_floor)
         return w_raw * (lam - lam_hat)
+    if arm_name == "EXACT-TV":
+        # S4 registration (additive dispatch; R9 Q5 §1): the exact-renewal
+        # per-frame analytic score from exact_tv (verified to 4e-10 against
+        # central differences in its selftest). Lazy import: exact_tv imports
+        # physics, so a top-level import here would cycle; at call time
+        # physics is already initialized and the import is safe.
+        from exact_tv import exact_score
+        lam_arr = np.full(m.shape, float(lam))
+        return exact_score(np.rint(m).astype(np.int64), lam_arr, T, tau)
     raise ValueError("no analytic score for arm %r" % (arm_name,))
 
 
