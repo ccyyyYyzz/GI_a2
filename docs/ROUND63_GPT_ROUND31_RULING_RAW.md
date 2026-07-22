@@ -1,5 +1,15 @@
 # R31 ruling (GitHub issue #23, raw)
 
+PROVENANCE NOTE (2026-07-22): this issue body is the EXTRA-HIGH-tier
+response (the first R31 submission). The PRO-tier response arrived as an
+independent audit ADDENDUM (comment 0 on #23, archived as
+ROUND63_GPT_ROUND31_PRO_APPENDIX_0.md) which confirms this ruling as
+"substantively correct" and adds binding amendments: the correlated-
+speckle determinant law, the mask/power-dependent C_eff definition, the
+irreducible fixed-speckle floor, the n_eff^2 photon-dose law, fence
+additions, and a narrowed GO. WHERE THEY DIFFER, THE PRO ADDENDUM
+GOVERNS (operator rule).
+
 Title: R31 theory ruling — conditional GO for microcell-occupancy Laplace tomography
 Posted: 2026-07-22T12:25:33Z
 
