@@ -82,6 +82,22 @@ post-R23. Papers remain two; digs are post-hoc/descriptive unless promoted.
    kills R3 pre-scan fragility for band-visible scenes; adds a
    cross-modal-mismatch failure mode; inapplicable to opaque-band scenes.
 
+16. **Source self-gating = near-zero-cost jitter kill** (2026-07-22): wire
+   the detector's EXISTING output pulse back to the source modulator;
+   each click blanks the source for a fixed clocked T_gate > B_max, so no
+   photon arrives during the uncertain recovery window — the hidden hold
+   never touches the data (E1's third zeroing route: STARVE, after
+   observe/clamp; chop=4th for slow components). c_eff -> clock precision;
+   channel becomes deterministic dead time T_gate; throughput tax
+   ~10-15% at cv=0.05 vs 55% jitter loss; detector unmodified (evades the
+   R24 hold-off-not-universal objection); bonus: converts paralyzable to
+   nonparalyzable. Fences: 1/tau cap stands; afterpulsing unaffected;
+   needs fast-modulatable source; PRIOR-ART SWEEP REQUIRED (gated SPADs,
+   rate-linearization schemes) before any novelty claim. Candidate lead
+   for the method paper discussion + the bench proposal. Also: the
+   TDC-free calibration (item 9) is strictly zero-cost — the system's own
+   power knob is the drive sweep; piggyback on normal acquisition.
+
 ## PARKED (mine, next work)
 
 12. **181 NUMERICAL_UNRESOLVED recondition**: R23 predicts load-coordinate
