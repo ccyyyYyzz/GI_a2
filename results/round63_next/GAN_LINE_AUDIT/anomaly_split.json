@@ -1,0 +1,290 @@
+{
+  "n_pixels": 4096,
+  "img_size": 64,
+  "operators": {
+    "rate05": {
+      "config": {
+        "img_size": 64,
+        "dct_rows": 128,
+        "hadamard_rows": 56,
+        "random_rows": 20,
+        "seed": 772101,
+        "m": 205
+      },
+      "operator_sha256": "62305c8e8309f772caa2b1b3601e1c45ded7224830adc667b7f6007bd97e79d6",
+      "operator_sha256_expected": "62305c8e8309f772caa2b1b3601e1c45ded7224830adc667b7f6007bd97e79d6",
+      "operator_sha256_match": true,
+      "m_rows": 205,
+      "numerical_rank": 200,
+      "sampling_ratio": 0.050048828125,
+      "per_anomaly": [
+        {
+          "anomaly": "gauss_sigma1.0",
+          "center": [
+            16,
+            43
+          ],
+          "total_energy": 3.1422426599356466,
+          "range_fraction": 0.3216508546957426,
+          "null_fraction": 0.6783491453042574,
+          "dc_fraction": 0.0030673270009063344,
+          "range_fraction_excl_dc": 0.3185835276948363
+        },
+        {
+          "anomaly": "gauss_sigma1.5",
+          "center": [
+            45,
+            53
+          ],
+          "total_energy": 7.068583476991851,
+          "range_fraction": 0.5604927392389244,
+          "null_fraction": 0.4395072607610756,
+          "dc_fraction": 0.006902913539213157,
+          "range_fraction_excl_dc": 0.5535898256997113
+        },
+        {
+          "anomaly": "gauss_sigma2.0",
+          "center": [
+            53,
+            38
+          ],
+          "total_energy": 12.566370614358913,
+          "range_fraction": 0.7573059078619445,
+          "null_fraction": 0.24269409213805548,
+          "dc_fraction": 0.012271844903483535,
+          "range_fraction_excl_dc": 0.7450340629584611
+        },
+        {
+          "anomaly": "gauss_sigma3.0",
+          "center": [
+            25,
+            27
+          ],
+          "total_energy": 28.274333882308134,
+          "range_fraction": 0.9579632192184908,
+          "null_fraction": 0.042036780781509187,
+          "dc_fraction": 0.027611654181941538,
+          "range_fraction_excl_dc": 0.9303515650365493
+        },
+        {
+          "anomaly": "square_3px",
+          "center": [
+            55,
+            55
+          ],
+          "total_energy": 9.0,
+          "range_fraction": 0.26964123656438255,
+          "null_fraction": 0.7303587634356175,
+          "dc_fraction": 0.002197265625,
+          "range_fraction_excl_dc": 0.26744397093938255
+        },
+        {
+          "anomaly": "square_5px",
+          "center": [
+            37,
+            45
+          ],
+          "total_energy": 25.0,
+          "range_fraction": 0.5226868156982555,
+          "null_fraction": 0.4773131843017445,
+          "dc_fraction": 0.006103515625,
+          "range_fraction_excl_dc": 0.5165833000732555
+        },
+        {
+          "anomaly": "stroke_h_5px",
+          "center": [
+            43,
+            45
+          ],
+          "total_energy": 5.0,
+          "range_fraction": 0.18522459281990677,
+          "null_fraction": 0.8147754071800932,
+          "dc_fraction": 0.001220703125,
+          "range_fraction_excl_dc": 0.18400388969490677
+        },
+        {
+          "anomaly": "stroke_v_5px",
+          "center": [
+            49,
+            38
+          ],
+          "total_energy": 5.0,
+          "range_fraction": 0.13194691279125997,
+          "null_fraction": 0.86805308720874,
+          "dc_fraction": 0.001220703125,
+          "range_fraction_excl_dc": 0.13072620966625997
+        },
+        {
+          "anomaly": "point_2px",
+          "center": [
+            16,
+            36
+          ],
+          "total_energy": 4.0,
+          "range_fraction": 0.13013426369018863,
+          "null_fraction": 0.8698657363098113,
+          "dc_fraction": 0.0009765625,
+          "range_fraction_excl_dc": 0.12915770119018863
+        },
+        {
+          "anomaly": "gauss_sigma1.2",
+          "center": [
+            14,
+            19
+          ],
+          "total_energy": 4.523905590857103,
+          "range_fraction": 0.4207299904579124,
+          "null_fraction": 0.5792700095420876,
+          "dc_fraction": 0.004417852784697856,
+          "range_fraction_excl_dc": 0.41631213767321457
+        }
+      ],
+      "range_fraction_mean": 0.4257776533037008,
+      "range_fraction_min": 0.13013426369018863,
+      "range_fraction_max": 0.9579632192184908,
+      "range_fraction_excl_dc_mean": 0.41917861906267656
+    },
+    "rate10": {
+      "config": {
+        "img_size": 64,
+        "dct_rows": 257,
+        "hadamard_rows": 112,
+        "random_rows": 40,
+        "seed": 772011,
+        "m": 410
+      },
+      "operator_sha256": "278202ef8489b0e2119bf9de7f32174d26138aa2f4ca6be33493aebb70ffd118",
+      "operator_sha256_expected": null,
+      "operator_sha256_match": null,
+      "m_rows": 410,
+      "numerical_rank": 393,
+      "sampling_ratio": 0.10009765625,
+      "per_anomaly": [
+        {
+          "anomaly": "gauss_sigma1.0",
+          "center": [
+            16,
+            43
+          ],
+          "total_energy": 3.1422426599356466,
+          "range_fraction": 0.5519093270453062,
+          "null_fraction": 0.44809067295469385,
+          "dc_fraction": 0.0030673270009063344,
+          "range_fraction_excl_dc": 0.5488420000443998
+        },
+        {
+          "anomaly": "gauss_sigma1.5",
+          "center": [
+            45,
+            53
+          ],
+          "total_energy": 7.068583476991851,
+          "range_fraction": 0.8161001431649925,
+          "null_fraction": 0.18389985683500754,
+          "dc_fraction": 0.006902913539213157,
+          "range_fraction_excl_dc": 0.8091972296257793
+        },
+        {
+          "anomaly": "gauss_sigma2.0",
+          "center": [
+            53,
+            38
+          ],
+          "total_energy": 12.566370614358913,
+          "range_fraction": 0.9502385902745073,
+          "null_fraction": 0.0497614097254927,
+          "dc_fraction": 0.012271844903483535,
+          "range_fraction_excl_dc": 0.9379667453710239
+        },
+        {
+          "anomaly": "gauss_sigma3.0",
+          "center": [
+            25,
+            27
+          ],
+          "total_energy": 28.274333882308134,
+          "range_fraction": 0.9988734442630047,
+          "null_fraction": 0.0011265557369952717,
+          "dc_fraction": 0.027611654181941538,
+          "range_fraction_excl_dc": 0.9712617900810633
+        },
+        {
+          "anomaly": "square_3px",
+          "center": [
+            55,
+            55
+          ],
+          "total_energy": 9.0,
+          "range_fraction": 0.42846717925281225,
+          "null_fraction": 0.5715328207471877,
+          "dc_fraction": 0.002197265625,
+          "range_fraction_excl_dc": 0.42626991362781225
+        },
+        {
+          "anomaly": "square_5px",
+          "center": [
+            37,
+            45
+          ],
+          "total_energy": 25.0,
+          "range_fraction": 0.7526675927391531,
+          "null_fraction": 0.24733240726084693,
+          "dc_fraction": 0.006103515625,
+          "range_fraction_excl_dc": 0.7465640771141531
+        },
+        {
+          "anomaly": "stroke_h_5px",
+          "center": [
+            43,
+            45
+          ],
+          "total_energy": 5.0,
+          "range_fraction": 0.33171964465592185,
+          "null_fraction": 0.6682803553440781,
+          "dc_fraction": 0.001220703125,
+          "range_fraction_excl_dc": 0.33049894153092185
+        },
+        {
+          "anomaly": "stroke_v_5px",
+          "center": [
+            49,
+            38
+          ],
+          "total_energy": 5.0,
+          "range_fraction": 0.22058922636263753,
+          "null_fraction": 0.7794107736373624,
+          "dc_fraction": 0.001220703125,
+          "range_fraction_excl_dc": 0.21936852323763753
+        },
+        {
+          "anomaly": "point_2px",
+          "center": [
+            16,
+            36
+          ],
+          "total_energy": 4.0,
+          "range_fraction": 0.25324064533593155,
+          "null_fraction": 0.7467593546640685,
+          "dc_fraction": 0.0009765625,
+          "range_fraction_excl_dc": 0.25226408283593155
+        },
+        {
+          "anomaly": "gauss_sigma1.2",
+          "center": [
+            14,
+            19
+          ],
+          "total_energy": 4.523905590857103,
+          "range_fraction": 0.6805571300679795,
+          "null_fraction": 0.31944286993202053,
+          "dc_fraction": 0.004417852784697856,
+          "range_fraction_excl_dc": 0.6761392772832816
+        }
+      ],
+      "range_fraction_mean": 0.5984362923162246,
+      "range_fraction_min": 0.22058922636263753,
+      "range_fraction_max": 0.9988734442630047,
+      "range_fraction_excl_dc_mean": 0.5918372580752004
+    }
+  }
+}
