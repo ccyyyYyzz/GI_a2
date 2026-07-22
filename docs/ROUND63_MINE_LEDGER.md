@@ -67,6 +67,21 @@ post-R23. Papers remain two; digs are post-hoc/descriptive unless promoted.
    "the ridge flattened by telemetry"). Needs: prior-art sweep + one
    short GPT derivation round before any claim.
 
+9. **TDC-free jitter calibration** (2026-07-22): count mean + Fano factor
+   vs drive level identify (tau, c) directly from the E2 long-window
+   formulas — LED + any counter, ten minutes, no timing hardware. Mature
+   enough to become the RLMI Step-0 recipe paragraph in the method paper.
+10. **SiPM = the cheap m-multiplier**: J_m = m*J(rho/m,c) is physically
+   packaged as a ~$100 SiPM (hundreds of independent-dead-time
+   microcells); breaks the single-SPAD ceiling in our power-rich regime.
+   Channel changes to cell-exhaustion nonlinearity N=m(1-exp(-N_ph/m)) —
+   a transfer target for the whole hidden-state/ridge framework, and the
+   mandatory answer to the referee question "why not just use a SiPM".
+11. **Guide-camera routing**: a cheap out-of-band camera can supply the
+   routing estimate xhat instead of (or beside) the 52-pattern pre-scan —
+   kills R3 pre-scan fragility for band-visible scenes; adds a
+   cross-modal-mismatch failure mode; inapplicable to opaque-band scenes.
+
 ## PARKED (mine, next work)
 
 8. **181 NUMERICAL_UNRESOLVED recondition**: R23 predicts load-coordinate
