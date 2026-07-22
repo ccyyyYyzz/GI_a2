@@ -1,0 +1,28 @@
+{
+ "scene": "bridge_control_0",
+ "group": "control",
+ "arm": "SCAT32-060",
+ "nu": 2000.0,
+ "c": 0.05,
+ "seed": 0,
+ "PSNR_rad": 30.244989175844495,
+ "PSNR_flux": 30.35367706454624,
+ "loads_main": {
+  "q5": 0.28126531772794694,
+  "q50": 0.5855345523881715,
+  "q95": 0.9684658866311922,
+  "max": 1.5488138588306948,
+  "mean": 0.5997870527568528
+ },
+ "incident_main": 597008.4901310696,
+ "incident_total": 628957.2901310696,
+ "detected_total": 746044,
+ "detected_main": 707792,
+ "lam_tv": 1.8728641779324402,
+ "recon_wall_s": 1.8492445000010775,
+ "n_rows": 1024,
+ "arm_info": {
+  "global_multiplier": 0.599810806217719,
+  "target_load": 0.6
+ }
+}

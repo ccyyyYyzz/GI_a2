@@ -1,0 +1,35 @@
+{
+ "scene": "bridge_control_0",
+ "group": "control",
+ "arm": "XHAT-FW",
+ "nu": 2000.0,
+ "c": 0.05,
+ "seed": 0,
+ "PSNR_rad": 30.209829209174618,
+ "PSNR_flux": 30.31814495616797,
+ "loads_main": {
+  "q5": 0.28126531772794694,
+  "q50": 0.5855345523881715,
+  "q95": 0.9684658866311922,
+  "max": 1.5488138588306948,
+  "mean": 0.5997870527568528
+ },
+ "incident_main": 597008.4901310696,
+ "incident_total": 628957.2901310696,
+ "detected_total": 746242,
+ "detected_main": 707990,
+ "lam_tv": 1.8091495241424835,
+ "recon_wall_s": 1.8872477999975672,
+ "n_rows": 1024,
+ "arm_info": {
+  "fw_solve_wall_s": 153.23873199999798,
+  "fw_logdet": 3734.507788930908,
+  "fw_support": 11579,
+  "materialize_flag": "MIXTURE_MATERIALIZATION_FAIL",
+  "fallback": "L0",
+  "global_multiplier": 0.599810806217719,
+  "target_load": 0.6,
+  "cache_hit": false,
+  "design_seed": 0
+ }
+}

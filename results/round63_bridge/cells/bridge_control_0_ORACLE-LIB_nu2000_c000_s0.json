@@ -1,0 +1,78 @@
+{
+ "scene": "bridge_control_0",
+ "group": "control",
+ "arm": "ORACLE-LIB",
+ "nu": 2000.0,
+ "c": 0.0,
+ "seed": 0,
+ "PSNR_rad": 30.787588524435975,
+ "PSNR_flux": 30.861556775449305,
+ "loads_main": {
+  "q5": 0.46892339186342274,
+  "q50": 0.9761987385329542,
+  "q95": 1.614618937491531,
+  "max": 2.5821706491038228,
+  "mean": 0.999960398411266
+ },
+ "incident_main": 995327.9999999994,
+ "incident_total": 1027276.7999999995,
+ "detected_total": 980439,
+ "detected_main": 942248,
+ "lam_tv": 2.7057237655068165,
+ "recon_wall_s": 1.7550817000010284,
+ "n_rows": 1024,
+ "best_bank": "L5",
+ "per_bank": [
+  {
+   "bank": "L0",
+   "PSNR_rad": 29.637139989143098,
+   "materialize_flag": "OK",
+   "incident_main": 995327.9999999998
+  },
+  {
+   "bank": "L1",
+   "PSNR_rad": 29.739456141216543,
+   "materialize_flag": "MIXTURE_MATERIALIZATION_FAIL",
+   "incident_main": 995327.9999999994
+  },
+  {
+   "bank": "L2",
+   "PSNR_rad": 28.874456501030735,
+   "materialize_flag": "MIXTURE_MATERIALIZATION_FAIL",
+   "incident_main": 995327.9999999994
+  },
+  {
+   "bank": "L3",
+   "PSNR_rad": 28.389994307803104,
+   "materialize_flag": "MIXTURE_MATERIALIZATION_FAIL",
+   "incident_main": 995327.9999999994
+  },
+  {
+   "bank": "L4",
+   "PSNR_rad": 28.511569814152672,
+   "materialize_flag": "MIXTURE_MATERIALIZATION_FAIL",
+   "incident_main": 995327.9999999994
+  },
+  {
+   "bank": "L5",
+   "PSNR_rad": 30.787588524435975,
+   "materialize_flag": "MIXTURE_MATERIALIZATION_FAIL",
+   "incident_main": 995327.9999999994
+  },
+  {
+   "bank": "L6",
+   "PSNR_rad": 27.76188185201898,
+   "materialize_flag": "MIXTURE_MATERIALIZATION_FAIL",
+   "incident_main": 995327.9999999994
+  },
+  {
+   "bank": "L7",
+   "PSNR_rad": 28.677836271312277,
+   "materialize_flag": "MIXTURE_MATERIALIZATION_FAIL",
+   "incident_main": 995327.9999999994
+  }
+ ],
+ "arm_info": {
+  "best_bank": "L5"
+ }
+}

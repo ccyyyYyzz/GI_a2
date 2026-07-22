@@ -612,8 +612,30 @@ def _bank_simplex_oracle_fw(H0, Fk, W, tol=1e-9, max_iter=200):
     return R, v
 
 
+def _normalize_W(sm):
+    """Numerical conditioning (T-D, engineering; criterion-invariant).
+
+    The standardized-maximin decision depends on W only through the RATIOS
+    r_s(w)=R_s(w)/R*_s, which are invariant to a global positive rescaling of W
+    (R_s and R*_s both scale).  Real dead-time information matrices are ~1e10, so
+    R(uniform) ~ 1e-7, where the oracle SLSQP (absolute ftol) and the maximin
+    both stall (observed on the T-B banks: R*_s over-estimated -> t_cont<1, and
+    the maximin runs its full iteration budget, ~200 s).  We rescale W so
+    R(uniform) ~ O(1); t_cont, w*, alpha, the KKT residual and every A_j are
+    numerically unchanged (well-scaled synthetic fixtures: kappa ~ 1, no-op)."""
+    K = len(sm.F[0])
+    X0 = _assemble_X(sm.H0[0], sm.F[0], np.full(K, 1.0 / K))
+    R0, _ = arisk(X0, sm.W)
+    if np.isfinite(R0) and R0 > 0:
+        sm.W = sm.W / R0
+    return sm
+
+
 def compute_oracles(sm, tol=1e-10):
-    """Fill sm.Rstar, sm.vstar with the per-scenario bank-simplex oracles."""
+    """Fill sm.Rstar, sm.vstar with the per-scenario bank-simplex oracles.
+
+    W is first normalized (criterion-invariant conditioning; see _normalize_W)."""
+    sm = _normalize_W(sm)
     S = len(sm.H0)
     Rstar = np.empty(S)
     vstar = []
@@ -996,6 +1018,7 @@ class Materialization:
     guards: dict
     flag: str                        # "OK" | "MIXTURE_MATERIALIZATION_FAIL"
     n_exchange: int
+    gamma: np.ndarray = None         # (A,) per-atom source-power setting (R25 SS8)
 
 
 def _union_measure(banks, w):
@@ -1047,9 +1070,98 @@ def _largest_remainder(target, total):
     return base
 
 
+def _int_dose_descent(counts, rows, supp, M_rows, target, max_moves=1500):
+    """Strengthen the integer stage past the local-min of the pairwise exchange:
+    single-count gradient descent on the L2 dose penalty (drop from the atom most
+    aligned with the over-dose, add to the admissible atom most aligned with the
+    under-dose).  Bounded; helps compact/bar/multiscale banks reach the ~1/k
+    structured-drop floor.  (Scattered/ring/weighted measures can stall at a
+    combinatorial local minimum — those honestly fall through to the guard
+    check and the L0 fallback; see the T-D phase-1.5 report.)"""
+    # bounded; skip for very large atom pools (weighted FW measure) where the
+    # per-move matvec is expensive and the greedy stalls anyway.
+    if rows.shape[0] > 5000:
+        return counts
+    dose = (counts[:, None] * rows).sum(0).astype(np.float64)
+    best_dev = float(np.abs(dose / dose.mean() - 1.0).max()) if dose.mean() > 0 else np.inf
+    best = counts.copy()
+    for _ in range(max_moves):
+        dbar = dose.mean()
+        if dbar <= 0:
+            break
+        rel = dose / dbar - 1.0
+        dev = float(np.abs(rel).max())
+        if dev < best_dev:                              # track best (never worse)
+            best_dev = dev; best = counts.copy()
+        if dev <= target:
+            break
+        score = rows @ rel
+        src = int(np.argmax(np.where(counts > 0, score, -np.inf)))
+        dst = int(np.argmin(np.where(supp, score, np.inf)))
+        if src == dst or score[src] - score[dst] <= 1e-9:
+            break
+        counts[src] -= 1; counts[dst] += 1
+        dose += rows[dst] - rows[src]
+    return best
+
+
+def _power_repair(counts, rows, M_rows, dose_band, lo=0.94, hi=1.06, iters=800):
+    """R25 SS8 per-row SOURCE-SETTING repair: bounded per-atom power trim
+    gamma_a in [lo, hi] that pulls per-pixel dose into the +-dose_band band,
+    minimal-norm (starts at 1).  Fast projected-gradient (O(nnz)/iter) on the
+    band-violation penalty; returns gamma over ALL atoms (1 off support) and the
+    achieved dose_dev.  A least-squares power repair per R25 SS8 per-row settings;
+    only closes the residual granularity gap the integer stage leaves ~1/k."""
+    use = np.where(counts > 0)[0]
+    if use.size == 0:
+        return np.ones(counts.shape[0]), np.inf
+    Ru = counts[use][:, None] * rows[use]              # (A_used, n)
+    g = np.ones(use.size)
+
+    def dev_of(gv):
+        d = Ru.T @ gv
+        dm = d.mean()
+        return np.inf if dm <= 0 else float(np.abs(d / dm - 1.0).max())
+
+    cur = dev_of(g)
+    best = (cur, g.copy())
+    step = None
+    for _ in range(iters):
+        if cur <= dose_band:
+            break
+        dose = Ru.T @ g
+        rel = dose / dose.mean() - 1.0
+        viol = np.sign(rel) * np.maximum(np.abs(rel) - dose_band + 0.004, 0.0)
+        grad = Ru @ viol
+        gn = float(np.abs(grad).max())
+        if gn < 1e-14:
+            break
+        if step is None:
+            step = 0.7 / gn
+        # backtracking line search: accept only steps that reduce dev
+        accepted = False
+        for _bt in range(20):
+            gtry = np.clip(g - step * grad, lo, hi)
+            dtry = dev_of(gtry)
+            if dtry < cur - 1e-9:
+                g, cur = gtry, dtry
+                if cur < best[0]:
+                    best = (cur, g.copy())
+                step *= 1.3
+                accepted = True
+                break
+            step *= 0.5
+        if not accepted:
+            break
+    gfull = np.ones(counts.shape[0])
+    gfull[use] = best[1]
+    return gfull, best[0]
+
+
 def materialize(banks, w, xhat, M_rows=972, dose_band=0.05,
                 incident_budget=None, peak_cap=1536.0, side=32,
-                block_seed=650777, max_exchange=4000):
+                block_seed=650777, max_exchange=4000, power_repair=True,
+                gamma_lo=0.94, gamma_hi=1.06):
     """Exact 972-row materialization from the union design measure (R25 SS9).
 
     Steps: merge duplicate atoms (weight addition) -> target p_a = M_rows*xi(w) ->
@@ -1153,29 +1265,56 @@ def materialize(banks, w, xhat, M_rows=972, dose_band=0.05,
         counts[s_] -= 1; counts[d_] += 1
         dev, dose = dose_dev(counts)
 
-    # final guard recompute
+    # -- materializer v2 (R25 SS8/SS9): if the deterministic exchange left the
+    #    dose above the band, (i) strengthen the integer stage by gradient
+    #    descent toward the ~1/k structured-drop floor, then (ii) apply the
+    #    bounded per-row source-power repair gamma in [gamma_lo, gamma_hi].
     dev, dose = dose_dev(counts)
+    dev_pre = dev
+    gamma = np.ones(A)
+    if power_repair and dev > dose_band:
+        counts = _int_dose_descent(counts, rows, supp, M_rows,
+                                   target=max(dose_band * 0.9, 0.045))
+        dev, dose = dose_dev(counts)
+        gamma, dev = _power_repair(counts, rows, M_rows, dose_band,
+                                   lo=gamma_lo, hi=gamma_hi)
+
+    # rows carrying the per-row source setting (gamma * atom row)
+    rows_eff = gamma[:, None] * rows
+
+    # final guard recompute ON THE TRIMMED (source-set) rows
+    def dose_dev_eff(cnts):
+        d = (cnts[:, None] * rows_eff).sum(0) / M_rows
+        dm = d.mean()
+        return (np.inf if dm <= 0 else float(np.abs(d / dm - 1.0).max()))
+    dev = dose_dev_eff(counts)
     total_ok = int(counts.sum()) == M_rows
-    peak_real = float((rows[counts > 0].max()) if (counts > 0).any() else 0.0)
-    inc_ok = (B_inc is None) or (incident_total(counts) <= B_inc + 1e-6)
+    peak_real = float((rows_eff[counts > 0].max()) if (counts > 0).any() else 0.0)
+    inc_real = float((counts * inc * gamma).sum())
+    inc_ok = (B_inc is None) or (inc_real <= B_inc + 1e-6)
     dose_ok = dev <= dose_band + 1e-9
     adm_ok = bool(np.all(counts[~ok] == 0))
     peak_ok = peak_real <= peak_cap + 1e-9
     guards = {"exact_count": int(counts.sum()), "count_ok": bool(total_ok),
-              "dose_dev": dev, "dose_ok": bool(dose_ok), "dose_band": dose_band,
-              "incident_total": incident_total(counts), "incident_budget": B_inc,
-              "incident_ok": bool(inc_ok), "peak": peak_real, "peak_ok": bool(peak_ok),
-              "peak_cap": peak_cap, "admission_ok": adm_ok, "n_exchange": n_exchange}
+              "dose_dev": dev, "dose_dev_pretrim": dev_pre, "dose_ok": bool(dose_ok),
+              "dose_band": dose_band, "incident_total": inc_real,
+              "incident_budget": B_inc, "incident_ok": bool(inc_ok),
+              "peak": peak_real, "peak_ok": bool(peak_ok), "peak_cap": peak_cap,
+              "admission_ok": adm_ok, "n_exchange": n_exchange,
+              "gamma_min": float(gamma[counts > 0].min()) if (counts > 0).any() else 1.0,
+              "gamma_max": float(gamma[counts > 0].max()) if (counts > 0).any() else 1.0,
+              "gamma_std": float(gamma[counts > 0].std()) if (counts > 0).any() else 0.0}
     if not (total_ok and dose_ok and inc_ok and adm_ok and peak_ok):
         fail = _mat_fail(banks, K, "MIXTURE_MATERIALIZATION_FAIL")
         fail.guards.update(guards)
         return fail
 
-    # expand to 972 rows + frozen-seed block-order randomization (R25 SS10)
+    # expand to 972 rows + frozen-seed block-order randomization (R25 SS10);
+    # each acquired row carries its atom's source setting gamma (rows_eff).
     expanded = np.repeat(np.arange(A), counts)
     perm = np.random.default_rng(block_seed).permutation(expanded.size)
     block = expanded[perm]
-    acquired = rows[block]
+    acquired = rows_eff[block]
     what = np.zeros(K)
     for i in range(A):
         if counts[i] > 0 and bw[i].sum() > 0:
@@ -1183,7 +1322,7 @@ def materialize(banks, w, xhat, M_rows=972, dose_band=0.05,
     what = what / M_rows
     return Materialization(rows=acquired, counts=counts, atom_rows=rows,
                            atom_bankw=bw, what=what, guards=guards, flag="OK",
-                           n_exchange=n_exchange)
+                           n_exchange=n_exchange, gamma=gamma)
 
 
 def _mat_fail(banks, K, flag):

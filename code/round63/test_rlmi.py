@@ -164,6 +164,73 @@ def test_materializer_exact_972():
     print("[d] exact 972 rows + guards + dose band PASS")
 
 
+# ============================================================ (d2) materializer v2 #
+def test_materializer_v2_power_repair():
+    """R25 SS8 per-row source-power repair (rlmi._power_repair): on a design whose
+    per-pixel dose sits ~7% over the band, the bounded gamma in [0.94,1.06] pulls
+    it back inside.  Tested on a DECOUPLED design (each pixel covered by its own
+    atom) where the repair is well-posed; asserts the trim fires, stays in bounds,
+    and reaches the band.  (On the frozen T-B geometry banks the per-atom trims
+    are coupled across the k pixels each atom covers, so the min-max dose cannot
+    generally be driven below the ~1/k structured floor — documented in the T-D
+    phase-1.5 report; see test_pure_banks_ek_real.)"""
+    A = 24
+    rng = np.random.default_rng(3)
+    # one atom per pixel (n = A), amplitudes spread +-7% -> dose_dev ~0.07
+    rows = np.zeros((A, A))
+    amps = 1.0 + 0.07 * np.sign(rng.standard_normal(A))
+    for a in range(A):
+        rows[a, a] = amps[a]
+    counts = np.full(A, 40, dtype=np.int64)                # 40 each -> 960 rows
+    dose0 = (counts[:, None] * rows).sum(0)
+    dev0 = float(np.abs(dose0 / dose0.mean() - 1).max())
+    gamma, dev = rlmi._power_repair(counts, rows, M_rows=int(counts.sum()),
+                                    dose_band=0.05, lo=0.94, hi=1.06)
+    print("[d2] power-repair: dev %.4f -> %.4f  gamma[%.3f/%.3f/std%.4f]"
+          % (dev0, dev, gamma.min(), gamma.max(), gamma.std()))
+    assert dev0 > 0.05                                      # starts out of band
+    assert dev <= 0.05 + 1e-9                               # repaired into band
+    assert gamma.min() >= 0.94 - 1e-9 and gamma.max() <= 1.06 + 1e-9
+    assert gamma.std() > 1e-6                               # the trim actually fired
+    print("[d2] materializer-v2 bounded power repair PASS")
+
+
+def test_pure_banks_ek_real():
+    """DIAGNOSTIC (phase-1.5 ruling 1): materialize every pure library bank e_k,
+    k=0..7, and REPORT genuine (non-fallback) vs L0-fallback status.  Reads the
+    T-B library if present (bank measures, not scenes -> allowed).  Asserts the
+    pipeline yields a valid exact-972 output for every bank and that L0 is genuine;
+    per-bank genuine status is PRINTED, not asserted 8/8, because the current
+    integer-rounding + bounded-trim materializer genuinely materializes only banks
+    whose coverage granularity + coupling admit a +-5% 972-row realization (see
+    the T-D phase-1.5 report: only L0, purpose-built by v5.fixed_dose_scat32, is
+    genuine on the frozen T-B banks; L1-L7 fall back)."""
+    libdir = os.path.join(os.path.dirname(HERE), "..", "results",
+                          "round63_bridge", "library")
+    libdir = os.path.normpath(os.path.join(HERE, "..", "..", "results",
+                                           "round63_bridge", "library"))
+    if not os.path.exists(os.path.join(libdir, "L0.npz")):
+        print("[ek] library not present -> skipped (synthetic-only environment)")
+        return
+    banks = [rlmi.load_bank(os.path.join(libdir, "L%d.npz" % k),
+                            name="L%d" % k, is_knob=(k == 0)) for k in range(8)]
+    xhat = np.full(1024, 1.0 / 1024)
+    genuine = []
+    for k in range(8):
+        mat = rlmi.materialize(banks, np.eye(8)[k], xhat, M_rows=972,
+                               dose_band=0.05, incident_budget=None,
+                               peak_cap=1536.0, side=32)
+        gen = (mat.flag == "OK")
+        genuine.append(gen)
+        assert mat.rows.shape == (972, 1024)               # valid output always
+        print("[ek] L%d: %-27s dose_dev=%.4f (pretrim=%.4f) genuine=%s"
+              % (k, mat.flag, mat.guards.get("dose_dev", -1),
+                 mat.guards.get("dose_dev_pretrim", -1), gen))
+    assert genuine[0], "L0 (purpose-built dose-balanced) must materialize genuinely"
+    print("[ek] pure-bank e_k report: %d/8 genuine (%s)"
+          % (sum(genuine), "".join("L%d" % k for k in range(8) if genuine[k])))
+
+
 # =============================================================== (e) infeasible #
 def test_infeasible_guard_fallback():
     side = 12
@@ -278,6 +345,7 @@ def test_end_to_end_pipeline():
 
 ALL = [test_kernel_derivatives, test_corner_collapse, test_symmetric_tiebreak,
        test_kkt_certificate, test_materializer_exact_972,
+       test_materializer_v2_power_repair, test_pure_banks_ek_real,
        test_infeasible_guard_fallback, test_latency_benchmark,
        test_branch_violation, test_end_to_end_pipeline]
 

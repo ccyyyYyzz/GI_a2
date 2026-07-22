@@ -1,0 +1,43 @@
+{
+ "n_groups_total": 320,
+ "n_keys": 32,
+ "routes": [
+  "pro2_a",
+  "pro2_b",
+  "pro2_c",
+  "pro1_a",
+  "pro1_b"
+ ],
+ "shards": [
+  {
+   "route": "pro2_a",
+   "n_keys": 7,
+   "n_groups": 70,
+   "manifest": "D:\\GI_another\\results\\round63_bridge\\manifests\\bridge_pro2_a.json"
+  },
+  {
+   "route": "pro2_b",
+   "n_keys": 7,
+   "n_groups": 70,
+   "manifest": "D:\\GI_another\\results\\round63_bridge\\manifests\\bridge_pro2_b.json"
+  },
+  {
+   "route": "pro2_c",
+   "n_keys": 6,
+   "n_groups": 60,
+   "manifest": "D:\\GI_another\\results\\round63_bridge\\manifests\\bridge_pro2_c.json"
+  },
+  {
+   "route": "pro1_a",
+   "n_keys": 6,
+   "n_groups": 60,
+   "manifest": "D:\\GI_another\\results\\round63_bridge\\manifests\\bridge_pro1_a.json"
+  },
+  {
+   "route": "pro1_b",
+   "n_keys": 6,
+   "n_groups": 60,
+   "manifest": "D:\\GI_another\\results\\round63_bridge\\manifests\\bridge_pro1_b.json"
+  }
+ ]
+}

@@ -1,0 +1,32 @@
+{
+ "scene": "bridge_control_0",
+ "group": "control",
+ "arm": "RIDGE-SCAT32",
+ "nu": 2000.0,
+ "c": 0.0,
+ "seed": 0,
+ "PSNR_rad": 22.08347227874387,
+ "PSNR_flux": 22.929556476794865,
+ "loads_main": {
+  "q5": 10.430663432042769,
+  "q50": 21.714422144646733,
+  "q95": 35.9153477949803,
+  "max": 57.43742673589213,
+  "mean": 22.24297303606725
+ },
+ "incident_main": 22139930.642470643,
+ "incident_total": 22171879.442470644,
+ "detected_total": 1886394,
+ "detected_main": 1848203,
+ "lam_tv": 41.09051165155608,
+ "recon_wall_s": 1.7480591999919852,
+ "n_rows": 1024,
+ "arm_info": {
+  "global_multiplier": 22.243853928022368,
+  "rho_R": 22.25454777474566,
+  "achieved_load": 22.25454777474566,
+  "clip_applied": false,
+  "guard_clipped": false,
+  "incident_budget": 22139930.642470643
+ }
+}

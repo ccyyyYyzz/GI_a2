@@ -1,0 +1,34 @@
+{
+ "scene": "bridge_control_0",
+ "group": "control",
+ "arm": "TRUE-X-FW",
+ "nu": 2000.0,
+ "c": 0.05,
+ "seed": 0,
+ "PSNR_rad": 29.22882893337337,
+ "PSNR_flux": 29.827450690992148,
+ "loads_main": {
+  "q5": 0.2813651776261021,
+  "q50": 0.5857424394509638,
+  "q95": 0.968809728899364,
+  "max": 1.5493637467281907,
+  "mean": 0.5999999999999999
+ },
+ "incident_main": 597220.4508786788,
+ "incident_total": 629169.2508786789,
+ "detected_total": 745999,
+ "detected_main": 707747,
+ "lam_tv": 5.537326011705201,
+ "recon_wall_s": 1.866362200002186,
+ "n_rows": 1024,
+ "arm_info": {
+  "fw_solve_wall_s": 187.13099010000587,
+  "fw_logdet": 3899.712545960078,
+  "fw_support": 11000,
+  "materialize_flag": "MIXTURE_MATERIALIZATION_FAIL",
+  "fallback": "L0",
+  "global_multiplier": 0.6000237618942491,
+  "target_load": 0.6,
+  "cache_hit": false
+ }
+}
