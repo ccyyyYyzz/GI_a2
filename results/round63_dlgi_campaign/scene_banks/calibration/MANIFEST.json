@@ -1,0 +1,517 @@
+{
+  "campaign": "ROUND63 DLGI confirmatory campaign (R34)",
+  "bank": "calibration",
+  "role": "construct the critical-value table c_0.95(eta) ONLY",
+  "side": 32,
+  "value_range": [
+    0.0,
+    1.0
+  ],
+  "seed_base": 710000,
+  "instances_per_stratum": 2,
+  "strata": [
+    "contour",
+    "texture",
+    "twopop",
+    "smooth",
+    "binsparse",
+    "natural"
+  ],
+  "n_scenes": 12,
+  "seed_disjoint_from": [
+    630900,
+    631000,
+    631900,
+    632000,
+    632900,
+    633000,
+    650000,
+    "the other two DLGI banks"
+  ],
+  "blind_generation": "no reconstruction, arm, or bucket metric computed during generation",
+  "utc": "2026-07-22 16:29:16Z",
+  "python": "3.11.5",
+  "numpy": "1.24.4",
+  "scenes": [
+    {
+      "scene_id": "calibration_contour_0",
+      "bank": "calibration",
+      "stratum": "contour",
+      "instance": 0,
+      "seed": 710000,
+      "gen_params": {
+        "generator": "code/round63/detail24.py::_gen_contour via _generate01 (FROZEN, verbatim import; fresh seed)",
+        "family": "contour",
+        "seed": 710000,
+        "params_snapshot": {
+          "bg_level_range": [
+            0.05,
+            0.15
+          ],
+          "fg_level": 1.0,
+          "n_shapes_range": [
+            4,
+            7
+          ],
+          "outline_width_choices": [
+            1,
+            2
+          ],
+          "shape_types": [
+            "ellipse",
+            "polygon",
+            "curve"
+          ],
+          "center_frac_range": [
+            0.28,
+            0.72
+          ],
+          "radius_frac_range": [
+            0.14,
+            0.42
+          ],
+          "polygon_vertices_range": [
+            3,
+            6
+          ],
+          "curve_freq_range": [
+            1.0,
+            3.0
+          ]
+        },
+        "x_sha256": "c46ec87965f507e1b8971925e0f73556bcda5ec085017d963811e0e4c8755d60"
+      },
+      "x_sha256": "c46ec87965f507e1b8971925e0f73556bcda5ec085017d963811e0e4c8755d60",
+      "stats": {
+        "mean": 0.43776045453209816,
+        "std": 0.4060386870969596,
+        "min": 0.14452705117513903,
+        "max": 1.0,
+        "rms_contrast": 0.927536242466112,
+        "michelson": 0.7474466837166558,
+        "spectral_centroid": 0.3045982161166398
+      },
+      "sha256_npz": "ac36c91da33f2fc818af0c9f6b67bbd9f2ed818a4b32811094a271e3eceb88ca"
+    },
+    {
+      "scene_id": "calibration_contour_1",
+      "bank": "calibration",
+      "stratum": "contour",
+      "instance": 1,
+      "seed": 710001,
+      "gen_params": {
+        "generator": "code/round63/detail24.py::_gen_contour via _generate01 (FROZEN, verbatim import; fresh seed)",
+        "family": "contour",
+        "seed": 710001,
+        "params_snapshot": {
+          "bg_level_range": [
+            0.05,
+            0.15
+          ],
+          "fg_level": 1.0,
+          "n_shapes_range": [
+            4,
+            7
+          ],
+          "outline_width_choices": [
+            1,
+            2
+          ],
+          "shape_types": [
+            "ellipse",
+            "polygon",
+            "curve"
+          ],
+          "center_frac_range": [
+            0.28,
+            0.72
+          ],
+          "radius_frac_range": [
+            0.14,
+            0.42
+          ],
+          "polygon_vertices_range": [
+            3,
+            6
+          ],
+          "curve_freq_range": [
+            1.0,
+            3.0
+          ]
+        },
+        "x_sha256": "c4180f22accd27b31a6fdd4428c0b0fecc5a66e0061e737b4098bbdcea10d63b"
+      },
+      "x_sha256": "c4180f22accd27b31a6fdd4428c0b0fecc5a66e0061e737b4098bbdcea10d63b",
+      "stats": {
+        "mean": 0.4582429608434498,
+        "std": 0.44180299843217247,
+        "min": 0.09795250716047588,
+        "max": 1.0,
+        "rms_contrast": 0.9641239171879091,
+        "michelson": 0.8215724149784938,
+        "spectral_centroid": 0.34501985556259407
+      },
+      "sha256_npz": "ce74678e1db7f9d5610047e1341b1e242d1151fba5f61b032022dc31a96a822b"
+    },
+    {
+      "scene_id": "calibration_texture_0",
+      "bank": "calibration",
+      "stratum": "texture",
+      "instance": 0,
+      "seed": 710100,
+      "gen_params": {
+        "generator": "code/round63/detail24.py::_gen_microtexture via _generate01 (FROZEN, verbatim import; fresh seed)",
+        "family": "microtexture",
+        "seed": 710100,
+        "realized_sigma_pair": [
+          1.2,
+          2.4
+        ],
+        "realized_sigma_pair_index": 2,
+        "params_snapshot": {
+          "fg_level": 1.0,
+          "sigma_pairs": [
+            [
+              0.8,
+              1.6
+            ],
+            [
+              1.0,
+              2.0
+            ],
+            [
+              1.2,
+              2.4
+            ],
+            [
+              1.5,
+              3.0
+            ]
+          ],
+          "rectify": "abs",
+          "renorm": "peak",
+          "conv_mode": "reflect"
+        },
+        "x_sha256": "fa1a9139efe205c94e61325c04d4fd87e9e5e46bc4688486cc157fdffa0ceb9f"
+      },
+      "x_sha256": "fa1a9139efe205c94e61325c04d4fd87e9e5e46bc4688486cc157fdffa0ceb9f",
+      "stats": {
+        "mean": 0.20753827059276708,
+        "std": 0.16422499576483623,
+        "min": 0.0002683763087595685,
+        "max": 1.0,
+        "rms_contrast": 0.7912998180806834,
+        "michelson": 0.9994633913955173,
+        "spectral_centroid": 0.47143668982348
+      },
+      "sha256_npz": "e57256ea998680498ec98febc33f189f08189d972ac5f2dbb539412929e1a675"
+    },
+    {
+      "scene_id": "calibration_texture_1",
+      "bank": "calibration",
+      "stratum": "texture",
+      "instance": 1,
+      "seed": 710101,
+      "gen_params": {
+        "generator": "code/round63/detail24.py::_gen_microtexture via _generate01 (FROZEN, verbatim import; fresh seed)",
+        "family": "microtexture",
+        "seed": 710101,
+        "realized_sigma_pair": [
+          1.5,
+          3.0
+        ],
+        "realized_sigma_pair_index": 3,
+        "params_snapshot": {
+          "fg_level": 1.0,
+          "sigma_pairs": [
+            [
+              0.8,
+              1.6
+            ],
+            [
+              1.0,
+              2.0
+            ],
+            [
+              1.2,
+              2.4
+            ],
+            [
+              1.5,
+              3.0
+            ]
+          ],
+          "rectify": "abs",
+          "renorm": "peak",
+          "conv_mode": "reflect"
+        },
+        "x_sha256": "9d775769dc314ed63e3ce6859283e0c2627767323afc26ea4eb1d402f8da8302"
+      },
+      "x_sha256": "9d775769dc314ed63e3ce6859283e0c2627767323afc26ea4eb1d402f8da8302",
+      "stats": {
+        "mean": 0.2609691817354308,
+        "std": 0.1851558771716084,
+        "min": 0.0003499244567192836,
+        "max": 1.0,
+        "rms_contrast": 0.7094932663708868,
+        "michelson": 0.9993003958951476,
+        "spectral_centroid": 0.43113991162577364
+      },
+      "sha256_npz": "88316b68845ca4e155d42cd91827cecd149adf6535c97cd42fe68153d5592f6e"
+    },
+    {
+      "scene_id": "calibration_twopop_0",
+      "bank": "calibration",
+      "stratum": "twopop",
+      "instance": 0,
+      "seed": 710200,
+      "gen_params": {
+        "recipe": "R23 Theorem T2-B two-population witness (docs/ROUND63_GPT_ROUND23_RULING_RAW.md section 3.2)",
+        "seed": 710200,
+        "side": 32,
+        "brightness_ratio_R": 8,
+        "bg_level": 0.02,
+        "bright_level": 0.8,
+        "dim_level": 0.1,
+        "fine_amp_frac_of_bright": 0.125,
+        "disk_radius_frac": 0.34,
+        "plateau_blur_sigma": 2.5,
+        "disk_center_row_col": [
+          14.1494,
+          11.5449
+        ],
+        "stroke_period_px": 4,
+        "stroke_phases_vhd": [
+          3,
+          2,
+          5
+        ],
+        "stroke_region": "complement of plateau (plateau<=0.5); disjoint",
+        "plateau_core_mean_measured": 0.7776620612350639,
+        "dim_structure_mean_measured": 0.09999999999999999,
+        "brightness_ratio_measured": 7.776620612350639,
+        "generator": "code/round63/gen_bridge_scenes.py::gen_twopop (FROZEN, verbatim import; fresh seed)",
+        "x_sha256": "95ecc798fb4dcc1c1210ae74d67a6fc339e4f8543d58193fc52a23940105e62a"
+      },
+      "x_sha256": "95ecc798fb4dcc1c1210ae74d67a6fc339e4f8543d58193fc52a23940105e62a",
+      "stats": {
+        "mean": 0.29898980887950577,
+        "std": 0.2885736369626956,
+        "min": 0.02,
+        "max": 0.8,
+        "rms_contrast": 0.9651621172111323,
+        "michelson": 0.9512195121951219,
+        "spectral_centroid": 0.09192160170674861
+      },
+      "sha256_npz": "5d254a97d1558d0d77ace8295557b5cb16711c990e0d069ec096582bd4c17d6f"
+    },
+    {
+      "scene_id": "calibration_twopop_1",
+      "bank": "calibration",
+      "stratum": "twopop",
+      "instance": 1,
+      "seed": 710201,
+      "gen_params": {
+        "recipe": "R23 Theorem T2-B two-population witness (docs/ROUND63_GPT_ROUND23_RULING_RAW.md section 3.2)",
+        "seed": 710201,
+        "side": 32,
+        "brightness_ratio_R": 16,
+        "bg_level": 0.02,
+        "bright_level": 0.8,
+        "dim_level": 0.05,
+        "fine_amp_frac_of_bright": 0.0625,
+        "disk_radius_frac": 0.34,
+        "plateau_blur_sigma": 2.5,
+        "disk_center_row_col": [
+          15.5449,
+          12.7506
+        ],
+        "stroke_period_px": 4,
+        "stroke_phases_vhd": [
+          0,
+          2,
+          5
+        ],
+        "stroke_region": "complement of plateau (plateau<=0.5); disjoint",
+        "plateau_core_mean_measured": 0.778324789727647,
+        "dim_structure_mean_measured": 0.049999999999999996,
+        "brightness_ratio_measured": 15.56649579455294,
+        "generator": "code/round63/gen_bridge_scenes.py::gen_twopop (FROZEN, verbatim import; fresh seed)",
+        "x_sha256": "50f32244c847434d5f722c8e62e6829d419ce4af27d72b18c5b8af77c90dcab0"
+      },
+      "x_sha256": "50f32244c847434d5f722c8e62e6829d419ce4af27d72b18c5b8af77c90dcab0",
+      "stats": {
+        "mean": 0.2811184220456765,
+        "std": 0.30077736165872376,
+        "min": 0.02,
+        "max": 0.8,
+        "rms_contrast": 1.0699311680465147,
+        "michelson": 0.9512195121951219,
+        "spectral_centroid": 0.09434920790322802
+      },
+      "sha256_npz": "024264d8224f9b48388326f72fc5e2ad023c48918a3a0701d0f642ca24c9f792"
+    },
+    {
+      "scene_id": "calibration_smooth_0",
+      "bank": "calibration",
+      "stratum": "smooth",
+      "instance": 0,
+      "seed": 710300,
+      "gen_params": {
+        "generator": "dlgi_scene_bank.gen_smooth (NEW; low-pass Gaussian random field)",
+        "family": "smooth",
+        "seed": 710300,
+        "blur_sigma": 4.905201835361893,
+        "floor": 0.06,
+        "gain": 0.9,
+        "x_sha256": "e7d7156d04edf429d1f5dd2ed9b120483256962adf7d3597fb561837b2ac9a95"
+      },
+      "x_sha256": "e7d7156d04edf429d1f5dd2ed9b120483256962adf7d3597fb561837b2ac9a95",
+      "stats": {
+        "mean": 0.5259339155669231,
+        "std": 0.21774514802918488,
+        "min": 0.06,
+        "max": 0.9599999999966182,
+        "rms_contrast": 0.41401617500645405,
+        "michelson": 0.8823529411760804,
+        "spectral_centroid": 0.10267103124161542
+      },
+      "sha256_npz": "009d64fd50938059edbd251daaf00a9112f9a349014104d0a37b64a6e3fd62fd"
+    },
+    {
+      "scene_id": "calibration_smooth_1",
+      "bank": "calibration",
+      "stratum": "smooth",
+      "instance": 1,
+      "seed": 710301,
+      "gen_params": {
+        "generator": "dlgi_scene_bank.gen_smooth (NEW; low-pass Gaussian random field)",
+        "family": "smooth",
+        "seed": 710301,
+        "blur_sigma": 4.28320088660969,
+        "floor": 0.06,
+        "gain": 0.9,
+        "x_sha256": "ffcb31324d93a384881c8f6878876a8b72f8ac2de3abfa12f330a876d758b603"
+      },
+      "x_sha256": "ffcb31324d93a384881c8f6878876a8b72f8ac2de3abfa12f330a876d758b603",
+      "stats": {
+        "mean": 0.5400761841647926,
+        "std": 0.208424697824395,
+        "min": 0.06,
+        "max": 0.9599999999978428,
+        "rms_contrast": 0.3859172167473296,
+        "michelson": 0.8823529411762217,
+        "spectral_centroid": 0.1350209271575383
+      },
+      "sha256_npz": "d791d3427859d8f74b8b7c5b7354eb75692f18498fffde026d66debffb18cea3"
+    },
+    {
+      "scene_id": "calibration_binsparse_0",
+      "bank": "calibration",
+      "stratum": "binsparse",
+      "instance": 0,
+      "seed": 710400,
+      "gen_params": {
+        "generator": "dlgi_scene_bank.gen_binsparse (NEW; sparse bright features on a modest background)",
+        "family": "binsparse",
+        "seed": 710400,
+        "bg_level": 0.06,
+        "n_features": 45,
+        "feature_fill_frac": 0.1962890625,
+        "x_sha256": "aadfec9d96cb3b3e663aade893e73b6ceaf95fd24fc510520b5d076ac8ac2460"
+      },
+      "x_sha256": "aadfec9d96cb3b3e663aade893e73b6ceaf95fd24fc510520b5d076ac8ac2460",
+      "stats": {
+        "mean": 0.2295767109236197,
+        "std": 0.3437640013972381,
+        "min": 0.06,
+        "max": 0.9950835825648193,
+        "rms_contrast": 1.4973818555646465,
+        "michelson": 0.8862649348516162,
+        "spectral_centroid": 0.44049880867479896
+      },
+      "sha256_npz": "b853fb6de35fb9cb3d786191973d9dd35f6af656a01070a3d89313d729676d0c"
+    },
+    {
+      "scene_id": "calibration_binsparse_1",
+      "bank": "calibration",
+      "stratum": "binsparse",
+      "instance": 1,
+      "seed": 710401,
+      "gen_params": {
+        "generator": "dlgi_scene_bank.gen_binsparse (NEW; sparse bright features on a modest background)",
+        "family": "binsparse",
+        "seed": 710401,
+        "bg_level": 0.06,
+        "n_features": 32,
+        "feature_fill_frac": 0.1494140625,
+        "x_sha256": "44608fd480ed8092d953c0617b6a0499f8d8aa8698ab1a672c9997df8bc20977"
+      },
+      "x_sha256": "44608fd480ed8092d953c0617b6a0499f8d8aa8698ab1a672c9997df8bc20977",
+      "stats": {
+        "mean": 0.1891218416128631,
+        "std": 0.3084688810156556,
+        "min": 0.06,
+        "max": 0.9942587689609321,
+        "rms_contrast": 1.6310589955394932,
+        "michelson": 0.8861759526854389,
+        "spectral_centroid": 0.43787406636894377
+      },
+      "sha256_npz": "872728e8e595ac3be15a17199b9fd6f28c0c45c58e3c38818e6dd3ffc267a3a1"
+    },
+    {
+      "scene_id": "calibration_natural_0",
+      "bank": "calibration",
+      "stratum": "natural",
+      "instance": 0,
+      "seed": 710500,
+      "gen_params": {
+        "generator": "dlgi_scene_bank.gen_natural (NEW; 1/f^beta power-law random field = synthetic natural-image-statistics proxy, NOT a photographic crop)",
+        "family": "natural",
+        "seed": 710500,
+        "beta": 0.9349923560341523,
+        "floor": 0.05,
+        "gain": 0.9,
+        "x_sha256": "2695d7d7bd50be5ddb3ea1e7257ee0bba9550c2ff2c60b4fdac33d47a6e7b486"
+      },
+      "x_sha256": "2695d7d7bd50be5ddb3ea1e7257ee0bba9550c2ff2c60b4fdac33d47a6e7b486",
+      "stats": {
+        "mean": 0.49477064374942314,
+        "std": 0.1264825294928205,
+        "min": 0.05,
+        "max": 0.9499999999999673,
+        "rms_contrast": 0.2556387107657051,
+        "michelson": 0.8999999999999967,
+        "spectral_centroid": 0.3783142400028351
+      },
+      "sha256_npz": "9720531741acd194a472260da12170d2683edddc5ea4cb4432658e7da6d7200f"
+    },
+    {
+      "scene_id": "calibration_natural_1",
+      "bank": "calibration",
+      "stratum": "natural",
+      "instance": 1,
+      "seed": 710501,
+      "gen_params": {
+        "generator": "dlgi_scene_bank.gen_natural (NEW; 1/f^beta power-law random field = synthetic natural-image-statistics proxy, NOT a photographic crop)",
+        "family": "natural",
+        "seed": 710501,
+        "beta": 1.0549924087042877,
+        "floor": 0.05,
+        "gain": 0.9,
+        "x_sha256": "4a2887338b3b320c077043a31a818fa972505fcdb29ac9a62661e8034c0729d7"
+      },
+      "x_sha256": "4a2887338b3b320c077043a31a818fa972505fcdb29ac9a62661e8034c0729d7",
+      "stats": {
+        "mean": 0.4643932580677435,
+        "std": 0.14832313717793763,
+        "min": 0.05,
+        "max": 0.9499999999999689,
+        "rms_contrast": 0.31939123706292255,
+        "michelson": 0.8999999999999968,
+        "spectral_centroid": 0.3392424198928336
+      },
+      "sha256_npz": "047bfee4e1697b847236504d756c453f698e42aaf1bc1401a1536d81c996a65c"
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "meta": {
+    "utc": "2026-07-22 16:56:24Z",
+    "python": "3.11.5",
+    "numpy": "1.24.4",
+    "whittle_source": "dl_bar4_final (frozen probe, verbatim import)",
+    "grids": {
+      "n_log_tc": 58,
+      "n_log_cv": 46,
+      "n_log_sv2": 14
+    }
+  },
+  "smoke": {
+    "cell": "tc64_cv40_ph10",
+    "tc": 64.0,
+    "cv": 0.4,
+    "ph": 1.0,
+    "n_cal": 500,
+    "n_test": 300,
+    "c_0_95_true": 43.65291976928711,
+    "asymptotic_chi2_2": 5.991,
+    "mc_over_asymptotic": 7.286416252593408,
+    "pointwise_joint_coverage": 0.9166666666666666,
+    "pointwise_joint_coverage_wilson95": [
+      0.8798776190248736,
+      0.94291952264368
+    ],
+    "asymptotic_joint_coverage": 0.5466666666666666,
+    "projected_tc_interval_coverage_flatsurf": 1.0,
+    "projected_cv_interval_coverage_flatsurf": 1.0,
+    "frac_bounded": 0.0,
+    "frac_connected": 1.0,
+    "median_logwidth_tc": 3.049121138936247,
+    "median_logwidth_cv": 1.7022192863225056,
+    "pf_tc_hat_median": 63.98946637468261,
+    "pf_cv_hat_median": 0.40267554834877983,
+    "runtime_s": 253.68000626564026,
+    "note": "pointwise_joint_coverage is the real calibration check (held-out: independent replicate seeds within the calibration bank; confirmatory bank stays SEALED); projected-interval coverage uses a FLAT single-knot surface only to exercise the inversion path -- the true projected coverage needs the full 27-knot calibration table (separate GO).",
+    "verdict": "PASS",
+    "verdict_basis": "Wilson95 overlaps [0.92,0.98] AND MC-calibrated coverage exceeds asymptotic-chi2 coverage by >0.10"
+  }
+}

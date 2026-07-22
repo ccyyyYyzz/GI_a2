@@ -1,0 +1,517 @@
+{
+  "campaign": "ROUND63 DLGI confirmatory campaign (R34)",
+  "bank": "confirmatory",
+  "role": "final endpoints ONLY (fresh scenes/seeds)",
+  "side": 32,
+  "value_range": [
+    0.0,
+    1.0
+  ],
+  "seed_base": 700000,
+  "instances_per_stratum": 2,
+  "strata": [
+    "contour",
+    "texture",
+    "twopop",
+    "smooth",
+    "binsparse",
+    "natural"
+  ],
+  "n_scenes": 12,
+  "seed_disjoint_from": [
+    630900,
+    631000,
+    631900,
+    632000,
+    632900,
+    633000,
+    650000,
+    "the other two DLGI banks"
+  ],
+  "blind_generation": "no reconstruction, arm, or bucket metric computed during generation",
+  "utc": "2026-07-22 16:29:16Z",
+  "python": "3.11.5",
+  "numpy": "1.24.4",
+  "scenes": [
+    {
+      "scene_id": "confirmatory_contour_0",
+      "bank": "confirmatory",
+      "stratum": "contour",
+      "instance": 0,
+      "seed": 700000,
+      "gen_params": {
+        "generator": "code/round63/detail24.py::_gen_contour via _generate01 (FROZEN, verbatim import; fresh seed)",
+        "family": "contour",
+        "seed": 700000,
+        "params_snapshot": {
+          "bg_level_range": [
+            0.05,
+            0.15
+          ],
+          "fg_level": 1.0,
+          "n_shapes_range": [
+            4,
+            7
+          ],
+          "outline_width_choices": [
+            1,
+            2
+          ],
+          "shape_types": [
+            "ellipse",
+            "polygon",
+            "curve"
+          ],
+          "center_frac_range": [
+            0.28,
+            0.72
+          ],
+          "radius_frac_range": [
+            0.14,
+            0.42
+          ],
+          "polygon_vertices_range": [
+            3,
+            6
+          ],
+          "curve_freq_range": [
+            1.0,
+            3.0
+          ]
+        },
+        "x_sha256": "31a74795e340aecc95617de79128e742da1609f8705bb605dcdce47f519d6159"
+      },
+      "x_sha256": "31a74795e340aecc95617de79128e742da1609f8705bb605dcdce47f519d6159",
+      "stats": {
+        "mean": 0.3962801658140925,
+        "std": 0.4265817600218244,
+        "min": 0.09486221053240218,
+        "max": 1.0,
+        "rms_contrast": 1.0764650790570915,
+        "michelson": 0.8267138830441992,
+        "spectral_centroid": 0.2693289725271934
+      },
+      "sha256_npz": "e5e4816fde250c076fc415b8d5821656638e6bc12c75bb8c896e83f8e93ec36f"
+    },
+    {
+      "scene_id": "confirmatory_contour_1",
+      "bank": "confirmatory",
+      "stratum": "contour",
+      "instance": 1,
+      "seed": 700001,
+      "gen_params": {
+        "generator": "code/round63/detail24.py::_gen_contour via _generate01 (FROZEN, verbatim import; fresh seed)",
+        "family": "contour",
+        "seed": 700001,
+        "params_snapshot": {
+          "bg_level_range": [
+            0.05,
+            0.15
+          ],
+          "fg_level": 1.0,
+          "n_shapes_range": [
+            4,
+            7
+          ],
+          "outline_width_choices": [
+            1,
+            2
+          ],
+          "shape_types": [
+            "ellipse",
+            "polygon",
+            "curve"
+          ],
+          "center_frac_range": [
+            0.28,
+            0.72
+          ],
+          "radius_frac_range": [
+            0.14,
+            0.42
+          ],
+          "polygon_vertices_range": [
+            3,
+            6
+          ],
+          "curve_freq_range": [
+            1.0,
+            3.0
+          ]
+        },
+        "x_sha256": "9a974ec1d092c3a36a0042099d025cd4c93e6e15501e7c977fffb1103d600ae6"
+      },
+      "x_sha256": "9a974ec1d092c3a36a0042099d025cd4c93e6e15501e7c977fffb1103d600ae6",
+      "stats": {
+        "mean": 0.3246186673536921,
+        "std": 0.39094704278829023,
+        "min": 0.09831749070427741,
+        "max": 1.0,
+        "rms_contrast": 1.204327052339012,
+        "michelson": 0.8209670854986876,
+        "spectral_centroid": 0.32172267781258024
+      },
+      "sha256_npz": "916d7b76e8a8e4cab0023a1f90a8d01e02fb375b578a729b27a851b13391fc82"
+    },
+    {
+      "scene_id": "confirmatory_texture_0",
+      "bank": "confirmatory",
+      "stratum": "texture",
+      "instance": 0,
+      "seed": 700100,
+      "gen_params": {
+        "generator": "code/round63/detail24.py::_gen_microtexture via _generate01 (FROZEN, verbatim import; fresh seed)",
+        "family": "microtexture",
+        "seed": 700100,
+        "realized_sigma_pair": [
+          1.5,
+          3.0
+        ],
+        "realized_sigma_pair_index": 3,
+        "params_snapshot": {
+          "fg_level": 1.0,
+          "sigma_pairs": [
+            [
+              0.8,
+              1.6
+            ],
+            [
+              1.0,
+              2.0
+            ],
+            [
+              1.2,
+              2.4
+            ],
+            [
+              1.5,
+              3.0
+            ]
+          ],
+          "rectify": "abs",
+          "renorm": "peak",
+          "conv_mode": "reflect"
+        },
+        "x_sha256": "78f5c038002440280bd85a387180d4b9a1d02940d4154b65d325e7306690fc84"
+      },
+      "x_sha256": "78f5c038002440280bd85a387180d4b9a1d02940d4154b65d325e7306690fc84",
+      "stats": {
+        "mean": 0.24395723611874748,
+        "std": 0.18259382772677066,
+        "min": 0.0008569100501499361,
+        "max": 1.0,
+        "rms_contrast": 0.7484665371347794,
+        "michelson": 0.9982876472319965,
+        "spectral_centroid": 0.413897733620326
+      },
+      "sha256_npz": "d7426af89f4a91e594d25b1c8c7b3eefc3b816b5de494f9b83e7bb46d4c55e71"
+    },
+    {
+      "scene_id": "confirmatory_texture_1",
+      "bank": "confirmatory",
+      "stratum": "texture",
+      "instance": 1,
+      "seed": 700101,
+      "gen_params": {
+        "generator": "code/round63/detail24.py::_gen_microtexture via _generate01 (FROZEN, verbatim import; fresh seed)",
+        "family": "microtexture",
+        "seed": 700101,
+        "realized_sigma_pair": [
+          0.8,
+          1.6
+        ],
+        "realized_sigma_pair_index": 0,
+        "params_snapshot": {
+          "fg_level": 1.0,
+          "sigma_pairs": [
+            [
+              0.8,
+              1.6
+            ],
+            [
+              1.0,
+              2.0
+            ],
+            [
+              1.2,
+              2.4
+            ],
+            [
+              1.5,
+              3.0
+            ]
+          ],
+          "rectify": "abs",
+          "renorm": "peak",
+          "conv_mode": "reflect"
+        },
+        "x_sha256": "2cdb5f3d87badf840cfeda9e689481b069eaec60289bbfa94d5dd0f1ca4825a7"
+      },
+      "x_sha256": "2cdb5f3d87badf840cfeda9e689481b069eaec60289bbfa94d5dd0f1ca4825a7",
+      "stats": {
+        "mean": 0.3503650126959865,
+        "std": 0.2205580297702562,
+        "min": 0.0004651249965447192,
+        "max": 1.0,
+        "rms_contrast": 0.6295092882508663,
+        "michelson": 0.9990701824882774,
+        "spectral_centroid": 0.6331831082406858
+      },
+      "sha256_npz": "349d155f915543ba69eb8d0755bbe2ed2b261f61c10d63e190d3de1d4f6963cb"
+    },
+    {
+      "scene_id": "confirmatory_twopop_0",
+      "bank": "confirmatory",
+      "stratum": "twopop",
+      "instance": 0,
+      "seed": 700200,
+      "gen_params": {
+        "recipe": "R23 Theorem T2-B two-population witness (docs/ROUND63_GPT_ROUND23_RULING_RAW.md section 3.2)",
+        "seed": 700200,
+        "side": 32,
+        "brightness_ratio_R": 8,
+        "bg_level": 0.02,
+        "bright_level": 0.8,
+        "dim_level": 0.1,
+        "fine_amp_frac_of_bright": 0.125,
+        "disk_radius_frac": 0.34,
+        "plateau_blur_sigma": 2.5,
+        "disk_center_row_col": [
+          17.1018,
+          13.748
+        ],
+        "stroke_period_px": 4,
+        "stroke_phases_vhd": [
+          2,
+          0,
+          3
+        ],
+        "stroke_region": "complement of plateau (plateau<=0.5); disjoint",
+        "plateau_core_mean_measured": 0.7763288832164705,
+        "dim_structure_mean_measured": 0.09999999999999999,
+        "brightness_ratio_measured": 7.763288832164706,
+        "generator": "code/round63/gen_bridge_scenes.py::gen_twopop (FROZEN, verbatim import; fresh seed)",
+        "x_sha256": "a8e7da32bec011e4363791214ae68b52ea23bd944ae6c09f23bdd70f159d0278"
+      },
+      "x_sha256": "a8e7da32bec011e4363791214ae68b52ea23bd944ae6c09f23bdd70f159d0278",
+      "stats": {
+        "mean": 0.2929952491144675,
+        "std": 0.28653902729697484,
+        "min": 0.02,
+        "max": 0.8,
+        "rms_contrast": 0.9779647559576287,
+        "michelson": 0.9512195121951219,
+        "spectral_centroid": 0.0921954958232183
+      },
+      "sha256_npz": "6197e165b20dbd1a2c22a4ac12d577b5b2cc12441228d128918826f9c55008bb"
+    },
+    {
+      "scene_id": "confirmatory_twopop_1",
+      "bank": "confirmatory",
+      "stratum": "twopop",
+      "instance": 1,
+      "seed": 700201,
+      "gen_params": {
+        "recipe": "R23 Theorem T2-B two-population witness (docs/ROUND63_GPT_ROUND23_RULING_RAW.md section 3.2)",
+        "seed": 700201,
+        "side": 32,
+        "brightness_ratio_R": 16,
+        "bg_level": 0.02,
+        "bright_level": 0.8,
+        "dim_level": 0.05,
+        "fine_amp_frac_of_bright": 0.0625,
+        "disk_radius_frac": 0.34,
+        "plateau_blur_sigma": 2.5,
+        "disk_center_row_col": [
+          16.236,
+          13.1466
+        ],
+        "stroke_period_px": 4,
+        "stroke_phases_vhd": [
+          0,
+          1,
+          4
+        ],
+        "stroke_region": "complement of plateau (plateau<=0.5); disjoint",
+        "plateau_core_mean_measured": 0.776394790004092,
+        "dim_structure_mean_measured": 0.04999999999999999,
+        "brightness_ratio_measured": 15.527895800081842,
+        "generator": "code/round63/gen_bridge_scenes.py::gen_twopop (FROZEN, verbatim import; fresh seed)",
+        "x_sha256": "f47b07de53476af35116ae7f945a32de45a676721142fafc42dce6c7d82be79b"
+      },
+      "x_sha256": "f47b07de53476af35116ae7f945a32de45a676721142fafc42dce6c7d82be79b",
+      "stats": {
+        "mean": 0.27441777867582107,
+        "std": 0.2991722676301333,
+        "min": 0.02,
+        "max": 0.8,
+        "rms_contrast": 1.0902073075358414,
+        "michelson": 0.9512195121951219,
+        "spectral_centroid": 0.09682176291832151
+      },
+      "sha256_npz": "87080ab1a1a024c1cb5c8cfe5d0b3a6c42b304c3b3e25eff5c5de9dea012bb44"
+    },
+    {
+      "scene_id": "confirmatory_smooth_0",
+      "bank": "confirmatory",
+      "stratum": "smooth",
+      "instance": 0,
+      "seed": 700300,
+      "gen_params": {
+        "generator": "dlgi_scene_bank.gen_smooth (NEW; low-pass Gaussian random field)",
+        "family": "smooth",
+        "seed": 700300,
+        "blur_sigma": 4.388012938816302,
+        "floor": 0.06,
+        "gain": 0.9,
+        "x_sha256": "6fbebc730a2bbac9afcb38a3fa511ea11e5e3085a95205efe2a7ef490c3ea522"
+      },
+      "x_sha256": "6fbebc730a2bbac9afcb38a3fa511ea11e5e3085a95205efe2a7ef490c3ea522",
+      "stats": {
+        "mean": 0.5386271650530604,
+        "std": 0.17703234317588412,
+        "min": 0.06,
+        "max": 0.9599999999979334,
+        "rms_contrast": 0.328673254269388,
+        "michelson": 0.8823529411762321,
+        "spectral_centroid": 0.12156102110335797
+      },
+      "sha256_npz": "cb7bf56803a11bcdca0547368a383273cb546d3d356c8127e1e188b30c9792d7"
+    },
+    {
+      "scene_id": "confirmatory_smooth_1",
+      "bank": "confirmatory",
+      "stratum": "smooth",
+      "instance": 1,
+      "seed": 700301,
+      "gen_params": {
+        "generator": "dlgi_scene_bank.gen_smooth (NEW; low-pass Gaussian random field)",
+        "family": "smooth",
+        "seed": 700301,
+        "blur_sigma": 3.7378602841216595,
+        "floor": 0.06,
+        "gain": 0.9,
+        "x_sha256": "876c9691e7ab2aff1f4288d0bef49bcfbf7a8073e670bdb6a443702aafc13d0d"
+      },
+      "x_sha256": "876c9691e7ab2aff1f4288d0bef49bcfbf7a8073e670bdb6a443702aafc13d0d",
+      "stats": {
+        "mean": 0.4195395011345654,
+        "std": 0.15795931506431748,
+        "min": 0.06,
+        "max": 0.9599999999982931,
+        "rms_contrast": 0.3765064186736799,
+        "michelson": 0.8823529411762736,
+        "spectral_centroid": 0.12640045581786727
+      },
+      "sha256_npz": "8ac3e67dcd7a335f90b136596b1f2c0029dd18a8d2b14a273d195de7898c41ee"
+    },
+    {
+      "scene_id": "confirmatory_binsparse_0",
+      "bank": "confirmatory",
+      "stratum": "binsparse",
+      "instance": 0,
+      "seed": 700400,
+      "gen_params": {
+        "generator": "dlgi_scene_bank.gen_binsparse (NEW; sparse bright features on a modest background)",
+        "family": "binsparse",
+        "seed": 700400,
+        "bg_level": 0.06,
+        "n_features": 37,
+        "feature_fill_frac": 0.1171875,
+        "x_sha256": "5ee350b59456e0567052bf256c4dabd7d4416c7f892aa5a17cfa4e89635e6615"
+      },
+      "x_sha256": "5ee350b59456e0567052bf256c4dabd7d4416c7f892aa5a17cfa4e89635e6615",
+      "stats": {
+        "mean": 0.16430777089929294,
+        "std": 0.2865805494175312,
+        "min": 0.06,
+        "max": 0.9983891034600443,
+        "rms_contrast": 1.7441691762295366,
+        "michelson": 0.8866201479137485,
+        "spectral_centroid": 0.47018979912219383
+      },
+      "sha256_npz": "2756f1ffada63f05b7917e6e27b366416c02f65e381cead5f74515f01caea1dd"
+    },
+    {
+      "scene_id": "confirmatory_binsparse_1",
+      "bank": "confirmatory",
+      "stratum": "binsparse",
+      "instance": 1,
+      "seed": 700401,
+      "gen_params": {
+        "generator": "dlgi_scene_bank.gen_binsparse (NEW; sparse bright features on a modest background)",
+        "family": "binsparse",
+        "seed": 700401,
+        "bg_level": 0.06,
+        "n_features": 56,
+        "feature_fill_frac": 0.212890625,
+        "x_sha256": "1d52b8389b97d62979984d533c374bd200c202f4be49ffdcd8247f63a8c8e527"
+      },
+      "x_sha256": "1d52b8389b97d62979984d533c374bd200c202f4be49ffdcd8247f63a8c8e527",
+      "stats": {
+        "mean": 0.24267891189584345,
+        "std": 0.3517399733960878,
+        "min": 0.06,
+        "max": 0.9973047275340652,
+        "rms_contrast": 1.449404773773886,
+        "michelson": 0.8865038650873395,
+        "spectral_centroid": 0.44306655568680015
+      },
+      "sha256_npz": "c9b738e16b30643c287c55a950696f7d88bed6b695ef1e214175817e9664a200"
+    },
+    {
+      "scene_id": "confirmatory_natural_0",
+      "bank": "confirmatory",
+      "stratum": "natural",
+      "instance": 0,
+      "seed": 700500,
+      "gen_params": {
+        "generator": "dlgi_scene_bank.gen_natural (NEW; 1/f^beta power-law random field = synthetic natural-image-statistics proxy, NOT a photographic crop)",
+        "family": "natural",
+        "seed": 700500,
+        "beta": 1.0113588960285265,
+        "floor": 0.05,
+        "gain": 0.9,
+        "x_sha256": "2ab36fde911d6ef920d07efa0b43b210b6c8daed889311d32fb8cd170c5d1fe5"
+      },
+      "x_sha256": "2ab36fde911d6ef920d07efa0b43b210b6c8daed889311d32fb8cd170c5d1fe5",
+      "stats": {
+        "mean": 0.5274391441560489,
+        "std": 0.1548570273110552,
+        "min": 0.05,
+        "max": 0.9499999999999691,
+        "rms_contrast": 0.2936016960948939,
+        "michelson": 0.8999999999999968,
+        "spectral_centroid": 0.2674288754713831
+      },
+      "sha256_npz": "614b9b16df5338c4379c37a7c5652ae7cefa56608759f90d2fc511941bad6d3a"
+    },
+    {
+      "scene_id": "confirmatory_natural_1",
+      "bank": "confirmatory",
+      "stratum": "natural",
+      "instance": 1,
+      "seed": 700501,
+      "gen_params": {
+        "generator": "dlgi_scene_bank.gen_natural (NEW; 1/f^beta power-law random field = synthetic natural-image-statistics proxy, NOT a photographic crop)",
+        "family": "natural",
+        "seed": 700501,
+        "beta": 1.2030269506416973,
+        "floor": 0.05,
+        "gain": 0.9,
+        "x_sha256": "accea931c15fc610733bcc3dd0214943e9a0d361a8afbf3e46c4b70bc002f072"
+      },
+      "x_sha256": "accea931c15fc610733bcc3dd0214943e9a0d361a8afbf3e46c4b70bc002f072",
+      "stats": {
+        "mean": 0.4756960868874608,
+        "std": 0.1459170433514947,
+        "min": 0.05,
+        "max": 0.9499999999999817,
+        "rms_contrast": 0.3067442583062817,
+        "michelson": 0.8999999999999981,
+        "spectral_centroid": 0.22705447693217326
+      },
+      "sha256_npz": "f1d1ca9f023e5d6dd40bb5980a7f5df2b3c0d63da1b3b25f9687764eb0a79599"
+    }
+  ]
+}

@@ -1,0 +1,538 @@
+{
+  "meta": {
+    "utc": "2026-07-22 16:41:01Z",
+    "python": "3.11.5",
+    "numpy": "1.24.4",
+    "machinery": "dl_t3_reciprocity (frozen probe, verbatim import)",
+    "compact_witness": {
+      "Kpix": 16,
+      "n_pair": 24
+    },
+    "snr_axis_note": "reciprocity structure is SNR-invariant; predictions stated per (t_c,CV) hold across the photon-SNR grid",
+    "schedule_names": "R34 {paired, random, ordered}; ordered == probe 'split'",
+    "predicted_ordering": "full-record Fisher info ~schedule-invariant; paired predicted best for BOTH ledgers at the estimator level; no forced scene-vs-medium trade",
+    "status": "FROZEN before confirmatory data (R34 sec.2.4)"
+  },
+  "generic_theorem2": {
+    "worst_relerr_Jx": 3.3531364795849406e-15,
+    "worst_relerr_Jtheta": 3.4507378171790375e-15,
+    "worst_abserr_det_reciprocity": 3.6637359812630166e-15,
+    "n_cases": 8
+  },
+  "reciprocity_worst_abserr": 2.6645352591003757e-15,
+  "per_cell": {
+    "tc16_cv5": {
+      "geometry": {
+        "paired": {
+          "kappa": [
+            0.1104656952875638,
+            0.00011284144571859765
+          ],
+          "kappa_max": 0.1104656952875638,
+          "K_frob": 0.1104657529216941,
+          "eff_scene": 0.9877973175868225,
+          "eff_medium": 0.9877973175868217,
+          "medium_crb_tc": 69.46635796461486,
+          "medium_crb_cv": 0.0593130627523126,
+          "scene_logdet_eff": 0.9877973175868225,
+          "reciprocity_abserr": 8.881784197001252e-16
+        },
+        "random": {
+          "kappa": [
+            0.11058072636231055,
+            0.001099065183488962
+          ],
+          "kappa_max": 0.11058072636231055,
+          "K_frob": 0.1105861880484799,
+          "eff_scene": 0.9877707097837636,
+          "eff_medium": 0.9877707097837662,
+          "medium_crb_tc": 69.25844079950366,
+          "medium_crb_cv": 0.05939755813307753,
+          "scene_logdet_eff": 0.9877707097837636,
+          "reciprocity_abserr": 2.6645352591003757e-15
+        },
+        "ordered": {
+          "kappa": [
+            0.11052307750556963,
+            0.0008068074847909949
+          ],
+          "kappa_max": 0.11052307750556963,
+          "K_frob": 0.11052602227357892,
+          "eff_scene": 0.9877840063518201,
+          "eff_medium": 0.9877840063518201,
+          "medium_crb_tc": 69.39500011857328,
+          "medium_crb_cv": 0.059305368287091334,
+          "scene_logdet_eff": 0.9877840063518201,
+          "reciprocity_abserr": 0.0
+        }
+      },
+      "K_frob": {
+        "paired": 0.1104657529216941,
+        "random": 0.1105861880484799,
+        "ordered": 0.11052602227357892
+      },
+      "K_frob_spread_frac": 0.0010896543811984632,
+      "predicted_best_scene_schedule": "paired",
+      "predicted_best_medium_schedule": "paired",
+      "predicted_medium_schedule_robust": true,
+      "predicted_no_forced_trade": true,
+      "predicted_fundamental_info_schedule_invariant": true
+    },
+    "tc16_cv15": {
+      "geometry": {
+        "paired": {
+          "kappa": [
+            0.3394486344407355,
+            0.001633667296404859
+          ],
+          "kappa_max": 0.3394486344407355,
+          "K_frob": 0.33945256560013715,
+          "eff_scene": 0.8847722632288967,
+          "eff_medium": 0.8847722632288977,
+          "medium_crb_tc": 22.984142156027357,
+          "medium_crb_cv": 0.06982484636571375,
+          "scene_logdet_eff": 0.8847722632288967,
+          "reciprocity_abserr": 9.992007221626409e-16
+        },
+        "random": {
+          "kappa": [
+            0.338941265288889,
+            0.008266588233952333
+          ],
+          "kappa_max": 0.338941265288889,
+          "K_frob": 0.33904205903790574,
+          "eff_scene": 0.8850583327790057,
+          "eff_medium": 0.8850583327790049,
+          "medium_crb_tc": 22.903981041490493,
+          "medium_crb_cv": 0.06950052078940852,
+          "scene_logdet_eff": 0.8850583327790057,
+          "reciprocity_abserr": 7.771561172376096e-16
+        },
+        "ordered": {
+          "kappa": [
+            0.33980789675634054,
+            0.008542771463764285
+          ],
+          "kappa_max": 0.33980789675634054,
+          "K_frob": 0.33991526244381837,
+          "eff_scene": 0.8844660411931479,
+          "eff_medium": 0.8844660411931479,
+          "medium_crb_tc": 22.98702687532065,
+          "medium_crb_cv": 0.0699352157577238,
+          "scene_logdet_eff": 0.8844660411931479,
+          "reciprocity_abserr": 0.0
+        }
+      },
+      "K_frob": {
+        "paired": 0.33945256560013715,
+        "random": 0.33904205903790574,
+        "ordered": 0.33991526244381837
+      },
+      "K_frob_spread_frac": 0.00257225528833393,
+      "predicted_best_scene_schedule": "paired",
+      "predicted_best_medium_schedule": "paired",
+      "predicted_medium_schedule_robust": true,
+      "predicted_no_forced_trade": true,
+      "predicted_fundamental_info_schedule_invariant": true
+    },
+    "tc16_cv40": {
+      "geometry": {
+        "paired": {
+          "kappa": [
+            0.7611510344587474,
+            0.010217792707237385
+          ],
+          "kappa_max": 0.7611510344587474,
+          "K_frob": 0.7612196138733088,
+          "eff_scene": 0.42060518559303817,
+          "eff_medium": 0.4206051855930389,
+          "medium_crb_tc": 15.201297569398276,
+          "medium_crb_cv": 0.17414371422876737,
+          "scene_logdet_eff": 0.42060518559303817,
+          "reciprocity_abserr": 7.216449660063518e-16
+        },
+        "random": {
+          "kappa": [
+            0.7606099724033873,
+            0.0220579835624798
+          ],
+          "kappa_max": 0.7606099724033873,
+          "K_frob": 0.7609297502124124,
+          "eff_scene": 0.42126740049515393,
+          "eff_medium": 0.421267400495153,
+          "medium_crb_tc": 15.187858234551912,
+          "medium_crb_cv": 0.17348411271301487,
+          "scene_logdet_eff": 0.42126740049515393,
+          "reciprocity_abserr": 9.43689570931383e-16
+        },
+        "ordered": {
+          "kappa": [
+            0.7621061839862797,
+            0.03717342826170859
+          ],
+          "kappa_max": 0.7621061839862797,
+          "K_frob": 0.7630122537933828,
+          "eff_scene": 0.4186148951021212,
+          "eff_medium": 0.41861489510212135,
+          "medium_crb_tc": 15.229924347985323,
+          "medium_crb_cv": 0.17428615663297073,
+          "scene_logdet_eff": 0.4186148951021212,
+          "reciprocity_abserr": 1.6653345369377348e-16
+        }
+      },
+      "K_frob": {
+        "paired": 0.7612196138733088,
+        "random": 0.7609297502124124,
+        "ordered": 0.7630122537933828
+      },
+      "K_frob_spread_frac": 0.0027339469970222964,
+      "predicted_best_scene_schedule": "paired",
+      "predicted_best_medium_schedule": "paired",
+      "predicted_medium_schedule_robust": true,
+      "predicted_no_forced_trade": true,
+      "predicted_fundamental_info_schedule_invariant": true
+    },
+    "tc32_cv5": {
+      "geometry": {
+        "paired": {
+          "kappa": [
+            0.10383364888101225,
+            0.00010965332340466359
+          ],
+          "kappa_max": 0.10383364888101225,
+          "K_frob": 0.1038337067805858,
+          "eff_scene": 0.9892185614658378,
+          "eff_medium": 0.9892185614658378,
+          "medium_crb_tc": 155.96707334055102,
+          "medium_crb_cv": 0.05542221213563954,
+          "scene_logdet_eff": 0.9892185614658378,
+          "reciprocity_abserr": 0.0
+        },
+        "random": {
+          "kappa": [
+            0.10403448228397975,
+            0.0012274608006704534
+          ],
+          "kappa_max": 0.10403448228397975,
+          "K_frob": 0.10404172318888649,
+          "eff_scene": 0.9891753361427302,
+          "eff_medium": 0.9891753361427302,
+          "medium_crb_tc": 155.1945781516499,
+          "medium_crb_cv": 0.055482843467428274,
+          "scene_logdet_eff": 0.9891753361427302,
+          "reciprocity_abserr": 0.0
+        },
+        "ordered": {
+          "kappa": [
+            0.10398808549632997,
+            0.0008394147866081593
+          ],
+          "kappa_max": 0.10398808549632997,
+          "K_frob": 0.10399147341189088,
+          "eff_scene": 0.989185781077017,
+          "eff_medium": 0.989185781077017,
+          "medium_crb_tc": 156.70978123498335,
+          "medium_crb_cv": 0.05550926311580422,
+          "scene_logdet_eff": 0.989185781077017,
+          "reciprocity_abserr": 0.0
+        }
+      },
+      "K_frob": {
+        "paired": 0.1038337067805858,
+        "random": 0.10404172318888649,
+        "ordered": 0.10399147341189088
+      },
+      "K_frob_spread_frac": 0.002001011387024159,
+      "predicted_best_scene_schedule": "paired",
+      "predicted_best_medium_schedule": "paired",
+      "predicted_medium_schedule_robust": true,
+      "predicted_no_forced_trade": true,
+      "predicted_fundamental_info_schedule_invariant": true
+    },
+    "tc32_cv15": {
+      "geometry": {
+        "paired": {
+          "kappa": [
+            0.32909138828570933,
+            0.0011999501143975452
+          ],
+          "kappa_max": 0.32909138828570933,
+          "K_frob": 0.3290935759386569,
+          "eff_scene": 0.8916975742165852,
+          "eff_medium": 0.891697574216586,
+          "medium_crb_tc": 54.44087507224604,
+          "medium_crb_cv": 0.08177145357088836,
+          "scene_logdet_eff": 0.8916975742165852,
+          "reciprocity_abserr": 7.771561172376096e-16
+        },
+        "random": {
+          "kappa": [
+            0.3291831758003074,
+            0.009734070226953707
+          ],
+          "kappa_max": 0.3291831758003074,
+          "K_frob": 0.32932706441038123,
+          "eff_scene": 0.8915539521350297,
+          "eff_medium": 0.8915539521350282,
+          "medium_crb_tc": 54.1351898750161,
+          "medium_crb_cv": 0.08143762568613876,
+          "scene_logdet_eff": 0.8915539521350297,
+          "reciprocity_abserr": 1.5543122344752192e-15
+        },
+        "ordered": {
+          "kappa": [
+            0.32928124389433144,
+            0.007992190578002012
+          ],
+          "kappa_max": 0.32928124389433144,
+          "K_frob": 0.32937822133655603,
+          "eff_scene": 0.8915169130406573,
+          "eff_medium": 0.8915169130406565,
+          "medium_crb_tc": 54.43817157545617,
+          "medium_crb_cv": 0.08191579507413317,
+          "scene_logdet_eff": 0.8915169130406573,
+          "reciprocity_abserr": 7.771561172376096e-16
+        }
+      },
+      "K_frob": {
+        "paired": 0.3290935759386569,
+        "random": 0.32932706441038123,
+        "ordered": 0.32937822133655603
+      },
+      "K_frob_spread_frac": 0.0008644838811012821,
+      "predicted_best_scene_schedule": "paired",
+      "predicted_best_medium_schedule": "paired",
+      "predicted_medium_schedule_robust": true,
+      "predicted_no_forced_trade": true,
+      "predicted_fundamental_info_schedule_invariant": true
+    },
+    "tc32_cv40": {
+      "geometry": {
+        "paired": {
+          "kappa": [
+            0.7203896461422047,
+            0.008154486308147366
+          ],
+          "kappa_max": 0.7203896461422047,
+          "K_frob": 0.7204357972198776,
+          "eff_scene": 0.481006770747705,
+          "eff_medium": 0.4810067707477052,
+          "medium_crb_tc": 37.42981076746255,
+          "medium_crb_cv": 0.20759286928548656,
+          "scene_logdet_eff": 0.481006770747705,
+          "reciprocity_abserr": 2.220446049250313e-16
+        },
+        "random": {
+          "kappa": [
+            0.719870890683539,
+            0.02283994526263514
+          ],
+          "kappa_max": 0.719870890683539,
+          "K_frob": 0.720233130557816,
+          "eff_scene": 0.4815345708201621,
+          "eff_medium": 0.48153457082016193,
+          "medium_crb_tc": 37.351742923037875,
+          "medium_crb_cv": 0.20682220154040268,
+          "scene_logdet_eff": 0.4815345708201621,
+          "reciprocity_abserr": 1.6653345369377348e-16
+        },
+        "ordered": {
+          "kappa": [
+            0.7207705018452055,
+            0.033766279429700036
+          ],
+          "kappa_max": 0.7207705018452055,
+          "K_frob": 0.7215610008562783,
+          "eff_scene": 0.4799420475425165,
+          "eff_medium": 0.47994204754251674,
+          "medium_crb_tc": 37.48634399903512,
+          "medium_crb_cv": 0.2077243716595761,
+          "scene_logdet_eff": 0.4799420475425165,
+          "reciprocity_abserr": 2.220446049250313e-16
+        }
+      },
+      "K_frob": {
+        "paired": 0.7204357972198776,
+        "random": 0.720233130557816,
+        "ordered": 0.7215610008562783
+      },
+      "K_frob_spread_frac": 0.0018423622958098217,
+      "predicted_best_scene_schedule": "paired",
+      "predicted_best_medium_schedule": "paired",
+      "predicted_medium_schedule_robust": true,
+      "predicted_no_forced_trade": true,
+      "predicted_fundamental_info_schedule_invariant": true
+    },
+    "tc64_cv5": {
+      "geometry": {
+        "paired": {
+          "kappa": [
+            0.09898632379363753,
+            9.820893855869023e-05
+          ],
+          "kappa_max": 0.09898632379363753,
+          "K_frob": 0.09898637251245479,
+          "eff_scene": 0.9902016981513303,
+          "eff_medium": 0.9902016981513303,
+          "medium_crb_tc": 413.83746606049147,
+          "medium_crb_cv": 0.054612650783516306,
+          "scene_logdet_eff": 0.9902016981513303,
+          "reciprocity_abserr": 0.0
+        },
+        "random": {
+          "kappa": [
+            0.09918485942132708,
+            0.0009210901501499414
+          ],
+          "kappa_max": 0.09918485942132708,
+          "K_frob": 0.09918913622717519,
+          "eff_scene": 0.9901615236008287,
+          "eff_medium": 0.9901615236008261,
+          "medium_crb_tc": 410.7805687929482,
+          "medium_crb_cv": 0.05464376955505474,
+          "scene_logdet_eff": 0.9901615236008287,
+          "reciprocity_abserr": 2.55351295663786e-15
+        },
+        "ordered": {
+          "kappa": [
+            0.09915226056672873,
+            0.0006449168672751518
+          ],
+          "kappa_max": 0.09915226056672873,
+          "K_frob": 0.09915435791359936,
+          "eff_scene": 0.9901684173957002,
+          "eff_medium": 0.990168417395701,
+          "medium_crb_tc": 418.0836451725619,
+          "medium_crb_cv": 0.05471554683352637,
+          "scene_logdet_eff": 0.9901684173957002,
+          "reciprocity_abserr": 8.881784197001252e-16
+        }
+      },
+      "K_frob": {
+        "paired": 0.09898637251245479,
+        "random": 0.09918913622717519,
+        "ordered": 0.09915435791359936
+      },
+      "K_frob_spread_frac": 0.002045846086732508,
+      "predicted_best_scene_schedule": "paired",
+      "predicted_best_medium_schedule": "paired",
+      "predicted_medium_schedule_robust": true,
+      "predicted_no_forced_trade": true,
+      "predicted_fundamental_info_schedule_invariant": true
+    },
+    "tc64_cv15": {
+      "geometry": {
+        "paired": {
+          "kappa": [
+            0.30727704317866195,
+            0.0007603464891702475
+          ],
+          "kappa_max": 0.30727704317866195,
+          "K_frob": 0.3072779839028577,
+          "eff_scene": 0.9055802951948527,
+          "eff_medium": 0.9055802951948535,
+          "medium_crb_tc": 130.73240641889691,
+          "medium_crb_cv": 0.09340734167339389,
+          "scene_logdet_eff": 0.9055802951948527,
+          "reciprocity_abserr": 7.771561172376096e-16
+        },
+        "random": {
+          "kappa": [
+            0.30783255211453514,
+            0.009108114656047377
+          ],
+          "kappa_max": 0.30783255211453514,
+          "K_frob": 0.3079672675690319,
+          "eff_scene": 0.9051640232557125,
+          "eff_medium": 0.9051640232557141,
+          "medium_crb_tc": 129.93660166613589,
+          "medium_crb_cv": 0.09314282200353667,
+          "scene_logdet_eff": 0.9051640232557125,
+          "reciprocity_abserr": 1.5543122344752192e-15
+        },
+        "ordered": {
+          "kappa": [
+            0.3074332018080821,
+            0.006528248626553331
+          ],
+          "kappa_max": 0.3074332018080821,
+          "K_frob": 0.3075025066631149,
+          "eff_scene": 0.9054462364464162,
+          "eff_medium": 0.9054462364464162,
+          "medium_crb_tc": 130.89287493745448,
+          "medium_crb_cv": 0.09355770524925952,
+          "scene_logdet_eff": 0.9054462364464162,
+          "reciprocity_abserr": 0.0
+        }
+      },
+      "K_frob": {
+        "paired": 0.3072779839028577,
+        "random": 0.3079672675690319,
+        "ordered": 0.3075025066631149
+      },
+      "K_frob_spread_frac": 0.0022409710349251205,
+      "predicted_best_scene_schedule": "paired",
+      "predicted_best_medium_schedule": "paired",
+      "predicted_medium_schedule_robust": true,
+      "predicted_no_forced_trade": true,
+      "predicted_fundamental_info_schedule_invariant": true
+    },
+    "tc64_cv40": {
+      "geometry": {
+        "paired": {
+          "kappa": [
+            0.6614705034821965,
+            0.005812870202059246
+          ],
+          "kappa_max": 0.6614705034821965,
+          "K_frob": 0.661496044158222,
+          "eff_scene": 0.5624377679123839,
+          "eff_medium": 0.5624377679123833,
+          "medium_crb_tc": 89.14511943987905,
+          "medium_crb_cv": 0.23877364498796297,
+          "scene_logdet_eff": 0.5624377679123839,
+          "reciprocity_abserr": 5.551115123125783e-16
+        },
+        "random": {
+          "kappa": [
+            0.6611924590214794,
+            0.0220638273052676
+          ],
+          "kappa_max": 0.6611924590214794,
+          "K_frob": 0.6615604888007047,
+          "eff_scene": 0.5625505421294498,
+          "eff_medium": 0.5625505421294498,
+          "medium_crb_tc": 88.86944142453294,
+          "medium_crb_cv": 0.23806389289049576,
+          "scene_logdet_eff": 0.5625505421294498,
+          "reciprocity_abserr": 0.0
+        },
+        "ordered": {
+          "kappa": [
+            0.6613812326507668,
+            0.026758800636260325
+          ],
+          "kappa_max": 0.6613812326507668,
+          "K_frob": 0.6619223280069488,
+          "eff_scene": 0.5621720426974788,
+          "eff_medium": 0.5621720426974778,
+          "medium_crb_tc": 89.22367544381359,
+          "medium_crb_cv": 0.23891245138992048,
+          "scene_logdet_eff": 0.5621720426974788,
+          "reciprocity_abserr": 9.992007221626409e-16
+        }
+      },
+      "K_frob": {
+        "paired": 0.661496044158222,
+        "random": 0.6615604888007047,
+        "ordered": 0.6619223280069488
+      },
+      "K_frob_spread_frac": 0.0006442645669073115,
+      "predicted_best_scene_schedule": "paired",
+      "predicted_best_medium_schedule": "paired",
+      "predicted_medium_schedule_robust": true,
+      "predicted_no_forced_trade": true,
+      "predicted_fundamental_info_schedule_invariant": true
+    }
+  }
+}

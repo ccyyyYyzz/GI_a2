@@ -1,0 +1,120 @@
+{
+  "meta": {
+    "utc": "2026-07-22 16:45:33Z",
+    "python": "3.11.5",
+    "numpy": "1.24.4",
+    "sec_per_replicate_measured": 1.26,
+    "local_cores": 32
+  },
+  "grid": {
+    "tc": [
+      16.0,
+      32.0,
+      64.0
+    ],
+    "cv": [
+      0.05,
+      0.15,
+      0.4
+    ],
+    "photon": [
+      0.5,
+      1.0,
+      2.0
+    ],
+    "n_cells": 27,
+    "n_rep_per_cell": 5000,
+    "total_replicates": 135000
+  },
+  "cost": {
+    "single_core_hours": 47.2,
+    "local_multiprocess_hours_all_cores": 1.48,
+    "local_cores_physical": 32,
+    "memory_safe_cores": 6,
+    "gb_per_worker": 0.4,
+    "local_multiprocess_hours_memsafe": 7.88,
+    "under_12h_local": true,
+    "recommendation": "LOCAL multiprocess: ~7.9 h on the memory-safe 6 workers (or ~1.5 h if all 32 cores fit in RAM); both << 12 h -> Colab sharding unnecessary but specified below.  Each worker re-imports numpy/scipy (~0.4 GB); this 16.9 GB box overcommits at 32 workers (page-file failure) -- cap with --nproc."
+  },
+  "colab_5route": {
+    "n_routes": 5,
+    "assumed_cores_per_route": 2,
+    "max_route_hours": 5.25,
+    "routes": [
+      {
+        "route": 0,
+        "n_cells": 6,
+        "cells": [
+          "tc16_cv5_ph05",
+          "tc16_cv15_ph20",
+          "tc32_cv5_ph10",
+          "tc32_cv40_ph05",
+          "tc64_cv5_ph20",
+          "tc64_cv40_ph10"
+        ],
+        "replicates": 30000,
+        "est_hours_colab_2core": 5.25
+      },
+      {
+        "route": 1,
+        "n_cells": 6,
+        "cells": [
+          "tc16_cv5_ph10",
+          "tc16_cv40_ph05",
+          "tc32_cv5_ph20",
+          "tc32_cv40_ph10",
+          "tc64_cv15_ph05",
+          "tc64_cv40_ph20"
+        ],
+        "replicates": 30000,
+        "est_hours_colab_2core": 5.25
+      },
+      {
+        "route": 2,
+        "n_cells": 5,
+        "cells": [
+          "tc16_cv5_ph20",
+          "tc16_cv40_ph10",
+          "tc32_cv15_ph05",
+          "tc32_cv40_ph20",
+          "tc64_cv15_ph10"
+        ],
+        "replicates": 25000,
+        "est_hours_colab_2core": 4.375
+      },
+      {
+        "route": 3,
+        "n_cells": 5,
+        "cells": [
+          "tc16_cv15_ph05",
+          "tc16_cv40_ph20",
+          "tc32_cv15_ph10",
+          "tc64_cv5_ph05",
+          "tc64_cv15_ph20"
+        ],
+        "replicates": 25000,
+        "est_hours_colab_2core": 4.375
+      },
+      {
+        "route": 4,
+        "n_cells": 5,
+        "cells": [
+          "tc16_cv15_ph10",
+          "tc32_cv5_ph05",
+          "tc32_cv15_ph20",
+          "tc64_cv5_ph10",
+          "tc64_cv40_ph05"
+        ],
+        "replicates": 25000,
+        "est_hours_colab_2core": 4.375
+      }
+    ]
+  },
+  "confirmatory_run_reference": {
+    "records_per_cell": 1000,
+    "n_arms": 4,
+    "approx_local_hours": 0.3,
+    "note": "separate GO; W-eval per record adds the same Whittle-grid cost"
+  },
+  "discipline": "commit CALIBRATION_TABLE.json BEFORE opening the confirmatory bank; no tuning/regridding/estimator-switch/interval-repair after"
+}
