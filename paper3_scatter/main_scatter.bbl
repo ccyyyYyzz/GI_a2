@@ -1,0 +1,218 @@
+\begin{thebibliography}{10}
+
+\bibitem{duarte2008singlepixel}
+Marco~F. Duarte, Mark~A. Davenport, Dharmpal Takhar, Jason~N. Laska, Ting Sun,
+  Kevin~F. Kelly, and Richard~G. Baraniuk.
+\newblock Single-pixel imaging via compressive sampling.
+\newblock {\em IEEE Signal Processing Magazine}, 25(2):83--91, 2008.
+
+\bibitem{shapiro2008computational}
+Jeffrey~H. Shapiro.
+\newblock Computational ghost imaging.
+\newblock {\em Physical Review A}, 78(6):061802, 2008.
+
+\bibitem{edgar2019principles}
+Matthew~P. Edgar, Graham~M. Gibson, and Miles~J. Padgett.
+\newblock Principles and prospects for single-pixel imaging.
+\newblock {\em Nature Photonics}, 13(1):13--20, 2019.
+
+\bibitem{xiao2022temporal}
+Yin Xiao, Lina Zhou, and Wen Chen.
+\newblock Temporal ghost imaging through complex scattering media.
+\newblock {\em Optics Letters}, 2022.
+\newblock ruling section 1; volume/pages/title VERIFY at submission.
+
+\bibitem{pengchen2023}
+Yang Peng and Wen Chen.
+\newblock Learning-based gain correction with gaussian constraints for ghost
+  imaging through scattering media.
+\newblock {\em Optics Letters}, 2023.
+\newblock ruling section 1; volume/pages/title VERIFY at submission.
+
+\bibitem{zhou2023dual}
+Lina Zhou, Yin Xiao, and Wen Chen.
+\newblock Dual-detector self-correction for ghost imaging through dynamic
+  scattering media.
+\newblock {\em Optics Express}, 2023.
+\newblock ruling section 1; volume/pages/title VERIFY at submission.
+
+\bibitem{pengchen2024apl}
+Yang Peng and Wen Chen.
+\newblock Supervised dynamic scaling-factor model for ghost imaging through
+  dynamic scattering media.
+\newblock {\em Applied Physics Letters}, 2024.
+\newblock ruling section 1 (Peng--Chen APL 2024, the motivating paper);
+  volume/pages/title VERIFY at submission.
+
+\bibitem{hao2025photonlimited}
+Yining Hao, Yang Peng, Tianshun Zhang, and Wen Chen.
+\newblock High-quality photon-limited imaging through dynamic and complex
+  scattering media with a single-photon detector.
+\newblock {\em APL Photonics}, 10(10):106119, 2025.
+
+\bibitem{companion}
+{Companion manuscript (Part~I)}.
+\newblock Identifiability of object and gain class in ghost imaging through
+  dynamic scattering media, 2026.
+\newblock in preparation; title/author block per Part~I (user decision).
+
+\bibitem{louis1982}
+Thomas~A. Louis.
+\newblock Finding the observed information matrix when using the {EM}
+  algorithm.
+\newblock {\em Journal of the Royal Statistical Society: Series B},
+  44(2):226--233, 1982.
+\newblock ruling section 2 (Louis missing-information principle).
+
+\bibitem{vantrees}
+Harry~L. Van~Trees and Kristine~L. Bell.
+\newblock {\em Bayesian Bounds for Parameter Estimation and Nonlinear
+  Filtering/Tracking}.
+\newblock Wiley--IEEE Press, 2007.
+\newblock task-named van Trees reference; edition/DOI VERIFY at submission.
+  Classic van Trees inequality also in Detection, Estimation, and Modulation
+  Theory, Part~I (Wiley, 1968).
+
+\bibitem{tichavsky1998}
+Petr Tichavsk{\'y}, Carlos~H. Muravchik, and Arye Nehorai.
+\newblock Posterior {Cram{\'e}r--Rao} bounds for discrete-time nonlinear
+  filtering.
+\newblock {\em IEEE Transactions on Signal Processing}, 46(5):1386--1396, 1998.
+\newblock ruling section 3 (posterior CRB for nonlinear dynamical systems).
+
+\bibitem{pukelsheim2006}
+Friedrich Pukelsheim.
+\newblock {\em Optimal Design of Experiments}.
+\newblock Classics in Applied Mathematics. SIAM, 2006.
+\newblock task-named optimal-design reference; reprint of 1993 Wiley edition;
+  VERIFY at submission.
+
+\bibitem{dette1997}
+Holger Dette.
+\newblock Designing experiments with respect to standardized optimality
+  criteria.
+\newblock {\em Journal of the Royal Statistical Society: Series B},
+  59(1):97--110, 1997.
+\newblock task-named optimal-design reference; all fields VERIFY at submission.
+
+\bibitem{imhofwong2000}
+Lorens~A. Imhof and Weng~Kee Wong.
+\newblock A graphical method for finding maximin efficiency designs.
+\newblock {\em Biometrics}, 56(1):113--117, 2000.
+\newblock task-named optimal-design reference; all fields VERIFY at submission.
+
+\bibitem{lilee2015}
+Yanjun Li, Kiryung Lee, and Yoram Bresler.
+\newblock Identifiability in blind deconvolution with subspace or sparsity
+  constraints, 2015.
+\newblock ruling section 4; arXiv:1501.06120; title VERIFY at submission.
+
+\bibitem{lingstrohmer2018}
+Shuyang Ling and Thomas Strohmer.
+\newblock Self-calibration and bilinear inverse problems via linear least
+  squares.
+\newblock {\em SIAM Journal on Imaging Sciences}, 2018.
+\newblock ruling section 4 (Ling \& Strohmer, SIIMS 2018); volume/pages VERIFY
+  at submission.
+
+\bibitem{cambareri2019}
+Valerio Cambareri and Laurent Jacques.
+\newblock A non-convex blind calibration method for randomised sensing
+  strategies.
+\newblock {\em Information and Inference}, 2019.
+\newblock ruling section 4 (nonconvex blind gain calibration);
+  volume/pages/year VERIFY at submission.
+
+\bibitem{kechkrahmer2017}
+Michael Kech and Felix Krahmer.
+\newblock Optimal injectivity conditions for bilinear inverse problems with
+  applications to identifiability of deconvolution problems.
+\newblock {\em SIAM Journal on Applied Algebra and Geometry}, 2017.
+\newblock ruling section 4 (Kech \& Krahmer); volume/pages/year VERIFY at
+  submission.
+
+\bibitem{fixsen2000calib}
+D.~J. Fixsen, S.~H. Moseley, and R.~G. Arendt.
+\newblock Calibrating array detectors, 2000.
+\newblock ruling section 5; arXiv:astro-ph/0002260.
+
+\bibitem{arendt2000dither}
+R.~G. Arendt, D.~J. Fixsen, and S.~H. Moseley.
+\newblock Dithering strategies for efficient self-calibration of imaging
+  arrays, 2000.
+\newblock ruling section 5; arXiv:astro-ph/0002258.
+
+\bibitem{uecker2008}
+Martin Uecker, Thorsten Hohage, Kai~Tobias Block, and Jens Frahm.
+\newblock Image reconstruction by regularized nonlinear inversion---joint
+  estimation of coil sensitivities and image content.
+\newblock {\em Magnetic Resonance in Medicine}, 60(3):674--682, 2008.
+\newblock ruling section 5 (parallel-MRI joint estimation).
+
+\bibitem{cidre2015}
+Kevin Smith, Yunpeng Li, Filippo Piccinini, Gabor Csucs, Csaba Balazs,
+  Alessandro Bevilacqua, and Peter Horvath.
+\newblock {CIDRE}: an illumination-correction method for optical microscopy.
+\newblock {\em Nature Methods}, 2015.
+\newblock ruling section 5 (microscopy flat-field); volume/pages VERIFY at
+  submission.
+
+\bibitem{basic2017}
+Tingying Peng, Kurt Thorn, Timm Schroeder, Lichao Wang, Fabian~J. Theis,
+  Carsten Marr, and Nassir Navab.
+\newblock A {BaSiC} tool for background and shading correction of optical
+  microscopy images.
+\newblock {\em Nature Communications}, 8:14836, 2017.
+\newblock ruling section 5 (microscopy flat-field).
+
+\bibitem{pine1988}
+D.~J. Pine, D.~A. Weitz, P.~M. Chaikin, and E.~Herbolzheimer.
+\newblock Diffusing wave spectroscopy.
+\newblock {\em Physical Review Letters}, 60(12):1134--1137, 1988.
+\newblock ruling section 6.
+
+\bibitem{bandyopadhyay2005}
+R.~Bandyopadhyay, A.~S. Gittings, S.~S. Suh, P.~K. Dixon, and D.~J. Durian.
+\newblock Speckle-visibility spectroscopy: A tool to study time-varying
+  dynamics.
+\newblock {\em Review of Scientific Instruments}, 76(9):093110, 2005.
+\newblock ruling section 6.
+
+\bibitem{yuan2005}
+Shuai Yuan, Anna Devor, David~A. Boas, and Andrew~K. Dunn.
+\newblock Determination of optimal exposure time for imaging of blood flow
+  changes with laser speckle contrast imaging.
+\newblock {\em Applied Optics}, 44(10):1823--1830, 2005.
+\newblock ruling section 6 (task-specific exposure optimum near 5 ms).
+
+\bibitem{scirep2023speckle}
+{Author list VERIFY at submission}.
+\newblock Optimal exposure time in laser speckle contrast imaging.
+\newblock {\em Scientific Reports}, 2023.
+\newblock ruling section 6 (best precision near T/tc in [2,10]);
+  authors/volume/pages VERIFY at submission.
+
+\bibitem{hassibi2003}
+Babak Hassibi and Bertrand~M. Hochwald.
+\newblock How much training is needed in multiple-antenna wireless links?
+\newblock {\em IEEE Transactions on Information Theory}, 49(4):951--963, 2003.
+\newblock ruling section 7 (training vs coherence-block tradeoff); DOI VERIFY
+  at submission (ruling links the Caltech record).
+
+\bibitem{qureshi_ng}
+Z.~H. Qureshi and T.~S. Ng.
+\newblock Optimal input design for dynamic system parameter estimation: the
+  {$D_s$}-optimality case.
+\newblock {\em SIAM Journal on Control and Optimization}, 1982.
+\newblock ruling section 8 (Qureshi \& Ng, partial-parameter design);
+  volume/pages/year VERIFY at submission.
+
+\bibitem{mehra1974}
+Raman~K. Mehra.
+\newblock Optimal input signals for parameter estimation in dynamic systems
+  ---survey and new results.
+\newblock {\em IEEE Transactions on Automatic Control}, 19(6):753--768, 1974.
+\newblock ruling section 8 (Mehra optimal-input survey; named, no DOI in
+  ruling); DOI VERIFY at submission.
+
+\end{thebibliography}

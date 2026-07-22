@@ -1,0 +1,402 @@
+% ============================================================================
+% refs.bib  --  Part II (dynamic-scattering GI: information limits & temporal
+%               design).  Seed bibliography.
+%
+% Provenance discipline (follows paper2/refs.bib):
+%   * DOIs / arXiv IDs marked "ruling" are transcribed VERBATIM from the hZ
+%     hyperlinks in docs/ROUND63_GPT_ROUND26_RULING_RAW.md (the NORMATIVE R26
+%     ruling). Author/volume/page metadata for those entries still needs a live
+%     Crossref pass -- fields not taken from the ruling are marked
+%     "VERIFY at submission".
+%   * Entries marked "task-named, not in ruling raw" (van Trees, Dette 1997,
+%     Imhof-Wong 2000, Pukelsheim) were requested by the scaffolding task as
+%     standard optimal-design references. They are seeded with the conventional
+%     records but every field is "VERIFY at submission" until Crossref-checked.
+%   * Field-first SPI anchors (duarte/edgar/shapiro) and the Peng-Chen APL 2024 /
+%     APL-Photonics 2025 entries are reused verbatim from paper2/refs.bib, which
+%     was Crossref-verified 2026-07-18.
+% Do NOT treat any "VERIFY" entry as publication-ready.
+% ============================================================================
+
+% --- companion (Part I) ------------------------------------------------------
+@misc{companion,
+  author = {{Companion manuscript (Part~I)}},
+  title  = {Identifiability of object and gain class in ghost imaging through
+            dynamic scattering media},
+  year   = {2026},
+  note   = {in preparation; title/author block per Part~I (user decision)}
+}
+
+% ============================================================================
+% Field-first SPI / GI anchors (reused from paper2/refs.bib; Crossref-verified)
+% ============================================================================
+@article{duarte2008singlepixel,
+  author  = {Duarte, Marco F. and Davenport, Mark A. and Takhar, Dharmpal and Laska, Jason N. and Sun, Ting and Kelly, Kevin F. and Baraniuk, Richard G.},
+  title   = {Single-pixel imaging via compressive sampling},
+  journal = {IEEE Signal Processing Magazine},
+  volume  = {25},
+  number  = {2},
+  pages   = {83--91},
+  year    = {2008},
+  doi     = {10.1109/MSP.2007.914730}
+}
+
+@article{edgar2019principles,
+  author  = {Edgar, Matthew P. and Gibson, Graham M. and Padgett, Miles J.},
+  title   = {Principles and prospects for single-pixel imaging},
+  journal = {Nature Photonics},
+  volume  = {13},
+  number  = {1},
+  pages   = {13--20},
+  year    = {2019},
+  doi     = {10.1038/s41566-018-0300-7}
+}
+
+@article{shapiro2008computational,
+  author  = {Shapiro, Jeffrey H.},
+  title   = {Computational ghost imaging},
+  journal = {Physical Review A},
+  volume  = {78},
+  number  = {6},
+  pages   = {061802},
+  year    = {2008},
+  doi     = {10.1103/PhysRevA.78.061802}
+}
+
+% ============================================================================
+% Q1 section 1 -- Peng--Chen dynamic-scattering correction line (ruling DOIs)
+% ============================================================================
+@article{xiao2022temporal,
+  author  = {Xiao, Yin and Zhou, Lina and Chen, Wen},
+  title   = {Temporal ghost imaging through complex scattering media},
+  journal = {Optics Letters},
+  year    = {2022},
+  doi     = {10.1364/OL.463897},
+  note    = {ruling section 1; volume/pages/title VERIFY at submission}
+}
+
+@article{pengchen2023,
+  author  = {Peng, Yang and Chen, Wen},
+  title   = {Learning-based gain correction with Gaussian constraints for ghost
+             imaging through scattering media},
+  journal = {Optics Letters},
+  year    = {2023},
+  doi     = {10.1364/OL.499787},
+  note    = {ruling section 1; volume/pages/title VERIFY at submission}
+}
+
+@article{zhou2023dual,
+  author  = {Zhou, Lina and Xiao, Yin and Chen, Wen},
+  title   = {Dual-detector self-correction for ghost imaging through dynamic
+             scattering media},
+  journal = {Optics Express},
+  year    = {2023},
+  doi     = {10.1364/OE.489808},
+  note    = {ruling section 1; volume/pages/title VERIFY at submission}
+}
+
+@article{pengchen2024apl,
+  author  = {Peng, Yang and Chen, Wen},
+  title   = {Supervised dynamic scaling-factor model for ghost imaging through
+             dynamic scattering media},
+  journal = {Applied Physics Letters},
+  year    = {2024},
+  doi     = {10.1063/5.0213138},
+  note    = {ruling section 1 (Peng--Chen APL 2024, the motivating paper);
+             volume/pages/title VERIFY at submission}
+}
+
+@article{hao2025photonlimited,
+  author  = {Hao, Yining and Peng, Yang and Zhang, Tianshun and Chen, Wen},
+  title   = {High-quality photon-limited imaging through dynamic and complex
+             scattering media with a single-photon detector},
+  journal = {APL Photonics},
+  volume  = {10},
+  number  = {10},
+  pages   = {106119},
+  year    = {2025},
+  doi     = {10.1063/5.0293168}
+}
+
+% ============================================================================
+% Q1 section 2 -- O1's abstract identity is classical missing-data theory
+% ============================================================================
+@article{louis1982,
+  author  = {Louis, Thomas A.},
+  title   = {Finding the observed information matrix when using the {EM}
+             algorithm},
+  journal = {Journal of the Royal Statistical Society: Series B},
+  volume  = {44},
+  number  = {2},
+  pages   = {226--233},
+  year    = {1982},
+  doi     = {10.1111/j.2517-6161.1982.tb01203.x},
+  note    = {ruling section 2 (Louis missing-information principle)}
+}
+
+% ============================================================================
+% Q1 section 3 -- O3's universal estimator bound is Bayesian estimation theory
+% ============================================================================
+@article{tichavsky1998,
+  author  = {Tichavsk{\'y}, Petr and Muravchik, Carlos H. and Nehorai, Arye},
+  title   = {Posterior {Cram{\'e}r--Rao} bounds for discrete-time nonlinear
+             filtering},
+  journal = {IEEE Transactions on Signal Processing},
+  volume  = {46},
+  number  = {5},
+  pages   = {1386--1396},
+  year    = {1998},
+  doi     = {10.1109/78.668800},
+  note    = {ruling section 3 (posterior CRB for nonlinear dynamical systems)}
+}
+
+% --- van Trees (task-named, not in ruling raw) ------------------------------
+@book{vantrees,
+  author    = {Van Trees, Harry L. and Bell, Kristine L.},
+  title     = {Bayesian Bounds for Parameter Estimation and Nonlinear
+               Filtering/Tracking},
+  publisher = {Wiley--IEEE Press},
+  year      = {2007},
+  note      = {task-named van Trees reference; edition/DOI VERIFY at submission.
+               Classic van Trees inequality also in Detection, Estimation, and
+               Modulation Theory, Part~I (Wiley, 1968)}
+}
+
+% ============================================================================
+% Q1 section 4 -- Blind gain/object identifiability (ruling DOIs / arXiv IDs)
+% ============================================================================
+@misc{lilee2015,
+  author        = {Li, Yanjun and Lee, Kiryung and Bresler, Yoram},
+  title         = {Identifiability in Blind Deconvolution with Subspace or
+                   Sparsity Constraints},
+  year          = {2015},
+  eprint        = {1501.06120},
+  archivePrefix = {arXiv},
+  note          = {ruling section 4; arXiv:1501.06120; title VERIFY at submission}
+}
+
+@article{lingstrohmer2018,
+  author  = {Ling, Shuyang and Strohmer, Thomas},
+  title   = {Self-Calibration and Bilinear Inverse Problems via Linear Least
+             Squares},
+  journal = {SIAM Journal on Imaging Sciences},
+  year    = {2018},
+  doi     = {10.1137/16M1103634},
+  note    = {ruling section 4 (Ling \& Strohmer, SIIMS 2018);
+             volume/pages VERIFY at submission}
+}
+
+@article{cambareri2019,
+  author  = {Cambareri, Valerio and Jacques, Laurent},
+  title   = {A non-convex blind calibration method for randomised sensing
+             strategies},
+  journal = {Information and Inference},
+  year    = {2019},
+  doi     = {10.1093/imaiai/iay004},
+  note    = {ruling section 4 (nonconvex blind gain calibration);
+             volume/pages/year VERIFY at submission}
+}
+
+@article{kechkrahmer2017,
+  author  = {Kech, Michael and Krahmer, Felix},
+  title   = {Optimal Injectivity Conditions for Bilinear Inverse Problems with
+             Applications to Identifiability of Deconvolution Problems},
+  journal = {SIAM Journal on Applied Algebra and Geometry},
+  year    = {2017},
+  doi     = {10.1137/16M1067469},
+  note    = {ruling section 4 (Kech \& Krahmer); volume/pages/year VERIFY at submission}
+}
+
+% ============================================================================
+% Q1 section 5 -- Self-calibration and temporal coding across imaging (ruling)
+% ============================================================================
+@misc{fixsen2000calib,
+  author        = {Fixsen, D. J. and Moseley, S. H. and Arendt, R. G.},
+  title         = {Calibrating Array Detectors},
+  year          = {2000},
+  eprint        = {astro-ph/0002260},
+  archivePrefix = {arXiv},
+  note          = {ruling section 5; arXiv:astro-ph/0002260}
+}
+
+@misc{arendt2000dither,
+  author        = {Arendt, R. G. and Fixsen, D. J. and Moseley, S. H.},
+  title         = {Dithering Strategies for Efficient Self-Calibration of Imaging
+                   Arrays},
+  year          = {2000},
+  eprint        = {astro-ph/0002258},
+  archivePrefix = {arXiv},
+  note          = {ruling section 5; arXiv:astro-ph/0002258}
+}
+
+@article{uecker2008,
+  author  = {Uecker, Martin and Hohage, Thorsten and Block, Kai Tobias and
+             Frahm, Jens},
+  title   = {Image reconstruction by regularized nonlinear inversion---Joint
+             estimation of coil sensitivities and image content},
+  journal = {Magnetic Resonance in Medicine},
+  volume  = {60},
+  number  = {3},
+  pages   = {674--682},
+  year    = {2008},
+  doi     = {10.1002/mrm.21691},
+  note    = {ruling section 5 (parallel-MRI joint estimation)}
+}
+
+@article{cidre2015,
+  author  = {Smith, Kevin and Li, Yunpeng and Piccinini, Filippo and Csucs, Gabor
+             and Balazs, Csaba and Bevilacqua, Alessandro and Horvath, Peter},
+  title   = {{CIDRE}: an illumination-correction method for optical microscopy},
+  journal = {Nature Methods},
+  year    = {2015},
+  doi     = {10.1038/nmeth.3323},
+  note    = {ruling section 5 (microscopy flat-field); volume/pages VERIFY at submission}
+}
+
+@article{basic2017,
+  author  = {Peng, Tingying and Thorn, Kurt and Schroeder, Timm and Wang, Lichao
+             and Theis, Fabian J. and Marr, Carsten and Navab, Nassir},
+  title   = {A {BaSiC} tool for background and shading correction of optical
+             microscopy images},
+  journal = {Nature Communications},
+  volume  = {8},
+  pages   = {14836},
+  year    = {2017},
+  doi     = {10.1038/ncomms14836},
+  note    = {ruling section 5 (microscopy flat-field)}
+}
+
+% ============================================================================
+% Q1 section 6 -- Speckle decorrelation-time / exposure laws (ruling DOIs)
+% ============================================================================
+@article{pine1988,
+  author  = {Pine, D. J. and Weitz, D. A. and Chaikin, P. M. and Herbolzheimer, E.},
+  title   = {Diffusing wave spectroscopy},
+  journal = {Physical Review Letters},
+  volume  = {60},
+  number  = {12},
+  pages   = {1134--1137},
+  year    = {1988},
+  doi     = {10.1103/PhysRevLett.60.1134},
+  note    = {ruling section 6}
+}
+
+@article{bandyopadhyay2005,
+  author  = {Bandyopadhyay, R. and Gittings, A. S. and Suh, S. S. and
+             Dixon, P. K. and Durian, D. J.},
+  title   = {Speckle-visibility spectroscopy: A tool to study time-varying
+             dynamics},
+  journal = {Review of Scientific Instruments},
+  volume  = {76},
+  number  = {9},
+  pages   = {093110},
+  year    = {2005},
+  doi     = {10.1063/1.2037987},
+  note    = {ruling section 6}
+}
+
+@article{yuan2005,
+  author  = {Yuan, Shuai and Devor, Anna and Boas, David A. and Dunn, Andrew K.},
+  title   = {Determination of optimal exposure time for imaging of blood flow
+             changes with laser speckle contrast imaging},
+  journal = {Applied Optics},
+  volume  = {44},
+  number  = {10},
+  pages   = {1823--1830},
+  year    = {2005},
+  doi     = {10.1364/AO.44.001823},
+  note    = {ruling section 6 (task-specific exposure optimum near 5 ms)}
+}
+
+@article{scirep2023speckle,
+  author  = {{Author list VERIFY at submission}},
+  title   = {Optimal exposure time in laser speckle contrast imaging},
+  journal = {Scientific Reports},
+  year    = {2023},
+  doi     = {10.1038/s41598-023-45303-z},
+  note    = {ruling section 6 (best precision near T/tc in [2,10]);
+             authors/volume/pages VERIFY at submission}
+}
+
+% ============================================================================
+% Q1 section 7 -- Fading-channel coherence/training tradeoffs (ruling)
+% ============================================================================
+@article{hassibi2003,
+  author  = {Hassibi, Babak and Hochwald, Bertrand M.},
+  title   = {How much training is needed in multiple-antenna wireless links?},
+  journal = {IEEE Transactions on Information Theory},
+  volume  = {49},
+  number  = {4},
+  pages   = {951--963},
+  year    = {2003},
+  doi     = {10.1109/TIT.2003.809594},
+  note    = {ruling section 7 (training vs coherence-block tradeoff); DOI VERIFY
+             at submission (ruling links the Caltech record)}
+}
+
+% ============================================================================
+% Q1 section 8 -- Classical optimal input / experimental design
+% ============================================================================
+@article{qureshi_ng,
+  author  = {Qureshi, Z. H. and Ng, T. S.},
+  title   = {Optimal input design for dynamic system parameter estimation:
+             the {$D_s$}-optimality case},
+  journal = {SIAM Journal on Control and Optimization},
+  year    = {1982},
+  doi     = {10.1137/0320052},
+  note    = {ruling section 8 (Qureshi \& Ng, partial-parameter design);
+             volume/pages/year VERIFY at submission}
+}
+
+@article{mehra1974,
+  author  = {Mehra, Raman K.},
+  title   = {Optimal input signals for parameter estimation in dynamic systems
+             ---survey and new results},
+  journal = {IEEE Transactions on Automatic Control},
+  volume  = {19},
+  number  = {6},
+  pages   = {753--768},
+  year    = {1974},
+  doi     = {10.1109/TAC.1974.1100701},
+  note    = {ruling section 8 (Mehra optimal-input survey; named, no DOI in ruling);
+             DOI VERIFY at submission}
+}
+
+% --- Dette 1997 (task-named, not in ruling raw) -----------------------------
+@article{dette1997,
+  author  = {Dette, Holger},
+  title   = {Designing experiments with respect to standardized optimality
+             criteria},
+  journal = {Journal of the Royal Statistical Society: Series B},
+  volume  = {59},
+  number  = {1},
+  pages   = {97--110},
+  year    = {1997},
+  doi     = {10.1111/1467-9868.00056},
+  note    = {task-named optimal-design reference; all fields VERIFY at submission}
+}
+
+% --- Imhof--Wong 2000 (task-named, not in ruling raw) -----------------------
+@article{imhofwong2000,
+  author  = {Imhof, Lorens A. and Wong, Weng Kee},
+  title   = {A graphical method for finding maximin efficiency designs},
+  journal = {Biometrics},
+  volume  = {56},
+  number  = {1},
+  pages   = {113--117},
+  year    = {2000},
+  doi     = {10.1111/j.0006-341X.2000.00113.x},
+  note    = {task-named optimal-design reference; all fields VERIFY at submission}
+}
+
+% --- Pukelsheim (task-named, not in ruling raw) -----------------------------
+@book{pukelsheim2006,
+  author    = {Pukelsheim, Friedrich},
+  title     = {Optimal Design of Experiments},
+  publisher = {SIAM},
+  series    = {Classics in Applied Mathematics},
+  year      = {2006},
+  doi       = {10.1137/1.9780898719109},
+  note      = {task-named optimal-design reference; reprint of 1993 Wiley edition;
+               VERIFY at submission}
+}

@@ -1,0 +1,629 @@
+% =============================================================================
+% PAPER 3 (Part II) -- Information limits and temporal design for ghost imaging
+% through dynamic scattering media.
+%
+% Companion to Part I (the existing identifiability manuscript). Scaffolded per
+% the R26 ruling, docs/ROUND63_GPT_ROUND26_RULING_RAW.md, which is NORMATIVE.
+% Spine follows ruling section 24 (eight sections). Provenance of every block
+% (verbatim / TODO / open-lemma) is recorded in NOTES.md.
+%
+% -----------------------------------------------------------------------------
+% FENCE -- THE SEVEN CLAIMS THIS PROGRAM MUST NOT MAKE (ruling section 23).
+% Future editors: do NOT let any of the following creep into the manuscript.
+%   1. No universal image-quality bound from Fisher information alone.
+%   2. No claim that a neural network is close to the ceiling without measuring
+%      its gap to the bound.
+%   3. No universal two-dimensional temporal ridge.
+%   4. No claim that temporal randomization is always optimal.
+%   5. No claim that the scalar gain model describes arbitrary dynamic turbid
+%      media.
+%   6. No claim that identifiability thresholds imply statistical efficiency.
+%   7. No claim that an information-optimal schedule is automatically
+%      PSNR-optimal under nonlinear regularization.
+% The clean hierarchy that replaces them (ruling section 23):
+%   physical scalar-gain hypothesis -> identifiability -> observed information
+%     -> Bayes risk bound -> temporal design.  Each arrow requires assumptions;
+%   none may be skipped.
+% -----------------------------------------------------------------------------
+
+% Single-column article (not paper2's twocolumn): the O3/O4 matrix displays are
+% too wide for a column. All other conventions (macros, amsthm, unsrt bib, \SPH
+% placeholders) follow paper2/main_m1.tex. See NOTES.md.
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,bm}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{placeins}
+
+\newcommand{\SPH}[1]{\textcolor{red}{[#1]}}
+\newcommand{\TODO}[1]{\textcolor{blue}{[TODO: #1]}}
+\newcommand{\Cov}{\operatorname{Cov}}
+\newcommand{\diag}{\operatorname{diag}}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\E}{\mathbb{E}}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}{Corollary}
+\newtheorem{proposition}{Proposition}
+\newtheorem{conjecture}{Conjecture}
+\newtheorem{hypothesis}{Hypothesis}
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+
+\title{Information limits and temporal design for ghost imaging through
+dynamic scattering media}
+\author{\SPH{author block --- user decision}}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Ghost imaging through a dynamic scattering medium replaces a fixed forward
+operator with a time-varying gain, and correcting for that gain is the central
+obstacle to quantitative reconstruction. We derive an exact
+missing-information identity showing that a hidden multiplicative gain path
+removes precisely the conditional covariance of the complete object score
+given the bucket record. In the Poisson bucket channel this loss specializes to
+the posterior covariance of a hidden gain-weighted illumination vector, which
+yields an estimator-independent Bayes-risk ceiling on any correction --- neural
+or otherwise --- under the declared gain model and prior. A Schur-complement
+analysis then characterizes the information-optimal temporal schedules:
+chopping, interleaving, and randomization help exactly when they make the
+object score orthogonal, in the noise metric, to the admitted gain-drift
+modes. All statements are conditioned on a stated scalar-gain hypothesis and
+its physical validity boundary; a resource-conditioned temporal operating
+surface is left as a conditional program rather than a universal claim.
+\end{abstract}
+
+% =============================================================================
+\section{Introduction}
+\label{sec:intro}
+Single-pixel and computational ghost imaging (GI) reconstruct a scene from the
+responses of one bucket detector to a sequence of structured illumination
+patterns~\cite{duarte2008singlepixel,shapiro2008computational,edgar2019principles}.
+When the light passes through a dynamic scattering medium, the effective
+forward operator acquires a time-varying gain, and a substantial experimental
+line corrects for that
+gain~\cite{xiao2022temporal,pengchen2023,zhou2023dual,pengchen2024apl,hao2025photonlimited}.
+That literature establishes methods and experiments; it does not establish an
+exact observed-versus-complete Fisher decomposition, an estimator-independent
+Bayes-risk ceiling, or an information-optimal temporal schedule under
+correlated gain. Those are the residual questions addressed here.
+
+This manuscript is the information-and-design companion to
+Part~I~\cite{companion}, which asks when the object and gain class can be
+separated at all. Part~I settles identifiability; the present paper asks, once
+separation is possible, how much object information survives hidden gain, what
+estimator-independent risk floor follows, and how patterns should be ordered in
+time. The two are companion questions, not sections of one paper, and are not
+merged. The argument follows a single hierarchy in which each arrow requires
+its own assumptions and none may be skipped:
+\begin{equation*}
+\text{scalar-gain hypothesis}
+\rightarrow \text{identifiability}
+\rightarrow \text{observed information}
+\rightarrow \text{Bayes risk bound}
+\rightarrow \text{temporal design}.
+\end{equation*}
+
+% =============================================================================
+\section{Physical hypothesis MG and channel model}
+\label{sec:mg}
+The entire program rests on a physical hypothesis: that the dynamic medium acts,
+on the illuminated object subspace, as a single scalar multiplier per frame plus
+a controlled residual. This section states the hypothesis, its sufficient
+physical conditions, and the regimes in which it breaks.
+
+\begin{hypothesis}[MG --- scalar multiplicative gain]
+\label{hyp:mg}
+Write the dynamic medium's intensity-transfer functional at time $t$ as
+$\mathcal K_t$. The scalar multiplicative model is a valid approximation on the
+experiment's illuminated object subspace $\mathcal S$ only if there exist a
+fixed functional $\mathcal K_0$, a positive scalar $a(t)$, and a small residual
+$E_t$ such that
+\begin{equation}
+\mathcal K_t|_{\mathcal S}
+= a(t)\,\mathcal K_0|_{\mathcal S} + E_t,
+\qquad
+\|E_t z\| \le \varepsilon\, a(t)\,\|\mathcal K_0 z\|
+\quad \forall z \in \mathcal S.
+\tag{MG}\label{eq:mg}
+\end{equation}
+After frame integration, $a_n$ is either the quasi-static gain or the properly
+weighted frame average.
+\end{hypothesis}
+
+Plausible sufficient physical conditions for Hypothesis~\ref{hyp:mg} are:
+\begin{enumerate}
+\item the bucket collects enough output speckles/modes that temporal medium
+variation mainly changes total throughput rather than the normalized spatial
+transfer;
+\item the object and medium are static enough within a pattern exposure for a
+scalar frame average to be meaningful;
+\item the pattern does not perturb the medium;
+\item incoherent/intensity-linear propagation is an adequate description, or
+coherent cross terms average out at the bucket;
+\item additive scattered background is separately modeled;
+\item the same collection aperture, polarization, and wavelength distribution
+apply across patterns.
+\end{enumerate}
+
+The scalar model fails when:
+\begin{itemize}
+\item the dynamic medium changes the spatial transmission matrix across object
+coordinates;
+\item only a few speckles are collected, producing pattern-dependent
+non-Gaussian fluctuations;
+\item coherent bucket integration retains interference cross terms that depend
+on the displayed pattern;
+\item the medium evolves substantially within a frame and cannot be represented
+by one scalar average;
+\item object motion and medium motion couple to the pattern order;
+\item polarization, wavelength, or path-length composition changes with time;
+\item multiple scattering creates an additive or convolutive component rather
+than common multiplicative throughput.
+\end{itemize}
+
+\begin{remark}[Scope of the scalar model]
+\label{rem:mg-scope}
+In the broken regimes the correct latent object is a vector/matrix-valued
+transfer process. The general missing-information identity of
+Section~\ref{sec:o1} survives, but the low-dimensional correction theory and
+the Poisson hidden-exposure corollary of Section~\ref{sec:o1p} do not. A second
+risk is gauge singularity: in a non-identifiable square design both complete and
+observed information can be singular. The identity remains true but cannot
+manufacture identifiability, so Part~I's thresholds~\cite{companion} must be
+assumed before any inverse information or Bayes risk is interpreted.
+\end{remark}
+
+% =============================================================================
+\section{The exact gain-path missing-information theorem}
+\label{sec:o1}
+Let $X$ denote the object parameter, $L$ the latent gain path, and $Y$ the
+observed bucket record. Assume: (1)~$p(l)$ does not depend on $x$;
+(2)~$p(y,l\mid x)=p(l)\,p(y\mid x,l)$ is dominated and differentiable in $x$;
+(3)~differentiation may pass under the integral; (4)~the complete score is
+square-integrable. Define the complete object score
+\begin{equation*}
+U_x(Y,L) = \nabla_x \log p(Y,L\mid x) = \nabla_x \log p(Y\mid x,L).
+\end{equation*}
+
+\begin{theorem}[O1 --- scattering missing-information identity]
+\label{thm:o1}
+The observed score is
+\begin{equation}
+\nabla_x \log p(Y\mid x)
+= \E\{ U_x(Y,L) \mid Y, x \}.
+\tag{O1.1}\label{eq:o1-obs}
+\end{equation}
+The complete and observed Fisher matrices satisfy
+\begin{equation}
+I_Y(x) = I_{Y,L}(x) - \E_Y\!\left[ \Cov\{ U_x(Y,L) \mid Y, x \} \right].
+\tag{O1.2}\label{eq:o1-fisher}
+\end{equation}
+The missing term is positive semidefinite. It vanishes if and only if the
+complete object score is measurable from the observed record.
+\end{theorem}
+
+\begin{proof}
+Differentiate the marginal likelihood:
+\begin{equation*}
+\nabla_x p(y\mid x)
+= \int \nabla_x p(y,l\mid x)\, dl
+= \int p(y,l\mid x)\, U_x(y,l)\, dl.
+\end{equation*}
+Division by $p(y\mid x)$ gives~\eqref{eq:o1-obs}. Scores have mean zero, so the
+law of total covariance gives
+\begin{equation*}
+\Cov(U_x) = \Cov\{ \E(U_x\mid Y) \} + \E\{ \Cov(U_x\mid Y) \}.
+\end{equation*}
+The first covariance is the observed Fisher matrix and the left side is the
+complete Fisher matrix, proving~\eqref{eq:o1-fisher}.
+\end{proof}
+
+This proof is classical Louis theory~\cite{louis1982}. The following
+programmable-GI specialization is the important part.
+
+% =============================================================================
+\section{Poisson hidden-exposure corollary and Gaussian counterpart}
+\label{sec:o1p}
+\subsection{Exact Poisson bucket corollary}
+\label{sec:o1p-poisson}
+Let the rows of $M\in\mathbb R_+^{N\times K}$ be $m_n^\top$, let
+\begin{equation*}
+s = Mx, \qquad s_n > 0, \qquad a_n = e^{l_n} > 0,
+\end{equation*}
+and conditionally on the entire correlated gain vector $a$, let
+$Y_n\mid a,x \sim \operatorname{Poisson}(a_n s_n)$ independently across frames.
+The prior on $a$ may have arbitrary temporal correlation and need not be
+Gaussian. The complete score is
+\begin{equation}
+U_x = M^\top D_s^{-1} Y - M^\top a.
+\tag{O1.3}\label{eq:o1p-score}
+\end{equation}
+Conditionally on $a$,
+$I_{Y\mid a}(x) = M^\top \diag(a_n/s_n)\, M$.
+
+\begin{corollary}[O1-P --- hidden exposure-vector identity]
+\label{cor:o1p}
+Under the conditionally Poisson multiplicative-gain model,
+\begin{equation}
+I_Y(x)
+= M^\top \diag\!\left( \frac{\E a_n}{s_n} \right) M
+- M^\top \E_Y\{ \Cov(a\mid Y,x) \} M.
+\tag{O1.4}\label{eq:o1p-fisher}
+\end{equation}
+\end{corollary}
+
+\begin{proof}
+Average the conditional Fisher matrix for the complete-information term. Given
+$Y$, the first term of~\eqref{eq:o1p-score} is fixed, hence
+$\Cov(U_x\mid Y,x) = M^\top \Cov(a\mid Y,x)\, M$. Insert this
+into~\eqref{eq:o1-fisher}.
+\end{proof}
+
+\paragraph{What plays the role of live time.}
+For the dead-time channel of Part~I's dead-time line, hidden active time is the
+latent exposure to the rate parameter. Here the corresponding object is
+\begin{equation}
+G_M(a) = M^\top a = \sum_{n=1}^N a_n m_n,
+\tag{O1.5}\label{eq:o1p-exposure}
+\end{equation}
+the \emph{gain-weighted illumination/exposure vector}. The information loss is
+exactly the posterior covariance of this hidden exposure vector,
+\begin{equation*}
+I_{\mathrm{missing}} = \E_Y \Cov\{ G_M(a)\mid Y,x \}.
+\end{equation*}
+This is the cleanest bridge from Part~I's live-time identity to
+dynamic-scattering GI. Three consequences are immediate:
+\begin{enumerate}
+\item temporal correlation enters through the full posterior covariance of $a$,
+not through one scalar variance;
+\item pattern ordering matters because it rotates gain uncertainty through
+$M^\top(\cdot)M$;
+\item a second monitor detector or other gain side information can only reduce
+the missing term by conditioning more strongly.
+\end{enumerate}
+
+\subsection{Gaussian readout corollary}
+\label{sec:o1p-gauss}
+For analog bucket data $Y\mid a,x \sim \mathcal N(D_a Mx, R)$ with $R\succ0$, the
+complete score and information are
+\begin{equation*}
+U_x = M^\top D_a R^{-1}(Y - D_a Mx),
+\qquad
+I_{Y,a}(x) = \E_a[\, M^\top D_a R^{-1} D_a M \,].
+\end{equation*}
+Identity~\eqref{eq:o1-fisher} remains exact, but the missing term is
+\begin{equation*}
+\E_Y \Cov\!\left[ M^\top D_a R^{-1}(Y - D_a Mx) \mid Y,x \right],
+\end{equation*}
+not merely $M^\top \Cov(a\mid Y)\, M$. The unusually clean hidden-exposure
+formula~\eqref{eq:o1p-fisher} is therefore a property of the conditionally
+Poisson multiplicative channel, not a universal gain law.
+
+% =============================================================================
+\section{Universal correction ceiling via van Trees}
+\label{sec:o3}
+\subsection{Estimator-independent Bayesian bound}
+\label{sec:o3-bound}
+Let the object have differentiable prior $\pi(x)$, with prior information
+$I_\pi = \E_\pi[\nabla\log\pi(X)\,\nabla\log\pi(X)^\top]$. Under the usual van
+Trees boundary conditions~\cite{vantrees,tichavsky1998}, every estimator
+$\widehat x(Y)$ satisfies
+\begin{equation}
+\E[(\widehat x - X)(\widehat x - X)^\top]
+\succeq \left[ I_\pi + \E_X I_Y(X) \right]^{-1}.
+\tag{O3.1}\label{eq:o3-vantrees}
+\end{equation}
+Combining with Theorem~\ref{thm:o1} gives
+\begin{equation}
+\E[(\widehat x - X)(\widehat x - X)^\top]
+\succeq \left[ I_\pi + \E I_{Y,L}(X) - \E\Cov(U_X\mid Y,X) \right]^{-1}.
+\tag{O3.2}\label{eq:o3-combined}
+\end{equation}
+For a task matrix $W\succeq0$,
+\begin{equation}
+\E\| W^{1/2}(\widehat x - X) \|_2^2
+\ge \tr\!\left\{ W\,[ I_\pi + \E I_Y(X) ]^{-1} \right\}.
+\tag{O3.3}\label{eq:o3-task}
+\end{equation}
+This covers a U-Net, an untrained network, a joint MAP estimator, or any other
+estimator that receives the same bucket record and side information.
+
+\begin{remark}[What may be claimed]
+\label{rem:o3-may}
+Under the declared gain prior and observation model, no estimator using the same
+measurements can achieve Bayes MSE below~\eqref{eq:o3-task}.
+\end{remark}
+
+\begin{remark}[What may not be claimed]
+\label{rem:o3-maynot}
+The following are outside the scope of~\eqref{eq:o3-task}:
+\begin{itemize}
+\item the bound does not show that a particular network is close to optimal;
+\item it does not directly bound PSNR, SSIM, visibility, or CNR without an
+explicit transformation/loss argument;
+\item if a network receives additional calibration data, reference-detector
+data, or a mismatched training distribution, those must be included in the
+experiment and prior;
+\item a lower bound alone does not prove that ``more training is pointless'';
+that conclusion requires the achieved risk to be close to the bound.
+\end{itemize}
+\end{remark}
+
+\subsection{Connection to Part~I's static-correction ceiling}
+\label{sec:o3-vbl}
+Use the small-log-gain linearization
+\begin{equation*}
+a \simeq \mathbf 1 + \ell,
+\qquad
+Y = s + D_s \ell + \epsilon,
+\qquad
+s = Mx,
+\end{equation*}
+with $\ell \sim \mathcal N(0, C_\ell)$ and $\epsilon \sim \mathcal N(0, R)$.
+Suppose a static correction removes a declared drift subspace with projector
+$P$. The residual gain is $\ell_\perp = (I-P)\ell$ and
+$C_\perp = (I-P)C_\ell(I-P)^\top$. The marginalized model is
+\begin{equation}
+Y\mid x \sim \mathcal N(s, \Sigma_x),
+\qquad
+\Sigma_x = R + D_s C_\perp D_s.
+\tag{O3.4}\label{eq:o3-marg}
+\end{equation}
+Its exact Gaussian Fisher matrix is
+\begin{equation}
+[I_Y]_{jk}
+= (\partial_j s)^\top \Sigma_x^{-1} (\partial_k s)
++ \tfrac12 \tr\!\left( \Sigma_x^{-1} \partial_j\Sigma_x\, \Sigma_x^{-1}
+\partial_k\Sigma_x \right).
+\tag{O3.5}\label{eq:o3-gaussfisher}
+\end{equation}
+If $C_\perp = v\bar C$ and $v\to0$, the covariance-derivative term is $O(v^2)$,
+while
+\begin{equation}
+I_Y = M^\top R^{-1} M
+- v\, M^\top R^{-1} D_s \bar C D_s R^{-1} M
++ O(v^2).
+\tag{O3.6}\label{eq:o3-vexpand}
+\end{equation}
+
+\begin{remark}[The $vB_L$ term --- derivation TODO]
+\label{rem:o3-todo}
+A scalarized risk or relative-MSE expansion of~\eqref{eq:o3-vexpand} yields a
+term of the form $v B_L$, so Part~I's static-correction ceiling can be
+interpreted as the first-order scalarization of the exact
+missing-information/Bayes-risk architecture --- but only under the small-gain
+Gaussian model, the declared correction projector, and the chosen task
+scalarization. The ruling sketches this connection but does not carry out the
+scalarization. \TODO{derive the $vB_L$ term explicitly: fix the task
+scalarization $W$, expand $\tr\{W\,[I_\pi+\E I_Y]^{-1}\}$
+from~\eqref{eq:o3-vexpand} to first order in $v$, and identify $B_L$ with
+Part~I's static-correction coefficient. This is a theorem path, not an
+automatic identity between manuscripts.}
+\end{remark}
+
+% =============================================================================
+\section{Nuisance-orthogonal temporal design}
+\label{sec:o4}
+\subsection{Linearized drift model}
+\label{sec:o4-model}
+Let the gain path be represented locally by $\ell = H\beta + r$, where the
+columns of $H\in\mathbb R^{N\times p}$ are declared low-frequency or OU/KL drift
+modes, $\beta$ has prior precision $\Lambda_\beta$, and $r$ is residual gain
+noise. At $\beta=0$, use the local Gaussian model
+\begin{equation}
+y = M_\pi x + D_{s_\pi} H\beta + \epsilon,
+\qquad
+s_\pi = M_\pi x,
+\qquad
+\epsilon \sim \mathcal N(0,R),
+\tag{O4.1}\label{eq:o4-model}
+\end{equation}
+where $\pi$ denotes the temporal order/schedule of the programmable patterns.
+The joint information matrix for $(x,\beta)$ is
+\begin{equation*}
+\mathcal I(\pi) =
+\begin{bmatrix}
+I_{xx} & I_{x\beta} \\
+I_{\beta x} & I_{\beta\beta}
+\end{bmatrix},
+\end{equation*}
+with
+\begin{equation*}
+I_{xx} = M_\pi^\top R^{-1} M_\pi,
+\quad
+I_{x\beta} = M_\pi^\top R^{-1} D_{s_\pi} H,
+\quad
+I_{\beta\beta} = H^\top D_{s_\pi} R^{-1} D_{s_\pi} H + \Lambda_\beta.
+\end{equation*}
+The efficient/Bayesian information for the object after treating drift as
+nuisance is the Schur complement
+\begin{equation}
+I_{x\mid\mathrm{gain}}(\pi)
+= I_{xx}(\pi) - I_{x\beta}(\pi)\, I_{\beta\beta}(\pi)^{-1}\, I_{\beta x}(\pi).
+\tag{O4.2}\label{eq:o4-schur}
+\end{equation}
+
+\subsection{The nuisance-orthogonal schedule}
+\label{sec:o4-theorem}
+\begin{theorem}[O4-A --- nuisance-orthogonal schedule]
+\label{thm:o4a}
+Assume $I_{\beta\beta}\succ0$. For schedules having the same oracle object
+information $I_{xx}$,
+\begin{equation*}
+I_{x\mid\mathrm{gain}} \preceq I_{xx},
+\end{equation*}
+with equality if and only if
+\begin{equation}
+M_\pi^\top R^{-1} D_{M_\pi x} H = 0.
+\tag{O4.3}\label{eq:o4-orth}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+The subtracted term in~\eqref{eq:o4-schur} is of the form $AA^\top$ with
+$A = I_{x\beta} I_{\beta\beta}^{-1/2}$, and is therefore positive semidefinite.
+It vanishes exactly when $I_{x\beta}=0$, proving the result.
+\end{proof}
+
+\paragraph{Exact moment conditions.}
+The optimal temporal schedule does not merely make gains ``stationary.'' It
+makes the object score orthogonal, in the noise metric, to every admitted drift
+mode. Expanded by columns $h_j$ of $H$, the exact moment conditions are, for
+diagonal $R = \diag(\sigma_n^2)$,
+\begin{equation}
+\sum_{n=1}^N h_j(t_n)\, \frac{s_n}{\sigma_n^2}\, m_n = 0,
+\qquad j = 1,\ldots,p.
+\tag{O4.4}\label{eq:o4-moment}
+\end{equation}
+
+\paragraph{Meaning: chopping, interleaving, randomization.}
+This is the theorem behind chopping, interleaving, and randomization:
+\begin{itemize}
+\item \emph{chopping/paired designs} are exact when their signed effective rows
+annihilate the low-order temporal moments in~\eqref{eq:o4-moment};
+\item \emph{interleaving} reduces the correlation between object-carrier
+directions and low-frequency gain modes;
+\item \emph{random permutation} makes the cross block mean-zero under centered
+exchangeable rows and gives concentration around zero.
+\end{itemize}
+The first two are exact only when the pattern/carrier moment equations actually
+hold. ``Alternating is always optimal'' is false.
+
+% =============================================================================
+\section{Randomization corollary and flip-boundary rederivation}
+\label{sec:o4-rand}
+\subsection{Randomization proposition and its obstacle}
+\label{sec:o4-randprop}
+\begin{proposition}[Randomization concentration]
+\label{prop:rand}
+Under bounded centered carrier vectors and a uniformly random permutation,
+standard matrix concentration bounds
+\begin{equation*}
+\| I_{x\beta} \|_{\mathrm{op}}
+= O_{\mathbb P}\!\left( B\sqrt{ \frac{\log((K+p)/\delta)}{N} } \right),
+\end{equation*}
+which in turn bounds the Schur-complement loss by
+\begin{equation*}
+\| I_{xx} - I_{x\mid\mathrm{gain}} \|_{\mathrm{op}}
+\le \frac{ \| I_{x\beta} \|_{\mathrm{op}}^2 }{ \lambda_{\min}(I_{\beta\beta}) }.
+\end{equation*}
+\end{proposition}
+
+\begin{remark}[Named obstacle --- open lemma]
+\label{rem:rand-obstacle}
+Proposition~\ref{prop:rand} is a theorem only under explicitly bounded,
+centered, permutation-sampling assumptions. It is \emph{not} yet a theorem for
+arbitrary nonnegative GI patterns, because $s_n = m_n^\top x$ is scene-dependent
+and can destroy centering. The named obstacle is the product $s_n m_n$: temporal
+randomization randomizes a scene-dependent carrier, not a fixed zero-mean row
+sequence. \emph{Closing this lemma requires the stationary-carrier hypothesis of
+the companion Part~I}~\cite{companion}; that hypothesis is exactly the condition
+needed to complete the proof. This remark must remain until the lemma is closed.
+\end{remark}
+
+\subsection{Relation to the existing flip boundary}
+\label{sec:o4-flip}
+The paired schedule can spend measurements/references to reduce $I_{x\beta}$; a
+randomized schedule preserves more distinct object rows but only suppresses the
+cross block statistically. The correct flip criterion is therefore equality of a
+task criterion $\Phi$ applied to the two Schur complements,
+\begin{equation}
+\Phi\{ I_{x\mid\mathrm{gain}}^{\mathrm{pair}} \}
+= \Phi\{ I_{x\mid\mathrm{gain}}^{\mathrm{rand}} \},
+\tag{O4.5}\label{eq:o4-flip}
+\end{equation}
+under the same total-time and photon accounting. Part~I's existing $\rho^*$ flip
+may be a closed-form instance of this equality; it should be rederived
+from~\eqref{eq:o4-schur}, not merely re-described as a heuristic schedule
+boundary. The measure-valued/KKT extension is then classical optimal
+design~\cite{pukelsheim2006,dette1997,imhofwong2000} applied to atoms that carry
+both a spatial pattern and a temporal slot. The novel content is the
+correlated-gain information atom and the nuisance-orthogonality geometry.
+
+% =============================================================================
+\section{A model-specific temporal operating surface}
+\label{sec:o2}
+This section is a deliberate stub. The R26 ruling rejects a universal two-axis
+``temporal ridge'' and retains only a conditional program: a decorrelation-time
+ratio alone does not create an interior optimum, because gain averaging over a
+frame is monotone and produces no interior extremum. An operating surface
+becomes well posed only after a competing mechanism and a full resource budget
+are fixed --- finite total acquisition time, read noise or switching overhead,
+per-frame photon budget, pattern rank/identifiability, and the exact
+within-frame gain functional. Accordingly we state the operating map as a
+future, conditional target and make no ridge claim here.
+
+\begin{conjecture}[O2 --- resource-conditioned operating surface; FUTURE / conditional]
+\label{conj:o2}
+Fix a specified OU-gain process, a fixed total acquisition time, and a
+read-noise-plus-shot-noise GI model. Then a matched temporal operating surface
+exists on a slice of the resource parameters
+\begin{equation*}
+r = \frac{T_f}{t_c},
+\quad
+\eta = \lambda t_c,
+\quad
+R_{\mathrm{tot}} = \frac{T_{\mathrm{total}}}{t_c},
+\quad
+\omega = \frac{t_{\mathrm{switch}}}{t_c},
+\quad
+N/K,
+\end{equation*}
+together with a read-noise-to-shot-noise ratio. Any ridge, its constant, and
+even its existence are model-dependent and must be derived only after these
+preconditions are fixed. The named obstacle is the coupled growth/decline of
+pattern rank, gain posterior uncertainty, and per-frame photon information:
+there is no scalar renewal reduction analogous to dead time. This is a
+conjecture, not a theorem, and it must not enter the title or the abstract until
+a concrete resource-conditioned law is derived.
+\end{conjecture}
+
+% =============================================================================
+\section{Reach: gain drift plus dead-time counting}
+\label{sec:o5}
+Let the complete latent record contain the gain path, photon arrivals, and
+detector state. Conditional-score operators compose through nested observation
+channels by the tower property, so the controlled-score Gramian architecture
+survives. What does \emph{not} survive is a scalar product law. If a frame's
+incident rate is $a_n s_n$ and the counter response is nonlinear, the score
+depends on
+\begin{equation*}
+\frac{\partial}{\partial x} \log p_{\mathrm{count}}(Y_n\mid a_n s_n),
+\end{equation*}
+so the posterior uncertainty of $a_n$ is weighted by the derivative and
+curvature of the dead-time count law. High-gain states are preferentially
+compressed or saturated. Consequently:
+\begin{itemize}
+\item gain uncertainty and dead-time loss are coupled;
+\item temporal carriers are clipped most strongly exactly when $a_n$ is large;
+\item a correction trained for an analog linear bucket may become biased under
+photon-counting saturation;
+\item the best temporal schedule may shift because extreme-gain frames carry
+less marginal object information.
+\end{itemize}
+The exact O1 identity~\eqref{eq:o1-fisher} still holds if the complete score
+includes both hidden mechanisms. The first composite treatment should derive one
+explicit Poisson-renewal specialization; it must \textbf{not} claim a
+mechanism-by-mechanism multiplicative efficiency law.
+
+% =============================================================================
+\section*{Code and data availability}
+Numerical checks of the O4.2 Schur formula and the O4.4 orthogonality
+conditions, and any released code and evidence bundles, are available
+at~\SPH{repo URL wording --- user decision}.
+
+\section*{Acknowledgments}
+\SPH{funding/acknowledgments --- user decision}
+
+\nocite{*}
+\bibliographystyle{unsrt}
+\bibliography{refs}
+
+\end{document}
