@@ -20,9 +20,14 @@ post-R23. Papers remain two; digs are post-hoc/descriptive unless promoted.
    a build requirement: diagnostics must be evaluated on-branch (at
    candidate-bank operating points), never at the deployed ridge alone.
    → results/round63_next/FALSIFIER_REGRESSION.md.
-2. **R16 2M-frame score-identity diagnostic** (the −8% endpoint bias;
-   now load-bearing for the elasticity map too, since alpha*_J = −ρJ''/J').
-   → Colab pro2 r63diag_a (Opus, running); runbook frozen protocol.
+2. **R16 2M-frame score-identity diagnostic** — COMPLETE 2026-07-22,
+   verdict **ESTIMATOR_ARTIFACT** (frozen adjudication): score CIs contain
+   the R16 predictions and exclude the −8%-biased histogram values at both
+   channels; c=0 anchor hit to <0.1% by score vs +8.8% histogram miss at
+   the same draws; bin-width sweep spans exactly the disputed deviation.
+   Ridge-law predictions CONFIRMED; paper-2 supplement open-note replaced
+   with the resolution. → results/round63_next/R16_DIAGNOSTIC_RUN/
+   (ADJUDICATION.md + SUMMARY_TABLE.md; raw npz local-only, SHAs frozen).
 3. **Speed-ratio decomposition** (the c=0 signature): S_gate vs
    detected-rate ratio (~20.1); per-scene deviations; clip-cost accounting
    J(11)/J(22)≈0.96 at low-nu crossings; the derived statement that at c=0

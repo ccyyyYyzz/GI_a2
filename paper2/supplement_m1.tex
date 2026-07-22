@@ -454,9 +454,18 @@ $3.399$, $2.051$ at $c_v = 0.02$, $0.05$, $0.1$, $0.2$, respectively. The pooled
 vs.\ the predicted $-2/3$ ($1.3\%$); the constant sits about $5\%$ below
 $2^{-1/3}$, at the edge of the run-to-run noise, so the frozen statement
 is:\ exponent confirmed at $1.3\%$, constant consistent within $5$--$10\%$.
-The end points replicate a mild $\approx{-8}\%$ low bias across both runs,
-left as an open higher-order note (candidate:\ a lognormal third-moment
-correction to the leading finite-variance law). One intermediate hypothesis
+The end points replicate a mild $\approx{-8}\%$ low bias across both runs.
+A frozen-scale diagnostic ($2\times10^{6}$ frames per load, 200-replicate
+frame bootstrap, common random numbers) resolved this bias as an artifact
+of histogram peak extraction on flat information tops rather than physics:\
+a score-identity estimator of the same information rate --- validated
+against the exactly known zero-jitter optimum to better than $0.1\%$, where
+the histogram estimator at the same draws misses by $+8.8\%$ --- places the
+jittered peaks at $10.10$ $[10.10, 10.30]$ and $2.15$ $[2.13, 2.20]$ for
+$c_v = 0.02$ and $0.2$, containing the predicted $10.22$ and $2.17$ and
+excluding the biased values; the histogram peak itself relocates from
+$10.10$ to $9.29$ as the log-bin width crosses $0.005$, spanning precisely
+the disputed deviation. One intermediate hypothesis
 is on the record:\ after the first two zoom points, an effective jitter-cost
 multiplier $k = 4/3$ was preregistered (commit \texttt{5e51088}) and was
 refuted by the very next measured point, whose deviation flipped sign
