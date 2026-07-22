@@ -33,8 +33,32 @@ overrides anything below that conflicts):**
    passed exact-972 admission or excluded; optimized allocator passed
    equivalence; phase-1.5 smoke reruns clean.
 
+**R28 amendment layer (issue #20, docs/ROUND63_GPT_ROUND28_RULING_RAW.md —
+supersedes Gate A and the FW-arm guard profile below):**
+
+1. **Gate A → LIBRARY_REACHABILITY_PASS** (finite-library image-reachability
+   gate): ΔQ^A_j = ORACLE-LIB − max(SCAT32-060, RIDGE-SCAT32), per-scene
+   oracle bank = argmax over 5-seed means (min-index tie-break, one bank
+   per scene); PASS iff median ≥ 1.0 dB, 9/12 positive, 90% scene-bootstrap
+   LB > 0.50 dB. Fail ⇒ RLMI/M2 stop (statement scoped to the DECLARED
+   library, not the physical class). Terminology: "finite-library image
+   oracle" — never "class ceiling".
+2. **Gate B** capture denominator = ORACLE-LIB (median ΔQ_RLMI ≥ 0.60 ×
+   median ΔQ_ORACLE-LIB); all else unchanged.
+3. **FW arms = NONDEPLOYABLE_DOSE_RELAXED_FW_DIAGNOSTIC**: ±5% dose band
+   removed (ONLY that); all other guards + k≥32 dictionary retained; full
+   dose-profile disclosure; no gate reads them.
+4. **Four quantities** (§4): in-class finite-library reachability;
+   deployable allocation loss; plug-in FW loss; dose-relaxation/library
+   contrast (never labeled a pure gap).
+5. **SMOKE_EXPOSED_PREGRID = {twopop_0, control_0}** — retained, disclosed;
+   post-grid leave-out sensitivity (no-gate).
+6. Both implementation disclosures **ratified** (§6): pattern-and-power
+   banks (nominal schedules are bank identity); k≥32 online dictionary.
+7. Launch authorized once §7 checks pass; bank manifest NOT regenerated.
+
 **Fable implementation ruling 2026-07-22 (post-smoke-3, within R27 — no
-guard touched):** the ONLINE FW designs (TRUE-X-FW / XHAT-FW oracle arms)
+guard touched; §6-ratified by R28):** the ONLINE FW designs (TRUE-X-FW / XHAT-FW oracle arms)
 are subject to the same arithmetic obstruction R27 §1.1 identified for
 banks; without a fix they fall back to L0 and Gate A becomes vacuous.
 Remedy = R27's own: (1) online primal_probe dictionary restricted to the
