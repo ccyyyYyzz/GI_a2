@@ -1,0 +1,174 @@
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex)
+ restricted \write18 enabled.
+entering extended mode
+(./main.tex
+LaTeX2e <2023-11-01> patch level 1
+L3 programming layer <2024-02-20>
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2023/05/17 v1.4n Standard LaTeX document class
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/base/size10.clo))
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/amsmath/amsmath.sty
+For additional information on amsmath, use the `?' option.
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/amsmath/amstext.sty
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/amsmath/amsgen.sty))
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/amsmath/amsbsy.sty)
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/amsmath/amsopn.sty))
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/amsfonts/amssymb.sty
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/amsfonts/amsfonts.sty))
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/tools/bm.sty)
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/amscls/amsthm.sty)
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/graphics/graphicx.sty
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/graphics/keyval.sty)
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/graphics/graphics.sty
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/graphics/trig.sty)
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/graphics-cfg/graphics.cfg)
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/graphics-def/pdftex.def)))
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/geometry/geometry.sty
+(d:/Program Files/texlive/2024/texmf-dist/tex/generic/iftex/ifvtex.sty
+(d:/Program Files/texlive/2024/texmf-dist/tex/generic/iftex/iftex.sty)))
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/xcolor/xcolor.sty
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/graphics-cfg/color.cfg)
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/graphics/mathcolor.ltx))
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/hyperref/hyperref.sty
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/kvsetkeys/kvsetkeys.sty)
+(d:/Program Files/texlive/2024/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys
+.sty)
+(d:/Program Files/texlive/2024/texmf-dist/tex/generic/pdfescape/pdfescape.sty
+(d:/Program Files/texlive/2024/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty)
+(d:/Program Files/texlive/2024/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty
+(d:/Program Files/texlive/2024/texmf-dist/tex/generic/infwarerr/infwarerr.sty))
+) (d:/Program Files/texlive/2024/texmf-dist/tex/latex/hycolor/hycolor.sty)
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/auxhook/auxhook.sty)
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/hyperref/nameref.sty
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/refcount/refcount.sty)
+(d:/Program Files/texlive/2024/texmf-dist/tex/generic/gettitlestring/gettitlest
+ring.sty
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/kvoptions/kvoptions.sty)))
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/etoolbox/etoolbox.sty)
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/hyperref/pd1enc.def)
+(d:/Program Files/texlive/2024/texmf-dist/tex/generic/intcalc/intcalc.sty)
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/hyperref/puenc.def)
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/url/url.sty)
+(d:/Program Files/texlive/2024/texmf-dist/tex/generic/bitset/bitset.sty
+(d:/Program Files/texlive/2024/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty
+)) (d:/Program Files/texlive/2024/texmf-dist/tex/latex/base/atbegshi-ltx.sty))
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/hyperref/hpdftex.def
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/base/atveryend-ltx.sty)
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/rerunfilecheck/rerunfileche
+ck.sty
+(d:/Program Files/texlive/2024/texmf-dist/tex/generic/uniquecounter/uniquecount
+er.sty)))
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/placeins/placeins.sty)
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/l3backend/l3backend-pdftex.
+def)
+No file main.aux.
+(d:/Program Files/texlive/2024/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+)
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.
+sty
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cf
+g))
+*geometry* driver: auto-detecting
+*geometry* detected driver: pdftex
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/amsfonts/umsa.fd)
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/amsfonts/umsb.fd)
+Underfull \hbox (badness 10000) in paragraph at lines 124--126
+[]\OT1/cmr/m/n/10 [ABSTRACT --- 80--100 words, DE-
+
+Underfull \hbox (badness 4765) in paragraph at lines 124--126
+\OT1/cmr/m/n/10 FINE/DECODE/CERTIFY in minia-ture: (1) a
+
+Underfull \hbox (badness 1596) in paragraph at lines 124--126
+\OT1/cmr/m/n/10 bucket record is gen-er-ated by a hid-den dy-namic
+
+Overfull \hbox (8.79999pt too wide) in paragraph at lines 203--207
+ [][] 
+
+LaTeX Warning: Reference `eq:hierarchy' on page 1 undefined on input line 238.
+
+
+Underfull \hbox (badness 4144) in paragraph at lines 238--238
+\OT1/cmr/m/n/8 path $\OML/cmm/m/it/8 a$ \OT1/cmr/m/n/8 is gen-er-ated by medium
+ hy-per-pa-ram-e-ters $\OML/cmm/m/it/8 ^^R \OT1/cmr/m/n/8 =
+
+LaTeX Warning: Reference `eq:partition' on page 1 undefined on input line 256.
+
+[1{d:/Program Files/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+
+Overfull \hbox (1.16403pt too wide) detected at line 263
+[][][]\OML/cmm/m/it/10 K \OT1/cmr/m/n/10 = \OML/cmm/m/it/10 A[]CB[];  [] \OT1/c
+mr/m/n/10 = [] []1 \OMS/cmsy/m/n/10 ^^@ \OML/cmm/m/it/10 ^^T[][] \OT1/cmr/m/n/1
+0 = []\OML/cmm/m/it/10 ;
+
+Overfull \hbox (8.79999pt too wide) in paragraph at lines 299--302
+ [][] 
+
+Underfull \hbox (badness 10000) in paragraph at lines 320--320
+[]\OT1/cmr/bx/n/14.4 Pilot-free scene-and-medium
+
+LaTeX Warning: Reference `eq:obs' on page 2 undefined on input line 331.
+
+
+LaTeX Warning: Reference `fig:precision' on page 2 undefined on input line 381.
+
+
+
+LaTeX Warning: Reference `fig:scene' on page 2 undefined on input line 388.
+
+[2]
+
+LaTeX Warning: Reference `fig:reciprocity' on page 3 undefined on input line 39
+4.
+
+
+LaTeX Warning: Reference `fig:scene' on page 3 undefined on input line 394.
+
+
+Overfull \hbox (8.79999pt too wide) in paragraph at lines 411--414
+ [][] 
+
+Overfull \hbox (8.79999pt too wide) in paragraph at lines 427--430
+ [][] 
+[3] [4] (tmp/main.aux)
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+
+Package rerunfilecheck Warning: File `main.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+ )
+(see the transcript file for additional information)<d:/Program Files/texlive/2
+024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><d:/Program Files/texl
+ive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><d:/Program Files
+/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb><d:/Program F
+iles/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><d:/Prog
+ram Files/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex8.pfb
+><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi1
+0.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/
+cmmi6.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmmi7.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/amsf
+onts/cm/cmmi8.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/
+amsfonts/cm/cmr10.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/pub
+lic/amsfonts/cm/cmr12.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1
+/public/amsfonts/cm/cmr17.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/t
+ype1/public/amsfonts/cm/cmr6.pfb><d:/Program Files/texlive/2024/texmf-dist/font
+s/type1/public/amsfonts/cm/cmr7.pfb><d:/Program Files/texlive/2024/texmf-dist/f
+onts/type1/public/amsfonts/cm/cmr8.pfb><d:/Program Files/texlive/2024/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmsy10.pfb><d:/Program Files/texlive/2024/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb><d:/Program Files/texlive/2024/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb><d:/Program Files/texlive/2
+024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><d:/Program Files/texli
+ve/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmti8.pfb><d:/Program Files/t
+exlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb><d:/Program Fil
+es/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb><d:/Program
+ Files/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb><
+d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/ms
+bm10.pfb>
+Output written on tmp/main.pdf (4 pages, 284420 bytes).
+Transcript written on tmp/main.log.

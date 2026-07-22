@@ -1,0 +1,26 @@
+% =============================================================================
+% SUPPLEMENT NOTE S9 -- Edge maps, residual/model checks, sensitivity
+% (R36 s6: "S9 edge maps, residual/model checks and sensitivity analyses")
+% =============================================================================
+% R36 CROSSWALK: NEW-scoped. R35 old S9 was MOLT (now folded into R36 S5). R36 S9
+%   is the failure-domain + model-check note that backs main-text Fig. 4's
+%   validity domain and Section 5's scope claim.
+%
+% CONTENT MANIFEST (R36 s6 "S9"):
+%   * Edge maps: fast-drift, slow-drift, and weak-fluctuation failure regions in
+%     (Delta/t_c, T/t_c, CV, photon-SNR).
+%   * Residual/model checks (scalar-gain gauge residuals; innovation whiteness).
+%   * Sensitivity analyses.
+%
+% PORTED WHOLESALE FROM:
+%   * results/round63_next/DUAL_LEDGER_PROBE/ : T1 grid (max |t_c| err 13.5%,
+%     |CV| err 5.5%); fast edge t_c=2/CV40 biases t_c +40%; slow t_c=64 at 25%
+%     oracle floor; bar-2 residuals (innovation std 0.89-0.97; lag-1 <=0.11;
+%     gauge shift 3e-15). Materials map s4a.
+% =============================================================================
+\section{Edge maps, residual and model checks, and sensitivity}
+\label{supp:edge}
+
+% TODO: failure-domain maps (fast/slow/weak); scalar-gain residual + innovation
+% whiteness checks; sensitivity analyses. Backs Fig. 4 right panel + Section 5
+% physical-scope paragraph.

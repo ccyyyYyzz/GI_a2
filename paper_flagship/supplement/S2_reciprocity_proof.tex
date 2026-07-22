@@ -1,0 +1,30 @@
+% =============================================================================
+% SUPPLEMENT NOTE S2 -- Canonical-confusion reciprocity proof
+% (R36 s6: "S2 canonical-confusion reciprocity proof, pseudoinverse cases,
+%  determinant identities")
+% =============================================================================
+% R36 CROSSWALK: from R35 old S7 (reciprocity + DLGI estimator), the RECIPROCITY
+%   PROOF half moves here; the estimator half moves to R36 S3.
+%
+% CONTENT MANIFEST (R36 s6 "S2"):
+%   * Full proof of the Canonical-Confusion Ledger Reciprocity Theorem.
+%   * Pseudoinverse cases (rank-deficient A or B).
+%   * Determinant identities.
+%
+% THEOREM NAME DISCIPLINE (register B3 / R33 s7): theorem =
+%   "Canonical-Confusion Ledger Reciprocity Theorem"; method = DLGI. Distinct.
+%   Forbidden: "information conservation", "free medium information", additive law.
+%
+% PORTED WHOLESALE FROM:
+%   * R33 Thm 2 (materials map s4b): K=A^{-1/2}CB^{-1/2};
+%     J_x=A^{1/2}(I-KK^T)A^{1/2}, J_theta=B^{1/2}(I-K^TK)B^{1/2};
+%     det(J_x)/det(A)=prod(1-kappa_i^2)=det(J_theta)/det(B).
+%   * results/round63_next/DUAL_LEDGER_PROBE/t3_reciprocity.json
+%     (reciprocity det exact to 1e-15; ||K|| schedule-invariant 0.2%).
+% =============================================================================
+\section{Canonical-confusion reciprocity: proof and determinant identities}
+\label{supp:reciprocity}
+
+% TODO: full reciprocity proof; shared nonzero eigenvalues of KK^T and K^TK;
+% pseudoinverse (rank-deficient) cases; determinant identities; the O4-A
+% "C=0 protects both ledgers" corollary.

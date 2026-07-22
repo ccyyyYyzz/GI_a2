@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.9.25)  22 JUL 2026 19:11
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.9.25)  22 JUL 2026 19:48
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -338,24 +338,24 @@ File: l3backend-pdftex.def 2024-02-20 L3 backend support: PDF output (pdfTeX)
 ) (tmp/main.aux)
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 113.
-LaTeX Font Info:    ... okay on input line 113.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 113.
-LaTeX Font Info:    ... okay on input line 113.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 113.
-LaTeX Font Info:    ... okay on input line 113.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 113.
-LaTeX Font Info:    ... okay on input line 113.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 113.
-LaTeX Font Info:    ... okay on input line 113.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 113.
-LaTeX Font Info:    ... okay on input line 113.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 113.
-LaTeX Font Info:    ... okay on input line 113.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 113.
-LaTeX Font Info:    ... okay on input line 113.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 113.
-LaTeX Font Info:    ... okay on input line 113.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 105.
+LaTeX Font Info:    ... okay on input line 105.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 105.
+LaTeX Font Info:    ... okay on input line 105.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 105.
+LaTeX Font Info:    ... okay on input line 105.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 105.
+LaTeX Font Info:    ... okay on input line 105.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 105.
+LaTeX Font Info:    ... okay on input line 105.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 105.
+LaTeX Font Info:    ... okay on input line 105.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 105.
+LaTeX Font Info:    ... okay on input line 105.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 105.
+LaTeX Font Info:    ... okay on input line 105.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 105.
+LaTeX Font Info:    ... okay on input line 105.
 
 (d:/Program Files/texlive/2024/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
@@ -416,121 +416,94 @@ e
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-Package hyperref Info: Link coloring OFF on input line 113.
+Package hyperref Info: Link coloring OFF on input line 105.
 (tmp/main.out) (tmp/main.out)
 \@outlinefile=\write3
 \openout3 = `main.out'.
 
-LaTeX Font Info:    Trying to load font information for U+msa on input line 115
+LaTeX Font Info:    Trying to load font information for U+msa on input line 107
 .
 
 (d:/Program Files/texlive/2024/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 115
+LaTeX Font Info:    Trying to load font information for U+msb on input line 107
 .
 
 (d:/Program Files/texlive/2024/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-Overfull \hbox (8.79999pt too wide) in paragraph at lines 225--233
+Underfull \hbox (badness 10000) in paragraph at lines 124--126
+[]\OT1/cmr/m/n/10 [ABSTRACT --- 80--100 words, DE-
+ []
+
+
+Underfull \hbox (badness 4765) in paragraph at lines 124--126
+\OT1/cmr/m/n/10 FINE/DECODE/CERTIFY in minia-ture: (1) a
+ []
+
+
+Underfull \hbox (badness 1596) in paragraph at lines 124--126
+\OT1/cmr/m/n/10 bucket record is gen-er-ated by a hid-den dy-namic
+ []
+
+
+Overfull \hbox (8.79999pt too wide) in paragraph at lines 203--207
  [][] 
  []
 
 
-Overfull \hbox (8.79999pt too wide) in paragraph at lines 318--321
- [][] 
+Underfull \hbox (badness 4144) in paragraph at lines 238--238
+\OT1/cmr/m/n/8 path $\OML/cmm/m/it/8 a$ \OT1/cmr/m/n/8 is gen-er-ated by medium
+ hy-per-pa-ram-e-ters $\OML/cmm/m/it/8 ^^R \OT1/cmr/m/n/8 =
  []
 
 [1{d:/Program Files/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
 
 ]
-Underfull \hbox (badness 2088) in paragraph at lines 361--363
-[]\OT1/cmr/m/n/10 These are fixed-dwell and elapsed-time ben-e-fits
+Overfull \hbox (1.16403pt too wide) detected at line 263
+[][][]\OML/cmm/m/it/10 K \OT1/cmr/m/n/10 = \OML/cmm/m/it/10 A[]CB[];  [] \OT1/c
+mr/m/n/10 = [] []1 \OMS/cmsy/m/n/10 ^^@ \OML/cmm/m/it/10 ^^T[][] \OT1/cmr/m/n/1
+0 = []\OML/cmm/m/it/10 ;
  []
 
 
-Underfull \hbox (badness 2626) in paragraph at lines 379--379
-[]$\U/msa/m/n/8 I$ \OT1/cmr/m/n/8 TODO: Beat 5 (one sen-tence). Point to the po
-st-
- []
-
-
-Underfull \hbox (badness 4660) in paragraph at lines 379--379
-\OT1/cmr/m/n/8 unblinding anal-y-sis cor-rec-tion and im-mutable prove-nance
- []
-
-
-Underfull \hbox (badness 2057) in paragraph at lines 379--379
-\OT1/cmr/m/n/8 in Meth-ods / Sup-ple-ment S4; do NOT nar-rate it here.
- []
-
-
-Underfull \hbox (badness 1152) in paragraph at lines 379--379
-\OT1/cmr/m/n/8 Frozen cor-rec-tion record: reg-is-ter s9a (three dis-crep-an-ci
-es;
- []
-
-
-Overfull \hbox (8.79999pt too wide) in paragraph at lines 397--400
+Overfull \hbox (8.79999pt too wide) in paragraph at lines 299--302
  [][] 
  []
 
 
-Underfull \hbox (badness 1360) in paragraph at lines 421--421
-[]\OT1/cmr/bx/n/14.4 Closing the integrated-count
+Underfull \hbox (badness 10000) in paragraph at lines 320--320
+[]\OT1/cmr/bx/n/14.4 Pilot-free scene-and-medium
  []
 
-
-Underfull \vbox (badness 1337) has occurred while \output is active []
-
- [2]
-Overfull \hbox (8.79999pt too wide) in paragraph at lines 484--488
+[2]
+Overfull \hbox (8.79999pt too wide) in paragraph at lines 411--414
  [][] 
  []
 
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Underfull \hbox (badness 6461) in paragraph at lines 552--562
-[]\OT1/cmr/m/n/10 Dedicated diffusing-wave and diffuse-correlation
- []
-
-[3]
-Underfull \hbox (badness 1701) in paragraph at lines 598--600
-[]\OT1/cmr/m/it/9 The same hid-den state that fixes the scene-
- []
-
-
-Underfull \hbox (badness 1565) in paragraph at lines 598--600
-\OT1/cmr/m/it/9 information bound-ary can there-fore be-come a
- []
-
-
-Overfull \hbox (8.79999pt too wide) in paragraph at lines 617--620
+Overfull \hbox (8.79999pt too wide) in paragraph at lines 427--430
  [][] 
  []
 
-[4] [5
-
-] (tmp/main.aux)
+[3] [4] (tmp/main.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-02-20>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 62EA010E8976AE269E509229D78C7F3B;1506.
+(rerunfilecheck)             Checksum: 0ECE5A7418EEFF773BCB09516A15BFD9;1144.
  ) 
 Here is how much of TeX's memory you used:
- 10793 strings out of 476023
- 163599 string characters out of 5790298
- 1953190 words of memory out of 5000000
- 32736 multiletter control sequences out of 15000+600000
+ 10788 strings out of 476023
+ 163543 string characters out of 5790298
+ 1951190 words of memory out of 5000000
+ 32730 multiletter control sequences out of 15000+600000
  572222 words of font info for 88 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 75i,8n,79p,601b,446s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,9n,79p,541b,456s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx
 10.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm
 /cmbx12.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/amsfon
@@ -538,28 +511,28 @@ ts/cm/cmex10.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/a
 msfonts/cmextra/cmex8.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1
 /public/amsfonts/cm/cmmi10.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/
 type1/public/amsfonts/cm/cmmi6.pfb><d:/Program Files/texlive/2024/texmf-dist/fo
-nts/type1/public/amsfonts/cm/cmmi8.pfb><d:/Program Files/texlive/2024/texmf-dis
-t/fonts/type1/public/amsfonts/cm/cmr10.pfb><d:/Program Files/texlive/2024/texmf
--dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><d:/Program Files/texlive/2024/t
-exmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb><d:/Program Files/texlive/20
-24/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><d:/Program Files/texlive
-/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb><d:/Program Files/texl
-ive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><d:/Program Files/t
-exlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><d:/Program Fi
-les/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb><d:/Progra
-m Files/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb><d:/Pr
-ogram Files/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><d
-:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmti8.pf
+nts/type1/public/amsfonts/cm/cmmi7.pfb><d:/Program Files/texlive/2024/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmmi8.pfb><d:/Program Files/texlive/2024/texmf
+-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><d:/Program Files/texlive/2024/t
+exmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><d:/Program Files/texlive/20
+24/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb><d:/Program Files/texliv
+e/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><d:/Program Files/tex
+live/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb><d:/Program Files/
+texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><d:/Program Fil
+es/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><d:/Progra
+m Files/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb><d:/Pr
+ogram Files/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb><d
+:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pf
 b><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmti
-9.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/
-cmtt10.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmtt8.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/ams
-fonts/symbols/msam10.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/
-public/amsfonts/symbols/msbm10.pfb>
-Output written on tmp/main.pdf (5 pages, 290856 bytes).
+8.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/
+cmti9.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmtt8.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/amsf
+onts/symbols/msam10.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/p
+ublic/amsfonts/symbols/msbm10.pfb>
+Output written on tmp/main.pdf (4 pages, 277017 bytes).
 PDF statistics:
- 184 PDF objects out of 1000 (max. 8388607)
- 129 compressed objects within 2 object streams
- 22 named destinations out of 1000 (max. 500000)
- 49 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 186 PDF objects out of 1000 (max. 8388607)
+ 132 compressed objects within 2 object streams
+ 23 named destinations out of 1000 (max. 500000)
+ 41 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -1,0 +1,33 @@
+% =============================================================================
+% SUPPLEMENT NOTE S3 -- DLGI model, gauge, identifiability, estimator, calibration
+% (R36 s6: "S3 DLGI model, gauge, identifiability, estimator and calibration
+%  algorithms")
+% =============================================================================
+% R36 CROSSWALK: the ESTIMATOR half of R35 old S7 lands here, expanded. This is
+%   where the main-text word-capped names live in full (Kalman/RTS/Whittle/
+%   bootstrap): R36 s3 sends "filter recursions, RTS/Kalman derivation, bootstrap
+%   implementation" out of the body and into the supplement.
+%
+% CONTENT MANIFEST (R36 s6 "S3"):
+%   * DLGI scalar-gain model + E[a]=1 gauge.
+%   * Identifiability (medium J_theta > 0; oracle floors).
+%   * Estimator: joint alternating inference; Kalman-RTS smoother recursions;
+%     moment/profile-likelihood medium estimator.
+%   * Calibration algorithms (simulation-calibrated intervals; Whittle spectral
+%     step; bootstrap resampling).
+%
+% PORTED WHOLESALE FROM:
+%   * R33 s4.1 identifiability (materials map s4b): J_theta=I_thth - I_thx I_xx^+
+%     I_xth > 0; oracle floors sd(t_c)/t_c >= sqrt(2 t_c/T), sd(CV)/CV >=
+%     sqrt(t_c/2T).
+%   * results/round63_next/LADDER_PROBE/ (ch.2 temporal-prior B=1 smoother
+%     +2.2-2.5 dB = DLGI ch.2 data-term lineage, materials map s5c).
+%   * results/round63_next/DUAL_LEDGER_PROBE/DUAL_LEDGER_PROBE_REPORT.md.
+% =============================================================================
+\section{DLGI model, gauge, identifiability, estimator, and calibration}
+\label{supp:dlgi}
+
+% TODO: scalar-gain observation model + gauge; identifiability + oracle floors;
+% full estimator (alternating inference; Kalman-RTS smoother; moment/profile
+% estimator); calibration (Whittle + bootstrap). All main-text word-capped names
+% are unrestricted HERE.

@@ -1,0 +1,53 @@
+% =============================================================================
+% SUPPLEMENT NOTE S4 -- Dead-time sibling: ridge law and M1 campaign
+% (R36 s6: "S4 dead-time sibling, ridge law, +1.87 dB / 19.13x M1 campaign and
+%  operating maps")
+% =============================================================================
+% R36 CROSSWALK: this is the BINDING-CUT DESTINATION. Everything R36 strips from
+%   the main text -- the ridge law, the M1 +1.87 dB / 19.13x campaign, and all
+%   operating maps -- is preserved here IN FULL. R36 s2: "Supplementary Note S4
+%   preserves that complete sibling instantiation." Demotion is not deletion.
+%   This absorbs R35 old S2 (detector) + S3 (ridge) + S4 (M1 protocol) + S5 (M1
+%   results/maps) into one dead-time-sibling note.
+%
+% CONTENT MANIFEST (R36 s6 "S4"):
+%   * Dead-time hidden-state specialization (live-time covariance, jitter model,
+%     correction ceiling).
+%   * The ridge law: cube-root deterministic ridge + jitter cap + crossover;
+%     (1/3,-2/3) exponents; blind verification (pooled slope -0.658).
+%   * The M1 campaign: protocol, 24-scene cohort, operating maps, R19 correction.
+%   * The frozen +1.87 dB / 19.13x verdict sentences (VERBATIM below).
+%
+% PORTED WHOLESALE FROM:
+%   * paper2/main_m1.tex Thm 1-3 + s4-s7 + paper2/supplement_m1.tex S1-S6.
+%   * paper/main_oe.tex s4 (ridge) + paper/supplement.tex S1.
+%   * results/round63_m1/CORRECTION_2026-07-19/ (R19-corrected source of record).
+% =============================================================================
+\section{Dead-time sibling: hidden-state ridge law and the M1 campaign}
+\label{supp:deadtime}
+
+% ------ FROZEN R19 VERDICT SENTENCES (register B1) -- VERBATIM, moved here from
+% the R35 main text per the R36 binding cut. Keep exactly; do not paraphrase. ---
+
+% Fixed-dwell:
+% "ridge control improved median fixed-dwell radiometric quality over the matched
+%  0.60 comparator by +1.87 dB, with a family-stratified lower bound of 1.41 dB
+%  and 19 of 24 scenes positive."
+% Resource:
+% "The same operating point used 37.1x the incident dose and 2.6x the detected
+%  counts."
+% Speed:
+% "the median conservative speed ratio was 19.13x, the family-stratified
+%  nested-bootstrap 2.5th-percentile bound was 18.33x, and 21 of 24 scenes had
+%  S_gate > 1."
+% Exact frozen values (S6): S_gate median = 19.127043091646133, LB =
+%  18.328492357080282.
+% Frame:
+% "These are fixed-dwell and elapsed-time benefits bought with power, not
+%  photon-efficiency gains."
+
+% TODO: install the five frozen sentences above as running prose; add the
+% ridge/jitter-cap law, operating maps, and the R19 correction record (frozen,
+% register B1: three discrepancies; "agreed on all 18 audited numerical
+% outputs"). Source of record: M1_VERDICTS_SPEC_CORRECTED_R19.json +
+% ANALYSIS_CORRECTION_DISCLOSURE.md.

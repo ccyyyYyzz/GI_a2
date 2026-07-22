@@ -1,12 +1,24 @@
 % =============================================================================
-% FLAGSHIP SUPPLEMENT -- master file (R35 s9 architecture: S1-S10)
+% FLAGSHIP SUPPLEMENT -- master file (R36 s6 architecture: S1-S10)
 % =============================================================================
-% "The supplement may be long. The main paper may not look long because the
-%  supplement is long." (R35 s9 final line.)
+% "The supplement remains the full scientific record." (R36 s6.) The main article
+% may point to a note but may NOT summarize it into another miniature result
+% section (R36 s6 final line).
 %
-% This master \inputs the ten stub notes. Each stub carries its content manifest
-% + materials-map pointers as comments (skeleton). Preamble mirrors
-% paper2/supplement_m1.tex (S-prefixed section/eq/table/figure numbering).
+% R36 S-NOTE MAP (docs/ROUND63_GPT_ROUND36_RULING_RAW.md s6):
+%   S1 regularity + joint missing-information proof
+%   S2 canonical-confusion reciprocity proof, pseudoinverse cases, determinants
+%   S3 DLGI model, gauge, identifiability, estimator + calibration algorithms
+%   S4 dead-time sibling, ridge law, +1.87 dB / 19.13x M1 campaign + operating maps
+%   S5 auxiliary hidden-state + schedule derivations (+ folded MOLT)
+%   S6 five preregistered closure certificates at full depth
+%   S7 ruthless prior-art fence (DCS/DWS, pilot GI, self-cal, AO/radio telemetry)
+%   S8 R34 confirmatory protocol, C1-C7, full grid, interval calibration + multiplicity
+%   S9 edge maps, residual/model checks, sensitivity
+%   S10 provenance, correction record, code, seeds, reproduction
+%
+% Crosswalk from the retired R35 s9 numbering is in BUILD_STATUS.md.
+% Preamble mirrors paper2/supplement_m1.tex (S-prefixed numbering).
 % Compile: pdflatex -output-directory=tmp supplement.tex
 % =============================================================================
 \documentclass[10pt]{article}
@@ -32,7 +44,7 @@
 \renewcommand{\theproposition}{S\arabic{proposition}}
 
 \title{Supplementary information:\\
-Hidden dynamics set the limit---and become the signal---in ghost imaging}
+One bucket record measures both scene and medium}
 \author{\SPH{author block --- USER DECISION (mirrors main text, gap G7)}}
 \date{}
 
@@ -40,23 +52,32 @@ Hidden dynamics set the limit---and become the signal---in ghost imaging}
 \maketitle
 
 \noindent
-This supplement carries the proof archive, preregistration archive, operating
-maps, complete negative campaigns, MOLT, interval construction, and
-reproducibility ledger (R35 s2.1). Section, equation, table, and figure numbers
-carry an ``S'' prefix; ``main-text Sec.~X'' refers to the primary manuscript.
-Internal method acronyms and audit labels appear only in Notes~S6 and~S8
-(R35 s2.1, s4.3).
+This supplement is the full scientific record behind the main article: proofs,
+the DLGI model and estimator, the demoted dead-time sibling (ridge law and M1
+campaign), the five preregistered closure certificates, the ruthless prior-art
+fence, the confirmatory protocol, failure maps, and provenance. Section,
+equation, table, and figure numbers carry an ``S'' prefix; ``main-text Sec.~X''
+refers to the primary manuscript. Internal method acronyms and audit labels
+appear only in Notes~S6 and~S8 (R36 s2, s6).
 
-\input{S1_notation.tex}
-\input{S2_detector_specialization.tex}
-\input{S3_ridge_asymptotics.tex}
-\input{S4_m1_protocol.tex}
-\input{S5_m1_results_maps.tex}
-\input{S6_closure_campaigns.tex}
-\input{S7_reciprocity_dlgi.tex}
-\input{S8_interval_campaign.tex}
-\input{S9_detector_escape_molt.tex}
-\input{S10_reproducibility.tex}
+% ---- Front matter: unified notation (gap G1). R36 s6 defines no notation note,
+% so the reconciliation table is front matter here. Strip the \documentclass
+% wrapper from ../NOTATION.tex (or \input only its longtable) when assembling.
+\section*{Notation}
+\SPH{Include the reconciled notation table from \texttt{../NOTATION.tex} (gap G1);
+collisions are flagged there. When assembling, strip its \texttt{documentclass}
+wrapper and include only the \texttt{longtable} body.}
+
+\input{S1_regularity_partition.tex}
+\input{S2_reciprocity_proof.tex}
+\input{S3_dlgi_model_estimator.tex}
+\input{S4_deadtime_sibling.tex}
+\input{S5_auxiliary_derivations.tex}
+\input{S6_closure_certificates.tex}
+\input{S7_priorart_fence.tex}
+\input{S8_confirmatory_protocol.tex}
+\input{S9_edge_sensitivity.tex}
+\input{S10_provenance.tex}
 
 % \bibliographystyle{unsrt}
 % \bibliography{refs_merged}   %% enable after gap G5 (merged bib) is built
