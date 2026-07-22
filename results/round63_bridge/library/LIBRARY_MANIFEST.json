@@ -1,0 +1,728 @@
+{
+  "K_banks": 8,
+  "M_rows_target": 972,
+  "all_banks_pass": true,
+  "banks": {
+    "L0": {
+      "bank": "L0",
+      "family": "SCAT32_deployed(frozen)",
+      "guards": {
+        "admission_corner": {
+          "b": 0.6,
+          "nu": 2000
+        },
+        "all_pass": true,
+        "atom_admission_ceiling_max": 0.0,
+        "atom_admission_ok": true,
+        "atom_load_max": 0.9414050500403444,
+        "atom_load_min": 0.3412663614820334,
+        "atom_peak_max": 50.20826933548504,
+        "atom_peak_ok": true,
+        "atom_w_guard": "normalized within-row w in [0.0625,4] (raw w1 in [1/4,4] via build_blocks W_CLIP; shape_ok w.max<=4)",
+        "atom_w_max": 1.0000000000000002,
+        "atom_w_min": 0.9999999999999998,
+        "atom_w_ok": true,
+        "mixable": true,
+        "n_atoms": 972,
+        "representation": "mixable approximate design measure (R25 8)",
+        "weighted_budget_load": 0.6,
+        "weighted_dose_band_ok": true,
+        "weighted_dose_dev": 0.03999077941990259,
+        "weights_normalized_ok": true,
+        "weights_sum": 1.0000000000000004
+      },
+      "note": "Frozen deployed SCAT32 as a 972-atom mixable measure with uniform weights. The per-atom amplitudes ARE the ridge power SCHEDULE (rho_R policy): the global power multiplier from calibrated (tau,c,nu) sets mean load; spatial rows are scene-independent. The R25 lexicographic tie-break selects this corner when the robust allocation is indifferent.",
+      "params": {
+        "materialization": "atoms = the 972 frozen deployed rows; uniform weights; deterministic.",
+        "src_dose_dev": 0.0399907794199027
+      },
+      "provenance": "verbatim atoms = rows of results/round63_m1/designs/scat32_deployed.npz (v5.fixed_dose_scat32; NOT regenerated)",
+      "role": "KNOB / rank-one default bank; simplex tie-break corner e_0 (R25)",
+      "sha256": "1f478e7fe151fcfe4bc247fa9ecc4ef8502038fc546bb75984959858325ccefc",
+      "source_sha256": "ff133328f00b0867b09129fa4930900ccb7f393719d58c56208c5c2ac44c4a51"
+    },
+    "L1": {
+      "bank": "L1",
+      "family": "scattered_k16",
+      "guards": {
+        "admission_corner": {
+          "b": 0.6,
+          "nu": 2000
+        },
+        "all_pass": true,
+        "atom_admission_ceiling_max": 0.0,
+        "atom_admission_ok": true,
+        "atom_load_max": 0.6,
+        "atom_load_min": 0.6,
+        "atom_peak_max": 64.0,
+        "atom_peak_ok": true,
+        "atom_w_guard": "normalized within-row w in [0.0625,4] (raw w1 in [1/4,4] via build_blocks W_CLIP; shape_ok w.max<=4)",
+        "atom_w_max": 1.0,
+        "atom_w_min": 1.0,
+        "atom_w_ok": true,
+        "mixable": true,
+        "n_atoms": 1024,
+        "representation": "mixable approximate design measure (R25 8)",
+        "weighted_budget_load": 0.5999999999999999,
+        "weighted_dose_band_ok": true,
+        "weighted_dose_dev": 0.0,
+        "weights_normalized_ok": true,
+        "weights_sum": 1.0
+      },
+      "note": "Fresh scattered 16-pixel support (RandomState(630016).choice; seed documented & disjoint from frozen R10 scat16=63/scat32=6332), full cyclic-translate pool with uniform weights (R10 scat family construction). As a MEASURE the +-5% dose band holds exactly (dev=0): the rounding difficulty that blocked a monolithic 972-row scattered bank does not arise for the measure; T-D handles constrained rounding.",
+      "params": {
+        "construction": "RandomState(seed).choice(1024,16,replace=False) + _shape_support cyclic translates",
+        "families": [
+          {
+            "atom_pattern": "uniform A=(n/k) on cyclic-translated support",
+            "base_amp": 64.0,
+            "family": "scat16_fresh_seed630016",
+            "k": 16,
+            "mix_fraction": 1.0,
+            "n_translates": 1024,
+            "weight_per_atom": 0.0009765625
+          }
+        ],
+        "materialization": "R25 8: full cyclic-translate pool (oed_design._shape_support) of R10 dictionary_families supports, UNIFORM weights -> weighted per-pixel dose exactly uniform (coverage k per pixel). Deterministic materialization at arbitrary counts by drawing rows proportional to weights.",
+        "seed": 630016,
+        "wall_s": 0.0
+      },
+      "role": "scattered k=16 illumination bank",
+      "sha256": "5db55564f02aa9985d0db2f6bf7147a0f80569b46bccf8ecc58e48c8ede6e158"
+    },
+    "L2": {
+      "bank": "L2",
+      "family": "compact_k16",
+      "guards": {
+        "admission_corner": {
+          "b": 0.6,
+          "nu": 2000
+        },
+        "all_pass": true,
+        "atom_admission_ceiling_max": 0.0,
+        "atom_admission_ok": true,
+        "atom_load_max": 0.6,
+        "atom_load_min": 0.6,
+        "atom_peak_max": 64.0,
+        "atom_peak_ok": true,
+        "atom_w_guard": "normalized within-row w in [0.0625,4] (raw w1 in [1/4,4] via build_blocks W_CLIP; shape_ok w.max<=4)",
+        "atom_w_max": 1.0,
+        "atom_w_min": 1.0,
+        "atom_w_ok": true,
+        "mixable": true,
+        "n_atoms": 1024,
+        "representation": "mixable approximate design measure (R25 8)",
+        "weighted_budget_load": 0.5999999999999999,
+        "weighted_dose_band_ok": true,
+        "weighted_dose_dev": 0.0,
+        "weights_normalized_ok": true,
+        "weights_sum": 1.0
+      },
+      "note": "Filled 4x4 compact block (R10 solid4x4), full cyclic-translate pool, uniform weights.",
+      "params": {
+        "families": [
+          {
+            "atom_pattern": "uniform A=(n/k) on cyclic-translated support",
+            "base_amp": 64.0,
+            "family": "solid4x4",
+            "k": 16,
+            "mix_fraction": 1.0,
+            "n_translates": 1024,
+            "weight_per_atom": 0.0009765625
+          }
+        ],
+        "materialization": "R25 8: full cyclic-translate pool (oed_design._shape_support) of R10 dictionary_families supports, UNIFORM weights -> weighted per-pixel dose exactly uniform (coverage k per pixel). Deterministic materialization at arbitrary counts by drawing rows proportional to weights.",
+        "wall_s": 0.01
+      },
+      "role": "compact/clustered k=16 illumination bank",
+      "sha256": "8c2f1f44e1fe153767b8483242b95caaaed94a8dc146e78f677d30af280a29eb"
+    },
+    "L3": {
+      "bank": "L3",
+      "family": "compact_k32",
+      "guards": {
+        "admission_corner": {
+          "b": 0.6,
+          "nu": 2000
+        },
+        "all_pass": true,
+        "atom_admission_ceiling_max": 0.0,
+        "atom_admission_ok": true,
+        "atom_load_max": 0.6,
+        "atom_load_min": 0.6,
+        "atom_peak_max": 32.0,
+        "atom_peak_ok": true,
+        "atom_w_guard": "normalized within-row w in [0.0625,4] (raw w1 in [1/4,4] via build_blocks W_CLIP; shape_ok w.max<=4)",
+        "atom_w_max": 1.0,
+        "atom_w_min": 1.0,
+        "atom_w_ok": true,
+        "mixable": true,
+        "n_atoms": 1024,
+        "representation": "mixable approximate design measure (R25 8)",
+        "weighted_budget_load": 0.5999999999999999,
+        "weighted_dose_band_ok": true,
+        "weighted_dose_dev": 0.0,
+        "weights_normalized_ok": true,
+        "weights_sum": 1.0
+      },
+      "note": "Compact 32-pixel square (R10 sq32c: 6x6 minus 4 corners), full cyclic-translate pool, uniform weights.",
+      "params": {
+        "families": [
+          {
+            "atom_pattern": "uniform A=(n/k) on cyclic-translated support",
+            "base_amp": 32.0,
+            "family": "sq32c",
+            "k": 32,
+            "mix_fraction": 1.0,
+            "n_translates": 1024,
+            "weight_per_atom": 0.0009765625
+          }
+        ],
+        "materialization": "R25 8: full cyclic-translate pool (oed_design._shape_support) of R10 dictionary_families supports, UNIFORM weights -> weighted per-pixel dose exactly uniform (coverage k per pixel). Deterministic materialization at arbitrary counts by drawing rows proportional to weights.",
+        "wall_s": 0.01
+      },
+      "role": "compact k=32 illumination bank",
+      "sha256": "244d6f420b1b04098546d5f602aa4e2e14c22a0673bd3563c11ceef287be12dc"
+    },
+    "L4": {
+      "bank": "L4",
+      "family": "bar_HV_mixture",
+      "guards": {
+        "admission_corner": {
+          "b": 0.6,
+          "nu": 2000
+        },
+        "all_pass": true,
+        "atom_admission_ceiling_max": 0.0,
+        "atom_admission_ok": true,
+        "atom_load_max": 0.6,
+        "atom_load_min": 0.6,
+        "atom_peak_max": 64.0,
+        "atom_peak_ok": true,
+        "atom_w_guard": "normalized within-row w in [0.0625,4] (raw w1 in [1/4,4] via build_blocks W_CLIP; shape_ok w.max<=4)",
+        "atom_w_max": 1.0,
+        "atom_w_min": 1.0,
+        "atom_w_ok": true,
+        "mixable": true,
+        "n_atoms": 2048,
+        "representation": "mixable approximate design measure (R25 8)",
+        "weighted_budget_load": 0.5999999999999999,
+        "weighted_dose_band_ok": true,
+        "weighted_dose_dev": 0.0,
+        "weights_normalized_ok": true,
+        "weights_sum": 1.0
+      },
+      "note": "Equal convex mix (0.5/0.5) of horizontal 1x16 (bar1x16) and vertical 16x1 (bar16x1) R10 bar families; each family's full translate set, uniform within family.",
+      "params": {
+        "families": [
+          {
+            "atom_pattern": "uniform A=(n/k) on cyclic-translated support",
+            "base_amp": 64.0,
+            "family": "bar1x16",
+            "k": 16,
+            "mix_fraction": 0.5,
+            "n_translates": 1024,
+            "weight_per_atom": 0.00048828125
+          },
+          {
+            "atom_pattern": "uniform A=(n/k) on cyclic-translated support",
+            "base_amp": 64.0,
+            "family": "bar16x1",
+            "k": 16,
+            "mix_fraction": 0.5,
+            "n_translates": 1024,
+            "weight_per_atom": 0.00048828125
+          }
+        ],
+        "materialization": "R25 8: full cyclic-translate pool (oed_design._shape_support) of R10 dictionary_families supports, UNIFORM weights -> weighted per-pixel dose exactly uniform (coverage k per pixel). Deterministic materialization at arbitrary counts by drawing rows proportional to weights.",
+        "wall_s": 0.02
+      },
+      "role": "horizontal/vertical bar mixture bank",
+      "sha256": "cd06068c5dc01f3f859f678dbf1167dfad9dd36f7117adac0bdf621adf6bca12"
+    },
+    "L5": {
+      "bank": "L5",
+      "family": "radial_ring_contour",
+      "guards": {
+        "admission_corner": {
+          "b": 0.6,
+          "nu": 2000
+        },
+        "all_pass": true,
+        "atom_admission_ceiling_max": 0.0,
+        "atom_admission_ok": true,
+        "atom_load_max": 0.6,
+        "atom_load_min": 0.6,
+        "atom_peak_max": 64.0,
+        "atom_peak_ok": true,
+        "atom_w_guard": "normalized within-row w in [0.0625,4] (raw w1 in [1/4,4] via build_blocks W_CLIP; shape_ok w.max<=4)",
+        "atom_w_max": 1.0,
+        "atom_w_min": 1.0,
+        "atom_w_ok": true,
+        "mixable": true,
+        "n_atoms": 1024,
+        "representation": "mixable approximate design measure (R25 8)",
+        "weighted_budget_load": 0.5999999999999999,
+        "weighted_dose_band_ok": true,
+        "weighted_dose_dev": 0.0,
+        "weights_normalized_ok": true,
+        "weights_sum": 1.0
+      },
+      "note": "16-pixel radius-2.5 ring support (R10 ring16 = v1 ring5), full cyclic-translate pool, uniform weights -> concentric/contour illumination.",
+      "params": {
+        "families": [
+          {
+            "atom_pattern": "uniform A=(n/k) on cyclic-translated support",
+            "base_amp": 64.0,
+            "family": "ring16",
+            "k": 16,
+            "mix_fraction": 1.0,
+            "n_translates": 1024,
+            "weight_per_atom": 0.0009765625
+          }
+        ],
+        "materialization": "R25 8: full cyclic-translate pool (oed_design._shape_support) of R10 dictionary_families supports, UNIFORM weights -> weighted per-pixel dose exactly uniform (coverage k per pixel). Deterministic materialization at arbitrary counts by drawing rows proportional to weights.",
+        "wall_s": 0.02
+      },
+      "role": "radial/ring/contour bank",
+      "sha256": "34f2c00e88216f8930d9ab14cc8d61d15a8eb409e082e90740b3e2640292d172"
+    },
+    "L6": {
+      "bank": "L6",
+      "family": "multiscale_blocks",
+      "guards": {
+        "admission_corner": {
+          "b": 0.6,
+          "nu": 2000
+        },
+        "all_pass": true,
+        "atom_admission_ceiling_max": 0.0,
+        "atom_admission_ok": true,
+        "atom_load_max": 0.6,
+        "atom_load_min": 0.6,
+        "atom_peak_max": 64.0,
+        "atom_peak_ok": true,
+        "atom_w_guard": "normalized within-row w in [0.0625,4] (raw w1 in [1/4,4] via build_blocks W_CLIP; shape_ok w.max<=4)",
+        "atom_w_max": 1.0,
+        "atom_w_min": 1.0,
+        "atom_w_ok": true,
+        "mixable": true,
+        "n_atoms": 4096,
+        "representation": "mixable approximate design measure (R25 8)",
+        "weighted_budget_load": 0.5999999999999999,
+        "weighted_dose_band_ok": true,
+        "weighted_dose_dev": 0.0,
+        "weights_normalized_ok": true,
+        "weights_sum": 1.0
+      },
+      "note": "Multiscale/multi-aspect block mix (0.25 each): solid4x4 (16px,4x4), sq32c (32px,~6x6), rect4x8 (32px,4x8), rect8x4 (32px,8x4); each family's full translate set.",
+      "params": {
+        "families": [
+          {
+            "atom_pattern": "uniform A=(n/k) on cyclic-translated support",
+            "base_amp": 64.0,
+            "family": "solid4x4",
+            "k": 16,
+            "mix_fraction": 0.25,
+            "n_translates": 1024,
+            "weight_per_atom": 0.000244140625
+          },
+          {
+            "atom_pattern": "uniform A=(n/k) on cyclic-translated support",
+            "base_amp": 32.0,
+            "family": "sq32c",
+            "k": 32,
+            "mix_fraction": 0.25,
+            "n_translates": 1024,
+            "weight_per_atom": 0.000244140625
+          },
+          {
+            "atom_pattern": "uniform A=(n/k) on cyclic-translated support",
+            "base_amp": 32.0,
+            "family": "rect4x8",
+            "k": 32,
+            "mix_fraction": 0.25,
+            "n_translates": 1024,
+            "weight_per_atom": 0.000244140625
+          },
+          {
+            "atom_pattern": "uniform A=(n/k) on cyclic-translated support",
+            "base_amp": 32.0,
+            "family": "rect8x4",
+            "k": 32,
+            "mix_fraction": 0.25,
+            "n_translates": 1024,
+            "weight_per_atom": 0.000244140625
+          }
+        ],
+        "materialization": "R25 8: full cyclic-translate pool (oed_design._shape_support) of R10 dictionary_families supports, UNIFORM weights -> weighted per-pixel dose exactly uniform (coverage k per pixel). Deterministic materialization at arbitrary counts by drawing rows proportional to weights.",
+        "wall_s": 0.04
+      },
+      "role": "multiscale block bank",
+      "sha256": "62061a0fa9e8a845cdae4c3c69a37ab7e57b9d410671d28dc5d5b45ad25f1f6a"
+    },
+    "L7": {
+      "aggregation_rule": "average the six per-geometry dose contributions: weight_g = total FW mass over the six prototypes (normalized); representative atom row_g = LEVEL0_LOAD * (sum_s mass_s(g) * GVAL_s(g)) / (sum_s mass_s(g)) on support(g). The weighted per-pixel dose equals the mean of the six in-band dose_of vectors, so the +-5% band holds; T-D does exact 972-row rounding.",
+      "bank": "L7",
+      "family": "FW_geometry_measure",
+      "guards": {
+        "admission_corner": {
+          "b": 0.6,
+          "nu": 2000
+        },
+        "all_pass": true,
+        "atom_admission_ceiling_max": 0.0,
+        "atom_admission_ok": true,
+        "atom_load_max": 0.3,
+        "atom_load_min": 0.3,
+        "atom_peak_max": 765.0224118697082,
+        "atom_peak_ok": true,
+        "atom_w_guard": "normalized within-row w in [0.0625,4] (raw w1 in [1/4,4] via build_blocks W_CLIP; shape_ok w.max<=4)",
+        "atom_w_max": 3.971948200467564,
+        "atom_w_min": 0.2181326125675706,
+        "atom_w_ok": true,
+        "mixable": true,
+        "n_atoms": 13174,
+        "representation": "mixable approximate design measure (R25 8)",
+        "weighted_budget_load": 0.30000000000000004,
+        "weighted_dose_band_ok": true,
+        "weighted_dose_dev": 0.015419423619008499,
+        "weights_normalized_ok": true,
+        "weights_sum": 1.0
+      },
+      "note": "Mixable design measure xi_7 (R25 8): the offline support-expanding Frank-Wolfe SUPPORT AND WEIGHTS, NOT a rounded 972-row realization. dev_gap_probe.primal_probe (multiplicative ascent + dose/budget projection over the admitted, peak-guarded atom set = full safety cone budget+dose+peak+admission) was run via the frozen pipeline on the SIX m1_dev (632900) prototype PRESCAN ESTIMATES at the primary corner (nu=2000, b=0.60). Prototypes are the six m1_dev scenes ONLY (leakage firewall: never the bridge scenes). All FW mass landed at palette level 0 (uniform illumination, load 0.30); no D_gain/gamma atoms.",
+      "params": {
+        "corner": {
+          "b": 0.6,
+          "nu": 2000.0
+        },
+        "deployed_scat32_sha256": "ff133328f00b0867b09129fa4930900ccb7f393719d58c56208c5c2ac44c4a51",
+        "iters": 50,
+        "level0_load": 0.3,
+        "n_atoms": 13174,
+        "per_scene": [
+          {
+            "G_tot": 26624,
+            "L": 11,
+            "L_load": 6,
+            "gain_mass": 0.0,
+            "iters": 49,
+            "ld_best": 3818.853654875391,
+            "level_mass": [
+              0.9999999999999925,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "load_mass": 0.9999999999999997,
+            "n_support_geoms": 12764,
+            "scene": "m1_dev_chirp",
+            "setup_s": 67.8,
+            "solve_s": 334.8
+          },
+          {
+            "G_tot": 26624,
+            "L": 11,
+            "L_load": 6,
+            "gain_mass": 0.0,
+            "iters": 49,
+            "ld_best": 3829.2243257044347,
+            "level_mass": [
+              0.9999999999999882,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "load_mass": 1.0000000000000002,
+            "n_support_geoms": 11905,
+            "scene": "m1_dev_contour",
+            "setup_s": 34.0,
+            "solve_s": 264.9
+          },
+          {
+            "G_tot": 26624,
+            "L": 11,
+            "L_load": 6,
+            "gain_mass": 0.0,
+            "iters": 49,
+            "ld_best": 3801.172679058294,
+            "level_mass": [
+              0.9999999999999883,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "load_mass": 1.0,
+            "n_support_geoms": 11951,
+            "scene": "m1_dev_glyph",
+            "setup_s": 12.2,
+            "solve_s": 146.0
+          },
+          {
+            "G_tot": 26624,
+            "L": 11,
+            "L_load": 6,
+            "gain_mass": 0.0,
+            "iters": 49,
+            "ld_best": 3750.288985448052,
+            "level_mass": [
+              0.9999999999999821,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "load_mass": 1.0,
+            "n_support_geoms": 12693,
+            "scene": "m1_dev_maze",
+            "setup_s": 12.2,
+            "solve_s": 188.0
+          },
+          {
+            "G_tot": 26624,
+            "L": 11,
+            "L_load": 6,
+            "gain_mass": 0.0,
+            "iters": 49,
+            "ld_best": 3851.8562421246925,
+            "level_mass": [
+              0.9999999999999877,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "load_mass": 0.9999999999999999,
+            "n_support_geoms": 9968,
+            "scene": "m1_dev_microtexture",
+            "setup_s": 22.4,
+            "solve_s": 177.9
+          },
+          {
+            "G_tot": 26624,
+            "L": 11,
+            "L_load": 6,
+            "gain_mass": 0.0,
+            "iters": 49,
+            "ld_best": 3820.7993198701643,
+            "level_mass": [
+              0.9999999999999873,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "load_mass": 0.9999999999999999,
+            "n_support_geoms": 13524,
+            "scene": "m1_dev_spokes",
+            "setup_s": 12.1,
+            "solve_s": 134.5
+          }
+        ],
+        "prototypes": [
+          "m1_dev_chirp",
+          "m1_dev_contour",
+          "m1_dev_glyph",
+          "m1_dev_maze",
+          "m1_dev_microtexture",
+          "m1_dev_spokes"
+        ],
+        "prune_cumulative_mass": 0.9995,
+        "solver": "dev_gap_probe.primal_probe (R18 support-expanding primal)"
+      },
+      "provenance": "reconstructed from _l7_measures.npz (frozen FW marginals) + deterministic prescan-estimate rebuild of GVAL",
+      "role": "offline support-expanding FW geometry bank (RLMI library element)",
+      "sha256": "9912b31c086c62a0d81fe33c3962a681126153ca71608ba6c4e7a0b01e55c432"
+    }
+  },
+  "build_wall_s_L0toL6": 1.44,
+  "dictionary": "oed_design_v4.dictionary_families (R10, 13 families) + oed_design._shape_support cyclic translations",
+  "dictionary_manifest": {
+    "families": {
+      "bar16x1": {
+        "k": 16,
+        "n_translations": 1024,
+        "powers": [
+          0,
+          1
+        ],
+        "sha256": "892aa54478a533bd3146e235d0b2396bcc0af0fdc94df3f6b6ade3bb7625b808"
+      },
+      "bar1x16": {
+        "k": 16,
+        "n_translations": 1024,
+        "powers": [
+          0,
+          1
+        ],
+        "sha256": "62f5d65571e96242f3162a4cfe24474a89a5f3335613a443a31c68b381a6dc23"
+      },
+      "bar2x8": {
+        "k": 16,
+        "n_translations": 1024,
+        "powers": [
+          0,
+          1
+        ],
+        "sha256": "4f4616f368ca2d56daf0ba237778c81c33b8025ef71e73ecd946d8273c990b44"
+      },
+      "bar8x2": {
+        "k": 16,
+        "n_translations": 1024,
+        "powers": [
+          0,
+          1
+        ],
+        "sha256": "2be2e8ea7880bdc6d4499da1b9223231abdfea7a4e0d68d1c8e316dae2bd8c12"
+      },
+      "lblob6x6": {
+        "k": 16,
+        "n_translations": 1024,
+        "powers": [
+          0,
+          1
+        ],
+        "sha256": "e2261d7098b73b20be18b4fc8fc2fa949ed672d6a5d045861ac7ce90be57abd7"
+      },
+      "rect4x4": {
+        "k": 16,
+        "n_translations": 1024,
+        "powers": [
+          0,
+          1
+        ],
+        "sha256": "2bc35923988d0e1fd645b6b622b881c9321270200f5f06630b0b848c05cc7a0b"
+      },
+      "rect4x8": {
+        "k": 32,
+        "n_translations": 1024,
+        "powers": [
+          0,
+          1
+        ],
+        "sha256": "436e94bf76eb0dcb5780d85bcf026ce3c2c82b1683f5c0e2afae0846a8fcca65"
+      },
+      "rect8x4": {
+        "k": 32,
+        "n_translations": 1024,
+        "powers": [
+          0,
+          1
+        ],
+        "sha256": "540f069c3956a4ce5a4eea56d1ed62faae7ad8166d8c2127b757d83468d13a49"
+      },
+      "ring16": {
+        "k": 16,
+        "n_translations": 1024,
+        "powers": [
+          0,
+          1
+        ],
+        "sha256": "32055e8a55e8039c63e1d8c80739c3560b198cf19b21041063e25cd3cb27c1ae"
+      },
+      "scat16": {
+        "k": 16,
+        "n_translations": 1024,
+        "powers": [
+          0,
+          1
+        ],
+        "sha256": "7fa66fafe1b0b0eace0e314895642b53c75ba9cb451303bb9c6eb73892c9f58a"
+      },
+      "scat32": {
+        "k": 32,
+        "n_translations": 1024,
+        "powers": [
+          0,
+          1
+        ],
+        "sha256": "0c8058a065c75d694ffc5173a058720fb8a720dc33c746d867f55fb3333ce54e"
+      },
+      "solid4x4": {
+        "k": 16,
+        "n_translations": 1024,
+        "powers": [
+          0,
+          1
+        ],
+        "sha256": "2bc35923988d0e1fd645b6b622b881c9321270200f5f06630b0b848c05cc7a0b"
+      },
+      "sq32c": {
+        "k": 32,
+        "n_translations": 1024,
+        "powers": [
+          0,
+          1
+        ],
+        "sha256": "e2177346883872d35fdd96808a7f6f23e629ae4e95122678ccbb219eab6255df"
+      }
+    },
+    "sha256_global": "710aa49f43d02acbcdfd49d1dad0f9e62d5a33e5e7bb343f3159f58fb15a52e8",
+    "side": 32
+  },
+  "dose_band_hard": 0.05,
+  "l7_solve_wall_min": 23.45,
+  "library": "RLMI/RGLI 8-bank pattern library as MIXABLE DESIGN MEASURES",
+  "n": 1024,
+  "peak_physical": 1536.0,
+  "primary_corner": {
+    "b": 0.6,
+    "nu": 2000
+  },
+  "representation": "each L_k = xi_k = {(atom row, normalized weight)}; guards verified on the measure (weighted dose in band, weighted budget, per-atom peak/admission); exact 972-row materialization deferred to T-C/T-D over the union pool (R25 9).",
+  "schema": {
+    "atom_admission": "(A,) bool",
+    "atom_incident": "(A,) row sum (incident cost)",
+    "atom_k": "(A,) support size",
+    "atom_load": "(A,) per-atom deployment load b*amp at (nu=2000,b=0.60)",
+    "atom_peak": "(A,) row max",
+    "meta": "json (family, params, guards, sha256)",
+    "rows": "(A,1024) atom pool (physical patterns = per-pixel dose vectors)",
+    "weights": "(A,) normalized, sum=1"
+  },
+  "side": 32,
+  "spec": "docs/ROUND63_GPT_ROUND25_RULING_RAW.md 8-9 (mixable-measure amendment to R24 2.2)",
+  "w_clip": [
+    0.25,
+    4.0
+  ]
+}
