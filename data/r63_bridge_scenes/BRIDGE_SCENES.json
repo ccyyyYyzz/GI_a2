@@ -1,0 +1,787 @@
+{
+  "cohort": "ROUND63 DEV bridge scenes (T-A)",
+  "spec": [
+    "docs/ROUND63_BRIDGE_BUILD_PLAN.md (interface contract)",
+    "docs/ROUND63_GPT_ROUND24_RULING_RAW.md section 3.1",
+    "docs/ROUND63_GPT_ROUND23_RULING_RAW.md section 3.2 (T2-B)"
+  ],
+  "side": 32,
+  "value_range": [
+    0.0,
+    1.0
+  ],
+  "n_scenes": 16,
+  "seed_base": 650000,
+  "seed_disjoint_from": [
+    632900,
+    633000
+  ],
+  "blind_generation": "no reconstruction, no arm, no bucket-signal quality metric was computed during generation",
+  "sha256_field": "sha256 of the .npz file bytes; gen_params.x_sha256 is the reproducible content hash of x.tobytes()",
+  "scenes": [
+    {
+      "scene_id": "bridge_contour_0",
+      "group": "contour",
+      "gen_params": {
+        "generator": "code/round63/detail24.py :: _GEN['contour'] via _generate01 (FROZEN, verbatim; fresh seed)",
+        "family": "contour",
+        "seed": 650000,
+        "side": 32,
+        "params_ref": "detail24.PARAMS['contour'] (unchanged)",
+        "params_snapshot": {
+          "bg_level_range": [
+            0.05,
+            0.15
+          ],
+          "fg_level": 1.0,
+          "n_shapes_range": [
+            4,
+            7
+          ],
+          "outline_width_choices": [
+            1,
+            2
+          ],
+          "shape_types": [
+            "ellipse",
+            "polygon",
+            "curve"
+          ],
+          "center_frac_range": [
+            0.28,
+            0.72
+          ],
+          "radius_frac_range": [
+            0.14,
+            0.42
+          ],
+          "polygon_vertices_range": [
+            3,
+            6
+          ],
+          "curve_freq_range": [
+            1.0,
+            3.0
+          ]
+        },
+        "x_sha256": "49587e6b37f4faaf11ee53387c19704e11efe8ea58d639f301d5c01952cac803"
+      },
+      "sha256": "5ce163381b75283f17563a41c00aa376727cf7d122dd449ce76b2545418c50f4",
+      "stats": {
+        "mean": 0.3825142862059493,
+        "std": 0.4363085783553794,
+        "min": 0.0742234686308815,
+        "max": 1.0,
+        "rms_contrast": 1.140633419690021,
+        "michelson": 0.8618100036010556,
+        "spectral_centroid": 0.3286279839670811
+      }
+    },
+    {
+      "scene_id": "bridge_contour_1",
+      "group": "contour",
+      "gen_params": {
+        "generator": "code/round63/detail24.py :: _GEN['contour'] via _generate01 (FROZEN, verbatim; fresh seed)",
+        "family": "contour",
+        "seed": 650001,
+        "side": 32,
+        "params_ref": "detail24.PARAMS['contour'] (unchanged)",
+        "params_snapshot": {
+          "bg_level_range": [
+            0.05,
+            0.15
+          ],
+          "fg_level": 1.0,
+          "n_shapes_range": [
+            4,
+            7
+          ],
+          "outline_width_choices": [
+            1,
+            2
+          ],
+          "shape_types": [
+            "ellipse",
+            "polygon",
+            "curve"
+          ],
+          "center_frac_range": [
+            0.28,
+            0.72
+          ],
+          "radius_frac_range": [
+            0.14,
+            0.42
+          ],
+          "polygon_vertices_range": [
+            3,
+            6
+          ],
+          "curve_freq_range": [
+            1.0,
+            3.0
+          ]
+        },
+        "x_sha256": "1dc7ce1c77baa7f50483d664b0ee53ba917f076025d2419ce041997d25937105"
+      },
+      "sha256": "a1ac21fd27b78ca89e77cee2d2c791358da70bb86eeab024cd6937c836a0983a",
+      "stats": {
+        "mean": 0.5335632358247583,
+        "std": 0.4355703412334295,
+        "min": 0.12681673397541593,
+        "max": 1.0,
+        "rms_contrast": 0.8163424913640167,
+        "michelson": 0.774911518170296,
+        "spectral_centroid": 0.38972284689107456
+      }
+    },
+    {
+      "scene_id": "bridge_contour_2",
+      "group": "contour",
+      "gen_params": {
+        "generator": "code/round63/detail24.py :: _GEN['contour'] via _generate01 (FROZEN, verbatim; fresh seed)",
+        "family": "contour",
+        "seed": 650002,
+        "side": 32,
+        "params_ref": "detail24.PARAMS['contour'] (unchanged)",
+        "params_snapshot": {
+          "bg_level_range": [
+            0.05,
+            0.15
+          ],
+          "fg_level": 1.0,
+          "n_shapes_range": [
+            4,
+            7
+          ],
+          "outline_width_choices": [
+            1,
+            2
+          ],
+          "shape_types": [
+            "ellipse",
+            "polygon",
+            "curve"
+          ],
+          "center_frac_range": [
+            0.28,
+            0.72
+          ],
+          "radius_frac_range": [
+            0.14,
+            0.42
+          ],
+          "polygon_vertices_range": [
+            3,
+            6
+          ],
+          "curve_freq_range": [
+            1.0,
+            3.0
+          ]
+        },
+        "x_sha256": "87aee0f882068f8c7e7633c61f439e840c056501da124b8c585b02c9fc147afd"
+      },
+      "sha256": "8c62d8ab90ce62d87b2e9c228a8b8bf4378b386ecdcd91e073ef7d9c4a9ea678",
+      "stats": {
+        "mean": 0.530604505811274,
+        "std": 0.4400564814729887,
+        "min": 0.11805323660687117,
+        "max": 1.0,
+        "rms_contrast": 0.8293493113108023,
+        "michelson": 0.7888235859588484,
+        "spectral_centroid": 0.29177251929620585
+      }
+    },
+    {
+      "scene_id": "bridge_contour_3",
+      "group": "contour",
+      "gen_params": {
+        "generator": "code/round63/detail24.py :: _GEN['contour'] via _generate01 (FROZEN, verbatim; fresh seed)",
+        "family": "contour",
+        "seed": 650003,
+        "side": 32,
+        "params_ref": "detail24.PARAMS['contour'] (unchanged)",
+        "params_snapshot": {
+          "bg_level_range": [
+            0.05,
+            0.15
+          ],
+          "fg_level": 1.0,
+          "n_shapes_range": [
+            4,
+            7
+          ],
+          "outline_width_choices": [
+            1,
+            2
+          ],
+          "shape_types": [
+            "ellipse",
+            "polygon",
+            "curve"
+          ],
+          "center_frac_range": [
+            0.28,
+            0.72
+          ],
+          "radius_frac_range": [
+            0.14,
+            0.42
+          ],
+          "polygon_vertices_range": [
+            3,
+            6
+          ],
+          "curve_freq_range": [
+            1.0,
+            3.0
+          ]
+        },
+        "x_sha256": "049acedda7815dd9830aef0887b795ad1603254bb795823d72c6aad7c0e97c2c"
+      },
+      "sha256": "05a6992787ac80b969971cbfad32a5bfaeeb2b2a298f1f8e0a5d3ab014678053",
+      "stats": {
+        "mean": 0.5377391195432926,
+        "std": 0.42410429716339376,
+        "min": 0.1486418316768553,
+        "max": 1.0,
+        "rms_contrast": 0.7886803874778349,
+        "michelson": 0.7411868041409232,
+        "spectral_centroid": 0.3257179522424934
+      }
+    },
+    {
+      "scene_id": "bridge_twopop_0",
+      "group": "twopop",
+      "gen_params": {
+        "recipe": "R23 Theorem T2-B two-population witness (docs/ROUND63_GPT_ROUND23_RULING_RAW.md section 3.2)",
+        "seed": 650100,
+        "side": 32,
+        "brightness_ratio_R": 4,
+        "bg_level": 0.02,
+        "bright_level": 0.8,
+        "dim_level": 0.2,
+        "fine_amp_frac_of_bright": 0.25,
+        "disk_radius_frac": 0.34,
+        "plateau_blur_sigma": 2.5,
+        "disk_center_row_col": [
+          14.5923,
+          13.4409
+        ],
+        "stroke_period_px": 3,
+        "stroke_phases_vhd": [
+          0,
+          2,
+          2
+        ],
+        "stroke_region": "complement of plateau (plateau<=0.5); disjoint",
+        "plateau_core_mean_measured": 0.7796425793046108,
+        "dim_structure_mean_measured": 0.2,
+        "brightness_ratio_measured": 3.8982128965230536,
+        "x_sha256": "d902dfc5cb7d2d8c14c3e04c357ffb25ad5ad4369b77855d6d274e8fd5ae35c9"
+      },
+      "sha256": "b7c6423f54742178d67839d623d480cf3474d14fde7b815cda6b5ba8506dde49",
+      "stats": {
+        "mean": 0.342059755681774,
+        "std": 0.25924272687763694,
+        "min": 0.02,
+        "max": 0.8,
+        "rms_contrast": 0.7578872479778545,
+        "michelson": 0.9512195121951219,
+        "spectral_centroid": 0.11090154839323452
+      }
+    },
+    {
+      "scene_id": "bridge_twopop_1",
+      "group": "twopop",
+      "gen_params": {
+        "recipe": "R23 Theorem T2-B two-population witness (docs/ROUND63_GPT_ROUND23_RULING_RAW.md section 3.2)",
+        "seed": 650101,
+        "side": 32,
+        "brightness_ratio_R": 8,
+        "bg_level": 0.02,
+        "bright_level": 0.8,
+        "dim_level": 0.1,
+        "fine_amp_frac_of_bright": 0.125,
+        "disk_radius_frac": 0.34,
+        "plateau_blur_sigma": 2.5,
+        "disk_center_row_col": [
+          16.4015,
+          13.7265
+        ],
+        "stroke_period_px": 4,
+        "stroke_phases_vhd": [
+          1,
+          3,
+          5
+        ],
+        "stroke_region": "complement of plateau (plateau<=0.5); disjoint",
+        "plateau_core_mean_measured": 0.7787191797478366,
+        "dim_structure_mean_measured": 0.09999999999999998,
+        "brightness_ratio_measured": 7.787191797478367,
+        "x_sha256": "52a904784dcf0f698965bd51f1ec8d92ad80c3d56d27ba36df544c6c785c73f2"
+      },
+      "sha256": "fec77c8adc04fd6f232ecfc2379086c584522e35d567f61aa4f5946d02ac5f40",
+      "stats": {
+        "mean": 0.29781752133993217,
+        "std": 0.28745073465452053,
+        "min": 0.02,
+        "max": 0.8,
+        "rms_contrast": 0.9651908100008029,
+        "michelson": 0.9512195121951219,
+        "spectral_centroid": 0.09211401412464422
+      }
+    },
+    {
+      "scene_id": "bridge_twopop_2",
+      "group": "twopop",
+      "gen_params": {
+        "recipe": "R23 Theorem T2-B two-population witness (docs/ROUND63_GPT_ROUND23_RULING_RAW.md section 3.2)",
+        "seed": 650102,
+        "side": 32,
+        "brightness_ratio_R": 16,
+        "bg_level": 0.02,
+        "bright_level": 0.8,
+        "dim_level": 0.05,
+        "fine_amp_frac_of_bright": 0.0625,
+        "disk_radius_frac": 0.34,
+        "plateau_blur_sigma": 2.5,
+        "disk_center_row_col": [
+          16.8535,
+          10.87
+        ],
+        "stroke_period_px": 4,
+        "stroke_phases_vhd": [
+          2,
+          2,
+          3
+        ],
+        "stroke_region": "complement of plateau (plateau<=0.5); disjoint",
+        "plateau_core_mean_measured": 0.7762134012443671,
+        "dim_structure_mean_measured": 0.04999999999999999,
+        "brightness_ratio_measured": 15.524268024887345,
+        "x_sha256": "b7b96d5cbc3dd3da6c6b705b0fc118bb5f8477d1b995a840a1bf8141dbcba184"
+      },
+      "sha256": "304ccbf473b9b2d2a876ff81477b613f050e932b30515c92fde49c279f3547a0",
+      "stats": {
+        "mean": 0.28328199583166463,
+        "std": 0.3025547619727556,
+        "min": 0.02,
+        "max": 0.8,
+        "rms_contrast": 1.0680338546913637,
+        "michelson": 0.9512195121951219,
+        "spectral_centroid": 0.09391634444902124
+      }
+    },
+    {
+      "scene_id": "bridge_twopop_3",
+      "group": "twopop",
+      "gen_params": {
+        "recipe": "R23 Theorem T2-B two-population witness (docs/ROUND63_GPT_ROUND23_RULING_RAW.md section 3.2)",
+        "seed": 650103,
+        "side": 32,
+        "brightness_ratio_R": 32,
+        "bg_level": 0.02,
+        "bright_level": 0.8,
+        "dim_level": 0.025,
+        "fine_amp_frac_of_bright": 0.03125,
+        "disk_radius_frac": 0.34,
+        "plateau_blur_sigma": 2.5,
+        "disk_center_row_col": [
+          13.4605,
+          12.1718
+        ],
+        "stroke_period_px": 3,
+        "stroke_phases_vhd": [
+          1,
+          1,
+          0
+        ],
+        "stroke_region": "complement of plateau (plateau<=0.5); disjoint",
+        "plateau_core_mean_measured": 0.7774035565388672,
+        "dim_structure_mean_measured": 0.024999999999999998,
+        "brightness_ratio_measured": 31.09614226155469,
+        "x_sha256": "cca5f7879397fa5700d4856e304f511818b16ba653e042dcb67337ce1a5c49a5"
+      },
+      "sha256": "0f44837d0a4853f44d96f697a95aeb9cf30b5cb7264666d278d554c9f554b350",
+      "stats": {
+        "mean": 0.2671055285664057,
+        "std": 0.30927569303778024,
+        "min": 0.02,
+        "max": 0.8,
+        "rms_contrast": 1.1578782913918255,
+        "michelson": 0.9512195121951219,
+        "spectral_centroid": 0.10051648194681019
+      }
+    },
+    {
+      "scene_id": "bridge_microtex_0",
+      "group": "microtex",
+      "gen_params": {
+        "generator": "code/round63/detail24.py :: _GEN['microtexture'] via _generate01 (FROZEN, verbatim; fresh seed)",
+        "family": "microtexture",
+        "seed": 650200,
+        "side": 32,
+        "params_ref": "detail24.PARAMS['microtexture'] (unchanged)",
+        "params_snapshot": {
+          "fg_level": 1.0,
+          "sigma_pairs": [
+            [
+              0.8,
+              1.6
+            ],
+            [
+              1.0,
+              2.0
+            ],
+            [
+              1.2,
+              2.4
+            ],
+            [
+              1.5,
+              3.0
+            ]
+          ],
+          "rectify": "abs",
+          "renorm": "peak",
+          "conv_mode": "reflect"
+        },
+        "realized_sigma_pair": [
+          1.5,
+          3.0
+        ],
+        "realized_sigma_pair_index": 3,
+        "x_sha256": "cff2c60be0572e82a6e1405a2c67295e8ffb9c0830091d0114f2b10e4adfeea3"
+      },
+      "sha256": "8056f8309c750ca0cf69c8c240c67c7294cd093980a57ac268762f54a2bf25e9",
+      "stats": {
+        "mean": 0.2906087015090155,
+        "std": 0.1957748392107235,
+        "min": 0.0004745848959154257,
+        "max": 1.0,
+        "rms_contrast": 0.6736716354126444,
+        "michelson": 0.9990512804561352,
+        "spectral_centroid": 0.4243950054087232
+      }
+    },
+    {
+      "scene_id": "bridge_microtex_1",
+      "group": "microtex",
+      "gen_params": {
+        "generator": "code/round63/detail24.py :: _GEN['microtexture'] via _generate01 (FROZEN, verbatim; fresh seed)",
+        "family": "microtexture",
+        "seed": 650201,
+        "side": 32,
+        "params_ref": "detail24.PARAMS['microtexture'] (unchanged)",
+        "params_snapshot": {
+          "fg_level": 1.0,
+          "sigma_pairs": [
+            [
+              0.8,
+              1.6
+            ],
+            [
+              1.0,
+              2.0
+            ],
+            [
+              1.2,
+              2.4
+            ],
+            [
+              1.5,
+              3.0
+            ]
+          ],
+          "rectify": "abs",
+          "renorm": "peak",
+          "conv_mode": "reflect"
+        },
+        "realized_sigma_pair": [
+          1.5,
+          3.0
+        ],
+        "realized_sigma_pair_index": 3,
+        "x_sha256": "421b8fc11d236b529ee38acbceed75fb92ae91ecce79c9924cf3ef9af2ace35a"
+      },
+      "sha256": "68709da2c67b61dd17dd9ff7d8a23b4f8e775bab53f2806e9a44861125dd8fc9",
+      "stats": {
+        "mean": 0.22130541190257194,
+        "std": 0.17357757832052714,
+        "min": 0.0003948640249178743,
+        "max": 1.0,
+        "rms_contrast": 0.784334991305786,
+        "michelson": 0.9992105836622768,
+        "spectral_centroid": 0.383282377912995
+      }
+    },
+    {
+      "scene_id": "bridge_microtex_2",
+      "group": "microtex",
+      "gen_params": {
+        "generator": "code/round63/detail24.py :: _GEN['microtexture'] via _generate01 (FROZEN, verbatim; fresh seed)",
+        "family": "microtexture",
+        "seed": 650202,
+        "side": 32,
+        "params_ref": "detail24.PARAMS['microtexture'] (unchanged)",
+        "params_snapshot": {
+          "fg_level": 1.0,
+          "sigma_pairs": [
+            [
+              0.8,
+              1.6
+            ],
+            [
+              1.0,
+              2.0
+            ],
+            [
+              1.2,
+              2.4
+            ],
+            [
+              1.5,
+              3.0
+            ]
+          ],
+          "rectify": "abs",
+          "renorm": "peak",
+          "conv_mode": "reflect"
+        },
+        "realized_sigma_pair": [
+          1.2,
+          2.4
+        ],
+        "realized_sigma_pair_index": 2,
+        "x_sha256": "cfd24bf0ec26ba2015ab5f3c98a6e620c9464f80ef0dd3cf1e35f55ba4d9abf6"
+      },
+      "sha256": "1d57f9bcf158f7edde63bb4fb0b2093cd8d9dc512f22adc1f80ea4430d79b7f9",
+      "stats": {
+        "mean": 0.284459564361585,
+        "std": 0.20753430126200118,
+        "min": 0.0001990584757901875,
+        "max": 1.0,
+        "rms_contrast": 0.7295739966689894,
+        "michelson": 0.9996019622812011,
+        "spectral_centroid": 0.4926271496047587
+      }
+    },
+    {
+      "scene_id": "bridge_microtex_3",
+      "group": "microtex",
+      "gen_params": {
+        "generator": "code/round63/detail24.py :: _GEN['microtexture'] via _generate01 (FROZEN, verbatim; fresh seed)",
+        "family": "microtexture",
+        "seed": 650203,
+        "side": 32,
+        "params_ref": "detail24.PARAMS['microtexture'] (unchanged)",
+        "params_snapshot": {
+          "fg_level": 1.0,
+          "sigma_pairs": [
+            [
+              0.8,
+              1.6
+            ],
+            [
+              1.0,
+              2.0
+            ],
+            [
+              1.2,
+              2.4
+            ],
+            [
+              1.5,
+              3.0
+            ]
+          ],
+          "rectify": "abs",
+          "renorm": "peak",
+          "conv_mode": "reflect"
+        },
+        "realized_sigma_pair": [
+          0.8,
+          1.6
+        ],
+        "realized_sigma_pair_index": 0,
+        "x_sha256": "74833200c052e78304b6a9b62bb886820f0009fa88c224c656fb7cfe213a38f5"
+      },
+      "sha256": "d67a92c17ca4a23ba6c17f52688e53e127cf7366ecd2ef5ddc64cddbfb186099",
+      "stats": {
+        "mean": 0.3357562997016804,
+        "std": 0.21135195026285683,
+        "min": 0.0005253520483174046,
+        "max": 1.0,
+        "rms_contrast": 0.6294802225621473,
+        "michelson": 0.9989498476030779,
+        "spectral_centroid": 0.6676418483657092
+      }
+    },
+    {
+      "scene_id": "bridge_control_0",
+      "group": "control",
+      "gen_params": {
+        "generator": "code/round63/detail24.py :: _GEN['maze'] via _generate01 (FROZEN, verbatim; fresh seed)",
+        "family": "maze",
+        "seed": 650300,
+        "side": 32,
+        "params_ref": "detail24.PARAMS['maze'] (unchanged)",
+        "params_snapshot": {
+          "bg_level": 0.0,
+          "fg_level": 1.0,
+          "step_choices": [
+            6,
+            8
+          ],
+          "stroke_width_choices": [
+            1,
+            2
+          ],
+          "margin": 3,
+          "fill_factor_range": [
+            0.05,
+            0.55
+          ]
+        },
+        "x_sha256": "c2e634948f563b6e20efdeee7b5a0975cf0d4de70462f882fdff3396b1ff3f0f"
+      },
+      "sha256": "bce5887fb9ba1f71167ddaa678adb6b3e41c4ede5f0d63084fd2f9f25a852eef",
+      "stats": {
+        "mean": 0.23828125,
+        "std": 0.4260320362348793,
+        "min": 0.0,
+        "max": 1.0,
+        "rms_contrast": 1.787937725838182,
+        "michelson": 1.0,
+        "spectral_centroid": 0.3754650619579942
+      }
+    },
+    {
+      "scene_id": "bridge_control_1",
+      "group": "control",
+      "gen_params": {
+        "generator": "code/round63/detail24.py :: _GEN['maze'] via _generate01 (FROZEN, verbatim; fresh seed)",
+        "family": "maze",
+        "seed": 650301,
+        "side": 32,
+        "params_ref": "detail24.PARAMS['maze'] (unchanged)",
+        "params_snapshot": {
+          "bg_level": 0.0,
+          "fg_level": 1.0,
+          "step_choices": [
+            6,
+            8
+          ],
+          "stroke_width_choices": [
+            1,
+            2
+          ],
+          "margin": 3,
+          "fill_factor_range": [
+            0.05,
+            0.55
+          ]
+        },
+        "x_sha256": "b70309567539f1e5517a2ec21a8d2ae2d702e1c15cd56fd91ae5706d42364d9b"
+      },
+      "sha256": "ee5081f265bf71f351125bc2b78915d5eabbd6a6538abc995bca2cb533a4b41d",
+      "stats": {
+        "mean": 0.28515625,
+        "std": 0.4514888294143472,
+        "min": 0.0,
+        "max": 1.0,
+        "rms_contrast": 1.5833032921927792,
+        "michelson": 1.0,
+        "spectral_centroid": 0.3917625301873136
+      }
+    },
+    {
+      "scene_id": "bridge_control_2",
+      "group": "control",
+      "gen_params": {
+        "generator": "code/round63/detail24.py :: _GEN['glyph'] via _generate01 (FROZEN, verbatim; fresh seed)",
+        "family": "glyph",
+        "seed": 650302,
+        "side": 32,
+        "params_ref": "detail24.PARAMS['glyph'] (unchanged)",
+        "params_snapshot": {
+          "alphabet": "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
+          "bg_level": 0.06,
+          "fg_level": 1.0,
+          "scale_choices": [
+            1,
+            2
+          ],
+          "n_rows_range": [
+            3,
+            6
+          ],
+          "chars_per_row_range": [
+            4,
+            9
+          ],
+          "top_margin": 3,
+          "left_margin": 2,
+          "char_gap_font_px": 1,
+          "row_gap_font_px": 2
+        },
+        "x_sha256": "a5468e40178c01c61efaf6a15cc4421f2b2f090adba4cf61a3817d8e79dab450"
+      },
+      "sha256": "4105ccc55e70f4c9d4c0f82b1bb01bd23494ecf8526fb2ce02b9caa39a79e019",
+      "stats": {
+        "mean": 0.23349609375000002,
+        "std": 0.3646716791560475,
+        "min": 0.06,
+        "max": 1.0,
+        "rms_contrast": 1.5617892072596928,
+        "michelson": 0.8867924528301886,
+        "spectral_centroid": 0.6482113422742175
+      }
+    },
+    {
+      "scene_id": "bridge_control_3",
+      "group": "control",
+      "gen_params": {
+        "generator": "code/round63/detail24.py :: _GEN['glyph'] via _generate01 (FROZEN, verbatim; fresh seed)",
+        "family": "glyph",
+        "seed": 650303,
+        "side": 32,
+        "params_ref": "detail24.PARAMS['glyph'] (unchanged)",
+        "params_snapshot": {
+          "alphabet": "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
+          "bg_level": 0.06,
+          "fg_level": 1.0,
+          "scale_choices": [
+            1,
+            2
+          ],
+          "n_rows_range": [
+            3,
+            6
+          ],
+          "chars_per_row_range": [
+            4,
+            9
+          ],
+          "top_margin": 3,
+          "left_margin": 2,
+          "char_gap_font_px": 1,
+          "row_gap_font_px": 2
+        },
+        "x_sha256": "b62496c7116686f497e8a5e8c803f2d630a4559d6e84e103d2db231a48849b16"
+      },
+      "sha256": "125b4e189c08f91080f1f25e950c61ab0e3cd241accec5a548992449b670e674",
+      "stats": {
+        "mean": 0.15546875,
+        "std": 0.2839477817723489,
+        "min": 0.06,
+        "max": 1.0,
+        "rms_contrast": 1.826397792304556,
+        "michelson": 0.8867924528301886,
+        "spectral_centroid": 0.35361983337215447
+      }
+    }
+  ]
+}
