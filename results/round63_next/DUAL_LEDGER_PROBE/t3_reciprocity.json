@@ -1,0 +1,210 @@
+{
+  "meta": {
+    "utc": "2026-07-22 14:24:35Z",
+    "python": "3.11.5",
+    "numpy": "1.24.4",
+    "runtime_s": 25.591164112091064,
+    "model": "marginal Gaussian hyperparameter Fisher (R33 eq 3.4)",
+    "compact_instance": {
+      "K": 16,
+      "n_pair": 24,
+      "N": 48
+    }
+  },
+  "theorem2_generic_verification": {
+    "worst_relerr_Jx": 3.3531364795849406e-15,
+    "worst_relerr_Jtheta": 3.4507378171790375e-15,
+    "worst_abserr_det_reciprocity": 3.6637359812630166e-15,
+    "n_cases": 8
+  },
+  "marginal_fisher_ABK": {
+    "tc16_cv15_paired": {
+      "kappa": [
+        0.3394486344407355,
+        0.001633667296404859
+      ],
+      "kappa_max": 0.3394486344407355,
+      "K_frob": 0.33945256560013715,
+      "eff_scene": 0.8847722632288967,
+      "eff_medium": 0.8847722632288977,
+      "medium_crb_tc": 22.984142156027357,
+      "medium_crb_cv": 0.06982484636571375,
+      "scene_logdet_eff": 0.8847722632288967,
+      "thm2_relerr_on_gi_fisher": 3.4102815930372115e-15
+    },
+    "tc16_cv15_random": {
+      "kappa": [
+        0.338941265288889,
+        0.008266588233952333
+      ],
+      "kappa_max": 0.338941265288889,
+      "K_frob": 0.33904205903790574,
+      "eff_scene": 0.8850583327790057,
+      "eff_medium": 0.8850583327790049,
+      "medium_crb_tc": 22.903981041490493,
+      "medium_crb_cv": 0.06950052078940852,
+      "scene_logdet_eff": 0.8850583327790057,
+      "thm2_relerr_on_gi_fisher": 2.337227483965314e-15
+    },
+    "tc16_cv15_split": {
+      "kappa": [
+        0.33980789675634054,
+        0.008542771463764285
+      ],
+      "kappa_max": 0.33980789675634054,
+      "K_frob": 0.33991526244381837,
+      "eff_scene": 0.8844660411931479,
+      "eff_medium": 0.8844660411931479,
+      "medium_crb_tc": 22.98702687532065,
+      "medium_crb_cv": 0.0699352157577238,
+      "scene_logdet_eff": 0.8844660411931479,
+      "thm2_relerr_on_gi_fisher": 1.7051809925004318e-15
+    },
+    "tc64_cv15_paired": {
+      "kappa": [
+        0.30727704317866195,
+        0.0007603464891702475
+      ],
+      "kappa_max": 0.30727704317866195,
+      "K_frob": 0.3072779839028577,
+      "eff_scene": 0.9055802951948527,
+      "eff_medium": 0.9055802951948535,
+      "medium_crb_tc": 130.73240641889691,
+      "medium_crb_cv": 0.09340734167339389,
+      "scene_logdet_eff": 0.9055802951948527,
+      "thm2_relerr_on_gi_fisher": 2.945558427271814e-15
+    },
+    "tc64_cv15_random": {
+      "kappa": [
+        0.30783255211453514,
+        0.009108114656047377
+      ],
+      "kappa_max": 0.30783255211453514,
+      "K_frob": 0.3079672675690319,
+      "eff_scene": 0.9051640232557125,
+      "eff_medium": 0.9051640232557141,
+      "medium_crb_tc": 129.93660166613589,
+      "medium_crb_cv": 0.09314282200353667,
+      "scene_logdet_eff": 0.9051640232557125,
+      "thm2_relerr_on_gi_fisher": 2.6846762758399428e-15
+    },
+    "tc64_cv15_split": {
+      "kappa": [
+        0.3074332018080821,
+        0.006528248626553331
+      ],
+      "kappa_max": 0.3074332018080821,
+      "K_frob": 0.3075025066631149,
+      "eff_scene": 0.9054462364464162,
+      "eff_medium": 0.9054462364464162,
+      "medium_crb_tc": 130.89287493745448,
+      "medium_crb_cv": 0.09355770524925952,
+      "scene_logdet_eff": 0.9054462364464162,
+      "thm2_relerr_on_gi_fisher": 2.4138451451605707e-15
+    }
+  },
+  "empirical_schedule_scan": {
+    "tc16_cv15_paired": {
+      "schedule": "paired",
+      "tc": 16.0,
+      "cv": 0.15,
+      "scene_psnr_med": 16.496533831600427,
+      "medium_tc_absrelerr_med": 0.053952768103932736,
+      "medium_cv_absrelerr_med": 0.028647230363493353,
+      "gaincorr_med": 0.9874568391585823
+    },
+    "tc16_cv15_random": {
+      "schedule": "random",
+      "tc": 16.0,
+      "cv": 0.15,
+      "scene_psnr_med": 8.412356825131965,
+      "medium_tc_absrelerr_med": 0.08653288884787741,
+      "medium_cv_absrelerr_med": 0.09339033965792026,
+      "gaincorr_med": 0.9791339677746778
+    },
+    "tc16_cv15_split": {
+      "schedule": "split",
+      "tc": 16.0,
+      "cv": 0.15,
+      "scene_psnr_med": 5.463699389822448,
+      "medium_tc_absrelerr_med": 0.10249756883043115,
+      "medium_cv_absrelerr_med": 0.11197477267958204,
+      "gaincorr_med": 0.9436393615655682
+    },
+    "tc64_cv15_paired": {
+      "schedule": "paired",
+      "tc": 64.0,
+      "cv": 0.15,
+      "scene_psnr_med": 17.577991637874334,
+      "medium_tc_absrelerr_med": 0.06397400954526772,
+      "medium_cv_absrelerr_med": 0.03775927832324509,
+      "gaincorr_med": 0.9923568539546994
+    },
+    "tc64_cv15_random": {
+      "schedule": "random",
+      "tc": 64.0,
+      "cv": 0.15,
+      "scene_psnr_med": 9.58119298079584,
+      "medium_tc_absrelerr_med": 0.09825282172491234,
+      "medium_cv_absrelerr_med": 0.09019334900606987,
+      "gaincorr_med": 0.9889029288292852
+    },
+    "tc64_cv15_split": {
+      "schedule": "split",
+      "tc": 64.0,
+      "cv": 0.15,
+      "scene_psnr_med": 5.292757724915591,
+      "medium_tc_absrelerr_med": 0.15378743459788846,
+      "medium_cv_absrelerr_med": 0.14145892837868573,
+      "gaincorr_med": 0.9319422107438345
+    }
+  },
+  "bar6_prediction_check": {
+    "tc16_cv15": {
+      "K_frob": {
+        "paired": 0.33945256560013715,
+        "random": 0.33904205903790574,
+        "split": 0.33991526244381837
+      },
+      "scene_psnr": {
+        "paired": 16.496533831600427,
+        "random": 8.412356825131965,
+        "split": 5.463699389822448
+      },
+      "medium_tc_err": {
+        "paired": 0.053952768103932736,
+        "random": 0.08653288884787741,
+        "split": 0.10249756883043115
+      },
+      "K_frob_spread_frac": 0.00257225528833393,
+      "empirical_best_scene": "paired",
+      "empirical_best_medium": "paired",
+      "no_forced_trade": true,
+      "same_schedule_best_both": true,
+      "note": "(A,B,K) confusion is ~schedule-invariant (permutation preserves full-record information); medium is empirically schedule-robust as predicted; the scene-PSNR schedule sensitivity is a differential-estimator data-processing loss (R33 sec.3), not an information trade; paired is best for BOTH ledgers -> no forced trade"
+    },
+    "tc64_cv15": {
+      "K_frob": {
+        "paired": 0.3072779839028577,
+        "random": 0.3079672675690319,
+        "split": 0.3075025066631149
+      },
+      "scene_psnr": {
+        "paired": 17.577991637874334,
+        "random": 9.58119298079584,
+        "split": 5.292757724915591
+      },
+      "medium_tc_err": {
+        "paired": 0.06397400954526772,
+        "random": 0.09825282172491234,
+        "split": 0.15378743459788846
+      },
+      "K_frob_spread_frac": 0.0022409710349251205,
+      "empirical_best_scene": "paired",
+      "empirical_best_medium": "paired",
+      "no_forced_trade": true,
+      "same_schedule_best_both": true,
+      "note": "(A,B,K) confusion is ~schedule-invariant (permutation preserves full-record information); medium is empirically schedule-robust as predicted; the scene-PSNR schedule sensitivity is a differential-estimator data-processing loss (R33 sec.3), not an information trade; paired is best for BOTH ledgers -> no forced trade"
+    }
+  }
+}
