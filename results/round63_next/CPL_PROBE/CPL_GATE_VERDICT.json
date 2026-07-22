@@ -1,0 +1,48 @@
+{
+  "generated_utc": "2026-07-22 10:18:43Z",
+  "method": "CPL-GI exact conditional binomial MLE + TV",
+  "primary_cell": "primary_sig40_tc16",
+  "kill_bar": "median dQ(CPL vs best[A1,A2]) >= 1.0 dB AND >=5/6 scenes positive; no-harm sigma=0 median >= -0.25 dB",
+  "per_scene_dQ": {
+    "bridge_contour_1": 1.069765743791351,
+    "bridge_microtex_1": -0.40514665037108877,
+    "bridge_twopop_1": 0.10128416888209024,
+    "bridge_control_2": 0.35010959505323314,
+    "bridge_contour_3": 1.0812345797655656,
+    "bridge_microtex_3": 0.4742864929966579
+  },
+  "median": 0.41219804402494553,
+  "n_positive": 5,
+  "no_harm": {
+    "control_median_dQ": 0.21337379209940543,
+    "per_scene": {
+      "bridge_contour_1": 0.0030922264575963254,
+      "bridge_microtex_1": 0.41702310233353757,
+      "bridge_twopop_1": -2.0585323300924365,
+      "bridge_control_2": 2.442472007726483,
+      "bridge_contour_3": 0.009724481865273304,
+      "bridge_microtex_3": 0.6975635913241263
+    }
+  },
+  "conditions": {
+    "a": {
+      "name": "median dQ >= 1.0 dB",
+      "value": 0.41219804402494553,
+      "threshold": 1.0,
+      "passed": false
+    },
+    "b": {
+      "name": "#scenes dQ>0 >= 5 of 6",
+      "value": 5,
+      "threshold": 5,
+      "passed": true
+    },
+    "c": {
+      "name": "no-harm sigma=0 median dQ >= -0.25 dB",
+      "value": 0.21337379209940543,
+      "threshold": -0.25,
+      "passed": true
+    }
+  },
+  "verdict": "CPL_KILL"
+}
