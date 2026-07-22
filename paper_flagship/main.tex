@@ -1,0 +1,706 @@
+% =============================================================================
+% FLAGSHIP MANUSCRIPT SKELETON  --  ROUND63 / R35 frozen architecture
+% =============================================================================
+% Spine (invisible): LIMIT -> REACH -> CLOSE -> REUSE.
+%   The manuscript is ONE causal argument, not four papers under one cover.
+%   Do NOT print "Act I-IV", "round", "campaign tree", "materials bank", or any
+%   internal method acronym in the article body. Those are production scaffolds.
+%
+% NORMATIVE SOURCE: docs/ROUND63_GPT_ROUND35_RULING_RAW.md  (every structural
+%   decision below cites its R35 clause in a comment).
+% CONTENT MAP:     docs/FLAGSHIP_MATERIALS_MAP.md  (where each piece lives + the
+%   frozen-wording register + gap list).
+% FROZEN STRINGS:  paper_flagship/FROZEN_REGISTER.md  (custody-controlled; the
+%   sentences installed verbatim below may NOT be paraphrased).
+% NOTATION:        paper_flagship/NOTATION.tex  (unified symbol table; gap G1).
+% FILL STATE:      paper_flagship/BUILD_STATUS.md  (per-section skeleton/drafted
+%   /frozen state + C1-C7 dependency ledger).
+%
+% TOOLCHAIN NOTE (R35 deliverable-1 + gap G6): no opticajnl.cls is installed in
+%   this TeX Live 2024 tree and none ships in the repo, so this skeleton uses the
+%   SAME clean two-column article preamble that paper/main_oe.tex and
+%   paper2/main_m1.tex compile against. PORT-TODO (G6): swap \documentclass for
+%   opticajnl.cls (Optica journal template) at submission prep; the LIMIT->REACH
+%   ->CLOSE->REUSE section order and 5-figure/9-page budget below already match
+%   the target Optica research-article shape and survive a PR Applied / OE
+%   transfer without reordering (R35 s2.1).
+%
+% HARD PRODUCTION CONSTRAINTS (R35 s2.1 -- enforced, tracked in BUILD_STATUS.md):
+%   * 9.0 composed Optica pages max, including references and back matter.
+%   * 5 main figures max, all earning a claim.  NO SIXTH FIGURE (R35 s6.2).
+%   * 0 main tables (the five negatives are a figure, not a table -- R35 s2.1).
+%   * abstract 95-105 words; main-text equations target 6, absolute max 8.
+%   * campaign labels / internal acronyms appear ONLY in supplement S6 & S8.
+%
+% BRANCH DISCIPLINE (R35 s8): every pass-branch-only element is tagged
+%   %% PASS-BRANCH and carries the fail-branch alternative in an adjacent
+%   %%>> FAIL-BRANCH comment block, so degradation is a mechanical edit rather
+%   than a rewrite.  Pass branch = all R34 C1-C7 bars clear; fail branch = any
+%   confirmatory DLGI bar fails.
+% =============================================================================
+
+\documentclass[10pt,twocolumn]{article}
+\usepackage{amsmath,amssymb,bm}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{placeins}
+\setcounter{dbltopnumber}{2}
+\renewcommand{\dbltopfraction}{0.95}
+\renewcommand{\dblfloatpagefraction}{0.70}
+\renewcommand{\textfraction}{0.05}
+
+% --- placeholder macros ------------------------------------------------------
+% \SPH{}      user-decision placeholder (author block, repo URL, funding).
+% \CAMPAIGN{} number/result awaiting the R34 C1-C7 confirmatory campaign (gap
+%             G2). ALL Section 5 (REUSE) numbers use this; it renders orange so
+%             a reviewer/operator can see at a glance what is not yet certified.
+% \TODOc{}    structured content TODO with a materials-map pointer (skeleton).
+% \CITE{}     citation site; the merged bibliography is gap G5, so citations are
+%             carried as visible markers instead of \cite to keep the skeleton
+%             self-contained and bibtex-free until refs are ported.
+% \figph{}    placeholder figure box (flagship figures are gap G3/G4, unbuilt).
+\newcommand{\SPH}[1]{\textcolor{red}{[#1]}}
+\newcommand{\CAMPAIGN}[1]{\textcolor{orange}{$\langle$C:\,#1$\rangle$}}
+\newcommand{\TODOc}[1]{\par\smallskip\noindent\textcolor{blue}{\footnotesize$\blacktriangleright$~TODO: #1}\par\smallskip}
+\newcommand{\CITE}[1]{\textsuperscript{\textcolor{gray}{\scriptsize[#1]}}}
+\newcommand{\figph}[3]{%
+  \setlength{\fboxsep}{4pt}%
+  \fbox{\begin{minipage}[c][#2][c]{#1\linewidth}\centering
+    \ttfamily\footnotesize\textcolor{gray}{#3}\end{minipage}}}
+
+% --- carried notation macros (mirror paper/ + paper2/; full table NOTATION.tex)
+\newcommand{\rhobar}{\bar{\rho}}
+\newcommand{\Cu}{C_{u}}
+\newcommand{\rhoR}{\rho_{R}}
+\newcommand{\Jex}{J_{\mathrm{exact}}}
+\newcommand{\tc}{t_{c}}
+\newtheorem{theorem}{Theorem}
+
+% =============================================================================
+% TITLE BLOCK  (R35 s1.3)
+% =============================================================================
+%% PASS-BRANCH  -- active title = R35 preferred pass-branch title #1 (best
+%% full-arc title: contains the inversion, makes the two halves inevitable).
+\title{Hidden dynamics set the limit---and become the signal---in ghost imaging}
+%
+% Ranked pass-branch alternates (R35 s1.3, use in order if #1 is unavailable):
+%   2. One bucket record measures both scene and medium
+%        (cleanest systems title; use ONLY after calibrated C1-C7 success)
+%   3. Ghost imaging becomes its own medium monitor
+%        (most memorable, but editorial / less explicit on the boundary half)
+%   4. Information loss becomes a second measurement in ghost imaging
+%        (elegant theorem-to-method inversion; slightly abstract)
+%   5. Information ridges and dual-use sensing in dynamic ghost imaging
+%        (safest descriptive; less luminous)
+%   6. Hidden-state limits and dual-use sensing in ghost imaging
+%        (accurate + searchable; reserve for a conservative editor)
+%
+%%>> FAIL-BRANCH  -- if any confirmatory DLGI bar fails (R35 s8.1), swap the
+%%   active \title above for title #7 or #8 and drop "become the signal":
+%%     7. Hidden-state information sets the operating boundary of ghost imaging
+%%     8. Dynamic bucket imaging at its information boundary
+%%
+% FORBIDDEN in title (R35 s1.3): DLGI, MIRROR-GI, HSGI, MOLT, "certificate",
+%   "Kalman", "adaptive", "optimal illumination", "self-calibration", "first",
+%   "new", "universal". The acronym belongs in Methods after the concept lands.
+
+\author{\SPH{author block --- USER DECISION (gap G7)}}
+\date{}
+
+\begin{document}
+\maketitle
+
+% =============================================================================
+% ABSTRACT  (R35 s2.1: 95-105 words, no displayed equations, no campaign names;
+%   beat sheet R35 s12; max three numeric callouts: +1.87 dB, 19.13x, <=1.5x
+%   pilot -- coverage / lower bounds / cohort counts / the five negatives STAY
+%   OUT of the abstract.)
+% =============================================================================
+%
+%% PASS-BRANCH thesis -- FROZEN VERBATIM (R35 s1.1). This sentence is the
+%% manuscript contract; every main-text paragraph must advance one of its three
+%% verbs -- SET, CLOSE, or IMPRINT:
+%%   "Hidden dynamics set both the operating limit and the extra scientific
+%%    output of bucket imaging: they impose a finite information ridge, leave no
+%%    material scene-recovery headroom across five preregistered count-only
+%%    escape tests, and imprint a model-certified measurement of the medium on
+%%    the same unmodified record."
+%%
+%%>> FAIL-BRANCH thesis -- FROZEN VERBATIM (R35 s1.2). If any DLGI bar fails,
+%%   switch cleanly to this sentence; do NOT preserve "second product" language
+%%   by weakening "certified" into a vague adjective:
+%%     "Hidden dynamics set a finite information-optimal ridge in bucket imaging,
+%%      and double-sided preregistered closure tests show that global power
+%%      control is the practical optimum of the declared integrated-count
+%%      scene-recovery class."
+%
+\begin{abstract}
+%% PASS-BRANCH abstract. Draft to the six-sentence beat sheet (R35 s12):
+%%   1. Dynamic hidden states are usually corrected as nuisance in bucket imaging.
+%%   2. An exact hidden-state information specialization yields a jitter-capped
+%%      finite operating ridge.
+%%   3. One global multiplier produces the frozen +1.87 dB and 19.13x results.
+%%   4. Five preregistered design/inference tests find no material count-only
+%%      scene headroom.
+%%   5. The same bucket record then estimates scene and medium with calibrated
+%%      uncertainty, no additional acquisition, and near-pilot precision.
+%%   6. State the scalar-gain/detector-model domain and the boundary-to-resource
+%%      conclusion.
+\SPH{ABSTRACT --- draft to the 6-beat sheet above, 95--105 words. Numeric
+callouts limited to $+1.87$~dB, $19.13\times$, and $\le 1.5\times$ pilot
+(\CAMPAIGN{pilot ratio}). No displayed equations, no internal campaign names,
+no DLGI acronym (R35 cut~7).}
+%%>> FAIL-BRANCH abstract: drop beats 5-6; end on the closure/practical-optimum
+%%   conclusion (R35 s8). Two numeric callouts only: +1.87 dB, 19.13x.
+\end{abstract}
+
+% =============================================================================
+% 1. INTRODUCTION -- "One hidden channel, two consequences"
+%    R35 s2.2 | claim: a dynamic hidden channel simultaneously limits scene
+%    information and can carry medium information | Fig. 1 (hero) | 1.25 pp
+%    MUST NOT CONTAIN: generic GI history; acronym list; five-negative
+%    inventory; algorithm details; audit chronology (R35 s2.2 + s3.1).
+% =============================================================================
+\section{One hidden channel, two consequences}
+\label{sec:intro}
+
+% ---- Paragraph 1: the paradox, not the background (R35 s3.1). --------------
+% Frozen opening + second sentence installed as draft text (R35 s3.1 "opening-
+% sentence strategy"). The phrase "ghost imaging becomes its own medium monitor"
+% must LAND at the end of para 1 as the promise, not after a page of setup.
+A bucket camera records one number per pattern, but that number is produced by
+a dynamic hidden channel.\CITE{GI/SPI core}
+Detector live time and medium fluctuations are usually treated as distortions to
+be corrected; here they determine both what the scene channel can never recover
+and what the same record can measure instead.
+\TODOc{Finish para 1 (2--3 sentences). State the two consequences immediately:
+the hidden state can \emph{erase} scene information, but its temporal imprint can
+\emph{identify} the medium. End the paragraph on the promise phrase
+``ghost imaging becomes its own medium monitor.'' Source: R35 s3.1 para~1;
+materials map s1a intro seed (paper/main\_oe.tex 72--141) + s2a
+(paper2/main\_m1.tex 61--97). Do NOT open with ``Ghost imaging has attracted\dots'',
+an application list, dead-time definitions, DCS history, or a contribution list
+(R35 s3.1).}
+
+% ---- Paragraph 2: the boundary (R35 s3.1). --------------------------------
+\TODOc{Para 2 (the boundary). State that an exact missing-information
+specialization turns detector-state uncertainty into a measurable scene-
+information loss and a jitter-capped ridge. Give ONLY the two empirical
+consequences: global power control and the confirmed imaging/time gains
+($+1.87$~dB, $19.13\times$). Source: R35 s3.1 para~2; identity from
+paper2 Thm~1--2 (materials map s2a 118--167) + paper-1 Eq.~(missing)
+(materials map s1a 241--378).}
+
+% ---- Paragraph 3: why the second product is logically necessary (R35 s3.1). -
+\TODOc{Para 3. A positive operating law is not yet a boundary, so five
+preregistered closure tests probe the remaining count-only degrees of freedom;
+their joint negative result motivates \emph{reusing}, not correcting away, the
+hidden medium state. Source: R35 s3.1 para~3. END the paragraph -- and the
+section -- with the thesis sentence (frozen, R35 s1.1, in the abstract comment
+block above).}
+
+% Transition out of the Introduction -- FROZEN (R35 s3.1 "transition out").
+\begin{quote}\itshape\small
+We first quantify the information removed by the hidden state before asking how
+that boundary should be used.
+\end{quote}
+
+% ---- Figure 1 (hero) is assigned to this section (R35 s2.2, s6.1). ---------
+\begin{figure*}[!t]
+  \centering
+  %% PASS-BRANCH hero: three-stage read (limit -> reach -> reuse), Stage 3
+  %% present. Full spec: figures/FIGURE_SPECS.md (Fig. 1). Flagship hero is gap
+  %% G3 -- unbuilt; existing per-paper heroes (paper/figs/fig_mechanism_p1.pdf,
+  %% paper2/figs/fig_mechanism.pdf) are candidates but no unified 3-stage arc
+  %% figure exists yet.
+  \figph{1.0}{45mm}{FIG. 1 (HERO) PLACEHOLDER --- limit $\to$ reach $\to$ close
+  $\to$ reuse. Stage 1: one hidden-state bucket experiment (label chain
+  ``simulation model''). Stage 2: scene-info arrow to finite ridge + global dial
+  + gray ``count-only scene boundary'' wall w/ five unlabeled ticks; callouts
+  $+1.87$~dB, $19.13\times$ only. Stage 3 (PASS): raw stream branches to scene
+  card + medium card ($\tc$, CV) with reciprocity symbol $\kappa_i^2$,
+  ``0 extra exposures'', ``$\le 1.5\times$ pilot''. $\le 4$ colors.}
+  %%>> FAIL-BRANCH hero (R35 s8.1): REMOVE Stage 3; the hero figure ends at the
+  %%   count-only boundary. No vague relabeling of the reuse stage.
+  \caption{\textbf{\SPH{Fig. 1 title --- the 10-second paper.}} \SPH{Caption
+  120--160 words (R35 s2.1). What the referee must grasp in ten seconds
+  (R35 s6.1): (1) hidden dynamics cap scene information; (2) a global dial
+  reaches the cap and yields a large speed gain; (3) count-only adaptations do
+  not materially move the cap; (4) the same record can instead become a medium
+  instrument. No provenance narrative in the caption (R35 cut~13).}}
+  \label{fig:hero}
+\end{figure*}
+
+% =============================================================================
+% 2. HIDDEN-STATE INFORMATION SETS A FINITE RIDGE  (LIMIT)
+%    R35 s2.2 | claim: posterior hidden-state uncertainty subtracts scene Fisher
+%    information and, under dead-time jitter, produces a finite load optimum with
+%    the frozen scaling law | Fig. 2 (theorem/ridge) | 1.45 pp
+%    MUST NOT CONTAIN: imaging galleries; M1 campaign details; the DLGI
+%    estimator; a claim that the Louis theory is new (R35 s2.2, s3.2).
+% =============================================================================
+\section{Hidden-state information sets a finite ridge}
+\label{sec:ridge}
+
+% Single claim (R35 s3.2): the conditional-score identity is the common
+% mathematical hinge -- posterior hidden-state uncertainty subtracts observable
+% scene information; the dead-time specialization turns that subtraction into the
+% finite jitter-capped operating ridge.
+%
+% CREDIT LINEAGE IN THE FIRST SENTENCE (R35 s3.2, s7.5): credit
+% Louis / Orchard-Woodbury for the missing-information identity; do NOT name the
+% abstract identity as a discovery. The contribution is the optical
+% specialization, the ridge consequence, the blind-verified scaling, and the
+% later reuse of the same geometry.
+\TODOc{Opening sentence: credit Louis (observed information in EM) and the
+Orchard--Woodbury missing-information lineage, THEN state the optical
+specialization as the contribution. Source: R35 s3.2 + s7.5; DOI fences in
+materials map s8c (Louis 10.1111/j.2517-6161.1982.tb01203.x).}
+
+% Main-text mathematical content -- KEEP ONLY these four objects (R35 s3.2).
+% Target <= 4 displayed equations here (global budget: 6 target / 8 max).
+\TODOc{Eq.~(1) -- the observed-score conditional expectation (hidden-state
+identity, single form with detector \emph{and} medium specializations; do NOT
+brand separate E1/O1 -- R35 cut~3). Import: paper2 Thm~1 ``missing-information
+identity'' $I_N = \mathbb{E}[N_T] - \lambda^2\,\mathbb{E}[\mathrm{Var}(L_T\mid
+N_T)]$ (materials map s2a 118--167, main\_m1.tex Eq.~(identity)); the
+paper-1 terminal-phase form $I_N = \mathbb{E}[N] - \rho^2\,\mathbb{E}[
+\mathrm{Var}(R_\nu\mid N)]$ (materials map s1a Eq.~(missing), main\_oe.tex
+253--257) is the same identity in the deterministic special case.}
+\TODOc{Eq.~(2) -- the missing-information identity (long-window rate). Import:
+paper2 Thm~2 $J_\infty(\rho,c_v)=\rho/[(1+\rho)(1+c_v^2\rho^2)]$
+(main\_m1.tex Eq.~(Jinf)).}
+\TODOc{Eq.~(3) -- one dead-time specialization exposing the hidden
+exposure/live-time covariance (the jitter mechanism), leading to\dots}
+\TODOc{Eq.~(4) -- the frozen ridge law + asymptotic exponents in existing
+notation. Import the jitter-capped optimum paper2 Thm~3
+$c_v^2\rho_c^2(1+2\rho_c)=1$ with $\rho_c=2^{-1/3}c_v^{-2/3}-\tfrac16+\cdots$
+(main\_m1.tex Eq.~(cubic)/(smallc)), the deterministic cube-root ridge
+$\rho^{*}(\nu)=(6\nu)^{1/3}-2/3+O(\nu^{-1/3})$ (paper-1 Eq.~(cuberoot),
+main\_oe.tex 281--284), and the crossover bridge
+$\rho_*(\nu,c_v)\sim(6\nu)^{1/3}(1+12\nu c_v^2)^{-1/3}$
+(main\_m1.tex Eq.~(crossover)) that UNIFIES the two theorem sets into one
+Act-I progression (gap G8). Frozen blind-verified pooled slope $-0.658$ vs
+$-2/3$ (materials map s2b S4).}
+
+% Frozen end-of-theory transition -- FROZEN VERBATIM (R35 s11).
+\begin{quote}\itshape\small
+The hidden-state identity therefore yields an operating point, not an estimator.
+\end{quote}
+% Frozen transition into Section 3 -- FROZEN VERBATIM (R35 s3.2 "transition out").
+\begin{quote}\itshape\small
+The theorem identifies a finite operating point; the next question is whether
+one scalar control can realize it in imaging.
+\end{quote}
+
+% MUST NOT CONTAIN here (R35 s3.2 "must not contain"): the general controlled-
+% score abstraction from R22 (R35 cut~2); composite dead-time mechanisms not used
+% in the campaign; every detector variant; MOLT; a claim the exponents are
+% universal beyond the declared asymptotic model.
+%
+% MOVED WHOLESALE TO SUPPLEMENT (R35 s3.2 last para): proof, regularity
+% conditions, exact cubic, R16 estimator-artifact closure (gap G10), Monte-Carlo
+% convergence, blind-verification tables -> Supplementary Notes S1-S3.
+
+\begin{figure*}[!t]
+  \centering
+  % Fig. 2 spec: figures/FIGURE_SPECS.md (Fig. 2). Source materials EXIST:
+  % paper2/figs/fig_mechanism.pdf (a/b), fig_jitter_validation.pdf (b/c),
+  % results/round63_theory/fig_a_ridge_map.pdf. "Make the reader believe the
+  % ridge before seeing an image" -- NO reconstruction thumbnails here (R35 s3.2).
+  \figph{1.0}{42mm}{FIG. 2 PLACEHOLDER --- hidden-state ridge. (a) complete vs
+  observed bucket experiment; hidden state + missing-information subtraction,
+  shown once. (b) jitter-capped $J(\rho;c)$ for deterministic + two jitter
+  levels, optima marked. (c) blind verification of the two frozen scaling
+  exponents on log--log axes (theory lines + independent simulation points).}
+  \caption{\textbf{\SPH{Fig. 2 title.}} \SPH{Caption 120--160 words; the ridge
+  is believed before any image is shown. Source: paper2 hero+validation figs
+  (materials map s6b) reused; (a) panel is new. No provenance narrative.}}
+  \label{fig:ridge}
+\end{figure*}
+
+% =============================================================================
+% 3. ONE GLOBAL CONTROL REACHES THE RIDGE  (REACH)
+%    R35 s2.2 | claim: a scalar source multiplier realizes the law and yields the
+%    confirmed +1.87 dB fixed-dwell gain and 19.13x elapsed-time speedup |
+%    Fig. 3 (positive imaging evidence) | 1.45 pp
+%    MUST NOT CONTAIN: OED retirement story; solver/certificate statuses; the R19
+%    narrative; all operating maps (R35 s2.2, s3.3, cut~12).
+% =============================================================================
+\section{One global control reaches the ridge}
+\label{sec:reach}
+
+% Result sequence -- FIVE beats, in this order (R35 s3.3). The elapsed-time
+% result is the visual + rhetorical HEADLINE; +1.87 dB is supporting evidence
+% that the speedup is not obtained by lowering the quality target (R35 s3.3).
+
+% Beat 1: one sentence on the M1 design.
+\TODOc{Beat 1 (one sentence). M1 design: fixed mask bank, safe comparator,
+ridge multiplier, preregistered scene cohort. Source: paper2 s4--s5
+(main\_m1.tex 232--292); full protocol -> Supplement S4. Translate internal
+labels into reader language -- no \texttt{SCAT32}, no \texttt{RIDGE\_OPERATING\_PASS}
+in the main text (R35 s3.3 "must not contain").}
+
+% Beat 2: fixed-dwell result -- FROZEN VERBATIM (register s9a; R35 s3.3 beat 2).
+% Disclose the ~37x incident-dose trade in the SAME paragraph.
+The preregistered operating-point endpoint passed: at $\nu=2000$, ridge control
+improved median fixed-dwell radiometric quality over the matched $0.60$
+comparator by $+1.87$~dB, with a family-stratified lower bound of $1.41$~dB and
+19 of 24 scenes positive. The same operating point used $37.1\times$ the incident
+dose and $2.6\times$ the detected counts.
+
+% Beat 3: elapsed-time result -- FROZEN VERBATIM (register s9a; R35 s3.3 beat 3).
+Against the safe reference, the median conservative speed ratio was
+$19.13\times$, the family-stratified nested-bootstrap 2.5th-percentile bound was
+$18.33\times$, and 21 of 24 scenes had $S_{\mathrm{gate}}>1$.
+
+% Frame sentence -- FROZEN VERBATIM (register s9a).
+These are fixed-dwell and elapsed-time benefits bought with power, not
+photon-efficiency gains.
+
+% Beat 4: one sentence on edge/failure cases.
+\TODOc{Beat 4 (one sentence). Edge/failure cases: median family gain ranges
+$+6.37$~dB (maze) to $-4.18$~dB (contour); per-scene gain correlates with bucket
+contrast at $+0.64$; no guard explains the negatives -- they delimit where one
+global multiplier is insufficiently aligned with scene structure. Source:
+paper2 s6 (main\_m1.tex 372--380). Full per-family/per-scene tables -> S5.}
+
+% Beat 5: one sentence pointing to the R19 correction + immutable provenance in
+% Methods/Supplement. Do NOT interrupt Results with the correction story
+% (R35 s3.3 beat 5). The R19 correction wording itself is FROZEN (register s9a)
+% and lives in Methods / Supplement S4.
+\TODOc{Beat 5 (one sentence). Point to the post-unblinding analysis correction
+and immutable provenance in Methods / Supplement S4; do NOT narrate it here.
+Frozen correction record: register s9a (three discrepancies; ``agreed on all 18
+audited numerical outputs''); source-of-record
+\texttt{results/round63\_m1/CORRECTION\_2026-07-19/}.}
+
+% Frozen end-of-M1 transition -- FROZEN VERBATIM (R35 s11) and its s3.3 variant.
+\begin{quote}\itshape\small
+The global dial works; the remaining question is whether richer control of the
+same scalar count can materially improve it.
+\end{quote}
+
+\begin{figure*}[!t]
+  \centering
+  % Fig. 3 spec: figures/FIGURE_SPECS.md (Fig. 3). Source EXISTS:
+  % paper2/figs/fig_speed_results.pdf (recon + fixed-dwell dQ + elapsed speed).
+  % NO gallery mosaic -- two large reconstructions only (R35 s3.3).
+  \figph{1.0}{42mm}{FIG. 3 PLACEHOLDER --- ridge realized in imaging. Left third:
+  two large reconstruction comparisons (one representative positive, one boundary
+  case) -- NO gallery. Upper right: 24-scene fixed-dwell $\Delta Q$ forest plot
+  (median, LB, zero line). Lower right: elapsed-time speed distribution with the
+  $3\times$ gate, median $19.13\times$, LB $18.33\times$, censoring symbols;
+  optional small quality-vs-time curve.}
+  \caption{\textbf{\SPH{Fig. 3 title.}} \SPH{Caption 120--160 words. Translate
+  \texttt{FAST\_RIGHT\_CENSORED} etc. into reader language (R35 s3.3). No audit
+  hashes, frozen cell IDs, solver caps, or process terminology.}}
+  \label{fig:reach}
+\end{figure*}
+
+% Frozen transition into Section 4 -- FROZEN VERBATIM (R35 s3.3 "transition out").
+\begin{quote}\itshape\small
+A global dial reaches the ridge, but that does not yet show that richer count-only
+design or inference cannot materially surpass it.
+\end{quote}
+
+% =============================================================================
+% 4. CLOSING THE INTEGRATED-COUNT SCENE CHANNEL  (CLOSE)
+%    R35 s2.2 | claim: five orthogonal preregistered interventions bracket the
+%    remaining design and inference freedoms and find no material count-only
+%    headroom | Fig. 4 (closure) | 0.95 pp
+%    HARD RULE (R35 s4.2): EXACTLY THREE PARAGRAPHS. No paragraph-per-negative.
+%    Never call this "five failed methods" -- it is "a preregistered closure
+%    experiment for the integrated-count scene channel" (R35 s4.1).
+%    MUST NOT CONTAIN: five subsections; internal method names; full campaign
+%    tables; MOLT; speculative alternatives (R35 s2.2).
+% =============================================================================
+\section{Closing the integrated-count scene channel}
+\label{sec:close}
+
+% The three closure paragraphs are AUTHORIZED to draft now (R35 s4.2) from the
+% certificate one-liners in the materials map s3a. Drafted below; numbers are
+% frozen certificate values, not campaign placeholders.
+
+% ---- Paragraph 1: design of the closure test (R35 s4.2 para 1). ------------
+The scientific question is singular: is the global ridge merely a convenient
+baseline, or is it the practical optimum of the declared count-only experiment?
+To answer it, five preregistered interventions share one common comparator, one
+common resource ledger, and a preregistered $1$~dB materiality bar on image
+quality, and they divide into the two families of freedom that remain after the
+detector has compressed each exposure to a single count: design-side freedoms
+(the illumination geometry, the measurement allocation, and the temporal order)
+and inference-side freedoms (the estimator and the count likelihood).
+
+% ---- Paragraph 2: design-side closure (R35 s4.2 para 2). -------------------
+% One sentence, three numbers (materials map s3a certs 1-3). Do NOT explain the
+% three algorithms here (R35 s4.2).
+On the design side, none of the three interventions clears the bar: scene-adapted
+geometry drawn from a dose-uniform library reaches only $+0.68$~dB over the ridge
+baseline, robust reallocation of the measurement budget is actively harmful at
+$-8.3$~dB, and optimizing the temporal order of the same patterns yields
+$+0.04$~dB.
+
+% ---- Paragraph 3: inference-side closure + conclusion (R35 s4.2 para 3). ----
+% Estimator efficiency near 99% (<=0.2 dB headroom); exact conditional likelihood
+% +0.41 dB < 1.0 (materials map s3a certs 4-5). Then the FROZEN scope sentence
+% and the FROZEN pivot.
+On the inference side, the renewal quasi-likelihood estimator is already within
+roughly one per cent of the certified count-Fisher ceiling, leaving at most
+$0.2$~dB of headroom, and replacing it with the exact conditional-count
+likelihood returns $+0.41$~dB.
+% FROZEN VERBATIM scope sentence (R35 s4.2 para 3):
+Together these tests do not prove a universal optimum over every imaginable
+optical measurement; they close the declared integrated-count class from both the
+design and software sides.
+% FROZEN VERBATIM pivot (R35 s4.2, immediately after the scope sentence):
+Once the scalar scene channel is closed, the remaining question is not how to
+manufacture another fraction of a decibel from the same count, but whether the
+hidden channel can become a second output.
+
+% Frozen end-of-closure transition beam -- FROZEN VERBATIM (R35 s11). Kept in a
+% comment so the drafted pivot above is not duplicated in print; reinstate as the
+% section-closing sentence if the pivot wording is ever cut:
+%   "Within the declared count-only class it cannot, which redirects the problem
+%    from extracting more scene information to reusing the hidden channel as a
+%    second output."
+
+\begin{figure*}[!t]
+  \centering
+  % Fig. 4 spec: figures/FIGURE_SPECS.md (Fig. 4). GAP G4 -- the double-sided
+  % closure schematic does not exist yet (the 5-certificate table has no
+  % companion figure). Title concept: "Double-sided closure of the count-only
+  % scene channel."
+  \figph{1.0}{42mm}{FIG. 4 PLACEHOLDER --- count-only closure. (a) intervention
+  map: pattern-design $\to$ count-likelihood pipeline with five intervention
+  points, all enclosed in one box ``same integrated-count observation''.
+  (b) common materiality plot: incremental dB over the ridge baseline on one
+  axis with a shaded $1$~dB region; design-side brace $\{+0.68,-8.3,+0.04\}$,
+  inference-side brace $\{\le 0.2$ headroom (capped arrow)$,+0.41\}$;
+  broken-axis inset for $-8.3$~dB. Right edge: one arrow leaving the box
+  SIDEWAYS labeled ``second scientific output''.}
+  \caption{\textbf{\SPH{Fig. 4 title: Double-sided closure of the count-only
+  scene channel.}} \SPH{Caption 120--160 words. Teach that the campaigns are
+  orthogonal probes of ONE class, not a chronology. Internal acronyms + full
+  campaign tables live in Supplement S6, nowhere else (R35 s4.3).}}
+  \label{fig:close}
+\end{figure*}
+
+% MOLT DISPOSITION (R35 s4.4): CUT MOLT ENTIRELY from this section and the whole
+% main narrative. It goes to a self-contained Supplement note S9. The Discussion
+% carries at most ONE sentence pointing to S9 (see Section 6). No MOLT acronym,
+% dose table, or null-pair figure in the main paper.
+
+% =============================================================================
+% 5. ONE RECORD, TWO SCIENTIFIC OUTPUTS  (REUSE)   %% PASS-BRANCH SECTION
+%    R35 s2.2, s5 | claim: with the raw record retained, the scene and medium
+%    ledgers obey canonical-confusion reciprocity, and DLGI extracts t_c and CV
+%    without an additional acquisition or scene penalty | Fig. 5 | 1.75 pp
+%    THIS ENTIRE SECTION APPEARS ONLY AFTER ALL R34 C1-C7 BARS PASS (R35 s5).
+%    Every quantitative result here is a \CAMPAIGN{} placeholder (gap G2).
+%    MUST NOT CONTAIN: Kalman/RTS derivation; full interval-calibration
+%    machinery; nine/27-cell tables; long DCS history; "free information"
+%    (R35 s2.2, s5.6).
+% =============================================================================
+%%>> FAIL-BRANCH (R35 s8.1): DELETE this entire printed Section 5 and REMOVE
+%%   Fig. 5. Replace with a single 0.45-page Discussion subsection titled
+%%   "What lies beyond the count-only boundary" that mentions DLGI ONLY as a
+%%   preregistered, theorem-backed outlook whose point precision was promising
+%%   but whose confirmatory certification failed; put all DLGI results in the
+%%   supplement / a later method note. Reduce the article to 7.5-8.0 pp and four
+%%   figures (Fig. 4 becomes the culmination, not the bridge).
+\section{One record, two scientific outputs}%% PASS-BRANCH
+\label{sec:reuse}
+
+% ---- 5.1 Single claim (R35 s5.1). -----------------------------------------
+\TODOc{Single-claim sentence: when the hidden medium state carries parameters of
+scientific interest, retaining the raw bucket stream allows joint scene+medium
+inference; the same canonical confusion modes tax both ledgers, and nuisance-
+orthogonal scheduling can improve both rather than trading one against the other.
+Source: R35 s5.1.}
+
+% ---- 5.2 Theory content in the main text (R35 s5.2). -----------------------
+% Use the block Fisher matrix ONCE. This is the Canonical-Confusion Ledger
+% Reciprocity result (theorem NAME kept distinct from method name DLGI --
+% register s9c, R33 s7). Import R33 Thm 1-2 (materials map s4b).
+\begin{equation}
+  \mathcal{I} \;=\;
+  \begin{bmatrix} A & C \\ C^{\top} & B \end{bmatrix}.
+  \label{eq:blockfisher}
+\end{equation}
+\TODOc{Define the two Schur-complement ledgers and the whitened cross operator
+$K=A^{-1/2}CB^{-1/2}$. State (without long proof) that $KK^{\top}$ and
+$K^{\top}K$ share the same nonzero eigenvalues $\kappa_i^2$, giving equal
+normalized determinant retention
+$\det(J_x)/\det(A)=\prod(1-\kappa_i^2)=\det(J_\theta)/\det(B)$ -- the
+Canonical-Confusion Ledger Reciprocity result. Import: R33 Thm~1--2
+(materials map s4b). Full proof, pseudoinverse version, path-vs-hyperparameter
+distinction, and the $(A,B,K)$ matrices -> Supplement S7.}
+\TODOc{State the O4-A consequence plainly (R35 s5.2, one sentence): ``Reducing
+the cross block while preserving the oracle ledgers protects both products;
+paired scheduling is not a transfer of information from scene to medium.''
+FORBIDDEN wording (register s9c / R33 s4c): no ``information conservation'', no
+``free medium information'', no ``paired schedules trade scene into medium'', no
+additive conservation law. Correct framing: ``two projections of the same
+posterior ambiguity, coupled through the posterior cross-covariance $K$''.}
+
+% ---- 5.3 Prior-art placement (R35 s5.3) -- BEFORE the DLGI result. ---------
+% DCS priority handled in THREE sentences (R35 s5.3). Drafted now (authorized).
+Dedicated diffusing-wave and diffuse-correlation spectroscopies already estimate
+medium dynamics, but they do so from purpose-built temporal intensity
+fluctuations rather than from an imaging record.\CITE{DWS/DCS}
+Pilot-interleaved and interpolated ghost-imaging monitors already insert
+dedicated reference measurements to track medium gain, at the cost of the frames
+those references consume.\CITE{pilot GI}
+The distinction claimed here is the simultaneous recovery of an unknown scene and
+quantitative medium hyperparameters from the same ordinary programmable bucket
+record --- with no pilot or reference acquisition, and with a joint scene/medium
+confusion certificate.
+
+% ---- 5.4 Confirmatory evidence sequence (R35 s5.4) -- SEVEN beats. ---------
+% ALL numbers are \CAMPAIGN{} (gap G2: the R34 C1-C7 campaign has not run).
+% R34 AUTHORIZED CLAIM until the campaign passes -- FROZEN VERBATIM (register
+% s9d). Install it as the section's load-bearing claim sentence; do NOT use
+% "two certified products" yet.
+\TODOc{Install the R34 authorized claim (frozen, register s9d, verbatim):
+``DLGI extracts a competitive point estimate of medium correlation time and
+fluctuation strength from the same bucket record used for scene reconstruction,
+with no added acquisition and no detected scene penalty; model-calibrated $\tc$
+uncertainty remains under confirmation.'' On C1-C7 PASS, restore the R33 headline
+``One bucket stream, two model-certified products\dots'' with ``model-certified''
++ validated scalar-gain domain MANDATORY (register s9d).}
+\TODOc{Beat 1 -- byte-identical / equal-ledger statement (identical photons,
+exposures, multiset; only order+inference change). \CAMPAIGN{identical-ledger
+confirm}.}
+\TODOc{Beat 2 -- model/gauge residual check in one sentence (scalar-gain model +
+gauge pass held-out residual tests). \CAMPAIGN{innovation std, lag-1, gauge
+shift}.}
+\TODOc{Beat 3 -- pilot-free vs pilot and oracle precision for $\tc$ and CV.
+\CAMPAIGN{RMSE ratios $\le 1.5\times$ pilot}.}
+\TODOc{Beat 4 -- calibrated interval coverage and width. \CAMPAIGN{coverage
+$\in[0.92,0.98]$ per cell; width $\le 1.5\times$ pilot}. (This is C1/C2, the bar
+that FAILED in the feasibility probe -- materials map s4a bar~4; the whole
+section is contingent on it clearing in the frozen-Neyman campaign.)}
+\TODOc{Beat 5 -- scene noninferiority. \CAMPAIGN{$\Delta$PSNR $\ge -0.2$~dB vs
+byte-identical linear comparator}.}
+\TODOc{Beat 6 -- schedule ordering predicted by $(A,B,K)$. \CAMPAIGN{reciprocity
+det match; paired best for both ledgers}.}
+\TODOc{Beat 7 -- one compact edge-domain statement (fast-drift, slow-drift,
+weak-CV/noise failure regions). \CAMPAIGN{edge map}.}
+% R35 s5.4 explicit cut: do NOT report gain-path correlation 0.998 in the main
+% text -- it was a seed diagnostic, not a certification endpoint (R35 cut~6).
+
+% Frozen end-of-DLGI transition -- FROZEN VERBATIM (R35 s11).
+\begin{quote}\itshape\small
+The same hidden state that fixes the scene-information boundary can therefore
+become a model-certified medium measurement without a second acquisition.
+\end{quote}
+
+\begin{figure*}[!t]
+  \centering
+  % Fig. 5 spec: figures/FIGURE_SPECS.md (Fig. 5). Source candidate:
+  % results/round63_next/DUAL_LEDGER_PROBE/figs/fig_dual_ledger.png (feasibility
+  % only; the confirmatory grid is gap G2). Title: "One bucket record, two
+  % model-certified products." Panel c (certification) is MANDATORY -- without it
+  % "model-certified" is forbidden (R35 s5.5).
+  \figph{1.0}{46mm}{FIG. 5 PLACEHOLDER (PASS-BRANCH) --- dual output. (a)
+  comparator geometry: three columns (DCS-like dedicated monitor; pilot-
+  interleaved GI; DLGI same raw record). (b) medium precision: forest/scatter of
+  pilot-free/pilot RMSE ratios for $\tc$ and CV across the confirmatory grid,
+  $1.0$ and $1.5$ lines, oracle ratios light. (c) certification (MANDATORY):
+  coverage vs cell for $\tc$ and CV, $[0.92,0.98]$ band, width-ratio inset.
+  (d) scene + schedule: scene $\Delta$PSNR vs byte-identical linear comparator,
+  $-0.2$~dB line; paired/random/ordered ranking + reciprocity prediction. Narrow
+  edge strip under b--d: fast/slow/weak-CV failure regions (NO sixth figure).}
+  \caption{\textbf{\SPH{Fig. 5 title: One bucket record, two model-certified
+  products.}} \SPH{Caption 120--160 words. Measures scientific outputs +
+  uncertainty, not path correlation or smoother fit (R35 s7.2).}}
+  \label{fig:reuse}
+\end{figure*}
+
+% =============================================================================
+% 6. DISCUSSION -- "Boundary, scope, and experimental transfer"
+%    R35 s2.2 | claim: a boundary-to-resource principle valid in a declared
+%    scalar-gain/detector model, with a direct bench falsification path |
+%    NO new visual (refer back to Figs. 1 and 5) | 0.60 pp
+%    MUST NOT CONTAIN: new results; another limitations list; a future-work
+%    catalogue; MOLT details (R35 s2.2).
+% =============================================================================
+\section{Boundary, scope, and experimental transfer}
+\label{sec:discussion}
+
+\TODOc{Discussion para 1 -- the boundary-to-resource principle. State the result
+as: hidden dynamics set the scene-information boundary, and the SAME hidden state
+supplies a second measurement once its model is validated. Refer back to Figs.~1
+and~5; introduce no new result. Source: R35 s2.2 + the s5 "transition out"
+frozen beam.}
+
+% Frozen Section-5 "transition out" beam -- FROZEN VERBATIM (R35 s5 transition):
+%   "The hidden channel therefore has a double role: it fixes the scene-
+%    information boundary and, when its model is validated, supplies a second
+%    measurement without a second acquisition."
+
+% ---- MOLT one-sentence slot (R35 s4.4). -----------------------------------
+\TODOc{MOLT slot -- EXACTLY ONE sentence pointing to Supplement S9 as evidence
+that adding a mathematically new channel is not sufficient when the channel is
+Fisher-weak. No MOLT acronym in the main text (R35 s4.4). Source: materials map
+s5a; S9 title ``Detector-side escape beyond the count-only model: a real operator
+with insufficient matched-resource image strength.''}
+
+% ---- Bench-falsification paragraph slot (R35 s7.1, s7.4). ------------------
+\TODOc{Bench-falsification paragraph -- specify the minimal rotating-diffuser
+validation: same pattern stream, one bucket detector, independently controllable
+decorrelation time, external monitor used ONLY as ground truth. State the exact
+physical violation that kills the model: spatially varying transfer rather than
+scalar gain (R35 s7.4). Source: paper2 "immediate bench test" (main\_m1.tex
+430--438) + R35 s7.1. This paragraph pre-empts "there is no experiment".}
+
+% ---- Three-sentence conclusion (R35 cut~14: no standalone conclusion if space
+% is tight; end Discussion with three sentences; do NOT repeat the abstract). --
+\TODOc{Three-sentence conclusion. Boundary-to-resource principle; declared
+scalar-gain/detector domain; the bench falsification path. Do NOT repeat the
+abstract (R35 cut~14).}
+
+% =============================================================================
+% METHODS AND PROVENANCE CAPSULE  (R35 s2.2)
+%    claim: the evidence is preregistered, simulation-only, ledger-matched, and
+%    reproducible; all physical/model assumptions explicit | no visual | 0.40 pp
+%    MUST NOT CONTAIN: commit chronology; hashes in prose; raw seed lists;
+%    correction history beyond one pointer (R35 s2.2).
+% =============================================================================
+\section*{Methods and provenance capsule}
+\label{sec:methods}
+
+\TODOc{Methods stub. Cover, tersely: (i) the exact statistical model and the
+"simulation model" labeling of every optical schematic (R35 s7.1); (ii)
+preregistered numerical campaign wording used consistently -- NOT "experiment"
+(R35 s7.1); (iii) the RQL reconstruction + physical-parameter mapping;
+(iv) the DLGI state-space (Kalman/RTS) as ONE computational implementation only
+(R35 s7.2 -- keep it out of the body); (v) ONE pointer to the R19 analysis
+correction + immutable artifacts (register s9a); (vi) code/data availability.
+Full detail -> Supplement S1-S10. Materials-map pointers: paper-1 s2-s3
+(main\_oe.tex 162--239), paper2 s4 provenance, R34 campaign spec (materials map
+s4d).}
+
+\section*{Code and data availability}
+All simulation code, preregistration documents, manifests, correction records,
+and evidence bundles are available at~\SPH{repo URL --- USER DECISION (gap G7)}.
+
+\section*{Acknowledgments}
+\SPH{funding / acknowledgments --- USER DECISION (gap G7)}
+
+% =============================================================================
+% BIBLIOGRAPHY  (gap G5 -- merged bibliography not yet built)
+% PORT-TODO: merge paper/refs.bib U paper2/refs.bib (+ ~39 new DOIs from
+% materials map s8b/s8c), dedupe, REMOVE the `companion` cross-ref key (the two
+% papers merge into this one), and clear the Groenberg full-text sign-off (S5
+% hard item). Until then, citation sites are carried as \CITE{} markers and the
+% \bibliography call is disabled so the skeleton compiles bibtex-free.
+% =============================================================================
+% \bibliographystyle{unsrt}
+% \bibliography{refs_merged}   %% enable after G5 (merged bib) is built
+
+\end{document}

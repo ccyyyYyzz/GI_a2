@@ -1,0 +1,156 @@
+% =============================================================================
+% NOTATION.tex -- unified notation table for the flagship (gap-list item G1).
+% =============================================================================
+% Reconciles the three source notation sets into ONE table:
+%   * paper/main_oe.tex        (Act-I deterministic ridge): rho, nu, C_u, Gamma, J
+%   * paper2/main_m1.tex       (Act-I jitter cap + Act-II): c_v, rho_R, rho_c, K,A,B
+%   * R33/R35 (DLGI / reuse):  t_c, CV, kappa_i, ledgers, J(rho;c)
+% Destination: Supplement Note S1 ("Unified notation and hidden-state experiment"
+%   -- R35 s9). This file is \input-able from supplement/S1_notation.tex.
+% COLLISIONS ARE FLAGGED in the last column; resolve at writing-phase freeze.
+% Standalone-compilable for proofing: `pdflatex NOTATION.tex`.
+% =============================================================================
+\documentclass[10pt]{article}
+\usepackage{amsmath,amssymb,bm}
+\usepackage[margin=2cm]{geometry}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\newcommand{\rhobar}{\bar{\rho}}
+\newcommand{\Cu}{C_{u}}
+\newcommand{\rhoR}{\rho_{R}}
+\newcommand{\tc}{t_{c}}
+\newcommand{\FLAG}[1]{\textcolor{red}{\footnotesize #1}}
+\title{Unified notation (flagship) --- gap G1 reconciliation}
+\author{}
+\date{}
+\begin{document}
+\maketitle
+
+\noindent
+Symbols are grouped by act-role (LIMIT / REACH / CLOSE / REUSE). Where the two
+source manuscripts used the same glyph for different objects, or different glyphs
+for the same object, the \textbf{Collision / note} column flags it. The
+right-hand rule of R35 applies throughout: present \emph{one} hidden-state
+identity with detector and medium specializations (R35 cut~3); do not brand
+separate \(E1\)/\(O1\) objects.
+
+\renewcommand{\arraystretch}{1.25}
+\begin{longtable}{@{}p{0.12\textwidth}p{0.40\textwidth}p{0.16\textwidth}p{0.26\textwidth}@{}}
+\toprule
+\textbf{Symbol} & \textbf{Meaning (flagship)} & \textbf{Source} &
+\textbf{Collision / note} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Symbol} & \textbf{Meaning (flagship)} & \textbf{Source} &
+\textbf{Collision / note} \\
+\midrule
+\endhead
+
+\multicolumn{4}{@{}l}{\textit{Hidden-state experiment (LIMIT, Sec.~2)}}\\
+\midrule
+$x$ & scene (object) vector & both papers, R33 & --- \\
+$\theta=\log\lambda$ & log arrival rate, the LIMIT parameter of interest &
+paper2 Thm~1 & \FLAG{$\theta$ REUSED in REUSE as the medium hyperparameter
+vector $\theta=(\log \tc,\log \mathrm{CV})$ -- \textbf{collision}; subscript or
+rename one ($\theta_\lambda$ vs $\theta_m$).} \\
+$\lambda,\lambda_i$ & Poisson arrival rate (per pattern $i$) & both & --- \\
+$\tau$ & detector dead / recovery time (mean hold) & both & --- \\
+$\rho=\lambda\tau$ & dead-time duty / detector load & both & shared, consistent \\
+$\rhobar$ & mean load across the pattern bank & paper2 & paper-1 writes the same
+as $\rho$ mean; keep $\rhobar$ for the bank mean \\
+$\nu=T/\tau$ & exposure length in dead-time slots & both & --- \\
+$T$ & total exposure / acquisition time & both & --- \\
+$N,N_T,N_i$ & integrated bucket count & both & --- \\
+$R_\nu$ & terminal residual dead-time phase $\in[0,1)$ (deterministic) &
+paper-1 Eq.~(missing) & det. special case of $L_T$ \\
+$L_T$ & hidden detector-active (live) time over $T$ (random-hold) &
+paper2 Thm~1 & generalizes $R_\nu$ \\
+$B_i\sim H$ & hidden i.i.d.\ recovery hold, mean $\tau$ & paper2 & --- \\
+$c_v=\sigma_B/\tau$ & hold-time coefficient of variation (jitter) & paper2 &
+\FLAG{glyph clash with CV (medium fluctuation strength) in REUSE -- keep $c_v$
+for detector jitter, CV for medium; state the distinction explicitly.} \\
+$I_N$ & Fisher information retained by the scalar count & both & --- \\
+$J=I_N/\nu$ & per-slot normalized count information ($J{=}1$ = ceiling) &
+paper-1 & --- \\
+$J_\infty(\rho,c_v)$ & long-window information rate & paper2 Eq.~(Jinf) & --- \\
+$J(\rho;c)$ & jitter-capped information curve (figure notation) & R35 s3.2 Fig.~2
+& same object as $J_\infty$; $c\equiv c_v$ \\
+
+\midrule
+\multicolumn{4}{@{}l}{\textit{Ridge law (LIMIT, Sec.~2)}}\\
+\midrule
+$\rho^{*}(\nu)$ & deterministic cube-root ridge $=(6\nu)^{1/3}-2/3+O(\nu^{-1/3})$
+& paper-1 Eq.~(cuberoot) & --- \\
+$\rho_c$ & jitter-capped optimum, $c_v^2\rho_c^2(1+2\rho_c)=1$ &
+paper2 Eq.~(cubic) & --- \\
+$\rho_*(\nu,c_v)$ & finite-window crossover bridge $\sim(6\nu)^{1/3}(1+12\nu
+c_v^2)^{-1/3}$ & paper2 Eq.~(crossover) & \FLAG{three near-identical glyphs
+$\rho^{*},\rho_c,\rho_*$ -- the crossover UNIFIES them (gap G8); fix one display
+convention and gloss it once.} \\
+$(1/3,-2/3)$ & ridge / cap asymptotic exponent pair & both & blind slope
+$-0.658$ \\
+
+\midrule
+\multicolumn{4}{@{}l}{\textit{Global control + imaging (REACH, Sec.~3)}}\\
+\midrule
+$\Phi$ & global source / power multiplier & both (Fig.~1) & --- \\
+$\rhoR(\nu,H)$ & production operating target (smallest maximizer) & paper2
+Eq.~(production-ridge) & $\rhoR(2000)=22.25$ \\
+$a_i$ & illumination pattern (mask) $i$ & both & --- \\
+$\hat\lambda=N/(T-N\tau)$ & classical dead-time-corrected rate (RQL point) &
+paper-1 s3 & --- \\
+$\Delta Q$ & paired radiometric-PSNR gain vs comparator (dB) & paper2 &
+frozen $+1.87$~dB \\
+$S_{\mathrm{gate}}$ & elapsed-time speed ratio & paper2 & frozen $19.13\times$ \\
+$T_{\mathrm{opt}}$ & frozen elapsed optical-time coordinate & paper2 (R19) &
+R19-corrected axis (was $\log(\nu\rho)$) \\
+
+\midrule
+\multicolumn{4}{@{}l}{\textit{Contrast / closure diagnostics (CLOSE, Sec.~4)}}\\
+\midrule
+$\Cu$ & unnormalized bucket-energy contrast & paper-1 s5--6 & mechanism variable;
+main text only via Fig.~4 reading \\
+$\Gamma$ & photon-limited-onset proxy ($\Gamma=1$ boundary) & paper-1 Fig.~1 &
+\FLAG{descriptive proxy ONLY, never a validated critical value (register s9b);
+keep out of any quantitative claim.} \\
+
+\midrule
+\multicolumn{4}{@{}l}{\textit{Dual ledgers (REUSE, Sec.~5) -- PASS-BRANCH}}\\
+\midrule
+$\theta_m=(\log \tc,\log\mathrm{CV})$ & medium hyperparameter vector & R33/R34 &
+see $\theta$ collision above \\
+$\tc$ & medium correlation (decorrelation) time & R33 & --- \\
+$\mathrm{CV}$ & medium fluctuation strength & R33 & see $c_v$ clash above \\
+$\mathcal{I}=\left[\begin{smallmatrix}A&C\\C^\top&B\end{smallmatrix}\right]$ &
+joint scene/medium Fisher block & R33 Thm~1, main Eq.~(blockfisher) & --- \\
+$A$ & scene Fisher block (scene--scene) & R33 & \FLAG{glyph $A$/$B$ also loosely
+used for ``arms'' in campaign prose -- reserve $A,B$ for the Fisher blocks in the
+main text.} \\
+$B$ & medium Fisher block (medium--medium) & R33 & see note on $A$ \\
+$C$ & scene--medium cross Fisher block & R33 & --- \\
+$K=A^{-1/2}CB^{-1/2}$ & whitened cross operator & R33 Thm~2 &
+\FLAG{$K$ also used for pattern/measurement count $k$ in paper-1 occupancy
+ladder -- use lowercase $k$ for count, capital $K$ for the cross operator.} \\
+$\kappa_i$ & canonical confusion singular values (of $K$) & R33 Thm~2 &
+$\det(J_x)/\det(A)=\prod(1-\kappa_i^2)=\det(J_\theta)/\det(B)$ \\
+$J_x,\ J_\theta$ & scene / medium Schur-complement (oracle) ledgers & R33 &
+\FLAG{$J$ clashes with the count-information $J=I_N/\nu$ in LIMIT -- disambiguate:
+$J$(scalar, load) vs $J_x,J_\theta$(matrices, ledgers).} \\
+$\kappa$ (grid) & --- reserved; do not overload with $\kappa_i$ & --- & note \\
+
+\bottomrule
+\end{longtable}
+
+\paragraph{Collision summary (resolve at freeze).}
+(1)~$\theta$ = log-rate (LIMIT) vs medium hyperparameters (REUSE) --- subscript.
+(2)~$c_v$ (detector jitter) vs $\mathrm{CV}$ (medium fluctuation) --- keep both
+glyphs, distinguish in prose. (3)~$J$ (scalar count information) vs $J_x,J_\theta$
+(ledger matrices) --- always subscript the matrices. (4)~$\rho^{*},\rho_c,\rho_*$
+--- three ridge glyphs unified by the crossover (gap G8); pick one display form.
+(5)~$K$ (cross operator) vs $k$ (pattern count) --- case discipline.
+(6)~$A,B$ (Fisher blocks) reserved; do not reuse for campaign ``arms''.
+(7)~$\Gamma$ is a descriptive proxy only (register s9b).
+
+\end{document}

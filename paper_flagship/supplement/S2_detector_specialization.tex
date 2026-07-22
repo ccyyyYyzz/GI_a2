@@ -1,0 +1,22 @@
+% =============================================================================
+% SUPPLEMENT NOTE S2 -- Detector hidden-state specialization  (R35 s9)
+% =============================================================================
+% CONTENT MANIFEST (R35 s9 "S2"):
+%   * E1/O1 proofs (present as ONE identity's detector specialization).
+%   * Live-time covariance.
+%   * Exact finite-window expressions.
+%   * Jitter model.
+%   * Correction ceiling.
+%
+% PORTED WHOLESALE FROM:
+%   * paper2/main_m1.tex Thm 1-2 + paper2/supplement_m1.tex S7 (proofs).
+%   * paper/main_oe.tex s4.1 missing-information identity Eq.(missing) (det. case).
+%   * paper/supplement.tex S1 (Gaussian-likelihood non-coercivity; ceiling
+%     N*tau >= T) for the correction-ceiling subsection.
+% =============================================================================
+\section{Detector hidden-state specialization}
+\label{supp:detector}
+
+% TODO: live-time covariance derivation; exact finite-window count expressions;
+% i.i.d. hold jitter model; correction ceiling. Frozen: terminal-phase
+% Var(R_nu) -> 1/12, censoring price rho^2/(12 nu) (materials map s1a).
