@@ -1,0 +1,12 @@
+[img] building J grid nu=2000.0 c=0.05 ...
+[img] J grid done (710s); J range [0.0504,0.7857] over rho[0.050,80.0]
+[img] bridge_contour_1     rho=  1.00 rank=1012 floor_mse=7.149e-06 | TV: rng=3.469e-08 null=4.533e-10 eff=206.052 | noTV: rng=9.113e-08 eff=78.450  (729s)
+[img] bridge_contour_1     rho=  5.70 rank=1012 floor_mse=6.150e-06 | TV: rng=2.835e-08 null=3.245e-10 eff=216.959 | noTV: rng=7.946e-08 eff=77.403  (747s)
+[img] bridge_contour_1     rho= 22.25 rank=1012 floor_mse=7.900e-06 | TV: rng=4.160e-08 null=5.182e-10 eff=189.902 | noTV: rng=1.038e-07 eff=76.087  (766s)
+[img] bridge_microtex_1    rho=  1.00 rank=1012 floor_mse=7.042e-06 | TV: rng=6.905e-08 null=2.211e-09 eff=101.985 | noTV: rng=9.929e-08 eff=70.926  (784s)
+[img] bridge_microtex_1    rho=  5.70 rank=1012 floor_mse=6.045e-06 | TV: rng=6.078e-08 null=2.040e-09 eff=99.455 | noTV: rng=8.243e-08 eff=73.329  (801s)
+[img] bridge_microtex_1    rho= 22.25 rank=1012 floor_mse=7.801e-06 | TV: rng=7.674e-08 null=2.060e-09 eff=101.663 | noTV: rng=1.110e-07 eff=70.255  (819s)
+[img] bridge_control_2     rho=  1.00 rank=1012 floor_mse=7.200e-06 | TV: rng=7.246e-08 null=7.315e-09 eff=99.358 | noTV: rng=7.415e-08 eff=97.094  (840s)
+[img] bridge_control_2     rho=  5.70 rank=1012 floor_mse=6.245e-06 | TV: rng=5.996e-08 null=6.986e-09 eff=104.160 | noTV: rng=6.670e-08 eff=93.632  (862s)
+[img] bridge_control_2     rho= 22.25 rank=1012 floor_mse=8.576e-06 | TV: rng=1.033e-07 null=7.376e-09 eff=82.992 | noTV: rng=8.587e-08 eff=99.869  (884s)
+[img] DONE

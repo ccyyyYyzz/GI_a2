@@ -1,0 +1,31 @@
+bridge_contour_1     rho= 5.70 rank=1012 floor=6.298e-03 rngerr=2.837e-05 nullerr=3.033e-07
+   band [0, 253] mu[8.22e+07,1.71e+09] floor=2.061e-06 err=1.729e-06 eff=1.192
+   band [253, 506] mu[3.27e+07,8.19e+07] floor=4.971e-06 err=3.787e-06 eff=1.313
+   band [506, 759] mu[7.78e+06,3.25e+07] floor=1.608e-05 err=7.812e-06 eff=2.058
+   band [759, 1012] mu[2.18e+02,7.74e+06] floor=6.275e-03 err=1.505e-05 eff=417.047
+bridge_contour_1     rho=22.25 rank=1012 floor=8.089e-03 rngerr=4.352e-05 nullerr=5.599e-07
+   band [0, 253] mu[4.69e+07,1.02e+09] floor=3.464e-06 err=2.920e-06 eff=1.186
+   band [253, 506] mu[1.79e+07,4.69e+07] floor=8.942e-06 err=6.477e-06 eff=1.381
+   band [506, 759] mu[4.17e+06,1.78e+07] floor=2.983e-05 err=1.278e-05 eff=2.334
+   band [759, 1012] mu[2.04e+02,4.13e+06] floor=8.047e-03 err=2.135e-05 eff=376.930
+bridge_microtex_1    rho= 5.70 rank=1012 floor=6.190e-03 rngerr=6.306e-05 nullerr=2.178e-06
+   band [0, 253] mu[8.20e+07,1.70e+09] floor=2.066e-06 err=2.128e-06 eff=0.971
+   band [253, 506] mu[3.26e+07,8.17e+07] floor=4.976e-06 err=4.711e-06 eff=1.056
+   band [506, 759] mu[7.78e+06,3.26e+07] floor=1.608e-05 err=1.279e-05 eff=1.257
+   band [759, 1012] mu[2.23e+02,7.76e+06] floor=6.167e-03 err=4.343e-05 eff=141.998
+bridge_microtex_1    rho=22.25 rank=1012 floor=7.988e-03 rngerr=7.791e-05 nullerr=2.170e-06
+   band [0, 253] mu[4.69e+07,1.02e+09] floor=3.482e-06 err=3.418e-06 eff=1.019
+   band [253, 506] mu[1.79e+07,4.68e+07] floor=8.945e-06 err=7.761e-06 eff=1.153
+   band [506, 759] mu[4.16e+06,1.78e+07] floor=2.977e-05 err=1.954e-05 eff=1.524
+   band [759, 1012] mu[2.09e+02,4.10e+06] floor=7.946e-03 err=4.719e-05 eff=168.396
+bridge_control_2     rho= 5.70 rank=1012 floor=6.395e-03 rngerr=6.167e-05 nullerr=7.084e-06
+   band [0, 253] mu[8.98e+07,2.08e+09] floor=1.736e-06 err=1.652e-06 eff=1.050
+   band [253, 506] mu[3.31e+07,8.94e+07] floor=4.768e-06 err=4.903e-06 eff=0.972
+   band [506, 759] mu[7.56e+06,3.29e+07] floor=1.637e-05 err=1.156e-05 eff=1.416
+   band [759, 1012] mu[2.18e+02,7.49e+06] floor=6.372e-03 err=4.355e-05 eff=146.321
+bridge_control_2     rho=22.25 rank=1012 floor=8.782e-03 rngerr=1.077e-04 nullerr=7.621e-06
+   band [0, 253] mu[5.48e+07,1.52e+09] floor=2.596e-06 err=2.594e-06 eff=1.001
+   band [253, 506] mu[1.79e+07,5.47e+07] floor=8.416e-06 err=8.806e-06 eff=0.956
+   band [506, 759] mu[3.77e+06,1.79e+07] floor=3.178e-05 err=2.628e-05 eff=1.209
+   band [759, 1012] mu[1.99e+02,3.76e+06] floor=8.739e-03 err=7.004e-05 eff=124.779
+BANDS DONE
