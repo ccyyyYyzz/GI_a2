@@ -84,14 +84,14 @@ post-R23. Papers remain two; digs are post-hoc/descriptive unless promoted.
 
 ## PARKED (mine, next work)
 
-8. **181 NUMERICAL_UNRESOLVED recondition**: R23 predicts load-coordinate
+12. **181 NUMERICAL_UNRESOLVED recondition**: R23 predicts load-coordinate
    LP fixes the uniform ~65s failures; would sharpen 0/299/181 to a
    post-hoc sensitivity. Next-paper material; frozen distribution stands.
-9. **Estimator-layer science** (lambda_TV × load interaction): image-domain
+13. **Estimator-layer science** (lambda_TV × load interaction): image-domain
    non-corollary fence (R23 T5.3); needs its own study.
-10. **Sub-Poissonian illumination × dead time** (R22 reach b): quantum
+14. **Sub-Poissonian illumination × dead time** (R22 reach b): quantum
     interface; archived.
-11. **T3-C nonlinear cluster continuation**: conjecture with named obstacle.
+15. **T3-C nonlinear cluster continuation**: conjecture with named obstacle.
 
 ## CLOSED BY UNDERSTANDING (no further dig)
 
