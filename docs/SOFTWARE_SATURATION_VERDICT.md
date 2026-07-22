@@ -41,6 +41,35 @@ mechanisms measured the bound as binding.
   uncertified by Fisher, where accountability (range–null audit) rather
   than "recovery" is the honest deliverable.
 
+## Adjudicated amendment (2026-07-22 ladder probe, coordinator ruling)
+
+The LADDER_PROBE (results/round63_next/LADDER_PROBE/) sharpened the
+verdict's scope in three ways:
+
+1. **Record refinement per se is WEAK (~1 dB, saturating at B≈16),
+   provably VACUOUS under within-exposure-constant gain (bucket total is
+   sufficient), and HARMFUL at fast drift (t_c=2)** — the "timestamps"
+   axis is closed as a flagship for ch.2. For ch.1, detection timestamps
+   recover only 11–15% of the jitter loss (the count already pins the
+   summed holds; Fano ≈ 0.004 at the ridge) — the observe-route
+   expectation is REFUTED for detection-only tagging (re-arm tagging
+   would recover ~100% but is a richer detector = hardware).
+2. **FLAG upheld as real**: a temporal-prior B=1 BUCKET estimator
+   (state-space smoother exploiting calibrated OU drift statistics,
+   jointly with the image) recovers **+2.2–2.5 dB over the killed
+   A2/A3 arms on the same bucket record** at moderate drift. This does
+   NOT overturn the verdict: the verdict's bar is the PRODUCT
+   novelty × simplicity × generality × image-positive, and this
+   estimator is R29's JGM-GI lane (ranked #6, killed for crowded prior
+   art — selfcal/Kalman gain tracking are mature elsewhere), not for
+   ineffectiveness (its P+ was 0.74, now confirmed).
+3. **Adjudication**: the temporal-prior estimator is ADMISSIBLE as the
+   ch.2 DATA TERM of the certified-imaging direction (information-
+   weighted consistency = gain-marginalized likelihood), where the
+   novelty burden is carried by the ledger/certificate integration, not
+   by the smoother itself. It may contribute its +2.2–2.5 dB there; it
+   may not be presented as a standalone novel method.
+
 ## Frozen consequences
 
 1. No further method campaigns on the bucket-count channels at this
