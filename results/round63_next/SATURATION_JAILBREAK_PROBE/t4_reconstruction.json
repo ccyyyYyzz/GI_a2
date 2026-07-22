@@ -1,0 +1,51 @@
+{
+  "dense": {
+    "bridge_twopop_1": {
+      "psnr_linear": 2.3981270381803363,
+      "psnr_lin_quad": 2.3981270381803363,
+      "delta_psnr": 0.0
+    },
+    "bridge_contour_0": {
+      "psnr_linear": 2.4286691869955637,
+      "psnr_lin_quad": 2.4286691869955637,
+      "delta_psnr": 0.0
+    },
+    "bridge_microtex_2": {
+      "psnr_linear": 2.5565333886616686,
+      "psnr_lin_quad": 2.5565333886616686,
+      "delta_psnr": 0.0
+    }
+  },
+  "note": "NOISELESS upside ceiling only; not a photon-cost claim",
+  "dense_mean_delta_psnr": 0.0,
+  "known_support": {
+    "s40": {
+      "support": 40,
+      "psnr_linear_only": 302.9072986917849,
+      "psnr_joint": 321.3553127628511,
+      "linear_determined": true,
+      "joint_determined": true
+    },
+    "s80": {
+      "support": 80,
+      "psnr_linear_only": 27.75595890045697,
+      "psnr_joint": 296.69680577137547,
+      "linear_determined": false,
+      "joint_determined": true
+    },
+    "s100": {
+      "support": 100,
+      "psnr_linear_only": 25.277982280803073,
+      "psnr_joint": 15.088368305059117,
+      "linear_determined": false,
+      "joint_determined": true
+    },
+    "s120": {
+      "support": 120,
+      "psnr_linear_only": 25.516854058640153,
+      "psnr_joint": 24.147338865798936,
+      "linear_determined": false,
+      "joint_determined": false
+    }
+  }
+}

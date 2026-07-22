@@ -1,0 +1,77 @@
+{
+  "C": 3600,
+  "pairs": [
+    {
+      "p1A": 58.46147542392049,
+      "p2A": 50.62804005569834,
+      "p1B": 58.4614754239205,
+      "p2B": 109.46011277624535,
+      "p2_ratio": 2.1620452353245954
+    },
+    {
+      "p1A": 47.14678257569537,
+      "p2A": 27.71266423771675,
+      "p1B": 47.14678257569536,
+      "p2B": 69.57780737546972,
+      "p2_ratio": 2.5106863338233207
+    },
+    {
+      "p1A": 46.58417294590937,
+      "p2A": 21.265959385546974,
+      "p1B": 46.58417294590937,
+      "p2B": 62.2813856125599,
+      "p2_ratio": 2.9286892015268458
+    }
+  ],
+  "models": {
+    "curve_separation_pair0": {
+      "product": 0.003208310978172986,
+      "coherent": 2.7755575615628914e-17,
+      "coherent_mc": 0.0005623237822059979,
+      "gamma_k1": 0.003208310978172986,
+      "gamma_k3": 0.0010526403961932836,
+      "gamma_k10": 0.00031594401562601293
+    },
+    "data_discrimination": {
+      "product": {
+        "median_err_productfit": 0.0326714562816266,
+        "median_err_coherentfit": 1.5195956014416263,
+        "frac_product_model_wins": 1.0
+      },
+      "coherent": {
+        "median_err_productfit": 1.6551255390128246,
+        "median_err_coherentfit": 0.019119889251599576,
+        "frac_product_model_wins": 0.0
+      }
+    },
+    "gamma_gate_demand": {
+      "detail": {
+        "k1": {
+          "I_p2_pergate": 0.0003964105700055312,
+          "gates_for_d3": 8.857579383312444
+        },
+        "k3": {
+          "I_p2_pergate": 4.145542190212686e-05,
+          "gates_for_d3": 84.69912815018255
+        },
+        "k10": {
+          "I_p2_pergate": 3.6500285449150603e-06,
+          "gates_for_d3": 961.9755158078736
+        }
+      },
+      "ratio_k3_over_k1": 9.562333509508763,
+      "ratio_k10_over_k1": 108.60478627154299,
+      "expected_k2": [
+        9.0,
+        100.0
+      ]
+    }
+  },
+  "verdict": {
+    "coherent_collapses_p2_channel": true,
+    "product_model_separates_pair": false,
+    "data_distinguishes_models": true,
+    "P0": "CONDITIONAL_PASS: mechanism real IFF intensity-additive; coherent speckle is an exact kill -- physical premise must be verified on the real bench",
+    "kill_condition": "if the real optical path is coherent-additive, r depends only on p1 and MOLT is dead"
+  }
+}

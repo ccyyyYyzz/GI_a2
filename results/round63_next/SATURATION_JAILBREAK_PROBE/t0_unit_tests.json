@@ -1,0 +1,23 @@
+{
+  "mgf_one_pixel": "1/(a*v1 + 1)",
+  "symbolic_ok": true,
+  "mc_survival_max_reldiff": 0.002229971972752396,
+  "p2_noiseless_relerr_3pix_ES": 5.7595187625605395e-15,
+  "p2_noiseless_relerr_3pix_log": 0.0016857151235169065,
+  "convergence_note": "log/power-sum series needs a*max(v)<1; ES-poly exact for P<=order",
+  "gamma_ok": true,
+  "self_averaging": {
+    "900": {
+      "relsd_mc": 0.017933362367339015,
+      "relsd_ana": 0.020291680497440134
+    },
+    "3600": {
+      "relsd_mc": 0.010543343435864055,
+      "relsd_ana": 0.010145840248720067
+    },
+    "14400": {
+      "relsd_mc": 0.004684394721518948,
+      "relsd_ana": 0.005072920124360033
+    }
+  }
+}

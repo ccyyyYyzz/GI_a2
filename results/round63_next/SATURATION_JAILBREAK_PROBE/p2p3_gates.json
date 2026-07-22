@@ -1,0 +1,61 @@
+{
+  "C": 3600,
+  "K": 51,
+  "linear_campaign": 510000.0,
+  "bank_size": 40,
+  "P2": {
+    "median_dprime": 0.005629944340455816,
+    "frac_ge2": 0.0,
+    "frac_ge3": 0.0,
+    "dprime_min": 0.0023970592162096157,
+    "dprime_max": 0.018157634107933893,
+    "budget_mult_for_median_d3": 283945.053144013,
+    "BAR": "median d'>=3 AND >=80% pairs >=2 at matched budget",
+    "PASS": false,
+    "gamma_k_degradation": {
+      "k3": {
+        "median_dprime": 0.001876648113485272,
+        "budget_mult_for_d3": 2555505.478296117
+      },
+      "k10": {
+        "median_dprime": 0.0005629944340455816,
+        "budget_mult_for_d3": 28394505.314401306
+      }
+    }
+  },
+  "P3": {
+    "rank_M": 51,
+    "rank_J": 102,
+    "expected_rank": 102,
+    "rank_doubling": true,
+    "J_sv_max": 136.4655782987577,
+    "J_sv_min_nonzero": 3.4974344035178837,
+    "dim_joint_first_order_fiber": 922,
+    "adversarial_median_dprime": 0.006147102233136368,
+    "adversarial_max_dprime": 0.01167281074019142,
+    "random_pair_median_dprime": 0.005629944340455816,
+    "restricted_prior_injectivity": {
+      "d40": {
+        "tangent_dim": 40,
+        "joint_rank": 40,
+        "injective": true
+      },
+      "d90": {
+        "tangent_dim": 90,
+        "joint_rank": 90,
+        "injective": true
+      },
+      "d102": {
+        "tangent_dim": 102,
+        "joint_rank": 102,
+        "injective": true
+      },
+      "d150": {
+        "tangent_dim": 150,
+        "joint_rank": 102,
+        "injective": false
+      }
+    },
+    "honest_claim": "fiber HALVING (N-K -> N-2K) + closes low-dim prior tangents (2K>=d); NOT dense-scene null-space jailbreak"
+  }
+}

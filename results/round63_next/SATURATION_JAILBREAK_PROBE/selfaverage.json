@@ -1,0 +1,62 @@
+{
+  "scene": "bridge_contour_2",
+  "p2_true": 237.90223866854024,
+  "order": 4,
+  "n_active": 514,
+  "quenched_bias_vs_C": {
+    "900": {
+      "rms_relbias": 0.04853197016124205,
+      "mean_relbias": 0.017888071756308122,
+      "p50_abs": 0.03196310536424764
+    },
+    "3600": {
+      "rms_relbias": 0.02446260216539181,
+      "mean_relbias": -0.002649381470360015,
+      "p50_abs": 0.017161359884140633
+    },
+    "14400": {
+      "rms_relbias": 0.010685024942371972,
+      "mean_relbias": -0.0013071847724785662,
+      "p50_abs": 0.008719050804539026
+    }
+  },
+  "sqrtC_law_const_range": [
+    1.2822029930846366,
+    1.4677561299235087
+  ],
+  "frame_averaging_rescue_C3600": {
+    "1": 0.01787686712298662,
+    "4": 0.013572477585039612,
+    "16": 0.006454983821720943,
+    "32": 0.004274641867715679
+  },
+  "calibration_rescue": {
+    "gain": 0.9905443959876908,
+    "relerr_raw": 0.029748274590951106,
+    "relerr_calibrated": 0.02048638169156235,
+    "n_cal_scenes": 4
+  },
+  "cell_correlation_effectiveC": {
+    "block1": {
+      "rms_relbias": 0.026000162753230097,
+      "C_eff": 3600,
+      "rms_times_sqrt_Ceff": 1.5600097651938059
+    },
+    "block4": {
+      "rms_relbias": 0.04830099817375663,
+      "C_eff": 900,
+      "rms_times_sqrt_Ceff": 1.449029945212699
+    },
+    "block16": {
+      "rms_relbias": 0.1032346030787117,
+      "C_eff": 225,
+      "rms_times_sqrt_Ceff": 1.5485190461806755
+    },
+    "block36": {
+      "rms_relbias": 0.13886673586937076,
+      "C_eff": 100,
+      "rms_times_sqrt_Ceff": 1.3886673586937075
+    }
+  },
+  "cell_correlation_note": "perfect intra-block sharing => C_eff=C/block; rms*sqrt(C_eff) stays ~const (same law as independent cells) => correlation acts purely through effective-C reduction"
+}
