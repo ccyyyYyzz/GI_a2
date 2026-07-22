@@ -145,3 +145,24 @@ check; MC only for the O1-P posterior-covariance sanity check).
 Deliverables when run: a single script + a table of max abs errors per identity;
 target < 1e-10 for the exact linear-algebra checks (1,2) and < a few % Monte
 Carlo agreement for (3). **Not executed at scaffold time.**
+
+
+## Numerical verification results (2026-07-22, results/scatter_verify/)
+
+All three blocks PASS (O1.4 identity via exact HMM posterior, paired-CRN
+max z=2.19 vs FD Fisher; O4.2 Schur 9.1e-16; exact-zero chop + delta^2
+perturbation slope 1.984; ordered 1770 >> random 63.6 > paired 0.0;
+concentration slope -0.497; obstacle demo: uncentered carrier bias flat
+~31-33 under permutation). Two findings to fold into the manuscript:
+
+1. **DC-mode gauge remark (add near Theorem O4-A):** the constant drift
+   mode is NOT orthogonalisable by any schedule — its moment equals
+   sum s_n^2/sigma_n^2 > 0 identically (verified to 16 digits). The DC
+   gain mode IS the scale gauge, degenerate with object amplitude; O4.4
+   is satisfiable only for centered/AC modes. This is Part I's gauge
+   invariance (a,T)->(ca,T/c) seen from the design side — a genuine
+   Part I/Part II interlock sentence.
+2. **Methods note (verification section):** compute the missing term as
+   the small posterior covariance Cov(G|Y) DIRECTLY; the difference form
+   E[aa^T]-E[a|Y-hat outer] suffers catastrophic cancellation along the
+   gauge direction (factor-30 error observed).
