@@ -280,3 +280,33 @@ confusion theorem and a schedule chosen to control both efficient ledgers.*
 - `code/dl_run_main.py` — T1 + T2 + T4 + bars 2/3/4/5 runner
 - `code/dl_t3_reciprocity.py` — T3 reciprocity theorem + schedule prediction
 - `code/dl_figure.py` — figure generator
+
+---
+
+## Bar-4 repair — FINAL (coordinator-assembled after two attempts; frozen)
+
+Two honest interval-repair attempts were run on the fresh-replica protocol
+(204 records/cell, interior grid):
+
+1. **Bias-corrected parametric bootstrap** (percentile + pivotal, log-space):
+   interior t_c coverage 0.77-0.92 — FAIL.
+2. **Profile-likelihood on (log t_c, log CV)** (the last authorized attempt):
+   CV coverage 0.985-1.000 on every interior cell (PASS); t_c coverage
+   {tc16_cv5: 0.892, tc16_cv15: 0.980, tc16_cv40: 0.848, tc64_cv5: 0.868,
+   tc64_cv15: 0.956, tc64_cv40: 0.990} — three of six interior cells below
+   the 0.92 floor. `interior_all_in_92_98 = False`.
+
+**BAR 4 VERDICT: FAIL (frozen; no further iterations).**
+Mechanism, honestly: the t_c sampling distribution is right-skewed and
+biased at the slow-drift CRB floor (tc64_cv5) and carries intrinsic
+estimator bias at high CV (tc16_cv40); neither symmetric bootstrap nor
+profile likelihood calibrates all cells simultaneously. This is an
+estimator-statistics deficiency, not an information deficiency (bar 3
+point-precision PASSED at <=1.5x pilot everywhere).
+
+**DLGI FINAL SCORE: 6 PASS / 1 FAIL of the R33 promotion bars.**
+Per R33 ("promote only if ALL"), DLGI is NOT auto-promoted to flagship.
+Disposition: full disclosure to the next GPT round (R34) for campaign
+adjudication — options include a preregistered simulation-calibrated
+interval procedure (frozen before the campaign) or narrowing the claim to
+RMSE-based precision. Raw numbers in `bar4_coverage.json`.
