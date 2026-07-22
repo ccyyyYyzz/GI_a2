@@ -1,0 +1,118 @@
+{
+  "C": 3600,
+  "K_D": 40,
+  "K_S": 30,
+  "row_budget": 100,
+  "closure_window": {
+    "s30": {
+      "s": 30,
+      "rank_linear": 30,
+      "rank_joint": 30,
+      "sigma_min_unweighted": 0.654879705414008,
+      "sigma_min_fisher": 0.6073422411945205,
+      "linear_closes": true,
+      "joint_closes": true,
+      "fisher_wq_over_wl_median": 0.11272876013773345
+    },
+    "s40": {
+      "s": 40,
+      "rank_linear": 40,
+      "rank_joint": 40,
+      "sigma_min_unweighted": 1.2347096141545102,
+      "sigma_min_fisher": 1.0426471060544757,
+      "linear_closes": true,
+      "joint_closes": true,
+      "fisher_wq_over_wl_median": 0.10530583648688084
+    },
+    "s55": {
+      "s": 55,
+      "rank_linear": 40,
+      "rank_joint": 55,
+      "sigma_min_unweighted": 0.7780634867066151,
+      "sigma_min_fisher": 0.5463904025130204,
+      "linear_closes": false,
+      "joint_closes": true,
+      "fisher_wq_over_wl_median": 0.09272346206826401
+    },
+    "s70": {
+      "s": 70,
+      "rank_linear": 40,
+      "rank_joint": 70,
+      "sigma_min_unweighted": 0.4379282740287099,
+      "sigma_min_fisher": 0.09931113026394042,
+      "linear_closes": false,
+      "joint_closes": true,
+      "fisher_wq_over_wl_median": 0.0985778893546188
+    },
+    "s85": {
+      "s": 85,
+      "rank_linear": 40,
+      "rank_joint": 85,
+      "sigma_min_unweighted": 0.2299658066392273,
+      "sigma_min_fisher": 0.02535614587631784,
+      "linear_closes": false,
+      "joint_closes": true,
+      "fisher_wq_over_wl_median": 0.09981685116349943
+    },
+    "s100": {
+      "s": 100,
+      "rank_linear": 40,
+      "rank_joint": 100,
+      "sigma_min_unweighted": 0.009548763957637724,
+      "sigma_min_fisher": 0.0009011648009797345,
+      "linear_closes": false,
+      "joint_closes": true,
+      "fisher_wq_over_wl_median": 0.08768891498623885
+    },
+    "s115": {
+      "s": 115,
+      "rank_linear": 40,
+      "rank_joint": 100,
+      "sigma_min_unweighted": 0.0,
+      "sigma_min_fisher": 0.0,
+      "linear_closes": false,
+      "joint_closes": false,
+      "fisher_wq_over_wl_median": 0.09286767366768672
+    }
+  },
+  "fisher_note": "quadratic rows carry sqrt(I_p2/I_p1)~1/n_eff the linear information/photon: geometrically full-rank, but the smallest Fisher-weighted singular value is small -> the closure is real but dose-expensive (photon-for-rank trade)",
+  "equal_time_reconstruction": {
+    "s55": {
+      "s": 55,
+      "n_linear_masks_equaltime": 70,
+      "joint_row_budget": 100,
+      "linear_null_dim": 0,
+      "null_energy_frac": 0.0,
+      "linear_invisible_residual": 0.0,
+      "null_delta_p2_norm": 0.0,
+      "psnr_linear_equaltime": 23.39346737426539,
+      "psnr_molt": 24.41427534459344,
+      "psnr_molt_noiseless": 306.15264799350905,
+      "delta_db": 1.0208079703280504,
+      "regime": "determined (s<=K_D+K_S): no linear null"
+    },
+    "s80": {
+      "s": 80,
+      "n_linear_masks_equaltime": 70,
+      "joint_row_budget": 100,
+      "linear_null_dim": 10,
+      "null_energy_frac": 0.22516200780562204,
+      "linear_invisible_residual": 2.0791723739534308e-14,
+      "null_delta_p2_norm": 0.6160215910950925,
+      "psnr_linear_equaltime": 17.358385706213614,
+      "psnr_molt": 18.147441458202007,
+      "psnr_molt_noiseless": 296.89753510926425,
+      "delta_db": 0.7890557519883927,
+      "regime": "s>rank[M_D;M_S]: 10-dim linear-invisible fiber (order-one dp2)"
+    }
+  },
+  "bar6_summary": {
+    "geometric_certificate_closes": true,
+    "noiseless_recon_confirms_fiber": true,
+    "noisy_equaltime_material_win": false,
+    "noisy_delta_db_s80": 0.7890557519883927,
+    "BAR": "R32.1 Jacobian full-rank + conditioned on support AND noisy joint recon materially beats strongest equal-time linear comparator",
+    "verdict": "CONDITIONAL",
+    "honest_claim": "R32.1 CLOSES the fiber geometrically: rank([M_D|S;M_S|S;2M_S|S diag x])=s exactly for K_D<s<=K_D+2K_S (linear stuck at K_D), and the NOISELESS joint recon hits ~297 dB where linear is underdetermined. BUT the quadratic rows are Fisher-weak and box-constrained null perturbations give sub-order-one Delta_p2, so at the strict equal-TIME 10% p2 dose the noisy recon only ties the min-norm linear arm (delta=+0.8 dB): the fiber-resolving directions have O(1) SNR. The win is RANK/identifiability, provable noiselessly and at elevated dose; the equal-time NOISY material win is NOT established (honest photon-for-rank cost). NOT a dense-scene or prior-free recovery claim."
+  }
+}

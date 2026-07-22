@@ -1,0 +1,108 @@
+{
+  "K_D": 51,
+  "G_lin": 27.77777777777778,
+  "G_sweep": 82.0,
+  "levels_gates": [
+    75,
+    1,
+    6
+  ],
+  "tau_settle": 10.0,
+  "tau_pow": 10.0,
+  "tau_read": 5.0,
+  "t_lin": 0.1,
+  "B_map_multiple": 11.3,
+  "R_dmd": {
+    "1kHz": 1000.0,
+    "10kHz": 10000.0,
+    "22kHz": 22000.0
+  },
+  "R_gate": {
+    "100kHz": 100000.0,
+    "1MHz": 1000000.0
+  },
+  "overhead_pct": {
+    "K_S_51": {
+      "100kHz": {
+        "1kHz": {
+          "overhead_pct": 22.131499785131076,
+          "T_linear_us": 131863.33333333334,
+          "T_molt_us": 161046.6666666667
+        },
+        "10kHz": {
+          "overhead_pct": 72.84299858557284,
+          "T_linear_us": 40063.333333333336,
+          "T_molt_us": 69246.66666666667
+        },
+        "22kHz": {
+          "overhead_pct": 84.59011497685532,
+          "T_linear_us": 34499.69696969697,
+          "T_molt_us": 63683.030303030304
+        }
+      },
+      "1MHz": {
+        "1kHz": {
+          "overhead_pct": 4.038359083644108,
+          "T_linear_us": 106363.33333333334,
+          "T_molt_us": 110658.66666666667
+        },
+        "10kHz": {
+          "overhead_pct": 29.49416342412451,
+          "T_linear_us": 14563.333333333332,
+          "T_molt_us": 18858.666666666664
+        },
+        "22kHz": {
+          "overhead_pct": 47.727532913566115,
+          "T_linear_us": 8999.69696969697,
+          "T_molt_us": 13295.030303030304
+        }
+      }
+    },
+    "K_S_25": {
+      "100kHz": {
+        "1kHz": {
+          "overhead_pct": 14.560197227059922,
+          "T_linear_us": 98251.11111111111,
+          "T_molt_us": 112556.66666666667
+        },
+        "10kHz": {
+          "overhead_pct": 47.92302538524532,
+          "T_linear_us": 29851.11111111111,
+          "T_molt_us": 44156.66666666667
+        },
+        "22kHz": {
+          "overhead_pct": 55.65139143214165,
+          "T_linear_us": 25705.656565656565,
+          "T_molt_us": 40011.21212121212
+        }
+      },
+      "1MHz": {
+        "1kHz": {
+          "overhead_pct": 2.6568151866079774,
+          "T_linear_us": 79251.11111111111,
+          "T_molt_us": 81356.66666666667
+        },
+        "10kHz": {
+          "overhead_pct": 19.404054884292435,
+          "T_linear_us": 10851.111111111111,
+          "T_molt_us": 12956.666666666666
+        },
+        "22kHz": {
+          "overhead_pct": 31.399692706293468,
+          "T_linear_us": 6705.656565656566,
+          "T_molt_us": 8811.21212121212
+        }
+      }
+    }
+  },
+  "bar4_summary": {
+    "n_regimes": 12,
+    "n_pass_10pct": 2,
+    "passing_regimes": [
+      "K_S_51|1MHz|1kHz",
+      "K_S_25|1MHz|1kHz"
+    ],
+    "verdict": "MOLT meets <=10% end-to-end overhead ONLY in switching-limited regimes (fast gates and/or slow DMD); at 100 kHz gates with a 22 kHz DMD the ridge-heavy sweep exceeds 10%. The equal-time framing is hardware-contingent, NOT universal. 'Negligible time' is false in the gate-limited corner and must be stated per-regime.",
+    "BAR": "<=10% end-to-end wall-clock overhead including mask/settle/power/readout"
+  }
+}

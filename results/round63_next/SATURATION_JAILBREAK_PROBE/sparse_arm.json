@@ -1,0 +1,288 @@
+{
+  "C": 3600,
+  "L": 12,
+  "order": 4,
+  "target_rel_se": 0.1,
+  "B_LIN": 10000.0,
+  "support": 32,
+  "K": 51,
+  "t_star": 2.821439372122079,
+  "scenes": {
+    "bridge_contour_0": {
+      "support": 32,
+      "n_active": 32,
+      "n_eff": 15.014713013027231,
+      "p1": 13.484469372617632,
+      "p2": 12.11018246591199,
+      "relse_at_M1": 2.5830931073571217,
+      "M_need": 667.237000127587,
+      "B_sat": 22920051.229537588,
+      "budget_multiple": 2292.005122953759,
+      "fisher_cond": 323273933.9445548
+    },
+    "bridge_twopop_1": {
+      "support": 32,
+      "n_active": 32,
+      "n_eff": 17.81205863694645,
+      "p1": 10.411985895609796,
+      "p2": 6.086295385616479,
+      "relse_at_M1": 3.0820044773496145,
+      "M_need": 949.8751598403069,
+      "B_sat": 32628866.985856626,
+      "budget_multiple": 3262.8866985856625,
+      "fisher_cond": 71616086.68930712
+    },
+    "bridge_microtex_2": {
+      "support": 32,
+      "n_active": 32,
+      "n_eff": 17.86193803315909,
+      "p1": 9.510975197259064,
+      "p2": 5.064324433045771,
+      "relse_at_M1": 3.091577970338746,
+      "M_need": 955.7854346683838,
+      "B_sat": 32831889.003242157,
+      "budget_multiple": 3283.188900324216,
+      "fisher_cond": 42502175.67060018
+    },
+    "bridge_control_0": {
+      "support": 32,
+      "n_active": 6,
+      "n_eff": 6.0,
+      "p1": 6.0,
+      "p2": 6.0,
+      "relse_at_M1": 0.9805545652556392,
+      "M_need": 96.14872554436755,
+      "B_sat": 3302775.048011819,
+      "budget_multiple": 330.27750480118186,
+      "fisher_cond": 3273254.546064062
+    },
+    "bridge_contour_2": {
+      "support": 32,
+      "n_active": 32,
+      "n_eff": 18.982496950249818,
+      "p1": 17.00690502231681,
+      "p2": 15.236921633447086,
+      "relse_at_M1": 3.290210985057469,
+      "M_need": 1082.548832619284,
+      "B_sat": 37186299.16711094,
+      "budget_multiple": 3718.629916711094,
+      "fisher_cond": 1268690408.3784072
+    },
+    "bridge_twopop_3": {
+      "support": 32,
+      "n_active": 32,
+      "n_eff": 13.37579993944931,
+      "p1": 8.726965897807247,
+      "p2": 5.693860115003051,
+      "relse_at_M1": 2.2912026520235504,
+      "M_need": 524.960959263975,
+      "B_sat": 18032771.080645643,
+      "budget_multiple": 1803.2771080645643,
+      "fisher_cond": 26002831.259037644
+    }
+  },
+  "neff2_dense_vs_sparse": {
+    "bridge_contour_0": {
+      "dense": {
+        "n_eff": 213.7857676968883,
+        "B_sat": 4980485628.331904
+      },
+      "sparse": {
+        "n_eff": 15.014713013027231,
+        "B_sat": 22920051.229537588
+      },
+      "neff_ratio": 14.238418510656922,
+      "B_ratio": 217.29818919049535,
+      "B_ratio_over_neff_ratio_sq": 1.071846512394673
+    },
+    "bridge_twopop_1": {
+      "dense": {
+        "n_eff": 250.61175988999486,
+        "B_sat": 6849688081.926861
+      },
+      "sparse": {
+        "n_eff": 17.81205863694645,
+        "B_sat": 32628866.985856626
+      },
+      "neff_ratio": 14.069780759095774,
+      "B_ratio": 209.92724279687494,
+      "B_ratio_over_neff_ratio_sq": 1.0604596329297125
+    },
+    "bridge_microtex_2": {
+      "dense": {
+        "n_eff": 316.30707822564307,
+        "B_sat": 10922246598.892483
+      },
+      "sparse": {
+        "n_eff": 17.86193803315909,
+        "B_sat": 32831889.003242157
+      },
+      "neff_ratio": 17.708441135471823,
+      "B_ratio": 332.67189097203357,
+      "B_ratio_over_neff_ratio_sq": 1.0608535706696518
+    },
+    "bridge_control_0": {
+      "dense": {
+        "n_eff": 120.0,
+        "B_sat": 1562429430.5737293
+      },
+      "sparse": {
+        "n_eff": 6.0,
+        "B_sat": 3302775.048011819
+      },
+      "neff_ratio": 20.0,
+      "B_ratio": 473.0656517204432,
+      "B_ratio_over_neff_ratio_sq": 1.182664129301108
+    },
+    "bridge_contour_2": {
+      "dense": {
+        "n_eff": 289.6673002193633,
+        "B_sat": 9156768949.054806
+      },
+      "sparse": {
+        "n_eff": 18.982496950249818,
+        "B_sat": 37186299.16711094
+      },
+      "neff_ratio": 15.259704820632207,
+      "B_ratio": 246.24039375107864,
+      "B_ratio_over_neff_ratio_sq": 1.0574675062172056
+    },
+    "bridge_twopop_3": {
+      "dense": {
+        "n_eff": 206.9571047418276,
+        "B_sat": 4666545147.514256
+      },
+      "sparse": {
+        "n_eff": 13.37579993944931,
+        "B_sat": 18032771.080645643
+      },
+      "neff_ratio": 15.472503003835161,
+      "B_ratio": 258.78136680406277,
+      "B_ratio_over_neff_ratio_sq": 1.080965544101906
+    }
+  },
+  "neff2_law_ratioofratios_range": [
+    1.0574675062172056,
+    1.182664129301108
+  ],
+  "summary_T2": {
+    "min_budget_multiple": 330.27750480118186,
+    "max_budget_multiple": 3718.629916711094,
+    "median_budget_multiple": 2777.4459107697107,
+    "BAR": "rel se(p2) <= 10% at per-mask budget <= 4x linear arm",
+    "PASS": false,
+    "note": "sparse 32-support cuts n_eff ~10x -> ~100x cheaper than dense, still >>4x on matched PHOTONS (see dual-resource framing for the TIME view)"
+  },
+  "P2_sparse": {
+    "support": 32,
+    "K": 51,
+    "rank_M": 51,
+    "linear_campaign": 510000.0,
+    "bank_size": 40,
+    "median_dprime": 0.26730658788879136,
+    "frac_ge2": 0.0,
+    "frac_ge3": 0.0,
+    "dprime_min": 0.18729326809480853,
+    "dprime_max": 0.40250965757033,
+    "dprime_table": {
+      "p10": 0.21486127379007544,
+      "median": 0.26730658788879136,
+      "p90": 0.36857583009106426,
+      "max": 0.40250965757033
+    },
+    "per_mask_neff_mean": 23.52279986986094,
+    "per_mask_neff_max": 25.757386875877533,
+    "budget_mult_for_median_d3": 125.95725426418053,
+    "gamma_k_degradation": {
+      "k3": {
+        "median_dprime": 0.08910219596293045,
+        "budget_mult_for_d3": 1133.6152883776247
+      },
+      "k10": {
+        "median_dprime": 0.026730658788879137,
+        "budget_mult_for_d3": 12595.725426418052
+      }
+    },
+    "BAR": "median d'>=3 AND >=80% pairs >=2 at matched budget",
+    "PASS": false,
+    "dense_reference": {
+      "dense_median_dprime": 0.005629944340455816,
+      "dense_budget_mult_for_d3": 283945.053144013,
+      "sparse_over_dense_dprime": 47.479437046645735,
+      "dense_over_sparse_budmult": 2254.2969422663946
+    }
+  },
+  "dual_resource": {
+    "C_times_tstar": 10157.181739639485,
+    "t_star": 2.821439372122079,
+    "B_LIN": 10000.0,
+    "gate_rates_Hz": {
+      "100kHz": 100000.0,
+      "1MHz": 1000000.0
+    },
+    "per_scene": {
+      "bridge_contour_0": {
+        "B_10": 22920051.229537588,
+        "photon_multiple": 2292.005122953759,
+        "gates_equiv": 2256.536489850294,
+        "wall_s_100kHz": 0.02256536489850294,
+        "wall_s_1MHz": 0.002256536489850294
+      },
+      "bridge_twopop_1": {
+        "B_10": 32628866.985856626,
+        "photon_multiple": 3262.8866985856625,
+        "gates_equiv": 3212.393735017952,
+        "wall_s_100kHz": 0.03212393735017952,
+        "wall_s_1MHz": 0.0032123937350179523
+      },
+      "bridge_microtex_2": {
+        "B_10": 32831889.003242157,
+        "photon_multiple": 3283.188900324216,
+        "gates_equiv": 3232.3817614793884,
+        "wall_s_100kHz": 0.03232381761479389,
+        "wall_s_1MHz": 0.0032323817614793885
+      },
+      "bridge_control_0": {
+        "B_10": 3302775.048011819,
+        "photon_multiple": 330.27750480118186,
+        "gates_equiv": 325.1664814780646,
+        "wall_s_100kHz": 0.003251664814780646,
+        "wall_s_1MHz": 0.0003251664814780646
+      },
+      "bridge_contour_2": {
+        "B_10": 37186299.16711094,
+        "photon_multiple": 3718.629916711094,
+        "gates_equiv": 3661.084355908238,
+        "wall_s_100kHz": 0.03661084355908238,
+        "wall_s_1MHz": 0.003661084355908238
+      },
+      "bridge_twopop_3": {
+        "B_10": 18032771.080645643,
+        "photon_multiple": 1803.2771080645643,
+        "gates_equiv": 1775.3715098225357,
+        "wall_s_100kHz": 0.017753715098225358,
+        "wall_s_1MHz": 0.0017753715098225357
+      }
+    },
+    "reference_x30": {
+      "photon_multiple": 30.0,
+      "gates_equiv": 29.535751913271177,
+      "wall_s_100kHz": 0.00029535751913271175,
+      "wall_s_1MHz": 2.9535751913271176e-05
+    },
+    "reference_x100": {
+      "photon_multiple": 100.0,
+      "gates_equiv": 98.45250637757059,
+      "wall_s_100kHz": 0.0009845250637757058,
+      "wall_s_1MHz": 9.845250637757058e-05
+    },
+    "decisive_P2_d3": {
+      "photon_multiple_vs_linear_campaign": 125.95725426418053,
+      "per_mask_B": 1259572.5426418053,
+      "per_mask_gates": 124.00807378745513,
+      "per_mask_wall_s_100kHz": 0.0012400807378745513,
+      "per_mask_wall_s_1MHz": 0.00012400807378745512
+    },
+    "dose_caveat": "The two frames diverge by design. On the PHOTON axis MOLT's second channel costs ~n_eff^2 more primary opportunities than the linear bucket, so for DOSE-LIMITED scenes (photodamage, single-molecule, quantum-light budgets) the photon frame governs and MOLT LOSES. On the TIME axis those same photons are delivered in G=B/(C t*) gates at 0.1-1 MHz, so even the decisive matched-photon multiple lands at milliseconds/mask and a x30 multiple at microseconds/mask; for LIGHT-CHEAP, robust scenes the time frame governs and MOLT is essentially free."
+  }
+}

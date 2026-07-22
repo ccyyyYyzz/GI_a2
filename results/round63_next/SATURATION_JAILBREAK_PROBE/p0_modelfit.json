@@ -1,0 +1,93 @@
+{
+  "C": 3600,
+  "block": 16,
+  "G_level": 400,
+  "n_trial": 300,
+  "scene": "bridge_microtex_2@0.5",
+  "p1": 149.26139585334278,
+  "p2": 65.7781001205646,
+  "n_eff_product": 338.6988108694718,
+  "n_eff_block": 54.760563159654346,
+  "second_order_observables": {
+    "product_p2": 65.7781001205646,
+    "correlated_sum_sb2": 406.8432281664818,
+    "coherent_p1sq": 22278.96429208829
+  },
+  "models": [
+    "coherent",
+    "product",
+    "correlated"
+  ],
+  "confusion": [
+    [
+      300,
+      0,
+      0
+    ],
+    [
+      0,
+      300,
+      0
+    ],
+    [
+      0,
+      3,
+      297
+    ]
+  ],
+  "recovery_accuracy": 0.9966666666666667,
+  "median_holdout_err": {
+    "coherent": {
+      "coherent": 0.016253823378896415,
+      "product": 0.4565812234692978,
+      "correlated": 0.44529052480924425
+    },
+    "product": {
+      "coherent": 1.2330192955365864,
+      "product": 0.00473778950053827,
+      "correlated": 0.03981358420164838
+    },
+    "correlated": {
+      "coherent": 1.1639275221460892,
+      "product": 0.03825837299714452,
+      "correlated": 0.008388613598637296
+    }
+  },
+  "permutation_control": {
+    "block": 16,
+    "random_perm": {
+      "tr_SigmaV2_orig": 406.8432281664818,
+      "tr_SigmaV2_perm": 389.7223532710709,
+      "delta_frac": 0.04208224129124494,
+      "dprime_B1e4": 0.05084106562185602
+    },
+    "extreme_perm": {
+      "p1_clustered": 149.26139585334278,
+      "p1_spread": 149.26139585334278,
+      "p2_clustered": 65.7781001205646,
+      "p2_spread": 65.7781001205646,
+      "tr_clustered": 1049.9193401618977,
+      "tr_spread": 352.62753062154536,
+      "delta_p1": 0.0,
+      "delta_p2": 0.0,
+      "delta_tr_SigmaV2": 697.2918095403523,
+      "delta_tr_frac": 1.9774173851692685,
+      "dprime": {
+        "B10000": 2.003013738615972,
+        "B100000": 4.660754082339966,
+        "B1000000": 14.464253178113621
+      },
+      "budget_for_d3": 22432.34384299739,
+      "budget_mult_for_d3": 2.243234384299739
+    },
+    "product_curve_diff_same_multiset": 0.0,
+    "verdict": "an equal-p1/equal-p2 spatial permutation leaves the product & coherent sweep EXACTLY invariant (curve diff ~1e-16) but changes the correlated-determinant curve (tr[(Sigma V)^2] moves); it is detectable (d'=3 reachable) -> the operative second-order observable under correlated speckle is tr[(Sigma V)^2], NOT p2. A bare curvature fit that assumes Sigma=I mis-reads a correlated determinant as p2."
+  },
+  "verdict": {
+    "three_models_recoverable": true,
+    "coherent_recovered": true,
+    "product_recovered": true,
+    "correlated_recovered": true,
+    "P0": "the generative mechanism IS identifiable from swept data at realistic noise (near-diagonal confusion); BUT product-vs-correlated identifiability requires the permutation/held-out control -- a bare curvature fit that assumes Sigma=I mis-reads a correlated determinant as p2 curvature"
+  }
+}

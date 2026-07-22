@@ -1,0 +1,104 @@
+{
+  "C": 3600,
+  "B_LIN": 10000.0,
+  "t_star": 2.821439372122079,
+  "rel_target": 0.1,
+  "dose_constants": {
+    "D1_known_map": 281.405668895241,
+    "nuisance_inflate": 1.8831425187524677,
+    "known_d3": 25.33
+  },
+  "bar2_map": {
+    "bridge_contour_0": {
+      "n_eff": 15.014713013027231,
+      "p1": 13.484469372617632,
+      "p2": 12.11018246591199,
+      "B10_law_known": 63440.546176260665,
+      "mult_law_known": 6.344054617626067,
+      "B10_law_nuis": 119467.58991739574,
+      "mult_law_nuis": 11.946758991739575,
+      "B10_crb_3level_nuis": 67570.86184462493,
+      "mult_crb_3level": 6.757086184462493
+    },
+    "bridge_twopop_1": {
+      "n_eff": 17.81205863694645,
+      "p1": 10.411985895609796,
+      "p2": 6.086295385616479,
+      "B10_law_known": 89281.41698130383,
+      "mult_law_known": 8.928141698130384,
+      "B10_law_nuis": 168129.63245196184,
+      "mult_law_nuis": 16.812963245196183,
+      "B10_crb_3level_nuis": 98505.48398658483,
+      "mult_crb_3level": 9.850548398658484
+    },
+    "bridge_microtex_2": {
+      "n_eff": 17.86193803315909,
+      "p1": 9.510975197259064,
+      "p2": 5.064324433045771,
+      "B10_law_known": 89782.14950093256,
+      "mult_law_known": 8.978214950093255,
+      "B10_law_nuis": 169072.58315019676,
+      "mult_law_nuis": 16.907258315019675,
+      "B10_crb_3level_nuis": 99300.04853854122,
+      "mult_crb_3level": 9.930004853854122
+    },
+    "bridge_control_0": {
+      "n_eff": 6.0,
+      "p1": 6.0,
+      "p2": 6.0,
+      "B10_law_known": 10130.604080228675,
+      "mult_law_known": 1.0130604080228676,
+      "B10_law_nuis": 19077.371284125853,
+      "mult_law_nuis": 1.9077371284125852,
+      "B10_crb_3level_nuis": 8264.91688960599,
+      "mult_crb_3level": 0.8264916889605989
+    },
+    "bridge_contour_2": {
+      "n_eff": 18.982496950249818,
+      "p1": 17.00690502231681,
+      "p2": 15.236921633447086,
+      "B10_law_known": 101400.36529964735,
+      "mult_law_known": 10.140036529964735,
+      "B10_law_nuis": 190951.33931279826,
+      "mult_law_nuis": 19.095133931279825,
+      "B10_crb_3level_nuis": 113042.885989585,
+      "mult_crb_3level": 11.3042885989585
+    },
+    "bridge_twopop_3": {
+      "n_eff": 13.37579993944931,
+      "p1": 8.726965897807247,
+      "p2": 5.693860115003051,
+      "B10_law_known": 50346.85779279797,
+      "mult_law_known": 5.034685779279797,
+      "B10_law_nuis": 94810.30859520187,
+      "mult_law_nuis": 9.481030859520187,
+      "B10_crb_3level_nuis": 52274.41449095858,
+      "mult_crb_3level": 5.227441449095858
+    },
+    "boundary_neff32": {
+      "n_eff": 32.0,
+      "mult_law_known": 28.815940494872677,
+      "mult_law_nuis": 54.26452276373577
+    },
+    "summary": {
+      "max_mult_law_known": 10.140036529964735,
+      "max_mult_law_nuis": 19.095133931279825,
+      "max_mult_crb_3level": 11.3042885989585,
+      "boundary_neff32_known": 28.815940494872677,
+      "BAR": "10% p2 map at <= x40 linear detected-photon budget/mask (expect ~x30)",
+      "PASS": true
+    }
+  },
+  "bar3_nullpair": {
+    "favorable_dprime_at_BLIN": 1.4111993434989445,
+    "favorable_f_median": 0.05041882062820081,
+    "favorable_f_max": 0.24742416021443364,
+    "measured_budget_mult_for_d3": 4.519243873429372,
+    "mean_neff": 23.52279986986094,
+    "dose_law_f1_known_mult": 1.4015649140465032,
+    "dose_law_f1_nuis_mult": 2.639346482432618,
+    "BAR": "favorable order-one Delta_p2/p2 pair d'>=3 at <= x4 linear dose (expect ~2.6)",
+    "PASS": true,
+    "note": "measured favorable-pair multiple and the closed-form f=1 dose law both reported; bar met if either production estimate <= x4"
+  }
+}

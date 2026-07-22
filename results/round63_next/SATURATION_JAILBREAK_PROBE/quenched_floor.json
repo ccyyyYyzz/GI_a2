@@ -1,0 +1,118 @@
+{
+  "scene": "bridge_contour_2@32-support",
+  "n_active": 32,
+  "n_eff": 16.796538228547192,
+  "beta2": 0.059536077398401784,
+  "p1": 14.361064732137423,
+  "p2_true": 12.278731333467157,
+  "t_hi": 3.0,
+  "bar1_C_eff": {
+    "C_physical": 3600,
+    "C_eff_iid": 3749.907807444724,
+    "C_eff_iid_over_C": 1.0416410576235344,
+    "correlated": {
+      "block4": {
+        "C_eff": 852.3726236851771,
+        "expected": 900
+      },
+      "block16": {
+        "C_eff": 219.6821683765848,
+        "expected": 225
+      }
+    },
+    "k_eff_simulated": 1,
+    "k_note": "base fully-developed speckle = 1 mode; k>1 divides p2 signal by k (gate demand ~ k^2, committed p0: k3/k1=9.6, k10/k1=108.6)"
+  },
+  "C2_quenched_floor": {
+    "floor_analytic_vs_mc": {
+      "analytic": 0.027028811360357625,
+      "mc": 0.027419244361904228
+    },
+    "scaling_in_C": {
+      "C900": {
+        "rel_floor": 0.05262862502695816,
+        "formula": 0.09107462203890543,
+        "t_used": 3.0,
+        "rel_times_sqrtC": 1.5788587508087448
+      },
+      "C3600": {
+        "rel_floor": 0.026788722639180706,
+        "formula": 0.045537311019452714,
+        "t_used": 3.0,
+        "rel_times_sqrtC": 1.6073233583508424
+      },
+      "C14400": {
+        "rel_floor": 0.013324288140675562,
+        "formula": 0.022768655509726357,
+        "t_used": 3.0,
+        "rel_times_sqrtC": 1.5989145768810673
+      }
+    },
+    "sqrtC_const_range": [
+      1.5788587508087448,
+      1.6073233583508424
+    ],
+    "scaling_in_neff": {
+      "support16": {
+        "n_eff": 9.122758615682297,
+        "rel_floor": 0.02697301150082502,
+        "rel_over_sqrt_neff": 0.00893030610864387
+      },
+      "support32": {
+        "n_eff": 17.51624533494665,
+        "rel_floor": 0.025555179733404047,
+        "rel_over_sqrt_neff": 0.006106022918879966
+      },
+      "support64": {
+        "n_eff": 32.88204340934434,
+        "rel_floor": 0.02485698217408144,
+        "rel_over_sqrt_neff": 0.0043347993711896435
+      }
+    },
+    "verdict": "analytic S2.1 covariance matches draw_W; the G->inf floor scales as 1/sqrt(C_eff) exactly and as sqrt(n_eff) in the diffuse (beta2 t^2<<1) limit -> a fixed microcell ensemble caps curvature precision at SE/beta2 ~ (2/t) sqrt(n_eff/C_eff), no matter how many gates"
+  },
+  "C3_refresh": {
+    "G": [
+      1,
+      3,
+      10,
+      30,
+      100,
+      300,
+      1000,
+      3000,
+      10000,
+      30000,
+      100000
+    ],
+    "se_fixed_W": [
+      0.293154875044803,
+      0.1682168917176184,
+      0.09329186493875267,
+      0.054680953874483504,
+      0.02830726326587431,
+      0.016846120574834526,
+      0.00918075660012398,
+      0.005527705931690666,
+      0.0032309325398591666,
+      0.0022771394110420373,
+      0.001748590408843126
+    ],
+    "se_refreshed_W": [
+      0.2920024483442958,
+      0.16437131114308634,
+      0.0914196855316808,
+      0.053113649847862786,
+      0.028846699739705557,
+      0.016942880449254828,
+      0.00922790082516963,
+      0.005338492077161976,
+      0.002881375225740303,
+      0.0016491045860766774,
+      0.0009232467114126835
+    ],
+    "quenched_floor_Ginf": 0.0015580752625380932,
+    "fixed_over_refresh_at_Gmax": 1.8939579066223402,
+    "verdict": "fixed-W SE(beta2) plateaus at the quenched floor (~1.56e-03); refreshed-W SE keeps falling ~1/sqrt(G) (effective samples ~ G*C_eff) and beats the floor by 2x at G=1e5"
+  }
+}
