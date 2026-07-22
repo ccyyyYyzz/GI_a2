@@ -33,6 +33,23 @@ overrides anything below that conflicts):**
    passed exact-972 admission or excluded; optimized allocator passed
    equivalence; phase-1.5 smoke reruns clean.
 
+**Fable implementation ruling 2026-07-22 (post-smoke-3, within R27 — no
+guard touched):** the ONLINE FW designs (TRUE-X-FW / XHAT-FW oracle arms)
+are subject to the same arithmetic obstruction R27 §1.1 identified for
+banks; without a fix they fall back to L0 and Gate A becomes vacuous.
+Remedy = R27's own: (1) online primal_probe dictionary restricted to the
+k_eff>=32 physical super-atom dictionary (identical to L7's) — conservative,
+can only weaken the oracle, cannot inflate Gate A; (2) per-cell exact-972
+realization via T-B's witness construction (coverage-aware selection +
+Sinkhorn nominal-amplitude balancing within the peak guard), deterministic
+given (measure, dictionary), all guards verified post-hoc per the R25 §9
+replacement text; (3) L0 + MIXTURE_MATERIALIZATION_FAIL remains the honest
+fallback. Option "exempt oracle from the dose guard" REJECTED (frozen-guard
+change). Nominal-power-schedule witnesses ruled COMPLIANT for banks (R27 §2
+verbatim presupposes "the bank's frozen nominal powers"; L0 grandfathered
+with a ridge schedule); strict equal-weight NOT required. Disclosed here
+for the post-grid GPT report.
+
 Command change 2026-07-22: the build is owned directly by the main agent
 and executed by decomposed Opus subagents. The docs2/ letters 13–14 are
 superseded as assignments (their technical content, including the
