@@ -1,43 +1,77 @@
 {
  "n_groups_total": 320,
  "n_keys": 32,
- "routes": [
-  "pro2_a",
-  "pro2_b",
-  "pro2_c",
-  "pro1_a",
-  "pro1_b"
- ],
- "shards": [
-  {
-   "route": "pro2_a",
-   "n_keys": 7,
-   "n_groups": 70,
-   "manifest": "D:\\GI_another\\results\\round63_bridge\\manifests\\bridge_pro2_a.json"
+ "layouts": {
+  "primary_5route": {
+   "layout": "primary_5route",
+   "routes": [
+    "pro2_a",
+    "pro2_b",
+    "pro2_c",
+    "pro1_a",
+    "pro1_b"
+   ],
+   "shards": [
+    {
+     "route": "pro2_a",
+     "n_keys": 7,
+     "n_groups": 70,
+     "manifest": "D:\\GI_another\\results\\round63_bridge\\manifests\\primary_5route\\bridge_pro2_a.json"
+    },
+    {
+     "route": "pro2_b",
+     "n_keys": 7,
+     "n_groups": 70,
+     "manifest": "D:\\GI_another\\results\\round63_bridge\\manifests\\primary_5route\\bridge_pro2_b.json"
+    },
+    {
+     "route": "pro2_c",
+     "n_keys": 6,
+     "n_groups": 60,
+     "manifest": "D:\\GI_another\\results\\round63_bridge\\manifests\\primary_5route\\bridge_pro2_c.json"
+    },
+    {
+     "route": "pro1_a",
+     "n_keys": 6,
+     "n_groups": 60,
+     "manifest": "D:\\GI_another\\results\\round63_bridge\\manifests\\primary_5route\\bridge_pro1_a.json"
+    },
+    {
+     "route": "pro1_b",
+     "n_keys": 6,
+     "n_groups": 60,
+     "manifest": "D:\\GI_another\\results\\round63_bridge\\manifests\\primary_5route\\bridge_pro1_b.json"
+    }
+   ]
   },
-  {
-   "route": "pro2_b",
-   "n_keys": 7,
-   "n_groups": 70,
-   "manifest": "D:\\GI_another\\results\\round63_bridge\\manifests\\bridge_pro2_b.json"
-  },
-  {
-   "route": "pro2_c",
-   "n_keys": 6,
-   "n_groups": 60,
-   "manifest": "D:\\GI_another\\results\\round63_bridge\\manifests\\bridge_pro2_c.json"
-  },
-  {
-   "route": "pro1_a",
-   "n_keys": 6,
-   "n_groups": 60,
-   "manifest": "D:\\GI_another\\results\\round63_bridge\\manifests\\bridge_pro1_a.json"
-  },
-  {
-   "route": "pro1_b",
-   "n_keys": 6,
-   "n_groups": 60,
-   "manifest": "D:\\GI_another\\results\\round63_bridge\\manifests\\bridge_pro1_b.json"
+  "fallback_3route": {
+   "layout": "fallback_3route",
+   "routes": [
+    "pro2_a",
+    "pro1_a",
+    "pro1_b"
+   ],
+   "shards": [
+    {
+     "route": "pro2_a",
+     "n_keys": 11,
+     "n_groups": 110,
+     "manifest": "D:\\GI_another\\results\\round63_bridge\\manifests\\fallback_3route\\bridge_pro2_a.json"
+    },
+    {
+     "route": "pro1_a",
+     "n_keys": 11,
+     "n_groups": 110,
+     "manifest": "D:\\GI_another\\results\\round63_bridge\\manifests\\fallback_3route\\bridge_pro1_a.json"
+    },
+    {
+     "route": "pro1_b",
+     "n_keys": 10,
+     "n_groups": 100,
+     "manifest": "D:\\GI_another\\results\\round63_bridge\\manifests\\fallback_3route\\bridge_pro1_b.json"
+    }
+   ]
   }
- ]
+ },
+ "note": "primary_5route assumes R16 released its 2 pro2 slots; fallback_3route assumes R16 still holds pro2_b/pro2_c (~1-2h) so only pro2_a + pro1_a + pro1_b are free."
 }

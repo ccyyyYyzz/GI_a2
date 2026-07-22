@@ -79,13 +79,38 @@ MATERIALIZER v2 (phase-1.5 ruling 1).  rlmi.materialize is the R25 §8/§9 two-s
   per-row source settings) that pulls per-pixel dose into the +-5% band; guards +
   realized-regret recomputed WITH the trimmed powers.  Genuine (non-fallback)
   designs carry the gamma vector; only solver/materialization/guard failure
-  returns the flagged L0 fallback.
+  returns the flagged L0 fallback.  R27 §2: pure library banks use their frozen
+  exact-972 admission WITNESS verbatim (rlmi._materialize_from_witness).
+
+GATE A -> LIBRARY_REACHABILITY_PASS (R28 §1).  The M2 science go/no-go is the
+  finite-library image oracle: per stress scene, k*_j = min arg max_k five-seed-
+  mean PSNR over the 8 GENUINE ORACLE-LIB bank materializations, dQ^A_j =
+  ORACLE-LIB - max(SCAT32-060, RIDGE).  It NEVER reads an FW arm.  Gate B's 60%
+  capture denominator is this ORACLE-LIB gain (R28 §2).
+
+FW ARMS -- k_eff>=32 restriction + DOSE-RELAXED diagnostic (R28 §3; supersedes
+  the R27 dose-compliant witness path, which smoke-4 showed destroys the oracle,
+  9.5 dB vs 22.8 baseline, because dose-uniformization removes the FW direction).
+  (1) the online primal_probe dictionary is restricted to k_eff>=32 super-atoms
+      (_restrict_ctx_keff32; +-5% at 972 rows is infeasible for k=16, R27 §1.1);
+  (2) rlmi.materialize_fw_relaxed keeps exactly 972 rows, the incident-budget cap,
+      row-wise peak/load/admission/nonneg guards, k>=32 dict, dwell and RQL, but
+      removes ONLY the +-5% dose band -- the FW information direction is preserved
+      at its frozen amplitudes (NOT dose-uniformized).  Both arms are labeled
+      NONDEPLOYABLE_DOSE_RELAXED_FW_DIAGNOSTIC and record the full realized dose
+      profile / max deviation / power distribution / budget / peak / loads.  NO
+      Gate A-C statistic reads them (asserted by bridge_gates.gates_read_no_fw +
+      a unit test).  They feed only the descriptive four-quantity decomposition
+      (R28 §4): q3 = XHAT-FW - TRUE-X-FW, q4 = TRUE-X-FW - ORACLE-LIB.
 
 L7 PRUNE (phase-1.5 ruling 2b).  load_banks() prunes L7 to 99% cumulative weight
-  mass (documented atom count) and renormalizes; guards re-verified after renorm.
+  mass ONLY when the bank carries no exact-972 admission witness (R27 §2 witnessed
+  banks are consumed verbatim).
 
-BLINDNESS.  Phase 1 reconstructs ONLY bridge_control_0 (smoke).  No other scene
-  is acquired/reconstructed until the full grid (checkpoint-gated).
+BLINDNESS.  smoke-1..3 reconstruct ONLY bridge_control_0; smoke-4 additionally
+  reconstructs bridge_twopop_0 for the four FW cells (coordinator-authorized,
+  materialization validation only).  The other 14 stress scenes stay blind until
+  the checkpoint-gated grid.
 """
 from __future__ import annotations
 
@@ -266,15 +291,45 @@ def _prune_measure(bk, mass):
 
 
 def load_banks():
-    """The 8 mixable measures L0..L7 (L0 = knob).  L7 pruned to L7_PRUNE_MASS
-    cumulative weight mass (phase-1.5 ruling 2b).  Cached module-level."""
+    """The 8 mixable measures L0..L7 (L0 = knob).  Cached module-level.
+
+    L7 is pruned to L7_PRUNE_MASS cumulative weight mass (phase-1.5 ruling 2b)
+    ONLY when it does NOT carry an exact-972 admission witness.  The R27 §2 bank
+    rebuild regenerates LIBRARY_MANIFEST.json with per-bank admission witnesses
+    (an exact 972-row realization proving ±5% feasibility); when a bank carries
+    that witness, pruning is skipped (the witness is defined on the full measure)
+    so smoke-3 consumes the witnessed measures verbatim."""
     global _BANKS
     if _BANKS is None:
         b = [rlmi.load_bank(os.path.join(LIB_DIR, "L%d.npz" % k),
                             name="L%d" % k, is_knob=(k == 0)) for k in range(8)]
-        b[7] = _prune_measure(b[7], L7_PRUNE_MASS)
+        if not _has_admission_witness(b[7]) and b[7].rows.shape[0] > 5000:
+            b[7] = _prune_measure(b[7], L7_PRUNE_MASS)
         _BANKS = b
     return _BANKS
+
+
+def _has_admission_witness(bank):
+    """True if the bank carries an R27 §2 exact-972 admission witness
+    (schema R27_S2_V1: meta['witness_mult'] loaded from npz admission_witness_mult,
+    or meta['admission']['witness_multiplicities'])."""
+    m = bank.meta or {}
+    if m.get("witness_mult") is not None:
+        return True
+    adm = m.get("admission")
+    return bool(isinstance(adm, dict) and adm.get("witness_multiplicities"))
+
+
+def reset_caches():
+    """Drop the module bank cache + the rlmi scenario/oracle cache so a rerun
+    (smoke-3) picks up a freshly regenerated library.  Call after the R27 §2
+    T-B rebuild lands a new LIBRARY_MANIFEST.json."""
+    global _BANKS
+    _BANKS = None
+    try:
+        rlmi._SM_CACHE.clear()
+    except Exception:
+        pass
 
 
 def prescan_matrix_load():
@@ -449,17 +504,37 @@ def _floor_design(x):
     return xf / xf.sum()
 
 
+FW_KEFF_MIN = 32                         # R27 (TRUE-X/XHAT hole ruling) point 1
+
+
+def _restrict_ctx_keff32(ctx, k_min=FW_KEFF_MIN):
+    """R27 (FW-hole ruling §1): restrict the online primal_probe dictionary to
+    the SAME k_eff>=32 physical super-atom class T-B used for L7.  The +-5% dose
+    band at 972 rows is arithmetically infeasible for k=16 atoms (R27 §1.1) for
+    ANY arm; the restriction is conservative (it can only WEAKEN the oracle, so
+    Gate A cannot be inflated by it).  Implemented by zeroing ALLOW for every
+    geometry whose physical support has fewer than k_min pixels, so primal_probe
+    never selects a sub-32 atom."""
+    k_per_geom = np.concatenate([np.full(mb["IDX"].shape[0], mb["IDX"].shape[1],
+                                         dtype=np.int64) for mb in ctx["metas"]])
+    ctx["ALLOW"] = ctx["ALLOW"] & (k_per_geom >= k_min)[:, None]
+    ctx["k_per_geom"] = k_per_geom
+    return ctx
+
+
 def _fw_ctx(x_design, nu, budget=0.60):
     """Build the R18 certificate context on a design image (x_true for TRUE-X,
-    xhat for XHAT).  info_matrix_full(deployed SCAT32 + pre-scan) -> fixed-star
-    subspace B -> setup_ctx_cert (D_load U D_gain palette under the full safety
-    cone).  The design scene is floored (see _floor_design)."""
+    xhat for XHAT), RESTRICTED to k_eff>=32 super-atoms (R27 FW-hole ruling §1).
+    info_matrix_full(deployed SCAT32 + pre-scan) -> fixed-star subspace B ->
+    setup_ctx_cert (D_load U D_gain palette under the full safety cone) ->
+    k_eff>=32 restriction.  The design scene is floored (see _floor_design)."""
     xd = _floor_design(x_design)
     rows_dep, _ = m1.deployed_scat32()
     P = v4.balanced_prescan_52(SIDE)
     V_full = v4.info_matrix_full(rows_dep, xd, int(nu), budget, P=P)
     B, eps0, _ = v4.subspace_from_fixedstar(V_full)
-    return v5.setup_ctx_cert(xd, float(nu), budget, B, eps0, SIDE)
+    ctx = v5.setup_ctx_cert(xd, float(nu), budget, B, eps0, SIDE)
+    return _restrict_ctx_keff32(ctx)
 
 
 def _ctx_atom_rows(ctx, gl_pairs):
@@ -498,32 +573,69 @@ def fw_design_bank(ctx, xi, name, x_design):
                      admission=np.ones(rows.shape[0], dtype=bool), is_knob=False)
 
 
+def fw_design_directions(ctx, xi):
+    """FW design as UNIT geometry directions for the T-B witness construction
+    (R27 FW-hole ruling §2).  Aggregates the design measure over load LEVELS per
+    geometry (weight_g = sum_l xi[g,l]) and returns the unit-amplitude direction
+    patterns GVAL[g] scattered onto IDX[g] (NOT the load-scaled C[g,l] rows) --
+    the fixed_dose construction sets the per-atom nominal power via the Sinkhorn,
+    so the atoms must enter at unit amplitude (base pattern = n/k on support),
+    exactly as make_patterns('sparsek', k=32) does in fixed_dose_scat32.  Returns
+    (rows (G_sel, n), weights (G_sel,))."""
+    metas = ctx["metas"]
+    n = ctx["n"]
+    wg = xi.sum(axis=1)                                 # weight per geometry
+    gsel = np.where(wg > 1e-12)[0]
+    offs, acc = [], 0
+    for mb in metas:
+        offs.append(acc)
+        acc += mb["IDX"].shape[0]
+    offs = np.asarray(offs)
+    rows = np.zeros((gsel.size, n))
+    for i, g in enumerate(gsel):
+        bi = int(np.searchsorted(offs, g, side="right") - 1)
+        mb = metas[bi]
+        gl = int(g - offs[bi])
+        rows[i, mb["IDX"][gl]] = mb["GVAL"][gl]        # unit direction (g.xhat=1)
+    w = wg[gsel]
+    return rows, w / w.sum()
+
+
+FW_LABEL = "NONDEPLOYABLE_DOSE_RELAXED_FW_DIAGNOSTIC"   # R28 §3
+
+
 def arm_fw(x_design, xhat_mat, nu, budget, B_inc, name, iters=80):
-    """Run the R18 support-expanding primal on x_design; materialize 972 rows
-    from the resulting measure via rlmi.materialize (single-measure) under the
-    RIDGE incident budget.  xhat_mat = the scene used for the materializer dose/
-    load (x_true for TRUE-X, xhat for XHAT).  Returns (main_rows, info)."""
+    """R28 §3 dose-RELAXED FW diagnostic (NONDEPLOYABLE).  Run the R18 support-
+    expanding primal on the k_eff>=32-restricted dictionary (R27 §1), then
+    materialize the per-cell design at its FROZEN FW amplitudes via
+    rlmi.materialize_fw_relaxed: exact 972 rows + incident-budget cap + peak/load/
+    admission/nonneg guards, but NO +-5% dose band (the FW information direction is
+    preserved, not dose-uniformized).  Records the full realized dose profile /
+    power distribution / peak / budget / loads.  NO Gate A-C statistic reads this
+    arm.  On a peak/incident/count guard violation -> L0 fallback."""
     t0 = time.perf_counter()
     ctx = _fw_ctx(x_design, nu, budget)
     ld, xi, it = dgp.primal_probe(ctx, budget, iters=iters)
     t_solve = time.perf_counter() - t0
     if xi is None:
-        # solver found no feasible interior point -> fall back to L0 rows
         rows, sc = arm_scat32_060(xhat_mat)
         return rows, {"fw_solve_wall_s": t_solve, "fw_logdet": None,
-                      "fw_support": 0, "fallback": "L0", **sc}
-    bank = fw_design_bank(ctx, xi, name, xhat_mat)
-    mat = rlmi.materialize([bank], np.array([1.0]), xhat_mat, M_rows=M_MAIN,
-                           dose_band=DOSE_BAND, incident_budget=B_inc,
-                           peak_cap=PEAK_CAP, side=SIDE)
-    if mat.flag != "OK":
+                      "fw_support": 0, "fallback": "L0", "fw_label": FW_LABEL, **sc}
+    bank = fw_design_bank(ctx, xi, name, xhat_mat)     # frozen FW amplitudes
+    t1 = time.perf_counter()
+    mat = rlmi.materialize_fw_relaxed(bank.rows, bank.weights, M_rows=M_MAIN,
+                                      peak_cap=PEAK_CAP, incident_budget=B_inc)
+    t_mat = time.perf_counter() - t1
+    if mat is None:
         rows, sc = arm_scat32_060(xhat_mat)
-        return rows, {"fw_solve_wall_s": t_solve, "fw_logdet": float(ld),
+        return rows, {"fw_solve_wall_s": t_solve, "fw_materialize_wall_s": t_mat,
+                      "fw_logdet": float(ld), "fw_support": int((xi > 1e-9).sum()),
+                      "materialize_flag": "GUARD_FAIL", "fallback": "L0",
+                      "fw_label": FW_LABEL, **sc}
+    return mat.rows, {"fw_solve_wall_s": t_solve, "fw_materialize_wall_s": t_mat,
+                      "fw_logdet": float(ld), "fw_iters": int(it),
                       "fw_support": int((xi > 1e-9).sum()),
-                      "materialize_flag": mat.flag, "fallback": "L0", **sc}
-    return mat.rows, {"fw_solve_wall_s": t_solve, "fw_logdet": float(ld),
-                      "fw_iters": int(it), "fw_support": int((xi > 1e-9).sum()),
-                      "materialize_flag": mat.flag,
+                      "materialize_flag": "OK", "fw_label": FW_LABEL,
                       "materialize_guards": mat.guards}
 
 
@@ -748,47 +860,69 @@ def frozen_inputs():
         p = os.path.join(LIB_DIR, "L%d.npz" % k)
         fi.append({"path": os.path.relpath(p, ROOT).replace("\\", "/"),
                    "sha256": _sha256(p)})
+    # code provenance (R27 smoke-3/4: harness + allocator file hashes so a code
+    # change invalidates the frozen manifest)
+    for fn in ("bridge_harness.py", "rlmi.py", "bridge_gates.py"):
+        p = os.path.join(HERE, fn)
+        if os.path.exists(p):
+            fi.append({"path": os.path.relpath(p, ROOT).replace("\\", "/"),
+                       "sha256": _sha256(p), "role": "code"})
     return fi
 
 
-def generate_manifests(n_shards_pro2=3, n_shards_pro1=2, out_dir=None):
-    """Write shard manifests (schema mirrors shard_runner.py) partitioning the
-    320 groups across Colab routes.  Groups are assigned so that all 5 seeds and
-    both c of a (scene, nu) stay in one shard (TRUE-X FW design reuse across
-    seeds; no cross-shard cache dependence).  Returns the shard summary."""
-    out_dir = out_dir or os.path.join(OUT_DIR, "manifests")
-    os.makedirs(out_dir, exist_ok=True)
-    cells = build_grid_cells()
-    fi = frozen_inputs()
-    # partition key = (scene, nu): keeps a scene's TRUE-X design local to a shard
-    scenes = [s["scene_id"] for s in scene_manifest()["scenes"]]
-    keys = [(sc, nu) for sc in scenes for nu in NU_LIST]        # 32 keys
-    routes = ["pro2_a", "pro2_b", "pro2_c"][:n_shards_pro2] + \
-             ["pro1_a", "pro1_b"][:n_shards_pro1]
+# Route layouts (phase-1.75 sequencing note).  Primary assumes the R16
+# diagnostic has released its 2 pro2 slots by smoke-3 time (all 3 pro2 + 2 pro1
+# free); the 3-route fallback assumes R16 still holds 2 pro2 slots (only pro2_a
+# free) — so the grid runs on pro2_a + pro1_a + pro1_b.
+ROUTE_LAYOUTS = {
+    "primary_5route": ["pro2_a", "pro2_b", "pro2_c", "pro1_a", "pro1_b"],
+    "fallback_3route": ["pro2_a", "pro1_a", "pro1_b"],
+}
+
+
+def _emit_layout(name, routes, cells, fi, keys, out_dir):
+    ldir = os.path.join(out_dir, name)
+    os.makedirs(ldir, exist_ok=True)
     R = len(routes)
     buckets = {r: [] for r in routes}
-    for i, key in enumerate(keys):
+    for i, key in enumerate(keys):                     # round-robin (scene, nu) keys
         buckets[routes[i % R]].append(key)
     shards = []
     for r in routes:
         keyset = set(buckets[r])
         scells = [c for c in cells if (c["scene"], c["nu"]) in keyset]
-        shard = {
-            "shard_id": "bridge_%s" % r,
-            "stage": "DEV_BRIDGE",
-            "route": r,
-            "frozen_inputs": fi,
-            "cells": scells,
-            "output_dir": "results/round63_bridge/cells",
-            "output_csv": "results/round63_bridge/bridge_%s.csv" % r,
-        }
-        p = os.path.join(out_dir, "bridge_%s.json" % r)
+        shard = {"shard_id": "bridge_%s_%s" % (name, r), "stage": "DEV_BRIDGE",
+                 "route": r, "layout": name, "frozen_inputs": fi, "cells": scells,
+                 "output_dir": "results/round63_bridge/cells",
+                 "output_csv": "results/round63_bridge/bridge_%s_%s.csv" % (name, r)}
+        p = os.path.join(ldir, "bridge_%s.json" % r)
         with open(p, "w") as f:
             json.dump(shard, f, indent=1)
         shards.append({"route": r, "n_keys": len(buckets[r]),
                        "n_groups": len(scells), "manifest": p})
-    idx = {"n_groups_total": len(cells), "n_keys": len(keys), "routes": routes,
-           "shards": shards}
+    return {"layout": name, "routes": routes, "shards": shards}
+
+
+def generate_manifests(out_dir=None, layouts=None):
+    """Write shard manifests (schema mirrors shard_runner.py) partitioning the
+    320 groups across Colab routes, for BOTH the primary 5-route layout and the
+    3-route R16-contention fallback (phase-1.75 sequencing note).  Groups are
+    assigned so that all 5 seeds and both c of a (scene, nu) stay in one shard
+    (TRUE-X FW design reuse across seeds; no cross-shard cache dependence)."""
+    out_dir = out_dir or os.path.join(OUT_DIR, "manifests")
+    os.makedirs(out_dir, exist_ok=True)
+    layouts = layouts or ROUTE_LAYOUTS
+    cells = build_grid_cells()
+    fi = frozen_inputs()
+    scenes = [s["scene_id"] for s in scene_manifest()["scenes"]]
+    keys = [(sc, nu) for sc in scenes for nu in NU_LIST]        # 32 keys
+    emitted = {name: _emit_layout(name, routes, cells, fi, keys, out_dir)
+               for name, routes in layouts.items()}
+    idx = {"n_groups_total": len(cells), "n_keys": len(keys),
+           "layouts": emitted,
+           "note": ("primary_5route assumes R16 released its 2 pro2 slots; "
+                    "fallback_3route assumes R16 still holds pro2_b/pro2_c "
+                    "(~1-2h) so only pro2_a + pro1_a + pro1_b are free.")}
     with open(os.path.join(out_dir, "INDEX.json"), "w") as f:
         json.dump(idx, f, indent=1)
     return idx

@@ -281,22 +281,33 @@ class Bank:
 
 
 def load_bank(path, name=None, is_knob=False):
-    """Load a T-B bank npz (fields: rows, weights, meta-json).  meta json may
-    carry per-row 'load','incident','peak','admission'; missing ones default."""
+    """Load a T-B bank npz.  Per-row metadata is read from the npz arrays
+    (atom_load/atom_incident/atom_peak/atom_admission); the R27 §2 exact-972
+    admission witness (admission_witness_mult, aligned to rows) is stored in
+    meta['witness_mult'].  meta['admission'] is the R27 admission OBJECT (dict),
+    NOT a per-row mask -- do not coerce it to bool."""
     d = np.load(path, allow_pickle=True)
+    files = set(d.files)
     rows = np.asarray(d["rows"], dtype=np.float64)
     weights = np.asarray(d["weights"], dtype=np.float64)
     meta = {}
-    if "meta" in d:
+    if "meta" in files:
         m = d["meta"]
         meta = json.loads(m.item() if hasattr(m, "item") else str(m))
-    def _get(k):
-        v = meta.get(k)
-        return np.asarray(v, dtype=np.float64) if v is not None else None
-    adm = meta.get("admission")
+
+    def npz(k, dt=np.float64):
+        return np.asarray(d[k], dtype=dt) if k in files else None
+
+    admission = None
+    if "atom_admission" in files:
+        admission = np.asarray(d["atom_admission"], dtype=bool)
+    wit = npz("admission_witness_mult", np.int64)
+    if wit is not None:
+        meta = dict(meta)
+        meta["witness_mult"] = wit                     # (R,) int, aligned to rows
     return Bank(name=name or meta.get("name", "L?"), rows=rows, weights=weights,
-                load=_get("load"), incident=_get("incident"), peak=_get("peak"),
-                admission=(np.asarray(adm, dtype=bool) if adm is not None else None),
+                load=npz("atom_load"), incident=npz("atom_incident"),
+                peak=npz("atom_peak"), admission=admission,
                 is_knob=is_knob, meta=meta)
 
 
@@ -678,7 +689,8 @@ class MaximinResult:
 
 
 def standardized_maximin(sm, tol=1e-9, tie_tol=1e-7, outer_iter=120,
-                         inner_iter=120, seed=0, refine_maxiter=None):
+                         inner_iter=120, seed=0, refine_maxiter=None,
+                         fast_linalg=False):
     """Solve min_{w in simplex} max_s r_s(w), r_s=R_s(w)/R*_s (R25.1).
 
     Primal-dual saddle formulation (exact, gives the least-favorable alpha):
@@ -692,15 +704,35 @@ def standardized_maximin(sm, tol=1e-9, tie_tol=1e-7, outer_iter=120,
     At the saddle, w* = w(alpha*) minimizes sum_s alpha*_s r_s over the simplex,
     so the KKT stationarity (R25.2)  sum_s alpha*_s g_{s,k} = lambda on supp(w),
     <= lambda off support, holds by construction -- alpha* IS the least-favorable
-    scenario distribution.  K=8, S=16 -> small + robust."""
+    scenario distribution.  K=8, S=16 -> small + robust.
+
+    fast_linalg (R27 §3.2, output-equivalent): evaluate rs_g with BATCHED linear
+    algebra over the S scenarios (one stacked (S,r,r) inverse instead of S scipy
+    Cholesky-solves).  Same objective, same math; verified against the reference
+    (fast_linalg=False) to the R27 equivalence bar (|t|<=1e-8, ||w||_1<=1e-6, KKT
+    within tol, IDENTICAL 972-row realization) in test_rlmi.  Default off."""
     H0, F, W, Rstar = sm.H0, sm.F, sm.W, sm.Rstar
     S, K = len(H0), len(F[0])
 
-    def rs_g(w):
-        rs = np.empty(S); gg = np.empty((S, K))
-        for s in range(S):
-            rs[s], gg[s], _ = _rs_and_grad(H0[s], F[s], W, Rstar[s], w)
-        return rs, gg
+    if fast_linalg:
+        H0s = np.stack([np.ascontiguousarray(h) for h in H0])       # (S,r,r)
+        Fs = np.stack([np.stack(F[s]) for s in range(S)])           # (S,K,r,r)
+        Rst = np.asarray(Rstar, dtype=np.float64)
+
+        def rs_g(w):
+            X = H0s + np.einsum("k,skij->sij", w, Fs)               # (S,r,r)
+            X = 0.5 * (X + np.transpose(X, (0, 2, 1)))
+            Xi = np.linalg.inv(X)                                   # batched
+            R = np.einsum("ij,sji->s", W, Xi)                       # tr[W Xi]
+            XiWXi = Xi @ W @ Xi                                     # (S,r,r)
+            gpos = np.einsum("skij,sij->sk", Fs, XiWXi)             # tr[F XiWXi]
+            return R / Rst, gpos / Rst[:, None]
+    else:
+        def rs_g(w):
+            rs = np.empty(S); gg = np.empty((S, K))
+            for s in range(S):
+                rs[s], gg[s], _ = _rs_and_grad(H0[s], F[s], W, Rstar[s], w)
+            return rs, gg
 
     def inner_min(alpha, w0):
         """argmin_{w in Delta_K} sum_s alpha_s r_s(w) (convex), warm-started."""
@@ -1170,6 +1202,20 @@ def materialize(banks, w, xhat, M_rows=972, dose_band=0.05,
     block-order randomization.  Returns a Materialization; sets flag
     MIXTURE_MATERIALIZATION_FAIL if no compliant exact design is found."""
     K = len(banks)
+    # R27 §2: a PURE bank realization IS the bank's frozen exact-972 admission
+    # witness (dose-band-compliant under the bank's nominal powers).  Use it
+    # verbatim rather than re-deriving it -- guarantees the manifest-certified
+    # design and gamma=1 (nominal powers).
+    wa = np.asarray(w, dtype=np.float64)
+    nz = np.where(wa > 1e-12)[0]
+    if nz.size == 1 and abs(float(wa[nz[0]]) - 1.0) < 1e-9:
+        wm = (banks[int(nz[0])].meta or {}).get("witness_mult")
+        if wm is not None:
+            mv = _materialize_from_witness(banks, int(nz[0]), np.asarray(wm),
+                                           M_rows, dose_band, incident_budget,
+                                           peak_cap, block_seed)
+            if mv is not None:
+                return mv
     rows, xi, bw, inc, peak, adm = _union_measure(banks, w)
     A = rows.shape[0]
     n = rows.shape[1]
@@ -1325,6 +1371,190 @@ def materialize(banks, w, xhat, M_rows=972, dose_band=0.05,
                            n_exchange=n_exchange, gamma=gamma)
 
 
+def materialize_fw_relaxed(rows, weights, M_rows=972, peak_cap=1536.0,
+                           incident_budget=None, block_seed=650777):
+    """R28 §3 dose-RELAXED FW diagnostic materialization
+    (NONDEPLOYABLE_DOSE_RELAXED_FW_DIAGNOSTIC).  Largest-remainder integer
+    multiplicities from the FW design measure at its FROZEN nominal amplitudes
+    (preserving the FW information direction -- NO coverage/Sinkhorn dose
+    uniformization), with the SAME exact-972 count, row-wise peak cap, incident-
+    budget cap, nonnegativity and admission guards, but NO +-5% per-pixel dose
+    band.  Records the FULL realized per-pixel dose profile + max deviation +
+    source-power distribution.  Returns a Materialization (flag OK) or None
+    (peak / incident / count guard violated -> caller falls back to L0)."""
+    rows = np.asarray(rows, dtype=np.float64)
+    w = np.asarray(weights, dtype=np.float64)
+    if rows.shape[0] == 0 or w.sum() <= 0:
+        return None
+    counts = _largest_remainder(M_rows * (w / w.sum()), M_rows)
+    use = np.where(counts > 0)[0]
+    if use.size == 0 or int(counts.sum()) != M_rows or (rows[use] < -1e-12).any():
+        return None
+    peak = float(rows[use].max())
+    inc = float((counts * rows.sum(axis=1)).sum())
+    if peak > peak_cap + 1e-9 or (incident_budget is not None
+                                  and inc > incident_budget + 1e-6):
+        return None
+    dose = (counts[:, None] * rows).sum(0) / M_rows     # per-pixel dose (relaxed)
+    dm = dose.mean()
+    dev = float(np.abs(dose / dm - 1.0).max()) if dm > 0 else float("inf")
+    power = rows[use].sum(axis=1)                        # per-row source power
+    guards = {"exact_count": int(counts.sum()), "count_ok": True,
+              "dose_dev": dev, "dose_band": None, "dose_relaxed": True,
+              "dose_max": float(dose.max()), "dose_min": float(dose.min()),
+              "dose_mean": float(dm),
+              "power_min": float(power.min()), "power_max": float(power.max()),
+              "power_mean": float(power.mean()), "power_std": float(power.std()),
+              "incident_total": inc, "incident_budget": incident_budget,
+              "incident_ok": bool(incident_budget is None or inc <= incident_budget + 1e-6),
+              "peak": peak, "peak_ok": bool(peak <= peak_cap + 1e-9), "peak_cap": peak_cap,
+              "admission_ok": True, "n_exchange": 0,
+              "label": "NONDEPLOYABLE_DOSE_RELAXED_FW_DIAGNOSTIC"}
+    expanded = np.repeat(np.arange(rows.shape[0]), counts.astype(np.int64))
+    perm = np.random.default_rng(block_seed).permutation(expanded.size)
+    acquired = rows[expanded[perm]]
+    return Materialization(rows=acquired, counts=counts, atom_rows=rows,
+                           atom_bankw=None, what=None, guards=guards, flag="OK",
+                           n_exchange=0, gamma=np.ones(rows.shape[0]))
+
+
+def _coverage_select(supports, n_pix, M_rows):
+    """Coverage-aware greedy SELECTION of M_rows atoms (lifted from the drop rule
+    of oed_design_v5.fixed_dose_scat32): repeatedly add the atom whose support
+    covers the least-covered pixels (min sum of running coverage over its
+    support), keeping per-pixel coverage as uniform as possible.  Deterministic
+    (index tie-break).  supports = binary (A, n_pix)."""
+    A = supports.shape[0]
+    cov = np.zeros(n_pix)
+    chosen = np.zeros(A, dtype=bool)
+    order = np.arange(A)
+    picks = []
+    for _ in range(min(M_rows, A)):
+        score = supports @ cov                          # sum coverage over support
+        score[chosen] = np.inf
+        j = int(order[np.argmin(score)])                # lowest -> index tie-break
+        chosen[j] = True
+        picks.append(j)
+        cov += supports[j]
+    return np.array(picks, dtype=np.int64)
+
+
+def witness_materialize(rows, weights, M_rows=972, dose_band=0.05, w_lo=0.25,
+                        w_hi=4.0, peak_cap=1536.0, incident_budget=None,
+                        x_design=None, budget=0.60, block_seed=650777,
+                        n_iter=6000, band_margin=0.003):
+    """T-B admission-witness construction for an online k_eff>=32 design (R27 §2;
+    lifted from oed_design_v5.fixed_dose_scat32 -- coverage-aware greedy selection
+    + deterministic Sinkhorn nominal-amplitude balancing, the same machinery that
+    produced the frozen library witnesses).  `rows` = unit-indicator geometry
+    patterns (1.0 on each k_eff>=32 support), `weights` the design measure.
+
+    Steps: (1) coverage-aware select M_rows atoms (uniform per-pixel coverage);
+    (2) multiplicatively balance per-atom NOMINAL amplitudes c in [w_lo, w_hi]
+    (default [1/4,4], the frozen bank power range) until per-pixel dose is within
+    +-dose_band; (3) global scale so the mean operating load at x_design equals
+    `budget` (dose_dev is scale-invariant); (4) verify peak<=peak_cap, incident
+    budget, exact M_rows, c in range.  Seed-free deterministic (R27 §2.3).
+    Returns a Materialization (gamma = c) or None (caller -> L0 fallback)."""
+    rows = np.asarray(rows, dtype=np.float64)
+    w = np.asarray(weights, dtype=np.float64)
+    A, n = rows.shape
+    if A == 0 or w.sum() <= 0:
+        return None
+    supports = (rows > 0).astype(np.float64)
+    if A > M_rows:                                      # coverage-aware selection
+        sel = _coverage_select(supports, n, M_rows)
+    elif A == M_rows:
+        sel = np.arange(A)
+    else:                                               # too few atoms to admit
+        return None
+    R = supports[sel]                                   # unit-amplitude base rows
+    counts = np.ones(sel.size, dtype=np.int64)          # one exposure each
+    Rb = R
+    deg = np.maximum(Rb.sum(axis=1), 1.0)
+    c = np.ones(sel.size)
+    for _ in range(n_iter):
+        dose = c @ R
+        dm = dose.mean()
+        if dm <= 0:
+            return None
+        rel = dose / dm
+        if np.abs(rel - 1.0).max() <= dose_band - band_margin:
+            break
+        c = np.clip(c / np.power((Rb @ rel) / deg, 0.7), w_lo, w_hi)
+    rows_eff = c[:, None] * R
+    # global load scaling: mean operating load at x_design == budget (scale-free
+    # for dose_dev; sets absolute loads/incident/peak).
+    if x_design is not None:
+        loads = rows_eff @ np.asarray(x_design, dtype=np.float64)
+        ml = float(loads.mean())
+        if ml > 0:
+            rows_eff = rows_eff * (budget / ml)
+    dose = rows_eff.sum(0)
+    dev = float(np.abs(dose / dose.mean() - 1.0).max()) if dose.mean() > 0 else np.inf
+    peak = float(rows_eff.max()) if rows_eff.size else 0.0
+    inc = float(rows_eff.sum())
+    ok = (dev <= dose_band + 1e-9 and peak <= peak_cap + 1e-9
+          and (incident_budget is None or inc <= incident_budget + 1e-6)
+          and w_lo - 1e-9 <= c.min() and c.max() <= w_hi + 1e-9)
+    guards = {"exact_count": int(counts.sum()), "count_ok": True,
+              "dose_dev": dev, "dose_dev_pretrim": dev,
+              "dose_ok": bool(dev <= dose_band + 1e-9), "dose_band": dose_band,
+              "incident_total": inc, "incident_budget": incident_budget,
+              "incident_ok": bool(incident_budget is None or inc <= incident_budget + 1e-6),
+              "peak": peak, "peak_ok": bool(peak <= peak_cap + 1e-9), "peak_cap": peak_cap,
+              "admission_ok": True, "n_exchange": 0, "gamma_min": float(c.min()),
+              "gamma_max": float(c.max()), "gamma_std": float(c.std()),
+              "from_witness_construct": True}
+    if not ok:
+        return None
+    perm = np.random.default_rng(block_seed).permutation(sel.size)
+    acquired = rows_eff[perm]
+    gamma_full = np.ones(A); gamma_full[sel] = c
+    return Materialization(rows=acquired, counts=counts, atom_rows=R,
+                           atom_bankw=None, what=None, guards=guards, flag="OK",
+                           n_exchange=0, gamma=gamma_full)
+
+
+def _materialize_from_witness(banks, k, wm, M_rows, dose_band, incident_budget,
+                              peak_cap, block_seed):
+    """R27 §2 pure-bank realization from the frozen exact-972 admission witness
+    (multiplicities aligned to the bank rows, nominal powers, gamma=1).  Guards
+    are recomputed and re-verified post-hoc; returns None (fall through to the
+    general materializer) if the witness is malformed or fails a guard."""
+    K = len(banks)
+    bk = banks[k]
+    counts = np.asarray(wm, dtype=np.int64)
+    rows = bk.rows
+    if counts.shape[0] != rows.shape[0] or int(counts.sum()) != M_rows:
+        return None
+    dose = (counts[:, None] * rows).sum(0) / M_rows
+    dmean = dose.mean()
+    dev = float(np.abs(dose / dmean - 1.0).max()) if dmean > 0 else np.inf
+    inc_row = bk.incident if bk.incident is not None else rows.sum(axis=1)
+    inc_real = float((counts * inc_row).sum())
+    peak_real = float(rows[counts > 0].max()) if (counts > 0).any() else 0.0
+    dose_ok = dev <= dose_band + 1e-9
+    inc_ok = (incident_budget is None) or (inc_real <= incident_budget + 1e-6)
+    peak_ok = peak_real <= peak_cap + 1e-9
+    guards = {"exact_count": int(counts.sum()), "count_ok": True,
+              "dose_dev": dev, "dose_dev_pretrim": dev, "dose_ok": bool(dose_ok),
+              "dose_band": dose_band, "incident_total": inc_real,
+              "incident_budget": incident_budget, "incident_ok": bool(inc_ok),
+              "peak": peak_real, "peak_ok": bool(peak_ok), "peak_cap": peak_cap,
+              "admission_ok": True, "n_exchange": 0, "gamma_min": 1.0,
+              "gamma_max": 1.0, "gamma_std": 0.0, "from_witness": True}
+    if not (dose_ok and inc_ok and peak_ok):
+        return None                                     # let the general path try
+    expanded = np.repeat(np.arange(rows.shape[0]), counts)
+    perm = np.random.default_rng(block_seed).permutation(expanded.size)
+    acquired = rows[expanded[perm]]
+    what = np.zeros(K); what[k] = 1.0
+    return Materialization(rows=acquired, counts=counts, atom_rows=rows,
+                           atom_bankw=None, what=what, guards=guards, flag="OK",
+                           n_exchange=0, gamma=np.ones(rows.shape[0]))
+
+
 def _mat_fail(banks, K, flag):
     """L0 realization fallback (R25 SS9): return the frozen knob bank's exact
     rows.  The knob bank L0 is materialized by taking its atoms at their integer
@@ -1404,6 +1634,36 @@ class RLMIConfig:
     knob_index: int = 0
     freeze_directions: bool = True
     compute_loo: bool = False        # R25 SS3 Delta_LOO (S extra solves; off=fast)
+    fast_linalg: bool = False        # R27 SS3.2 batched maximin (output-equivalent)
+    use_cache: bool = False          # R27 SS3.2 scenario/oracle cache (per state)
+
+
+# ---- R27 SS3.2 scenario-matrix + oracle cache (output-equivalent) ---------- #
+#  Keyed by the identical (xhat, banks, B, W, physics) state; stores the
+#  ScenarioSet + solved ScenarioMatrices so repeated allocator calls (equivalence
+#  checks, delta_LOO, arms sharing the pre-scan state) skip make_scenarios +
+#  build_scenario_matrices + compute_oracles.  On a HIT the returned objects are
+#  bit-identical -> the maximin trajectory and 972-row realization are identical.
+#  For the bridge GRID each cell is a distinct state (cache miss) -> no per-cell
+#  route-latency change; disabled by default for that reason.
+_SM_CACHE = {}
+_SM_CACHE_MAX = 8
+
+
+def _state_key(xhat, banks, B, W, config):
+    h = hashlib.sha256()
+    h.update(np.ascontiguousarray(xhat, dtype=np.float64).tobytes())
+    h.update(np.ascontiguousarray(B, dtype=np.float64).tobytes())
+    h.update(np.ascontiguousarray(W, dtype=np.float64).tobytes())
+    for bk in banks:
+        h.update(bk.name.encode())
+        h.update(np.ascontiguousarray(bk.rows, dtype=np.float64).tobytes())
+        h.update(np.ascontiguousarray(bk.weights, dtype=np.float64).tobytes())
+    for fld in ("n_scenarios", "nu", "c", "lambda_TV", "eps", "tv_smooth",
+                "rho_prescan", "M_rows", "side", "seed_scenario", "jitter_scale",
+                "oracle_tol", "freeze_directions"):
+        h.update(repr(getattr(config, fld)).encode())
+    return h.hexdigest()
 
 
 def run_rlmi(xhat, banks, B, H0_full, config: RLMIConfig, W=None,
@@ -1425,30 +1685,38 @@ def run_rlmi(xhat, banks, B, H0_full, config: RLMIConfig, W=None,
         W = np.eye(r)
     side = config.side
 
-    # -- 1. scenarios ------------------------------------------------------- #
-    scen = make_scenarios(xhat, H0_full, n_scenarios=config.n_scenarios,
-                          seed_base=config.seed_scenario,
-                          jitter_scale=config.jitter_scale)
-
-    # -- 2. scenario matrices + oracles ------------------------------------- #
     if Dx is None or Dy is None:
         Dx, Dy = _grad_ops(side)
-    sm = build_scenario_matrices(scen, banks, B, config.nu, config.c,
-                                 config.lambda_TV, config.eps, side,
-                                 prescan_rows=prescan_rows,
-                                 rho_prescan=config.rho_prescan,
-                                 tv_smooth=config.tv_smooth, W=W,
-                                 M_rows=config.M_rows, Dx=Dx, Dy=Dy,
-                                 freeze_directions=config.freeze_directions)
-    try:
-        sm = compute_oracles(sm, tol=config.oracle_tol)
-    except Exception as e:               # noqa
-        return _solver_fail(banks, config, "SOLVER_FAIL", str(e), scen, sm)
+
+    # -- 1-2. scenarios + scenario matrices + oracles (R27 SS3.2 cacheable) -- #
+    ck = _state_key(xhat, banks, B, W, config) if config.use_cache else None
+    if ck is not None and ck in _SM_CACHE:
+        scen, sm = _SM_CACHE[ck]                       # bit-identical reuse
+    else:
+        scen = make_scenarios(xhat, H0_full, n_scenarios=config.n_scenarios,
+                              seed_base=config.seed_scenario,
+                              jitter_scale=config.jitter_scale)
+        sm = build_scenario_matrices(scen, banks, B, config.nu, config.c,
+                                     config.lambda_TV, config.eps, side,
+                                     prescan_rows=prescan_rows,
+                                     rho_prescan=config.rho_prescan,
+                                     tv_smooth=config.tv_smooth, W=W,
+                                     M_rows=config.M_rows, Dx=Dx, Dy=Dy,
+                                     freeze_directions=config.freeze_directions)
+        try:
+            sm = compute_oracles(sm, tol=config.oracle_tol)
+        except Exception as e:               # noqa
+            return _solver_fail(banks, config, "SOLVER_FAIL", str(e), scen, sm)
+        if ck is not None:
+            if len(_SM_CACHE) >= _SM_CACHE_MAX:
+                _SM_CACHE.pop(next(iter(_SM_CACHE)))
+            _SM_CACHE[ck] = (scen, sm)
 
     # -- 3-4. standardized maximin + tie-break ------------------------------ #
     try:
         mm = standardized_maximin(sm, tol=config.maximin_tol,
-                                  tie_tol=config.tie_tol)
+                                  tie_tol=config.tie_tol,
+                                  fast_linalg=config.fast_linalg)
         w_star = tie_break_to_knob(sm, mm, knob_index=config.knob_index,
                                    tie_tol=config.tie_tol)
     except Exception as e:               # noqa

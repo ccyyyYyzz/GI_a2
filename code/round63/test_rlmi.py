@@ -279,6 +279,68 @@ def test_latency_benchmark():
     return med
 
 
+# ==================================================== (f2) fast-linalg equiv == #
+def test_fast_linalg_equivalence():
+    """R27 §3.2 output-equivalence: the batched allocator (fast_linalg=True) must
+    agree with the reference to |t|<=1e-8, ||w||_1<=1e-6, KKT within tol, and an
+    IDENTICAL 972-row realization after the closest-to-e0 tie-break."""
+    rng = np.random.default_rng(17)
+    S, K, r = 16, 8, 40
+    H0 = [_spd(rng, r, scale=0.4, ridge=2.5) for _ in range(S)]
+    F = [[_spd(rng, r, scale=0.3, ridge=0.5) for _ in range(K)] for _ in range(S)]
+    sm = _make_sm(H0, F)
+    mm_r = rlmi.standardized_maximin(sm, fast_linalg=False)
+    mm_f = rlmi.standardized_maximin(sm, fast_linalg=True)
+    w_r = rlmi.tie_break_to_knob(sm, mm_r, knob_index=0)
+    w_f = rlmi.tie_break_to_knob(sm, mm_f, knob_index=0)
+    dt = abs(mm_f.t_cont - mm_r.t_cont)
+    dw = float(np.abs(w_f - w_r).sum())
+    # identical 972-row realization on a shared bank set built from w
+    side = 18
+    knob = _strip_bank("L0", side, "row", amp=1.0, is_knob=True)
+    lib = _strip_bank("L1", side, "col", amp=1.0)
+    xh = np.full(side * side, 0.5)
+    # use a common 2-simplex projection of the (r-dim) weights for the realization
+    w2r = np.array([w_r[0], 1 - w_r[0]]); w2r = np.clip(w2r, 0, None); w2r /= w2r.sum()
+    w2f = np.array([w_f[0], 1 - w_f[0]]); w2f = np.clip(w2f, 0, None); w2f /= w2f.sum()
+    m_r = rlmi.materialize([knob, lib], w2r, xh, M_rows=972, dose_band=0.05,
+                           incident_budget=None, peak_cap=1e9, side=side)
+    m_f = rlmi.materialize([knob, lib], w2f, xh, M_rows=972, dose_band=0.05,
+                           incident_budget=None, peak_cap=1e9, side=side)
+    ident = bool(np.array_equal(m_r.counts, m_f.counts))
+    print("[f2] fast-linalg equiv: |dt|=%.2e ||dw||_1=%.2e kkt_r=%.1e kkt_f=%.1e realiz_ident=%s"
+          % (dt, dw, mm_r.kkt_residual, mm_f.kkt_residual, ident))
+    assert dt <= 1e-8 and dw <= 1e-6
+    assert mm_f.kkt_residual <= 1e-6
+    assert ident
+    print("[f2] R27 §3.2 batched-allocator output-equivalence PASS")
+
+
+def test_scenario_cache_identity():
+    """R27 §3.2 cache: a second run_rlmi on the identical state (use_cache=True)
+    reuses the cached scenario matrices and returns a BIT-IDENTICAL allocation +
+    972-row realization."""
+    rng = np.random.default_rng(8)
+    side, n, r = 18, 18 * 18, 24
+    xhat = np.clip(np.full(n, 0.5) + 0.02 * rng.standard_normal(n), 0.05, 1.0)
+    Mr = rng.standard_normal((n, n)); B = np.linalg.eigh(Mr @ Mr.T)[1][:, -r:]
+    Dx, Dy = rlmi._grad_ops(side)
+    H0f = rlmi.tv_curvature(xhat, side, Dx, Dy) + 0.05 * np.eye(n)
+    banks = [_strip_bank("L0", side, "row", amp=0.03, is_knob=True),
+             _strip_bank("L1", side, "col", amp=0.03),
+             _strip_bank("L2", side, "row", amp=0.05)]
+    cfg = rlmi.RLMIConfig(n_scenarios=8, nu=200.0, c=0.05, eps=1e-4, side=side,
+                          dose_band=0.08, peak_cap=1e9, jitter_scale=0.5,
+                          use_cache=True)
+    rlmi._SM_CACHE.clear()
+    d1, m1_, *_ = rlmi.run_rlmi(xhat, banks, B, H0f, cfg)
+    d2, m2_, *_ = rlmi.run_rlmi(xhat, banks, B, H0f, cfg)   # cache HIT
+    assert np.array_equal(m1_.counts, m2_.counts)
+    assert abs(d1["t_cont"] - d2["t_cont"]) == 0.0
+    assert np.array_equal(np.asarray(d1["w_realized"]), np.asarray(d2["w_realized"]))
+    print("[cache] scenario/oracle cache -> bit-identical re-run PASS")
+
+
 # =============================================================== (g) branch === #
 def test_branch_violation():
     side = 8
@@ -346,6 +408,7 @@ def test_end_to_end_pipeline():
 ALL = [test_kernel_derivatives, test_corner_collapse, test_symmetric_tiebreak,
        test_kkt_certificate, test_materializer_exact_972,
        test_materializer_v2_power_repair, test_pure_banks_ek_real,
+       test_fast_linalg_equivalence, test_scenario_cache_identity,
        test_infeasible_guard_fallback, test_latency_benchmark,
        test_branch_violation, test_end_to_end_pipeline]
 

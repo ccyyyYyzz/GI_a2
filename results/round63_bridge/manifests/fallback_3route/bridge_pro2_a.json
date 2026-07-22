@@ -1,0 +1,1773 @@
+{
+ "shard_id": "bridge_fallback_3route_pro2_a",
+ "stage": "DEV_BRIDGE",
+ "route": "pro2_a",
+ "layout": "fallback_3route",
+ "frozen_inputs": [
+  {
+   "path": "data/r63_bridge_scenes/bridge_contour_0.npz",
+   "sha256": "5ce163381b75283f17563a41c00aa376727cf7d122dd449ce76b2545418c50f4"
+  },
+  {
+   "path": "data/r63_bridge_scenes/bridge_contour_1.npz",
+   "sha256": "a1ac21fd27b78ca89e77cee2d2c791358da70bb86eeab024cd6937c836a0983a"
+  },
+  {
+   "path": "data/r63_bridge_scenes/bridge_contour_2.npz",
+   "sha256": "8c62d8ab90ce62d87b2e9c228a8b8bf4378b386ecdcd91e073ef7d9c4a9ea678"
+  },
+  {
+   "path": "data/r63_bridge_scenes/bridge_contour_3.npz",
+   "sha256": "05a6992787ac80b969971cbfad32a5bfaeeb2b2a298f1f8e0a5d3ab014678053"
+  },
+  {
+   "path": "data/r63_bridge_scenes/bridge_twopop_0.npz",
+   "sha256": "b7c6423f54742178d67839d623d480cf3474d14fde7b815cda6b5ba8506dde49"
+  },
+  {
+   "path": "data/r63_bridge_scenes/bridge_twopop_1.npz",
+   "sha256": "fec77c8adc04fd6f232ecfc2379086c584522e35d567f61aa4f5946d02ac5f40"
+  },
+  {
+   "path": "data/r63_bridge_scenes/bridge_twopop_2.npz",
+   "sha256": "304ccbf473b9b2d2a876ff81477b613f050e932b30515c92fde49c279f3547a0"
+  },
+  {
+   "path": "data/r63_bridge_scenes/bridge_twopop_3.npz",
+   "sha256": "0f44837d0a4853f44d96f697a95aeb9cf30b5cb7264666d278d554c9f554b350"
+  },
+  {
+   "path": "data/r63_bridge_scenes/bridge_microtex_0.npz",
+   "sha256": "8056f8309c750ca0cf69c8c240c67c7294cd093980a57ac268762f54a2bf25e9"
+  },
+  {
+   "path": "data/r63_bridge_scenes/bridge_microtex_1.npz",
+   "sha256": "68709da2c67b61dd17dd9ff7d8a23b4f8e775bab53f2806e9a44861125dd8fc9"
+  },
+  {
+   "path": "data/r63_bridge_scenes/bridge_microtex_2.npz",
+   "sha256": "1d57f9bcf158f7edde63bb4fb0b2093cd8d9dc512f22adc1f80ea4430d79b7f9"
+  },
+  {
+   "path": "data/r63_bridge_scenes/bridge_microtex_3.npz",
+   "sha256": "d67a92c17ca4a23ba6c17f52688e53e127cf7366ecd2ef5ddc64cddbfb186099"
+  },
+  {
+   "path": "data/r63_bridge_scenes/bridge_control_0.npz",
+   "sha256": "bce5887fb9ba1f71167ddaa678adb6b3e41c4ede5f0d63084fd2f9f25a852eef"
+  },
+  {
+   "path": "data/r63_bridge_scenes/bridge_control_1.npz",
+   "sha256": "ee5081f265bf71f351125bc2b78915d5eabbd6a6538abc995bca2cb533a4b41d"
+  },
+  {
+   "path": "data/r63_bridge_scenes/bridge_control_2.npz",
+   "sha256": "4105ccc55e70f4c9d4c0f82b1bb01bd23494ecf8526fb2ce02b9caa39a79e019"
+  },
+  {
+   "path": "data/r63_bridge_scenes/bridge_control_3.npz",
+   "sha256": "125b4e189c08f91080f1f25e950c61ab0e3cd241accec5a548992449b670e674"
+  },
+  {
+   "path": "results/round63_bridge/library/L0.npz",
+   "sha256": "cf04a6cda34b0d30949f339c25ca06425cd5a4126f9da808d329331b79d3ff48"
+  },
+  {
+   "path": "results/round63_bridge/library/L1.npz",
+   "sha256": "31f24e00804ea03db4211be934c6796099b00ca8243e14ebeb4d656b5a5a9691"
+  },
+  {
+   "path": "results/round63_bridge/library/L2.npz",
+   "sha256": "59c04d20c87f728afbbb36ae5d63048c7b56ea539f96c54fcd8b2e4cec4e7c3c"
+  },
+  {
+   "path": "results/round63_bridge/library/L3.npz",
+   "sha256": "aee9f352e7e2f172840ec623755ff1cd0dd81dc74af9aac86a923640eb1a950a"
+  },
+  {
+   "path": "results/round63_bridge/library/L4.npz",
+   "sha256": "ed000e5cd8330ce18b8d03544be961af83015674cb67a26691e0ff95df704f33"
+  },
+  {
+   "path": "results/round63_bridge/library/L5.npz",
+   "sha256": "44a3ec6dc3cb9351ce916f597173ecb733ffab869369966ffc4061c35d57e3fa"
+  },
+  {
+   "path": "results/round63_bridge/library/L6.npz",
+   "sha256": "8cc4e8cd24570763889a0533984dad50cf3020efdb29b5af8cf23f161151902c"
+  },
+  {
+   "path": "results/round63_bridge/library/L7.npz",
+   "sha256": "dd24bb404ca8d5c7e775a61916638093c9bbd80cfb25b5a83af1bcd8f896de14"
+  },
+  {
+   "path": "code/round63/bridge_harness.py",
+   "sha256": "97fb00e8a15852e74521c4dbc1e2291161f1dde879fb731abb09a7b7aa4c2470",
+   "role": "code"
+  },
+  {
+   "path": "code/round63/rlmi.py",
+   "sha256": "2e117ab20d6cafb2dca0352489146ff848e3eb0bf0e60ba8a3869e539c4b9704",
+   "role": "code"
+  },
+  {
+   "path": "code/round63/bridge_gates.py",
+   "sha256": "ec9e7223753402a6f8124dba91c25f1a93d4d1ab094b6da855e01b422b0fe21b",
+   "role": "code"
+  }
+ ],
+ "cells": [
+  {
+   "cell_id": "bridge_contour_0_nu200_c000_s0",
+   "scene": "bridge_contour_0",
+   "nu": 200.0,
+   "c": 0.0,
+   "seed": 0,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_contour_0_nu200_c000_s1",
+   "scene": "bridge_contour_0",
+   "nu": 200.0,
+   "c": 0.0,
+   "seed": 1,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_contour_0_nu200_c000_s2",
+   "scene": "bridge_contour_0",
+   "nu": 200.0,
+   "c": 0.0,
+   "seed": 2,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_contour_0_nu200_c000_s3",
+   "scene": "bridge_contour_0",
+   "nu": 200.0,
+   "c": 0.0,
+   "seed": 3,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_contour_0_nu200_c000_s4",
+   "scene": "bridge_contour_0",
+   "nu": 200.0,
+   "c": 0.0,
+   "seed": 4,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_contour_0_nu200_c050_s0",
+   "scene": "bridge_contour_0",
+   "nu": 200.0,
+   "c": 0.05,
+   "seed": 0,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_contour_0_nu200_c050_s1",
+   "scene": "bridge_contour_0",
+   "nu": 200.0,
+   "c": 0.05,
+   "seed": 1,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_contour_0_nu200_c050_s2",
+   "scene": "bridge_contour_0",
+   "nu": 200.0,
+   "c": 0.05,
+   "seed": 2,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_contour_0_nu200_c050_s3",
+   "scene": "bridge_contour_0",
+   "nu": 200.0,
+   "c": 0.05,
+   "seed": 3,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_contour_0_nu200_c050_s4",
+   "scene": "bridge_contour_0",
+   "nu": 200.0,
+   "c": 0.05,
+   "seed": 4,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_contour_1_nu2000_c000_s0",
+   "scene": "bridge_contour_1",
+   "nu": 2000.0,
+   "c": 0.0,
+   "seed": 0,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_contour_1_nu2000_c000_s1",
+   "scene": "bridge_contour_1",
+   "nu": 2000.0,
+   "c": 0.0,
+   "seed": 1,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_contour_1_nu2000_c000_s2",
+   "scene": "bridge_contour_1",
+   "nu": 2000.0,
+   "c": 0.0,
+   "seed": 2,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_contour_1_nu2000_c000_s3",
+   "scene": "bridge_contour_1",
+   "nu": 2000.0,
+   "c": 0.0,
+   "seed": 3,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_contour_1_nu2000_c000_s4",
+   "scene": "bridge_contour_1",
+   "nu": 2000.0,
+   "c": 0.0,
+   "seed": 4,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_contour_1_nu2000_c050_s0",
+   "scene": "bridge_contour_1",
+   "nu": 2000.0,
+   "c": 0.05,
+   "seed": 0,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_contour_1_nu2000_c050_s1",
+   "scene": "bridge_contour_1",
+   "nu": 2000.0,
+   "c": 0.05,
+   "seed": 1,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_contour_1_nu2000_c050_s2",
+   "scene": "bridge_contour_1",
+   "nu": 2000.0,
+   "c": 0.05,
+   "seed": 2,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_contour_1_nu2000_c050_s3",
+   "scene": "bridge_contour_1",
+   "nu": 2000.0,
+   "c": 0.05,
+   "seed": 3,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_contour_1_nu2000_c050_s4",
+   "scene": "bridge_contour_1",
+   "nu": 2000.0,
+   "c": 0.05,
+   "seed": 4,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_contour_3_nu200_c000_s0",
+   "scene": "bridge_contour_3",
+   "nu": 200.0,
+   "c": 0.0,
+   "seed": 0,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_contour_3_nu200_c000_s1",
+   "scene": "bridge_contour_3",
+   "nu": 200.0,
+   "c": 0.0,
+   "seed": 1,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_contour_3_nu200_c000_s2",
+   "scene": "bridge_contour_3",
+   "nu": 200.0,
+   "c": 0.0,
+   "seed": 2,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_contour_3_nu200_c000_s3",
+   "scene": "bridge_contour_3",
+   "nu": 200.0,
+   "c": 0.0,
+   "seed": 3,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_contour_3_nu200_c000_s4",
+   "scene": "bridge_contour_3",
+   "nu": 200.0,
+   "c": 0.0,
+   "seed": 4,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_contour_3_nu200_c050_s0",
+   "scene": "bridge_contour_3",
+   "nu": 200.0,
+   "c": 0.05,
+   "seed": 0,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_contour_3_nu200_c050_s1",
+   "scene": "bridge_contour_3",
+   "nu": 200.0,
+   "c": 0.05,
+   "seed": 1,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_contour_3_nu200_c050_s2",
+   "scene": "bridge_contour_3",
+   "nu": 200.0,
+   "c": 0.05,
+   "seed": 2,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_contour_3_nu200_c050_s3",
+   "scene": "bridge_contour_3",
+   "nu": 200.0,
+   "c": 0.05,
+   "seed": 3,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_contour_3_nu200_c050_s4",
+   "scene": "bridge_contour_3",
+   "nu": 200.0,
+   "c": 0.05,
+   "seed": 4,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_twopop_0_nu2000_c000_s0",
+   "scene": "bridge_twopop_0",
+   "nu": 2000.0,
+   "c": 0.0,
+   "seed": 0,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_twopop_0_nu2000_c000_s1",
+   "scene": "bridge_twopop_0",
+   "nu": 2000.0,
+   "c": 0.0,
+   "seed": 1,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_twopop_0_nu2000_c000_s2",
+   "scene": "bridge_twopop_0",
+   "nu": 2000.0,
+   "c": 0.0,
+   "seed": 2,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_twopop_0_nu2000_c000_s3",
+   "scene": "bridge_twopop_0",
+   "nu": 2000.0,
+   "c": 0.0,
+   "seed": 3,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_twopop_0_nu2000_c000_s4",
+   "scene": "bridge_twopop_0",
+   "nu": 2000.0,
+   "c": 0.0,
+   "seed": 4,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_twopop_0_nu2000_c050_s0",
+   "scene": "bridge_twopop_0",
+   "nu": 2000.0,
+   "c": 0.05,
+   "seed": 0,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_twopop_0_nu2000_c050_s1",
+   "scene": "bridge_twopop_0",
+   "nu": 2000.0,
+   "c": 0.05,
+   "seed": 1,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_twopop_0_nu2000_c050_s2",
+   "scene": "bridge_twopop_0",
+   "nu": 2000.0,
+   "c": 0.05,
+   "seed": 2,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_twopop_0_nu2000_c050_s3",
+   "scene": "bridge_twopop_0",
+   "nu": 2000.0,
+   "c": 0.05,
+   "seed": 3,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_twopop_0_nu2000_c050_s4",
+   "scene": "bridge_twopop_0",
+   "nu": 2000.0,
+   "c": 0.05,
+   "seed": 4,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_twopop_2_nu200_c000_s0",
+   "scene": "bridge_twopop_2",
+   "nu": 200.0,
+   "c": 0.0,
+   "seed": 0,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_twopop_2_nu200_c000_s1",
+   "scene": "bridge_twopop_2",
+   "nu": 200.0,
+   "c": 0.0,
+   "seed": 1,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_twopop_2_nu200_c000_s2",
+   "scene": "bridge_twopop_2",
+   "nu": 200.0,
+   "c": 0.0,
+   "seed": 2,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_twopop_2_nu200_c000_s3",
+   "scene": "bridge_twopop_2",
+   "nu": 200.0,
+   "c": 0.0,
+   "seed": 3,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_twopop_2_nu200_c000_s4",
+   "scene": "bridge_twopop_2",
+   "nu": 200.0,
+   "c": 0.0,
+   "seed": 4,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_twopop_2_nu200_c050_s0",
+   "scene": "bridge_twopop_2",
+   "nu": 200.0,
+   "c": 0.05,
+   "seed": 0,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_twopop_2_nu200_c050_s1",
+   "scene": "bridge_twopop_2",
+   "nu": 200.0,
+   "c": 0.05,
+   "seed": 1,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_twopop_2_nu200_c050_s2",
+   "scene": "bridge_twopop_2",
+   "nu": 200.0,
+   "c": 0.05,
+   "seed": 2,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_twopop_2_nu200_c050_s3",
+   "scene": "bridge_twopop_2",
+   "nu": 200.0,
+   "c": 0.05,
+   "seed": 3,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_twopop_2_nu200_c050_s4",
+   "scene": "bridge_twopop_2",
+   "nu": 200.0,
+   "c": 0.05,
+   "seed": 4,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_twopop_3_nu2000_c000_s0",
+   "scene": "bridge_twopop_3",
+   "nu": 2000.0,
+   "c": 0.0,
+   "seed": 0,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_twopop_3_nu2000_c000_s1",
+   "scene": "bridge_twopop_3",
+   "nu": 2000.0,
+   "c": 0.0,
+   "seed": 1,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_twopop_3_nu2000_c000_s2",
+   "scene": "bridge_twopop_3",
+   "nu": 2000.0,
+   "c": 0.0,
+   "seed": 2,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_twopop_3_nu2000_c000_s3",
+   "scene": "bridge_twopop_3",
+   "nu": 2000.0,
+   "c": 0.0,
+   "seed": 3,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_twopop_3_nu2000_c000_s4",
+   "scene": "bridge_twopop_3",
+   "nu": 2000.0,
+   "c": 0.0,
+   "seed": 4,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_twopop_3_nu2000_c050_s0",
+   "scene": "bridge_twopop_3",
+   "nu": 2000.0,
+   "c": 0.05,
+   "seed": 0,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_twopop_3_nu2000_c050_s1",
+   "scene": "bridge_twopop_3",
+   "nu": 2000.0,
+   "c": 0.05,
+   "seed": 1,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_twopop_3_nu2000_c050_s2",
+   "scene": "bridge_twopop_3",
+   "nu": 2000.0,
+   "c": 0.05,
+   "seed": 2,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_twopop_3_nu2000_c050_s3",
+   "scene": "bridge_twopop_3",
+   "nu": 2000.0,
+   "c": 0.05,
+   "seed": 3,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_twopop_3_nu2000_c050_s4",
+   "scene": "bridge_twopop_3",
+   "nu": 2000.0,
+   "c": 0.05,
+   "seed": 4,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_microtex_1_nu200_c000_s0",
+   "scene": "bridge_microtex_1",
+   "nu": 200.0,
+   "c": 0.0,
+   "seed": 0,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_microtex_1_nu200_c000_s1",
+   "scene": "bridge_microtex_1",
+   "nu": 200.0,
+   "c": 0.0,
+   "seed": 1,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_microtex_1_nu200_c000_s2",
+   "scene": "bridge_microtex_1",
+   "nu": 200.0,
+   "c": 0.0,
+   "seed": 2,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_microtex_1_nu200_c000_s3",
+   "scene": "bridge_microtex_1",
+   "nu": 200.0,
+   "c": 0.0,
+   "seed": 3,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_microtex_1_nu200_c000_s4",
+   "scene": "bridge_microtex_1",
+   "nu": 200.0,
+   "c": 0.0,
+   "seed": 4,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_microtex_1_nu200_c050_s0",
+   "scene": "bridge_microtex_1",
+   "nu": 200.0,
+   "c": 0.05,
+   "seed": 0,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_microtex_1_nu200_c050_s1",
+   "scene": "bridge_microtex_1",
+   "nu": 200.0,
+   "c": 0.05,
+   "seed": 1,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_microtex_1_nu200_c050_s2",
+   "scene": "bridge_microtex_1",
+   "nu": 200.0,
+   "c": 0.05,
+   "seed": 2,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_microtex_1_nu200_c050_s3",
+   "scene": "bridge_microtex_1",
+   "nu": 200.0,
+   "c": 0.05,
+   "seed": 3,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_microtex_1_nu200_c050_s4",
+   "scene": "bridge_microtex_1",
+   "nu": 200.0,
+   "c": 0.05,
+   "seed": 4,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_microtex_2_nu2000_c000_s0",
+   "scene": "bridge_microtex_2",
+   "nu": 2000.0,
+   "c": 0.0,
+   "seed": 0,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_microtex_2_nu2000_c000_s1",
+   "scene": "bridge_microtex_2",
+   "nu": 2000.0,
+   "c": 0.0,
+   "seed": 1,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_microtex_2_nu2000_c000_s2",
+   "scene": "bridge_microtex_2",
+   "nu": 2000.0,
+   "c": 0.0,
+   "seed": 2,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_microtex_2_nu2000_c000_s3",
+   "scene": "bridge_microtex_2",
+   "nu": 2000.0,
+   "c": 0.0,
+   "seed": 3,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_microtex_2_nu2000_c000_s4",
+   "scene": "bridge_microtex_2",
+   "nu": 2000.0,
+   "c": 0.0,
+   "seed": 4,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_microtex_2_nu2000_c050_s0",
+   "scene": "bridge_microtex_2",
+   "nu": 2000.0,
+   "c": 0.05,
+   "seed": 0,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_microtex_2_nu2000_c050_s1",
+   "scene": "bridge_microtex_2",
+   "nu": 2000.0,
+   "c": 0.05,
+   "seed": 1,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_microtex_2_nu2000_c050_s2",
+   "scene": "bridge_microtex_2",
+   "nu": 2000.0,
+   "c": 0.05,
+   "seed": 2,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_microtex_2_nu2000_c050_s3",
+   "scene": "bridge_microtex_2",
+   "nu": 2000.0,
+   "c": 0.05,
+   "seed": 3,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_microtex_2_nu2000_c050_s4",
+   "scene": "bridge_microtex_2",
+   "nu": 2000.0,
+   "c": 0.05,
+   "seed": 4,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_control_0_nu200_c000_s0",
+   "scene": "bridge_control_0",
+   "nu": 200.0,
+   "c": 0.0,
+   "seed": 0,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_control_0_nu200_c000_s1",
+   "scene": "bridge_control_0",
+   "nu": 200.0,
+   "c": 0.0,
+   "seed": 1,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_control_0_nu200_c000_s2",
+   "scene": "bridge_control_0",
+   "nu": 200.0,
+   "c": 0.0,
+   "seed": 2,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_control_0_nu200_c000_s3",
+   "scene": "bridge_control_0",
+   "nu": 200.0,
+   "c": 0.0,
+   "seed": 3,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_control_0_nu200_c000_s4",
+   "scene": "bridge_control_0",
+   "nu": 200.0,
+   "c": 0.0,
+   "seed": 4,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_control_0_nu200_c050_s0",
+   "scene": "bridge_control_0",
+   "nu": 200.0,
+   "c": 0.05,
+   "seed": 0,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_control_0_nu200_c050_s1",
+   "scene": "bridge_control_0",
+   "nu": 200.0,
+   "c": 0.05,
+   "seed": 1,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_control_0_nu200_c050_s2",
+   "scene": "bridge_control_0",
+   "nu": 200.0,
+   "c": 0.05,
+   "seed": 2,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_control_0_nu200_c050_s3",
+   "scene": "bridge_control_0",
+   "nu": 200.0,
+   "c": 0.05,
+   "seed": 3,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_control_0_nu200_c050_s4",
+   "scene": "bridge_control_0",
+   "nu": 200.0,
+   "c": 0.05,
+   "seed": 4,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_control_1_nu2000_c000_s0",
+   "scene": "bridge_control_1",
+   "nu": 2000.0,
+   "c": 0.0,
+   "seed": 0,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_control_1_nu2000_c000_s1",
+   "scene": "bridge_control_1",
+   "nu": 2000.0,
+   "c": 0.0,
+   "seed": 1,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_control_1_nu2000_c000_s2",
+   "scene": "bridge_control_1",
+   "nu": 2000.0,
+   "c": 0.0,
+   "seed": 2,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_control_1_nu2000_c000_s3",
+   "scene": "bridge_control_1",
+   "nu": 2000.0,
+   "c": 0.0,
+   "seed": 3,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_control_1_nu2000_c000_s4",
+   "scene": "bridge_control_1",
+   "nu": 2000.0,
+   "c": 0.0,
+   "seed": 4,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_control_1_nu2000_c050_s0",
+   "scene": "bridge_control_1",
+   "nu": 2000.0,
+   "c": 0.05,
+   "seed": 0,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_control_1_nu2000_c050_s1",
+   "scene": "bridge_control_1",
+   "nu": 2000.0,
+   "c": 0.05,
+   "seed": 1,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_control_1_nu2000_c050_s2",
+   "scene": "bridge_control_1",
+   "nu": 2000.0,
+   "c": 0.05,
+   "seed": 2,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_control_1_nu2000_c050_s3",
+   "scene": "bridge_control_1",
+   "nu": 2000.0,
+   "c": 0.05,
+   "seed": 3,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_control_1_nu2000_c050_s4",
+   "scene": "bridge_control_1",
+   "nu": 2000.0,
+   "c": 0.05,
+   "seed": 4,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_control_3_nu200_c000_s0",
+   "scene": "bridge_control_3",
+   "nu": 200.0,
+   "c": 0.0,
+   "seed": 0,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_control_3_nu200_c000_s1",
+   "scene": "bridge_control_3",
+   "nu": 200.0,
+   "c": 0.0,
+   "seed": 1,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_control_3_nu200_c000_s2",
+   "scene": "bridge_control_3",
+   "nu": 200.0,
+   "c": 0.0,
+   "seed": 2,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_control_3_nu200_c000_s3",
+   "scene": "bridge_control_3",
+   "nu": 200.0,
+   "c": 0.0,
+   "seed": 3,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_control_3_nu200_c000_s4",
+   "scene": "bridge_control_3",
+   "nu": 200.0,
+   "c": 0.0,
+   "seed": 4,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_control_3_nu200_c050_s0",
+   "scene": "bridge_control_3",
+   "nu": 200.0,
+   "c": 0.05,
+   "seed": 0,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_control_3_nu200_c050_s1",
+   "scene": "bridge_control_3",
+   "nu": 200.0,
+   "c": 0.05,
+   "seed": 1,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_control_3_nu200_c050_s2",
+   "scene": "bridge_control_3",
+   "nu": 200.0,
+   "c": 0.05,
+   "seed": 2,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_control_3_nu200_c050_s3",
+   "scene": "bridge_control_3",
+   "nu": 200.0,
+   "c": 0.05,
+   "seed": 3,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  },
+  {
+   "cell_id": "bridge_control_3_nu200_c050_s4",
+   "scene": "bridge_control_3",
+   "nu": 200.0,
+   "c": 0.05,
+   "seed": 4,
+   "arms": [
+    "SCAT32-060",
+    "RIDGE-SCAT32",
+    "TRUE-X-FW",
+    "XHAT-FW",
+    "RLMI",
+    "ORACLE-LIB"
+   ]
+  }
+ ],
+ "output_dir": "results/round63_bridge/cells",
+ "output_csv": "results/round63_bridge/bridge_fallback_3route_pro2_a.csv"
+}
