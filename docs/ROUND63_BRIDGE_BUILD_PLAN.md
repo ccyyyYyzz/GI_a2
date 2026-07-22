@@ -38,20 +38,39 @@ here). Output root: `results/round63_bridge/`. Scenes:
   the R18 support-expanding solver run on PROTOTYPE scenes = the six
   m1_dev (632900) instances ONLY (never the 16 bridge scenes — no
   leakage).
-- **T-C (router)**: RGLI per R24 §2.3 steps 0–5 with prototype constants
-  AS GIVEN (U1/r<=0.01; 1.02 knob preference; 2% margin; S=16 frozen
-  bootstrap draws; ABSTAIN + OUT_OF_LIBRARY_OR_UNCERTAIN). Plus the
-  falsifier-derived requirements: all diagnostics evaluated ON-BRANCH at
-  each candidate bank's own loads; BRANCH_VIOLATION disclosure when the
-  R23 bound hypothesis fails at a candidate's operating point (bound
-  reported as UNAVAILABLE, never vacuous).
+- **T-C (allocator; SUPERSEDED BY R25 — issue #17, docs/
+  ROUND63_GPT_ROUND25_RULING_RAW.md is normative)**: the method is now
+  **RLMI (Robust Library Mixture Illumination)**. Step 3 = the R25 §13
+  eight-step pipeline: S=16 declared bootstrap scenario matrices →
+  per-scenario bank-simplex A-risk oracles R*_s → standardized maximin
+  relative-regret program (R25.1, parameter-free convex) → lexicographic
+  closest-to-knob tie-break → exact 972-row materialization from the
+  union design measure by constrained rounding/deterministic exchange
+  (§9; budget/dose/peak/family constraints enforced; NO online
+  full-dictionary OED) → post-materialization guard + realized-regret +
+  KKT recomputation (R25.2 certificate, least-favorable scenario
+  multipliers) → L0 fallback ONLY on solver/materialization/guard
+  failure with explicit flag (MIXTURE_MATERIALIZATION_FAIL etc.) →
+  acquire once + RQL. NO runtime thresholds (0.01/1.02/2%/hysteresis all
+  retired). ε1, m, ε1²/2m remain mandatory DISCLOSURES (on-branch
+  evaluation + BRANCH_VIOLATION flag per the falsifier addendum), never
+  allocation decisions. Banks consumed as mixable measures ξ_k
+  (T-B corrected schema: atom pool + normalized weights + per-row dose/
+  cost/peak metadata); duplicate atoms merged with weight addition;
+  final block order randomized with a frozen seed.
 - **T-D (arms + harness)**: six arms (SCAT32-060, RIDGE-SCAT32, TRUE-X FW
   oracle, XHAT FW, RGLI, ORACLE-LIB), resources per R24 §3.2 (52+972,
   tau=50ns, nu in {200,2000}, c in {0,0.05}, 5 paired seeds; adaptive
   incident budgets capped by RIDGE's; pre-scan photons charged). Verify
   the c=0.05 jittered-hold forward path end-to-end on one smoke cell
-  BEFORE the grid. Gates A–D + four-gap decomposition per §3.4–3.5;
-  gates are decision rules — no tuning, no re-runs, no scene swaps.
+  BEFORE the grid. Gates A, B, D per R24 §3.4 numerically unchanged;
+  Gate C REPLACED by R25 §12: allocation informativeness via realized
+  A_j = 1 − ŵ_j0 (C1: mean A_j ≥ 0.80 on rescue-needed scenes; C2: mean
+  ŵ_j0 ≥ 0.75 on aligned controls; same 1 dB / 0.25 dB labels, no new
+  thresholds; entropy/active-bank count reported, not gated). Four-gap
+  decomposition per §3.5; gates are decision rules — no tuning, no
+  re-runs, no scene swaps. If A+B pass but C fails: the method may be a
+  static composite design but must NOT lead M2 as adaptive.
 - **Compute**: local smoke; full grid sharded to Colab (pro2 x3 sessions
   first, pro1 added for speed) after the cost projection.
 
