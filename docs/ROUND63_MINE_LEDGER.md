@@ -5,10 +5,21 @@ post-R23. Papers remain two; digs are post-hoc/descriptive unless promoted.
 
 ## ACTIVE DIGS
 
-1. **Falsifier regression** (gate for the R23 page in paper 2): per-scene
-   exact residual Align1 + local M1 functional + dispersion covariates vs
-   frozen dQ and certificate gaps; predictions P1/P2/P3.
-   → results/round63_next/FALSIFIER_REGRESSION.md (Opus, running).
+1. **Falsifier regression** — COMPLETE, verdict NEGATIVE for the raw
+   bridge (2026-07-20/22): P1 FAIL (Align1 ~0.02 uniform, no between-scene
+   signal), P2 nominally passes but is contrast-in-disguise
+   (corr(M1sq, Cu)=0.999; partials collapse), P3 FAIL (contour mid-pack).
+   ROOT CAUSE IS SCOPE, not concept: the production ridge sits AT the
+   finite-nu kernel argmax, ~47% of loads beyond it, J' sign-splits, and
+   alpha* is scene-constant (-7.1e5) — the R23 declared monotone-concave
+   branch is violated at the deployed operating point, exactly the
+   fragility R23 T4 predicted. CONSEQUENCE (pre-agreed gate): the R23
+   alignment page does NOT enter paper 2; the material stays next-line.
+   The failure directly supports R24's re-architecture (estimator-aware
+   robust router + abstention instead of raw-residual gating), and yields
+   a build requirement: diagnostics must be evaluated on-branch (at
+   candidate-bank operating points), never at the deployed ridge alone.
+   → results/round63_next/FALSIFIER_REGRESSION.md.
 2. **R16 2M-frame score-identity diagnostic** (the −8% endpoint bias;
    now load-bearing for the elasticity map too, since alpha*_J = −ρJ''/J').
    → Colab pro2 r63diag_a (Opus, running); runbook frozen protocol.
