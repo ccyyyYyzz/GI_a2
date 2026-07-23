@@ -1,0 +1,433 @@
+{
+  "meta": {
+    "utc": "2026-07-23 12:42:46Z",
+    "local_stack": {
+      "python": "3.11.5",
+      "numpy": "1.24.4",
+      "scipy": "1.10.1"
+    },
+    "local_cores": 32,
+    "frozen_stack": {
+      "python": "3.12.13",
+      "numpy": "2.0.2",
+      "scipy": "1.16.3"
+    },
+    "sec_per_record_local_measured": 2.0,
+    "colab_scale_from_calibration": 1.83,
+    "sec_per_record_colab_projected": 3.66,
+    "note": "official confirmatory runs on the FROZEN stack, verified per VM at nonce; local smoke is unofficial"
+  },
+  "counts": {
+    "primary": {
+      "cells": 27,
+      "records_per_cell": 1000,
+      "records": 27000
+    },
+    "edge": {
+      "cells": 6,
+      "records_per_cell": 300,
+      "records": 1800
+    },
+    "schedule_substudy": {
+      "cells": 9,
+      "extra_schedules": 2,
+      "records_per_unit": 300,
+      "records": 5400
+    },
+    "total_records": 34200
+  },
+  "cost": {
+    "total_records": 34200,
+    "core_hours_local": 19.0,
+    "core_hours_colab": 34.77,
+    "local_all_cores_hours": 0.59,
+    "colab_6shard_max_wall_hours": 2.95,
+    "under_12h": true,
+    "recommendation": "6-shard Colab fleet (3 pro2 + 3 pro1, --nproc 2), reusing the calibration bundle+watchdog recipe (rebind-first + KA-ping + per-poll mirror + file-carried scripts).  Max shard ~3.0 h wall; confirmatory is ~0.44x the calibration compute (34200 records vs 135000 replicates).  Local all-cores fallback ~0.6 h."
+  },
+  "shards": [
+    {
+      "shard": 0,
+      "account": "pro2",
+      "n_units": 7,
+      "n_records": 5600,
+      "units": [
+        {
+          "ckey": "tc16_cv5_ph05",
+          "schedule": "paired",
+          "role": "primary",
+          "n": 1000
+        },
+        {
+          "ckey": "tc16_cv40_ph05",
+          "schedule": "paired",
+          "role": "primary",
+          "n": 1000
+        },
+        {
+          "ckey": "tc32_cv15_ph05",
+          "schedule": "paired",
+          "role": "primary",
+          "n": 1000
+        },
+        {
+          "ckey": "tc64_cv5_ph05",
+          "schedule": "paired",
+          "role": "primary",
+          "n": 1000
+        },
+        {
+          "ckey": "tc64_cv40_ph05",
+          "schedule": "paired",
+          "role": "primary",
+          "n": 1000
+        },
+        {
+          "ckey": "tc32_cv5_ph10",
+          "schedule": "random",
+          "role": "substudy",
+          "n": 300
+        },
+        {
+          "ckey": "tc64_cv5_ph10",
+          "schedule": "random",
+          "role": "substudy",
+          "n": 300
+        }
+      ],
+      "est_wall_hours_colab": 2.85
+    },
+    {
+      "shard": 1,
+      "account": "pro2",
+      "n_units": 7,
+      "n_records": 5600,
+      "units": [
+        {
+          "ckey": "tc16_cv5_ph10",
+          "schedule": "paired",
+          "role": "primary",
+          "n": 1000
+        },
+        {
+          "ckey": "tc16_cv40_ph10",
+          "schedule": "paired",
+          "role": "primary",
+          "n": 1000
+        },
+        {
+          "ckey": "tc32_cv15_ph10",
+          "schedule": "paired",
+          "role": "primary",
+          "n": 1000
+        },
+        {
+          "ckey": "tc64_cv5_ph10",
+          "schedule": "paired",
+          "role": "primary",
+          "n": 1000
+        },
+        {
+          "ckey": "tc64_cv40_ph10",
+          "schedule": "paired",
+          "role": "primary",
+          "n": 1000
+        },
+        {
+          "ckey": "tc32_cv5_ph10",
+          "schedule": "ordered",
+          "role": "substudy",
+          "n": 300
+        },
+        {
+          "ckey": "tc64_cv5_ph10",
+          "schedule": "ordered",
+          "role": "substudy",
+          "n": 300
+        }
+      ],
+      "est_wall_hours_colab": 2.85
+    },
+    {
+      "shard": 2,
+      "account": "pro2",
+      "n_units": 7,
+      "n_records": 5600,
+      "units": [
+        {
+          "ckey": "tc16_cv5_ph20",
+          "schedule": "paired",
+          "role": "primary",
+          "n": 1000
+        },
+        {
+          "ckey": "tc16_cv40_ph20",
+          "schedule": "paired",
+          "role": "primary",
+          "n": 1000
+        },
+        {
+          "ckey": "tc32_cv15_ph20",
+          "schedule": "paired",
+          "role": "primary",
+          "n": 1000
+        },
+        {
+          "ckey": "tc64_cv5_ph20",
+          "schedule": "paired",
+          "role": "primary",
+          "n": 1000
+        },
+        {
+          "ckey": "tc64_cv40_ph20",
+          "schedule": "paired",
+          "role": "primary",
+          "n": 1000
+        },
+        {
+          "ckey": "tc32_cv15_ph10",
+          "schedule": "random",
+          "role": "substudy",
+          "n": 300
+        },
+        {
+          "ckey": "tc64_cv15_ph10",
+          "schedule": "random",
+          "role": "substudy",
+          "n": 300
+        }
+      ],
+      "est_wall_hours_colab": 2.85
+    },
+    {
+      "shard": 3,
+      "account": "pro1",
+      "n_units": 10,
+      "n_records": 5800,
+      "units": [
+        {
+          "ckey": "tc16_cv15_ph05",
+          "schedule": "paired",
+          "role": "primary",
+          "n": 1000
+        },
+        {
+          "ckey": "tc32_cv5_ph05",
+          "schedule": "paired",
+          "role": "primary",
+          "n": 1000
+        },
+        {
+          "ckey": "tc32_cv40_ph05",
+          "schedule": "paired",
+          "role": "primary",
+          "n": 1000
+        },
+        {
+          "ckey": "tc64_cv15_ph05",
+          "schedule": "paired",
+          "role": "primary",
+          "n": 1000
+        },
+        {
+          "ckey": "tc2_cv5_ph10",
+          "schedule": "paired",
+          "role": "edge",
+          "n": 300
+        },
+        {
+          "ckey": "tc128_cv5_ph10",
+          "schedule": "paired",
+          "role": "edge",
+          "n": 300
+        },
+        {
+          "ckey": "tc16_cv5_ph10",
+          "schedule": "random",
+          "role": "substudy",
+          "n": 300
+        },
+        {
+          "ckey": "tc16_cv15_ph10",
+          "schedule": "ordered",
+          "role": "substudy",
+          "n": 300
+        },
+        {
+          "ckey": "tc32_cv15_ph10",
+          "schedule": "ordered",
+          "role": "substudy",
+          "n": 300
+        },
+        {
+          "ckey": "tc64_cv15_ph10",
+          "schedule": "ordered",
+          "role": "substudy",
+          "n": 300
+        }
+      ],
+      "est_wall_hours_colab": 2.95
+    },
+    {
+      "shard": 4,
+      "account": "pro1",
+      "n_units": 10,
+      "n_records": 5800,
+      "units": [
+        {
+          "ckey": "tc16_cv15_ph10",
+          "schedule": "paired",
+          "role": "primary",
+          "n": 1000
+        },
+        {
+          "ckey": "tc32_cv5_ph10",
+          "schedule": "paired",
+          "role": "primary",
+          "n": 1000
+        },
+        {
+          "ckey": "tc32_cv40_ph10",
+          "schedule": "paired",
+          "role": "primary",
+          "n": 1000
+        },
+        {
+          "ckey": "tc64_cv15_ph10",
+          "schedule": "paired",
+          "role": "primary",
+          "n": 1000
+        },
+        {
+          "ckey": "tc2_cv15_ph10",
+          "schedule": "paired",
+          "role": "edge",
+          "n": 300
+        },
+        {
+          "ckey": "tc128_cv15_ph10",
+          "schedule": "paired",
+          "role": "edge",
+          "n": 300
+        },
+        {
+          "ckey": "tc16_cv5_ph10",
+          "schedule": "ordered",
+          "role": "substudy",
+          "n": 300
+        },
+        {
+          "ckey": "tc16_cv40_ph10",
+          "schedule": "random",
+          "role": "substudy",
+          "n": 300
+        },
+        {
+          "ckey": "tc32_cv40_ph10",
+          "schedule": "random",
+          "role": "substudy",
+          "n": 300
+        },
+        {
+          "ckey": "tc64_cv40_ph10",
+          "schedule": "random",
+          "role": "substudy",
+          "n": 300
+        }
+      ],
+      "est_wall_hours_colab": 2.95
+    },
+    {
+      "shard": 5,
+      "account": "pro1",
+      "n_units": 10,
+      "n_records": 5800,
+      "units": [
+        {
+          "ckey": "tc16_cv15_ph20",
+          "schedule": "paired",
+          "role": "primary",
+          "n": 1000
+        },
+        {
+          "ckey": "tc32_cv5_ph20",
+          "schedule": "paired",
+          "role": "primary",
+          "n": 1000
+        },
+        {
+          "ckey": "tc32_cv40_ph20",
+          "schedule": "paired",
+          "role": "primary",
+          "n": 1000
+        },
+        {
+          "ckey": "tc64_cv15_ph20",
+          "schedule": "paired",
+          "role": "primary",
+          "n": 1000
+        },
+        {
+          "ckey": "tc2_cv40_ph10",
+          "schedule": "paired",
+          "role": "edge",
+          "n": 300
+        },
+        {
+          "ckey": "tc128_cv40_ph10",
+          "schedule": "paired",
+          "role": "edge",
+          "n": 300
+        },
+        {
+          "ckey": "tc16_cv15_ph10",
+          "schedule": "random",
+          "role": "substudy",
+          "n": 300
+        },
+        {
+          "ckey": "tc16_cv40_ph10",
+          "schedule": "ordered",
+          "role": "substudy",
+          "n": 300
+        },
+        {
+          "ckey": "tc32_cv40_ph10",
+          "schedule": "ordered",
+          "role": "substudy",
+          "n": 300
+        },
+        {
+          "ckey": "tc64_cv40_ph10",
+          "schedule": "ordered",
+          "role": "substudy",
+          "n": 300
+        }
+      ],
+      "est_wall_hours_colab": 2.95
+    }
+  ],
+  "fleet_recipe": {
+    "scratch": "D:/tmp/dlgi_conf",
+    "n_shards": 6,
+    "nproc_per_shard": 2,
+    "accounts": {
+      "pro2": [
+        0,
+        1,
+        2
+      ],
+      "pro1": [
+        3,
+        4,
+        5
+      ]
+    },
+    "bundle": "tar.gz of {code/round63_dlgi, results/round63_next/{DUAL_LEDGER_PROBE,LADDER_PROBE}, results/round63_dlgi_campaign/{CALIBRATION_TABLE.json,predictions,scene_banks/{confirmatory,edge}}}; SHA-gated on upload",
+    "watchdog": "reuse D:/tmp/dlgi_calib/watchdog.sh recipe: rebind-first every cycle (list_assignments + keep_alive_assignment), network-aware back-off, per-cell(unit) atomic checkpoint + per-poll mirror, death=endpoint-absent-while-net-up; on all-done fetch->merge->verify->release",
+    "per_vm_nonce": "print LIBS numpy/scipy; ABORT unless numpy==2.0.2 and scipy==1.16.3 (stack must match calibration)",
+    "launch_command": "python code/round63_dlgi/dlgi_confirmatory_driver.py --run-shard <S> --nproc 2 --flush 25",
+    "merge_command": "python code/round63_dlgi/dlgi_confirmatory_driver.py --merge",
+    "discipline": "SEPARATE GO -- confirmatory fires only after the independent 3-cell identity cross-check passes; outcome-blind until then"
+  }
+}
