@@ -1,0 +1,97 @@
+{
+  "meta": {
+    "exploratory": true,
+    "preregistered": false,
+    "utc": "2026-07-23 13:44:22Z",
+    "note": "E2(b) OU-model adequacy failure on non-OU classes; true-scene z; Ljung-Box K=20",
+    "classes": [
+      "ou",
+      "regime",
+      "heavytail",
+      "quasiper"
+    ],
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "scenes": [
+      "bridge_contour_1",
+      "bridge_microtex_1",
+      "bridge_twopop_1",
+      "bridge_control_2",
+      "bridge_contour_3",
+      "bridge_microtex_3"
+    ],
+    "runtime_s": 1.1190097332000732
+  },
+  "rows": [
+    {
+      "cls": "ou",
+      "n": 36,
+      "frac_pass": 1.0,
+      "med_p": 0.4566712350938477,
+      "med_istd": 1.0130387921047954,
+      "med_ikurt": -0.01960150887483203,
+      "med_tc_hat": 29.12231874858886,
+      "med_tc_true": 26.17057910057581,
+      "med_cv_hat": 0.3394715451571323,
+      "med_cv_true": 0.3254996310559528,
+      "med_tc_relerr": 0.1270677834154896,
+      "med_cv_relerr": 0.04975772062860456,
+      "med_tauOU_relerr": 0.18808520673535506,
+      "med_tauEMP_relerr": 0.18394058461830093
+    },
+    {
+      "cls": "regime",
+      "n": 36,
+      "frac_pass": 0.4722222222222222,
+      "med_p": 0.006754657701015963,
+      "med_istd": 1.0576736587188065,
+      "med_ikurt": 2.5789623956087806,
+      "med_tc_hat": 8.575390223418712,
+      "med_tc_true": 7.040300478712745,
+      "med_cv_hat": 0.3462730000173274,
+      "med_cv_true": 0.35295988541145573,
+      "med_tc_relerr": 0.1926231440348561,
+      "med_cv_relerr": 0.02848633874012823,
+      "med_tauOU_relerr": 0.26339961978320087,
+      "med_tauEMP_relerr": 0.4723249290195587
+    },
+    {
+      "cls": "heavytail",
+      "n": 36,
+      "frac_pass": 0.9722222222222222,
+      "med_p": 0.4350296514703673,
+      "med_istd": 1.0164738600374208,
+      "med_ikurt": 9.134891033809257,
+      "med_tc_hat": 22.954907879254606,
+      "med_tc_true": 21.243459110725386,
+      "med_cv_hat": 0.37446930493129327,
+      "med_cv_true": 0.3564487185345103,
+      "med_tc_relerr": 0.1455524325192991,
+      "med_cv_relerr": 0.06100151425648652,
+      "med_tauOU_relerr": 0.2067321969051773,
+      "med_tauEMP_relerr": 0.18470761116240578
+    },
+    {
+      "cls": "quasiper",
+      "n": 36,
+      "frac_pass": 0.75,
+      "med_p": 0.33693469082654487,
+      "med_istd": 0.9578573990839623,
+      "med_ikurt": -0.055267678158939626,
+      "med_tc_hat": 17.796617626755435,
+      "med_tc_true": 17.488943243741005,
+      "med_cv_hat": 0.183992801630171,
+      "med_cv_true": 0.1805718058956915,
+      "med_tc_relerr": 0.05878037243871524,
+      "med_cv_relerr": 0.025241338106636993,
+      "med_tauOU_relerr": 0.37437786926232364,
+      "med_tauEMP_relerr": 0.05822039835608866
+    }
+  ]
+}
