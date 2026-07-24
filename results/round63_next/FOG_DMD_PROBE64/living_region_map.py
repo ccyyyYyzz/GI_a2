@@ -119,8 +119,9 @@ def fisher_metrics(x, Um, S, Phi_beta, T_eff=4096, n_ph=PHOT):
     UmA = Um.t() @ A.t()                                # (db,M)
     KA = Um @ (S[:, None] * UmA)                        # K_w A^T  (N,M)
     C = A @ KA
-    m = Pt @ x
-    R = torch.clamp(m, min=1e-12) * (m.mean() / n_ph)
+    m = Pt @ x                                            # signed mean bucket (~0); kept for the eta mean term
+    flux = torch.abs(Pt) @ x                              # CORRECTED shot: physical nonneg photon throughput |P|x
+    R = flux * (flux.mean() / n_ph)                       # var(b_i)=flux_i*mean(flux)/n (signed complementary-pair shot)
     V = C + torch.diag(R)
     Vinv = torch.linalg.inv(V + 1e-9 * torch.eye(M, device=DEV, dtype=DT))
 
@@ -266,7 +267,7 @@ out = dict(map="living_region", fixed=dict(N=N, M=M, k_p=KP, photons=PHOT, T_eff
            sigma_f_eff=sig_eff, n_cells=len(grid), n_pass=len(passing),
            grid=grid, passing_cells=passing, most_defensible=best,
            mc_cross_check=xcheck, verdict=verdict, wall_s=time.time() - t0)
-json.dump(out, open("LIVING_REGION_MAP.json", "w"), indent=2)
+json.dump(out, open("LIVING_REGION_MAP_CORRECTED.json", "w"), indent=2)  # physical-shot corrected artifact
 print(f"\nLIVING-REGION VERDICT: {verdict}  ({len(passing)}/81 P1-viable)  [{time.time()-t0:.0f}s]", flush=True)
 if best:
     print(f"  most defensible: {best}", flush=True)

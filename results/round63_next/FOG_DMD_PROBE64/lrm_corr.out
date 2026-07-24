@@ -1,0 +1,99 @@
+=== bounded-field truncation (clip) diagnostic ===
+  sigma_f_nominal=0.3 bounds[0.2,1.8] -> sigma_f_eff=0.298  clip-frac=0.008
+  sigma_f_nominal=0.6 bounds[0.2,1.8] -> sigma_f_eff=0.503  clip-frac=0.182
+  sigma_f_nominal=1.0 bounds[0.05,1.95] -> sigma_f_eff=0.696  clip-frac=0.342
+  medium band k_w=1x k_p: db=120 modes
+  medium band k_w=2x k_p: db=440 modes
+  medium band k_w=4x k_p: db=1680 modes
+
+=== LIVING-REGION grid (81 cells): P1 viability @ T_eff=4096, n=1e4 ===
+  sf0.3(0.30) flat  kw1 claim1.25: f_rec=0.25 NRMSE_w=0.13 NRMSE_nat=0.23 eta10=0.98 Treq=712
+  sf0.3(0.30) flat  kw1 claim1.5: f_rec=0.19 NRMSE_w=0.14 NRMSE_nat=0.28 eta10=0.99 Treq=860
+  sf0.3(0.30) flat  kw1 claim1.8: f_rec=0.03 NRMSE_w=0.19 NRMSE_nat=0.44 eta10=0.99 Treq=1569
+  sf0.3(0.30) flat  kw2 claim1.25: f_rec=0.48 NRMSE_w=0.17 NRMSE_nat=0.35 eta10=0.99 Treq=1299
+  sf0.3(0.30) flat  kw2 claim1.5: f_rec=0.23 NRMSE_w=0.19 NRMSE_nat=0.46 eta10=0.99 Treq=1560
+  sf0.3(0.30) flat  kw2 claim1.8: f_rec=0.06 NRMSE_w=0.25 NRMSE_nat=0.82 eta10=0.99 Treq=2778
+  sf0.3(0.30) flat  kw4 claim1.25: f_rec=0.29 NRMSE_w=0.28 NRMSE_nat=0.56 eta10=0.98 Treq=3468
+  sf0.3(0.30) flat  kw4 claim1.5: f_rec=0.11 NRMSE_w=0.30 NRMSE_nat=0.80 eta10=0.98 Treq=4209
+  sf0.3(0.30) flat  kw4 claim1.8: f_rec=0.03 NRMSE_w=0.41 NRMSE_nat=1.61 eta10=0.98 Treq=7658
+  sf0.3(0.30) k^-1  kw1 claim1.25: f_rec=0.27 NRMSE_w=0.12 NRMSE_nat=0.22 eta10=0.98 Treq=636
+  sf0.3(0.30) k^-1  kw1 claim1.5: f_rec=0.19 NRMSE_w=0.14 NRMSE_nat=0.28 eta10=0.99 Treq=841
+  sf0.3(0.30) k^-1  kw1 claim1.8: f_rec=0.11 NRMSE_w=0.20 NRMSE_nat=0.49 eta10=0.99 Treq=1824
+  sf0.3(0.30) k^-1  kw2 claim1.25: f_rec=0.27 NRMSE_w=0.14 NRMSE_nat=0.28 eta10=0.99 Treq=856
+  sf0.3(0.30) k^-1  kw2 claim1.5: f_rec=0.18 NRMSE_w=0.16 NRMSE_nat=0.38 eta10=0.99 Treq=1152
+  sf0.3(0.30) k^-1  kw2 claim1.8: f_rec=0.13 NRMSE_w=0.24 NRMSE_nat=0.75 eta10=0.99 Treq=2599
+  sf0.3(0.30) k^-1  kw4 claim1.25: f_rec=0.31 NRMSE_w=0.16 NRMSE_nat=0.34 eta10=0.99 Treq=1231
+  sf0.3(0.30) k^-1  kw4 claim1.5: f_rec=0.18 NRMSE_w=0.19 NRMSE_nat=0.47 eta10=0.99 Treq=1699
+  sf0.3(0.30) k^-1  kw4 claim1.8: f_rec=0.14 NRMSE_w=0.30 NRMSE_nat=1.02 eta10=0.99 Treq=4062
+  sf0.3(0.30) k^-2  kw1 claim1.25: f_rec=0.25 NRMSE_w=0.10 NRMSE_nat=0.18 eta10=0.98 Treq=444
+  sf0.3(0.30) k^-2  kw1 claim1.5: f_rec=0.26 NRMSE_w=0.13 NRMSE_nat=0.28 eta10=0.98 Treq=768
+  sf0.3(0.30) k^-2  kw1 claim1.8: f_rec=0.34 NRMSE_w=0.24 NRMSE_nat=0.61 eta10=0.99 Treq=2519
+  sf0.3(0.30) k^-2  kw2 claim1.25: f_rec=0.27 NRMSE_w=0.10 NRMSE_nat=0.20 eta10=0.98 Treq=501
+  sf0.3(0.30) k^-2  kw2 claim1.5: f_rec=0.25 NRMSE_w=0.14 NRMSE_nat=0.31 eta10=0.99 Treq=882
+  sf0.3(0.30) k^-2  kw2 claim1.8: f_rec=0.31 NRMSE_w=0.26 NRMSE_nat=0.80 eta10=0.99 Treq=3009
+  sf0.3(0.30) k^-2  kw4 claim1.25: f_rec=0.25 NRMSE_w=0.11 NRMSE_nat=0.21 eta10=0.98 Treq=554
+  sf0.3(0.30) k^-2  kw4 claim1.5: f_rec=0.24 NRMSE_w=0.15 NRMSE_nat=0.33 eta10=0.99 Treq=989
+  sf0.3(0.30) k^-2  kw4 claim1.8: f_rec=0.32 NRMSE_w=0.28 NRMSE_nat=0.88 eta10=0.99 Treq=3498
+  sf0.6(0.50) flat  kw1 claim1.25: f_rec=0.27 NRMSE_w=0.11 NRMSE_nat=0.19 eta10=0.98 Treq=557
+  sf0.6(0.50) flat  kw1 claim1.5: f_rec=0.20 NRMSE_w=0.12 NRMSE_nat=0.24 eta10=0.99 Treq=673
+  sf0.6(0.50) flat  kw1 claim1.8: f_rec=0.03 NRMSE_w=0.16 NRMSE_nat=0.38 eta10=0.99 Treq=1224
+  sf0.6(0.50) flat  kw2 claim1.25: f_rec=0.50 NRMSE_w=0.14 NRMSE_nat=0.27 eta10=0.99 Treq=837
+  sf0.6(0.50) flat  kw2 claim1.5: f_rec=0.23 NRMSE_w=0.15 NRMSE_nat=0.34 eta10=0.99 Treq=1000
+  sf0.6(0.50) flat  kw2 claim1.8: f_rec=0.07 NRMSE_w=0.20 NRMSE_nat=0.58 eta10=0.99 Treq=1755
+  sf0.6(0.50) flat  kw4 claim1.25: f_rec=0.46 NRMSE_w=0.19 NRMSE_nat=0.38 eta10=0.99 Treq=1578
+  sf0.6(0.50) flat  kw4 claim1.5: f_rec=0.17 NRMSE_w=0.20 NRMSE_nat=0.52 eta10=0.99 Treq=1904
+  sf0.6(0.50) flat  kw4 claim1.8: f_rec=0.04 NRMSE_w=0.27 NRMSE_nat=0.95 eta10=0.98 Treq=3406
+  sf0.6(0.50) k^-1  kw1 claim1.25: f_rec=0.31 NRMSE_w=0.10 NRMSE_nat=0.18 eta10=0.98 Treq=489
+  sf0.6(0.50) k^-1  kw1 claim1.5: f_rec=0.18 NRMSE_w=0.12 NRMSE_nat=0.23 eta10=0.98 Treq=636
+  sf0.6(0.50) k^-1  kw1 claim1.8: f_rec=0.06 NRMSE_w=0.17 NRMSE_nat=0.39 eta10=0.99 Treq=1314
+  sf0.6(0.50) k^-1  kw2 claim1.25: f_rec=0.33 NRMSE_w=0.11 NRMSE_nat=0.22 eta10=0.99 Treq=597
+  sf0.6(0.50) k^-1  kw2 claim1.5: f_rec=0.19 NRMSE_w=0.13 NRMSE_nat=0.29 eta10=0.99 Treq=785
+  sf0.6(0.50) k^-1  kw2 claim1.8: f_rec=0.10 NRMSE_w=0.19 NRMSE_nat=0.54 eta10=0.99 Treq=1658
+  sf0.6(0.50) k^-1  kw4 claim1.25: f_rec=0.25 NRMSE_w=0.13 NRMSE_nat=0.26 eta10=0.99 Treq=753
+  sf0.6(0.50) k^-1  kw4 claim1.5: f_rec=0.22 NRMSE_w=0.15 NRMSE_nat=0.34 eta10=0.99 Treq=1007
+  sf0.6(0.50) k^-1  kw4 claim1.8: f_rec=0.15 NRMSE_w=0.22 NRMSE_nat=0.67 eta10=0.99 Treq=2231
+  sf0.6(0.50) k^-2  kw1 claim1.25: f_rec=0.27 NRMSE_w=0.08 NRMSE_nat=0.15 eta10=0.98 Treq=318
+  sf0.6(0.50) k^-2  kw1 claim1.5: f_rec=0.21 NRMSE_w=0.11 NRMSE_nat=0.22 eta10=0.99 Treq=527
+  sf0.6(0.50) k^-2  kw1 claim1.8: f_rec=0.24 NRMSE_w=0.18 NRMSE_nat=0.44 eta10=0.99 Treq=1524
+  sf0.6(0.50) k^-2  kw2 claim1.25: f_rec=0.19 NRMSE_w=0.09 NRMSE_nat=0.16 eta10=0.98 Treq=346
+  sf0.6(0.50) k^-2  kw2 claim1.5: f_rec=0.24 NRMSE_w=0.11 NRMSE_nat=0.24 eta10=0.99 Treq=579
+  sf0.6(0.50) k^-2  kw2 claim1.8: f_rec=0.23 NRMSE_w=0.19 NRMSE_nat=0.55 eta10=0.99 Treq=1724
+  sf0.6(0.50) k^-2  kw4 claim1.25: f_rec=0.21 NRMSE_w=0.09 NRMSE_nat=0.17 eta10=0.99 Treq=370
+  sf0.6(0.50) k^-2  kw4 claim1.5: f_rec=0.21 NRMSE_w=0.12 NRMSE_nat=0.25 eta10=0.99 Treq=625
+  sf0.6(0.50) k^-2  kw4 claim1.8: f_rec=0.27 NRMSE_w=0.20 NRMSE_nat=0.58 eta10=0.99 Treq=1912
+  sf1.0(0.70) flat  kw1 claim1.25: f_rec=0.29 NRMSE_w=0.11 NRMSE_nat=0.17 eta10=0.98 Treq=506
+  sf1.0(0.70) flat  kw1 claim1.5: f_rec=0.20 NRMSE_w=0.12 NRMSE_nat=0.22 eta10=0.99 Treq=612
+  sf1.0(0.70) flat  kw1 claim1.8: f_rec=0.04 NRMSE_w=0.16 NRMSE_nat=0.36 eta10=0.99 Treq=1110
+  sf1.0(0.70) flat  kw2 claim1.25: f_rec=0.54 NRMSE_w=0.12 NRMSE_nat=0.24 eta10=0.99 Treq=700
+  sf1.0(0.70) flat  kw2 claim1.5: f_rec=0.21 NRMSE_w=0.14 NRMSE_nat=0.30 eta10=0.99 Treq=835
+  sf1.0(0.70) flat  kw2 claim1.8: f_rec=0.06 NRMSE_w=0.18 NRMSE_nat=0.49 eta10=0.99 Treq=1456
+  sf1.0(0.70) flat  kw4 claim1.25: f_rec=0.48 NRMSE_w=0.16 NRMSE_nat=0.32 eta10=0.99 Treq=1131
+  sf1.0(0.70) flat  kw4 claim1.5: f_rec=0.21 NRMSE_w=0.17 NRMSE_nat=0.42 eta10=0.99 Treq=1362
+  sf1.0(0.70) flat  kw4 claim1.8: f_rec=0.06 NRMSE_w=0.23 NRMSE_nat=0.74 eta10=0.98 Treq=2417
+  sf1.0(0.70) k^-1  kw1 claim1.25: f_rec=0.33 NRMSE_w=0.10 NRMSE_nat=0.17 eta10=0.98 Treq=441
+  sf1.0(0.70) k^-1  kw1 claim1.5: f_rec=0.18 NRMSE_w=0.11 NRMSE_nat=0.21 eta10=0.98 Treq=569
+  sf1.0(0.70) k^-1  kw1 claim1.8: f_rec=0.04 NRMSE_w=0.16 NRMSE_nat=0.36 eta10=0.99 Treq=1152
+  sf1.0(0.70) k^-1  kw2 claim1.25: f_rec=0.27 NRMSE_w=0.11 NRMSE_nat=0.20 eta10=0.99 Treq=516
+  sf1.0(0.70) k^-1  kw2 claim1.5: f_rec=0.18 NRMSE_w=0.12 NRMSE_nat=0.26 eta10=0.99 Treq=671
+  sf1.0(0.70) k^-1  kw2 claim1.8: f_rec=0.08 NRMSE_w=0.17 NRMSE_nat=0.46 eta10=0.99 Treq=1377
+  sf1.0(0.70) k^-1  kw4 claim1.25: f_rec=0.29 NRMSE_w=0.12 NRMSE_nat=0.22 eta10=0.99 Treq=615
+  sf1.0(0.70) k^-1  kw4 claim1.5: f_rec=0.17 NRMSE_w=0.13 NRMSE_nat=0.29 eta10=0.99 Treq=811
+  sf1.0(0.70) k^-1  kw4 claim1.8: f_rec=0.11 NRMSE_w=0.20 NRMSE_nat=0.55 eta10=0.99 Treq=1732
+  sf1.0(0.70) k^-2  kw1 claim1.25: f_rec=0.23 NRMSE_w=0.08 NRMSE_nat=0.13 eta10=0.98 Treq=277
+  sf1.0(0.70) k^-2  kw1 claim1.5: f_rec=0.21 NRMSE_w=0.10 NRMSE_nat=0.19 eta10=0.98 Treq=451
+  sf1.0(0.70) k^-2  kw1 claim1.8: f_rec=0.16 NRMSE_w=0.16 NRMSE_nat=0.38 eta10=0.98 Treq=1235
+  sf1.0(0.70) k^-2  kw2 claim1.25: f_rec=0.23 NRMSE_w=0.08 NRMSE_nat=0.15 eta10=0.98 Treq=297
+  sf1.0(0.70) k^-2  kw2 claim1.5: f_rec=0.19 NRMSE_w=0.10 NRMSE_nat=0.22 eta10=0.98 Treq=486
+  sf1.0(0.70) k^-2  kw2 claim1.8: f_rec=0.20 NRMSE_w=0.17 NRMSE_nat=0.46 eta10=0.99 Treq=1362
+  sf1.0(0.70) k^-2  kw4 claim1.25: f_rec=0.21 NRMSE_w=0.08 NRMSE_nat=0.15 eta10=0.98 Treq=312
+  sf1.0(0.70) k^-2  kw4 claim1.5: f_rec=0.19 NRMSE_w=0.11 NRMSE_nat=0.22 eta10=0.99 Treq=516
+  sf1.0(0.70) k^-2  kw4 claim1.8: f_rec=0.20 NRMSE_w=0.18 NRMSE_nat=0.49 eta10=0.99 Treq=1478
+
+=== 0/81 cells reach P1-grade viability ===
+
+=== MC covariance cross-check of the analytic Fisher engine ===
+  0.3 flat kw1: analytic-vs-MC(Gaussian) rel-err 0.122 (engine ok if small); analytic-vs-MC(bounded) rel-err 0.122 (truncation effect)
+  1.0 flat kw1: analytic-vs-MC(Gaussian) rel-err 0.122 (engine ok if small); analytic-vs-MC(bounded) rel-err 0.312 (truncation effect)
+  0.6 k^-2 kw2: analytic-vs-MC(Gaussian) rel-err 0.087 (engine ok if small); analytic-vs-MC(bounded) rel-err 0.222 (truncation effect)
+
+LIVING-REGION VERDICT: REGION_EMPTY  (0/81 P1-viable)  [246s]

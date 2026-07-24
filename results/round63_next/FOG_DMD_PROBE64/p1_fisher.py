@@ -104,9 +104,9 @@ def fisher_prognosis(x, T_eff, tag):
     Kwt = torch.tensor(Kw, device=DEV, dtype=DT)
     A = Pt * xt[None, :]                                  # P diag(x)  (M,N)
     C = A @ Kwt @ A.t()                                   # covariance signal (M,M)
-    m = Pt @ xt                                           # mean bucket (M,)
-    scp_var = float(m.mean().item()) / PHOT               # shot scale: var(b_i)=m_i*mean(m)/n
-    R_shot = torch.diag(torch.clamp(m, min=1e-12) * scp_var)
+    m = Pt @ xt                                           # signed mean bucket (~0); kept for the eta mean term
+    flux = torch.abs(Pt) @ xt                             # CORRECTED shot: physical nonneg photon throughput |P|x
+    R_shot = torch.diag(flux * (flux.mean() / PHOT))      # var(b_i)=flux_i*mean(flux)/n (signed complementary-pair shot)
     V = C + R_shot
     Vinv = torch.linalg.inv(V + 1e-9 * torch.eye(M, device=DEV, dtype=DT))
     KA = Kwt @ A.t()                                      # (N,M)
@@ -208,7 +208,7 @@ out = dict(bar="P1_fisher_prognosis", frozen_geometry=dict(
     medium_db=int(db), beyond_band_dof=int(d_beta)),
     primary_point=rows, T_eff_sweep=sweep, natural_nrmse_crb_median=nat_nmse_med,
     checks=checks, P1_pass=bool(P1_pass), verdict=verdict, wall_s=time.time() - t0)
-json.dump(out, open("P1_results.json", "w"), indent=2)
+json.dump(out, open("P1_results_CORRECTED.json", "w"), indent=2)  # physical-shot corrected artifact
 print("\n[P1] bar checks:", flush=True)
 for k, v in checks.items():
     print(f"  {'PASS' if v else 'FAIL'}  {k}", flush=True)

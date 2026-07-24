@@ -1,0 +1,138 @@
+{
+  "bar": "P1_fisher_prognosis",
+  "frozen_geometry": {
+    "N": 4096,
+    "k_p": 5,
+    "k_claim": 9,
+    "k_support": 10,
+    "M": 128,
+    "sigma_f": 0.3,
+    "photons": 10000.0,
+    "medium_db": 120,
+    "beyond_band_dof": 240
+  },
+  "primary_point": [
+    {
+      "tag": "witness",
+      "T_eff": 4096,
+      "d_beta": 240,
+      "min_eig_Jbar": 0.004165710174575264,
+      "n_positive": 240,
+      "eta_prof_p10": 0.9898673905221245,
+      "eta_prof_median": 0.9964320790838699,
+      "f_rec_snr3": 0.03333333333333333,
+      "nmse_crb": 0.18528109346398064,
+      "exact_null": false
+    },
+    {
+      "tag": "nat_cameraman",
+      "T_eff": 4096,
+      "d_beta": 240,
+      "min_eig_Jbar": 0.0037428776726614143,
+      "n_positive": 240,
+      "eta_prof_p10": 0.9940819046505895,
+      "eta_prof_median": 0.9980425807694013,
+      "f_rec_snr3": 0.2125,
+      "nmse_crb": 0.4429980358230377,
+      "exact_null": false
+    },
+    {
+      "tag": "nat_coins",
+      "T_eff": 4096,
+      "d_beta": 240,
+      "min_eig_Jbar": 0.006415080997787437,
+      "n_positive": 240,
+      "eta_prof_p10": 0.9936827908420536,
+      "eta_prof_median": 0.996986717215952,
+      "f_rec_snr3": 0.6041666666666666,
+      "nmse_crb": 0.17129083447171203,
+      "exact_null": false
+    },
+    {
+      "tag": "nat_moon",
+      "T_eff": 4096,
+      "d_beta": 240,
+      "min_eig_Jbar": 0.004795746047353106,
+      "n_positive": 240,
+      "eta_prof_p10": 0.9976642413424419,
+      "eta_prof_median": 0.9992571027261646,
+      "f_rec_snr3": 0.020833333333333332,
+      "nmse_crb": 1.0066456856478603,
+      "exact_null": false
+    }
+  ],
+  "T_eff_sweep": [
+    {
+      "tag": "witness_T256",
+      "T_eff": 256,
+      "d_beta": 240,
+      "min_eig_Jbar": 0.004165710174575264,
+      "n_positive": 240,
+      "eta_prof_p10": 0.9898673905221245,
+      "eta_prof_median": 0.9964320790838699,
+      "f_rec_snr3": 0.0125,
+      "nmse_crb": 0.7411243738559226,
+      "exact_null": false
+    },
+    {
+      "tag": "witness_T512",
+      "T_eff": 512,
+      "d_beta": 240,
+      "min_eig_Jbar": 0.004165710174575264,
+      "n_positive": 240,
+      "eta_prof_p10": 0.9898673905221245,
+      "eta_prof_median": 0.9964320790838699,
+      "f_rec_snr3": 0.0125,
+      "nmse_crb": 0.5240540704561569,
+      "exact_null": false
+    },
+    {
+      "tag": "witness_T1024",
+      "T_eff": 1024,
+      "d_beta": 240,
+      "min_eig_Jbar": 0.004165710174575264,
+      "n_positive": 240,
+      "eta_prof_p10": 0.9898673905221245,
+      "eta_prof_median": 0.9964320790838699,
+      "f_rec_snr3": 0.029166666666666667,
+      "nmse_crb": 0.3705621869279613,
+      "exact_null": false
+    },
+    {
+      "tag": "witness_T2048",
+      "T_eff": 2048,
+      "d_beta": 240,
+      "min_eig_Jbar": 0.004165710174575264,
+      "n_positive": 240,
+      "eta_prof_p10": 0.9898673905221245,
+      "eta_prof_median": 0.9964320790838699,
+      "f_rec_snr3": 0.029166666666666667,
+      "nmse_crb": 0.26202703522807846,
+      "exact_null": false
+    },
+    {
+      "tag": "witness_T4096",
+      "T_eff": 4096,
+      "d_beta": 240,
+      "min_eig_Jbar": 0.004165710174575264,
+      "n_positive": 240,
+      "eta_prof_p10": 0.9898673905221245,
+      "eta_prof_median": 0.9964320790838699,
+      "f_rec_snr3": 0.03333333333333333,
+      "nmse_crb": 0.18528109346398064,
+      "exact_null": false
+    }
+  ],
+  "natural_nrmse_crb_median": 0.4429980358230377,
+  "checks": {
+    "no_exact_null": true,
+    "eta_p10_ge_0p10": true,
+    "eta_median_ge_0p25": true,
+    "nrmse_synth_le_0p25": true,
+    "nrmse_nat_median_le_0p35": false,
+    "frec_ge_0p70": false
+  },
+  "P1_pass": false,
+  "verdict": "P1_FAIL -> STOP (no reconstruction; archive theorem)",
+  "wall_s": 11.794688701629639
+}

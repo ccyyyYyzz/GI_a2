@@ -1,0 +1,134 @@
+{
+  "validation": [
+    {
+      "cell": "best",
+      "eps": 0.01,
+      "T_eff": 1400,
+      "T_det_analytic": 2956.0,
+      "dprime_analytic": 3.46,
+      "dprime_empirical": 3.61,
+      "ratio": 1.043,
+      "auc": 0.9979,
+      "T_det_sec": 37.8
+    },
+    {
+      "cell": "best",
+      "eps": 0.02,
+      "T_eff": 739,
+      "T_det_analytic": 739.0,
+      "dprime_analytic": 5.07,
+      "dprime_empirical": 5.17,
+      "ratio": 1.019,
+      "auc": 1.0,
+      "T_det_sec": 9.5
+    },
+    {
+      "cell": "best",
+      "eps": 0.05,
+      "T_eff": 118,
+      "T_det_analytic": 118.0,
+      "dprime_analytic": 5.09,
+      "dprime_empirical": 5.25,
+      "ratio": 1.031,
+      "auc": 1.0,
+      "T_det_sec": 1.5
+    },
+    {
+      "cell": "mid",
+      "eps": 0.01,
+      "T_eff": 1400,
+      "T_det_analytic": 5474.0,
+      "dprime_analytic": 2.47,
+      "dprime_empirical": 2.44,
+      "ratio": 0.986,
+      "auc": 0.96,
+      "T_det_sec": 70.1
+    },
+    {
+      "cell": "mid",
+      "eps": 0.02,
+      "T_eff": 1369,
+      "T_det_analytic": 1369.0,
+      "dprime_analytic": 5.04,
+      "dprime_empirical": 4.94,
+      "ratio": 0.98,
+      "auc": 0.9998,
+      "T_det_sec": 17.5
+    },
+    {
+      "cell": "mid",
+      "eps": 0.05,
+      "T_eff": 219,
+      "T_det_analytic": 219.0,
+      "dprime_analytic": 5.06,
+      "dprime_empirical": 5.08,
+      "ratio": 1.005,
+      "auc": 0.9999,
+      "T_det_sec": 2.8
+    },
+    {
+      "cell": "floor",
+      "eps": 0.01,
+      "T_eff": 1400,
+      "T_det_analytic": 7738.0,
+      "dprime_analytic": 2.22,
+      "dprime_empirical": 2.23,
+      "ratio": 1.003,
+      "auc": 0.9344,
+      "T_det_sec": 99.0
+    },
+    {
+      "cell": "floor",
+      "eps": 0.02,
+      "T_eff": 1400,
+      "T_det_analytic": 1934.0,
+      "dprime_analytic": 4.32,
+      "dprime_empirical": 4.27,
+      "ratio": 0.988,
+      "auc": 0.9992,
+      "T_det_sec": 24.8
+    },
+    {
+      "cell": "floor",
+      "eps": 0.05,
+      "T_eff": 310,
+      "T_det_analytic": 310.0,
+      "dprime_analytic": 4.88,
+      "dprime_empirical": 5.02,
+      "ratio": 1.028,
+      "auc": 0.9995,
+      "T_det_sec": 4.0
+    }
+  ],
+  "specificity": {
+    "tmean_inband_vs_H0": 61.0,
+    "tmean_beyond_vs_H0": -0.1,
+    "tcov_beyond_vs_H0": 13.5,
+    "tcov_inband_vs_H0": 0.1,
+    "tcov_medium_vs_H0": 0.1,
+    "tamp_medium_vs_H0": 60.8,
+    "tamp_beyond_vs_H0": 0.3
+  },
+  "third_class": {
+    "note": "medium-law change (sigma_f +20%) sits in the law-amplitude nuisance direction, which is PROFILED OUT of the beyond-band detector -> t_cov(medium)~H0; it separates on the amplitude statistic t_amp. tau change would separate via lag-decay (not exercised in the iid-bank MC).",
+    "tcov_medium_vs_H0": 0.1,
+    "tamp_medium_vs_H0": 60.8
+  },
+  "robustness": {
+    "matched": {
+      "auc": 1.0,
+      "dprime": 5.3
+    },
+    "rot10": {
+      "auc": 1.0,
+      "dprime": 5.31
+    },
+    "rot_angle": 0.1
+  },
+  "online_cost": {
+    "covariance_update_flops_per_bank": 16384,
+    "final_score_flops": 16384,
+    "note": "running M x M covariance accumulation: ~M^2=16384 MAC/bank + one M^2 inner product; the M x M matched filter W is precomputed offline from the declared law.",
+    "ms_per_bank": 12.8
+  }
+}

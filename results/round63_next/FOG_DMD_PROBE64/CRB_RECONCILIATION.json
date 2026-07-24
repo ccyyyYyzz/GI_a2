@@ -1,0 +1,63 @@
+{
+  "shot_diag": {
+    "physical_R_mean": 28.709691510884312,
+    "C_rank": 120,
+    "M": 128,
+    "db": 120
+  },
+  "table": {
+    "physical": {
+      "200": {
+        "nat6_med": 0.9553725382142239,
+        "nat3_med": 0.8249463986250282,
+        "wit_med": 0.22494326020589164
+      },
+      "500": {
+        "nat6_med": 0.6042306469466402,
+        "nat3_med": 0.5217419134416571,
+        "wit_med": 0.1422666093109068
+      },
+      "1000": {
+        "nat6_med": 0.4272555878567039,
+        "nat3_med": 0.36892724502384044,
+        "wit_med": 0.10059768418015941
+      },
+      "4096": {
+        "nat6_med": 0.211109500103338,
+        "nat3_med": 0.18228912268224323,
+        "wit_med": 0.04970590771056126
+      }
+    },
+    "signed_clamp": {
+      "200": {
+        "nat6_med": 0.6185639663412714,
+        "nat3_med": 0.4390266590429755,
+        "wit_med": 0.1500155240120338
+      },
+      "500": {
+        "nat6_med": 0.39121420242922955,
+        "nat3_med": 0.2776648392219923,
+        "wit_med": 0.09487814805234153
+      },
+      "1000": {
+        "nat6_med": 0.27663021543419497,
+        "nat3_med": 0.19633869071094323,
+        "wit_med": 0.06708898187423193
+      },
+      "4096": {
+        "nat6_med": 0.1366846172492376,
+        "nat3_med": 0.09701210241592571,
+        "wit_med": 0.03314906072255076
+      }
+    }
+  },
+  "tau_note": "bank acquisition -> T_eff=banks, no tau penalty; continuous-OU T_eff=T_raw*(1-phi^2)/(1+phi^2)",
+  "bank_seconds": 0.0128,
+  "reconciled_headline": {
+    "witness_Treq_banks": 112.44326736012329,
+    "natural_Treq_banks": 2028.3037483864184,
+    "witness_seconds": 1.4392738222095782,
+    "natural_seconds": 25.962287979346158,
+    "living_region_bug": "signed_clamp shot (clamp(Px,1e-12)*mean(Px)/n) ~0 for zero-mean signed codes; with C rank-deficient (M>db) V^-1 explodes in the 8 null directions -> inflated Fisher -> understated CRB ~2x. physical nonneg-throughput shot |P|x is correct."
+  }
+}

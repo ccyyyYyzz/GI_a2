@@ -1,0 +1,34 @@
+{
+  "robustness": [
+    {
+      "cell": "sf0.3_k^-2_kw1_c1.25",
+      "dprime_avg_1pct": 8.76,
+      "rot_angle": 0.1,
+      "dprime_avg_1pct_rot": 8.76,
+      "rot_degradation_pct": 0.0,
+      "tau2x_Teff_ratio": 0.5,
+      "tau2x_dprime_factor": 0.707,
+      "tau2x_degradation_pct": -29.3
+    },
+    {
+      "cell": "sf0.3_flat_kw1_c1.5",
+      "dprime_avg_1pct": 5.72,
+      "rot_angle": 0.1,
+      "dprime_avg_1pct_rot": 5.72,
+      "rot_degradation_pct": 0.0,
+      "tau2x_Teff_ratio": 0.5,
+      "tau2x_dprime_factor": 0.707,
+      "tau2x_degradation_pct": -29.3
+    },
+    {
+      "cell": "sf0.3_flat_kw1_c1.8",
+      "dprime_avg_1pct": 4.82,
+      "rot_angle": 0.1,
+      "dprime_avg_1pct_rot": 4.82,
+      "rot_degradation_pct": 0.0,
+      "tau2x_Teff_ratio": 0.5,
+      "tau2x_dprime_factor": 0.707,
+      "tau2x_degradation_pct": -29.3
+    }
+  ]
+}
