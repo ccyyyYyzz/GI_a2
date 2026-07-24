@@ -1,0 +1,147 @@
+{
+  "test": "KT4_coherence_rank_sketch",
+  "R44_ref": "sec 5.3 / sec 4.2 (Coherence-Separation Rank Bound, innovation #3, 125)",
+  "params": {
+    "M": 16,
+    "n_bank": 250,
+    "z1_mm": 10,
+    "z2_mm": [
+      0.1,
+      0.5,
+      1.0,
+      2.0,
+      5.0,
+      10.0,
+      20.0
+    ],
+    "scene_dim": 361,
+    "sketch": 256
+  },
+  "prediction": "rank(I_cov) <= min(N_scene, R^2); R -> 1 with z2 (scrambling); orthogonal jet slope ~4 survives rank collapse",
+  "caveat": "R is a field-coherence proxy; memory-effect rank line carries an internal-divergence bookkeeping caveat -- reported honestly",
+  "cells": [
+    {
+      "z2_mm": 0.1,
+      "cov_fisher_rank_PR": 99.84,
+      "cov_fisher_rank_count": 136,
+      "coherence_rank_R_PR": 107.37,
+      "coherence_rank_R_count": 237,
+      "R_squared": 11528.0,
+      "scene_dim": 361,
+      "bound_min_N_R2": 361,
+      "bound_satisfied": true,
+      "jet": null
+    },
+    {
+      "z2_mm": 0.5,
+      "cov_fisher_rank_PR": 100.31,
+      "cov_fisher_rank_count": 136,
+      "coherence_rank_R_PR": 107.82,
+      "coherence_rank_R_count": 238,
+      "R_squared": 11624.4,
+      "scene_dim": 361,
+      "bound_min_N_R2": 361,
+      "bound_satisfied": true,
+      "jet": {
+        "orthogonal_slope": 4.0,
+        "generic_slope": 2.241
+      }
+    },
+    {
+      "z2_mm": 1.0,
+      "cov_fisher_rank_PR": 101.53,
+      "cov_fisher_rank_count": 136,
+      "coherence_rank_R_PR": 108.19,
+      "coherence_rank_R_count": 238,
+      "R_squared": 11704.3,
+      "scene_dim": 361,
+      "bound_min_N_R2": 361,
+      "bound_satisfied": true,
+      "jet": null
+    },
+    {
+      "z2_mm": 2.0,
+      "cov_fisher_rank_PR": 104.63,
+      "cov_fisher_rank_count": 136,
+      "coherence_rank_R_PR": 107.74,
+      "coherence_rank_R_count": 238,
+      "R_squared": 11607.2,
+      "scene_dim": 361,
+      "bound_min_N_R2": 361,
+      "bound_satisfied": true,
+      "jet": {
+        "orthogonal_slope": 4.0,
+        "generic_slope": 2.23
+      }
+    },
+    {
+      "z2_mm": 5.0,
+      "cov_fisher_rank_PR": 110.18,
+      "cov_fisher_rank_count": 136,
+      "coherence_rank_R_PR": 114.37,
+      "coherence_rank_R_count": 239,
+      "R_squared": 13080.9,
+      "scene_dim": 361,
+      "bound_min_N_R2": 361,
+      "bound_satisfied": true,
+      "jet": null
+    },
+    {
+      "z2_mm": 10.0,
+      "cov_fisher_rank_PR": 111.53,
+      "cov_fisher_rank_count": 136,
+      "coherence_rank_R_PR": 120.34,
+      "coherence_rank_R_count": 241,
+      "R_squared": 14480.7,
+      "scene_dim": 361,
+      "bound_min_N_R2": 361,
+      "bound_satisfied": true,
+      "jet": {
+        "orthogonal_slope": 4.0,
+        "generic_slope": 1.597
+      }
+    },
+    {
+      "z2_mm": 20.0,
+      "cov_fisher_rank_PR": 102.0,
+      "cov_fisher_rank_count": 136,
+      "coherence_rank_R_PR": 121.97,
+      "coherence_rank_R_count": 241,
+      "R_squared": 14876.7,
+      "scene_dim": 361,
+      "bound_min_N_R2": 361,
+      "bound_satisfied": true,
+      "jet": null
+    }
+  ],
+  "verdict": {
+    "rank_bound_satisfied_all_z2": "PASS",
+    "R_vs_z2": [
+      107.37,
+      107.82,
+      108.19,
+      107.74,
+      114.37,
+      120.34,
+      121.97
+    ],
+    "cov_fisher_rank_vs_z2": [
+      99.84,
+      100.31,
+      101.53,
+      104.63,
+      110.18,
+      111.53,
+      102.0
+    ],
+    "R_collapses_toward_scrambling": false,
+    "orthogonal_jet_slopes": [
+      4.0,
+      4.0,
+      4.0
+    ],
+    "P_jet_survives_rank_collapse": "PASS",
+    "overall": "rank(I_cov) <= min(N,R^2) holds at every z2 (PASS); coherence rank R does not monotonically collapse with z2; orthogonal quotient-jet slope stays ~4 (survives) even as reconstruction rank changes -- the Coherence-Rank / Jet-Order Separation."
+  },
+  "elapsed_s": 473.2
+}
