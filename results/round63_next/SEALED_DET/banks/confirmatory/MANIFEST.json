@@ -1,0 +1,126 @@
+{
+  "campaign": "R41 sealed detection probe (SEALED_DET)",
+  "bank": "confirmatory",
+  "role": "all primary endpoints (12 fresh scenes: 6 natural + 6 synthetic); SEALED",
+  "frozen_ledger": {
+    "n": 64,
+    "N": 4096,
+    "k_p": 5,
+    "M": 128,
+    "exposures_per_bank": 256,
+    "ms_per_bank": 12.8,
+    "T_cap": 4096,
+    "T_cap_sec": 52.43,
+    "photons_per_bucket": 10000.0,
+    "tau": 8.0,
+    "rho": 0.8825
+  },
+  "seed_salt_base": 841000,
+  "seed_disjoint_from": [
+    840000,
+    842000,
+    843000,
+    844000,
+    800000,
+    810000,
+    820000,
+    830000,
+    "FOG_DMD_PROBE64 banks",
+    "DLGI 700/710/720"
+  ],
+  "code_seed": 841010,
+  "medium_seed_base": 861000,
+  "anomaly_seed_base": 871000,
+  "n_scenes": 12,
+  "scenes": [
+    {
+      "scene_id": "confirmatory_nat_moon",
+      "family": "natural",
+      "source": "moon",
+      "seed": null,
+      "x_sha256": "a70a0492e057bee9801d667935f8e6a13fb99d322b1118ea89061dd162f9c05d"
+    },
+    {
+      "scene_id": "confirmatory_nat_text",
+      "family": "natural",
+      "source": "text",
+      "seed": null,
+      "x_sha256": "5df4fff609c554927b018bd95daa3d4d69d530bfe087a25ee92e177e37aca03a"
+    },
+    {
+      "scene_id": "confirmatory_nat_clock",
+      "family": "natural",
+      "source": "clock",
+      "seed": null,
+      "x_sha256": "7e3c8f4a08b7e7cef936718beb52f0b56d9eed7cb5045ac63387fba072b041fb"
+    },
+    {
+      "scene_id": "confirmatory_nat_page",
+      "family": "natural",
+      "source": "page",
+      "seed": null,
+      "x_sha256": "9b988830426196a6235f105c4c007f82acd96ba9b625c264ee2b9287d081077f"
+    },
+    {
+      "scene_id": "confirmatory_nat_gravel",
+      "family": "natural",
+      "source": "gravel",
+      "seed": null,
+      "x_sha256": "d3c9b9df192946e0ff65bec2cb1cfd3b800de15582e2e8554094b4a96f8561ef"
+    },
+    {
+      "scene_id": "confirmatory_nat_brick",
+      "family": "natural",
+      "source": "brick",
+      "seed": null,
+      "x_sha256": "9c0f3fadb86ae5b1cba883006984bae5e023fc5c9112084b5c0f5e5f12713f88"
+    },
+    {
+      "scene_id": "confirmatory_witness_1",
+      "family": "witness",
+      "source": null,
+      "seed": 842001,
+      "x_sha256": "38d9de67e104e7237ea528e404fc52d18199a7aaae83e1d8c2d6b305266f8e19"
+    },
+    {
+      "scene_id": "confirmatory_witness_2",
+      "family": "witness",
+      "source": null,
+      "seed": 842002,
+      "x_sha256": "bfb5eccd46c210e15b7a91cc6bee24422bba2ed777996212634f7612a40a98fc"
+    },
+    {
+      "scene_id": "confirmatory_witness_3",
+      "family": "witness",
+      "source": null,
+      "seed": 842003,
+      "x_sha256": "5341c49a53bf2ec79bd28d38ffef8a734651e6c6d2f7c1c7d580d1772873a3e8"
+    },
+    {
+      "scene_id": "confirmatory_onef_1",
+      "family": "onef",
+      "source": null,
+      "seed": 843001,
+      "x_sha256": "6bf3cf72dfd9306ff5cfeb8e5fba4e451f93c120fd152c03d19dc5a7e894cf43"
+    },
+    {
+      "scene_id": "confirmatory_texture_1",
+      "family": "texture",
+      "source": null,
+      "seed": 844001,
+      "x_sha256": "368440e2924e4d9820f39f34005bf164c176ecd8f4e2f7432a12e9fa883b14ea"
+    },
+    {
+      "scene_id": "confirmatory_smooth_1",
+      "family": "smooth",
+      "source": null,
+      "seed": 845001,
+      "x_sha256": "7fc30d900fe99926908dedb35572c7bfefbac84691095ba7c33f0599a47320c4"
+    }
+  ],
+  "thresholds_frozen_before_generation": true,
+  "bars_reference": "sealed_common.BARS (frozen R41 sec 4.6)",
+  "utc": "2026-07-24 02:34:34Z",
+  "python": "3.11.5",
+  "numpy": "1.24.4"
+}

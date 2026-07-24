@@ -1,0 +1,27 @@
+{
+  "campaign": "R41 sealed detection probe",
+  "banks": [
+    "calibration",
+    "confirmatory",
+    "specificity",
+    "mismatch",
+    "oracle"
+  ],
+  "salt_bases": {
+    "calibration": 840000,
+    "confirmatory": 841000,
+    "specificity": 842000,
+    "mismatch": 843000,
+    "oracle": 844000
+  },
+  "bank_scene_set_sha256": {
+    "calibration": "1deab0dbf1c1d32661a3f0fae5c6e1acaa0ab91f85f442723c9515bb32f391d0",
+    "confirmatory": "87da1b866ca3ff7dbd053b93f9d93376a5324ee641bf078473461d05500b65cb",
+    "specificity": "23105ff55c8a4307b8d3be29724fe4ff4a5e8593555a728f64f9ab2999b11a43",
+    "mismatch": "737e4ef22726ca9e9e722483b83365a2851e79ca5ed7f24e5542801a2ae7041d",
+    "oracle": "4c7a25547ea3dd6fd3af3d11b7fc5bc06c660ca7d0ce03571226312771f52e56"
+  },
+  "n_unique_scenes": 26,
+  "n_total_scenes": 26,
+  "utc": "2026-07-24 02:34:41Z"
+}

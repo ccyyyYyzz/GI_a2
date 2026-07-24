@@ -1,0 +1,84 @@
+{
+  "campaign": "R41 sealed detection probe (SEALED_DET)",
+  "bank": "calibration",
+  "role": "build score filters/nuisance bases/thresholds/cross-fit baseline; ONLY bank opened in the dry run",
+  "frozen_ledger": {
+    "n": 64,
+    "N": 4096,
+    "k_p": 5,
+    "M": 128,
+    "exposures_per_bank": 256,
+    "ms_per_bank": 12.8,
+    "T_cap": 4096,
+    "T_cap_sec": 52.43,
+    "photons_per_bucket": 10000.0,
+    "tau": 8.0,
+    "rho": 0.8825
+  },
+  "seed_salt_base": 840000,
+  "seed_disjoint_from": [
+    841000,
+    842000,
+    843000,
+    844000,
+    800000,
+    810000,
+    820000,
+    830000,
+    "FOG_DMD_PROBE64 banks",
+    "DLGI 700/710/720"
+  ],
+  "code_seed": 840010,
+  "medium_seed_base": 860000,
+  "anomaly_seed_base": 870000,
+  "n_scenes": 6,
+  "scenes": [
+    {
+      "scene_id": "calibration_nat_camera",
+      "family": "natural",
+      "source": "camera",
+      "seed": null,
+      "x_sha256": "8358732f6b9eee4406c1de711630969904b0f19086a507b2719a94dcc133799a"
+    },
+    {
+      "scene_id": "calibration_nat_coins",
+      "family": "natural",
+      "source": "coins",
+      "seed": null,
+      "x_sha256": "7ccbc00252986bc7ec6e15e6f664dce600fda9ab392c281a01a0704082453330"
+    },
+    {
+      "scene_id": "calibration_witness_0",
+      "family": "witness",
+      "source": null,
+      "seed": 841000,
+      "x_sha256": "e2054fd91841e32a290ad414c1836f37bd6c147ee9d91f9011bebb0ba8efccac"
+    },
+    {
+      "scene_id": "calibration_onef_0",
+      "family": "onef",
+      "source": null,
+      "seed": 842000,
+      "x_sha256": "7603fdfc8666a3cbf553b943e58cb4de790ed04e1f3293f101aca222510f5911"
+    },
+    {
+      "scene_id": "calibration_texture_0",
+      "family": "texture",
+      "source": null,
+      "seed": 843000,
+      "x_sha256": "17b76b17a39e95f970e9f5a0732cac8a7667f203777b5bf586b1d9900033f067"
+    },
+    {
+      "scene_id": "calibration_smooth_0",
+      "family": "smooth",
+      "source": null,
+      "seed": 844000,
+      "x_sha256": "676261f802119815f19ce067dc6b1c873890acb2dc5b07f86812c67c72d1d3b1"
+    }
+  ],
+  "thresholds_frozen_before_generation": true,
+  "bars_reference": "sealed_common.BARS (frozen R41 sec 4.6)",
+  "utc": "2026-07-24 02:34:33Z",
+  "python": "3.11.5",
+  "numpy": "1.24.4"
+}

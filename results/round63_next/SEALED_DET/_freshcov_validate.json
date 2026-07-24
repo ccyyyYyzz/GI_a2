@@ -1,0 +1,10 @@
+{
+  "fresh_d_mc": 2.841,
+  "fresh_auc": 0.9675,
+  "fresh_d_analytic": 5.112688630456868,
+  "fixed_d_analytic": 4.9992505935602125,
+  "fresh_lam_eff": 0.11680481904519331,
+  "fixed_lam_mean": 0.11167909495573947,
+  "latency_ratio": 0.956117186505202,
+  "ms_per_bank": 4.468
+}

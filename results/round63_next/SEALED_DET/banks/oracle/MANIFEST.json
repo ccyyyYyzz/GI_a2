@@ -1,0 +1,56 @@
+{
+  "campaign": "R41 sealed detection probe (SEALED_DET)",
+  "bank": "oracle",
+  "role": "exact mean-wall / true-law ceiling anchor; SEALED",
+  "frozen_ledger": {
+    "n": 64,
+    "N": 4096,
+    "k_p": 5,
+    "M": 128,
+    "exposures_per_bank": 256,
+    "ms_per_bank": 12.8,
+    "T_cap": 4096,
+    "T_cap_sec": 52.43,
+    "photons_per_bucket": 10000.0,
+    "tau": 8.0,
+    "rho": 0.8825
+  },
+  "seed_salt_base": 844000,
+  "seed_disjoint_from": [
+    840000,
+    841000,
+    842000,
+    843000,
+    800000,
+    810000,
+    820000,
+    830000,
+    "FOG_DMD_PROBE64 banks",
+    "DLGI 700/710/720"
+  ],
+  "code_seed": 844010,
+  "medium_seed_base": 864000,
+  "anomaly_seed_base": 874000,
+  "n_scenes": 2,
+  "scenes": [
+    {
+      "scene_id": "oracle_nat_checkerboard",
+      "family": "natural",
+      "source": "checkerboard",
+      "seed": null,
+      "x_sha256": "8ce5eed627bdf19fe7e9cf52dbb9fe65662010031e27d8eecbb3c6e902db4799"
+    },
+    {
+      "scene_id": "oracle_witness_6",
+      "family": "witness",
+      "source": null,
+      "seed": 845006,
+      "x_sha256": "45b4c734535bb281976bd2bb78e1b6b4621a229f7119b31aa06e70eec65c0ffd"
+    }
+  ],
+  "thresholds_frozen_before_generation": true,
+  "bars_reference": "sealed_common.BARS (frozen R41 sec 4.6)",
+  "utc": "2026-07-24 02:34:35Z",
+  "python": "3.11.5",
+  "numpy": "1.24.4"
+}

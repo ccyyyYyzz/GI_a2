@@ -1,0 +1,96 @@
+{
+  "campaign": "R41 sealed detection probe (SEALED_DET)",
+  "bank": "specificity",
+  "role": "six event classes incl tau x{0.5,2} and mixed scene+medium; SEALED",
+  "frozen_ledger": {
+    "n": 64,
+    "N": 4096,
+    "k_p": 5,
+    "M": 128,
+    "exposures_per_bank": 256,
+    "ms_per_bank": 12.8,
+    "T_cap": 4096,
+    "T_cap_sec": 52.43,
+    "photons_per_bucket": 10000.0,
+    "tau": 8.0,
+    "rho": 0.8825
+  },
+  "seed_salt_base": 842000,
+  "seed_disjoint_from": [
+    840000,
+    841000,
+    843000,
+    844000,
+    800000,
+    810000,
+    820000,
+    830000,
+    "FOG_DMD_PROBE64 banks",
+    "DLGI 700/710/720"
+  ],
+  "code_seed": 842010,
+  "medium_seed_base": 862000,
+  "anomaly_seed_base": 872000,
+  "n_scenes": 3,
+  "scenes": [
+    {
+      "scene_id": "specificity_nat_horse",
+      "family": "natural",
+      "source": "horse",
+      "seed": null,
+      "x_sha256": "546796d2538eb38690fc37bbb85c41fc073b0b79f08d69ca0ff22c5608f0ec18"
+    },
+    {
+      "scene_id": "specificity_witness_4",
+      "family": "witness",
+      "source": null,
+      "seed": 843004,
+      "x_sha256": "1be2e8554579efa363ab68221e7a179bcc9f973a3f8d913f1cef60b8759247f8"
+    },
+    {
+      "scene_id": "specificity_texture_2",
+      "family": "texture",
+      "source": null,
+      "seed": 845002,
+      "x_sha256": "83e6606b0941a7c27e37dccd67c8d8fe90e5d7c1e4c930f233d869ea82bbc0a7"
+    }
+  ],
+  "thresholds_frozen_before_generation": true,
+  "bars_reference": "sealed_common.BARS (frozen R41 sec 4.6)",
+  "utc": "2026-07-24 02:34:35Z",
+  "python": "3.11.5",
+  "numpy": "1.24.4",
+  "event_classes": [
+    {
+      "cls": "H0",
+      "desc": "declared scene, no change"
+    },
+    {
+      "cls": "inband_scene",
+      "desc": "in-band scene change, matched norm (lights mean channel)"
+    },
+    {
+      "cls": "beyond_scene",
+      "desc": "beyond-band scene change (headline target)"
+    },
+    {
+      "cls": "medium_amplitude",
+      "desc": "sigma_f x {0.8,1.2} (amplitude/law direction)"
+    },
+    {
+      "cls": "medium_timescale",
+      "desc": "tau x {0.5,2} (lag/correlation-time direction)"
+    },
+    {
+      "cls": "mixed_scene_medium",
+      "desc": "simultaneous beyond-band scene + medium change"
+    }
+  ],
+  "eps_levels": [
+    0.005,
+    0.01,
+    0.02,
+    0.05
+  ],
+  "min_records_per_class": 250
+}

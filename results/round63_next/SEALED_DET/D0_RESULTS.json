@@ -1,0 +1,167 @@
+{
+  "bar": "D0",
+  "mean_derivative": {
+    "per_claim": {
+      "claim_1.25": 1.990265985417225e-16,
+      "claim_1.5": 3.243661567186246e-16,
+      "claim_1.8": 5.68320358088911e-16
+    },
+    "worst": 5.68320358088911e-16
+  },
+  "two_engine": {
+    "rows": [
+      {
+        "cell": {
+          "sf": 1.0,
+          "shape": "k^-2",
+          "kwf": 1,
+          "claim": 1.25
+        },
+        "rel_diffs": {
+          "lam_mean": 0.0147,
+          "lam_max": 0.0162,
+          "tr": 0.0147,
+          "dprime_energy_spread": 0.0074,
+          "dprime_matched_target": 0.0081
+        },
+        "lam_min_A": 0.05722487456739621,
+        "lam_min_B": 0.0527602645606253,
+        "note": "lam_min excluded from the gate: near-null beyond-band modes (both ~0)"
+      },
+      {
+        "cell": {
+          "sf": 0.3,
+          "shape": "flat",
+          "kwf": 1,
+          "claim": 1.5
+        },
+        "rel_diffs": {
+          "lam_mean": 0.0111,
+          "lam_max": 0.0161,
+          "tr": 0.0111,
+          "dprime_energy_spread": 0.0056,
+          "dprime_matched_target": 0.0081
+        },
+        "lam_min_A": 0.016373594968223337,
+        "lam_min_B": 0.013463427466800496,
+        "note": "lam_min excluded from the gate: near-null beyond-band modes (both ~0)"
+      },
+      {
+        "cell": {
+          "sf": 0.3,
+          "shape": "flat",
+          "kwf": 1,
+          "claim": 1.8
+        },
+        "rel_diffs": {
+          "lam_mean": 0.0097,
+          "lam_max": 0.0168,
+          "tr": 0.0097,
+          "dprime_energy_spread": 0.0049,
+          "dprime_matched_target": 0.0084
+        },
+        "lam_min_A": 0.004148458927706731,
+        "lam_min_B": 0.0,
+        "note": "lam_min excluded from the gate: near-null beyond-band modes (both ~0)"
+      },
+      {
+        "cell": {
+          "sf": 0.6,
+          "shape": "k^-1",
+          "kwf": 2,
+          "claim": 1.5
+        },
+        "rel_diffs": {
+          "lam_mean": 0.0074,
+          "lam_max": 0.0061,
+          "tr": 0.0074,
+          "dprime_energy_spread": 0.0037,
+          "dprime_matched_target": 0.0031
+        },
+        "lam_min_A": 0.016212169761525345,
+        "lam_min_B": 0.013269857435259146,
+        "note": "lam_min excluded from the gate: near-null beyond-band modes (both ~0)"
+      },
+      {
+        "cell": {
+          "sf": 1.0,
+          "shape": "flat",
+          "kwf": 4,
+          "claim": 1.8
+        },
+        "rel_diffs": {
+          "lam_mean": 0.0479,
+          "lam_max": 0.0268,
+          "tr": 0.0479,
+          "dprime_energy_spread": 0.0242,
+          "dprime_matched_target": 0.0135
+        },
+        "lam_min_A": 0.0028250738703166555,
+        "lam_min_B": 0.0,
+        "note": "lam_min excluded from the gate: near-null beyond-band modes (both ~0)"
+      }
+    ],
+    "worst": 0.0478593162624182
+  },
+  "shot_ledger": {
+    "rows": [
+      {
+        "cell": {
+          "sf": 1.0,
+          "shape": "k^-2",
+          "kwf": 1,
+          "claim": 1.25
+        },
+        "shot_var_median_rel": 0.0115,
+        "CplusR_selfconsistency_rel": 0.0101,
+        "physical_end2end_rel": 0.1246,
+        "medium_shot_ratio": 61.98
+      },
+      {
+        "cell": {
+          "sf": 0.3,
+          "shape": "flat",
+          "kwf": 1,
+          "claim": 1.5
+        },
+        "shot_var_median_rel": 0.0115,
+        "CplusR_selfconsistency_rel": 0.0088,
+        "physical_end2end_rel": 0.0076,
+        "medium_shot_ratio": 11.8
+      },
+      {
+        "cell": {
+          "sf": 0.3,
+          "shape": "flat",
+          "kwf": 1,
+          "claim": 1.8
+        },
+        "shot_var_median_rel": 0.0115,
+        "CplusR_selfconsistency_rel": 0.0088,
+        "physical_end2end_rel": 0.0076,
+        "medium_shot_ratio": 11.8
+      }
+    ],
+    "worst": 0.0115047066558845
+  },
+  "D0_eval": {
+    "bar": "D0",
+    "checks": {
+      "mean_derivative": true,
+      "two_engine_fisher": true,
+      "mc_shot_ledger": true
+    },
+    "passed": true,
+    "measured": {
+      "mean_deriv_rel": 5.68320358088911e-16,
+      "two_engine_rel": 0.0478593162624182,
+      "mc_shot_rel": 0.0115047066558845
+    }
+  },
+  "kill_tree": {
+    "node": "all_pass",
+    "verdict": "DETECTION ADMITTED as the flagship positive"
+  },
+  "passed": true,
+  "wall_s": 35.3
+}

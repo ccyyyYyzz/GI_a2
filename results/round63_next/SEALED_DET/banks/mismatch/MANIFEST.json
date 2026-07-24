@@ -1,0 +1,122 @@
+{
+  "campaign": "R41 sealed detection probe (SEALED_DET)",
+  "bank": "mismatch",
+  "role": "D5 mismatch axes; SEALED",
+  "frozen_ledger": {
+    "n": 64,
+    "N": 4096,
+    "k_p": 5,
+    "M": 128,
+    "exposures_per_bank": 256,
+    "ms_per_bank": 12.8,
+    "T_cap": 4096,
+    "T_cap_sec": 52.43,
+    "photons_per_bucket": 10000.0,
+    "tau": 8.0,
+    "rho": 0.8825
+  },
+  "seed_salt_base": 843000,
+  "seed_disjoint_from": [
+    840000,
+    841000,
+    842000,
+    844000,
+    800000,
+    810000,
+    820000,
+    830000,
+    "FOG_DMD_PROBE64 banks",
+    "DLGI 700/710/720"
+  ],
+  "code_seed": 843010,
+  "medium_seed_base": 863000,
+  "anomaly_seed_base": 873000,
+  "n_scenes": 3,
+  "scenes": [
+    {
+      "scene_id": "mismatch_nat_cell",
+      "family": "natural",
+      "source": "cell",
+      "seed": null,
+      "x_sha256": "621310fc884f03c49eeb0911b101f08a86b8e1c940d5024b338622f61b849d8b"
+    },
+    {
+      "scene_id": "mismatch_witness_5",
+      "family": "witness",
+      "source": null,
+      "seed": 844005,
+      "x_sha256": "c3901e66027ceb18ab6565f71fea4e069b41e265584cbf0514d133aad3b35ad3"
+    },
+    {
+      "scene_id": "mismatch_onef_2",
+      "family": "onef",
+      "source": null,
+      "seed": 845002,
+      "x_sha256": "53a85e319adf5ec0577c2011f7aedde34c229cafacd35db9317e4ccdad369820"
+    }
+  ],
+  "thresholds_frozen_before_generation": true,
+  "bars_reference": "sealed_common.BARS (frozen R41 sec 4.6)",
+  "utc": "2026-07-24 02:34:35Z",
+  "python": "3.11.5",
+  "numpy": "1.24.4",
+  "mismatch_axes": [
+    {
+      "axis": "basis_rotation",
+      "levels": [
+        0.1,
+        0.2
+      ],
+      "desc": "declared medium subspace rotation"
+    },
+    {
+      "axis": "spectral_slope",
+      "levels": [
+        -1,
+        1
+      ],
+      "desc": "declared power-law slope error"
+    },
+    {
+      "axis": "band_edge",
+      "levels": [
+        -0.2,
+        0.2
+      ],
+      "desc": "declared medium band-edge error"
+    },
+    {
+      "axis": "tau_scale",
+      "levels": [
+        0.5,
+        2.0
+      ],
+      "desc": "declared correlation-time error"
+    },
+    {
+      "axis": "shot_level",
+      "levels": [
+        0.8,
+        1.2
+      ],
+      "desc": "declared photon/shot level error"
+    },
+    {
+      "axis": "static_envelope",
+      "levels": [
+        0.1
+      ],
+      "desc": "10% RMS static multiplicative envelope"
+    },
+    {
+      "axis": "convolutive_blend",
+      "levels": [
+        0.1,
+        0.25,
+        0.5
+      ],
+      "desc": "multiplicative->convolutive medium blend (0.50 = mapped edge, not a pass condition)"
+    }
+  ],
+  "min_records_per_class": 250
+}
