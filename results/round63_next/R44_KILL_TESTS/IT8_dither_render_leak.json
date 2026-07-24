@@ -1,0 +1,32 @@
+{
+  "test": "IT8_dither_render_leak",
+  "ref": "internal divergence finer #5",
+  "params": {
+    "M": 16,
+    "dither": "Bayer 8x8 ordered",
+    "z1_mm": [
+      0.0,
+      10.0
+    ]
+  },
+  "decision": "dither leak >=1e-2 => PWM+whole-period integration hard line; <1e-3 => non-issue",
+  "leak": {
+    "analog": {
+      "z1_0": 0.007014959995473512,
+      "z1_10": 0.05591845845532393
+    },
+    "dither": {
+      "z1_0": 0.01383920290320863,
+      "z1_10": 0.05725401217435266
+    }
+  },
+  "verdict": {
+    "dither_leak_z1_0": 0.01383920290320863,
+    "analog_leak_z1_0": 0.007014959995473512,
+    "dither_excess_z1_0": 0.0068242429077351174,
+    "dither_excess_z1_10": 0.0013355537190287287,
+    "P_dither": "PWM_CONSTRAINT_NEEDED",
+    "overall": "PWM CONSTRAINT NEEDED -- ordered-dither render leaks 1.38e-02 into the beyond-band annulus at z1=0 (>=1e-2): PWM temporal dithering + exact whole-period bucket integration is a hard line in the apparatus spec."
+  },
+  "elapsed_s": 2.1
+}
