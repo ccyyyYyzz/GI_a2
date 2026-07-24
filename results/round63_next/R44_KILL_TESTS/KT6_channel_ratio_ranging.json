@@ -1,0 +1,368 @@
+{
+  "test": "KT6_channel_ratio_ranging",
+  "R44_ref": "sec 5.5 / innovation #5 (Channel-Ratio Ranging, 80)",
+  "params": {
+    "M": 8,
+    "n_bank": 120,
+    "z2_mm": [
+      0.05,
+      0.1,
+      0.2,
+      0.35,
+      0.5,
+      1.0,
+      2.0,
+      5.0
+    ],
+    "z1_mm": [
+      5.0,
+      10.0
+    ],
+    "sigmas": [
+      "weak_0p3",
+      "developed_2pi"
+    ],
+    "change": "2pct beyond-band",
+    "wishart_null_T": 60,
+    "n_split": 24
+  },
+  "binding_caveat": "blind lambda_cov must be reported vs the Wishart M^2/T floor; oracle-only is NOT a pass (coordinator).",
+  "frozen_prediction": "ORACLE J_cov/J_mean ~ z2^4 near contact",
+  "cells": [
+    {
+      "z1_mm": 5.0,
+      "sigma": "weak_0p3",
+      "near_contact_exponent": 4.076086453022537,
+      "signal_to_floor_near_contact": [
+        0.0046,
+        0.0042,
+        0.0048,
+        0.0045,
+        0.0048
+      ],
+      "median_signal_to_floor_near": 0.004567371952940353,
+      "rows": [
+        {
+          "z2_mm": 0.05,
+          "lam_cov": 7.748744139380031e-16,
+          "lam_mean": 6.206504375473293e-05,
+          "ratio_cov_over_mean": 1.2484876623951675e-11,
+          "lam_null_wishart_floor": 1.6965432680365772e-13,
+          "signal_to_floor": 0.004567371952940353
+        },
+        {
+          "z2_mm": 0.1,
+          "lam_cov": 1.2517175858441194e-14,
+          "lam_mean": 6.253894797861244e-05,
+          "ratio_cov_over_mean": 2.0015008667433797e-10,
+          "lam_null_wishart_floor": 2.988091782160926e-12,
+          "signal_to_floor": 0.0041890198732078545
+        },
+        {
+          "z2_mm": 0.2,
+          "lam_cov": 2.0935485645689723e-13,
+          "lam_mean": 6.336488669591903e-05,
+          "ratio_cov_over_mean": 3.303956929041279e-09,
+          "lam_null_wishart_floor": 4.3657967167120246e-11,
+          "signal_to_floor": 0.00479534137848193
+        },
+        {
+          "z2_mm": 0.35,
+          "lam_cov": 2.158662550197886e-12,
+          "lam_mean": 6.472034853257669e-05,
+          "ratio_cov_over_mean": 3.335369167722162e-08,
+          "lam_null_wishart_floor": 4.815746238313125e-10,
+          "signal_to_floor": 0.004482508926703806
+        },
+        {
+          "z2_mm": 0.5,
+          "lam_cov": 9.850231583539957e-12,
+          "lam_mean": 6.572482969449484e-05,
+          "ratio_cov_over_mean": 1.4987078139762787e-07,
+          "lam_null_wishart_floor": 2.042660589289095e-09,
+          "signal_to_floor": 0.004822255657739068
+        },
+        {
+          "z2_mm": 1.0,
+          "lam_cov": 1.6669037061628798e-10,
+          "lam_mean": 7.483068844120031e-05,
+          "ratio_cov_over_mean": 2.227566979385312e-06,
+          "lam_null_wishart_floor": 3.479323100770577e-08,
+          "signal_to_floor": 0.004790885059779889
+        },
+        {
+          "z2_mm": 2.0,
+          "lam_cov": 2.874158703961347e-09,
+          "lam_mean": 0.00010186439286269611,
+          "ratio_cov_over_mean": 2.8215538552666293e-05,
+          "lam_null_wishart_floor": 5.905897778659072e-07,
+          "signal_to_floor": 0.004866590672034832
+        },
+        {
+          "z2_mm": 5.0,
+          "lam_cov": 1.0023098990847914e-07,
+          "lam_mean": 0.00017317876184310516,
+          "ratio_cov_over_mean": 0.000578771835770979,
+          "lam_null_wishart_floor": 2.4336070519913147e-05,
+          "signal_to_floor": 0.004118618485530131
+        }
+      ]
+    },
+    {
+      "z1_mm": 5.0,
+      "sigma": "developed_2pi",
+      "near_contact_exponent": 3.953098613311092,
+      "signal_to_floor_near_contact": [
+        0.0044,
+        0.0047,
+        0.0049,
+        0.0044,
+        0.0045
+      ],
+      "median_signal_to_floor_near": 0.004492067348902102,
+      "rows": [
+        {
+          "z2_mm": 0.05,
+          "lam_cov": 1.4909612567000013e-10,
+          "lam_mean": 6.241116815951654e-05,
+          "ratio_cov_over_mean": 2.388933424366064e-06,
+          "lam_null_wishart_floor": 3.403890059273602e-08,
+          "signal_to_floor": 0.004380168662139975
+        },
+        {
+          "z2_mm": 0.1,
+          "lam_cov": 2.417270519462678e-09,
+          "lam_mean": 6.34724805150173e-05,
+          "ratio_cov_over_mean": 3.8083756926606376e-05,
+          "lam_null_wishart_floor": 5.11062607007905e-07,
+          "signal_to_floor": 0.0047298911842033635
+        },
+        {
+          "z2_mm": 0.2,
+          "lam_cov": 4.049382895055357e-08,
+          "lam_mean": 6.633176873290264e-05,
+          "ratio_cov_over_mean": 0.0006104741321403564,
+          "lam_null_wishart_floor": 8.31006122926906e-06,
+          "signal_to_floor": 0.0048728677001716085
+        },
+        {
+          "z2_mm": 0.35,
+          "lam_cov": 4.039830870796836e-07,
+          "lam_mean": 7.265722653367304e-05,
+          "ratio_cov_over_mean": 0.005560122596923753,
+          "lam_null_wishart_floor": 9.087772623451623e-05,
+          "signal_to_floor": 0.004445347653584305
+        },
+        {
+          "z2_mm": 0.5,
+          "lam_cov": 1.6994272029504307e-06,
+          "lam_mean": 8.173650132006492e-05,
+          "ratio_cov_over_mean": 0.020791533470411096,
+          "lam_null_wishart_floor": 0.00037831739173852425,
+          "signal_to_floor": 0.004492067348902102
+        },
+        {
+          "z2_mm": 1.0,
+          "lam_cov": 2.3135333855843793e-05,
+          "lam_mean": 0.00012829192459161496,
+          "ratio_cov_over_mean": 0.18033351615457718,
+          "lam_null_wishart_floor": 0.0051718671578298335,
+          "signal_to_floor": 0.0044733039635054365
+        },
+        {
+          "z2_mm": 2.0,
+          "lam_cov": 0.00017398815084536325,
+          "lam_mean": 0.00024611904625793823,
+          "ratio_cov_over_mean": 0.7069268042873033,
+          "lam_null_wishart_floor": 0.03990819003983091,
+          "signal_to_floor": 0.004359710392070199
+        },
+        {
+          "z2_mm": 5.0,
+          "lam_cov": 0.0003557155739528317,
+          "lam_mean": 0.00047685221517546007,
+          "ratio_cov_over_mean": 0.7459660721549641,
+          "lam_null_wishart_floor": 0.1387772232341107,
+          "signal_to_floor": 0.0025632129369871893
+        }
+      ]
+    },
+    {
+      "z1_mm": 10.0,
+      "sigma": "weak_0p3",
+      "near_contact_exponent": 4.015519117684396,
+      "signal_to_floor_near_contact": [
+        0.0048,
+        0.0043,
+        0.0044,
+        0.0041,
+        0.0045
+      ],
+      "median_signal_to_floor_near": 0.0043581001266019565,
+      "rows": [
+        {
+          "z2_mm": 0.05,
+          "lam_cov": 1.113112814355075e-15,
+          "lam_mean": 0.00016911045425086087,
+          "ratio_cov_over_mean": 6.582164416067782e-12,
+          "lam_null_wishart_floor": 2.3233851292392713e-13,
+          "signal_to_floor": 0.00479090961006337
+        },
+        {
+          "z2_mm": 0.1,
+          "lam_cov": 1.798859289813018e-14,
+          "lam_mean": 0.00016977780059131918,
+          "ratio_cov_over_mean": 1.0595373974381634e-10,
+          "lam_null_wishart_floor": 4.146792815997026e-12,
+          "signal_to_floor": 0.004337953135429345
+        },
+        {
+          "z2_mm": 0.2,
+          "lam_cov": 2.9377307164837576e-13,
+          "lam_mean": 0.00017166899996312376,
+          "ratio_cov_over_mean": 1.7112761867983223e-09,
+          "lam_null_wishart_floor": 6.740851818781705e-11,
+          "signal_to_floor": 0.0043581001266019565
+        },
+        {
+          "z2_mm": 0.35,
+          "lam_cov": 2.824913858497435e-12,
+          "lam_mean": 0.00017400809260603747,
+          "ratio_cov_over_mean": 1.623438206919016e-08,
+          "lam_null_wishart_floor": 6.935952827139141e-10,
+          "signal_to_floor": 0.004072856215867059
+        },
+        {
+          "z2_mm": 0.5,
+          "lam_cov": 1.2018684792954594e-11,
+          "lam_mean": 0.00017613522650532833,
+          "ratio_cov_over_mean": 6.823555418989972e-08,
+          "lam_null_wishart_floor": 2.655970243646338e-09,
+          "signal_to_floor": 0.004525157923627314
+        },
+        {
+          "z2_mm": 1.0,
+          "lam_cov": 1.8255036400221026e-10,
+          "lam_mean": 0.00018014694435467254,
+          "ratio_cov_over_mean": 1.0133414399902664e-06,
+          "lam_null_wishart_floor": 4.118554759578675e-08,
+          "signal_to_floor": 0.004432388899956863
+        },
+        {
+          "z2_mm": 2.0,
+          "lam_cov": 2.2094340210927267e-09,
+          "lam_mean": 0.000206378060933559,
+          "ratio_cov_over_mean": 1.0705760152500068e-05,
+          "lam_null_wishart_floor": 4.983658661568539e-07,
+          "signal_to_floor": 0.004433357441051826
+        },
+        {
+          "z2_mm": 5.0,
+          "lam_cov": 9.935620059134092e-08,
+          "lam_mean": 0.00028407824490045,
+          "ratio_cov_over_mean": 0.00034974941719369767,
+          "lam_null_wishart_floor": 2.242389266919597e-05,
+          "signal_to_floor": 0.004430818594125184
+        }
+      ]
+    },
+    {
+      "z1_mm": 10.0,
+      "sigma": "developed_2pi",
+      "near_contact_exponent": 3.926523016172128,
+      "signal_to_floor_near_contact": [
+        0.0045,
+        0.0043,
+        0.0045,
+        0.0043,
+        0.0043
+      ],
+      "median_signal_to_floor_near": 0.00433092074334704,
+      "rows": [
+        {
+          "z2_mm": 0.05,
+          "lam_cov": 2.1409929581247e-10,
+          "lam_mean": 0.00016996852616002405,
+          "ratio_cov_over_mean": 1.2596408326262545e-06,
+          "lam_null_wishart_floor": 4.7856621391245396e-08,
+          "signal_to_floor": 0.004473765376417401
+        },
+        {
+          "z2_mm": 0.1,
+          "lam_cov": 3.4404018717060754e-09,
+          "lam_mean": 0.0001715563584034904,
+          "ratio_cov_over_mean": 2.0054062138661476e-05,
+          "lam_null_wishart_floor": 8.001427371284322e-07,
+          "signal_to_floor": 0.004299735174817754
+        },
+        {
+          "z2_mm": 0.2,
+          "lam_cov": 5.499233102701925e-08,
+          "lam_mean": 0.00017525341625919828,
+          "ratio_cov_over_mean": 0.00031378749813176863,
+          "lam_null_wishart_floor": 1.2202495020677912e-05,
+          "signal_to_floor": 0.00450664646318898
+        },
+        {
+          "z2_mm": 0.35,
+          "lam_cov": 5.024645008206543e-07,
+          "lam_mean": 0.0001815136542346574,
+          "ratio_cov_over_mean": 0.002768191202690888,
+          "lam_null_wishart_floor": 0.00011683320697487087,
+          "signal_to_floor": 0.00430069938017474
+        },
+        {
+          "z2_mm": 0.5,
+          "lam_cov": 1.972182103681069e-06,
+          "lam_mean": 0.00018899446848359615,
+          "ratio_cov_over_mean": 0.01043513135334035,
+          "lam_null_wishart_floor": 0.0004553724763286522,
+          "signal_to_floor": 0.00433092074334704
+        },
+        {
+          "z2_mm": 1.0,
+          "lam_cov": 2.29835627875391e-05,
+          "lam_mean": 0.00022997965479732872,
+          "ratio_cov_over_mean": 0.09993737405942944,
+          "lam_null_wishart_floor": 0.005464540881303298,
+          "signal_to_floor": 0.004205945803457416
+        },
+        {
+          "z2_mm": 2.0,
+          "lam_cov": 0.00017059960284915304,
+          "lam_mean": 0.0003294113089424856,
+          "ratio_cov_over_mean": 0.5178923680453829,
+          "lam_null_wishart_floor": 0.04080456128802929,
+          "signal_to_floor": 0.004180895406396669
+        },
+        {
+          "z2_mm": 5.0,
+          "lam_cov": 0.0003454989839618156,
+          "lam_mean": 0.0005049708961728716,
+          "ratio_cov_over_mean": 0.6841958350081577,
+          "lam_null_wishart_floor": 0.14050912987796582,
+          "signal_to_floor": 0.00245890771839443
+        }
+      ]
+    }
+  ],
+  "verdict": {
+    "oracle_near_contact_exponents": [
+      4.076,
+      3.953,
+      4.016,
+      3.927
+    ],
+    "blind_median_signal_to_floor_near": [
+      0.0046,
+      0.0045,
+      0.0044,
+      0.0043
+    ],
+    "worst_signal_to_floor": 0.00433092074334704,
+    "P_oracle_z4_law": "PASS",
+    "P_blind_estimable": "ESTIMATOR_KILLED",
+    "overall": "ORACLE confirms the near-contact quartic ratio law (exponent ~4); BLIND channel-ratio ranging is ESTIMATOR_KILLED -- lambda_cov sits below the Wishart M^2/T sampling floor near contact (signal/floor << 1), so the ratio is a valid theory relationship but NOT bench-observable via naive blind estimation. Honest per coordinator's binding caveat."
+  },
+  "elapsed_s": 525.5
+}
