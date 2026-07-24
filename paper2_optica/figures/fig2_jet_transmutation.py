@@ -85,9 +85,10 @@ axR.legend(loc="center right", fontsize=5.6, handlelength=1.4, labelspacing=0.25
 # projected-slope callout (all four cells = 4.00)
 proj = kt2["verdict"]["projected_cov_slopes"]
 unp = kt2["verdict"]["unprojected_lowEps_slopes"]
-axR.text(0.03, 0.045,
+axR.text(0.035, 0.72,
          f"projected cov slope = {proj[0]:.2f} (all 4 cells)\n"
          f"unprojected low-$\\varepsilon$ slope = {min(unp):.2f}–{max(unp):.2f}",
-         transform=axR.transAxes, fontsize=5.8, color=C_JET, va="bottom", fontweight="bold")
+         transform=axR.transAxes, fontsize=5.8, color=C_JET, ha="left", va="top",
+         fontweight="bold")
 
 save(fig, os.path.join(HERE, "fig2_jet_transmutation"))

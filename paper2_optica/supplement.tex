@@ -257,25 +257,27 @@ $5.64\times10^{-2}$; IT4, \texttt{@33b8ef2}).
 % =====================================================================
 Let the profiled Chernoff distance carry two leading operators,
 \begin{equation}
-C(\eps,g)=A\,g^{2a_1}\eps^{2m_1}+B\,g^{2a_2}\eps^{2m_2},\qquad 0<m_1<m_2,
+C(\eps,\gamma)=c_1\,\gamma^{2a_1}\eps^{2m_1}+c_2\,\gamma^{2a_2}\eps^{2m_2},\qquad
+0<m_1<m_2,
 \label{eq:s-two}
 \end{equation}
-and set $y=(B/A)g^{2(a_2-a_1)}\eps^{2(m_2-m_1)}$. The effective orders are
-$m_{\mathrm{eff}}=\tfrac12\,\partial_{\log\eps}\log C=(m_1+m_2y)/(1+y)$ and
-$a_{\mathrm{eff}}=\tfrac12\,\partial_{\log g}\log C=(a_1+a_2y)/(1+y)$, and a direct
-differentiation gives the exact flow
+with a geometric gain $\gamma$ (the contact distance $z_2$ in the near-contact
+case), and set $y=(c_2/c_1)\gamma^{2(a_2-a_1)}\eps^{2(m_2-m_1)}$. The effective
+orders are $m_{\mathrm{eff}}=\tfrac12\,\partial_{\log\eps}\log C=(m_1+m_2y)/(1+y)$ and
+$a_{\mathrm{eff}}=\tfrac12\,\partial_{\log\gamma}\log C=(a_1+a_2y)/(1+y)$, and a
+direct differentiation gives the exact flow
 \begin{equation}
 \frac{\partial m_{\mathrm{eff}}}{\partial\log\eps}=2(m_{\mathrm{eff}}-m_1)
 (m_2-m_{\mathrm{eff}}),\qquad
-\frac{\partial m_{\mathrm{eff}}}{\partial\log g}=\frac{2(a_2-a_1)}{m_2-m_1}
+\frac{\partial m_{\mathrm{eff}}}{\partial\log\gamma}=\frac{2(a_2-a_1)}{m_2-m_1}
 (m_{\mathrm{eff}}-m_1)(m_2-m_{\mathrm{eff}}),
 \label{eq:s-flow}
 \end{equation}
 with fixed points $m_1$ (relevant as $\eps\to0$) and $m_2$.
 
 \begin{corollary}[Jet transmutation]\label{cor:s-jet}
-A lower-order symmetry-breaking channel with coefficient $A>0$ drives
-$m_{\mathrm{eff}}\to m_1$; zeroing $A$ by an exact wall, a certified code, or a
+A lower-order symmetry-breaking channel with coefficient $c_1>0$ drives
+$m_{\mathrm{eff}}\to m_1$; zeroing $c_1$ by an exact wall, a certified code, or a
 nuisance projection places the experiment exactly on the $m_2$ manifold without
 changing the scene perturbation.
 \end{corollary}
@@ -289,7 +291,7 @@ information is $O(z_2^4\eps^4)$),
 \end{equation}
 so that $y\propto\eps^2 z_2^4$, giving $\eps\,z_2^2=\text{const}$ and
 $z_{2,\ast}\propto\eps^{-1/2}$, the geometric form
-of the KT2 crossover $\eps_{\mathrm{cross}}=\sqrt{A/B}$. The measured realizations
+of the KT2 crossover $\eps_{\mathrm{cross}}=\sqrt{c_1/c_2}$. The measured realizations
 (KT2, \texttt{@05f1029}): projected covariance slopes $[4,4,4,4]$; unprojected
 low-amplitude slopes $[2.136,2.20,2.117,2.176]$; orthogonality residuals in
 $[1.45,5.09]\times10^{-18}$; generic-direction covariance slopes
@@ -347,9 +349,10 @@ relative squared error below a constant requires $T\lambda\sim p$. Hence
 \text{known}:\text{blind}:\text{full}\ =\ 1:\sqrt p:p.
 \label{eq:s-ladder}
 \end{equation}
-Composing with the physical jet $A_\perp=\kappa g^a\eps^m B$
-($\tfrac12\lVert B\rVert_F^2=1$) gives $\lambda=\kappa^2g^{2a}\eps^{2m}$ and
-$T_{\mathrm{known}}\asymp\kappa^{-2}g^{-2a}\eps^{-2m}$, $T_{\mathrm{blind}}\asymp
+Composing with the physical jet $A_\perp=\kappa\gamma^a\eps^m B$
+($\tfrac12\lVert B\rVert_F^2=1$; the geometric gain $\gamma$ is the contact distance
+$z_2$ in the near-contact case) gives $\lambda=\kappa^2\gamma^{2a}\eps^{2m}$ and
+$T_{\mathrm{known}}\asymp\kappa^{-2}\gamma^{-2a}\eps^{-2m}$, $T_{\mathrm{blind}}\asymp
 \sqrt p\,T_{\mathrm{known}}$, $T_{\mathrm{est}}\asymp p\,T_{\mathrm{known}}$;
 adaptation multiplies the prefactor and leaves the physical exponent $2m$ unchanged.
 Boundary cases: at $p=1$ the three ledgers coincide; an exact wall $B=0$ gives
@@ -399,7 +402,20 @@ the verdict is \texttt{TLSG\_PASS} at commit \texttt{35d858e}
 \end{tabular}
 \end{table}
 
-Bar~4 is the $1:\sqrt p:p$ signature; bar~3's coefficient $0.985$ is the
+Bar~4 is the $1:\sqrt p:p$ signature. Each bar-4 exponent is a single OLS log--log
+fit over $n=4$ distinct $p\in\{10,36,136,528\}$ ($8$ cells) at the frozen seed
+$20260724$, with in-sample $R^2=0.003/0.983/0.9995$ (known/blind/estimation;
+deterministic recomputation from the committed \texttt{TLSG\_partA.json} contours).
+A post-gate $10$-seed bootstrap (\texttt{TLSG\_BOOTSTRAP.json}; the \texttt{tlsg\_A}
+runner unmodified, only the seed varied) attaches $95\%$ confidence intervals and is
+reported as post-hoc robustness whatever it shows: matched exponent mean $-0.011$, CI
+$[-0.044,0.012]$ (contains $0$); estimation mean $0.996$, CI $[0.985,1.008]$
+(contains $1$); blind mean $0.454$, std $0.006$, CI $[0.446,0.465]$, which
+\emph{excludes} the asymptotic $\tfrac12$---a systematic finite-$p$ deviation of
+$\approx9\%$ over the fit range rather than sampling scatter. The frozen gate verdict
+is unchanged: all $10$ seeds pass every bar and lie inside the frozen $\pm0.15$ band,
+so the $0:\tfrac12:1$ ladder-order separation is unambiguous even though the blind
+exponent sits systematically low. Bar~3's coefficient $0.985$ is the
 Cram\'er--Rao floor $p/T$; bar~5 confirms the KT6 negative for the right reason
 (the operating point lies below the optimal blind tier). The oracle law itself is
 intact: the near-contact ratio $J_{\mathrm{cov}}/J_{\mathrm{mean}}\propto z_2^4$ has
@@ -449,9 +465,15 @@ circular-complex-Gaussian field, factorized grain $\otimes$ code covariance),
 grid $2048$ for IT1/KT1 in \texttt{complex128}\slash\texttt{float64}, with code counts
 $M\in\{8,12,16,32\}$ and $200$--$700$ banks per test. The blindness-capacity and
 route tests use the SVD/DPSS leak operators at the relay-conjugate plane. The
-COMSOL full-Maxwell twin (Wave Optics, 2D TE, COMSOL~6.3) validates the thin-phase
-screen at $15.5\%$ contrast agreement ($0.467$ versus $0.395$; WAVE\_TWIN,
-\texttt{@0c3b0d9}). No reconstruction is performed anywhere.
+COMSOL full-Maxwell twin (Wave Optics, 2D TE, COMSOL~6.3; a COMSOL license is
+required to reproduce it) \emph{scopes} the thin-phase screen rather than validating
+it wholesale: over $n=8$ realizations the ensemble speckle contrast agrees to
+$15.5\%$ ($0.467$ versus $0.395$) while the speckle grain size disagrees by $65\%$
+($3.88\,\mu$m versus $1.35\,\mu$m, a $2.9\times$ overestimate). The per-realization
+contrast disagreements $\lvert\Delta\rvert/\mathrm{FEM}$ span $11.6\%$--$60.9\%$
+(median $\approx19\%$); the reduced model transfers contrast statistics but not grain
+scale (WAVE\_TWIN, \texttt{@0c3b0d9}; per-realization values in
+\texttt{COMSOL\_developed\_results.json}). No reconstruction is performed anywhere.
 
 \paragraph{Scaling gate.}
 Arm~A and arm~B parameters are in Section~S4.3; the single seed is $20260724$; there
@@ -473,6 +495,7 @@ tree is clean for all cited artifact directories.
 Artifact & Commit & Role \\
 \midrule
 TLSG\_RESULTS.json & \texttt{35d858e} & three-ledger scaling + calibration transfer (gate) \\
+TLSG\_BOOTSTRAP.json & \texttt{3646754} & post-gate $10$-seed exponent CIs (post-hoc robustness) \\
 KT1 shell sweep & \texttt{19338a4} & support/field wall $6.6\times10^{-16}$ + breakers \\
 IT1 two-wall jet & \texttt{f13a323} & energy/unitary wall $2.18\times10^{-16}$; NA-clip $\eps^1$ \\
 KT2 jet transmutation & \texttt{05f1029} & projected slope $4.00$; jet flow \\

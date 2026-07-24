@@ -101,7 +101,7 @@ axL.text(0.5, 1.05, "Two exact walls", ha="center", va="bottom", fontsize=7.8,
          fontweight="bold", color=C_WALL, transform=axL.transAxes)
 
 
-def wall_row(y, name, invar, wall_val, brk_label, brk_val):
+def wall_row(y, name, invar, wall_val, brk_label, brk_val, prec=1):
     # WALL block (machine-zero, blue)
     axL.add_patch(FancyBboxPatch((0.02, y - 0.075), 0.44, 0.15,
                   boxstyle="round,pad=0.006", facecolor=OI["skyblue"], alpha=0.22,
@@ -109,7 +109,7 @@ def wall_row(y, name, invar, wall_val, brk_label, brk_val):
     axL.text(0.24, y + 0.038, name, ha="center", va="center", fontsize=6.9,
              fontweight="bold", color=C_WALL)
     axL.text(0.24, y - 0.006, invar, ha="center", va="center", fontsize=5.7, color="0.35")
-    axL.text(0.24, y - 0.050, f"null {wall_val:.1e}".replace("e-16", r"$\times10^{-16}$"),
+    axL.text(0.24, y - 0.050, f"null {wall_val:.{prec}e}".replace("e-16", r"$\times10^{-16}$"),
              ha="center", va="center", fontsize=6.4, fontweight="bold", color="0.15")
     # breaker arrow -> vermillion
     axL.add_patch(FancyArrowPatch((0.47, y), (0.565, y), arrowstyle="-|>",
@@ -128,7 +128,7 @@ def wall_row(y, name, invar, wall_val, brk_label, brk_val):
 wall_row(0.80, "SUPPORT wall", r"hard-pupil field, $\ker A$", FIELD_WALL,
          "finite window\n(leak law)", f"{SUPPORT_BREAK*100:.0f}%")
 wall_row(0.52, "ENERGY wall", r"$E\!\to\!UE$, full bucket", ENERGY_WALL,
-         "NA clipping", rf"$\varepsilon^{{{CLIP_SLOPE:.2f}}}$")
+         "NA clipping", rf"$\varepsilon^{{{CLIP_SLOPE:.2f}}}$", prec=2)
 # tie: score-null orbit label
 axL.text(0.24, 0.335, "score-null orbits", ha="center", va="center", fontsize=5.8,
          style="italic", color="0.4")

@@ -45,7 +45,8 @@ CERT = 1e-5                                                          # IT4b 80 d
 CERT_FLOOR = it4b["results"]["joint_spectrum"]["rel_leak_vs_d"]["1"]  # 1.43e-6 best-code floor
 
 apply_style()
-fig, (axL, axR) = plt.subplots(1, 2, figsize=(COL2, 3.0))
+fig, (axL, axR) = plt.subplots(1, 2, figsize=(COL2, 3.0),
+                               gridspec_kw={"wspace": 0.34})
 
 # ---- Panel L: descending route ladder ----
 routes = [("raw random\ncodes", RAW, C_BREAK, "IT4"),

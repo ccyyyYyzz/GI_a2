@@ -197,3 +197,23 @@ Flagged as a length-budget decision for the writing phase, not an evidence gap.
 **No numerical claim in the Paper-2 architecture (R45 §C2 theorem set, §C3 sections/hero, §C7
 transfer sentences) lacks a committed source.** All four GAPs are non-blocking (rounding / caption
 precision / length budget); none requires data generation.
+
+---
+
+# DERIVED STATISTICS (fix wave, 2026-07-24 — merged adjudication READ1+READ2)
+
+Deterministic recomputations from committed JSON only (no stochastic generation). Each row gives
+the exact formula and the committed source (commit / blob). These back the new prose added by the
+fix wave (TLSG per-fit R² + bootstrap CIs §4/§S4.3; two-sided COMSOL §5/§S6).
+
+| # | Derived value | Formula (deterministic) | Source file | Commit / blob |
+|---|---|---|---|---|
+| **TLSG-R2** | Per-fit in-sample R² of the three ledger p-exponents: known **0.003**, blind **0.983**, estimation **0.9995** | OLS fit `log(contour) = slope·log(p_eff) + b` over the 8 `(M,p)` cells; `R² = 1 − SS_res/SS_tot` in log–log space. Contours per cell = `Tlam_50_matched`, `Tlam_50_blind`, `mean(risk_times_T)` (= known/blind/estimation). Slopes recovered −0.004/0.444/1.010 (match `bars[3].measured`). | `TLSG/TLSG_partA.json` (`cells[*].{Tlam_50_matched,Tlam_50_blind,risk_times_T}`) | commit `35d858e` / blob `c19e158` |
+| **TLSG-BOOT** | Post-gate 10-seed bootstrap 95% CIs on the p-exponents: matched mean **−0.011** CI **[−0.044, 0.012]** (contains 0); estimation mean **0.996** CI **[0.985, 1.008]** (contains 1); blind mean **0.454** std **0.006** CI **[0.446, 0.465]** (EXCLUDES ½; ≈9% below asymptotic, `(0.5−0.4538)/0.5=9.2%`). All 10 seeds `partA_all_pass`, all inside frozen ±0.15 band. Post-hoc robustness; gate verdict stands on the frozen single seed. | Committed multi-seed run (`tlsg_A` unmodified, seed varied); values read verbatim from `exponent_CIs` + `honest_flags`. Deficit = `(0.5 − mean_blind)/0.5`. | `TLSG/TLSG_BOOTSTRAP.json` (`exponent_CIs`, `honest_flags`, `all_seeds_partA_pass`) | commit `3646754` / blob `83cdf7a` |
+| **COMSOL-GRAIN** | Speckle-grain overestimate: thin-screen **3.88 µm** vs FEM **1.35 µm** = **2.9×**; `grain_rel_diff=0.6523` (65%) | `thinscreen_grain_mean_um / fem_grain_mean_um = 3.875/1.347 = 2.877×`; `grain_rel_diff` read verbatim | `WAVE_TWIN/COMSOL_MICRO/COMSOL_developed_results.json` (`summary`) | commit `0c3b0d9` / blob `7c9bd2d` |
+| **COMSOL-PERREAL** | Per-realization contrast disagreement `|Δ|/FEM` over n=8: **[35.9, 16.5, 13.1, 22.0, 11.6, 60.9, 26.9, 15.9]%**, span **11.6–60.9%**, median **19.3%** | `abs(fem_contrast − thinscreen_contrast)/fem_contrast` for `rows[0..7]` | `WAVE_TWIN/COMSOL_MICRO/COMSOL_developed_results.json` (`rows`) | commit `0c3b0d9` / blob `7c9bd2d` |
+
+**Note on F3 (COMSOL "VALIDATED"):** the paper prose (§5 main + §S6) is rescoped to two-sided reporting
+per adjudication R2 (contrast statistics transfer; grain-scale does not; no "validated/anchors"
+wording). The legacy F3 matrix row above is left unedited under the append-only constraint on this file;
+the authoritative scoping now lives in the manuscript and in COMSOL-GRAIN / COMSOL-PERREAL here.

@@ -71,6 +71,56 @@ matrix were **not modified**. Companion Letter cited as `[COMPANION]`; user-rese
 placeholders (`[AUTHORS]`, `[AFFILIATION]`, `[FUNDING/ACKNOWLEDGMENTS]`, `[URL]`) left
 intact exactly as in paper 1.
 
+### Phase 3 — fix wave (merged adjudication READ1+READ2) — COMPLETE
+
+Implements `REVIEW_ADJUDICATION.md` (coordinator merge of `REVIEW_READ1_GENERAL.md` +
+`REVIEW_READ2_HOSTILE.md`). One wave; no data generation beyond deterministic recomputations
+from committed JSON (logged in `CLAIM_SOURCE_MATRIX.md` → **DERIVED STATISTICS**).
+
+**R1 reframe (READ2 R1 + READ1 F2/F3):** abstract + intro restructured to the three-part
+contribution (physics mapping / measured certification apparatus / engineering doctrine); theorem
+statements unchanged but each now carries a classical-attribution sentence (Thm 1 → van der Vaart
+invariance⇒singular-Fisher; Thm 2 → Courant–Fischer/Weyl + Backus–Gilbert/TSVD; Thm 3 →
+Ingster–Suslina detection boundary + Cramér–Rao); new **Relation to prior work** paragraph
+(Backus–Gilbert, Barrett–Myers, Ingster, Wyner physical-layer security, Candès–Tao CS
+certifiability — also neutralizes READ2 M5). 6 bibliography entries added (HornJohnson, BackusGilbert,
+IngsterSuslina, BarrettMyers, Wyner, CandesTao — all real, canonical).
+
+**R2 COMSOL two-sided (integrity):** §5 main + §S6 now report BOTH contrast agreement 15.5% AND
+grain-size disagreement 65% (thin-screen 3.88 µm vs FEM 1.35 µm, 2.9× overestimate); "anchors/
+validated" → scoped ("contrast statistics transfer; grain-scale do not"); per-realization spread
+(11.6–60.9%, n=8) to supplement. Matrix F3 note added; append-only left the legacy row intact.
+
+**M2:** §5 leak law compressed to one sentence + `[COMPANION]` (End Matter C) ownership; display
+Eq.(7) removed (was verbatim duplicate). **M3:** TLSG prose now states n=4 p-points, single seed,
+per-fit R² (0.003/0.983/0.9995) — AND the landed post-gate 10-seed bootstrap CIs wired in
+(`TLSG_BOOTSTRAP.json` @`3646754`): matched/estimation CIs bracket target; **blind CI [0.446,0.465]
+excludes ½ — stated plainly as a systematic ≈9% finite-p deviation**; gate verdict stands
+(all 10 seeds pass, inside ±0.15). **M4/M1:** projected slope 4.0 reworded as a consistency check;
+Fig 2 caption discloses analytic reconstruction; Gaussian-covariance scope moved into the Thm 3
+statement + setup.
+
+**READ1 MAJORs:** Figs 2 & 3 now cited in body (`\ref{fig:jet}` §4 Route 1; `\ref{fig:transfer}`
+§2 + §5); abstract gains headline numbers (10⁻¹⁶ walls, 80-dim; COMSOL kept out of abstract);
+"quotient jet" defined standalone at first use (intro); `g` de-collided → geometry scalar renamed
+`γ` (identified with `z₂`), group element keeps `g`. **MINORs/NITs:** Fig 1 energy-wall label
+2.2e-16 → **2.18×10⁻¹⁶** (regenerated from frozen sources; support wall stays 6.6e-16); two roles of
+"80" disambiguated; four conjugate-floor values reconciled as one ~7×10⁻³ instrument floor; A/B
+Chernoff coefficients → `c₁,c₂`; Fig 2 slope callout relocated (F9); Fig 3 panel `wspace` widened so
+the y-label clears its ticks (F10); "seventeen-test" → "full verification battery" (F11); intro
+preview now lists all five sections (F12); m1 "per-variant maximum" field leak; m2 coverage "(24/24
+fresh draws)"; m4 COMSOL-license dependency noted in Data availability + S6.
+
+**Compile (pdflatex, TeX Live 2024, 2× each):** `main.pdf` **7 pp**, `supplement.pdf` **6 pp** —
+**0 undefined references, 0 missing citations, 0 overfull hbox** in both. Main within the ≤8 pp
+budget. All 3 figures regenerated and re-embed. Placeholders untouched.
+
+**Files edited this phase:** `main.tex`, `supplement.tex`, `CLAIM_SOURCE_MATRIX.md` (append-only:
+DERIVED STATISTICS), `BUILD_STATUS.md`, `figures/fig1_hero.py` (+regenerated pdf/png),
+`figures/fig2_jet_transmutation.py` (+pdf/png), `figures/fig3_routes_transfer.py` (+pdf/png).
+NOT touched: `paper_prl/`, `results/`, `docs/`, `figures/_frozen_sources/`, the two review reports,
+the adjudication.
+
 ---
 
 ## Frozen source provenance (see CLAIM_SOURCE_MATRIX.md for the full map)

@@ -73,15 +73,18 @@
     \begin{center}
     \begin{minipage}{0.92\textwidth}
       \noindent\small\textbf{Abstract.} A symmetry of an optical measurement law
-      makes a scene subspace exactly invisible. We turn that blindness into a
-      calibrated, certifiable design variable. A statistical Noether theorem
-      identifies each exact wall with a score-null orbit; a blindness-capacity
-      theorem, $\bd_d=\sigma_d$, makes the largest guaranteed-invisible code space
-      a measured singular spectrum; a three-ledger theorem separates what finite
-      data can certify into a $1:\sqrt{p}:p$ ladder for known, blind, and estimated
-      change; and a jet-transmutation corollary shows an exact wall or projection
-      restores the higher-amplitude law. A scaling gate and a wave-optics twin
-      validate the program. This opens calibrated, publishable optical blindness.
+      makes a scene subspace exactly invisible; we turn that blindness into a
+      calibrated, certifiable design variable. A physics mapping assigns each optical
+      symmetry class its wall type---a support wall and a lossless-bucket energy wall,
+      both realized to machine precision (leaks near $10^{-16}$)---with the one
+      controlled breaker that reopens it. A measured certification apparatus turns
+      ``cannot see'' into a singular spectrum $\bd_d=\sigma_d$: $80$ code dimensions
+      are certified blind at a fixed plane, and a frozen scaling gate confirms a
+      $1:\sqrt{p}:p$ certifiability ladder for known, blind, and estimated change in a
+      Gaussian covariance model. The mathematical cores are classical; new here are
+      the optical instantiation, its measured capacity curve, and the engineering
+      doctrine---breakers, noncomposability, jet restoration, wave-optics
+      transfer---of physical realization.
       \par\vspace{6pt}
       \noindent\footnotesize\textcopyright\ 2026. Companion Letter, Ref.~{[COMPANION]}.
     \end{minipage}
@@ -97,15 +100,20 @@ A strongly scattering or bandlimited optical channel is usually described by wha
 it destroys. The received wisdom is that a lost coordinate is simply lost. The
 companion Letter~\cite{COMPANION} already separates two invariants that this view
 conflates: reconstruction rank, which can collapse to one, and local change
-observability, which can stay complete because the first nonzero nuisance-profiled
-statistical jet fixes the price of observing each direction. That Letter owns the
-Rank--Jet Separation theorem and the algebraic mean wall of a scrambling channel.
+observability, which can stay complete because the first nonzero \emph{jet}---the
+lowest order at which a scene change perturbs the nuisance-profiled measurement
+statistics (the ``quotient information jet'' used below)---fixes the price of
+observing each direction. That Letter owns the Rank--Jet Separation theorem and the
+algebraic mean wall of a scrambling channel.
 
 Here we take the complementary and constructive step. Rather than accept an
 optical sensor's blindness as a defect, we ask what it \emph{cannot} see, whether
 that ignorance can be measured, engineered, and certified, and what finite data
-then permit us to conclude. The result is a hierarchy of three theorems and one
-corollary that turns invisibility into a metrological primitive:
+then permit us to conclude. The mathematical scaffolding is deliberately
+classical---a symmetry that annihilates the score, the min--max identity for
+singular values, and the local-asymptotic-normality detection ladder; our object is
+their optical instantiation and measured certification. Four structural results and
+a physical realization organize the program:
 
 \begin{enumerate}\itemsep2pt
 \item exact measurement symmetries create \emph{walls}---score-null orbits on
@@ -119,17 +127,22 @@ higher-amplitude channel through three physically distinct routes
 (Section~\ref{sec:jet});
 \item unknown tangent dimension imposes a separate $1:\sqrt{p}:p$
 \emph{certifiability ladder} on known, blind, and estimated change
-(Section~\ref{sec:certify}).
+(Section~\ref{sec:certify});
+\item a wave-optics transfer chain carries the algebraic walls to a bench, where a
+calibrated leak law, a full-Maxwell twin, and apparatus rules fix what physically
+realizes them (Section~\ref{sec:transfer}).
 \end{enumerate}
 
-The abstract ingredients---gauge nulls, singular-value min--max, and local
-asymptotic normality---are individually classical~\cite{Vaart,DiakonikolasKane};
-the contribution is their synthesis into a physical optical metrology program with
-a measured dimension--leak curve, a certified cannot-see guarantee, and a
-wave-optics transfer chain (Section~\ref{sec:transfer}). The five sections are
-organized by theorem, not by chronology; the seventeen-test verification battery,
-the honest negatives, and the full proofs are in the Supplement. Every quoted
-number traces to a single committed artifact.
+The contribution is not these classical skeletons but their physical realization, in
+three parts: (a) a \emph{physics mapping} from optical symmetry class to wall type,
+with two machine-precision instantiations and their specific breakers; (b) a
+\emph{measured certification apparatus}---an $80$-dimensional certified-blind code
+space, a dimension--leak capacity curve, and a frozen-gate $1:\sqrt{p}:p$ ladder on a
+physical instrument model; and (c) an \emph{engineering doctrine} of breakers,
+noncomposability, and transfer constraints. Each theorem below is billed with the
+classical result it restates. The sections are organized by theorem, not by
+chronology; the full verification battery, the honest negatives, and the full proofs
+are in the Supplement, and every quoted number traces to a single committed artifact.
 
 % =====================================================================
 \section{Symmetry walls of an optical measurement}\label{sec:walls}
@@ -185,16 +198,21 @@ converse is Frobenius integrability applied to the score-null distribution. Full
 statement and the discrete-degeneracy caveat are in Supplement~S1.
 \end{proof}
 
-The honest content of Theorem~\ref{thm:noether} is that a symmetry of the
-\emph{wave equation} does not by itself create a wall; a wall appears only when the
-\emph{full measurement law} inherits the induced parameter action. Two walls of
-distinct physical type realize it exactly.
+The mathematical core is classical: an invariance of a dominated likelihood forces
+the score to vanish along orbit tangents and the Fisher information to be singular
+there~\cite{Vaart}, and the finite-orbit indistinguishability then follows at once
+because the laws coincide. What is new is the optical instantiation---which
+measurement law inherits which scene symmetry---and its two machine-precision
+realizations. Indeed, the honest content of Theorem~\ref{thm:noether} is that a
+symmetry of the \emph{wave equation} does not by itself create a wall; a wall appears
+only when the \emph{full measurement law} inherits the induced parameter action. Two
+walls of distinct physical type realize it exactly.
 
 \paragraph{Support (field) wall.}
 For a bandlimited mean operator $A$, every $h\in\ker A$ generates a translation
 $x\mapsto x+h$ that leaves the mean-channel law invariant---the additive group of
 the unmeasured subspace. A hard Fourier pupil restores this wall to machine
-precision: the maximum signed-intensity field leak beyond $2kR$ is
+precision: the per-variant maximum signed-intensity field leak beyond $2kR$ is
 $6.6\times10^{-16}$ across all hard-pupil variants and all defocus $z_1$, and the
 ideal periodic-code detector wall is $2.07\times10^{-15}$ for $k>k_p$.
 
@@ -257,7 +275,12 @@ the same statement for the pencil $(\Lop^\dagger\Lop,\Bmet^\dagger\Bmet)$;
 \eqref{eq:robust} is Weyl's inequality. Supplement~S2.
 \end{proof}
 
-Theorem~\ref{thm:capacity} makes ``cannot see'' a measured spectrum. At the fixed
+The identity $\bd_d=\sigma_d$ is the Courant--Fischer min--max characterization of
+singular values~\cite{HornJohnson} and coincides with the null-space resolution
+analysis of Backus--Gilbert and truncated SVD~\cite{BackusGilbert}; what is new is
+the \emph{measured} dimension--leak spectrum of a specific optical leak operator and
+its calibration-transfer certificate. Theorem~\ref{thm:capacity} makes ``cannot see''
+a measured spectrum. At the fixed
 relay-conjugate plane, $80$ code dimensions are certified below $10^{-5}$ (and
 below $10^{-4}$)---a single-plane blindness-capacity point, not an incidental
 code-design success. Enforcing invisibility \emph{jointly} over four defocus
@@ -274,12 +297,15 @@ $1.20$ ($\ll3$), yet the operational mean leak is $219\times$ lower
 ($2.58\times10^{-4}$ versus $5.64\times10^{-2}$).
 
 The envelope \eqref{eq:robust} is what upgrades a numerical null space to a
-certified instrument property. On a fresh calibration/test split the simultaneous
-$\sigma_{64}(\hat\Lop)+\delta$ envelope has coverage $1.000$
-($\sigma_{64}=3.4\times10^{-8}$, $\delta=1.07\times10^{-2}$, worst fresh
-bottom-$64$ leak $1.99\times10^{-6}$, six orders below the envelope), and at least
-$64$ conjugate-plane dimensions stay certified below $10^{-4}$ on fresh
-physical-law draws, with a measured minimum of $80$.
+certified instrument property (Fig.~\ref{fig:transfer}, right). On a fresh
+calibration/test split the simultaneous $\sigma_{64}(\hat\Lop)+\delta$ envelope has
+coverage $1.000$ ($24/24$ fresh draws; $\sigma_{64}=3.4\times10^{-8}$,
+$\delta=1.07\times10^{-2}$, worst fresh bottom-$64$ leak $1.99\times10^{-6}$, six
+orders below the envelope), and at least $64$ conjugate-plane dimensions stay
+certified below $10^{-4}$ on fresh physical-law draws, with a measured minimum of
+$80$. This fresh-draw minimum (at $10^{-4}$) coincides numerically with, but is a
+distinct and stronger statement than, the single-plane deterministic capacity ($80$
+dimensions at $10^{-5}$) reported above.
 
 % =====================================================================
 \section{Restoring the desired jet}\label{sec:jet}
@@ -288,23 +314,27 @@ physical-law draws, with a measured minimum of $80$.
 \centering
 \includegraphics[width=\textwidth]{fig2_jet_transmutation.pdf}
 \caption{\textbf{Jet transmutation.} \emph{Left:} the profiled covariance
-distance $C(\eps)=A\eps^2+B\eps^4$ reconstructed from the committed fitted
-coefficients of the four KT2 cells. Unprojected, a first-order mean leak
-($A>0$) gives slope $2$ ($m=1$) at small amplitude; projecting the measured
-mean-leak tangent zeroes $A$ and leaves slope $4$ ($m=2$) everywhere, with the
-crossover at $\eps_{\mathrm{cross}}=\sqrt{A/B}$. \emph{Right:} the exact logistic
-jet flow $\mathrm{d}m_{\mathrm{eff}}/\mathrm{d}\log\eps=2(m_{\mathrm{eff}}-1)
-(2-m_{\mathrm{eff}})$ between the integer fixed points $1$ and $2$; the four
-measured projected slopes are $4.00$ and the unprojected low-amplitude slopes are
-$2.12$--$2.20$. Cross-anchor: the companion integer contact orders $2.038/4.000$
-(Ref.~[COMPANION]). Source: KT2~\texttt{@05f1029}.}
+distance $C(\eps)=c_1\eps^2+c_2\eps^4$, an analytic two-coefficient reconstruction
+from the committed fitted coefficients of the four KT2 cells (not a raw $C(\eps)$
+sweep). Unprojected, a first-order mean leak ($c_1>0$) gives slope $2$ ($m=1$) at
+small amplitude; projecting the measured mean-leak tangent zeroes $c_1$ and leaves
+slope $4$ ($m=2$) everywhere, with the crossover at
+$\eps_{\mathrm{cross}}=\sqrt{c_1/c_2}$. The projected slope $4$ is the exact analytic
+consequence of zeroing $c_1$---a consistency check, not an independent
+measurement---and the four cells reproduce it to $4.00$. \emph{Right:} the exact
+logistic jet flow $\mathrm{d}m_{\mathrm{eff}}/\mathrm{d}\log\eps=2(m_{\mathrm{eff}}-1)
+(2-m_{\mathrm{eff}})$ between the integer fixed points $1$ and $2$; the unprojected
+low-amplitude slopes are $2.12$--$2.20$. Cross-anchor: the companion integer contact
+orders $2.038/4.000$ (Ref.~[COMPANION]). Source: KT2~\texttt{@05f1029}.}
 \label{fig:jet}
 \end{figure*}
 
 The exact walls of Section~\ref{sec:walls} are the endpoints of a continuous
 mechanism. Let the profiled Chernoff distance carry two leading operators,
-$C(\eps,g)=A\,g^{2a_1}\eps^{2m_1}+B\,g^{2a_2}\eps^{2m_2}$ with $0<m_1<m_2$, and set
-$y=(B/A)g^{2(a_2-a_1)}\eps^{2(m_2-m_1)}$. The effective amplitude order
+$C(\eps,\gamma)=c_1\,\gamma^{2a_1}\eps^{2m_1}+c_2\,\gamma^{2a_2}\eps^{2m_2}$ with
+$0<m_1<m_2$ and a geometric gain $\gamma$ (the contact distance $z_2$ in the
+near-contact case), and set
+$y=(c_2/c_1)\gamma^{2(a_2-a_1)}\eps^{2(m_2-m_1)}$. The effective amplitude order
 $m_{\mathrm{eff}}=\tfrac12\,\mathrm{d}\log C/\mathrm{d}\log\eps=(m_1+m_2y)/(1+y)$
 obeys the exact flow
 \begin{equation}
@@ -328,10 +358,12 @@ Three physically distinct routes realize the corollary, and they are alternative
 not factors.
 
 \paragraph{Route 1 --- optical projection.}
-Projecting out the measured mean-leak tangent restores the covariance-only slope to
+Projecting out the measured mean-leak tangent zeroes the first-order coefficient
+$c_1$, so the covariance channel becomes a pure $\eps^4$ monomial whose log--log
+slope is $4$ by construction; this consistency check (Fig.~\ref{fig:jet}) returns
 $4.00$ in all four cells, against an unprojected leak-dominated slope of
-$2.12$--$2.20$; the orthogonality residual is $\sim10^{-18}$. A generic direction,
-by contrast, stays sub-quartic (slopes $1.58$--$2.28$).
+$2.12$--$2.20$, with orthogonality residual $\sim10^{-18}$. A generic direction, by
+contrast, stays sub-quartic (slopes $1.58$--$2.28$).
 
 \paragraph{Route 2 --- code-space projection.}
 Projecting the covariance score off the leak/law span drives the nuisance overlaps
@@ -369,12 +401,13 @@ independent price is set by finite data and unknown direction. Whiten the null
 covariance, profile every admitted nuisance tangent, and let the efficient
 covariance displacement be $A_\perp$ in a symmetric tangent space of dimension $p$,
 with efficient signal $\lambda=\tfrac12\lVert A_\perp\rVert_F^2$. For $T$
-independent banks the aggregate score experiment is locally
-$Z_T\approx\mathcal N(\sqrt T\,\theta,I_p)$ with $\lVert\theta\rVert^2=\lambda$.
+independent Gaussian banks $Y_t\sim\mathcal N(0,\Sigma_\eps)$ the aggregate score
+experiment is locally $Z_T\approx\mathcal N(\sqrt T\,\theta,I_p)$ with
+$\lVert\theta\rVert^2=\lambda$.
 
 \begin{theorem}[Three-ledger certifiability]\label{thm:ledger}
-Under this nuisance-profiled reduction, the per-task bank budget for fixed
-nontrivial power obeys
+For a Gaussian covariance model reduced by local asymptotic normality, under this
+nuisance-profiled reduction the per-task bank budget for fixed nontrivial power obeys
 \begin{equation}
 T\lambda\sim
 \begin{cases}
@@ -385,10 +418,10 @@ p, & \text{estimate or localize the direction,}
 \label{eq:ledgers}
 \end{equation}
 a $1:\sqrt{p}:p$ ladder. Composed with a quotient jet
-$A_\perp=\kappa\,g^{a}\eps^{m}B$, the known-direction budget is
-$T_{\mathrm{known}}\asymp\kappa^{-2}g^{-2a}\eps^{-2m}$, and the blind and estimation
-budgets multiply it by $\sqrt p$ and $p$; adaptation changes the prefactor, never
-the physical exponent $2m$.
+$A_\perp=\kappa\,\gamma^{a}\eps^{m}B$, the known-direction budget is
+$T_{\mathrm{known}}\asymp\kappa^{-2}\gamma^{-2a}\eps^{-2m}$, and the blind and
+estimation budgets multiply it by $\sqrt p$ and $p$; adaptation changes the
+prefactor, never the physical exponent $2m$.
 \end{theorem}
 
 \begin{proof}[Proof sketch]
@@ -402,6 +435,12 @@ Cram\'er--Rao bound, so relative error is controlled only at $T\lambda\sim p$.
 Supplement~S4.
 \end{proof}
 
+The three scalings are classical---matched-filter detection at $O(1)$, the
+Ingster--Suslina high-dimensional detection boundary at $\sqrt
+p$~\cite{IngsterSuslina,DiakonikolasKane}, and the Cram\'er--Rao bound at
+$p$~\cite{Vaart}; what is new is their realization as a single measured operating map
+on an optical instrument model.
+
 A dedicated scaling gate (TLSG) confirms the ladder without a repair round. The
 fitted $p$-exponents for the known, blind, and estimation tasks are
 $-0.004/0.444/1.010$ against the frozen targets $0,\tfrac12,1$. The matched-score
@@ -411,6 +450,18 @@ $\mathrm{CV}=0.125$; the blind contours collapse against $T\lambda/\sqrt p$
 the signature of the $\sqrt p$ adaptation penalty; the estimation risk collapses
 against $T\lambda/p$ ($\mathrm{CV}=0.035$, mean risk $\cdot\,T\lambda/p=0.985$,
 i.e.\ the Cram\'er--Rao floor $p/T$).
+
+Each exponent is a single log--log fit over $n=4$ distinct tangent dimensions
+$p\in\{10,36,136,528\}$ ($8$ cells, frozen seed $20260724$), with in-sample
+$R^2=0.003$, $0.983$, $0.9995$ for the known, blind, and estimation tasks
+(deterministic recomputation from the committed points). A post-gate $10$-seed
+bootstrap (unmodified runner, post-hoc robustness) confirms the known and estimation
+exponents---mean $-0.011$, $95\%$ CI $[-0.044,0.012]$, and mean $0.996$, CI
+$[0.985,1.008]$, each bracketing its target---while the blind exponent, mean $0.454$,
+CI $[0.446,0.465]$, has an interval that \emph{excludes} the asymptotic $\tfrac12$: a
+systematic finite-$p$ deviation of $\approx9\%$ over this fit range, not sampling
+noise. The frozen gate verdict is unaffected---all $10$ seeds pass every bar inside
+the $\pm0.15$ band---and the $0:\tfrac12:1$ ladder-order separation is unambiguous.
 
 The ladder also predicts a negative for the right reason. The near-contact
 channel-ratio operating point (KT6) sits below the optimal blind tier: its blind
@@ -448,23 +499,29 @@ KT3~\texttt{@2430166}, TLSG~\texttt{@35d858e}.}
 
 The theorems above are algebraic; a bench is not. On the unfiltered
 complementary-DMD twin the exact mean wall becomes a reproducible calibrated
-residual,
-\begin{equation}
-L(z_1)=6.94\times10^{-3}+5.92\times10^{-3}\,(z_1/\mathrm{mm})^{0.90},
-\label{eq:leaklaw}
-\end{equation}
-whose floor, coefficient, and exponent are stable across code seeds and code counts
-with coefficients of variation $2.2\%$, $2.2\%$, and $0.1\%$. The conjugate-plane
-floor is an instrument constant set by fill-factor and macro-pixel staircase
-effects (moving $6\%$ and $50\%$ respectively, with $L_{\mathrm{pix}}=7.15\times
-10^{-3}$); the pupil does not reduce it. Deterministic beyond-band leak grows with
-defocus, from $6.8\times10^{-3}$ at the conjugate plane to $5.4\times10^{-2}$ at
-$z_1=10\,$mm and $8.9\times10^{-2}$ at $z_1=20\,$mm; near-conjugate relay imaging
-suppresses the propagation term. A full-Maxwell check anchors the model: the
-thin-phase-screen speckle contrast $0.467$ agrees with a two-dimensional
-finite-element (COMSOL 6.3 Wave Optics, TE) contrast $0.395$ to $15.5\%$. The
-covariance signal grows as $\lambda\propto M^{1.8\text{--}1.9}$ in code count
-(fitted exponent $1.78$ at mid range, $1.89$ near contact), and the geometry-matched
+residual: a leak law with a $\sim\!7\times10^{-3}$ conjugate-plane floor and a
+weakly super-linear defocus term, established and owned by the companion
+Letter~\cite{COMPANION} (End Matter~C), which we take here as the boundary condition
+for the transfer results new to this paper. That floor is an instrument constant set
+by fill-factor and macro-pixel staircase effects (moving $6\%$ and $50\%$, with
+$L_{\mathrm{pix}}=7.15\times10^{-3}$) that the pupil does not reduce; its four
+independent estimates---leak-law intercept $6.94\times10^{-3}$, pixelation constant
+$7.15\times10^{-3}$, deterministic conjugate-plane leak $6.8\times10^{-3}$, and
+analog-PWM baseline $7.0\times10^{-3}$---are consistent readings of one
+$\sim\!7\times10^{-3}$ floor from different tests, not scatter on one measurement.
+Deterministic beyond-band leak grows with defocus, from $6.8\times10^{-3}$ at the
+conjugate plane to $5.4\times10^{-2}$ at $z_1=10\,$mm and $8.9\times10^{-2}$ at
+$z_1=20\,$mm (Fig.~\ref{fig:transfer}, left); near-conjugate relay imaging suppresses
+the propagation term. A full-Maxwell check \emph{scopes} the reduced model rather
+than validating it wholesale: over $n=8$ realizations the thin-phase-screen speckle
+contrast $0.467$ agrees with a two-dimensional finite-element twin (COMSOL~6.3 Wave
+Optics, 2D TE) contrast $0.395$ to $15.5\%$ in the ensemble mean, but the speckle
+grain size disagrees by $65\%$ (thin-screen $3.88\,\mu$m versus FEM $1.35\,\mu$m, a
+$2.9\times$ overestimate), consistent with the multiple-scattering decorrelation the
+thin screen omits. The contrast statistics therefore transfer; the grain-scale
+statistics do not, and we make no grain-scale claim from the reduced model. The
+covariance signal grows as $\lambda\propto M^{1.8\text{--}1.9}$ in code count (fitted
+exponent $1.78$ at mid range, $1.89$ near contact), and the geometry-matched
 developed cell extrapolates to $\approx768$ code banks at $2\%$ error for $M=128$,
 inside the sealed band $[513,2996]$.
 
@@ -502,6 +559,21 @@ scope---a segmented bucket that breaks the mean wall, and a coincidence veto tha
 repairs medium false alarms while retaining only $24\%$ of scene power---appear with
 the positives in Supplement~S5.
 
+\paragraph{Relation to prior work.}
+We claim none of the classical cores. The capacity identity $\bd_d=\sigma_d$ is
+Courant--Fischer min--max~\cite{HornJohnson} and coincides with the null-space
+resolution analysis of Backus--Gilbert and truncated SVD~\cite{BackusGilbert}; the
+Noether wall is the invariance$\Rightarrow$singular-Fisher fact~\cite{Vaart}; and the
+$1:\sqrt{p}:p$ ladder combines matched-filter detection, the Ingster
+high-dimensional detection boundary~\cite{IngsterSuslina}, and the Cram\'er--Rao
+bound, its decision-theoretic ``cannot see'' being Barrett--Myers ideal-observer
+detectability~\cite{BarrettMyers}. Declaring a guaranteed-invisible code subspace
+with a bounded leak is the wiretap / physical-layer-security framing~\cite{Wyner},
+and the certifiability language is adjacent to compressed-sensing null-space and
+restricted-isometry certificates~\cite{CandesTao}. The delta this paper adds to each
+is the same: a hardware-calibrated, task-selective capacity curve measured on an
+optical instrument, not a new inequality.
+
 % ---------------------------------------------------------------------
 \section*{Back matter}
 \paragraph{Funding.}[FUNDING/ACKNOWLEDGMENTS]
@@ -509,8 +581,9 @@ the positives in Supplement~S5.
 \paragraph{Disclosures.}The authors declare no conflicts of interest.
 \paragraph{Data availability.}The committed frozen artifacts underlying every
 numerical claim, the claim--source matrix, and the figure scripts are available at
-[URL]. See Supplement~1 for the full verification battery, proofs, and the TLSG
-gate table.
+[URL]; the full-Maxwell twin additionally requires a COMSOL~6.3 (Wave Optics)
+license to reproduce. See Supplement~1 for the full verification battery, proofs, and
+the TLSG gate table.
 
 % =====================================================================
 \begin{thebibliography}{99}
@@ -546,6 +619,32 @@ IEEE Trans. Autom. Control \textbf{22}, 728 (1977).
 \bibitem{Vaart}
 A.~W. van der Vaart,
 \emph{Asymptotic Statistics} (Cambridge University Press, 1998).
+
+\bibitem{HornJohnson}
+R.~A. Horn and C.~R. Johnson,
+\emph{Matrix Analysis}, 2nd ed. (Cambridge University Press, 2013).
+
+\bibitem{BackusGilbert}
+G.~Backus and F.~Gilbert,
+The resolving power of gross earth data,
+Geophys. J. R. Astron. Soc. \textbf{16}, 169 (1968).
+
+\bibitem{IngsterSuslina}
+Y.~I. Ingster and I.~A. Suslina,
+\emph{Nonparametric Goodness-of-Fit Testing Under Gaussian Models}
+(Springer, 2003).
+
+\bibitem{BarrettMyers}
+H.~H. Barrett and K.~J. Myers,
+\emph{Foundations of Image Science} (Wiley-Interscience, 2004).
+
+\bibitem{Wyner}
+A.~D. Wyner,
+The wire-tap channel, Bell Syst. Tech. J. \textbf{54}, 1355 (1975).
+
+\bibitem{CandesTao}
+E.~J. Cand\`es and T.~Tao,
+Decoding by linear programming, IEEE Trans. Inf. Theory \textbf{51}, 4203 (2005).
 
 \bibitem{DiakonikolasKane}
 I.~Diakonikolas and D.~M. Kane,
