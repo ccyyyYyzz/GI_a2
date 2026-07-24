@@ -1,0 +1,442 @@
+% =====================================================================
+%  Supplemental Material for
+%  "Strong Optical Disorder Erases Images but Preserves Local Change
+%   Observability"  (Rank-Jet Separation)
+%  S1-S5 per R43 section 6.5. Audit trail, not an alternate manuscript.
+%  Every number traces to paper_prl/CLAIM_SOURCE_MATRIX.md.
+% =====================================================================
+\documentclass[aps,prl,onecolumn,notitlepage,nofootinbib,superscriptaddress]{revtex4-2}
+
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{bm}
+\usepackage{booktabs}
+\graphicspath{{figures/}}
+
+\renewcommand{\thesection}{S\arabic{section}}
+\renewcommand{\theequation}{S\arabic{equation}}
+\renewcommand{\thetable}{S\arabic{table}}
+\renewcommand{\thefigure}{S\arabic{figure}}
+
+\newcommand{\Treq}{T_{\mathrm{req}}}
+\newcommand{\Cstar}{C_{\ast}}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\eps}{\varepsilon}
+
+\begin{document}
+
+\title{Supplemental Material:\\
+Strong Optical Disorder Erases Images but Preserves Local Change Observability}
+\author{[AUTHORS]}
+\affiliation{[AFFILIATION]}
+\date{\today}
+\maketitle
+
+\noindent
+This Supplemental Material is an audit trail for the Letter. It contains
+(S1) the general Chernoff/Kullback--Leibler jet derivation and its equality
+cases; (S2) the JET\_TEST design with all seventeen frozen checks and the raw
+exponent tables; (S3) the full-scramble Gaussian derivation, exact generator,
+rank-one result, and detection duel; (S4) the sealed thin-screen protocol with
+bars D0--D6, the fixed/fresh comparator, the D3/D5 boundary failures, and the
+chunking audit; and (S5) the thin-screen covariance aperture and a minimal
+prior-art fence. All numerical values are read from the committed frozen
+artifacts \texttt{JET\_TEST} (\texttt{1bf29f1}), \texttt{SCRAMBLE\_EXT}
+(\texttt{ed7a1e0}), and \texttt{SEALED\_DET/CONFIRMATORY} (\texttt{b37c841}); no
+new data are generated here.
+
+% =====================================================================
+\section{General quotient-jet derivation and equality cases}
+% =====================================================================
+Let $P_{\eps,\eta}$ be a dominated statistical model in which $\eps$ is a scalar
+physical-change amplitude along a scene direction $\delta$ and $\eta$ is a
+nuisance. Define the profiled Chernoff distance
+\begin{equation}
+\Cstar(\eps)=\inf_{\eta'}\ \max_{0\le s\le1}
+\Big[-\log\!\int p_{\eps,\eta}^{\,s}\,p_{0,\eta'}^{\,1-s}\Big],
+\label{eq:s_cstar}
+\end{equation}
+and assume the infimum is attained locally with
+\begin{equation}
+\Cstar(\eps)=c_m\,\eps^{2m}+o(\eps^{2m}),\qquad c_m>0 .
+\label{eq:s_contact}
+\end{equation}
+
+\paragraph*{Theorem A (information-jet detection law).}
+For $T$ independent observations with equal priors,
+\begin{equation}
+\lim_{T\to\infty}-\tfrac{1}{T}\log P_e^{\ast}(T,\eps)=\Cstar(\eps),
+\end{equation}
+so in the joint small-change/large-sample regime with target error exponent $h$,
+\begin{equation}
+\Treq(\eps)=\frac{h}{c_m\,\eps^{2m}}\,[1+o(1)] .
+\label{eq:s_Treq}
+\end{equation}
+For quickest detection at false-alarm level $\alpha$, if the profiled per-bank KL
+distance is $D_{\ast}(\eps)=k_m\eps^{2m}+o(\eps^{2m})$, then Lorden/CUSUM
+asymptotics give the mean delay $E_{\mathrm{delay}}=|\log\alpha|/(k_m\eps^{2m})
+[1+o(1)]$. The exponent $m$ is invariant because reparameterizing $\eta$ leaves
+the nuisance orbit unchanged, a gain gauge absorbed into $\eta$ is quotiented
+automatically, no statistic or Fisher eigenbasis is selected, and physical
+covariation changes $c_m$ but not the definition of $m$.
+
+\paragraph*{Gaussian specialization.}
+Let $P_\eps=\mathcal{N}(0,\Sigma_\eps)$ with
+$\Sigma_\eps=\Sigma_0+z(\eps)H$, $\Sigma_0\succ0$, and put
+$A_\eps=z(\eps)K$, $K=\Sigma_0^{-1/2}H\Sigma_0^{-1/2}$. The exact divergences are
+\begin{align}
+D(P_\eps\|P_0)&=\tfrac12\big[\tr A_\eps-\log\det(I+A_\eps)\big]
+   = \frac{z^2}{4}\tr(K^2)-\frac{z^3}{6}\tr(K^3)+O(z^4),
+\label{eq:s_KL}\\
+B(P_\eps,P_0)&=\tfrac12\log\det\!\Big(I+\tfrac{A_\eps}{2}\Big)
+   -\tfrac14\log\det(I+A_\eps)
+   = \frac{z^2}{16}\tr(K^2)+O(z^3).
+\label{eq:s_Bhatt}
+\end{align}
+For nearby regular distributions the optimizing Chernoff parameter tends to
+$s=\tfrac12$, so Eq.~\eqref{eq:s_Bhatt} is the leading Chernoff coefficient.
+
+\paragraph*{Equality and boundary cases.}
+With $z(\eps)=2c\,\eps+d\,\eps^2$, $c=x^{\!\top}G\delta$,
+$d=\delta^{\!\top}G\delta>0$:
+(i) fast class, $c\neq0$: $D=c^2\|K\|_F^2\eps^2+o(\eps^2)$, $m=1$;
+(ii) curvature class, $c=0$, $d>0$: $D=\tfrac14 d^2\|K\|_F^2\eps^4+o(\eps^4)$,
+$m=2$;
+(iii) true local blindness only if $d=0$ (a nullspace of $G$ at coarse grain) or
+the covariance signature is entirely nuisance;
+(iv) global finite-change cancellation for signed changes at
+$\eps_\ast=-2c/d$, so the theorem is local; on the monotone cone
+($x\ge0$, $\delta\ge0$, $G$ entrywise nonnegative) $c,d\ge0$ and every $\eps>0$
+gives $\Delta Q>0$;
+(v) amplitude gauge: if $\Sigma=R+a\,Q(x)H$ then $\partial_a\Sigma=QH$ and
+$\partial_Q\Sigma=aH$ are collinear, so zero-lag covariance carries zero
+efficient information for separating $Q$ from $a$. Under nuisance profiling with
+$\langle A,B\rangle_0=\tfrac12\tr(\Sigma_0^{-1}A\Sigma_0^{-1}B)$ and
+$H_\perp=(I-\Pi_\eta)H$, Eqs.~\eqref{eq:s_KL}--\eqref{eq:s_Bhatt} hold with
+$\|K_\perp\|_F$, $K_\perp=\Sigma_0^{-1/2}H_\perp\Sigma_0^{-1/2}$; if $H_\perp=0$
+the change is unidentifiable from that ledger.
+
+% =====================================================================
+\section{JET\_TEST design and the seventeen frozen checks}
+% =====================================================================
+The jet test uses the exact scrambling generator (Sec.~S3) on a $32\times32$
+grid ($N=1024$), code band $P_B=3$, grain band $K=13$, $M=36$ codes, and $10^4$
+photons per bucket, with $\|K\|_F^2=3.46\times10^{-4}$. Three scene directions
+are constructed: a generic beyond-band direction $\delta_g$ with
+$c=x^{\!\top}G\delta_g\neq0$; an exactly $G$-orthogonal direction $\delta_o$ with
+$x^{\!\top}G\delta_o=0$; and a small-eigenvalue direction $\delta_n$. A mixed
+direction $\delta_{\mathrm{mix}}$ with a small nonzero $c$ probes the crossover.
+
+Table~\ref{tab:jet_exp} lists the raw contact orders and coefficient ratios.
+The exact-KL log--log slopes are $2.038$ ($\delta_g$) and $4.000$
+($\delta_o,\delta_n$), matching the predicted integer orders; the measured
+leading coefficients agree with Eqs.~\eqref{eq:s_KL}--\eqref{eq:s_Bhatt} to
+$1.07\%$ ($\delta_g$) and $0.00\%$ ($\delta_o$). The Monte Carlo single-look
+$d'\!\propto\!\eps^{m}$ exponents are $0.95$ and $2.05$; the CUSUM
+($\mathrm{ARL}_0=500$) delay slopes are $-2.16$ and $-3.92$. The mixed direction
+crosses over at $\eps_{\mathrm{cross}}^{\mathrm{pred}}=9.995\times10^{-3}$ versus
+empirical $9.997\times10^{-3}$ (ratio $1.0003$).
+
+\begin{table}[h]
+\centering
+\caption{Raw jet exponents (committed \texttt{JET\_TEST}, \texttt{1bf29f1}).
+$c=x^{\!\top}G\delta$, $d=\delta^{\!\top}G\delta$; KL slope is the log--log
+regression of the exact Gaussian KL over an amplitude decade; coef.\ ratio is
+measured/predicted leading coefficient.}
+\label{tab:jet_exp}
+\begin{ruledtabular}
+\begin{tabular}{lcccccc}
+Direction & $c$ & $d$ & $m_{\mathrm{pred}}$ & KL slope & Bhatt.\ slope & coef.\ ratio\\
+\colrule
+$\delta_g$ (generic)     & $29.78$              & $164.26$ & $1$ & $2.0381$ & $2.0374$ & $1.0107$\\
+$\delta_o$ (orthogonal)  & $2.0\times10^{-15}$  & $137.43$ & $2$ & $3.9999$ & $3.9999$ & $1.0000$\\
+$\delta_n$ (small eig.)  & $-3.1\times10^{-6}$  & $44.19$  & $2$ & $4.0000$ & $4.0000$ & $0.9999$\\
+\end{tabular}
+\end{ruledtabular}
+\end{table}
+
+\begin{table}[h]
+\centering
+\caption{Monte Carlo and sequential-detection slopes, and the nuisance quotient
+(committed \texttt{JET\_TEST}). $I_\theta$ is the per-bank efficient information
+for $\log$ fluctuation scale; ``naive'' omits nuisance profiling.}
+\label{tab:jet_mc}
+\begin{ruledtabular}
+\begin{tabular}{lcc}
+Quantity & $\delta_g$ / value & $\delta_o$ / value\\
+\colrule
+MC $d'$ exponent $m$                   & $0.955$  & $2.046$\\
+CUSUM delay slope                       & $-2.158$ & $-3.916$\\
+\colrule
+Amplitude gauge, single zero lag: $I_\theta^{\mathrm{naive}}$ & \multicolumn{2}{c}{$0.614$}\\
+Amplitude gauge, single zero lag: $I_\theta^{\mathrm{eff}}$   & \multicolumn{2}{c}{$0.000$}\\
+Amplitude gauge, proportional lags: $I_\theta^{\mathrm{eff}}$ & \multicolumn{2}{c}{$0.000$}\\
+Second grain kernel: fraction recovered                       & \multicolumn{2}{c}{$0.018$}\\
+Amplitude anchor: fraction recovered                          & \multicolumn{2}{c}{$0.200$}\\
+\end{tabular}
+\end{ruledtabular}
+\end{table}
+
+The signed iso-$Q$ cancellation crosses at $\eps_\ast=0.363$ with
+$\mathrm{AUC}=0.481$ (chance), while the two sides remain visible
+($\mathrm{AUC}=0.026$ and $1.000$), confirming locality. The monotone cone gives
+$\Delta Q>0$ for all seven tested amplitudes ($\Delta Q$ from $1.59$ at
+$\eps=0.005$ to $156.0$ at $\eps=0.4$), with the kernel entrywise nonnegative. A
+scan of $400$ in-aperture directions gives $d_{\min}=\delta^{\!\top}G\delta=0.254$
+(median $0.265$), so the blind fraction is exactly $0$. All seventeen frozen
+checks pass and none of the four kill conditions fire (Table~\ref{tab:checks};
+verdict \texttt{MOONSHOT\_SURVIVES}).
+
+\begin{table}[h]
+\centering
+\caption{All seventeen predeclared JET\_TEST checks (committed
+\texttt{JET\_TEST}, \texttt{1bf29f1}); every entry is \texttt{true}, and each of
+the four kill conditions is \texttt{false}.}
+\label{tab:checks}
+\begin{ruledtabular}
+\begin{tabular}{ll}
+Check & Status\\
+\colrule
+1. KL contact order generic $=2$ & pass\\
+2. KL contact order orthogonal $=4$ & pass\\
+3. orders integer & pass\\
+4. generic coefficient within $10\%$ & pass\\
+5. orthogonal coefficient within $10\%$ & pass\\
+6. crossover within $25\%$ & pass\\
+7. delay slope generic near $-2$ & pass\\
+8. delay slope orthogonal near $-4$ & pass\\
+9. MC generic $m$ near $1$ & pass\\
+10. MC orthogonal $m$ near $2$ & pass\\
+11. amplitude gauge collapse to zero & pass\\
+12. collapse persists across lags & pass\\
+13. information returns with anchor & pass\\
+14. AUC returns to $\tfrac12$ at $\eps_\ast$ & pass\\
+15. locally visible either side of $\eps_\ast$ & pass\\
+16. cone $\Delta Q>0$ for all tested & pass\\
+17. no broad in-aperture blind set & pass\\
+\colrule
+Kills (non-integer order; $\eps^{-4}$ class vanished; & all\\
+info survives collinear amplitude; broad blind set) & \texttt{false}\\
+\end{tabular}
+\end{ruledtabular}
+\end{table}
+
+% =====================================================================
+\section{Full-scramble Gaussian derivation, generator, rank-one result, and duel}
+% =====================================================================
+A band-limited modulator imprints a real, nonnegative code $p_i$ (Fourier
+support $B_p$) on the illumination; a dynamic strongly scattering medium with
+state $T_t$ produces the speckle field $E_{i,t}(r)=\sum_a T_t(r,a)A_i(a)$, and a
+single-pixel bucket collects $b_{i,t}=\sum_r |E_{i,t}(r)|^2 x(r)+\text{shot}$.
+Fully developed speckle means $T_t$ has zero-mean circular-complex-Gaussian
+entries, so $E_{i,t}$ is a zero-mean circular-complex-Gaussian field with
+mutual coherence $J_{ij}(r,r')=\langle E_{i,t}(r)E_{j,t}(r')^{\ast}\rangle$.
+With medium statistics
+$\langle T_t(r,a)T_t(r',b)^{\ast}\rangle=C(r,r')\,\Gamma(a,b)$ and full
+scrambling $\Gamma(a,b)=\tau(a)\delta_{ab}$, the coherence factorizes,
+\begin{equation}
+J_{ij}(r,r')=C(r-r')\,O_{ij},\qquad
+O_{ij}=I_0\sum_a\tau(a)p_i(a)p_j(a).
+\label{eq:s_factor}
+\end{equation}
+The joint field is exactly generated by $E_t=B(Z_t O^{1/2})$ with $Z_t$ i.i.d.\
+unit circular-Gaussian, $O^{1/2}$ the code-covariance root, and $BB^{\dagger}=C$;
+this Kronecker generator drives the simulation with no approximation.
+
+\paragraph*{Mean wall.}
+The mean intensity is $\mu_i(r)=J_{ii}(r,r)=C(0)O_{ii}$, independent of $r$, so
+$\mathbb{E}[b_i]=C(0)O_{ii}\,\hat{x}(0)$: the first-moment channel measures only
+the scene DC term, with spatial band $B_{\mathrm{mean}}=\{0\}$. Every $h$ with
+$\hat{h}(0)=0$ is annihilated. Numerically the mean envelope coefficient of
+variation is $0.0156$ (Monte Carlo floor $0.0158$), and the mean response to a
+beyond-band, DC-free change has relative magnitude $6.56\times10^{-19}$.
+
+\paragraph*{Covariance and rank collapse.}
+By the Siegert relation $\mathrm{Cov}_t[S_{i,t}(r),S_{j,t}(r')]=|J_{ij}(r,r')|^2$,
+so with Eq.~\eqref{eq:s_factor} the same-epoch bucket covariance collapses to
+\begin{equation}
+\mathrm{Cov}_t[b_{i,t},b_{j,t}]=O_{ij}^2\,Q(x),\qquad
+Q(x)=\sum_{r,r'}x(r)x(r')|C(r-r')|^2=x^{\!\top}Gx .
+\label{eq:s_Q}
+\end{equation}
+In Fourier, $Q(x)=\sum_k\hat{G}(k)|\hat{x}(k)|^2$ with $\hat{G}=\widehat{|C|^2}$
+supported on $|k|\le2k_{\mathrm{grain}}$. The measured aperture is full
+($\hat{G}$ nonzero on all $1024/1024$ bins, $C_0=0.517$), yet the scene enters
+only through the scalar $Q$, so the covariance Fisher information is rank one,
+$I^{\mathrm{cov}}_{xx}=4\kappa\,(Gx)(Gx)^{\!\top}$. Empirically
+$\hat{Q}$ from $\mathrm{Var}[b_i]/O_{ii}^2$ is $190.9$ against the theoretical
+$Q(x)=187.4$ (ratio $1.019$), and $99.99\%$ of the covariance matrix energy lies
+in the single direction $O\!\circ\!O$. The change functional obeys
+$\Delta Q=2x^{\!\top}G\delta+\delta^{\!\top}G\delta$; the predicted
+$\Delta Q=0.34803$ matches the measured $0.34803$ to relative error
+$2\times10^{-15}$, split into cross term $0.0031$ and quadratic term $0.3449>0$
+for the orthogonal direction.
+
+\paragraph*{Detection duel.}
+Table~\ref{tab:duel} reports the H0-vs-H1 duel (efficient covariance score) at
+the complete-scramble endpoint. The mean detector is at chance for both a
+coherent and an orthogonal beyond-band $5\%$ change ($\mathrm{AUC}=0.502$ and
+$0.505$), while the covariance detector reaches $d'=4.10$, $\mathrm{AUC}=0.997$
+for the generic $5\%$ change at $8192$ banks. The worst-case orthogonal
+direction obeys the predicted $d'\!\sim\!\eps^2\sqrt{T}$ law and is never zero;
+its slower rate ($a=0.0050$ per $\sqrt{T}$ vs $0.0459$ for the coherent change)
+is the curvature-class $\eps^{-4}$ price, not a blind direction.
+
+\begin{table}[h]
+\centering
+\caption{Complete-scramble detection (committed \texttt{SCRAMBLE\_EXT},
+\texttt{ed7a1e0}). $d'$ and AUC at listed bank budgets $T_{\mathrm{eff}}$; the
+mean detector uses $512$ banks. ``coherent'' is a generic direction
+($x^{\!\top}G\delta\neq0$); ``orthogonal'' is $G$-orthogonal.}
+\label{tab:duel}
+\begin{ruledtabular}
+\begin{tabular}{lccc}
+Channel / change & $T_{\mathrm{eff}}$ & $d'$ & AUC\\
+\colrule
+Mean, coherent $5\%$        & $512$   & $0.030$ & $0.502$\\
+Mean, orthogonal $5\%$      & $512$   & $0.015$ & $0.505$\\
+Covariance, coherent $5\%$  & $512$   & $0.99$  & $0.762$\\
+Covariance, coherent $5\%$  & $2048$  & $2.22$  & $0.943$\\
+Covariance, coherent $5\%$  & $8192$  & $4.10$  & $0.997$\\
+Covariance, coherent $2\%$  & $8192$  & $1.60$  & $0.887$\\
+Covariance, orthogonal $5\%$& $8192$  & $0.36$  & $0.601$\\
+Covariance, orthogonal $5\%$& $65536$ & $1.23$  & $0.809$\\
+\end{tabular}
+\end{ruledtabular}
+\end{table}
+
+% =====================================================================
+\section{Sealed thin-screen protocol, bars D0--D6, comparator, and audits}
+% =====================================================================
+The sealed sentinel uses a true zero-dimensional bucket record on a $64\times64$
+scene ($N=4096$), modulator band $k_p=5$, $M=128$ signed effective codes realized
+by $256$ complementary nonnegative exposures per bank at a $20\,\mathrm{kHz}$
+pattern rate ($12.8\,\mathrm{ms}$ per bank; cap $T_{\mathrm{eff}}=4096$ banks
+$=52.4\,\mathrm{s}$), $10^4$ detected photoelectrons per physical bucket, and a
+medium quasi-static within a bank and independent between banks. Thresholds were
+committed before confirmatory generation; the run used $12$ confirmatory banks and
+$2.76$ of a $6.0$ GPU-hour ceiling. Table~\ref{tab:bars} summarizes the seven
+bars.
+
+\begin{table}[h]
+\centering
+\caption{Sealed detector bars D0--D6 (committed \texttt{SEALED\_DET/CONFIRMATORY},
+\texttt{b37c841}; analysis freeze \texttt{5910277}). ``passed'' is the frozen
+bar verdict; D3 and D5 did not pass their strong forms but did not trigger a
+kill, defining the honest boundary (Sec.~S4).}
+\label{tab:bars}
+\begin{ruledtabular}
+\begin{tabular}{llc}
+Bar & Key measured endpoint & Verdict\\
+\colrule
+D0 mechanism/engine & mean deriv.\ $5.7\times10^{-16}$; two-engine $1.7\%$; shot ledger $1.0\%$ & pass\\
+D1 calibration      & $n=108$ cells, median $d'_{\mathrm{emp}}/d'_{\mathrm{an}}=0.998$, all in $[0.91,1.10]$ & pass\\
+D2 capability       & $2\%$ in $77/81$ cells, best $453$ banks, MC power LCB $0.990$ & pass\\
+D3 specificity      & TPR $0.988$, bal.\ acc.\ $0.916$; medium FA $0.096/0.084>0.05$ & boundary\\
+D4 fresh comparator & fixed vs fresh latency $459$ vs $1013$ banks (retain fixed) & pass\\
+D5 mismatch         & AUC $1.000$; $\le10\%$ rotation passes; $20\%$/slope$-1$ fail & boundary\\
+D6 online feasibility & $0.0203\,\mathrm{ms}$ ($0.16\%$ of bank), $0.26\,\mathrm{MB}$ & pass\\
+\end{tabular}
+\end{ruledtabular}
+\end{table}
+
+\paragraph*{D2 capability.}
+The $2\%$ beyond-band change is analytically detectable within the $4096$-bank
+cap in $77/81$ predeclared cells; the best cell (unit static factor, $k^{-2}$
+spectrum, $k_w/k_p=1$, $1.25k_p$ claim shell) requires $453$ banks and the pooled
+Monte Carlo power lower bound is $0.990$ ($n=13500$). The $5\%$ change clears all
+$81$ energy-spread cells and $75/81$ worst-mode cells; the $1\%$ best cell clears
+$d'\ge5$ by $1811$ banks; the $0.5\%$ edge audit reaches $d'_{\max}=3.76$.
+
+\paragraph*{D3 specificity (strong claim killed, power intact).}
+At the threshold calibrated to $1\%$ H0 false alarm ($t=0.051$), the target
+true-positive rate is $0.988$, in-band false alarms are $0.020$, and four-class
+balanced accuracy is $0.916$; the beyond score stays centered on non-targets
+($|d'|\le0.019$) and the attribution-simplex maximum off-diagonal canonical
+correlation is $0.039$. However, medium-amplitude and medium-timescale events
+exceed the frozen $0.05$ false-alarm bar at $0.096$ and $0.084$, and the weakest
+class-specific separation is $1.79$ rather than $5$ (the intended per-class
+separations are $[1.79,\,43.06,\,4.78]$). The result is a power-certified
+beyond-band alarm with measured attribution leakage, not a fully specific
+sentinel; no ``specific'', ``zero-false-alarm'', or ``medium-immune'' wording is
+used.
+
+\paragraph*{D4 fixed-versus-fresh.}
+On identical photons, exposures, duration, anomaly bank, and law knowledge, the
+repeated (fixed) code bank retains a latency advantage: best cell $459$ (fixed)
+versus $1013$ (fresh) banks, mid cell $1271$ versus $1488$, floor cell $1598$
+versus $3334$; the frozen branch retains the fixed-code concentration.
+
+\paragraph*{D5 mismatch (robustness frozen to $\le10\%$ rotation).}
+AUC is $1.000$ on every tested axis and latency inflation is bounded, but
+false-alarm calibration fails outside the primary domain: at aperture-preserving
+basis rotation $10\%$ the non-target false alarm is $0.032$ (latency inflation
+$19\%$, pass), whereas at $20\%$ rotation it is $0.052$ and at spectral-slope
+mismatch $-1$ it is $0.076$ (fail). Robustness is therefore frozen to the
+$\le10\%$ rotation regime; the kill-tree verdict is ``narrow the physical domain
+or kill robustness wording'', and the broader wording is withdrawn.
+
+\paragraph*{Integrity audits (verbatim).}
+\emph{Record generator.} After protocol freeze and before unblinding, the record
+generator was refactored solely to stream Monte Carlo records in GPU-memory
+chunks; an audited diff found no changes to hypotheses, thresholds, bank counts,
+scenes, estimators, or endpoints, although altered random-number consumption
+produced a different, still-blinded realization set. All reported decisions apply
+the frozen analysis unchanged to that disclosed chunked stream.
+\emph{Shot model.} A mandated independent-engine check exposed a signed-code
+shot-noise error that had inflated covariance Fisher information by approximately
+$1.9\times$; replacing the signed difference $Px$ with the physical
+complementary-exposure throughput $|P|x$ reduced the frozen $P1$ witness coverage
+from $0.050$ to $0.033$ and eliminated the apparent natural-scene living pocket,
+so all values reported here come from the corrected artifacts and every prior
+kill only strengthened.
+
+% =====================================================================
+\section{Thin-screen covariance aperture and minimal prior-art fence}
+% =====================================================================
+\paragraph*{Aperture interpolation.}
+The thin multiplicative screen is the weakest complex medium: a single random
+phase layer $w_t$. Its bucket covariance is
+$C(x)=\Phi^2 P\,\mathrm{diag}(x)K_w\,\mathrm{diag}(x)P^{\!\top}$, whose informative
+support is the convolution aperture $B_w\oplus B_p$ and whose Fisher structure is
+rich---many recoverable scene modes. As the medium approaches complete
+scrambling, the input coupling $\Gamma$ loses angular memory
+(rank $r_{\mathrm{ME}}\to1$) and the covariance factorizes as in
+Eq.~\eqref{eq:s_factor}, collapsing all $M(M+1)/2$ entries to the single scalar
+$Q(x)$. For a residual memory effect of rank $r_{\mathrm{ME}}$ the covariance
+becomes a rank-$O(r_{\mathrm{ME}}^2)$ combination of quadratic scene functionals,
+so the recoverable imaging aperture interpolates monotonically from the rich
+thin-screen aperture to the rank-one scalar. \emph{Beyond-band imaging survives
+exactly to the extent the medium retains memory-effect modes; beyond-band
+detection survives complete scrambling}, because $\delta^{\!\top}G\delta>0$ for
+every nonzero $\delta$. This is the precise, physically correct boundary between
+the two disorder endpoints of the Letter.
+
+\paragraph*{Minimal prior-art fence.}
+The result is distinct from the head-on prior art.
+Memory-effect and speckle-illumination imaging through scattering---blind
+structured illumination and its superresolution analyses~\cite{s_Mudry,s_Idier}
+and photoacoustic speckle-fluctuation imaging~\cite{s_Chaigne}---\emph{reconstruct}
+an image by exploiting residual correlations; our contribution is the opposite
+regime, where reconstruction rank has collapsed to one and only the observability
+order survives. Quantum-inspired superresolution~\cite{s_Tsang} moves Fisher
+information between optical \emph{measurements} of the same scene; the Rank--Jet
+Separation moves contact order between \emph{statistical layers} of one scalar
+record, with no change of hardware. Speckle-decorrelation and coda-wave change
+detection~\cite{s_Snieder} sense a change in the \emph{medium}; here an exact first-moment
+invariance wall makes the medium a transducer for \emph{scene} change while a
+profiled quotient rejects medium-law events. No claim of prior-art equivalence is
+made, and the novelty is the nuisance-profiled statistical jet order as a
+physical observability class for disordered sensing.
+
+\begin{thebibliography}{99}
+\bibitem{s_Mudry} E. Mudry \textit{et al.}, Nat. Photonics \textbf{6}, 312 (2012).
+\bibitem{s_Idier} J. Idier \textit{et al.}, IEEE Trans. Comput. Imaging \textbf{4}, 87 (2018).
+\bibitem{s_Chaigne} T. Chaigne \textit{et al.}, Optica \textbf{3}, 54 (2016).
+\bibitem{s_Tsang} M. Tsang, R. Nair, and X.-M. Lu, Phys. Rev. X \textbf{6}, 031033 (2016).
+\bibitem{s_Snieder} R. Snieder, A. Gr\^et, H. Douma, and J. Scales, Science \textbf{295}, 2253 (2002).
+\end{thebibliography}
+
+\end{document}

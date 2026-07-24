@@ -1,4 +1,4 @@
-# BUILD STATUS — PRL Letter, Phase 1 (R43 FINAL LOCK)
+# BUILD STATUS — PRL Letter, Phases 1–2 (R43 FINAL LOCK)
 
 **Paper:** *Strong Optical Disorder Erases Images but Preserves Local Change Observability*
 (Rank–Jet Separation). Binding spec: `docs/ROUND63_GPT_ROUND43_RULING_RAW.md`.
@@ -89,15 +89,91 @@ transcribed into the manuscript. No missing evidence — this is Phase-2 scope.
 
 ---
 
-## Next steps (Phase 2 — per R43 §7.3 steps 4–8)
+## Phase 2 — LaTeX build (R43 §7.3 steps 4–6) — COMPLETE
 
-1. **Resolve GAP-1** (coordinator ruling on the JET_TEST working-tree divergence) before locking Fig 2.
-2. **Write the theorem core + End Matter first** (R43 §7.3 step 4): Rank–Jet Separation statement
-   (R43 §2, eq 2.1/2.4), quotient-jet `T_req≍ε^{-2m}` (ROUND42 §6.1–6.2), the three necessary
-   boundaries (locality, amplitude anchor, monotone cone), End Matter A/B/C.
-3. **Draft the 3.65-page core** to the 3750-word PRL budget (R43 §6.1 page map), abstract seed §1.3,
-   impact statement §5.3.
-4. **Build Supplement S1–S5** as an audit trail (R43 §6.5) — not an alternate manuscript.
-5. **Two final reads** (general-physics interest; hostile statistical-optics scope/priority), then submit.
+Built in R43 §7.3 order: theorem core + End Matter **before** Introduction, then the 3.65-page
+core, then S1–S5 as an audit trail. TeXLive 2024 (`pdflatex`), REVTeX 4.2 (`revtex4-2.cls`).
 
-Timebox for Phase 1 (~4 h) met; all four figure/matrix deliverables complete and internally consistent.
+| # | Deliverable | File | Status |
+|---|---|---|---|
+| 6 | Main Letter (core + End Matter A/B/C) | `paper_prl/main.tex` → `main.pdf` | ✅ compiles clean |
+| 7 | Supplemental Material S1–S5 | `paper_prl/supplement.tex` → `supplement.pdf` | ✅ compiles clean |
+
+### Compiled page counts (100% scale, PRL two-column)
+
+- **`main.pdf` = 6 pages.** Core = **pages 1–4** (page 4 is Figs 2–3, top-floated); End Matter A/B/C
+  = **page 5 + 3 lines of page 6**; references = **rest of page 6**. → **core ≤ 4 pp, End Matter ≈ 1.1 pp**,
+  both inside the R43 budget (4-page core + 2-page End Matter).
+- **`supplement.pdf` = 5 pages** (S1–S5, Tables S1–S5).
+
+### Word count (texcount)
+
+- **Core** (abstract + body + 3 figure captions, excl. End Matter & refs): **1379 text + 269 caption
+  = 1648 words**. PRL-formula estimate incl. 3 full-width figures + 5 display equations
+  ≈ **2.7–2.9k words**, well under the **3750** ceiling.
+- End Matter text: **604 words**. Supplement: **1474 text + 238 caption + 5 tables**.
+- **Abstract: ≈ 588 characters** (adapted from R43 §1.3 seed; ≤ 600 char PRL limit).
+
+### Compile health
+
+- **No overfull hboxes, no undefined references/citations** in either document (both fixed:
+  eq. `jet`/`classes` split to fit column; one supplement inline limit promoted to a display).
+- **One residual underfull hbox** in `main.tex` (badness **1122**, sealed-instantiation paragraph) —
+  a single mildly-loose line, far below LaTeX's 10000 problem threshold and routine in REVTeX; not a
+  layout defect.
+
+### Deviations from the R43 §6.1 page map
+
+- **Core composes to ~3.0 pp of text + 1 pp of figures (Figs 2–3 float to p.4).** The per-part
+  proportions (opening 0.40 / jets 0.80 / Rank–Jet 0.55 / inversion 0.55 / tests 0.60 / sealed 0.35 /
+  conclusion 0.20) are followed in **content and ordering**; the composed text is **lighter** than
+  3.65 pp because the three double-column figures consume ~1 full page. This is *under* budget, not
+  over — acceptable, and leaves headroom for the user's author/affiliation/acknowledgment blocks.
+- **Exactly 5 displayed equations in the core** (`jet`, `rank`, `Q`+ΔQ, `classes`, `mean`) — at the
+  R43 cap.
+- **Frozen wording used verbatim** where it fits: §4.6 validation sentence (KL 2.038/4.000, MC
+  0.95/2.05, CUSUM −2.16/−3.92), §4.2 robustness-domain sentence, §4.1 capability compressed with the
+  D3/D5 numbers preserved in body + Fig. 3 caption (no "specific"/"zero-false-alarm"/"medium-immune").
+  End Matter C carries both integrity disclosures **verbatim** (R43 §4.5 chunking; R41 §6 shot
+  correction).
+- **End Matter placement:** after the core + acknowledgments, before the shared bibliography (so both
+  core and End Matter resolve the same numbered references). A `\clearpage` starts End Matter on a
+  fresh page per convention.
+
+### Every number traces to CLAIM_SOURCE_MATRIX.md
+
+All sentence-level values in both documents were re-checked field-by-field against the committed
+frozen JSON (`JET_TEST`@1bf29f1, `SCRAMBLE_EXT`@ed7a1e0, `CONFIRMATORY`@b37c841). No new analysis; no
+softening or strengthening of frozen wording. GAP-1 resolution unchanged: the Letter uses the
+**committed frozen** JET_TEST values; the uncommitted working-tree re-run is not used anywhere.
+
+---
+
+## TODO — user-level items (clearly-marked placeholders in the source)
+
+These are the only non-automatable blanks. Each is a literal placeholder token in `main.tex` /
+`supplement.tex`:
+
+1. **`\author{[AUTHORS]}`** — author block (both files).
+2. **`\affiliation{[AFFILIATION]}`** — institutional affiliation(s) (both files).
+3. **`[FUNDING/ACKNOWLEDGMENTS]`** — the `acknowledgments` environment in `main.tex` (funding,
+   grant numbers, thanks).
+4. **Data-availability statement + URL** — add a short statement pointing to the GI_a2 repository
+   (`github.com/ccyyyYyzz/GI_a2`) with the frozen commit hashes; recommended placement is the end of
+   End Matter C or a dedicated back-matter note. *(Not yet inserted — needs the user's preferred
+   public URL/DOI wording.)*
+5. **Reference verification** — the 11 main + 5 supplement `\bibitem` entries are best-effort
+   bibliographic reconstructions of the R41/R43 head-on prior art (Feng/Lee memory effect, Lee–Stone
+   UCF, Tsang PRX, Mudry blind-SIM, Idier, Chaigne, Snieder coda-wave, Dechant, Lorden, Hermann–Krener,
+   BBP). Volume/page/year should be verified against the user's Zotero before submission.
+
+## Two-reads checklist for Phase 3 (R43 §7.3 step 7)
+
+1. **General-physics interest read** — does the rank-vs-jet inversion land in ten seconds from
+   title + abstract + Fig. 1 alone, without ghost-imaging background?
+2. **Hostile statistical-optics read** — scope/priority: are the three theorem boundaries (locality,
+   amplitude anchor, monotone cone) stated where a referee will look, and is the D3/D5 boundary
+   impossible to misread as a specificity claim? Confirm the prior-art fence (S5) pre-empts
+   memory-effect / SPADE / coda-wave equivalence objections.
+
+Phase 2 timebox (~4 h) met; both documents compile from source with a single `pdflatex ×2` pass each.
