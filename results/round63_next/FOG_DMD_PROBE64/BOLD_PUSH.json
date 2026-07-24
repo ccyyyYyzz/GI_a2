@@ -1,0 +1,278 @@
+{
+  "attack1": {
+    "best_cell": [
+      0.3,
+      "k^-2",
+      1,
+      1.25
+    ],
+    "median_cell": [
+      0.3,
+      "flat",
+      1,
+      1.5
+    ],
+    "profiles": {
+      "best": {
+        "flat": {
+          "tr": 3.394251,
+          "lam_min": 0.03394147,
+          "lam_mean": 0.07071357,
+          "dprime_gain_agg": 1.0,
+          "dprime_gain_worst": 1.0
+        },
+        "k^1": {
+          "tr": 3.512177,
+          "lam_min": 0.03689957,
+          "lam_mean": 0.07317035,
+          "dprime_gain_agg": 1.017,
+          "dprime_gain_worst": 1.043
+        },
+        "k^2": {
+          "tr": 3.148979,
+          "lam_min": 0.03497665,
+          "lam_mean": 0.06560374,
+          "dprime_gain_agg": 0.963,
+          "dprime_gain_worst": 1.015
+        },
+        "k^3": {
+          "tr": 2.412312,
+          "lam_min": 0.02910144,
+          "lam_mean": 0.05025651,
+          "dprime_gain_agg": 0.843,
+          "dprime_gain_worst": 0.926
+        },
+        "edge_exp1": {
+          "tr": 2.16765,
+          "lam_min": 0.02488064,
+          "lam_mean": 0.04515938,
+          "dprime_gain_agg": 0.799,
+          "dprime_gain_worst": 0.856
+        },
+        "edge_exp2": {
+          "tr": 0.489186,
+          "lam_min": 0.00454223,
+          "lam_mean": 0.01019137,
+          "dprime_gain_agg": 0.38,
+          "dprime_gain_worst": 0.366
+        },
+        "low_k^-2": {
+          "tr": 2.016941,
+          "lam_min": 0.01634872,
+          "lam_mean": 0.04201961,
+          "dprime_gain_agg": 0.771,
+          "dprime_gain_worst": 0.694
+        }
+      },
+      "median": {
+        "flat": {
+          "tr": 3.978706,
+          "lam_min": 0.01648171,
+          "lam_mean": 0.03825679,
+          "dprime_gain_agg": 1.0,
+          "dprime_gain_worst": 1.0
+        },
+        "k^1": {
+          "tr": 3.917581,
+          "lam_min": 0.01723481,
+          "lam_mean": 0.03766905,
+          "dprime_gain_agg": 0.992,
+          "dprime_gain_worst": 1.023
+        },
+        "k^2": {
+          "tr": 3.622764,
+          "lam_min": 0.0167811,
+          "lam_mean": 0.03483427,
+          "dprime_gain_agg": 0.954,
+          "dprime_gain_worst": 1.009
+        },
+        "k^3": {
+          "tr": 3.211962,
+          "lam_min": 0.01548474,
+          "lam_mean": 0.03088425,
+          "dprime_gain_agg": 0.898,
+          "dprime_gain_worst": 0.969
+        },
+        "edge_exp1": {
+          "tr": 2.567369,
+          "lam_min": 0.01274358,
+          "lam_mean": 0.02468624,
+          "dprime_gain_agg": 0.803,
+          "dprime_gain_worst": 0.879
+        },
+        "edge_exp2": {
+          "tr": 0.883843,
+          "lam_min": 0.00340189,
+          "lam_mean": 0.00849849,
+          "dprime_gain_agg": 0.471,
+          "dprime_gain_worst": 0.454
+        },
+        "low_k^-2": {
+          "tr": 2.922847,
+          "lam_min": 0.00993839,
+          "lam_mean": 0.0281043,
+          "dprime_gain_agg": 0.857,
+          "dprime_gain_worst": 0.777
+        }
+      }
+    },
+    "greedy_best": {
+      "shell_weights": [
+        1.233,
+        0.822,
+        0.548,
+        0.548,
+        1.849
+      ],
+      "tr": 3.607028,
+      "dprime_gain_agg": 1.031
+    }
+  },
+  "attack2": {
+    "note": "eps_min(T)=5/(||x|| sqrt(T*lam)); banks independent so multi-lag GLS is moot",
+    "T_grid": [
+      256,
+      512,
+      1024,
+      2048,
+      4096,
+      8192,
+      16384
+    ],
+    "frontier": {
+      "best": {
+        "energy_spread": [
+          0.03293,
+          0.02329,
+          0.01647,
+          0.01164,
+          0.00823,
+          0.00582,
+          0.00412
+        ],
+        "matched_target": [
+          0.02972,
+          0.02101,
+          0.01486,
+          0.01051,
+          0.00743,
+          0.00525,
+          0.00371
+        ]
+      },
+      "best_T_for_0.5pct": {
+        "energy_spread": 11106.0,
+        "matched_target": 9044.0,
+        "energy_spread_sec": 142.2,
+        "matched_target_sec": 115.8
+      },
+      "median": {
+        "energy_spread": [
+          0.04617,
+          0.03265,
+          0.02309,
+          0.01632,
+          0.01154,
+          0.00816,
+          0.00577
+        ],
+        "matched_target": [
+          0.03587,
+          0.02536,
+          0.01793,
+          0.01268,
+          0.00897,
+          0.00634,
+          0.00448
+        ]
+      },
+      "median_T_for_0.5pct": {
+        "energy_spread": 21828.0,
+        "matched_target": 13175.0,
+        "energy_spread_sec": 279.4,
+        "matched_target_sec": 168.6
+      }
+    },
+    "mc_validation": {
+      "cell": "best_matched_target",
+      "eps": 0.00752,
+      "T_eff": 4000,
+      "dprime_analytic": 5.0,
+      "dprime_empirical": 4.61,
+      "auc": 1.0
+    }
+  },
+  "attack3": {
+    "cell": "best",
+    "banks_per_hour": 281250.0,
+    "ms_per_bank": 12.8,
+    "latency": {
+      "0.5%": {
+        "1/hour": {
+          "latency_banks": 4248.0,
+          "latency_sec": 54.4,
+          "threshold_b": 121.8,
+          "delta1_per_bank": 0.0474
+        },
+        "1/day": {
+          "latency_banks": 7052.0,
+          "latency_sec": 90.3,
+          "threshold_b": 188.36,
+          "delta1_per_bank": 0.0474
+        }
+      },
+      "1.0%": {
+        "1/hour": {
+          "latency_banks": 1366.0,
+          "latency_sec": 17.5,
+          "threshold_b": 75.35,
+          "delta1_per_bank": 0.0949
+        },
+        "1/day": {
+          "latency_banks": 2071.0,
+          "latency_sec": 26.5,
+          "threshold_b": 108.78,
+          "delta1_per_bank": 0.0949
+        }
+      },
+      "2.0%": {
+        "1/hour": {
+          "latency_banks": 418.0,
+          "latency_sec": 5.4,
+          "threshold_b": 44.96,
+          "delta1_per_bank": 0.1898
+        },
+        "1/day": {
+          "latency_banks": 595.0,
+          "latency_sec": 7.6,
+          "threshold_b": 61.69,
+          "delta1_per_bank": 0.1898
+        }
+      },
+      "5.0%": {
+        "1/hour": {
+          "latency_banks": 83.0,
+          "latency_sec": 1.1,
+          "threshold_b": 21.84,
+          "delta1_per_bank": 0.4745
+        },
+        "1/day": {
+          "latency_banks": 111.0,
+          "latency_sec": 1.4,
+          "threshold_b": 28.54,
+          "delta1_per_bank": 0.4745
+        }
+      }
+    },
+    "mc_validation": {
+      "eps": 0.02,
+      "ARL0_target": 500.0,
+      "ARL0_empirical": 590.0,
+      "delta1_empirical": 0.1541,
+      "threshold_h": 14.37,
+      "latency_mc_median_banks": 102.0,
+      "latency_siegmund_banks": 111.0,
+      "ratio": 0.92
+    }
+  }
+}
