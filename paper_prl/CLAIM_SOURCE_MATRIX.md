@@ -72,6 +72,7 @@ The `CONFIRMATORY_RESULTS.json` internal **analysis-freeze** commit is `5910277`
 |---|---|---|---|---|
 | E1 | post-freeze refactor streamed MC records in GPU-memory chunks; no change to hypotheses, thresholds, bank counts, scenes, estimators, endpoints; altered RNG → different still-blinded realization set | CONFIRMATORY | `D7.attestation`; `freeze_commit`="5910277"; `banks.confirmatory`=12 | b37c841 |
 | E2 | shot-model integrity disclosure (End Matter C disclosure 2): signed-code shot error inflated covariance Fisher "≈1.9×"; witness `f_rec` "0.050 → 0.033" | FOG_DMD_PROBE64 | `CORRECTION_NOTE.md` ("Fisher over-stated ≈ 1.9×"; table row "witness f_rec 0.050 → **0.033**"); `P1_results_CORRECTED.json:f_rec_snr3`=0.03333 | 099ce7f |
+| E3 | bench-transfer validity boundary (End Matter C, R44-frozen wording): mean leak "≈0.7%" (near-conjugate) → "≈9%" (20 mm gap); thin-screen spacing "≤0.3 mm" (developed) / "1–2 mm" (weak) | WAVE_TWIN | `T1_WALL_LEAK.json` (z1 sweep 6.8e-3 → 8.9e-2); `T4_MULT_TO_CONV.json` (α=0.5 at z2=0.327 mm developed; weak holds to ~1.4–2 mm); frozen wording = R44 §3 (issue #35) | 60d5fc7 |
 
 ## F. R43 §4.6 / §6.3 — Quotient-jet theorem statement + measured validation
 
