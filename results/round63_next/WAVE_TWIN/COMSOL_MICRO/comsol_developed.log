@@ -1,0 +1,11 @@
+COMSOL 6.3 started
+[seed 0] FEM contrast=0.190 grain=3.59um | thin-screen contrast=0.258 grain=4.46um  (89s)
+[seed 1] FEM contrast=0.356 grain=0.21um | thin-screen contrast=0.297 grain=6.81um  (113s)
+[seed 2] FEM contrast=0.406 grain=0.21um | thin-screen contrast=0.353 grain=3.29um  (138s)
+[seed 3] FEM contrast=0.284 grain=0.21um | thin-screen contrast=0.221 grain=5.17um  (163s)
+[seed 4] FEM contrast=0.377 grain=2.96um | thin-screen contrast=0.420 grain=3.52um  (188s)
+[seed 5] FEM contrast=0.782 grain=2.32um | thin-screen contrast=1.258 grain=0.70um  (214s)
+[seed 6] FEM contrast=0.401 grain=0.63um | thin-screen contrast=0.510 grain=2.58um  (239s)
+[seed 7] FEM contrast=0.362 grain=0.63um | thin-screen contrast=0.420 grain=4.46um  (264s)
+SUMMARY {"fem_contrast_mean": 0.3948, "thinscreen_contrast_mean": 0.4672, "fem_grain_mean_um": 1.347, "thinscreen_grain_mean_um": 3.875, "contrast_rel_diff": 0.155, "grain_rel_diff": 0.6523}
+saved COMSOL_MICRO_RESULTS.json  elapsed 264s

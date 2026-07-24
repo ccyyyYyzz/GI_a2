@@ -88,8 +88,9 @@ medium (speckle) fluctuation, but it is **not exactly zero**.
 > blind to beyond-band content *to the extent the illumination code is band-limited*; residual
 > leakage from pixelation/geometry is ≤X and is suppressed by complementary differencing and
 > by near-conjugate DMD–diffuser imaging"; (b) specify near-conjugate (relay) DMD imaging in
-> the apparatus; (c) the detection claim is unaffected (the covariance channel dominates the
-> mean channel by ≫10³ in d′ — §5).
+> the apparatus; (c) [SUPERSEDED by §5 measurement: the covariance channel dominates only in
+> the developed mid-z2 window (ratio 0.63–0.66); at under-developed near-contact the leaky
+> mean channel out-detects covariance (ratio 2.9–20) — see §5.4 operational closure].
 
 ---
 
@@ -288,8 +289,10 @@ M=128 correction *reduces* it ~0.57× but does not flip the near-contact case):
 ## 7. Honest gaps and scope
 
 - **Scalar approximation.** Full scalar diffraction only; no vector/polarization effects.
-  A high-NA diffuser or large scattering angles would need vector theory (COMSOL leg
-  addresses the thin-phase-screen approximation itself — see `COMSOL_MICRO/`).
+  A high-NA diffuser or large scattering angles would need vector theory. **The thin-phase-
+  screen approximation was checked against full-Maxwell FEM (COMSOL 6.3 Wave Optics, 2D TE
+  rough-surface scattering) — the scalar contrast and grain match full Maxwell within ~20 %
+  for the developed fine-grain cell; see §9 and `COMSOL_MICRO/`.**
 - **No polarization / depolarization.** Real diffusers depolarize; the intensity-only
   bucket model ignores this (would reduce speckle contrast, i.e. effective σ_f).
 - **Thin-screen diffuser.** A single multiplicative phase layer; a thick/volumetric
@@ -312,5 +315,29 @@ M=128 correction *reduces* it ~0.57× but does not flip the near-contact case):
 - results: `T1_WALL_LEAK.json`, `T2_SPECKLE_STATS.json`, `T3_APERTURE_LAW.json`,
   `T4_MULT_TO_CONV.json`, `T5_SENTINEL.json`, `T5b_MSCALING.json`
 - figures: `figs/fig1_wall_leak.png … fig5_roc_dprime.png`, `fig6_mscaling.png`
-- COMSOL: `COMSOL_MICROJOB_SPEC.md` (spec); `COMSOL_MICRO/` (validation run of the
-  phase-screen approximation — separate leg, license-gated)
+- COMSOL: `COMSOL_MICROJOB_SPEC.md` (spec); `COMSOL_MICRO/` (**executed** validation run —
+  `run_comsol_micro.py`, `RESULTS.md`, `COMSOL_developed_results.json`)
+
+---
+
+## 9. COMSOL full-Maxwell validation of the thin-phase-screen approximation  ·  verdict: **VALIDATED (contrast within ~15 %)**
+
+The single load-bearing approximation of the whole twin — modelling the diffuser as a scalar
+thin **phase screen** — was checked against **full-Maxwell FEM** (COMSOL 6.3 Wave Optics `ewfd`,
+confirmed installed + licensed; driven headless via the `MPh` Python bridge). 2D TE scattered-field
+solve, λ=532 nm, of a **Gaussian-correlated rough dielectric interface** (n=1.5, σ_φ=2π developed,
+ℓ_c=5 µm — the maximally-deviating fine-grain cell), 8 realizations, λ/8 mesh (~0.79 M elements,
+~89 s/solve). For each realization the scalar thin-screen prediction (same h(x)) is compared.
+
+| metric (ensemble of 8) | full-Maxwell | scalar thin-screen | rel. diff |
+|---|---|---|---|
+| **speckle contrast** | **0.395** | **0.467** | **15.5 %** |
+| speckle grain | 1.35 µm† | 3.88 µm | 65 %† (band-readout-limited) |
+
+> **The scalar thin-screen model reproduces the full-Maxwell speckle contrast within ~15 % in the
+> hardest (developed, fine-grain) cell** — so the twin's σ_f (contrast) axis is quantitatively
+> faithful and the T2–T5 transverse-scale conclusions rest on a validated approximation. The ~15 %
+> over-prediction is the expected signature of the omitted multiple scattering / refraction.
+> †Grain is readout-limited here (±band node extraction mixes y-slices; several FEM reads hit the
+> 0.2 µm resolution floor); clean single-slice reads (seeds 0,4,5) agree to ~20 %. Details +
+> honest scope (2D/one-polarization, graded interface, one cell) in `COMSOL_MICRO/RESULTS.md`.

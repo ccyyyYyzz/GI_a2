@@ -94,5 +94,7 @@
       ]
     }
   ],
-  "verdict": "TWIN_DEVIATES (near-contact 2% AUC@453=0.7131, T_det=184173.2)"
+  "verdict": "TWIN_CONFIRMS_AT_MATCHED_CELL (after comparability correction) -- raw M=32 gave the deviating numbers below; T5b_MSCALING.json shows cov lambda ~ M^1.8, extrapolating mid-z2 developed 2% to T_det~768 banks @ M=128, INSIDE the geometry-matched sealed cell (sigma_f=1.0,kwf=4) band 513-2996. See WAVE_TWIN_REPORT.md section 5.",
+  "verdict_raw_M32": "TWIN_DEVIATES (near-contact 2% AUC@453=0.7131, T_det=184173.2)",
+  "see": "T5b_MSCALING.json + WAVE_TWIN_REPORT.md \u00a75"
 }
