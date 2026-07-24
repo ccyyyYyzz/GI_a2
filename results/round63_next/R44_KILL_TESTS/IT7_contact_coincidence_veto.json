@@ -1,0 +1,30 @@
+{
+  "test": "IT7_contact_coincidence_veto",
+  "ref": "internal divergence stranger #6; merged adjudication D3/D5 FA repair",
+  "params": {
+    "M": 16,
+    "n_bank": 700,
+    "T_eff": 300,
+    "n_mc": 2000,
+    "z1_mm": 10,
+    "z2_mm": 5,
+    "medium_event": "l_c 50->45, sigma 2pi->1.8pi",
+    "change": "5pct beyond-band"
+  },
+  "decision": "medium contact-arm AUC ~0.5 AND coincidence FA<=0.05 at >=0.9x single-arm power => repaired; KILL if contact responds to medium (>0.55) or power cost>20%",
+  "measured": {
+    "contact_AUC_H0_vs_medium": 0.5009,
+    "contact_AUC_H0_vs_scene": 0.7408,
+    "z2_5_AUC_H0_vs_medium": 0.9986,
+    "z2_5_AUC_H0_vs_scene": 0.9934,
+    "single_arm_z2_5_power_scene": 0.971,
+    "single_arm_z2_5_FA_medium": 0.9965,
+    "coincidence_power_scene": 0.233,
+    "coincidence_FA_medium": 0.056,
+    "coincidence_FA_H0": 0.0035,
+    "power_ratio_coinc_over_single": 0.24,
+    "FA_repair_factor": 17.79
+  },
+  "verdict": "KILL -- coincidence power cost >20% (ratio 0.240): too expensive.",
+  "elapsed_s": 352.7
+}
