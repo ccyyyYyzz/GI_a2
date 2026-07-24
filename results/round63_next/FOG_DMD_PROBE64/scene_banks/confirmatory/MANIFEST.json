@@ -1,0 +1,396 @@
+{
+  "campaign": "R39 beyond-modulator-band sealed probe (R34 pattern)",
+  "bank": "confirmatory",
+  "role": "final beyond-band endpoints ONLY (fresh scenes/seeds)",
+  "side": 64,
+  "pattern_band": 8,
+  "medium_band": [
+    1,
+    16
+  ],
+  "value_range": [
+    0.0,
+    1.0
+  ],
+  "seed_base": 800000,
+  "instances_per_stratum": 3,
+  "strata": [
+    "witness",
+    "natural",
+    "onef",
+    "smooth",
+    "texture"
+  ],
+  "n_scenes": 15,
+  "seed_disjoint_from": [
+    700000,
+    710000,
+    720000,
+    "the other three R39 partitions"
+  ],
+  "blind_generation": "no reconstruction, arm, or bucket metric computed during generation",
+  "superres_frac": 0.099609375,
+  "coverage_frac": 0.119384765625,
+  "utc": "2026-07-23 23:34:35Z",
+  "python": "3.11.5",
+  "numpy": "1.24.4",
+  "scenes": [
+    {
+      "scene_id": "confirmatory_witness_0",
+      "bank": "confirmatory",
+      "stratum": "witness",
+      "instance": 0,
+      "seed": 800000,
+      "gen_params": {
+        "generator": "bank_gen64.gen_witness (in-band random + super-res-zone spikes)",
+        "family": "witness",
+        "seed": 800000,
+        "n_spikes": 19,
+        "x_sha256": "823b52165ae702d51af4a6479dd8004218b65dec1b27f1ece6574873886406e2"
+      },
+      "x_sha256": "823b52165ae702d51af4a6479dd8004218b65dec1b27f1ece6574873886406e2",
+      "stats": {
+        "mean": 0.47686528574934195,
+        "std": 0.12099142475273954,
+        "min": 0.0,
+        "max": 1.0,
+        "superres_energy_frac": 0.03665110071308438,
+        "inband_energy_frac": 0.9633488992869144,
+        "beyond_coverage_frac": 2.0697123219213485e-32
+      }
+    },
+    {
+      "scene_id": "confirmatory_witness_1",
+      "bank": "confirmatory",
+      "stratum": "witness",
+      "instance": 1,
+      "seed": 800001,
+      "gen_params": {
+        "generator": "bank_gen64.gen_witness (in-band random + super-res-zone spikes)",
+        "family": "witness",
+        "seed": 800001,
+        "n_spikes": 12,
+        "x_sha256": "d409d48d73ddf4268c633e2ae6f23ac90893b95ad8a67c2cb2527d46f4b02c31"
+      },
+      "x_sha256": "d409d48d73ddf4268c633e2ae6f23ac90893b95ad8a67c2cb2527d46f4b02c31",
+      "stats": {
+        "mean": 0.45304196913877215,
+        "std": 0.1482845678728356,
+        "min": 0.0,
+        "max": 1.0,
+        "superres_energy_frac": 0.05072338902580715,
+        "inband_energy_frac": 0.949276610974192,
+        "beyond_coverage_frac": 2.3572613010197827e-32
+      }
+    },
+    {
+      "scene_id": "confirmatory_witness_2",
+      "bank": "confirmatory",
+      "stratum": "witness",
+      "instance": 2,
+      "seed": 800002,
+      "gen_params": {
+        "generator": "bank_gen64.gen_witness (in-band random + super-res-zone spikes)",
+        "family": "witness",
+        "seed": 800002,
+        "n_spikes": 17,
+        "x_sha256": "b69c8133d65486cb8463fc1bb0199351de6f35bf5bfe9a8f2d326abb654ce9e0"
+      },
+      "x_sha256": "b69c8133d65486cb8463fc1bb0199351de6f35bf5bfe9a8f2d326abb654ce9e0",
+      "stats": {
+        "mean": 0.48150720297212146,
+        "std": 0.13864983452103322,
+        "min": 0.0,
+        "max": 1.0,
+        "superres_energy_frac": 0.044134023712225315,
+        "inband_energy_frac": 0.955865976287774,
+        "beyond_coverage_frac": 3.9164038259261205e-32
+      }
+    },
+    {
+      "scene_id": "confirmatory_natural_0",
+      "bank": "confirmatory",
+      "stratum": "natural",
+      "instance": 0,
+      "seed": 800100,
+      "gen_params": {
+        "generator": "bank_gen64.gen_natural (skimage.data, downsampled 64x64, deterministic, sha256-recorded)",
+        "family": "natural",
+        "source": "moon",
+        "global_idx": 2,
+        "x_sha256": "a70a0492e057bee9801d667935f8e6a13fb99d322b1118ea89061dd162f9c05d"
+      },
+      "x_sha256": "a70a0492e057bee9801d667935f8e6a13fb99d322b1118ea89061dd162f9c05d",
+      "stats": {
+        "mean": 0.4850143317079181,
+        "std": 0.05392855408636763,
+        "min": 0.0,
+        "max": 0.9999999999999954,
+        "superres_energy_frac": 0.004390370594307091,
+        "inband_energy_frac": 0.9942566175458706,
+        "beyond_coverage_frac": 0.0013530118598212967
+      }
+    },
+    {
+      "scene_id": "confirmatory_natural_1",
+      "bank": "confirmatory",
+      "stratum": "natural",
+      "instance": 1,
+      "seed": 800101,
+      "gen_params": {
+        "generator": "bank_gen64.gen_natural (skimage.data, downsampled 64x64, deterministic, sha256-recorded)",
+        "family": "natural",
+        "source": "text",
+        "global_idx": 3,
+        "x_sha256": "5df4fff609c554927b018bd95daa3d4d69d530bfe087a25ee92e177e37aca03a"
+      },
+      "x_sha256": "5df4fff609c554927b018bd95daa3d4d69d530bfe087a25ee92e177e37aca03a",
+      "stats": {
+        "mean": 0.710087387230352,
+        "std": 0.15368645868792416,
+        "min": 0.0,
+        "max": 0.9999999999999916,
+        "superres_energy_frac": 0.012515364099455945,
+        "inband_energy_frac": 0.973029751568534,
+        "beyond_coverage_frac": 0.014454884332009348
+      }
+    },
+    {
+      "scene_id": "confirmatory_natural_2",
+      "bank": "confirmatory",
+      "stratum": "natural",
+      "instance": 2,
+      "seed": 800102,
+      "gen_params": {
+        "generator": "bank_gen64.gen_natural (skimage.data, downsampled 64x64, deterministic, sha256-recorded)",
+        "family": "natural",
+        "source": "clock",
+        "global_idx": 4,
+        "x_sha256": "7e3c8f4a08b7e7cef936718beb52f0b56d9eed7cb5045ac63387fba072b041fb"
+      },
+      "x_sha256": "7e3c8f4a08b7e7cef936718beb52f0b56d9eed7cb5045ac63387fba072b041fb",
+      "stats": {
+        "mean": 0.2838181078555303,
+        "std": 0.15965548869223053,
+        "min": 0.0,
+        "max": 0.9999999999999923,
+        "superres_energy_frac": 0.009673446720532084,
+        "inband_energy_frac": 0.9872061701620257,
+        "beyond_coverage_frac": 0.0031203831174396136
+      }
+    },
+    {
+      "scene_id": "confirmatory_onef_0",
+      "bank": "confirmatory",
+      "stratum": "onef",
+      "instance": 0,
+      "seed": 800200,
+      "gen_params": {
+        "generator": "bank_gen64.gen_onef (1/f^beta power-law field)",
+        "family": "onef",
+        "seed": 800200,
+        "beta": 1.2580131242396102,
+        "x_sha256": "657a56c86cfe5a3e693053b3a11366e67729f4f6e1fa0992e560f9718851163c"
+      },
+      "x_sha256": "657a56c86cfe5a3e693053b3a11366e67729f4f6e1fa0992e560f9718851163c",
+      "stats": {
+        "mean": 0.5578925719240434,
+        "std": 0.14298270212982425,
+        "min": 0.05,
+        "max": 0.9499999999999865,
+        "superres_energy_frac": 0.011345789885997234,
+        "inband_energy_frac": 0.9821474711549166,
+        "beyond_coverage_frac": 0.00650673895908499
+      }
+    },
+    {
+      "scene_id": "confirmatory_onef_1",
+      "bank": "confirmatory",
+      "stratum": "onef",
+      "instance": 1,
+      "seed": 800201,
+      "gen_params": {
+        "generator": "bank_gen64.gen_onef (1/f^beta power-law field)",
+        "family": "onef",
+        "seed": 800201,
+        "beta": 1.242727901037063,
+        "x_sha256": "a9789e1fee872ad755537694396f8556a5e3e29f8268b6943bd66143c44b5c18"
+      },
+      "x_sha256": "a9789e1fee872ad755537694396f8556a5e3e29f8268b6943bd66143c44b5c18",
+      "stats": {
+        "mean": 0.5456289936450405,
+        "std": 0.12975097932556848,
+        "min": 0.05,
+        "max": 0.9499999999999849,
+        "superres_energy_frac": 0.011564970298522837,
+        "inband_energy_frac": 0.9799748257951824,
+        "beyond_coverage_frac": 0.008460203906294525
+      }
+    },
+    {
+      "scene_id": "confirmatory_onef_2",
+      "bank": "confirmatory",
+      "stratum": "onef",
+      "instance": 2,
+      "seed": 800202,
+      "gen_params": {
+        "generator": "bank_gen64.gen_onef (1/f^beta power-law field)",
+        "family": "onef",
+        "seed": 800202,
+        "beta": 1.1752612056142424,
+        "x_sha256": "dd6b5f37c1107146422eaab4b90d722eabf867258c96afb9756072a2a57d56bf"
+      },
+      "x_sha256": "dd6b5f37c1107146422eaab4b90d722eabf867258c96afb9756072a2a57d56bf",
+      "stats": {
+        "mean": 0.46835994504215506,
+        "std": 0.13533279554842134,
+        "min": 0.05,
+        "max": 0.949999999999984,
+        "superres_energy_frac": 0.013649786264834065,
+        "inband_energy_frac": 0.9756112889379767,
+        "beyond_coverage_frac": 0.010738924797188212
+      }
+    },
+    {
+      "scene_id": "confirmatory_smooth_0",
+      "bank": "confirmatory",
+      "stratum": "smooth",
+      "instance": 0,
+      "seed": 800300,
+      "gen_params": {
+        "generator": "bank_gen64.gen_smooth (low-pass Gaussian field)",
+        "family": "smooth",
+        "seed": 800300,
+        "blur_sigma": 7.387121230137787,
+        "x_sha256": "0d839d0b0183bdeda66640c7c3cb6b248e2d198e7847ca571df470f3fcbb054d"
+      },
+      "x_sha256": "0d839d0b0183bdeda66640c7c3cb6b248e2d198e7847ca571df470f3fcbb054d",
+      "stats": {
+        "mean": 0.5097782816872607,
+        "std": 0.19865708812776778,
+        "min": 0.06,
+        "max": 0.959999999994984,
+        "superres_energy_frac": 2.7652665734636288e-06,
+        "inband_energy_frac": 0.9999972344130688,
+        "beyond_coverage_frac": 3.2035732873488383e-10
+      }
+    },
+    {
+      "scene_id": "confirmatory_smooth_1",
+      "bank": "confirmatory",
+      "stratum": "smooth",
+      "instance": 1,
+      "seed": 800301,
+      "gen_params": {
+        "generator": "bank_gen64.gen_smooth (low-pass Gaussian field)",
+        "family": "smooth",
+        "seed": 800301,
+        "blur_sigma": 5.882636831209048,
+        "x_sha256": "af52fdfe98d69c8d745d94a89c00c17f184c4d7cc1e19b7df2b96ee927898333"
+      },
+      "x_sha256": "af52fdfe98d69c8d745d94a89c00c17f184c4d7cc1e19b7df2b96ee927898333",
+      "stats": {
+        "mean": 0.571392713300655,
+        "std": 0.1756146658229738,
+        "min": 0.06,
+        "max": 0.9599999999971258,
+        "superres_energy_frac": 6.279180005741791e-05,
+        "inband_energy_frac": 0.9999372080891353,
+        "beyond_coverage_frac": 1.1080631524768055e-10
+      }
+    },
+    {
+      "scene_id": "confirmatory_smooth_2",
+      "bank": "confirmatory",
+      "stratum": "smooth",
+      "instance": 2,
+      "seed": 800302,
+      "gen_params": {
+        "generator": "bank_gen64.gen_smooth (low-pass Gaussian field)",
+        "family": "smooth",
+        "seed": 800302,
+        "blur_sigma": 5.751241434388931,
+        "x_sha256": "a237849af0d314f1b07be60333764c1c621b54157fc125b99b86e129b5ff9860"
+      },
+      "x_sha256": "a237849af0d314f1b07be60333764c1c621b54157fc125b99b86e129b5ff9860",
+      "stats": {
+        "mean": 0.5287811370777991,
+        "std": 0.15732969291029728,
+        "min": 0.06,
+        "max": 0.9599999999969036,
+        "superres_energy_frac": 0.0001279971641750884,
+        "inband_energy_frac": 0.9998720024818967,
+        "beyond_coverage_frac": 3.5392773458998645e-10
+      }
+    },
+    {
+      "scene_id": "confirmatory_texture_0",
+      "bank": "confirmatory",
+      "stratum": "texture",
+      "instance": 0,
+      "seed": 800400,
+      "gen_params": {
+        "generator": "bank_gen64.gen_texture (band-pass, super-res annulus)",
+        "family": "texture",
+        "seed": 800400,
+        "x_sha256": "bc9eaba3853eb7f6fa66b69e5c6463d4cd24a4cf422d9e42c80979890b73b330"
+      },
+      "x_sha256": "bc9eaba3853eb7f6fa66b69e5c6463d4cd24a4cf422d9e42c80979890b73b330",
+      "stats": {
+        "mean": 0.4911720328224307,
+        "std": 0.12349191709655767,
+        "min": 0.0,
+        "max": 1.0,
+        "superres_energy_frac": 0.05783236058188633,
+        "inband_energy_frac": 0.9421676394181127,
+        "beyond_coverage_frac": 2.9503838647095655e-32
+      }
+    },
+    {
+      "scene_id": "confirmatory_texture_1",
+      "bank": "confirmatory",
+      "stratum": "texture",
+      "instance": 1,
+      "seed": 800401,
+      "gen_params": {
+        "generator": "bank_gen64.gen_texture (band-pass, super-res annulus)",
+        "family": "texture",
+        "seed": 800401,
+        "x_sha256": "c634c2a1681169db26260ef5b9ffd863fe5c06441a5c7d664d6f032183b7db0e"
+      },
+      "x_sha256": "c634c2a1681169db26260ef5b9ffd863fe5c06441a5c7d664d6f032183b7db0e",
+      "stats": {
+        "mean": 0.5090091739059623,
+        "std": 0.1275201216240974,
+        "min": 0.0,
+        "max": 1.0,
+        "superres_energy_frac": 0.05680529378059018,
+        "inband_energy_frac": 0.9431947062194085,
+        "beyond_coverage_frac": 3.04263674111054e-32
+      }
+    },
+    {
+      "scene_id": "confirmatory_texture_2",
+      "bank": "confirmatory",
+      "stratum": "texture",
+      "instance": 2,
+      "seed": 800402,
+      "gen_params": {
+        "generator": "bank_gen64.gen_texture (band-pass, super-res annulus)",
+        "family": "texture",
+        "seed": 800402,
+        "x_sha256": "9181c46c2b0ba56658aced9e4acad5ea424a1ec815f7940f705a3b195d89b218"
+      },
+      "x_sha256": "9181c46c2b0ba56658aced9e4acad5ea424a1ec815f7940f705a3b195d89b218",
+      "stats": {
+        "mean": 0.5501111211063894,
+        "std": 0.1301504164252515,
+        "min": 0.0,
+        "max": 1.0,
+        "superres_energy_frac": 0.050851322963483304,
+        "inband_energy_frac": 0.9491486770365164,
+        "beyond_coverage_frac": 3.934241102837293e-32
+      }
+    }
+  ]
+}

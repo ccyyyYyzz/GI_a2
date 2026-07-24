@@ -1,0 +1,277 @@
+{
+  "campaign": "R39 beyond-modulator-band sealed probe (R34 pattern)",
+  "bank": "mismatch",
+  "role": "F5 declared-law / geometry mismatch degradation bars ONLY",
+  "side": 64,
+  "pattern_band": 8,
+  "medium_band": [
+    1,
+    16
+  ],
+  "value_range": [
+    0.0,
+    1.0
+  ],
+  "seed_base": 820000,
+  "instances_per_stratum": 2,
+  "strata": [
+    "witness",
+    "natural",
+    "onef",
+    "smooth",
+    "texture"
+  ],
+  "n_scenes": 10,
+  "seed_disjoint_from": [
+    700000,
+    710000,
+    720000,
+    "the other three R39 partitions"
+  ],
+  "blind_generation": "no reconstruction, arm, or bucket metric computed during generation",
+  "superres_frac": 0.099609375,
+  "coverage_frac": 0.119384765625,
+  "utc": "2026-07-23 23:34:35Z",
+  "python": "3.11.5",
+  "numpy": "1.24.4",
+  "scenes": [
+    {
+      "scene_id": "mismatch_witness_0",
+      "bank": "mismatch",
+      "stratum": "witness",
+      "instance": 0,
+      "seed": 820000,
+      "gen_params": {
+        "generator": "bank_gen64.gen_witness (in-band random + super-res-zone spikes)",
+        "family": "witness",
+        "seed": 820000,
+        "n_spikes": 17,
+        "x_sha256": "af87ec9a16c46dd8e5509940a98952c6f160634eab123f858cfb028575807d19"
+      },
+      "x_sha256": "af87ec9a16c46dd8e5509940a98952c6f160634eab123f858cfb028575807d19",
+      "stats": {
+        "mean": 0.5925243107168972,
+        "std": 0.135886085990822,
+        "min": 0.0,
+        "max": 1.0,
+        "superres_energy_frac": 0.03249233240426767,
+        "inband_energy_frac": 0.9675076675957315,
+        "beyond_coverage_frac": 2.5189657174199846e-32
+      }
+    },
+    {
+      "scene_id": "mismatch_witness_1",
+      "bank": "mismatch",
+      "stratum": "witness",
+      "instance": 1,
+      "seed": 820001,
+      "gen_params": {
+        "generator": "bank_gen64.gen_witness (in-band random + super-res-zone spikes)",
+        "family": "witness",
+        "seed": 820001,
+        "n_spikes": 13,
+        "x_sha256": "a2671e2988c9756693efdc93b6f4cb72d056ba0d1ab6f3a187d36e3b139fea03"
+      },
+      "x_sha256": "a2671e2988c9756693efdc93b6f4cb72d056ba0d1ab6f3a187d36e3b139fea03",
+      "stats": {
+        "mean": 0.5362510946151873,
+        "std": 0.1400094764667794,
+        "min": 0.0,
+        "max": 1.0,
+        "superres_energy_frac": 0.031007537975581267,
+        "inband_energy_frac": 0.9689924620244182,
+        "beyond_coverage_frac": 3.8151615816260803e-32
+      }
+    },
+    {
+      "scene_id": "mismatch_natural_0",
+      "bank": "mismatch",
+      "stratum": "natural",
+      "instance": 0,
+      "seed": 820100,
+      "gen_params": {
+        "generator": "bank_gen64.gen_natural (skimage.data, downsampled 64x64, deterministic, sha256-recorded)",
+        "family": "natural",
+        "source": "gravel",
+        "global_idx": 5,
+        "x_sha256": "d3c9b9df192946e0ff65bec2cb1cfd3b800de15582e2e8554094b4a96f8561ef"
+      },
+      "x_sha256": "d3c9b9df192946e0ff65bec2cb1cfd3b800de15582e2e8554094b4a96f8561ef",
+      "stats": {
+        "mean": 0.4717990405096392,
+        "std": 0.1556701110954621,
+        "min": 0.0,
+        "max": 0.9999999999999918,
+        "superres_energy_frac": 0.02602674909692128,
+        "inband_energy_frac": 0.9102601835377592,
+        "beyond_coverage_frac": 0.06371306736531854
+      }
+    },
+    {
+      "scene_id": "mismatch_natural_1",
+      "bank": "mismatch",
+      "stratum": "natural",
+      "instance": 1,
+      "seed": 820101,
+      "gen_params": {
+        "generator": "bank_gen64.gen_natural (skimage.data, downsampled 64x64, deterministic, sha256-recorded)",
+        "family": "natural",
+        "source": "brick",
+        "global_idx": 6,
+        "x_sha256": "9c0f3fadb86ae5b1cba883006984bae5e023fc5c9112084b5c0f5e5f12713f88"
+      },
+      "x_sha256": "9c0f3fadb86ae5b1cba883006984bae5e023fc5c9112084b5c0f5e5f12713f88",
+      "stats": {
+        "mean": 0.27400589284725907,
+        "std": 0.18919314386516398,
+        "min": 0.0,
+        "max": 0.999999999999987,
+        "superres_energy_frac": 0.05053658323694636,
+        "inband_energy_frac": 0.6849794100377471,
+        "beyond_coverage_frac": 0.2644840067253043
+      }
+    },
+    {
+      "scene_id": "mismatch_onef_0",
+      "bank": "mismatch",
+      "stratum": "onef",
+      "instance": 0,
+      "seed": 820200,
+      "gen_params": {
+        "generator": "bank_gen64.gen_onef (1/f^beta power-law field)",
+        "family": "onef",
+        "seed": 820200,
+        "beta": 1.1238764227858131,
+        "x_sha256": "36f6284e5039ead93c5be63293d98905aed412aea65c9fd103eb6f79ac9f529e"
+      },
+      "x_sha256": "36f6284e5039ead93c5be63293d98905aed412aea65c9fd103eb6f79ac9f529e",
+      "stats": {
+        "mean": 0.5258750371461651,
+        "std": 0.12934571501878106,
+        "min": 0.05,
+        "max": 0.949999999999981,
+        "superres_energy_frac": 0.010935811990747566,
+        "inband_energy_frac": 0.9780148703634823,
+        "beyond_coverage_frac": 0.011049317645768848
+      }
+    },
+    {
+      "scene_id": "mismatch_onef_1",
+      "bank": "mismatch",
+      "stratum": "onef",
+      "instance": 1,
+      "seed": 820201,
+      "gen_params": {
+        "generator": "bank_gen64.gen_onef (1/f^beta power-law field)",
+        "family": "onef",
+        "seed": 820201,
+        "beta": 1.0904034177374917,
+        "x_sha256": "291db52f30197322d8199af25cef34ded0309fe0df4650143a093f1b3498e18b"
+      },
+      "x_sha256": "291db52f30197322d8199af25cef34ded0309fe0df4650143a093f1b3498e18b",
+      "stats": {
+        "mean": 0.5056497427008042,
+        "std": 0.14116329056575944,
+        "min": 0.05,
+        "max": 0.9499999999999805,
+        "superres_energy_frac": 0.01168177146161163,
+        "inband_energy_frac": 0.9769504044200054,
+        "beyond_coverage_frac": 0.011367824118381496
+      }
+    },
+    {
+      "scene_id": "mismatch_smooth_0",
+      "bank": "mismatch",
+      "stratum": "smooth",
+      "instance": 0,
+      "seed": 820300,
+      "gen_params": {
+        "generator": "bank_gen64.gen_smooth (low-pass Gaussian field)",
+        "family": "smooth",
+        "seed": 820300,
+        "blur_sigma": 7.8887127706217255,
+        "x_sha256": "578df4b3291c9c41d86653b3ee235ec58bccc806b0fd18598d56ef94acb21502"
+      },
+      "x_sha256": "578df4b3291c9c41d86653b3ee235ec58bccc806b0fd18598d56ef94acb21502",
+      "stats": {
+        "mean": 0.40669246110939244,
+        "std": 0.18983986587916063,
+        "min": 0.06,
+        "max": 0.9599999999971958,
+        "superres_energy_frac": 3.3297543503510747e-07,
+        "inband_energy_frac": 0.9999996668524571,
+        "beyond_coverage_frac": 1.72106619512658e-10
+      }
+    },
+    {
+      "scene_id": "mismatch_smooth_1",
+      "bank": "mismatch",
+      "stratum": "smooth",
+      "instance": 1,
+      "seed": 820301,
+      "gen_params": {
+        "generator": "bank_gen64.gen_smooth (low-pass Gaussian field)",
+        "family": "smooth",
+        "seed": 820301,
+        "blur_sigma": 6.055061590396378,
+        "x_sha256": "e5d021b9805896984ddcf9e5384aaf932dec8702e2ea596ad4dec7fc9bb6021e"
+      },
+      "x_sha256": "e5d021b9805896984ddcf9e5384aaf932dec8702e2ea596ad4dec7fc9bb6021e",
+      "stats": {
+        "mean": 0.46852974505806966,
+        "std": 0.1504729671443262,
+        "min": 0.06,
+        "max": 0.9599999999961708,
+        "superres_energy_frac": 7.75213395424889e-05,
+        "inband_energy_frac": 0.999922477871788,
+        "beyond_coverage_frac": 7.886684188055629e-10
+      }
+    },
+    {
+      "scene_id": "mismatch_texture_0",
+      "bank": "mismatch",
+      "stratum": "texture",
+      "instance": 0,
+      "seed": 820400,
+      "gen_params": {
+        "generator": "bank_gen64.gen_texture (band-pass, super-res annulus)",
+        "family": "texture",
+        "seed": 820400,
+        "x_sha256": "77300d4461a6891a5d44bf3d6ae87fff7f1e249a9f29f1f8299a124dea724694"
+      },
+      "x_sha256": "77300d4461a6891a5d44bf3d6ae87fff7f1e249a9f29f1f8299a124dea724694",
+      "stats": {
+        "mean": 0.4776215884753677,
+        "std": 0.13247655765069555,
+        "min": 0.0,
+        "max": 1.0,
+        "superres_energy_frac": 0.06871935248913642,
+        "inband_energy_frac": 0.9312806475108628,
+        "beyond_coverage_frac": 2.564299983770451e-32
+      }
+    },
+    {
+      "scene_id": "mismatch_texture_1",
+      "bank": "mismatch",
+      "stratum": "texture",
+      "instance": 1,
+      "seed": 820401,
+      "gen_params": {
+        "generator": "bank_gen64.gen_texture (band-pass, super-res annulus)",
+        "family": "texture",
+        "seed": 820401,
+        "x_sha256": "6de6c7bfe8c2a739d6259d5aa302147898060980cb033c776e5f1757dd750f24"
+      },
+      "x_sha256": "6de6c7bfe8c2a739d6259d5aa302147898060980cb033c776e5f1757dd750f24",
+      "stats": {
+        "mean": 0.5370284481385106,
+        "std": 0.14714363493302893,
+        "min": 0.0,
+        "max": 1.0,
+        "superres_energy_frac": 0.06740855675353102,
+        "inband_energy_frac": 0.9325914432464683,
+        "beyond_coverage_frac": 3.6023661397152847e-32
+      }
+    }
+  ]
+}

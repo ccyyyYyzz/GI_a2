@@ -1,0 +1,19 @@
+G3 SCALE 64x64: N=4096 PB=8 medium 1<=i+j<=16 db=152 M=128 T=4096
+  coverage frac 0.119  super-res-zone frac 0.100
+  shell sizes (freqs) Dk=1..6: [19, 21, 23, 25, 27, 29]
+
+[A] aperture-law in/out separation (full-spectrum broadband scene)
+    in-coverage 0.250  out-coverage 4.697  SEPARATION 18.76x  (KILL <3x)
+
+[B] shell-resolved beyond-band err(Delta-k) and viable extension depth
+    witness per-shell energy Dk=1..6: [6.26, 6.26, 6.26, 6.26, 6.26, 6.26]
+    [flat     moment] err Dk=1..6: [0.468, 0.835, 0.812, 1.145, 1.118, 1.035]  depth(<=0.3)=0 depth(<=0.5)=1
+    [decaying moment] err Dk=1..6: [1.464, 1.43, 1.507, 1.76, 2.293, 2.233]  depth(<=0.3)=0 depth(<=0.5)=0
+    [flat MLE T=1024] err Dk=1..6: [0.567, 1.266, 1.009, 3.758, 1.735, 3.167]  depth(<=0.3)=0 (moment sameT depth 0) [71s]
+
+[B2] natural images: super-res-zone + shallow-shell recovery
+    cameraman   superres-NMSE 1.918  Dk1 1.375  Dk2 1.011  Dk3 1.904
+    coins       superres-NMSE 0.768  Dk1 0.404  Dk2 0.422  Dk3 0.639
+    moon        superres-NMSE 15.701  Dk1 3.929  Dk2 4.430  Dk3 4.575
+
+G3 VERDICT: KILL  (law 18.8x; viable depth flat=0 decaying=0; toy depth=1)  [472s]

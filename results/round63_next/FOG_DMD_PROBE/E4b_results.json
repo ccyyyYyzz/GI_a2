@@ -1,0 +1,6 @@
+{
+  "in_dist_dl_alone": 0.29171948783955576,
+  "ood_dl_alone": 1.0367066431009135,
+  "refine_baseline": 0.44011752437117413,
+  "note": "refine seeded independently of DL to test whether likelihood supports the null"
+}

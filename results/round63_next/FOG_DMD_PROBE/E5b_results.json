@@ -1,0 +1,20 @@
+{
+  "rows": [
+    {
+      "kind": "dense_ref",
+      "oracle": 9.102394114281893e-08,
+      "frozen_known": 0.027724029568264783,
+      "trueZ_noSparse": 0.8634125403252378,
+      "trueZ_sparse": 0.7093473494323572,
+      "baseline_sparse": 0.7663479555518408
+    },
+    {
+      "kind": "sparse",
+      "oracle": 1.535420567571806e-07,
+      "frozen_known": 0.013264908966383625,
+      "trueZ_noSparse": 0.5387352068786343,
+      "trueZ_sparse": 0.9722565179241733,
+      "baseline_sparse": 0.7562843293677124
+    }
+  ]
+}

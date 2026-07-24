@@ -1,0 +1,77 @@
+{
+  "n_cells": 205,
+  "n_shards": 5,
+  "fleet": [
+    {
+      "shard": 0,
+      "account": "pro1",
+      "home": "/var/tmp/codex-colab-accounts/pro1"
+    },
+    {
+      "shard": 1,
+      "account": "pro2",
+      "home": "/var/tmp/codex-colab-accounts/pro2"
+    },
+    {
+      "shard": 2,
+      "account": "pro1",
+      "home": "/var/tmp/codex-colab-accounts/pro1"
+    },
+    {
+      "shard": 3,
+      "account": "pro2",
+      "home": "/var/tmp/codex-colab-accounts/pro2"
+    },
+    {
+      "shard": 4,
+      "account": "pro2",
+      "home": "/var/tmp/codex-colab-accounts/pro2"
+    }
+  ],
+  "frozen": {
+    "T": 4096,
+    "photons": 100000.0,
+    "replicates": 3,
+    "steps": 4000,
+    "n_starts": 6,
+    "n_em": 25,
+    "mismatch_axes": {
+      "fine_rotation": [
+        "rot10",
+        "rot20"
+      ],
+      "band_width": [
+        "narrow",
+        "wide"
+      ],
+      "radial_profile": [
+        "flat_vs_1overf"
+      ],
+      "geometry_alpha": [
+        "a0.1",
+        "a0.25",
+        "a0.5"
+      ],
+      "wrong_tau": [
+        "tau_half",
+        "tau_double"
+      ],
+      "wrong_sigma_f": [
+        "sf_0.2",
+        "sf_0.4"
+      ]
+    }
+  },
+  "cells_per_shard": {
+    "0": 41,
+    "1": 41,
+    "2": 41,
+    "3": 41,
+    "4": 41
+  },
+  "cell_kind_counts": {
+    "arms": 75,
+    "mismatch": 120,
+    "aperture": 10
+  }
+}

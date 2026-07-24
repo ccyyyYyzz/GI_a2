@@ -1,0 +1,277 @@
+{
+  "campaign": "R39 beyond-modulator-band sealed probe (R34 pattern)",
+  "bank": "oracle",
+  "role": "oracle-ceiling reference anchor ONLY (disjoint from confirmatory)",
+  "side": 64,
+  "pattern_band": 8,
+  "medium_band": [
+    1,
+    16
+  ],
+  "value_range": [
+    0.0,
+    1.0
+  ],
+  "seed_base": 830000,
+  "instances_per_stratum": 2,
+  "strata": [
+    "witness",
+    "natural",
+    "onef",
+    "smooth",
+    "texture"
+  ],
+  "n_scenes": 10,
+  "seed_disjoint_from": [
+    700000,
+    710000,
+    720000,
+    "the other three R39 partitions"
+  ],
+  "blind_generation": "no reconstruction, arm, or bucket metric computed during generation",
+  "superres_frac": 0.099609375,
+  "coverage_frac": 0.119384765625,
+  "utc": "2026-07-23 23:34:35Z",
+  "python": "3.11.5",
+  "numpy": "1.24.4",
+  "scenes": [
+    {
+      "scene_id": "oracle_witness_0",
+      "bank": "oracle",
+      "stratum": "witness",
+      "instance": 0,
+      "seed": 830000,
+      "gen_params": {
+        "generator": "bank_gen64.gen_witness (in-band random + super-res-zone spikes)",
+        "family": "witness",
+        "seed": 830000,
+        "n_spikes": 17,
+        "x_sha256": "53c05414a165a1d32817f17fad654bfaa8e43b94283ca30b644fb6a53826fc17"
+      },
+      "x_sha256": "53c05414a165a1d32817f17fad654bfaa8e43b94283ca30b644fb6a53826fc17",
+      "stats": {
+        "mean": 0.5232971701415423,
+        "std": 0.1268682529635246,
+        "min": 0.0,
+        "max": 1.0,
+        "superres_energy_frac": 0.031173609422838082,
+        "inband_energy_frac": 0.968826390577161,
+        "beyond_coverage_frac": 3.0080117349042833e-32
+      }
+    },
+    {
+      "scene_id": "oracle_witness_1",
+      "bank": "oracle",
+      "stratum": "witness",
+      "instance": 1,
+      "seed": 830001,
+      "gen_params": {
+        "generator": "bank_gen64.gen_witness (in-band random + super-res-zone spikes)",
+        "family": "witness",
+        "seed": 830001,
+        "n_spikes": 20,
+        "x_sha256": "5b83ed46f1d3d7b9b3e68630a232031d28c66a514066e0699847f9ddcc9a153f"
+      },
+      "x_sha256": "5b83ed46f1d3d7b9b3e68630a232031d28c66a514066e0699847f9ddcc9a153f",
+      "stats": {
+        "mean": 0.5130275432589856,
+        "std": 0.13989382895849092,
+        "min": 0.0,
+        "max": 1.0,
+        "superres_energy_frac": 0.04590558708520403,
+        "inband_energy_frac": 0.9540944129147955,
+        "beyond_coverage_frac": 2.90466321094837e-32
+      }
+    },
+    {
+      "scene_id": "oracle_natural_0",
+      "bank": "oracle",
+      "stratum": "natural",
+      "instance": 0,
+      "seed": 830100,
+      "gen_params": {
+        "generator": "bank_gen64.gen_natural (skimage.data, downsampled 64x64, deterministic, sha256-recorded)",
+        "family": "natural",
+        "source": "page",
+        "global_idx": 7,
+        "x_sha256": "9b988830426196a6235f105c4c007f82acd96ba9b625c264ee2b9287d081077f"
+      },
+      "x_sha256": "9b988830426196a6235f105c4c007f82acd96ba9b625c264ee2b9287d081077f",
+      "stats": {
+        "mean": 0.640507375725186,
+        "std": 0.25540839404521726,
+        "min": 0.0,
+        "max": 0.9999999999999947,
+        "superres_energy_frac": 0.015651515314285967,
+        "inband_energy_frac": 0.9775058770781773,
+        "beyond_coverage_frac": 0.006842607607536335
+      }
+    },
+    {
+      "scene_id": "oracle_natural_1",
+      "bank": "oracle",
+      "stratum": "natural",
+      "instance": 1,
+      "seed": 830101,
+      "gen_params": {
+        "generator": "bank_gen64.gen_natural (skimage.data, downsampled 64x64, deterministic, sha256-recorded)",
+        "family": "natural",
+        "source": "horse",
+        "global_idx": 8,
+        "x_sha256": "546796d2538eb38690fc37bbb85c41fc073b0b79f08d69ca0ff22c5608f0ec18"
+      },
+      "x_sha256": "546796d2538eb38690fc37bbb85c41fc073b0b79f08d69ca0ff22c5608f0ec18",
+      "stats": {
+        "mean": 0.6691775107939242,
+        "std": 0.44639301135081944,
+        "min": 0.0,
+        "max": 0.999999999999,
+        "superres_energy_frac": 0.057866933106982425,
+        "inband_energy_frac": 0.9269881474407787,
+        "beyond_coverage_frac": 0.015144919452238566
+      }
+    },
+    {
+      "scene_id": "oracle_onef_0",
+      "bank": "oracle",
+      "stratum": "onef",
+      "instance": 0,
+      "seed": 830200,
+      "gen_params": {
+        "generator": "bank_gen64.gen_onef (1/f^beta power-law field)",
+        "family": "onef",
+        "seed": 830200,
+        "beta": 1.0425096911895535,
+        "x_sha256": "63da24e7979d5d7fd6f11bfba257cd4dc3089f4deea6e41387ef07e82a12676e"
+      },
+      "x_sha256": "63da24e7979d5d7fd6f11bfba257cd4dc3089f4deea6e41387ef07e82a12676e",
+      "stats": {
+        "mean": 0.4703773766106778,
+        "std": 0.13051657167041752,
+        "min": 0.05,
+        "max": 0.9499999999999753,
+        "superres_energy_frac": 0.01791328432322366,
+        "inband_energy_frac": 0.9629108141388224,
+        "beyond_coverage_frac": 0.019175901537952962
+      }
+    },
+    {
+      "scene_id": "oracle_onef_1",
+      "bank": "oracle",
+      "stratum": "onef",
+      "instance": 1,
+      "seed": 830201,
+      "gen_params": {
+        "generator": "bank_gen64.gen_onef (1/f^beta power-law field)",
+        "family": "onef",
+        "seed": 830201,
+        "beta": 1.255213672252372,
+        "x_sha256": "1d15952c8a88b06bb56f4c1fc3f80d3d20b271188605171f81cf414cb769a69d"
+      },
+      "x_sha256": "1d15952c8a88b06bb56f4c1fc3f80d3d20b271188605171f81cf414cb769a69d",
+      "stats": {
+        "mean": 0.5293982096443699,
+        "std": 0.14917004295972067,
+        "min": 0.05,
+        "max": 0.9499999999999854,
+        "superres_energy_frac": 0.012409120073038434,
+        "inband_energy_frac": 0.9793025574649976,
+        "beyond_coverage_frac": 0.008288322461963172
+      }
+    },
+    {
+      "scene_id": "oracle_smooth_0",
+      "bank": "oracle",
+      "stratum": "smooth",
+      "instance": 0,
+      "seed": 830300,
+      "gen_params": {
+        "generator": "bank_gen64.gen_smooth (low-pass Gaussian field)",
+        "family": "smooth",
+        "seed": 830300,
+        "blur_sigma": 7.647648953212677,
+        "x_sha256": "e9b3ca13b81805c5b99b959e31b02bd27af304f4e5231aac8b85a3ff25f0aa94"
+      },
+      "x_sha256": "e9b3ca13b81805c5b99b959e31b02bd27af304f4e5231aac8b85a3ff25f0aa94",
+      "stats": {
+        "mean": 0.4859998764054928,
+        "std": 0.15083864782959572,
+        "min": 0.06,
+        "max": 0.9599999999970485,
+        "superres_energy_frac": 7.439450530318632e-07,
+        "inband_energy_frac": 0.9999992559151087,
+        "beyond_coverage_frac": 1.3983711214826095e-10
+      }
+    },
+    {
+      "scene_id": "oracle_smooth_1",
+      "bank": "oracle",
+      "stratum": "smooth",
+      "instance": 1,
+      "seed": 830301,
+      "gen_params": {
+        "generator": "bank_gen64.gen_smooth (low-pass Gaussian field)",
+        "family": "smooth",
+        "seed": 830301,
+        "blur_sigma": 6.792692003959425,
+        "x_sha256": "d62f9f9e7f8e69ba0c4dc54e693e7ba08aa6e19268827233e9a1763d928d0776"
+      },
+      "x_sha256": "d62f9f9e7f8e69ba0c4dc54e693e7ba08aa6e19268827233e9a1763d928d0776",
+      "stats": {
+        "mean": 0.4154902999903915,
+        "std": 0.1769148800939703,
+        "min": 0.06,
+        "max": 0.9599999999967381,
+        "superres_energy_frac": 1.1488115056821545e-05,
+        "inband_energy_frac": 0.9999885113083417,
+        "beyond_coverage_frac": 5.765997641925451e-10
+      }
+    },
+    {
+      "scene_id": "oracle_texture_0",
+      "bank": "oracle",
+      "stratum": "texture",
+      "instance": 0,
+      "seed": 830400,
+      "gen_params": {
+        "generator": "bank_gen64.gen_texture (band-pass, super-res annulus)",
+        "family": "texture",
+        "seed": 830400,
+        "x_sha256": "94ab59c65edaf9421191b8b032759b170359de4e65b5a4449ab981a2b2304116"
+      },
+      "x_sha256": "94ab59c65edaf9421191b8b032759b170359de4e65b5a4449ab981a2b2304116",
+      "stats": {
+        "mean": 0.4875024518037552,
+        "std": 0.1385446170838247,
+        "min": 0.0,
+        "max": 1.0,
+        "superres_energy_frac": 0.07163564337274976,
+        "inband_energy_frac": 0.9283643566272494,
+        "beyond_coverage_frac": 2.877382457975514e-32
+      }
+    },
+    {
+      "scene_id": "oracle_texture_1",
+      "bank": "oracle",
+      "stratum": "texture",
+      "instance": 1,
+      "seed": 830401,
+      "gen_params": {
+        "generator": "bank_gen64.gen_texture (band-pass, super-res annulus)",
+        "family": "texture",
+        "seed": 830401,
+        "x_sha256": "5ae5c1cb6e9d213f4675b6ea88bbf366ae011818267e4b8f562096ac3d68a806"
+      },
+      "x_sha256": "5ae5c1cb6e9d213f4675b6ea88bbf366ae011818267e4b8f562096ac3d68a806",
+      "stats": {
+        "mean": 0.584388884831957,
+        "std": 0.12279695633867022,
+        "min": 0.0,
+        "max": 1.0,
+        "superres_energy_frac": 0.04091795614475442,
+        "inband_energy_frac": 0.9590820438552446,
+        "beyond_coverage_frac": 2.833833872538653e-32
+      }
+    }
+  ]
+}

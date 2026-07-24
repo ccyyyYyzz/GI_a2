@@ -1,0 +1,92 @@
+[
+ {
+  "arm": "A2",
+  "photons": "clean",
+  "seed": 0,
+  "sf_fourier": 0.5528116327872965,
+  "sf_walsh": 0.2829353397790738,
+  "pw_blind": 1.079419553501962,
+  "pw_trueseed": 0.718464989421214
+ },
+ {
+  "arm": "A2",
+  "photons": "clean",
+  "seed": 1,
+  "sf_fourier": 0.5524945389150918,
+  "sf_walsh": 0.2832948107534771,
+  "pw_blind": 1.0783406181221633,
+  "pw_trueseed": 0.6938095041186396
+ },
+ {
+  "arm": "A2",
+  "photons": "clean",
+  "seed": 2,
+  "sf_fourier": 0.5621703662125691,
+  "sf_walsh": 0.2804594126517001,
+  "pw_blind": 1.067421733048642,
+  "pw_trueseed": 0.6600436488970501
+ },
+ {
+  "arm": "A2",
+  "photons": "clean",
+  "seed": 3,
+  "sf_fourier": 0.5601406271837592,
+  "sf_walsh": 0.28227835808128443,
+  "pw_blind": 1.0731602777616982,
+  "pw_trueseed": 0.7166441891858779
+ },
+ {
+  "arm": "A2",
+  "photons": "clean",
+  "seed": 4,
+  "sf_fourier": 0.5689985357153259,
+  "sf_walsh": 0.28463449587218,
+  "pw_blind": 1.0547864998741632,
+  "pw_trueseed": 0.6489343695898537
+ },
+ {
+  "arm": "A4",
+  "photons": "clean",
+  "seed": 0,
+  "sf_fourier": 0.5528116327872965,
+  "sf_walsh": 0.2829353397790738,
+  "pw_blind": 1.0789533055999803,
+  "pw_trueseed": 0.8112340949718074
+ },
+ {
+  "arm": "A4",
+  "photons": "clean",
+  "seed": 1,
+  "sf_fourier": 0.5524945389150918,
+  "sf_walsh": 0.2832948107534771,
+  "pw_blind": 1.0891625407813803,
+  "pw_trueseed": 0.8278960103561164
+ },
+ {
+  "arm": "A4",
+  "photons": "clean",
+  "seed": 2,
+  "sf_fourier": 0.5621703662125691,
+  "sf_walsh": 0.2804594126517001,
+  "pw_blind": 1.062366184024298,
+  "pw_trueseed": 0.7338527025634493
+ },
+ {
+  "arm": "A4",
+  "photons": "clean",
+  "seed": 3,
+  "sf_fourier": 0.5601406271837592,
+  "sf_walsh": 0.28227835808128443,
+  "pw_blind": 1.0740407162323335,
+  "pw_trueseed": 0.8024478324852821
+ },
+ {
+  "arm": "A4",
+  "photons": "clean",
+  "seed": 4,
+  "sf_fourier": 0.5689985357153259,
+  "sf_walsh": 0.28463449587218,
+  "pw_blind": 1.0383761434319327,
+  "pw_trueseed": 0.6915288800806146
+ }
+]

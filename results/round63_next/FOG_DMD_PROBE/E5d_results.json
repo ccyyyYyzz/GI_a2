@@ -1,0 +1,112 @@
+{
+  "T2048": {
+    "matched": 0.31,
+    "basis_rotation": [
+      {
+        "label": "rot~5%",
+        "nmse": 0.316,
+        "degradation_pct": 1.9354838709677438,
+        "measured_mismatch": 0.05
+      },
+      {
+        "label": "rot~10%",
+        "nmse": 0.312,
+        "degradation_pct": 0.6451612903225813,
+        "measured_mismatch": 0.1
+      },
+      {
+        "label": "rot~20%",
+        "nmse": 0.318,
+        "degradation_pct": 2.580645161290325,
+        "measured_mismatch": 0.2
+      }
+    ],
+    "wrong_tau": [
+      {
+        "label": "true_tau=8",
+        "nmse": 0.285,
+        "degradation_pct": -8.064516129032265,
+        "measured_mismatch": null
+      },
+      {
+        "label": "true_tau=32",
+        "nmse": 0.377,
+        "degradation_pct": 21.612903225806456,
+        "measured_mismatch": null
+      }
+    ],
+    "wrong_sigma_f": [
+      {
+        "label": "true_sf=0.1",
+        "nmse": 0.313,
+        "degradation_pct": 0.9677419354838719,
+        "measured_mismatch": null
+      },
+      {
+        "label": "true_sf=0.2",
+        "nmse": 0.331,
+        "degradation_pct": 6.774193548387103,
+        "measured_mismatch": null
+      }
+    ],
+    "dim_mismatch": [
+      {
+        "label": "true_d=40",
+        "nmse": 0.331,
+        "degradation_pct": 6.774193548387103,
+        "measured_mismatch": null
+      },
+      {
+        "label": "true_d=56",
+        "nmse": 0.32,
+        "degradation_pct": 3.2258064516129057,
+        "measured_mismatch": null
+      }
+    ]
+  },
+  "T1024": {
+    "matched": 0.376,
+    "basis_rotation": [
+      {
+        "label": "rot~5%",
+        "nmse": 0.375,
+        "degradation_pct": -0.2659574468085109,
+        "measured_mismatch": 0.05
+      },
+      {
+        "label": "rot~10%",
+        "nmse": 0.368,
+        "degradation_pct": -2.1276595744680873,
+        "measured_mismatch": 0.1
+      },
+      {
+        "label": "rot~20%",
+        "nmse": 0.375,
+        "degradation_pct": -0.2659574468085109,
+        "measured_mismatch": 0.2
+      }
+    ],
+    "wrong_tau": [
+      {
+        "label": "true_tau=8",
+        "nmse": 0.342,
+        "degradation_pct": -9.042553191489356,
+        "measured_mismatch": null
+      },
+      {
+        "label": "true_tau=32",
+        "nmse": 0.433,
+        "degradation_pct": 15.159574468085104,
+        "measured_mismatch": null
+      }
+    ],
+    "wrong_sigma_f": [],
+    "dim_mismatch": []
+  },
+  "meta": {
+    "cell": "M=96 d=48 sf=0.15",
+    "photons": 100000.0,
+    "seeds": 5,
+    "note": "Reconstructed from run log; run was externally killed (exit 127) during the T=1024 block after another session cleared python processes. T=2048 block (used for the verdict) is COMPLETE; T=1024 sigma_f/dim axes not reached (redundant with T=2048)."
+  }
+}

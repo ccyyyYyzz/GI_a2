@@ -1,0 +1,13 @@
+G2 GEOMETRY MIXING  T=2048 seeds=3 blur_sigma=0.8px
+primary: effective-illumination blend  A=(1-a)(P.w)+a*blur(P.w)
+  [blend] alpha=0.00  err 0.516  degr +0%  [0.516, 0.493, 0.635]
+  [blend] alpha=0.10  err 0.514  degr -0%  [0.565, 0.514, 0.489]
+  [blend] alpha=0.25  err 0.545  degr +6%  [0.596, 0.505, 0.545]
+  [blend] alpha=0.50  err 0.583  degr +13%  [0.66, 0.58, 0.583]
+variant: convolutive medium  w_eff=(1-a)w+a*blur(w)
+  [convmed] alpha=0.00  err 0.516  degr +0%  [0.516, 0.493, 0.635]
+  [convmed] alpha=0.10  err 0.507  degr -2%  [0.519, 0.507, 0.506]
+  [convmed] alpha=0.25  err 0.530  degr +3%  [0.53, 0.512, 0.616]
+  [convmed] alpha=0.50  err 0.552  degr +7%  [0.552, 0.482, 0.609]
+
+G2 VERDICT: PASS  (blend err@alpha=0.1 = 0.514; worst-across-sweep 0.583)  [345s]

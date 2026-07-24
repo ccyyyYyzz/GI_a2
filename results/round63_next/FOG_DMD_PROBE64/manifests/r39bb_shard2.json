@@ -1,0 +1,354 @@
+{
+  "shard_id": "r39bb_shard2",
+  "account": "pro1",
+  "home": "/var/tmp/codex-colab-accounts/pro1",
+  "parity": "even->pro1",
+  "frozen": {
+    "T": 4096,
+    "photons": 100000.0,
+    "replicates": 3,
+    "steps": 4000,
+    "n_starts": 6,
+    "n_em": 25,
+    "mismatch_axes": {
+      "fine_rotation": [
+        "rot10",
+        "rot20"
+      ],
+      "band_width": [
+        "narrow",
+        "wide"
+      ],
+      "radial_profile": [
+        "flat_vs_1overf"
+      ],
+      "geometry_alpha": [
+        "a0.1",
+        "a0.25",
+        "a0.5"
+      ],
+      "wrong_tau": [
+        "tau_half",
+        "tau_double"
+      ],
+      "wrong_sigma_f": [
+        "sf_0.2",
+        "sf_0.4"
+      ]
+    }
+  },
+  "n_cells": 41,
+  "cells": [
+    {
+      "kind": "arms",
+      "partition": "confirmatory",
+      "scene_id": "confirmatory_witness_0",
+      "replicate": 2,
+      "cell_id": "arms::confirmatory_witness_0::r2"
+    },
+    {
+      "kind": "arms",
+      "partition": "confirmatory",
+      "scene_id": "confirmatory_witness_2",
+      "replicate": 1,
+      "cell_id": "arms::confirmatory_witness_2::r1"
+    },
+    {
+      "kind": "arms",
+      "partition": "confirmatory",
+      "scene_id": "confirmatory_natural_1",
+      "replicate": 0,
+      "cell_id": "arms::confirmatory_natural_1::r0"
+    },
+    {
+      "kind": "arms",
+      "partition": "confirmatory",
+      "scene_id": "confirmatory_natural_2",
+      "replicate": 2,
+      "cell_id": "arms::confirmatory_natural_2::r2"
+    },
+    {
+      "kind": "arms",
+      "partition": "confirmatory",
+      "scene_id": "confirmatory_onef_1",
+      "replicate": 1,
+      "cell_id": "arms::confirmatory_onef_1::r1"
+    },
+    {
+      "kind": "arms",
+      "partition": "confirmatory",
+      "scene_id": "confirmatory_smooth_0",
+      "replicate": 0,
+      "cell_id": "arms::confirmatory_smooth_0::r0"
+    },
+    {
+      "kind": "arms",
+      "partition": "confirmatory",
+      "scene_id": "confirmatory_smooth_1",
+      "replicate": 2,
+      "cell_id": "arms::confirmatory_smooth_1::r2"
+    },
+    {
+      "kind": "arms",
+      "partition": "confirmatory",
+      "scene_id": "confirmatory_texture_0",
+      "replicate": 1,
+      "cell_id": "arms::confirmatory_texture_0::r1"
+    },
+    {
+      "kind": "arms",
+      "partition": "confirmatory",
+      "scene_id": "confirmatory_texture_2",
+      "replicate": 0,
+      "cell_id": "arms::confirmatory_texture_2::r0"
+    },
+    {
+      "kind": "arms",
+      "partition": "oracle",
+      "scene_id": "oracle_witness_0",
+      "replicate": 2,
+      "cell_id": "arms::oracle_witness_0::r2"
+    },
+    {
+      "kind": "arms",
+      "partition": "oracle",
+      "scene_id": "oracle_natural_0",
+      "replicate": 1,
+      "cell_id": "arms::oracle_natural_0::r1"
+    },
+    {
+      "kind": "arms",
+      "partition": "oracle",
+      "scene_id": "oracle_onef_0",
+      "replicate": 0,
+      "cell_id": "arms::oracle_onef_0::r0"
+    },
+    {
+      "kind": "arms",
+      "partition": "oracle",
+      "scene_id": "oracle_onef_1",
+      "replicate": 2,
+      "cell_id": "arms::oracle_onef_1::r2"
+    },
+    {
+      "kind": "arms",
+      "partition": "oracle",
+      "scene_id": "oracle_smooth_1",
+      "replicate": 1,
+      "cell_id": "arms::oracle_smooth_1::r1"
+    },
+    {
+      "kind": "arms",
+      "partition": "oracle",
+      "scene_id": "oracle_texture_1",
+      "replicate": 0,
+      "cell_id": "arms::oracle_texture_1::r0"
+    },
+    {
+      "kind": "mismatch",
+      "partition": "mismatch",
+      "scene_id": "mismatch_witness_0",
+      "axis": "band_width",
+      "condition": "narrow",
+      "cell_id": "mismatch::mismatch_witness_0::band_width::narrow"
+    },
+    {
+      "kind": "mismatch",
+      "partition": "mismatch",
+      "scene_id": "mismatch_witness_0",
+      "axis": "geometry_alpha",
+      "condition": "a0.5",
+      "cell_id": "mismatch::mismatch_witness_0::geometry_alpha::a0.5"
+    },
+    {
+      "kind": "mismatch",
+      "partition": "mismatch",
+      "scene_id": "mismatch_witness_1",
+      "axis": "fine_rotation",
+      "condition": "rot10",
+      "cell_id": "mismatch::mismatch_witness_1::fine_rotation::rot10"
+    },
+    {
+      "kind": "mismatch",
+      "partition": "mismatch",
+      "scene_id": "mismatch_witness_1",
+      "axis": "geometry_alpha",
+      "condition": "a0.1",
+      "cell_id": "mismatch::mismatch_witness_1::geometry_alpha::a0.1"
+    },
+    {
+      "kind": "mismatch",
+      "partition": "mismatch",
+      "scene_id": "mismatch_witness_1",
+      "axis": "wrong_sigma_f",
+      "condition": "sf_0.2",
+      "cell_id": "mismatch::mismatch_witness_1::wrong_sigma_f::sf_0.2"
+    },
+    {
+      "kind": "mismatch",
+      "partition": "mismatch",
+      "scene_id": "mismatch_natural_0",
+      "axis": "band_width",
+      "condition": "wide",
+      "cell_id": "mismatch::mismatch_natural_0::band_width::wide"
+    },
+    {
+      "kind": "mismatch",
+      "partition": "mismatch",
+      "scene_id": "mismatch_natural_0",
+      "axis": "wrong_tau",
+      "condition": "tau_half",
+      "cell_id": "mismatch::mismatch_natural_0::wrong_tau::tau_half"
+    },
+    {
+      "kind": "mismatch",
+      "partition": "mismatch",
+      "scene_id": "mismatch_natural_1",
+      "axis": "fine_rotation",
+      "condition": "rot20",
+      "cell_id": "mismatch::mismatch_natural_1::fine_rotation::rot20"
+    },
+    {
+      "kind": "mismatch",
+      "partition": "mismatch",
+      "scene_id": "mismatch_natural_1",
+      "axis": "geometry_alpha",
+      "condition": "a0.25",
+      "cell_id": "mismatch::mismatch_natural_1::geometry_alpha::a0.25"
+    },
+    {
+      "kind": "mismatch",
+      "partition": "mismatch",
+      "scene_id": "mismatch_natural_1",
+      "axis": "wrong_sigma_f",
+      "condition": "sf_0.4",
+      "cell_id": "mismatch::mismatch_natural_1::wrong_sigma_f::sf_0.4"
+    },
+    {
+      "kind": "mismatch",
+      "partition": "mismatch",
+      "scene_id": "mismatch_onef_0",
+      "axis": "radial_profile",
+      "condition": "flat_vs_1overf",
+      "cell_id": "mismatch::mismatch_onef_0::radial_profile::flat_vs_1overf"
+    },
+    {
+      "kind": "mismatch",
+      "partition": "mismatch",
+      "scene_id": "mismatch_onef_0",
+      "axis": "wrong_tau",
+      "condition": "tau_double",
+      "cell_id": "mismatch::mismatch_onef_0::wrong_tau::tau_double"
+    },
+    {
+      "kind": "mismatch",
+      "partition": "mismatch",
+      "scene_id": "mismatch_onef_1",
+      "axis": "band_width",
+      "condition": "narrow",
+      "cell_id": "mismatch::mismatch_onef_1::band_width::narrow"
+    },
+    {
+      "kind": "mismatch",
+      "partition": "mismatch",
+      "scene_id": "mismatch_onef_1",
+      "axis": "geometry_alpha",
+      "condition": "a0.5",
+      "cell_id": "mismatch::mismatch_onef_1::geometry_alpha::a0.5"
+    },
+    {
+      "kind": "mismatch",
+      "partition": "mismatch",
+      "scene_id": "mismatch_smooth_0",
+      "axis": "fine_rotation",
+      "condition": "rot10",
+      "cell_id": "mismatch::mismatch_smooth_0::fine_rotation::rot10"
+    },
+    {
+      "kind": "mismatch",
+      "partition": "mismatch",
+      "scene_id": "mismatch_smooth_0",
+      "axis": "geometry_alpha",
+      "condition": "a0.1",
+      "cell_id": "mismatch::mismatch_smooth_0::geometry_alpha::a0.1"
+    },
+    {
+      "kind": "mismatch",
+      "partition": "mismatch",
+      "scene_id": "mismatch_smooth_0",
+      "axis": "wrong_sigma_f",
+      "condition": "sf_0.2",
+      "cell_id": "mismatch::mismatch_smooth_0::wrong_sigma_f::sf_0.2"
+    },
+    {
+      "kind": "mismatch",
+      "partition": "mismatch",
+      "scene_id": "mismatch_smooth_1",
+      "axis": "band_width",
+      "condition": "wide",
+      "cell_id": "mismatch::mismatch_smooth_1::band_width::wide"
+    },
+    {
+      "kind": "mismatch",
+      "partition": "mismatch",
+      "scene_id": "mismatch_smooth_1",
+      "axis": "wrong_tau",
+      "condition": "tau_half",
+      "cell_id": "mismatch::mismatch_smooth_1::wrong_tau::tau_half"
+    },
+    {
+      "kind": "mismatch",
+      "partition": "mismatch",
+      "scene_id": "mismatch_texture_0",
+      "axis": "fine_rotation",
+      "condition": "rot20",
+      "cell_id": "mismatch::mismatch_texture_0::fine_rotation::rot20"
+    },
+    {
+      "kind": "mismatch",
+      "partition": "mismatch",
+      "scene_id": "mismatch_texture_0",
+      "axis": "geometry_alpha",
+      "condition": "a0.25",
+      "cell_id": "mismatch::mismatch_texture_0::geometry_alpha::a0.25"
+    },
+    {
+      "kind": "mismatch",
+      "partition": "mismatch",
+      "scene_id": "mismatch_texture_0",
+      "axis": "wrong_sigma_f",
+      "condition": "sf_0.4",
+      "cell_id": "mismatch::mismatch_texture_0::wrong_sigma_f::sf_0.4"
+    },
+    {
+      "kind": "mismatch",
+      "partition": "mismatch",
+      "scene_id": "mismatch_texture_1",
+      "axis": "radial_profile",
+      "condition": "flat_vs_1overf",
+      "cell_id": "mismatch::mismatch_texture_1::radial_profile::flat_vs_1overf"
+    },
+    {
+      "kind": "mismatch",
+      "partition": "mismatch",
+      "scene_id": "mismatch_texture_1",
+      "axis": "wrong_tau",
+      "condition": "tau_double",
+      "cell_id": "mismatch::mismatch_texture_1::wrong_tau::tau_double"
+    },
+    {
+      "kind": "aperture",
+      "partition": "calibration",
+      "scene_id": "calibration_natural_0",
+      "cell_id": "aperture::calibration_natural_0"
+    },
+    {
+      "kind": "aperture",
+      "partition": "calibration",
+      "scene_id": "calibration_smooth_1",
+      "cell_id": "aperture::calibration_smooth_1"
+    }
+  ],
+  "output_csv": "results/round63_next/FOG_DMD_PROBE64/shards/r39bb_shard2.csv",
+  "note": "thresholds/budget [R39]-placeholder; confirmatory UNRUN until referee ruling"
+}

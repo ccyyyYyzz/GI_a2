@@ -1,0 +1,199 @@
+{
+ "config": {
+  "n_side": 32,
+  "N": 1024,
+  "M": 96,
+  "d": 48,
+  "sigma_f": 0.15,
+  "tau": 16.0,
+  "T": 128,
+  "S": 96,
+  "photons_list": [
+   null,
+   100000.0
+  ],
+  "lam_x": 0.0001,
+  "exposures": 12288,
+  "four_meta": {
+   "spacing": 3,
+   "band": 4.0,
+   "overlap_frac": 0.625,
+   "n_freq": 48,
+   "kmax": 16.15549442140351,
+   "rank": 96
+  },
+  "kn": {
+   "outer": 40,
+   "qsteps": 22,
+   "starts": 4,
+   "cov_steps": 4000,
+   "ts_outer": 30,
+   "ts_zsteps": 60
+  },
+  "seeds": [
+   0,
+   1,
+   2,
+   3,
+   4
+  ],
+  "arm_desc": {
+   "A0": "CONTROL: random-binary bank, Cartesian schedule (E4 config)",
+   "A1": "Fourier lattice + overlapping sidebands, Cartesian schedule",
+   "A2": "random-binary bank, CHRONOLOGY-RANDOMIZED slot schedule (GI_a1 port)",
+   "A3": "Fourier lattice + chronology-randomized slot schedule (A1+A2)",
+   "A4": "A2 base (random+slot) + multi-timescale medium + temporal-law penalty"
+  }
+ },
+ "null_fraction": 0.680221897947646,
+ "arms": {
+  "A2": {
+   "desc": "random-binary bank, CHRONOLOGY-RANDOMIZED slot schedule (GI_a1 port)",
+   "null_fraction": 0.680221897947646,
+   "clean": {
+    "seeds": [
+     {
+      "seed": 0,
+      "oracle_nmse": 0.0009942711297379549,
+      "pw_trueseed_nmse": 0.718464989421214,
+      "pw_blind_nmse": 1.079419553501962,
+      "pw_blind_starts": [
+       1.079419553501962,
+       1.0752677616330406,
+       1.072640787512884,
+       1.078379538794591
+      ],
+      "cov_blind_nmse": 0.8938086509259733,
+      "cov_blind_starts": [
+       0.8938086509259733,
+       0.9876477162057615,
+       0.8823931077388429,
+       0.9415014824561966
+      ],
+      "cert": {
+       "sf_fourier": 0.5528116327872965,
+       "sf_walsh": 0.2829353397790738,
+       "carrier_std": 4.784808468345349,
+       "carrier_mean": 69.05432816459417
+      },
+      "secs": 40.9
+     },
+     {
+      "seed": 1,
+      "oracle_nmse": 0.0009244846243209284,
+      "pw_trueseed_nmse": 0.6938095041186396,
+      "pw_blind_nmse": 1.0783406181221633,
+      "pw_blind_starts": [
+       1.0783406181221633,
+       1.0503345474250456,
+       1.0681249870201002,
+       1.0680258814144363
+      ],
+      "cov_blind_nmse": 0.9076488954868625,
+      "cov_blind_starts": [
+       0.9076488954868625,
+       0.9267426702818582,
+       0.9109683134768167,
+       0.9152526542317057
+      ],
+      "cert": {
+       "sf_fourier": 0.5524945389150918,
+       "sf_walsh": 0.2832948107534771,
+       "carrier_std": 4.784808468345349,
+       "carrier_mean": 69.05432816459417
+      },
+      "secs": 39.5
+     },
+     {
+      "seed": 2,
+      "oracle_nmse": 0.0006906612172906176,
+      "pw_trueseed_nmse": 0.6600436488970501,
+      "pw_blind_nmse": 1.067421733048642,
+      "pw_blind_starts": [
+       1.0616868143610854,
+       1.067421733048642,
+       1.0726117903715187,
+       1.0789537767527118
+      ],
+      "cov_blind_nmse": 0.9022709843735454,
+      "cov_blind_starts": [
+       0.9059962498128339,
+       0.9022709843735454,
+       0.944542943168462,
+       0.9350546155890084
+      ],
+      "cert": {
+       "sf_fourier": 0.5621703662125691,
+       "sf_walsh": 0.2804594126517001,
+       "carrier_std": 4.784808468345349,
+       "carrier_mean": 69.05432816459417
+      },
+      "secs": 38.9
+     },
+     {
+      "seed": 3,
+      "oracle_nmse": 0.0010453169859076213,
+      "pw_trueseed_nmse": 0.7166441891858779,
+      "pw_blind_nmse": 1.0731602777616982,
+      "pw_blind_starts": [
+       1.0738930647533016,
+       1.0731602777616982,
+       1.067301324444305,
+       1.070732579538869
+      ],
+      "cov_blind_nmse": 0.7406293611839146,
+      "cov_blind_starts": [
+       0.7406293611839146,
+       0.7193138869390994,
+       0.8803841969284234,
+       0.8981591406312502
+      ],
+      "cert": {
+       "sf_fourier": 0.5601406271837592,
+       "sf_walsh": 0.28227835808128443,
+       "carrier_std": 4.784808468345349,
+       "carrier_mean": 69.05432816459417
+      },
+      "secs": 38.8
+     },
+     {
+      "seed": 4,
+      "oracle_nmse": 0.0008783493940317615,
+      "pw_trueseed_nmse": 0.6489343695898537,
+      "pw_blind_nmse": 1.0547864998741632,
+      "pw_blind_starts": [
+       1.0573717340457798,
+       1.0766761743979452,
+       1.0547864998741632,
+       1.069884045530817
+      ],
+      "cov_blind_nmse": 0.8531737887253436,
+      "cov_blind_starts": [
+       0.8531737887253436,
+       0.8747686112370654,
+       0.8845419613859128,
+       0.8548090057120306
+      ],
+      "cert": {
+       "sf_fourier": 0.5689985357153259,
+       "sf_walsh": 0.28463449587218,
+       "carrier_std": 4.784808468345349,
+       "carrier_mean": 69.05432816459417
+      },
+      "secs": 38.5
+     }
+    ],
+    "summary": {
+     "oracle_median": 0.0009244846243209284,
+     "pw_trueseed_median": 0.6938095041186396,
+     "pw_blind_median": 1.0731602777616982,
+     "pw_blind_agreement": 0.006376411126575384,
+     "cov_blind_median": 0.8938086509259733,
+     "cov_blind_agreement": 0.018193108463635276,
+     "cert_sf_median": 0.5601406271837592,
+     "cert_vs_blind_corr": -0.9712885027735876
+    }
+   }
+  }
+ }
+}

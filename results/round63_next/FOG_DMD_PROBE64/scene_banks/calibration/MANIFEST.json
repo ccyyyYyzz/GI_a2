@@ -1,0 +1,277 @@
+{
+  "campaign": "R39 beyond-modulator-band sealed probe (R34 pattern)",
+  "bank": "calibration",
+  "role": "aperture-law prediction map + coeff_sd gauge check ONLY",
+  "side": 64,
+  "pattern_band": 8,
+  "medium_band": [
+    1,
+    16
+  ],
+  "value_range": [
+    0.0,
+    1.0
+  ],
+  "seed_base": 810000,
+  "instances_per_stratum": 2,
+  "strata": [
+    "witness",
+    "natural",
+    "onef",
+    "smooth",
+    "texture"
+  ],
+  "n_scenes": 10,
+  "seed_disjoint_from": [
+    700000,
+    710000,
+    720000,
+    "the other three R39 partitions"
+  ],
+  "blind_generation": "no reconstruction, arm, or bucket metric computed during generation",
+  "superres_frac": 0.099609375,
+  "coverage_frac": 0.119384765625,
+  "utc": "2026-07-23 23:34:35Z",
+  "python": "3.11.5",
+  "numpy": "1.24.4",
+  "scenes": [
+    {
+      "scene_id": "calibration_witness_0",
+      "bank": "calibration",
+      "stratum": "witness",
+      "instance": 0,
+      "seed": 810000,
+      "gen_params": {
+        "generator": "bank_gen64.gen_witness (in-band random + super-res-zone spikes)",
+        "family": "witness",
+        "seed": 810000,
+        "n_spikes": 18,
+        "x_sha256": "797c5a2ef7b1e9bcd73ab9f8515ce88a6d710a9377fe62064c08ea2f44975abc"
+      },
+      "x_sha256": "797c5a2ef7b1e9bcd73ab9f8515ce88a6d710a9377fe62064c08ea2f44975abc",
+      "stats": {
+        "mean": 0.5199409641851338,
+        "std": 0.14564628087461615,
+        "min": 0.0,
+        "max": 1.0,
+        "superres_energy_frac": 0.0429098337178946,
+        "inband_energy_frac": 0.9570901662821049,
+        "beyond_coverage_frac": 4.0741332985237105e-32
+      }
+    },
+    {
+      "scene_id": "calibration_witness_1",
+      "bank": "calibration",
+      "stratum": "witness",
+      "instance": 1,
+      "seed": 810001,
+      "gen_params": {
+        "generator": "bank_gen64.gen_witness (in-band random + super-res-zone spikes)",
+        "family": "witness",
+        "seed": 810001,
+        "n_spikes": 16,
+        "x_sha256": "b9316cdf341688503557d6d38d4f28da6fc7f3b8a6404bb2411700e827af576d"
+      },
+      "x_sha256": "b9316cdf341688503557d6d38d4f28da6fc7f3b8a6404bb2411700e827af576d",
+      "stats": {
+        "mean": 0.49316234916998736,
+        "std": 0.1315343027645485,
+        "min": 0.0,
+        "max": 1.0,
+        "superres_energy_frac": 0.03430038883674512,
+        "inband_energy_frac": 0.9656996111632539,
+        "beyond_coverage_frac": 2.615887217568413e-32
+      }
+    },
+    {
+      "scene_id": "calibration_natural_0",
+      "bank": "calibration",
+      "stratum": "natural",
+      "instance": 0,
+      "seed": 810100,
+      "gen_params": {
+        "generator": "bank_gen64.gen_natural (skimage.data, downsampled 64x64, deterministic, sha256-recorded)",
+        "family": "natural",
+        "source": "camera",
+        "global_idx": 0,
+        "x_sha256": "8358732f6b9eee4406c1de711630969904b0f19086a507b2719a94dcc133799a"
+      },
+      "x_sha256": "8358732f6b9eee4406c1de711630969904b0f19086a507b2719a94dcc133799a",
+      "stats": {
+        "mean": 0.5432200721655515,
+        "std": 0.304715975748142,
+        "min": 0.0,
+        "max": 0.9999999999999957,
+        "superres_energy_frac": 0.016866059019322803,
+        "inband_energy_frac": 0.9765596749798934,
+        "beyond_coverage_frac": 0.006574266000783252
+      }
+    },
+    {
+      "scene_id": "calibration_natural_1",
+      "bank": "calibration",
+      "stratum": "natural",
+      "instance": 1,
+      "seed": 810101,
+      "gen_params": {
+        "generator": "bank_gen64.gen_natural (skimage.data, downsampled 64x64, deterministic, sha256-recorded)",
+        "family": "natural",
+        "source": "coins",
+        "global_idx": 1,
+        "x_sha256": "7ccbc00252986bc7ec6e15e6f664dce600fda9ab392c281a01a0704082453330"
+      },
+      "x_sha256": "7ccbc00252986bc7ec6e15e6f664dce600fda9ab392c281a01a0704082453330",
+      "stats": {
+        "mean": 0.4285510534667846,
+        "std": 0.2422706292251209,
+        "min": 0.0,
+        "max": 0.9999999999999949,
+        "superres_energy_frac": 0.1232735391800353,
+        "inband_energy_frac": 0.8500931303450088,
+        "beyond_coverage_frac": 0.026633330474954888
+      }
+    },
+    {
+      "scene_id": "calibration_onef_0",
+      "bank": "calibration",
+      "stratum": "onef",
+      "instance": 0,
+      "seed": 810200,
+      "gen_params": {
+        "generator": "bank_gen64.gen_onef (1/f^beta power-law field)",
+        "family": "onef",
+        "seed": 810200,
+        "beta": 1.190856865644951,
+        "x_sha256": "edea5b70d191ef2eca700e2a4474ad983de09dc2f177e407485f7ba9eed7ba40"
+      },
+      "x_sha256": "edea5b70d191ef2eca700e2a4474ad983de09dc2f177e407485f7ba9eed7ba40",
+      "stats": {
+        "mean": 0.4817971042046306,
+        "std": 0.14248095202839237,
+        "min": 0.05,
+        "max": 0.9499999999999854,
+        "superres_energy_frac": 0.010038434115899704,
+        "inband_energy_frac": 0.9812677247806078,
+        "beyond_coverage_frac": 0.00869384110349163
+      }
+    },
+    {
+      "scene_id": "calibration_onef_1",
+      "bank": "calibration",
+      "stratum": "onef",
+      "instance": 1,
+      "seed": 810201,
+      "gen_params": {
+        "generator": "bank_gen64.gen_onef (1/f^beta power-law field)",
+        "family": "onef",
+        "seed": 810201,
+        "beta": 1.0361883016418603,
+        "x_sha256": "be54b5db7b61a35650f7d7f6c50a657867dd396f5d4a80a23b012bfcff27c2c8"
+      },
+      "x_sha256": "be54b5db7b61a35650f7d7f6c50a657867dd396f5d4a80a23b012bfcff27c2c8",
+      "stats": {
+        "mean": 0.4965908264111057,
+        "std": 0.13068044931816591,
+        "min": 0.05,
+        "max": 0.9499999999999774,
+        "superres_energy_frac": 0.012325777235583342,
+        "inband_energy_frac": 0.9739196480439102,
+        "beyond_coverage_frac": 0.013754574720505279
+      }
+    },
+    {
+      "scene_id": "calibration_smooth_0",
+      "bank": "calibration",
+      "stratum": "smooth",
+      "instance": 0,
+      "seed": 810300,
+      "gen_params": {
+        "generator": "bank_gen64.gen_smooth (low-pass Gaussian field)",
+        "family": "smooth",
+        "seed": 810300,
+        "blur_sigma": 5.234266203909824,
+        "x_sha256": "25b3c3b91e49fd6e88b1587f069c0ecfc224d4ea32155d65cd9f420787a4358f"
+      },
+      "x_sha256": "25b3c3b91e49fd6e88b1587f069c0ecfc224d4ea32155d65cd9f420787a4358f",
+      "stats": {
+        "mean": 0.5178671421592329,
+        "std": 0.14405967619464435,
+        "min": 0.06,
+        "max": 0.9599999999969437,
+        "superres_energy_frac": 0.0005581147496583509,
+        "inband_energy_frac": 0.9994418848968536,
+        "beyond_coverage_frac": 3.534871810906937e-10
+      }
+    },
+    {
+      "scene_id": "calibration_smooth_1",
+      "bank": "calibration",
+      "stratum": "smooth",
+      "instance": 1,
+      "seed": 810301,
+      "gen_params": {
+        "generator": "bank_gen64.gen_smooth (low-pass Gaussian field)",
+        "family": "smooth",
+        "seed": 810301,
+        "blur_sigma": 7.636654191365903,
+        "x_sha256": "514fa1514df2df4b1a9c9c80a1d4e2fbddc2effc2d3a5277a53791f4ce31fab0"
+      },
+      "x_sha256": "514fa1514df2df4b1a9c9c80a1d4e2fbddc2effc2d3a5277a53791f4ce31fab0",
+      "stats": {
+        "mean": 0.494114019951868,
+        "std": 0.20838839739548176,
+        "min": 0.06,
+        "max": 0.9599999999953472,
+        "superres_energy_frac": 7.542316149918016e-07,
+        "inband_energy_frac": 0.99999924543743,
+        "beyond_coverage_frac": 3.309543636550312e-10
+      }
+    },
+    {
+      "scene_id": "calibration_texture_0",
+      "bank": "calibration",
+      "stratum": "texture",
+      "instance": 0,
+      "seed": 810400,
+      "gen_params": {
+        "generator": "bank_gen64.gen_texture (band-pass, super-res annulus)",
+        "family": "texture",
+        "seed": 810400,
+        "x_sha256": "72d47b7b8ec7e604d11579246c3144b641440ea9400d4b6ee54c806ac959ddd6"
+      },
+      "x_sha256": "72d47b7b8ec7e604d11579246c3144b641440ea9400d4b6ee54c806ac959ddd6",
+      "stats": {
+        "mean": 0.4503290981692081,
+        "std": 0.1457335449224947,
+        "min": 0.0,
+        "max": 1.0,
+        "superres_energy_frac": 0.09165043782721553,
+        "inband_energy_frac": 0.9083495621727833,
+        "beyond_coverage_frac": 2.761337190643437e-32
+      }
+    },
+    {
+      "scene_id": "calibration_texture_1",
+      "bank": "calibration",
+      "stratum": "texture",
+      "instance": 1,
+      "seed": 810401,
+      "gen_params": {
+        "generator": "bank_gen64.gen_texture (band-pass, super-res annulus)",
+        "family": "texture",
+        "seed": 810401,
+        "x_sha256": "a5e1a0c255780f41bbe25393390e87adf207fb21819846ba2acaedd4d42eaed8"
+      },
+      "x_sha256": "a5e1a0c255780f41bbe25393390e87adf207fb21819846ba2acaedd4d42eaed8",
+      "stats": {
+        "mean": 0.463504756464176,
+        "std": 0.1312805993067478,
+        "min": 0.0,
+        "max": 1.0,
+        "superres_energy_frac": 0.07179255429513168,
+        "inband_energy_frac": 0.9282074457048671,
+        "beyond_coverage_frac": 2.2911104276457278e-32
+      }
+    }
+  ]
+}

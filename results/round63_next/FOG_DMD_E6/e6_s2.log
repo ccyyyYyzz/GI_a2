@@ -1,0 +1,9 @@
+device=cuda torch=2.11.0+cu128 np=2.0.2 smoke=False
+== ARM A2 | photons=clean ==
+    [A2 ph=None sd=0] or=0.001 pw_TS=0.718 pw_BL=1.079 cv_BL=0.894 sf=0.553 (40.9s)
+    [A2 ph=None sd=1] or=0.001 pw_TS=0.694 pw_BL=1.078 cv_BL=0.908 sf=0.552 (39.5s)
+    [A2 ph=None sd=2] or=0.001 pw_TS=0.660 pw_BL=1.067 cv_BL=0.902 sf=0.562 (38.9s)
+    [A2 ph=None sd=3] or=0.001 pw_TS=0.717 pw_BL=1.073 cv_BL=0.741 sf=0.560 (38.8s)
+    [A2 ph=None sd=4] or=0.001 pw_TS=0.649 pw_BL=1.055 cv_BL=0.853 sf=0.569 (38.5s)
+== ARM A2 | photons=100000 ==
+    [A2 ph=100000.0 sd=0] or=0.032 pw_TS=0.821 pw_BL=1.074 cv_BL=0.885 sf=0.553 (38.7s)
