@@ -1,0 +1,32 @@
+[14:54:33] device=cuda smoke=False
+[14:54:33] geometry: r0=0.4272 s=0.2991 A*=0.2093 omega=0.7000 | tangency resid=6.79e-18 cross-null=3.07e-16
+[14:54:33] operating: Q0=11.56 (bg=11.37 + xi=0.1825) c_rad=0.09035
+[14:54:33] [1] exact divergences (float64) ...
+[14:54:34]     straight KL slope=4.0000 | radial slope=2.0274 | I_Q=0.04492
+[14:54:34]     partial a=0.25 slope=4.0000 ratio meas=0.5625 pred=0.5625 (err 0.00%)
+[14:54:34]     partial a=0.50 slope=4.0003 ratio meas=0.2500 pred=0.2500 (err 0.01%)
+[14:54:34]     partial a=0.75 slope=4.0013 ratio meas=0.0625 pred=0.0625 (err 0.03%)
+[14:54:34]     exact cloak: max|dQ|/Q=1.54e-16 maxKL=2.47e-32
+[14:54:34]     cap sweep: A_kink=0.2093 A*=0.2093 (err 0.00%) law max-err=0.000
+[14:54:34]     wrong-metric excess G-cost=1.0336 (Euclid kink=0.2198 vs A*=0.2093)
+[14:54:34] [2] MC exact-cloak (real generator, CRN paired) ...
+[16:52:29]     exact th0.15_B4096: paired d'=-0.0010 (2s SE=0.0365) pairedAUC=0.4997 unpairedAUC=0.4999 CI=[0.492,0.507]
+[16:52:29]     exact th0.15_B16384: paired d'=-0.0271 (2s SE=0.0365) pairedAUC=0.4924 unpairedAUC=0.4961 CI=[0.489,0.504]
+[16:52:29]     exact th0.35_B4096: paired d'=-0.0195 (2s SE=0.0365) pairedAUC=0.4945 unpairedAUC=0.4948 CI=[0.488,0.502]
+[16:52:29]     exact th0.35_B16384: paired d'=-0.0029 (2s SE=0.0365) pairedAUC=0.4992 unpairedAUC=0.5006 CI=[0.493,0.508]
+[16:52:29]     exact th0.70_B4096: paired d'=-0.0170 (2s SE=0.0365) pairedAUC=0.4952 unpairedAUC=0.4955 CI=[0.488,0.503]
+[16:52:29]     exact th0.70_B16384: paired d'=0.0046 (2s SE=0.0365) pairedAUC=0.5013 unpairedAUC=0.5021 CI=[0.495,0.509]
+[16:52:29]     CONTROL straight: unpairedAUC=0.9973 paired d'=5.519 (dQ=1.48e-01) detectable=True
+[16:52:29]     CONTROL partial_a0.50: unpairedAUC=0.9338 paired d'=2.976 (dQ=8.14e-02) detectable=True
+[16:52:29]     exact d'-null=True ci-half=True paired-band=True controls-detectable=True
+[16:52:29] [3] block-CUSUM partial-cloak delay + exact-cloak no-trigger ...
+[16:52:33]     block=303645 jet-dev=7.1e-03 | partial delay slope=-3.947 (pred -4) ; exact detect_frac=0.0000 (FA 0.0020)
+[16:52:33] [4] second (non-optical) model: heteroscedastic Gaussian + Poisson, quartic invariant ...
+[16:52:33]     M2 straight slope(G)=4.000 radial slope(G)=2.096 ; exact null maxKL=4.93e-32
+[16:52:33]     M2 partial a=0.25 ratio(G)=0.5625 pred=0.5625
+[16:52:33]     M2 partial a=0.50 ratio(G)=0.2500 pred=0.2500
+[16:52:33]     M2 partial a=0.75 ratio(G)=0.0625 pred=0.0625
+[16:52:33] [5] figures ...
+[16:52:35] ==================== VERDICT: MOONSHOT_SURVIVES ====================
+[16:52:35] predictions passed 22/22 ; kill triggers: none
+[16:52:35] runtime 7079 s
