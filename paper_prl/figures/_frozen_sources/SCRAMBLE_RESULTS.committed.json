@@ -1,0 +1,272 @@
+{
+  "config": {
+    "N_SIDE": 32,
+    "N": 1024,
+    "PB": 3,
+    "K_GRAIN": 13,
+    "M": 36,
+    "PHOT": 10000.0,
+    "smoke": false
+  },
+  "aperture": {
+    "k_pattern": 3,
+    "k_grain": 13,
+    "Ghat_nonzero_bins": 1024,
+    "Ghat_total_bins": 1024,
+    "grain_band_ge_pattern": true,
+    "C0": 0.5166015625
+  },
+  "scene": {
+    "eps": 0.05,
+    "min_x": 0.12,
+    "min_xd": 0.11058973855476503,
+    "dc_delta_ortho": 3.885780586188048e-16,
+    "dc_delta_coherent": -1.5265566588595902e-16,
+    "norm_ratio": 0.05000000000000001,
+    "hi_freqs": [
+      [
+        8,
+        3
+      ],
+      [
+        3,
+        9
+      ],
+      [
+        7,
+        7
+      ],
+      [
+        11,
+        1
+      ],
+      [
+        1,
+        10
+      ],
+      [
+        6,
+        8
+      ]
+    ]
+  },
+  "valA_mean_flatness": {
+    "codes": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "envelope_CV": [
+      0.015570363179431668,
+      0.015583580241128414,
+      0.015649817960219265,
+      0.015456870743253439
+    ],
+    "envelope_nonDC_power_frac": [
+      0.0002423774484694827,
+      0.0002427890123122536,
+      0.0002448568326353747,
+      0.00023885778650053306
+    ],
+    "note": "CV ~ 1/sqrt(n_env) if truly flat; nonDC frac ~ residual MC noise",
+    "est_MC_CV": 0.015811388300841896
+  },
+  "valA_mean_null": {
+    "delta_mean_rel": 6.560178974029365e-19,
+    "dc_of_delta": 3.885780586188048e-16,
+    "note": "mean channel sees only x_hat(0); DC-free beyond-band delta -> exact null"
+  },
+  "valB_cov_is_Q": {
+    "Q_x_theory": 187.386557057951,
+    "Qhat_from_var_median": 190.8911415956295,
+    "Qhat_from_var_iqr": [
+      189.67341490982184,
+      192.45746890015346
+    ],
+    "var_over_O2Q_ratio_median": 1.0187024330491044,
+    "note": "empirical Var[b_i]/O_ii^2 should equal Q(x) across all codes"
+  },
+  "valB_rank1": {
+    "frac_cov_energy_in_OhO_direction": 0.9999161630072779,
+    "top_eig_frac": 0.8261291808227778,
+    "top3_eig_frac": 0.8761186835265534,
+    "note": "fully-scrambled cov collapses to Q*(O.O): rank-1 in matrix space"
+  },
+  "valB_dQ": {
+    "dQ_predicted": 0.34803496228605096,
+    "dQ_measured": 0.34803496228605013,
+    "rel_err": 2.392481671954836e-15,
+    "terms": {
+      "cross": 0.003143935283443873,
+      "quad": 0.3448910270026071
+    },
+    "per_delta": {
+      "ortho": {
+        "cross": 0.003143935283443873,
+        "quad": 0.3448910270026071,
+        "dQ_pred": 0.34803496228605096,
+        "dQ_meas": 0.34803496228605013,
+        "dQ_over_Q": 0.0018573101920988813
+      },
+      "coherent": {
+        "cross": 2.9781978972805154,
+        "quad": 0.4106519692175178,
+        "dQ_pred": 3.3888498664980333,
+        "dQ_meas": 3.388849866498049,
+        "dQ_over_Q": 0.018084807788266266
+      }
+    },
+    "quad_term_positive": true,
+    "note": "dQ = 2 xGd + dGd; quad dGd>0 for ANY delta (no blind direction). ortho: coherent term ~0 -> dQ/Q~eps^2 (worst case). coherent: 2xGd~eps -> dQ/Q~eps (strong sentinel)."
+  },
+  "valC_mean_detector": {
+    "ortho": {
+      "budget": 512,
+      "auc": 0.50453125,
+      "d_prime": 0.015168528320495816
+    },
+    "coherent": {
+      "budget": 512,
+      "auc": 0.5015625,
+      "d_prime": 0.02995307223733197
+    },
+    "note": "beyond-band DC-free delta invisible to mean channel -> AUC~0.5 for BOTH delta types (the wall)"
+  },
+  "detection": {
+    "coherent": {
+      "eps_0.05": {
+        "512": {
+          "T_eff": 512,
+          "d_prime": 0.9905308274323055,
+          "auc": 0.7622,
+          "tpr_at_fpr": {
+            "0.01": 0.06,
+            "0.05": 0.28,
+            "0.1": 0.33
+          },
+          "Q0_mean": 0.08669481724798198,
+          "Q1_mean": 0.0878928826458808
+        },
+        "2048": {
+          "T_eff": 2048,
+          "d_prime": 2.224601833640961,
+          "auc": 0.9432,
+          "tpr_at_fpr": {
+            "0.01": 0.46,
+            "0.05": 0.8,
+            "0.1": 0.82
+          },
+          "Q0_mean": 0.0867595139547524,
+          "Q1_mean": 0.08797516742143423
+        },
+        "8192": {
+          "T_eff": 8192,
+          "d_prime": 4.098246268930414,
+          "auc": 0.997,
+          "tpr_at_fpr": {
+            "0.01": 0.99,
+            "0.05": 0.99,
+            "0.1": 0.99
+          },
+          "Q0_mean": 0.0867704594951274,
+          "Q1_mean": 0.08798491930395638
+        },
+        "fit": {
+          "a_dprime_per_sqrtT": 0.045946619226188874,
+          "T_req_dprime5": 11842.213485502341,
+          "dQ_over_Q": 0.018084807788266266
+        }
+      },
+      "eps_0.02": {
+        "512": {
+          "T_eff": 512,
+          "d_prime": 0.3792921363116544,
+          "auc": 0.6046,
+          "tpr_at_fpr": {
+            "0.01": 0.06,
+            "0.05": 0.09,
+            "0.1": 0.16
+          },
+          "Q0_mean": 0.08671755107413004,
+          "Q1_mean": 0.08717479057780178
+        },
+        "2048": {
+          "T_eff": 2048,
+          "d_prime": 0.8528236394055313,
+          "auc": 0.7238,
+          "tpr_at_fpr": {
+            "0.01": 0.09,
+            "0.05": 0.22,
+            "0.1": 0.33
+          },
+          "Q0_mean": 0.086726868006489,
+          "Q1_mean": 0.0871831769368717
+        },
+        "8192": {
+          "T_eff": 8192,
+          "d_prime": 1.6034013130763742,
+          "auc": 0.8869,
+          "tpr_at_fpr": {
+            "0.01": 0.17,
+            "0.05": 0.47,
+            "0.1": 0.63
+          },
+          "Q0_mean": 0.08673035690331114,
+          "Q1_mean": 0.08714870548612724
+        },
+        "fit": {
+          "a_dprime_per_sqrtT": 0.017885055251652567,
+          "T_req_dprime5": 78155.48030646172,
+          "dQ_over_Q": NaN
+        }
+      }
+    },
+    "ortho": {
+      "eps_0.05": {
+        "8192": {
+          "T_eff": 8192,
+          "d_prime": 0.364314075143706,
+          "auc": 0.6014,
+          "tpr_at_fpr": {
+            "0.01": 0.01,
+            "0.05": 0.08,
+            "0.1": 0.21
+          },
+          "Q0_mean": 0.0867996499546801,
+          "Q1_mean": 0.08691180445931986
+        },
+        "32768": {
+          "T_eff": 32768,
+          "d_prime": 0.9922685370946586,
+          "auc": 0.7628,
+          "tpr_at_fpr": {
+            "0.01": 0.1,
+            "0.05": 0.25,
+            "0.1": 0.41
+          },
+          "Q0_mean": 0.08675354338990127,
+          "Q1_mean": 0.08688616348257623
+        },
+        "65536": {
+          "T_eff": 65536,
+          "d_prime": 1.2340139423468273,
+          "auc": 0.8094,
+          "tpr_at_fpr": {
+            "0.01": 0.29,
+            "0.05": 0.42,
+            "0.1": 0.48
+          },
+          "Q0_mean": 0.08677760084217961,
+          "Q1_mean": 0.08690181206053867
+        },
+        "fit": {
+          "a_dprime_per_sqrtT": 0.0049626399764241,
+          "T_req_dprime5": 1015113.1863937776,
+          "dQ_over_Q": 0.0018573101920988813
+        }
+      }
+    }
+  },
+  "runtime_sec": 598.4
+}
