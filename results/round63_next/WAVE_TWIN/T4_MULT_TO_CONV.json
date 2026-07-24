@@ -1,0 +1,181 @@
+{
+  "note": "T4 multiplicative->convolutive. alpha=1-corr maps to D5 convolutive_blend.",
+  "z1_mm": 10,
+  "n_epoch": 60,
+  "regimes": [
+    {
+      "regime": "developed_2pi_lc15",
+      "l_c_um": 15.0,
+      "rows": [
+        {
+          "z2_mm": 0.0,
+          "field_corr": 1.0,
+          "intensity_obj_corr": 1.0,
+          "alpha_field": -0.0,
+          "alpha_intensity": 0.0
+        },
+        {
+          "z2_mm": 0.5,
+          "field_corr": 0.1328,
+          "intensity_obj_corr": 0.2349,
+          "alpha_field": 0.8672,
+          "alpha_intensity": 0.7651
+        },
+        {
+          "z2_mm": 1.0,
+          "field_corr": 0.0701,
+          "intensity_obj_corr": 0.2621,
+          "alpha_field": 0.9299,
+          "alpha_intensity": 0.7379
+        },
+        {
+          "z2_mm": 2.0,
+          "field_corr": 0.0367,
+          "intensity_obj_corr": 0.267,
+          "alpha_field": 0.9633,
+          "alpha_intensity": 0.733
+        },
+        {
+          "z2_mm": 5.0,
+          "field_corr": 0.0142,
+          "intensity_obj_corr": 0.2589,
+          "alpha_field": 0.9858,
+          "alpha_intensity": 0.7411
+        },
+        {
+          "z2_mm": 10.0,
+          "field_corr": 0.0076,
+          "intensity_obj_corr": 0.2456,
+          "alpha_field": 0.9924,
+          "alpha_intensity": 0.7544
+        },
+        {
+          "z2_mm": 20.0,
+          "field_corr": 0.0062,
+          "intensity_obj_corr": 0.2377,
+          "alpha_field": 0.9938,
+          "alpha_intensity": 0.7623
+        }
+      ],
+      "z2mm_alpha_0p10": 0.065,
+      "z2mm_alpha_0p25": 0.163,
+      "z2mm_alpha_0p50": 0.327
+    },
+    {
+      "regime": "weak_0.3rad_lc15",
+      "l_c_um": 15.0,
+      "rows": [
+        {
+          "z2_mm": 0.0,
+          "field_corr": 1.0,
+          "intensity_obj_corr": 1.0,
+          "alpha_field": -0.0,
+          "alpha_intensity": 0.0
+        },
+        {
+          "z2_mm": 0.5,
+          "field_corr": 0.9801,
+          "intensity_obj_corr": 0.9092,
+          "alpha_field": 0.0199,
+          "alpha_intensity": 0.0908
+        },
+        {
+          "z2_mm": 1.0,
+          "field_corr": 0.9291,
+          "intensity_obj_corr": 0.7902,
+          "alpha_field": 0.0709,
+          "alpha_intensity": 0.2098
+        },
+        {
+          "z2_mm": 2.0,
+          "field_corr": 0.7903,
+          "intensity_obj_corr": 0.6924,
+          "alpha_field": 0.2097,
+          "alpha_intensity": 0.3076
+        },
+        {
+          "z2_mm": 5.0,
+          "field_corr": 0.4816,
+          "intensity_obj_corr": 0.6539,
+          "alpha_field": 0.5184,
+          "alpha_intensity": 0.3461
+        },
+        {
+          "z2_mm": 10.0,
+          "field_corr": 0.3116,
+          "intensity_obj_corr": 0.6571,
+          "alpha_field": 0.6884,
+          "alpha_intensity": 0.3429
+        },
+        {
+          "z2_mm": 20.0,
+          "field_corr": 0.2573,
+          "intensity_obj_corr": 0.6708,
+          "alpha_field": 0.7427,
+          "alpha_intensity": 0.3292
+        }
+      ],
+      "z2mm_alpha_0p10": 0.539,
+      "z2mm_alpha_0p25": 1.411,
+      "z2mm_alpha_0p50": null
+    },
+    {
+      "regime": "developed_2pi_lc5",
+      "l_c_um": 5.0,
+      "rows": [
+        {
+          "z2_mm": 0.0,
+          "field_corr": 1.0,
+          "intensity_obj_corr": 1.0,
+          "alpha_field": -0.0,
+          "alpha_intensity": 0.0
+        },
+        {
+          "z2_mm": 0.5,
+          "field_corr": 0.0565,
+          "intensity_obj_corr": 0.2897,
+          "alpha_field": 0.9435,
+          "alpha_intensity": 0.7103
+        },
+        {
+          "z2_mm": 1.0,
+          "field_corr": 0.0326,
+          "intensity_obj_corr": 0.274,
+          "alpha_field": 0.9674,
+          "alpha_intensity": 0.726
+        },
+        {
+          "z2_mm": 2.0,
+          "field_corr": 0.0172,
+          "intensity_obj_corr": 0.2674,
+          "alpha_field": 0.9828,
+          "alpha_intensity": 0.7326
+        },
+        {
+          "z2_mm": 5.0,
+          "field_corr": 0.006,
+          "intensity_obj_corr": 0.2542,
+          "alpha_field": 0.994,
+          "alpha_intensity": 0.7458
+        },
+        {
+          "z2_mm": 10.0,
+          "field_corr": 0.0047,
+          "intensity_obj_corr": 0.239,
+          "alpha_field": 0.9953,
+          "alpha_intensity": 0.761
+        },
+        {
+          "z2_mm": 20.0,
+          "field_corr": 0.0022,
+          "intensity_obj_corr": 0.2354,
+          "alpha_field": 0.9978,
+          "alpha_intensity": 0.7646
+        }
+      ],
+      "z2mm_alpha_0p10": 0.07,
+      "z2mm_alpha_0p25": 0.176,
+      "z2mm_alpha_0p50": 0.352
+    }
+  ]
+}

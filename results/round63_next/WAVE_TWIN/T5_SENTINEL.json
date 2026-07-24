@@ -1,0 +1,98 @@
+{
+  "note": "T5 end-to-end sentinel on wave-twin banks vs sealed detector.",
+  "sealed_best_Tdet_2pct": 453.0,
+  "sealed_mc_lcb": 0.99,
+  "sealed_D3_target_tpr": 0.988,
+  "M": 32,
+  "n_bank": 800,
+  "geometries": [
+    {
+      "geometry": "near_contact_z2_1mm_lc50",
+      "z2_mm": 1.0,
+      "l_c_um": 50.0,
+      "rows": [
+        {
+          "change": "2pct",
+          "per_bank_cov_noncentrality": 0.000136,
+          "per_bank_mean_noncentrality": 0.00113073,
+          "mean_dp_over_cov_dp": 2.8862,
+          "T_det_dprime5": 184173.2,
+          "auc_at_T453": 0.7131,
+          "dprime_at_T453": 0.798,
+          "auc_at_Town": 0.7889,
+          "T_own": 799
+        },
+        {
+          "change": "5pct",
+          "per_bank_cov_noncentrality": 0.000735,
+          "per_bank_mean_noncentrality": 0.0070672,
+          "mean_dp_over_cov_dp": 3.1013,
+          "T_det_dprime5": 34024.5,
+          "auc_at_T453": 0.929,
+          "dprime_at_T453": 2.082,
+          "auc_at_Town": 0.9758,
+          "T_own": 799
+        }
+      ]
+    },
+    {
+      "geometry": "mid_z2_5mm_lc50",
+      "z2_mm": 5.0,
+      "l_c_um": 50.0,
+      "rows": [
+        {
+          "change": "2pct",
+          "per_bank_cov_noncentrality": 0.002012,
+          "per_bank_mean_noncentrality": 0.00079264,
+          "mean_dp_over_cov_dp": 0.6277,
+          "T_det_dprime5": 12425.4,
+          "auc_at_T453": 0.3743,
+          "dprime_at_T453": -0.453,
+          "auc_at_Town": 0.3574,
+          "T_own": 799
+        },
+        {
+          "change": "5pct",
+          "per_bank_cov_noncentrality": 0.011436,
+          "per_bank_mean_noncentrality": 0.00495392,
+          "mean_dp_over_cov_dp": 0.6582,
+          "T_det_dprime5": 2186.1,
+          "auc_at_T453": 0.9646,
+          "dprime_at_T453": 2.555,
+          "auc_at_Town": 0.9904,
+          "T_own": 799
+        }
+      ]
+    },
+    {
+      "geometry": "near_contact_z2_1mm_lc15",
+      "z2_mm": 1.0,
+      "l_c_um": 15.0,
+      "rows": [
+        {
+          "change": "2pct",
+          "per_bank_cov_noncentrality": 4e-06,
+          "per_bank_mean_noncentrality": 0.00130353,
+          "mean_dp_over_cov_dp": 18.3145,
+          "T_det_dprime5": 6432924.7,
+          "auc_at_T453": 0.5987,
+          "dprime_at_T453": 0.352,
+          "auc_at_Town": 0.6653,
+          "T_own": 799
+        },
+        {
+          "change": "5pct",
+          "per_bank_cov_noncentrality": 2e-05,
+          "per_bank_mean_noncentrality": 0.00814707,
+          "mean_dp_over_cov_dp": 20.1448,
+          "T_det_dprime5": 1245273.8,
+          "auc_at_T453": 0.6963,
+          "dprime_at_T453": 0.725,
+          "auc_at_Town": 0.7696,
+          "T_own": 799
+        }
+      ]
+    }
+  ],
+  "verdict": "TWIN_DEVIATES (near-contact 2% AUC@453=0.7131, T_det=184173.2)"
+}

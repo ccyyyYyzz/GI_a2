@@ -1,0 +1,13 @@
+[A z1=  0.0mm z2=0] leak_rel_inband=6.809e-03 FLAG=True
+[A z1=  1.0mm z2=0] leak_rel_inband=1.248e-02 FLAG=True
+[A z1=  2.0mm z2=0] leak_rel_inband=1.622e-02 FLAG=True
+[A z1=  5.0mm z2=0] leak_rel_inband=3.172e-02 FLAG=True
+[A z1= 10.0mm z2=0] leak_rel_inband=5.432e-02 FLAG=True
+[A z1= 20.0mm z2=0] leak_rel_inband=8.917e-02 FLAG=True
+[B weak_0.3rad   z1=10 z2=2.0] leak=6.004e-02 floor=3.862e+00 above=0.000e+00 FLAG=False
+[B weak_0.3rad   z1=10 z2=5.0] leak=7.221e-02 floor=3.911e+00 above=0.000e+00 FLAG=False
+[B developed_2pi z1=10 z2=2.0] leak=6.841e-02 floor=2.071e+00 above=0.000e+00 FLAG=False
+[B developed_2pi z1=10 z2=5.0] leak=9.372e-02 floor=8.177e-01 above=0.000e+00 FLAG=False
+
+conjugate(z1=0) leak=6.81e-03 | nominal(z1=10mm) leak=5.43e-02 | max z1 for <1e-3: None
+saved T1_WALL_LEAK.json  elapsed 203.0s

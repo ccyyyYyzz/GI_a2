@@ -1,0 +1,9 @@
+[near_contact_z2_1mm_lc50   2pct] cov_lam=1.3574e-04 T_det=184173.2 AUC@453=0.7131 d'@453=0.80 mean/cov_dp=2.89e+00
+[near_contact_z2_1mm_lc50   5pct] cov_lam=7.3476e-04 T_det=34024.5 AUC@453=0.9290 d'@453=2.08 mean/cov_dp=3.10e+00
+[mid_z2_5mm_lc50            2pct] cov_lam=2.0120e-03 T_det=12425.4 AUC@453=0.3743 d'@453=-0.45 mean/cov_dp=6.28e-01
+[mid_z2_5mm_lc50            5pct] cov_lam=1.1436e-02 T_det= 2186.1 AUC@453=0.9646 d'@453=2.55 mean/cov_dp=6.58e-01
+[near_contact_z2_1mm_lc15   2pct] cov_lam=3.8863e-06 T_det=6432924.7 AUC@453=0.5987 d'@453=0.35 mean/cov_dp=1.83e+01
+[near_contact_z2_1mm_lc15   5pct] cov_lam=2.0076e-05 T_det=1245273.8 AUC@453=0.6963 d'@453=0.73 mean/cov_dp=2.01e+01
+
+VERDICT: TWIN_DEVIATES (near-contact 2% AUC@453=0.7131, T_det=184173.2)
+saved T5_SENTINEL.json  elapsed 571.2s

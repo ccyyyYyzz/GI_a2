@@ -1,0 +1,42 @@
+{
+  "note": "T1 mean-wall leak. statistical D0 mean_derivative=5.68e-16 (machine zero). wave twin computed in complex64 (float32 numerical floor ~1e-6).",
+  "mechanism": "complementary intensity differencing cancels the 2k_p term exactly only at z1=0 with no pixelation; free-space DMD->diffuser propagation z1 breaks the cancellation, and finite DMD micromirror aperture/pixelation leaves a residual floor even at z1=0 -> beyond-band leak in the mean channel.",
+  "flag_threshold_rel": 0.001,
+  "M": 8,
+  "partA_z1_sweep_z2_0_deterministic": [
+    {
+      "z1_mm": 0.0,
+      "leak_rel_inband": 0.006808869075030088,
+      "FLAG": true
+    },
+    {
+      "z1_mm": 1.0,
+      "leak_rel_inband": 0.012484566308557987,
+      "FLAG": true
+    },
+    {
+      "z1_mm": 2.0,
+      "leak_rel_inband": 0.016217321157455444,
+      "FLAG": true
+    },
+    {
+      "z1_mm": 5.0,
+      "leak_rel_inband": 0.0317249558866024,
+      "FLAG": true
+    },
+    {
+      "z1_mm": 10.0,
+      "leak_rel_inband": 0.0543210469186306,
+      "FLAG": true
+    },
+    {
+      "z1_mm": 20.0,
+      "leak_rel_inband": 0.08916623890399933,
+      "FLAG": true
+    }
+  ],
+  "conjugate_z1_0_pixelation_floor": 0.006808869075030088,
+  "nominal_z1_10mm_leak": 0.0543210469186306,
+  "max_z1_mm_for_leak_below_1em3": null,
+  "verdict": "WALL_LEAKS: deterministic mean-channel beyond-band leak grows from ~7e-3 (z1=0 pixelation floor) to ~5e-2 (z1=10mm) to ~9e-2 (z1=20mm), all >> the 1e-3 flag threshold. The statistical model's machine-zero wall is a band-limited-code idealization; real DMD pixelation + free-space geometry require a transfer-wording adjustment (mean channel is nearly-but-not-exactly blind). Operational impact (mean d' vs cov d') is quantified in T5."
+}
