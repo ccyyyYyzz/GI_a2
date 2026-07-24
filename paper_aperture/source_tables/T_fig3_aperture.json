@@ -1,0 +1,72 @@
+{
+  "panel": "Fig.3b : empirical aperture-law validation (in/out coverage separation)",
+  "PROVENANCE": {
+    "separation_64x64": "results/round63_next/FOG_DMD_PROBE64/G3_results.json -> partA (COPIED)",
+    "mean_wall_duel": "results/round63_next/FOG_DMD_PROBE/FOG_DMD_PROBE_REPORT.md sec14 (E8) (FROZEN)",
+    "16x16_pair": "NOT FOUND in repo (see missing_inputs)"
+  },
+  "geometry_64x64": {
+    "n": 64,
+    "N": 4096,
+    "PB": 8,
+    "medium_band": [
+      1,
+      16
+    ],
+    "M": 128,
+    "T": 4096
+  },
+  "separation_64x64": {
+    "in_coverage_err": 0.25039850165783106,
+    "out_coverage_err": 4.6971614677050795,
+    "separation": 18.758744307998054,
+    "in_all": [
+      0.2715202282658438,
+      0.23158652000178404,
+      0.25039850165783106
+    ],
+    "out_all": [
+      4.762212137993833,
+      4.635249496809803,
+      4.6971614677050795
+    ],
+    "class": "COPIED"
+  },
+  "mean_wall_duel_16x16": {
+    "note": "16x16, band-limited patterns M=24, beyond-band rel-err (1.000 = recovers nothing)",
+    "T_eff": [
+      512,
+      1024,
+      2048
+    ],
+    "fresh_bandlimited_wall": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "fixed_bank_moment": [
+      0.65,
+      0.547,
+      0.48
+    ],
+    "fixed_bank_mle": [
+      0.505,
+      0.439,
+      0.481
+    ],
+    "oracle_medium_known": [
+      0.389,
+      0.221,
+      0.091
+    ],
+    "class": "FROZEN"
+  },
+  "missing_inputs": {
+    "requested_16x16_in_out": {
+      "in": 0.073,
+      "out": 1.213
+    },
+    "status": "UNRECOVERABLE",
+    "note": "The R40 task listed a 16x16 in-coverage 0.073 vs out 1.213 pair. No committed result in D:/GI_another produces this pair; the digits 0.073 and 1.213 appear only coincidentally in unrelated scatter/probe JSONs (paper3_scatter T_s and study2 select_max_s). The canonical aperture-law validation retained here is the G3 64x64 18.76x separation plus the E8 exact-mean-wall duel."
+  }
+}

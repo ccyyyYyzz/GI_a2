@@ -1,0 +1,58 @@
+{
+  "PROVENANCE": "results/round63_next/FOG_DMD_PROBE64/LIVING_REGION_MAP.json (COPIED)",
+  "class": "COPIED",
+  "n_cells": 81,
+  "n_pass": 0,
+  "verdict": "REGION_EMPTY",
+  "fixed": {
+    "N": 4096,
+    "M": 128,
+    "k_p": 5,
+    "photons": 10000.0,
+    "T_eff": 4096
+  },
+  "sigma_f_eff": {
+    "0.3": 0.2978440976300366,
+    "0.6": 0.5034627238395173,
+    "1.0": 0.69557465725083
+  },
+  "axes": {
+    "sigma_f": [
+      0.3,
+      0.6,
+      1.0
+    ],
+    "shape": [
+      "flat",
+      "k^-1",
+      "k^-2"
+    ],
+    "k_w_over_kp": [
+      1,
+      2,
+      4
+    ],
+    "claim": [
+      1.25,
+      1.5,
+      1.8
+    ]
+  },
+  "mc_cross_check": [
+    {
+      "cell": "sf0.3_flat_kw1",
+      "rel_err_gaussian_engine": 0.122,
+      "rel_err_bounded_truncation": 0.122
+    },
+    {
+      "cell": "sf1.0_flat_kw1",
+      "rel_err_gaussian_engine": 0.122,
+      "rel_err_bounded_truncation": 0.312
+    },
+    {
+      "cell": "sf0.6_k^-2_kw2",
+      "rel_err_gaussian_engine": 0.087,
+      "rel_err_bounded_truncation": 0.222
+    }
+  ]
+}

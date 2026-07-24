@@ -1,0 +1,10 @@
+== P1 tower test: N=256, d=24, sig_f=0.3, T=4096, clean ==
+M=12 (2nd-eqs   78, +3rd   364 vs N=256): 2nd-only 0.725 [0.706, 0.725, 0.744] | +3rd 0.712 [0.712, 0.65, 0.965]
+M=20 (2nd-eqs  210, +3rd  1540 vs N=256): 2nd-only 0.616 [0.638, 0.616, 0.571] | +3rd 0.673 [0.625, 0.673, 0.984]
+Traceback (most recent call last):
+  File "D:\tmp\claude\E--ns-mc-gan-gi-code-fcc-phase1\04459650-b158-41b2-8bcd-cd575e323368\scratchpad\mini_p1_cumulant.py", line 45, in <module>
+    v2.append(nullnmse(estimate_tower(B,Pm,False,seed=s),Pm))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 58, in nullnmse
+  File "<string>", line 56, in <lambda>
+ValueError: matmul: Input operand 1 has a mismatch in its core dimension 0, with gufunc signature (n?,k),(k,m?)->(n?,m?) (size 48 is different from 12)

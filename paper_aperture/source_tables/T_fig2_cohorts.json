@@ -1,0 +1,37 @@
+{
+  "panel": "Fig.2b : two certified mean-channel cohort statistics",
+  "PROVENANCE": "paper2/main_m1.tex sec6 + docs/FLAGSHIP_MATERIALS_MAP.md sec9a (R19-frozen verbatim). Canonical machine source results/round63_m1/CORRECTION_2026-07-19/M1_VERDICTS_SPEC_CORRECTED_R19.json lives in the E:/GAN_FCC_WORK program repo, not GI_a2.",
+  "class": "FROZEN",
+  "materiality_bar_dB": 1.0,
+  "cohorts": [
+    {
+      "key": "fixed_dwell_quality",
+      "label": "fixed-dwell radiometric quality gain",
+      "metric": "median dQ over matched 0.60 comparator (dB)",
+      "value": 1.87,
+      "lower_bound": 1.41,
+      "lb_kind": "family-stratified",
+      "n_positive": 19,
+      "n_total": 24,
+      "unit": "dB"
+    },
+    {
+      "key": "elapsed_speed",
+      "label": "elapsed-time speed ratio",
+      "metric": "median conservative speed ratio S_gate (x)",
+      "value": 19.13,
+      "value_exact": 19.127043091646133,
+      "lower_bound": 18.33,
+      "lower_bound_exact": 18.328492357080282,
+      "lb_kind": "family-stratified nested-bootstrap 2.5th pct",
+      "n_positive": 21,
+      "n_total": 24,
+      "unit": "x"
+    }
+  ],
+  "resource_frame": {
+    "note": "benefits bought with power, not photon efficiency",
+    "incident_dose_x": 37.1,
+    "detected_counts_x": 2.6
+  }
+}

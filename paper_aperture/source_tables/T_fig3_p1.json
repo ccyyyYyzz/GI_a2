@@ -1,0 +1,81 @@
+{
+  "panel": "Fig.3c : P1 profiled-Fisher prognosis (prelaunch kill) + T_eff^-1/2 scaling",
+  "PROVENANCE": "results/round63_next/FOG_DMD_PROBE64/P1_results.json (COPIED)",
+  "class": "COPIED",
+  "frozen_geometry": {
+    "N": 4096,
+    "k_p": 5,
+    "k_claim": 9,
+    "k_support": 10,
+    "M": 128,
+    "sigma_f": 0.3,
+    "photons": 10000.0,
+    "medium_db": 120,
+    "beyond_band_dof": 240
+  },
+  "bar": {
+    "f_rec_snr3_required": 0.7,
+    "nmse_crb_synth_max": 0.25,
+    "nmse_crb_nat_median_max": 0.35,
+    "eta_prof_p10_min": 0.1,
+    "eta_prof_median_min": 0.25
+  },
+  "primary_point": {
+    "witness": {
+      "f_rec_snr3": 0.05,
+      "nmse_crb": 0.139930175773565,
+      "eta_prof_p10": 0.9883124029547273,
+      "eta_prof_median": 0.9960827112515211,
+      "min_eig_Jbar": 0.007447769967688125,
+      "exact_null": false
+    },
+    "nat_cameraman": {
+      "f_rec_snr3": 0.4166666666666667,
+      "nmse_crb": 0.31209118758932713,
+      "eta_prof_p10": 0.932241057889991
+    },
+    "nat_coins": {
+      "f_rec_snr3": 0.7125,
+      "nmse_crb": 0.12441465372392885
+    },
+    "nat_moon": {
+      "f_rec_snr3": 0.09583333333333334,
+      "nmse_crb": 0.7722062970861754
+    }
+  },
+  "natural_nrmse_crb_median": 0.31209118758932713,
+  "T_eff_sweep_witness": {
+    "T_eff": [
+      256,
+      512,
+      1024,
+      2048,
+      4096
+    ],
+    "nmse_crb": [
+      0.55972070309426,
+      0.3957823047284535,
+      0.27986035154713,
+      0.19789115236422675,
+      0.139930175773565
+    ],
+    "f_rec_snr3": [
+      0.0125,
+      0.020833333333333332,
+      0.025,
+      0.03333333333333333,
+      0.05
+    ],
+    "note": "nmse_crb ~ T_eff^-1/2 (no floor); f_rec grows far too slowly to reach 0.70"
+  },
+  "checks": {
+    "no_exact_null": true,
+    "eta_p10_ge_0p10": true,
+    "eta_median_ge_0p25": true,
+    "nrmse_synth_le_0p25": true,
+    "nrmse_nat_median_le_0p35": true,
+    "frec_ge_0p70": false
+  },
+  "P1_pass": false,
+  "verdict": "P1_FAIL -> STOP (no reconstruction; archive theorem)"
+}

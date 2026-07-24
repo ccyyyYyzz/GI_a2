@@ -1,0 +1,66 @@
+{
+  "panel": "Fig.1 : master information atlas (two rows x two apertures)",
+  "PROVENANCE": "DERIVED from T_fig2_ridge_points.json, T_fig3_aperture.json, T_fig3_p1.json, T_fig3_map(_meta).json, T_fig3_pocket.json. Each field's origin is in derivation_notes.",
+  "class": "DERIVED",
+  "axis": {
+    "name": "spatial-frequency / task mode",
+    "unit": "multiples of modulator band edge k_p (k_p = 1.0)"
+  },
+  "rows": {
+    "mean": {
+      "label": "mean channel",
+      "formal_support_extent": 1.0,
+      "formal_support_band": "B_p (modulator band)",
+      "fisher_usable_extent": 1.0,
+      "fisher_usable_note": "full band Fisher-usable; ridge optimum reached; residual headroom closed",
+      "exact_wall": 1.0,
+      "wall_kind": "exact first-moment wall"
+    },
+    "covariance": {
+      "label": "covariance channel",
+      "formal_support_extent": 2.0,
+      "formal_support_band": "B_p (+) B_w (pattern (+) medium band)",
+      "fisher_usable_extent": 1.1,
+      "fisher_usable_note": "thin Fisher-usable rim ~1.1 k_p; REGION_EMPTY at publication scale",
+      "pocket_extent": 1.25
+    }
+  },
+  "markers": [
+    {
+      "id": "M1_operating",
+      "row": "mean",
+      "x_kp": 1.0,
+      "color": "green",
+      "style": "dot",
+      "label": "certified mean operating point",
+      "source": "T_fig2_ridge_points.json.selected_operating_point + T_fig2_cohorts.json"
+    },
+    {
+      "id": "killed_1p8",
+      "row": "covariance",
+      "x_kp": 1.8,
+      "color": "red",
+      "style": "cross",
+      "label": "killed 1.8x covariance claim (P1 f_rec=0.05)",
+      "source": "T_fig3_p1.json (witness f_rec_snr3=0.05 at claim 1.8)"
+    },
+    {
+      "id": "pocket_1p25",
+      "row": "covariance",
+      "x_kp": 1.25,
+      "color": "amber",
+      "style": "filled_or_hollow",
+      "label": "natural-scene 1.25x pocket (branch: PENDING)",
+      "source": "T_fig3_pocket.json (f_rec_nat=0.79; branch PENDING -> A/B variant)"
+    }
+  ],
+  "legend_line": "support is not supply",
+  "derivation_notes": {
+    "mean.formal_support_extent=1.0": "modulator band B_p; first moment exactly blind outside B_p (exact wall).",
+    "mean.fisher_usable_extent=1.0": "M1 living optimum reached on the ridge (T_fig2_ridge_points.selected_operating_point); five preregistered interventions found no material residual headroom (T_fig2_closure).",
+    "cov.formal_support_extent=2.0": "aperture law B_p (+) B_w = 2 k_p; validated 18.76x in/out separation at 64x64 (T_fig3_aperture.separation_64x64).",
+    "cov.fisher_usable_extent=1.1": "P1 profiled-Fisher: only 5% of the 1.0-1.8 k_p annulus clears SNR>=3; usable aperture collapses to ~1.1 k_p (T_fig3_p1 + RISK_GATES_REPORT synthesis).",
+    "cov.pocket_extent=1.25": "sole sub-P1 residue: natural-scene 1.25x pocket under k^-2 medium (T_fig3_pocket, f_rec_nat=0.79, NRMSE 0.10, T_req 197).",
+    "marker.killed_1p8": "claim 1.8 k_p witness f_rec_snr3 = 0.05 << 0.70 bar (T_fig3_map / T_fig3_p1)."
+  }
+}

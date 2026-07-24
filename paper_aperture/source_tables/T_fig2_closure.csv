@@ -1,0 +1,8 @@
+# PROVENANCE: docs/SOFTWARE_SATURATION_VERDICT.md (table) + docs/FLAGSHIP_MATERIALS_MAP.md sec3a  (FROZEN)
+# materiality_bar_dB = 1.0 ; probeA governing_number is a headroom CEILING (<=0.2)
+key,mechanism,verdict,governing_number,unit,materiality_bar_dB,detail
+bridge,scene-adaptive geometry,FAIL,0.68,dB,1.0,median dQ +0.680 < 1.0; boot LB +0.543; 11/12 pos
+allocator,robust maximin routing,HARM,-8.3,dB,1.0,allocation loss -8.33 dB (harmful arm)
+dops,moment-orthogonal schedule,FAIL,0.039,dB,1.0,median dQ +0.039 < 1.0; 5/6 pos
+probeA,estimator vs Fisher ceiling,SATURATED,0.2,dB,1.0,~99% var-efficient; <=0.2 dB residual headroom
+cpl,conditional-likelihood gain,KILL,0.412,dB,1.0,median dQ +0.412 < 1.0; 5/6 pos

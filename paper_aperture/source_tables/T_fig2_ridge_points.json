@@ -1,0 +1,97 @@
+{
+  "panel": "Fig.2a / Fig.1 mean-row : hidden-state information ridge",
+  "PROVENANCE": {
+    "curves": "results/round63_theory/fisher_ridge.csv (COPIED)",
+    "peaks": "results/round63_theory/fisher_ridge.json -> ridge{} (COPIED)",
+    "ridge_law": "paper2/main_m1.tex sec4 + docs/FLAGSHIP_MATERIALS_MAP.md sec1a (FROZEN)",
+    "jitter_cap": "paper2/main_m1.tex sec3 Thm3 + supplement_m1.tex S4 (FROZEN)",
+    "operating_point": "paper2/main_m1.tex sec4/sec6, R19-frozen (FROZEN)"
+  },
+  "definition": "I about log-lambda per unit time, tau units; CLT proxy = rho/(1+rho)",
+  "ridge_peaks": [
+    {
+      "nu": 20,
+      "rho_star": 4.533269392866054,
+      "I_at_peak": 0.7432511906311869,
+      "I_asymptote_CLT": 1.0,
+      "qmle_trust_rho_ratio0.9": 4.966428051464585
+    },
+    {
+      "nu": 50,
+      "rho_star": 6.158937596398956,
+      "I_at_peak": 0.7979685241422887,
+      "I_asymptote_CLT": 1.0,
+      "qmle_trust_rho_ratio0.9": 8.588758603964937
+    },
+    {
+      "nu": 100,
+      "rho_star": 7.865366353033655,
+      "I_at_peak": 0.8334517658658727,
+      "I_asymptote_CLT": 1.0,
+      "qmle_trust_rho_ratio0.9": 12.374316756777032
+    },
+    {
+      "nu": 200,
+      "rho_star": 9.991695064900318,
+      "I_at_peak": 0.8655153082905239,
+      "I_asymptote_CLT": 1.0,
+      "qmle_trust_rho_ratio0.9": 17.828387344169222
+    },
+    {
+      "nu": 500,
+      "rho_star": 13.770412005178148,
+      "I_at_peak": 0.8986217003262402,
+      "I_asymptote_CLT": 1.0,
+      "qmle_trust_rho_ratio0.9": 25.68637942128446
+    },
+    {
+      "nu": 1000,
+      "rho_star": 17.45286017774791,
+      "I_at_peak": 0.919153540741788,
+      "I_asymptote_CLT": 1.0,
+      "qmle_trust_rho_ratio0.9": 37.00783896138373
+    },
+    {
+      "nu": 2000,
+      "rho_star": 22.15503546089851,
+      "I_at_peak": 0.9353615833281874,
+      "I_asymptote_CLT": 1.0,
+      "qmle_trust_rho_ratio0.9": 53.31931457248657
+    }
+  ],
+  "ridge_law": {
+    "rho_star_of_nu": "(6*nu)**(1/3) - 2/3 + O(nu**-1/3)",
+    "J_at_peak_of_nu": "1 - 0.8255*nu**(-1/3)",
+    "class": "FROZEN (deterministic dead-time ridge law, paper2 sec4)"
+  },
+  "jitter_cap": {
+    "note": "finite illumination jitter c_v caps the reachable load below the deterministic ridge",
+    "optimum_condition": "c_v**2 * rho_c**2 * (1 + 2*rho_c) = 1",
+    "small_jitter_expansion": "rho_c = 2**(-1/3) * c_v**(-2/3) - 1/6 + ...",
+    "pooled_MC_slope": -0.658,
+    "pooled_MC_slope_target": -0.6666666666666666,
+    "example_cv0p05_nu2000": {
+      "det_rho_star": 22.3,
+      "capped_rho_c": 5.7,
+      "info_forfeited_frac": 0.55
+    },
+    "MC_peaks_by_nu_desc": [
+      22.297,
+      10.739,
+      5.173,
+      3.862,
+      2.153,
+      1.607
+    ],
+    "class": "FROZEN (paper2 supplement_m1.tex S4, jitter_sfi_v2 100k frames)"
+  },
+  "selected_operating_point": {
+    "nu": 2000,
+    "rho_operating": 22.25,
+    "rho_star_deterministic": 22.15503546089851,
+    "I_at_peak": 0.9353615833281874,
+    "label": "certified mean-channel operating point (living optimum)",
+    "certified_result_ref": "T_fig2_cohorts.json (+1.87 dB / 19.13x)",
+    "class": "FROZEN"
+  }
+}

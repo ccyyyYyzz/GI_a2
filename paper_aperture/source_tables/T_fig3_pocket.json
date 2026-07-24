@@ -1,0 +1,21 @@
+{
+  "panel": "Fig.3d : natural-scene 1.25x pocket (branch inset)",
+  "PROVENANCE": "results/round63_next/FOG_DMD_PROBE64/LIVING_REGION_MAP.json -> grid (COPIED) + LIVING_REGION_MAP.md sec4 'most defensible' (FROZEN wording)",
+  "class": "COPIED",
+  "cell": {
+    "sigma_f": 0.3,
+    "sigma_f_eff": 0.298,
+    "shape": "k^-2",
+    "k_w_over_kp": 1,
+    "claim_x_kp": 1.25,
+    "db": 120
+  },
+  "f_rec_nat": 0.792,
+  "f_rec_witness": 0.458,
+  "nmse_crb_witness": 0.066,
+  "nmse_crb_nat_med": 0.097,
+  "t_req_0p30": 197.0,
+  "P1_pass": false,
+  "BRANCH": "PENDING",
+  "branch_note": "Blind lifted-GLS demo verdict arrives separately. POCKET_ACHIEVED -> filled amber marker + one reconstruction inset; ESTIMATOR_GAP_PERSISTS -> hollow amber marker 'Fisher-feasible, algorithmically unrealized'."
+}
