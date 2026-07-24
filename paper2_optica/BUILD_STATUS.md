@@ -26,8 +26,50 @@
 `figures/_frozen_sources/` (same protocol as paper 1). **No data generation.** All cited
 artifact directories verified clean in the working tree.
 
-### Phase 2 — prose (NOT STARTED)
-Sections per R45 §C3 (below). Theorem statements transcribed from R45 §B (analytical, no data).
+### Phase 2 — prose (COMPLETE)
+
+| Deliverable | Status | File |
+|---|---|---|
+| Main article (5 sections, 3 theorems + jet-transmutation corollary, proof sketches) | **DONE** | `main.tex` → `main.pdf` (**6 pp**) |
+| Supplement (full proofs S1–S4, negatives S5, methods+provenance S6, TLSG gate table) | **DONE** | `supplement.tex` → `supplement.pdf` (**6 pp**) |
+
+**Compile (pdflatex, TeX Live 2024):** main and supplement both compile clean —
+**0 undefined references, 0 missing citations, 0 overfull hbox** (worst residual box
+eliminated; only a few benign underfull vboxes remain from full-width float pages).
+All three committed figures embed (`fig1_hero`, `fig2_jet_transmutation`,
+`fig3_routes_transfer`). All 11 main-text references are cited (no dangling entries).
+
+**Section map (R45 §C3, organized by theorem — no 17-test chronology):**
+1. Symmetry walls — Statistical Noether Wall Thm + support wall 6.6e-16 (A1) / energy wall 2.18e-16 (A3) + two breakers (B1 NA-clip ε¹ 0.97–1.03; B2 window 5.3e-2) + wall periodic table (supp S1).
+2. Blindness capacity — Thm β_d=σ_d (4.2/4.3), robust envelope (4.4); 80@1e-5 single-plane (C1), 35@1e-4 joint (C2), σ_d curve (C3), C4/C5, fresh-draw min 80 + coverage 1.000 (C6/C7).
+3. Restoring the jet — Jet Transmutation corollary + flow eq; Route 1 slope 4.00 (D1), Route 2 86–99% (D3), Route 3 DPSS ≤2.4e-4 (D4); noncomposability (4.6) with **both** →24 instances kept distinct (D5 IT5 SVD→DPSS; D6 IT4b Tukey 93×).
+4. What finite data can certify — Three-Ledger Thm 1:√p:p; exponents −0.004/0.444/1.010 (E1), CVs (E2–E4), KT6 boundary blind power 0.051 + z2⁴ (E5/E6), projected jet above channel line (E7).
+5. Wave-optics transfer — leak law (F1), floor decomposition (F2), COMSOL 15.5% (F3), M^1.8 + matched-cell 768 (F4/F5), real-DMD leak (F6), PWM constraint (F7).
+
+**GAP flags — all honored in prose/captions (see CLAIM_SOURCE_MATRIX.md):**
+- **GAP-1**: field wall cited as committed **6.6×10⁻¹⁶** everywhere (not R45's loose 7e-16). Hero + §1 + supp table all read 6.6e-16.
+- **GAP-2**: joint **35@1e-4** (IT4b spectrum) and fresh-draw single-plane **80** (TLSG bar 7) are labelled with distinct provenance in the hero caption, §2, and Fig-3 caption.
+- **GAP-3**: the two "→24" instances are separated — §3/supp S2 name IT5 SVD→DPSS (D5) and IT4b Tukey rim-kill 93× (D6) as different operators/splits.
+- **GAP-4** (length): Optica Research Article guideline is 6–8 pp. The scaffold typesets at **6 pp** in a dense 10 pt / 0.8 in two-column layout; under `opticajnl` the same body expands toward the upper end of 6–8 pp. No padding was added — the anti-hype PRL house voice is kept. Abstract is ~100 words (Optica target), not the mistaken ≤35.
+
+**Honesty machinery (symmetric):** IT6 segmentation-flood and IT7 coincidence-veto
+(24% scene power) appear in supplement **S5** with the same KILL-verdict prominence as
+the positives, and S5 is referenced from the main-text Discussion.
+
+**Class-file status:** `opticajnl.cls` is **NOT installed** in this TeX Live 2024
+toolchain (`kpsewhich opticajnl.cls` → empty; `opticameeting` also absent). Per the
+task fallback, both files are **clean two-column (main) / one-column (supplement)
+`article`-class scaffolds** with Optica-matching typography (Times, full-width
+title/abstract, numbered sections, spanning `figure*`, ~100-word abstract). A TODO
+header in each `.tex` records that the **final submission is a mechanical class swap**
+to `\documentclass[10pt,twocolumn]{opticajnl}` + `\journal{opticajnl}` with **no body
+edits required**. Same pdflatex toolchain that built `paper_prl`.
+
+**Discipline held:** zero new numbers; every numerical claim traces to a
+CLAIM_SOURCE_MATRIX.md row. `paper_prl/`, `results/`, `docs/`, the figures, and the
+matrix were **not modified**. Companion Letter cited as `[COMPANION]`; user-reserved
+placeholders (`[AUTHORS]`, `[AFFILIATION]`, `[FUNDING/ACKNOWLEDGMENTS]`, `[URL]`) left
+intact exactly as in paper 1.
 
 ---
 

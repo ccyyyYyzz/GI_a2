@@ -1,0 +1,501 @@
+% =====================================================================
+%  Supplement to "Engineering What an Optical Sensor Cannot See"
+%  ROUND63 / Certified-Blindness / Three-Ledger line.
+%  Full proofs, methods, honest negatives, TLSG gate table.
+%  Every number traces to paper2_optica/CLAIM_SOURCE_MATRIX.md.
+%
+%  TODO (final port): mechanical class swap to opticajnl (supplemental-document
+%  mode) once opticajnl.cls is available; no body edits required.  Built here as
+%  a clean single-column article scaffold with S-prefixed numbering to match the
+%  companion Letter's Supplemental Material.  Logged in BUILD_STATUS.md.
+% =====================================================================
+\documentclass[10pt,onecolumn]{article}
+
+\usepackage[letterpaper,margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{bm}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage[hidelinks]{hyperref}
+\graphicspath{{figures/}}
+
+\usepackage{times}
+\usepackage[font=small,labelfont=bf,labelsep=period]{caption}
+\emergencystretch=2em
+
+\renewcommand{\thesection}{S\arabic{section}}
+\renewcommand{\theequation}{S\arabic{equation}}
+\renewcommand{\thetable}{S\arabic{table}}
+\renewcommand{\thefigure}{S\arabic{figure}}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}{Corollary}
+\newtheorem{lemma}{Lemma}
+\theoremstyle{definition}
+\newtheorem{remark}{Remark}
+
+\newcommand{\Treq}{T_{\mathrm{req}}}
+\newcommand{\Cstar}{C_{\ast}}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\bd}{\beta}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries Supplement:\\[2pt]Engineering What an Optical Sensor Cannot See\par}
+\vspace{8pt}
+{\large [AUTHORS]\par}
+\vspace{2pt}
+{\itshape [AFFILIATION]\par}
+\vspace{2pt}
+{\small\today\par}
+\end{center}
+
+\vspace{6pt}
+\noindent This Supplement is an audit trail, not an alternate manuscript. It
+contains the full proofs of the four main-text results (S1--S4), the model and
+protocol capsule with engines, seeds, and commit hashes (S6), the theorem-consistent
+honest negatives (S5), and the frozen three-ledger scaling-gate (TLSG) table (S4.3).
+Every number traces to a single committed frozen artifact recorded in
+\texttt{paper2\_optica/CLAIM\_SOURCE\_MATRIX.md}; no datum was generated for this
+document. Equation, section, table, and figure labels carry an ``S'' prefix; bare
+references point to the main article.
+
+\tableofcontents
+\vspace{8pt}
+
+% =====================================================================
+\section{Statistical Noether wall: proof and periodic table}\label{sec:s1}
+% =====================================================================
+Let a scene $x$ lie on a smooth parameter manifold $\mathcal X$; let the complete
+observed record have a dominated law $P_x$ with density $p(y\mid x)$; and let a Lie
+group $G$ act smoothly on $\mathcal X$ with infinitesimal generator $X_\xi(x)$ for
+$\xi$ in the Lie algebra.
+
+\begin{theorem}[Statistical Noether wall]\label{thm:s-noether}
+If $P_{g\cdot x}=P_x$ for every $g\in G$, then for every algebra element $\xi$
+\begin{equation}
+D_x\log p(Y\mid x)[X_\xi(x)]=0\quad\text{a.s.},\qquad
+I_x\,X_\xi(x)=0.
+\label{eq:s-scorenull}
+\end{equation}
+Consequently every $f$-divergence, Chernoff distance, and quotient information jet
+between two points on a common orbit is zero, and no estimator, moment order,
+exposure count, or reconstruction prior can distinguish points on that orbit.
+\end{theorem}
+
+\begin{proof}
+Invariance gives $\log p(y\mid\exp(t\xi)\cdot x)=\log p(y\mid x)$ for all $t$ and
+almost every $y$. Differentiating at $t=0$ yields the directional score identity
+\eqref{eq:s-scorenull}. Taking the outer product and expectation gives
+$I_x X_\xi=\mathbb E[(D_x\log p\,[X_\xi])(\cdot)]=0$. Because the complete laws
+coincide at every finite orbit displacement $P_{g\cdot x}=P_x$, any $f$-divergence
+$\mathcal D_f(P_{g\cdot x}\Vert P_x)=\mathcal D_f(P_x\Vert P_x)=0$; the same holds
+for the Chernoff distance and for any nuisance-profiled quotient jet, which is an
+infimum of such divergences.
+\end{proof}
+
+\begin{lemma}[Local converse]\label{lem:s-converse}
+Let $\mathcal D_x$ be a smooth constant-rank distribution that is integrable and
+satisfies $D_x\log p(y\mid x)[v]=0$ for every $v\in\mathcal D_x$, almost every $y$,
+and every $x$ in a connected neighborhood. Then $p(y\mid x)$ is constant along each
+integral leaf of $\mathcal D$; the leaves are local blindness orbits.
+\end{lemma}
+
+\begin{proof}
+By Frobenius integrability the distribution has integral leaves. Along any smooth
+path $\gamma(t)$ inside a leaf, $\tfrac{d}{dt}\log p(y\mid\gamma(t))=D_x\log
+p\,[\dot\gamma]=0$ for almost every $y$, so $p(y\mid\cdot)$ is constant on the leaf.
+Hence, under ordinary smoothness and integrability, continuous local walls are
+exactly local gauge symmetries of the statistical experiment.
+\end{proof}
+
+\begin{remark}
+A symmetry of the underlying wave equation does not by itself create a wall; a wall
+appears only when the full measurement law inherits the induced parameter action.
+Discrete degeneracies---parity, conjugation, source--detector exchange---may produce
+globally indistinguishable pairs without a nonzero infinitesimal tangent; these are
+walls but not Lie-generated local nulls, and are outside
+Theorem~\ref{thm:s-noether}.
+\end{remark}
+
+\paragraph{The two confirmed walls as group actions.}
+The support wall is the additive group of the unmeasured subspace: for a bandlimited
+mean operator $A$, every $h\in\ker A$ gives $x\mapsto x+h$ with
+$P^{\mathrm{mean}}_{x+h}=P^{\mathrm{mean}}_x$; a hard field pupil restores it to a
+maximum field leak beyond $2kR$ of $6.6\times10^{-16}$ (KT1, \texttt{@19338a4}). The
+energy wall is the unitary orbit of a lossless full-aperture bucket
+$B(E)=\lVert E\rVert_2^2$, with phase-only change the diagonal subgroup; the measured
+null is $2.18\times10^{-16}$ (IT1, \texttt{@f13a323}).
+
+\begin{table}[t]
+\centering
+\caption{Wall periodic table for an optical chain. The first two rows are the walls
+confirmed here; the mode-unitary and parity rows are immediate consequences of
+Theorem~\ref{thm:s-noether} (Section~S1).}
+\label{tab:s-walls}
+\small
+\begin{tabular}{@{}p{0.20\textwidth}p{0.26\textwidth}p{0.20\textwidth}p{0.24\textwidth}@{}}
+\toprule
+Wall class & Invariance / group & Exact null & Breaking operator \\
+\midrule
+Support & additive translations by $\ker A$ & scene modes beyond the transfer range
+ & finite window, aliasing, nonlinear moment \\
+Unitary energy & $E\!\to\!UE$ under total-energy collection & every lossless mode
+ mixing, incl.\ phase-only & NA clipping, mode-selective collection \\
+Mode-unitary & full $U$ on spatial modes & any unitary mode transform & mode sorter /
+ analyzer \\
+Global phase & $E\!\to\!e^{i\phi}E$ under intensity detection & absolute optical
+ phase & coherent reference \\
+Parity/exchange & $x(r)\!\to\!x(-r)$, symmetric chain & odd tangent modes at a
+ parity-even baseline & asymmetric code or pupil \\
+Polarization-unitary & local/global $SU(2)$ under intensity bucket & polarization
+ rotation at fixed intensity & analyzer, birefringent reference \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+There is no finite universal list independent of apparatus: the complete local list
+for a declared experiment is the integrable kernel distribution of its score map,
+and Theorem~\ref{thm:s-noether} supplies the classification rule.
+
+% =====================================================================
+\section{Blindness capacity: proof, robustness, and noncomposability}\label{sec:s2}
+% =====================================================================
+Let $L:\mathcal C\to\mathcal Y$ be a calibrated linear leak operator with the code
+norm whitened by the desired in-band metric, and write singular values ascending
+$\sigma_1\le\cdots\le\sigma_n$. With
+$\bd_d(L)=\min_{\dim S=d}\max_{c\in S,\lVert c\rVert=1}\lVert Lc\rVert$:
+
+\begin{theorem}[Blindness capacity]\label{thm:s-capacity}
+$\bd_d(L)=\sigma_d(L)$, attained by the span of the bottom $d$ right singular
+vectors. For a generalized relative-leak certificate with metric $B^\dagger B$,
+$\bd_d=\sqrt{\lambda_d}$ with $L^\dagger L\,v=\lambda\,B^\dagger B\,v$.
+\end{theorem}
+
+\begin{proof}
+Let $v_1,\dots,v_n$ be right singular vectors with singular values $\sigma_1\le
+\cdots\le\sigma_n$ and set $S^\star=\mathrm{span}\{v_1,\dots,v_d\}$. For $c\in
+S^\star$ with $\lVert c\rVert=1$, $\lVert Lc\rVert^2=\sum_{i\le d}\sigma_i^2|\langle
+c,v_i\rangle|^2\le\sigma_d^2$, so $\bd_d\le\sigma_d$. Conversely, any $d$-dimensional
+$S$ intersects $\mathrm{span}\{v_d,\dots,v_n\}$ (dimension $n-d+1$) nontrivially, by a
+dimension count; a unit vector $c$ in the intersection has $\lVert Lc\rVert^2=\sum_{i
+\ge d}\sigma_i^2|\langle c,v_i\rangle|^2\ge\sigma_d^2$, so $\bd_d\ge\sigma_d$. Hence
+$\bd_d=\sigma_d$. The generalized statement is the same argument for the pencil
+$(L^\dagger L,B^\dagger B)$ after the congruence $B^\dagger B=R^\dagger R$.
+\end{proof}
+
+\begin{theorem}[Robust calibration certificate]\label{thm:s-robust}
+If a calibration returns $\hat L$ with $\lVert L-\hat L\rVert_{\mathrm{op}}\le\delta$
+and $S_d$ is the bottom-$d$ right singular subspace of $\hat L$, then
+\begin{equation}
+\max_{c\in S_d,\ \lVert c\rVert=1}\lVert Lc\rVert\ \le\ \sigma_d(\hat L)+\delta.
+\label{eq:s-robust}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+For $c\in S_d$ with $\lVert c\rVert=1$, $\lVert Lc\rVert\le\lVert\hat Lc\rVert+
+\lVert(L-\hat L)c\rVert\le\sigma_d(\hat L)+\delta$, using
+Theorem~\ref{thm:s-capacity} for $\hat L$ on $S_d$ and the operator-norm bound.
+\end{proof}
+
+Equation~\eqref{eq:s-robust} converts one calibration run into a metrological
+cannot-see guarantee: it is the ingredient separating a numerical null space from a
+certified instrument property. TLSG arm~B measures it directly (Section~S4.3).
+
+\begin{theorem}[Noncomposability]\label{thm:s-noncompose}
+For leak routes $L_1,\dots,L_k$ with weights $w_i$, the simultaneous root-sum-square
+certificate is governed by the stacked operator
+$L_{\mathrm{stack}}=[w_1L_1;\dots;w_kL_k]$, so
+\begin{equation}
+\bd_d^2=\lambda_d^{\uparrow}\!\Big(\textstyle\sum_i w_i^2 L_i^\dagger L_i\Big).
+\label{eq:s-noncompose}
+\end{equation}
+The certificate factors are not multiplicative; multiplication occurs only for
+serial contractions whose singular-vector chains align.
+\end{theorem}
+
+\begin{proof}
+$L_{\mathrm{stack}}^\dagger L_{\mathrm{stack}}=\sum_i w_i^2 L_i^\dagger L_i$ by block
+computation; apply Theorem~\ref{thm:s-capacity} to $L_{\mathrm{stack}}$. Because the
+bottom eigenvector of a sum of positive-semidefinite forms is not the product of the
+individual bottom subspaces, the $d$-capacities do not multiply.
+\end{proof}
+
+\paragraph{Two committed instances of \eqref{eq:s-noncompose}.} The two ``$\to24$''
+witnesses are distinct and are not conflated. (i) IT5 (\texttt{@c8a0487}): the DPSS
+hardware route does not stack with the SVD code route---the single-plane certified
+dimension at $10^{-4}$ drops $80\to24$, because the window rotates and reshapes the
+operator. (ii) IT4b (\texttt{@5666d1e}): Tukey apodization is an independent witness
+of the same law, with joint certified dimension $35\to24$ and a $93\times$ worse
+relative leak at $d=64$ ($4.66\times10^{-2}$ apodized versus $4.99\times10^{-4}$
+non-apodized; a rim effect). These are different operators and different splits.
+
+\paragraph{Extra spectra.} The full ascending generalized-leak spectrum $\sigma_d$
+versus $d$ (IT4b, \texttt{@5666d1e}) runs from $\sigma_1=1.43\times10^{-6}$ through
+$\sigma_{64}=4.99\times10^{-4}$ to $\sigma_{120}=1.13\times10^{-1}$; the plotted
+capacity curve of Fig.~1 (center) is a $30$-point sampling of this map. Two capacity
+points anchor it: single-plane $d@10^{-5}=80$, and joint (four $z_1$ planes)
+$d@10^{-4}=35$, $d@10^{-5}=8$, $d@10^{-3}=80$, so the single-plane requirement buys
+$45$ extra certified dimensions. The $d=64$ subspace has worst-direction leak
+$4.99\times10^{-4}$ and operational random-code RMS leak $1.68\times10^{-4}$
+(threefold below the worst direction), ridge-stable ($d@10^{-4}=35$ across
+regularizers $0/10^{-8}/10^{-6}$). Certified-blind codes keep a second sensing
+channel: eigenvalue ratio $\lambda_{\mathrm{random}}/\lambda_{\mathrm{blind}}=1.20$,
+operational mean leak $219\times$ lower ($2.58\times10^{-4}$ versus
+$5.64\times10^{-2}$; IT4, \texttt{@33b8ef2}).
+
+% =====================================================================
+\section{Jet transmutation: flow equations and specialization}\label{sec:s3}
+% =====================================================================
+Let the profiled Chernoff distance carry two leading operators,
+\begin{equation}
+C(\eps,g)=A\,g^{2a_1}\eps^{2m_1}+B\,g^{2a_2}\eps^{2m_2},\qquad 0<m_1<m_2,
+\label{eq:s-two}
+\end{equation}
+and set $y=(B/A)g^{2(a_2-a_1)}\eps^{2(m_2-m_1)}$. The effective orders are
+$m_{\mathrm{eff}}=\tfrac12\,\partial_{\log\eps}\log C=(m_1+m_2y)/(1+y)$ and
+$a_{\mathrm{eff}}=\tfrac12\,\partial_{\log g}\log C=(a_1+a_2y)/(1+y)$, and a direct
+differentiation gives the exact flow
+\begin{equation}
+\frac{\partial m_{\mathrm{eff}}}{\partial\log\eps}=2(m_{\mathrm{eff}}-m_1)
+(m_2-m_{\mathrm{eff}}),\qquad
+\frac{\partial m_{\mathrm{eff}}}{\partial\log g}=\frac{2(a_2-a_1)}{m_2-m_1}
+(m_{\mathrm{eff}}-m_1)(m_2-m_{\mathrm{eff}}),
+\label{eq:s-flow}
+\end{equation}
+with fixed points $m_1$ (relevant as $\eps\to0$) and $m_2$.
+
+\begin{corollary}[Jet transmutation]\label{cor:s-jet}
+A lower-order symmetry-breaking channel with coefficient $A>0$ drives
+$m_{\mathrm{eff}}\to m_1$; zeroing $A$ by an exact wall, a certified code, or a
+nuisance projection places the experiment exactly on the $m_2$ manifold without
+changing the scene perturbation.
+\end{corollary}
+
+For the near-contact optical case $m_1=1,a_1=0,m_2=2,a_2=2$ (covariance Chernoff
+information is $O(z_2^4\eps^4)$),
+\begin{equation}
+\frac{\partial m}{\partial\log\eps}=2(m-1)(2-m),\qquad
+\frac{\partial m}{\partial\log z_2}=4(m-1)(2-m),
+\label{eq:s-r44}
+\end{equation}
+so that $y\propto\eps^2 z_2^4$, giving $\eps\,z_2^2=\text{const}$ and
+$z_{2,\ast}\propto\eps^{-1/2}$, the geometric form
+of the KT2 crossover $\eps_{\mathrm{cross}}=\sqrt{A/B}$. The measured realizations
+(KT2, \texttt{@05f1029}): projected covariance slopes $[4,4,4,4]$; unprojected
+low-amplitude slopes $[2.136,2.20,2.117,2.176]$; orthogonality residuals in
+$[1.45,5.09]\times10^{-18}$; generic-direction covariance slopes
+$[1.576,2.284,1.576,2.285]$. The cross-paper integer anchors are the companion KL
+slopes $2.038$ (generic) and $4.000$ (first-order-orthogonal) with coefficient
+agreement $1.07\%$/$0.00\%$ (JET\_TEST, \texttt{@1bf29f1}; Ref.~[COMPANION]).
+
+% =====================================================================
+\section{Three-ledger certifiability: proof and scaling gate}\label{sec:s4}
+% =====================================================================
+\subsection{Nuisance-profiled LAN reduction}
+One independent bank yields $Y_t\sim\mathcal N(0,\Sigma_\eps)$, $t=1,\dots,T$.
+Whiten the null covariance and project every admitted nuisance tangent in the
+Gaussian covariance metric, giving the efficient displacement
+$A_\perp=\Pi_\perp[\Sigma_0^{-1/2}(\Sigma_\eps-\Sigma_0)\Sigma_0^{-1/2}]$. Let the
+efficient symmetric tangent $\mathcal H$ have dimension $p$ with basis $B_1,\dots,
+B_p$ normalized by $\tfrac12\tr(B_jB_k)=\delta_{jk}$, and write
+$A_\perp=\sum_j\theta_jB_j$, $\lambda=\lVert\theta\rVert^2=\tfrac12\lVert
+A_\perp\rVert_F^2$. The single-bank score $s_j(Y)=\tfrac12[Y^\top B_jY-\tr(B_j)]$
+has $\mathbb E_0 s=0$, $\mathrm{Cov}_0(s)=I_p$, and $\mathbb E_A s=\theta+o(\lVert
+\theta\rVert)$, so the normalized aggregate score is locally
+\begin{equation}
+Z_T=T^{-1/2}\textstyle\sum_t s(Y_t)\ \approx\ \mathcal N(\sqrt T\,\theta,\,I_p).
+\label{eq:s-lan}
+\end{equation}
+
+\subsection{The three ledgers}
+\paragraph{Ledger I (known direction).}
+For a known unit direction $u=\theta/\lVert\theta\rVert$, the matched score $\nu=
+u^\top Z_T$ has $\nu\sim\mathcal N(0,1)$ under $H_0$ and $\mathcal N(\sqrt{T\lambda},
+1)$ under $H_1$, so fixed nontrivial power requires and attains $T\lambda=O(1)$.
+
+\paragraph{Ledger II (blind existence).}
+If only $\lVert\theta\rVert^2=\lambda$ is known, the invariant $Q_T=\lVert Z_T
+\rVert^2$ is $\chi^2_p$ under $H_0$ (mean $p$, SD $\sqrt{2p}$) and $\chi^2_p(T
+\lambda)$ under $H_1$ (mean $p+T\lambda$), so the norm test separates the hypotheses
+when $T\lambda\gg\sqrt p$.
+
+\begin{lemma}[Minimax lower bound]\label{lem:s-lb}
+Mixing the alternative uniformly over directions of norm $r=\sqrt{T\lambda}$, the
+$\chi^2$-divergence of the mixture from the null satisfies $\chi^2+1=\mathbb E\exp(
+\mu^\top\mu')$ for independent mixture directions $\mu,\mu'$, with
+$\mathbb E(\mu^\top\mu')=0$ and $\mathrm{Var}(\mu^\top\mu')=r^4/p$. If
+$r^4/p=T^2\lambda^2/p\to0$ the divergence tends to zero, hence total variation tends
+to zero and every test has asymptotic error sum approaching one. No
+direction-agnostic procedure succeeds below $T\lambda\sim\sqrt p$; the norm test
+attains this scale.
+\end{lemma}
+
+\paragraph{Ledger III (estimate the direction).}
+The efficient estimator $\hat\theta=Z_T/\sqrt T$ has exact local risk
+$\mathbb E\lVert\hat\theta-\theta\rVert^2=p/T$, matching the Cram\'er--Rao bound, so
+relative squared error below a constant requires $T\lambda\sim p$. Hence
+\begin{equation}
+\text{known}:\text{blind}:\text{full}\ =\ 1:\sqrt p:p.
+\label{eq:s-ladder}
+\end{equation}
+Composing with the physical jet $A_\perp=\kappa g^a\eps^m B$
+($\tfrac12\lVert B\rVert_F^2=1$) gives $\lambda=\kappa^2g^{2a}\eps^{2m}$ and
+$T_{\mathrm{known}}\asymp\kappa^{-2}g^{-2a}\eps^{-2m}$, $T_{\mathrm{blind}}\asymp
+\sqrt p\,T_{\mathrm{known}}$, $T_{\mathrm{est}}\asymp p\,T_{\mathrm{known}}$;
+adaptation multiplies the prefactor and leaves the physical exponent $2m$ unchanged.
+Boundary cases: at $p=1$ the three ledgers coincide; an exact wall $B=0$ gives
+$\lambda=0$ and no finite $T$ succeeds; a sparse admitted class replaces $p$ by its
+metric entropy.
+
+\subsection{Frozen scaling gate (TLSG)}\label{sec:s4gate}
+The gate is the falsification experiment above plus a calibration-transfer arm for
+Eq.~\eqref{eq:s-robust}. Arm~A sweeps $M\in\{8,16,32,64\}$ and $p_{\mathrm{eff}}\in
+\{10,36,136,528\}$ (eight $(M,p)$ cells), $\lambda=0.15$, $N_{\mathrm{MC}}=1500$,
+false-positive rate $0.05$, seed $20260724$. Arm~B uses $d_{\mathrm{cert}}=64$,
+$n_{\mathrm{cal}}=n_{\mathrm{test}}=24$, conjugate $z_1=0$, and perturbations
+fill $\pm5\%$, pitch $\pm3\%$, relay defocus $0$--$0.5\,$mm. All seven bars pass;
+the verdict is \texttt{TLSG\_PASS} at commit \texttt{35d858e}
+(Table~\ref{tab:s-tlsg}).
+
+\begin{table}[t]
+\centering
+\caption{TLSG gate: all seven frozen bars (\texttt{TLSG\_RESULTS.json},
+\texttt{@35d858e}). Values are quoted verbatim from the committed artifact.}
+\label{tab:s-tlsg}
+\small
+\begin{tabular}{@{}p{0.02\textwidth}p{0.42\textwidth}p{0.40\textwidth}c@{}}
+\toprule
+\# & Bar (frozen target) & Measured & Verdict \\
+\midrule
+1 & Matched-score $50\%$-power contours collapse vs $T\lambda$ (CV $\le0.20$) &
+ $\mathrm{CV}=0.1250$ & pass \\
+2 & Blind contours collapse vs $T\lambda/\sqrt p$ (CV $\le0.25$) AND fail vs
+ $T\lambda$ & $\mathrm{CV}_{\mathrm{scaled}}=0.1242$;\ $\mathrm{CV}_{\mathrm{raw}}
+ =0.6283$ & pass \\
+3 & Relative estimation risk collapses vs $T\lambda/p$ (CV $\le0.25$) &
+ $\mathrm{CV}=0.0348$ (mean risk $\cdot\,T\lambda/p=0.985$) & pass \\
+4 & Fitted $p$-exponents (matched/blind/estimation): $0/\tfrac12/1\pm0.15$ &
+ $-0.004\,/\,0.444\,/\,1.010$ & pass \\
+5 & KT6 operating point below blind power $0.2$ at FPR $0.05$ &
+ blind power $=0.0506$ ($10\times{=}0.0560$, $100\times{=}0.1335$; $p{=}136$,
+ $T\lambda{=}0.0866$) & pass \\
+6 & Fresh calibration/test: $\ge95\%$ simultaneous coverage of $\sigma_d(\hat
+ L)+\delta$ & coverage $=1.000$ ($\sigma_{64}{=}3.41\times10^{-8}$,
+ $\delta{=}1.07\times10^{-2}$; worst fresh $S_{64}$ leak $1.99\times10^{-6}$) &
+ pass \\
+7 & Conjugate plane: $\ge64$ code dims certified $<10^{-4}$ on fresh law draws &
+ fresh $d@10^{-4}$ min $=80$ (mean $80.0$; calibration $d@10^{-4}=d@10^{-5}=80$) &
+ pass \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Bar~4 is the $1:\sqrt p:p$ signature; bar~3's coefficient $0.985$ is the
+Cram\'er--Rao floor $p/T$; bar~5 confirms the KT6 negative for the right reason
+(the operating point lies below the optimal blind tier). The oracle law itself is
+intact: the near-contact ratio $J_{\mathrm{cov}}/J_{\mathrm{mean}}\propto z_2^4$ has
+fitted exponents $[4.081,4.054,4.022,3.989]$, but the blind median signal-to-floor
+ratio is $\approx5.4\times10^{-3}$ (worst $5.25\times10^{-3}$), so the estimator is
+killed (KT6, \texttt{@635ff05}).
+
+% =====================================================================
+\section{Theorem-consistent honest negatives}\label{sec:s5}
+% =====================================================================
+The kills carry the same prominence as the positives. Two apparatus shortcuts were
+falsified under preregistered protocols and are recorded here in full.
+
+\paragraph{Segmented-bucket negative (IT6, \texttt{@dade877}).}
+The $P^2$ information law is real (fitted exponent $1.68$--$2.02$; $P=4$ buys
+$12$--$17\times$), but segmenting the bucket \emph{breaks the mean wall}: the
+per-segment discriminability $d'$ grows from $0.8$ to $1.8$ at $z_2=5$, so beyond-band
+change floods the segmented mean channel. The single, whole-aperture bucket stands;
+segmentation is not a valid capacity multiplier. Verdict: KILL.
+
+\paragraph{Coincidence-veto negative (IT7, \texttt{@e1546ac}).}
+A contact-arm coincidence veto is a valid medium-event discriminator---the contact
+arm is exactly medium-blind ($\mathrm{AUC}=0.5009$) and the medium false-alarm rate
+is repaired $17.8\times$ (from $0.9965$ to $0.056$)---but it is an invalid
+beyond-band repair, retaining only $24\%$ of scene power, because the same wall that
+supplies specificity starves the contact arm of beyond-band signal. It belongs in
+the bench manual as a theorem-consistent negative control, not as a method. Verdict:
+KILL. This is why no strong-specificity wording is claimed, and the semiparametric
+projection remains a quarantined future method until estimator-layer certification is
+solved.
+
+\paragraph{Future objects (deferred, not claimed).}
+A task-dependent \'etendue law $N_\ast=[\nu/(2-\nu)]\,n$ is only partially collapsed
+(KT5, \texttt{@752114a}: $N_{\mathrm{eff}}$ grows $46\to811$, normalized CV $0.64$),
+and coherence-rank unsaturation persists with a thin screen holding $R\approx110$
+without an $R\to1$ collapse (KT4, \texttt{@494b46b}). Both are gated future work
+(named gates \'etendue-matching and COHERENCE-CROSSOVER); neither supports a claim
+here. The memory-effect phase diagram requires a genuine thickness/stacking axis and
+is deferred.
+
+% =====================================================================
+\section{Model and protocol capsule}\label{sec:s6}
+% =====================================================================
+\paragraph{Engines and shared configuration.}
+The wall/jet exams use the exact Kronecker speckle generator (fully developed
+circular-complex-Gaussian field, factorized grain $\otimes$ code covariance),
+grid $2048$ for IT1/KT1 in \texttt{complex128}\slash\texttt{float64}, with code counts
+$M\in\{8,12,16,32\}$ and $200$--$700$ banks per test. The blindness-capacity and
+route tests use the SVD/DPSS leak operators at the relay-conjugate plane. The
+COMSOL full-Maxwell twin (Wave Optics, 2D TE, COMSOL~6.3) validates the thin-phase
+screen at $15.5\%$ contrast agreement ($0.467$ versus $0.395$; WAVE\_TWIN,
+\texttt{@0c3b0d9}). No reconstruction is performed anywhere.
+
+\paragraph{Scaling gate.}
+Arm~A and arm~B parameters are in Section~S4.3; the single seed is $20260724$; there
+was one sealed run and no repair round.
+
+\paragraph{Provenance.} Every number in the article and this Supplement traces to one
+committed frozen artifact (Table~\ref{tab:s-prov}); the extracted verbatim copies
+read by the figure scripts live in \texttt{figures/\_frozen\_sources/}. The working
+tree is clean for all cited artifact directories.
+
+\begin{table}[t]
+\centering
+\caption{Frozen-source provenance (commit at freeze). Full field-level map in
+\texttt{paper2\_optica/CLAIM\_SOURCE\_MATRIX.md}.}
+\label{tab:s-prov}
+\small
+\begin{tabular}{@{}p{0.22\textwidth}p{0.20\textwidth}p{0.50\textwidth}@{}}
+\toprule
+Artifact & Commit & Role \\
+\midrule
+TLSG\_RESULTS.json & \texttt{35d858e} & three-ledger scaling + calibration transfer (gate) \\
+KT1 shell sweep & \texttt{19338a4} & support/field wall $6.6\times10^{-16}$ + breakers \\
+IT1 two-wall jet & \texttt{f13a323} & energy/unitary wall $2.18\times10^{-16}$; NA-clip $\eps^1$ \\
+KT2 jet transmutation & \texttt{05f1029} & projected slope $4.00$; jet flow \\
+KT3 orthogonalized sentinel & \texttt{2430166} & code-space projection, $86$--$99\%$ retained \\
+IT4 / IT4b & \texttt{33b8ef2} / \texttt{5666d1e} & capacity spectrum ($80/35/24$ dims) \\
+IT5 DPSS concentration & \texttt{c8a0487} & DPSS route $2.4\times10^{-4}$; $80\to24$ \\
+KT6 channel-ratio ranging & \texttt{635ff05} & third-ledger boundary (oracle $z_2^4$) \\
+IT2 / IT3 / IT8 & \texttt{acfcda0} / \texttt{6fb5149} / \texttt{6fb5149} & floor decomposition, leak law, PWM \\
+IT6 / IT7 & \texttt{dade877} / \texttt{e1546ac} & honest negatives (Section~S5) \\
+WAVE\_TWIN & \texttt{0c3b0d9} & COMSOL $15.5\%$, $M^{1.8}$, matched cell $768\in[513,2996]$ \\
+JET\_TEST / SCRAMBLE\_EXT & \texttt{1bf29f1} / \texttt{ed7a1e0} & companion jet/scrambling anchors \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\vspace{4pt}
+\noindent\textbf{Data availability.} The committed artifacts, claim--source matrix,
+and figure scripts are available at [URL].
+
+% =====================================================================
+\begin{thebibliography}{9}
+\bibitem{COMPANION}[AUTHORS], Strong optical disorder erases images but preserves
+local change observability, companion Letter (2026).
+\end{thebibliography}
+
+\end{document}
