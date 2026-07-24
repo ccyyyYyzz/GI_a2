@@ -1,0 +1,36 @@
+{
+  "test": "IT9_carrier_cross_grid_independence",
+  "ref": "internal divergence finer #2 residual",
+  "params": {
+    "M": 32,
+    "grids": [
+      2048,
+      4096
+    ]
+  },
+  "check": "D == Re[C conj(S)] (|S|^2 cancels, no 2kp edge) + beyond-2kp leak grid-independent",
+  "grids": {
+    "N2048": {
+      "carrier_cross_rel_err_max": 5.051350227327634e-16,
+      "carrier_cross_rel_err_mean": 4.380895793176598e-16,
+      "beyond_2kp_leak_mean": 0.009581233352556907,
+      "beyond_2kp_leak_std": 0.0013236267789505547
+    },
+    "N4096": {
+      "carrier_cross_rel_err_max": 4.706062166119707e-16,
+      "carrier_cross_rel_err_mean": 4.0161247678793153e-16,
+      "beyond_2kp_leak_mean": 0.009581233337842245,
+      "beyond_2kp_leak_std": 0.001323626776988025
+    }
+  },
+  "verdict": {
+    "carrier_cross_exact_both_grids": true,
+    "beyond_2kp_leak_2048": 0.009581233352556907,
+    "beyond_2kp_leak_4096": 0.009581233337842245,
+    "grid_rel_diff": 1.5357795025506775e-09,
+    "P_carrier_cross_confirmed": "PASS",
+    "P_grid_independent": "PASS",
+    "overall": "CONFIRMED -- D == Re[C conj(S)] to machine zero on both grids (|S|^2 cancels, NO 2k_p edge) and the beyond-2kp carrier-pedestal leak agrees to 0.0% between N=2048 and N=4096. The WAVE_TWIN_REPORT sec1 carrier-cross correction can be frozen with confidence."
+  },
+  "elapsed_s": 13.5
+}

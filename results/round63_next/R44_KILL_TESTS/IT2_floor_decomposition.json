@@ -1,0 +1,63 @@
+{
+  "test": "IT2_floor_decomposition",
+  "ref": "internal divergence nextpaper #9",
+  "params": {
+    "M": 12,
+    "variants": "fill{0.92,1.0} x mp{8,16} + pupil kR{5,6,8}"
+  },
+  "decision": "fill/staircase move floor >20% => instrument constant; <20% => grid artifact (bracket only)",
+  "floor_z1_0": {
+    "baseline_fill0p92_mp8": 0.007146870856739088,
+    "fill1p0_mp8": 0.007548076550489347,
+    "fill0p92_mp16": 0.0035636937769325003,
+    "fill1p0_mp16": 0.003762524739895746,
+    "pupil_kR": {
+      "5": 0.10066202509163097,
+      "6": 0.14347459612516386,
+      "8": 0.12946730128607944
+    }
+  },
+  "leak_law": {
+    "z1_mm": [
+      0.0,
+      0.5,
+      1.0,
+      3.0,
+      5.0,
+      7.0,
+      10.0,
+      15.0,
+      20.0
+    ],
+    "leak": [
+      0.007146870856739088,
+      0.010226991406502748,
+      0.01310807885191941,
+      0.026149290920260092,
+      0.0333278778034637,
+      0.04292232061301274,
+      0.05710112190048685,
+      0.07595749581784353,
+      0.09384511826784343
+    ],
+    "L_pix": 0.007146870856739088,
+    "fit_a": 0.006103758848137703,
+    "fit_p": 0.9050390174690152,
+    "leak_at_20mm": 0.09384511826784343
+  },
+  "verdict": {
+    "floor_move_fill": 0.056,
+    "floor_move_macro": 0.501,
+    "pupil_reduces_floor": false,
+    "L_pix": 0.007146870856739088,
+    "bracket": [
+      0.007146870856739088,
+      0.09384511826784343
+    ],
+    "fit_a": 0.006103758848137703,
+    "fit_p": 0.9050390174690152,
+    "P_decomposes": "PASS",
+    "overall": "DECOMPOSES -- the z1=0 floor moves 6% (fill) / 50% (macro-staircase): L_pix=7.15e-03 is a real DMD instrument constant (fill + staircase), quotable with a relay-NA spec (pupil kR=8 -> 1.29e-01). Leak law leak(z1)=L_pix + 6.10e-03*z1^0.91."
+  },
+  "elapsed_s": 5.9
+}
