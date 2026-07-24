@@ -9,14 +9,19 @@ bucket — used to test, in real diffraction physics, the four R39 §7.5 transfe
 predictions plus an end-to-end sentinel comparison against the frozen statistical
 detector (`SEALED_DET/CONFIRMATORY_RESULTS.json`).
 
-> **One-line verdict.** The covariance sentinel transfers to real scalar diffraction
-> and the aperture/grain and multiplicative→convolutive predictions are confirmed
-> **with two honest corrections to the idealized statistical model**: (1) the mean-wall
-> is **not machine-zero** under real DMD pixelation + free-space geometry — it leaks at
-> the **~0.7 %–9 %** level and requires near-conjugate DMD imaging plus a transfer-wording
-> adjustment; (2) the statistical grid's **(k_w, σ_f) axes are not independently
-> realizable** — physical speckle is illumination-diffraction-limited to fine grain
-> (wide aperture) and the developed-speckle multiplicative regime is **sub-millimetre thin**.
+> **One-line verdict.** The covariance sentinel **transfers to real scalar diffraction** — at
+> the geometry-matched sealed cell the M-corrected detection time (`≈768 banks @2 %`) lands
+> inside the sealed band (`513–2996`), and the aperture/grain (T3) and multiplicative→convolutive
+> (T4) predictions are confirmed — **with three honest corrections to the idealized statistical
+> model**: (1) the mean-wall is **not machine-zero** under real DMD pixelation + free-space
+> geometry — it leaks at **~0.7 %–9 %** and is *operationally decisive* at under-developed
+> near-contact (mean channel out-detects covariance there), requiring a near-conjugate DMD relay +
+> transfer-wording fix; (2) the statistical grid's **(k_w, σ_f) axes are not independently
+> realizable** — physical speckle is illumination-diffraction-limited to fine grain (wide
+> aperture, ~10⁴–10⁵ grains/bucket) and the developed multiplicative regime is **sub-mm thin**;
+> (3) the covariance noncentrality **scales as `M^1.8`** (codes still buy detection at finite z2 —
+> rank-one `M_eff` saturation is a *complete-scrambling* property only), so the M=32→128
+> comparability correction is essential and closes most of the apparent deviation.
 
 ---
 
@@ -52,8 +57,12 @@ is band-limited.
 complementary **intensity** exposures `|E⁺|² − |E⁻|²` with `a± = (1±s)/2`. With **no
 propagation** `|a⁺|² − |a⁻|² = s` exactly (band-limited → zero beyond-band): the wall
 holds. Two real effects break this exact cancellation:
-- **free-space DMD→diffuser propagation z1** makes E± complex, so `|E⁺|²−|E⁻|² ≠ s` and
-  the 2k_p intensity-autocorrelation tail leaks into the beyond-band annulus;
+- **free-space DMD→diffuser propagation z1** makes E± complex, so `|E⁺|²−|E⁻|² ≠ s`;
+  [MECHANISM CORRECTED post-hoc, divergence round 2026-07-24: with complementary
+  pairing the signed difference equals `4·Re(C̄S̃)` exactly at every z1 (measured
+  5e-16) — the `|S̃|²` 2k_p intensity-autocorrelation term **cancels identically**;
+  the leak is the carrier–code cross-spectrum through the finite object window,
+  with NO spectral edge at 2k_p. See DIVERGENCE_R2/MERGED_ADJUDICATION.md];
 - **finite DMD micromirror aperture / pixelation** leaks even at z1=0.
 
 **Result — deterministic z1 sweep (z2=0; diffuser-independent, zero Monte-Carlo noise):**
@@ -160,60 +169,105 @@ thin-screen *imaging* aperture does not.
 
 ---
 
-## 5. T5 — END-TO-END SENTINEL  ·  verdict: **TWIN_DEVIATES (quantitatively) — sentinel survives, detection 10²–10⁴× slower**
+## 5. T5 — END-TO-END SENTINEL  ·  verdict: **TWIN_CONFIRMS at the geometry-matched cell (after M=code-count correction); sentinel transfers to real diffraction**
 
 Frozen covariance detector (sealed conventions: signed buckets, per-bank sample
 covariance, matched score `W = V0⁻¹ΔC V0⁻¹`, per-bank noncentrality `λ = ½·tr[(V0⁻¹ΔC)²]`,
-`d′² = T_eff·λ`) on twin-generated banks. ΔC computed with common-random-number
-variance reduction (object-independent speckle pool → identical diffusers for H0/H1),
-shot added analytically. AUC by bootstrap over T_eff-bank sample covariances (M=32 codes,
-800-bank pool). **Sealed reference: best cell 453 banks @ 2 %, MC-LCB 0.99, D3 TPR 0.988.**
+`d′² = T_eff·λ`) on twin-generated banks. ΔC computed with common-random-number variance
+reduction (object-independent speckle pool → identical diffusers for H0/H1); shot added
+analytically. AUC by bootstrap over T_eff-bank sample covariances.
 
-| geometry | change | per-bank cov λ | T_det (d′=5) | AUC @453 | mean d′ / cov d′ |
+### 5.1 Raw run (M=32 codes, 800-bank pool)
+
+| geometry | change | cov λ (M=32) | T_det@M32 | AUC@453 | mean d′/cov d′ (M=32) |
 |---|---|---|---|---|---|
-| near-contact z2=1mm, l_c=50 (grain ~20 µm) | 2 % | 1.36e-4 | 184 000 | 0.71 | **2.9** |
-| near-contact z2=1mm, l_c=50 | 5 % | 7.35e-4 | 34 000 | 0.93 | **3.1** |
+| near-contact z2=1mm, l_c=50 (grain ~20 µm) | 2 % | 1.36e-4 | 184 000 | 0.71 | 2.9 |
+| near-contact z2=1mm, l_c=50 | 5 % | 7.35e-4 | 34 000 | 0.93 | 3.1 |
 | mid z2=5mm, l_c=50 | 2 % | 2.01e-3 | 12 400 | 0.37* | 0.63 |
-| **mid z2=5mm, l_c=50** | **5 %** | **1.14e-2** | **2 190** | **0.96** | **0.66** |
-| near-contact z2=1mm, l_c=15 (grain ~4 µm) | 2 % | 3.9e-6 | 6.4e6 | 0.60 | **18** |
-| near-contact z2=1mm, l_c=15 | 5 % | 2.0e-5 | 1.2e6 | 0.70 | **20** |
+| **mid z2=5mm, l_c=50** | **5 %** | **1.14e-2** | **2 190** | **0.96** | 0.66 |
+| near-contact z2=1mm, l_c=15 (grain ~4 µm) | 2 % | 3.9e-6 | 6.4e6 | 0.60 | 18 |
+| near-contact z2=1mm, l_c=15 | 5 % | 2.0e-5 | 1.2e6 | 0.70 | 20 |
 
-*(AUC 0.37 < 0.5 = the 2 % signal sitting at the covariance-estimation-noise floor; the
-matched direction is essentially random there. The ε-ordering AUC(5 %) ≫ AUC(2 %) and the
-z2/grain trends are all monotone and self-consistent — not a bug.)*
+*(AUC 0.37 < 0.5 = the 2 % signal at the covariance-estimation-noise floor at M=32; the
+ε-ordering AUC(5 %) ≫ AUC(2 %) and all z2/grain trends are monotone — not a bug.)*
 
-**What survives.** The covariance sentinel **fires in real diffraction**: the 5 % beyond-band
-change is clearly detectable (AUC 0.96 at mid-z2, T_det ≈ 2 190 banks), the covariance
-channel responds to a change the mean route cannot image, and the signal is ε-ordered.
-The qualitative flagship claim ("detect beyond-band change through the diffuser") transfers.
+### 5.2 COMPARABILITY CORRECTION — M-code-count scaling (**required before any deviation claim**)
 
-**What deviates (the finding).** The wave-realized per-bank covariance noncentrality is
-**λ ≈ 1e-4 … 1e-2**, versus the sealed best cell's `λ = 25/453 = 0.055`. Detection is
-therefore **27× (best wave cell) to 10⁴× (fine-grain) slower** than the sealed 453 banks.
-Root cause, and it ties T2/T3 together:
+The run used **M=32** codes; the sealed probe used **M=128** (256 complementary exposures/bank).
+The covariance channel carries ~`M(M+1)/2` covariance entries vs the mean channel's ~`M`, so
+M=32 deflates the covariance channel relative to the sealed numbers **and** relative to the
+mean channel. Measured scaling of `λ` (per-bank cov noncentrality) with M, on code-subsets of
+one pool (`T5b_MSCALING.json`):
 
-> **The single-pixel bucket integrates over N_grains ≈ (L_obj/grain)² ≈ 10⁴–10⁵ speckle
-> grains**, so the *bucket* covariance contrast is suppressed by ~1/√N_grains. The sealed
-> best cell (kwf=1, k_w=5 → only ~25 effective grains across the object) is **not physically
-> realizable** — the illumination-limited fine grain (T2) forces 10⁴–10⁵ grains, washing the
-> covariance signal down by ~30–200×. The measured λ ratios (l_c=15 vs l_c=50 = 35×) match
-> the √N_grains prediction exactly. The statistical twin's 453-bank number is an **optimistic
-> best-cell figure that the wave geometry cannot reach**; expect ~2 000 banks (5 %) to ~10⁴–10⁶
-> banks (2 %) on a real bench.
+| geometry / change | λ(M=8) | λ(M=16) | λ(M=32) | **exponent p (λ∝Mᵖ)** | **extrap T_det @ M=128** |
+|---|---|---|---|---|---|
+| mid z2=5mm, 2 % | 2.37e-4 | 8.90e-4 | 2.78e-3 | **1.78** | **768 banks** |
+| mid z2=5mm, 5 % | 1.45e-3 | 5.29e-3 | 1.68e-2 | 1.76 | **129 banks** |
+| near-contact, 2 % | 1.17e-5 | 4.52e-5 | 1.61e-4 | 1.89 | 11 300 banks |
+| near-contact, 5 % | 6.75e-5 | 2.55e-4 | 9.23e-4 | 1.89 | 1 980 banks |
 
-**Operational closure of the T1 flag (the key coupling).** The mean-vs-cov d′ ratio decides
-whether "mean blind, covariance detects" holds operationally:
-- **developed / mid-z2 (z2=5mm): ratio 0.63–0.66 → covariance channel dominates the leaky
-  mean channel.** The flagship separation holds.
-- **under-developed / near-contact (z2=1mm): ratio 2.9–20 → the leaky mean channel d′ EXCEEDS
-  the covariance d′.** Here a naive mean detector would out-detect the covariance detector,
-  because the covariance signal is washed out (many grains) while the T1 mean leak persists.
+> **`λ` scales as `M^1.8–1.9` — the covariance channel is NOT saturated at the in-band DOF.**
+> This contradicts the fully-scrambled `M_eff≈13` picture (`SCRAMBLE_EXT §4.1`) **and confirms
+> it is regime-specific**: at finite z2 the bucket covariance is *higher-rank* (thin-screen /
+> partial-memory regime), so extra codes keep adding independent covariance looks; the rank-one
+> `M_eff` saturation is a property of **complete** scrambling only. This is a genuine finding.
+> Consequence: the M=32→128 correction shortens `T_det` by `(128/32)^1.8 ≈ 12×`.
 
-> **Bench-design constraint (from T1+T5).** The "image-blind, change-observable" claim is only
-> operationally true where the speckle is **developed and coarse-enough** that the covariance
-> channel beats the (leaky, non-zero) mean channel — i.e. mid-z2, coarse grain. At
-> under-developed near-contact the wall leak dominates. Operate in the developed-speckle
-> regime and use coarse grain / a small illumination sub-aperture and many codes.
+### 5.3 MATCHED-CELL comparison (**not** the sealed best cell)
+
+Via the T2 dictionary, both l_c=50 geometries map to the sealed class **(σ_f≈1.0, kwf=4)**
+(measured contrast 0.87–1.01 → σ_f=1.0; illumination-limited fine grain → kwf=4). The sealed
+2 % `T_det` for **(σ_f=1.0, kwf=4)** cells is **513–2996 banks** (k^-2/k^-1/flat × claim
+1.25–1.8) — *not* the best-cell 453. Comparison:
+
+| geometry | change | twin T_det @ M=128 (extrap) | matched sealed cell (σ_f=1.0,kwf=4) | verdict |
+|---|---|---|---|---|
+| **mid z2=5mm developed** | **2 %** | **≈ 768 banks** | **513–2996 banks** | ✅ **WITHIN matched range** |
+| mid z2=5mm developed | 5 % | ≈ 129 banks | (2 % cell / ε² → ~130–750) | ✅ consistent |
+| near-contact (under-developed) | 2 % | ≈ 11 300 banks | 513–2996 banks | ✗ ~4–20× slower (starved cov, §5.4) |
+
+> **Corrected verdict: TWIN_CONFIRMS.** For the developed mid-z2 geometry — the regime the
+> detector is actually designed for — the M-corrected wave twin gives `T_det ≈ 768 banks (2 %)`,
+> **inside the geometry-matched sealed cell's 513–2996 band.** The apparent 27×–10⁴× "deviation"
+> against the *best* cell at M=32 was **almost entirely a comparability artifact** of (a) M=32 vs
+> 128 and (b) comparing to the best (unrealizable kwf=1) cell instead of the matched (kwf=4) cell.
+> The sentinel transfers to real scalar diffraction at the designed operating point.
+
+### 5.4 Why near-contact still starves the covariance channel (T2 contact-degeneracy)
+
+Near-contact (z2=1mm) remains ~4–20× slower than the matched cell even after M-correction,
+because a **pure phase screen has not yet converted phase to intensity** at 1 mm (T2:
+contrast 0.87, not fully developed) — the covariance signal is physically weak there. This is
+the T2 contact-degeneracy, not a detector failure: the medium is *becoming* visible but is
+under-developed.
+
+### 5.5 THE LOUD FINDING — the T1 mean-leak is operationally decisive near-contact (design requirement)
+
+The mean-vs-cov d′ ratio (mean channel ~`√M`, cov channel ~`M^0.9`; ratio ∝ `M^-0.4`, so the
+M=128 correction *reduces* it ~0.57× but does not flip the near-contact case):
+
+- **developed / mid-z2: ratio 0.63–0.66 (M=32) → ~0.36 (M=128) → covariance channel dominates.**
+  The "image-blind, change-observable" separation holds cleanly.
+- **under-developed / near-contact: ratio 2.9 (l_c=50) to 18–20 (l_c=15) at M=32 → still >1 at
+  M=128.** The **leaky mean channel out-detects the covariance channel**: the T1 wall leak here
+  is not a cosmetic 10⁻² number, it is **operationally larger than the intended signal**.
+
+> **Design requirement for the bench (numbers-backed, from T1+T5).** The mean-as-reference
+> attribution architecture is only safe where the covariance channel beats the (non-zero,
+> ~0.7–9 %) mean leak — i.e. **developed speckle**. To use the sentinel on hardware:
+> 1. **near-conjugate DMD→diffuser relay** (z1→0): drops the T1 leak from ~5 % (z1=10mm) toward
+>    the ~0.7 % pixelation floor;
+> 2. **DMD apodization** and a band-limited-code display to suppress the pixelation floor further;
+> 3. **z2 placement in the developed-speckle window** (contrast ≈ 1) — from T2/T4 this is a
+>    narrow band: far enough that phase→intensity is developed (z2 ≳ a few mm), but the developed
+>    multiplicative regime is sub-mm (T4), so the operating point is the **developed-convolutive**
+>    regime (SCRAMBLE_EXT), where the sentinel is validated (mid-z2 5 % AUC 0.96) and cov > mean;
+> 4. **as many codes as the frame budget allows** (λ∝M^1.8 → codes buy detection speed here,
+>    unlike the fully-scrambled limit).
+>
+> **Operating window where the sentinel transfers as-designed:** developed speckle (z2 ≈ few mm,
+> contrast ≈ 1), near-conjugate DMD relay, M ≈ 128 codes → matched-cell detection (~500–800 banks
+> at 2 %, ~130 at 5 %), covariance channel dominant over the residual mean leak.
 
 ---
 
@@ -253,8 +307,10 @@ whether "mean blind, covariance detects" holds operationally:
 
 ## 8. Deliverables in this directory
 
-- code: `wave_twin.py` (core), `twin_pool.py` (bank engine), `t1..t5_*.py`, `make_figures.py`, `validate_core.py`
+- code: `wave_twin.py` (core), `twin_pool.py` (bank engine), `t1..t5_*.py`,
+  `t5b_mscaling.py` (M-scaling + matched-cell), `make_figures.py`, `validate_core.py`
 - results: `T1_WALL_LEAK.json`, `T2_SPECKLE_STATS.json`, `T3_APERTURE_LAW.json`,
-  `T4_MULT_TO_CONV.json`, `T5_SENTINEL.json`
-- figures: `figs/fig1_wall_leak.png … fig5_roc_dprime.png`
-- COMSOL: `COMSOL_MICRO/` (validation of the phase-screen approximation — separate leg)
+  `T4_MULT_TO_CONV.json`, `T5_SENTINEL.json`, `T5b_MSCALING.json`
+- figures: `figs/fig1_wall_leak.png … fig5_roc_dprime.png`, `fig6_mscaling.png`
+- COMSOL: `COMSOL_MICROJOB_SPEC.md` (spec); `COMSOL_MICRO/` (validation run of the
+  phase-screen approximation — separate leg, license-gated)

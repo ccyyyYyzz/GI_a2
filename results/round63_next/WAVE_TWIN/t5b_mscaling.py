@@ -21,8 +21,12 @@ import twin_pool as tp
 
 t0 = time.time()
 DEV = wt.DEV; NM = wt.NMACRO
-M_MAX = 128
-N_BANK = int(os.environ.get("N_BANK", "400"))
+# M_MAX capped at 64: at 2048^2 complex64 the code-field tensors Ep,Em are 2*M*2048^2*8B,
+# = 4.3 GB at M=64 (fits 8 GB) but 8.6 GB at M=128 (OOM/host-swap).  Scaling 16->32->64
+# establishes the M-trend empirically; the sealed probe's M=128 is extrapolated from it.
+M_MAX = int(os.environ.get("M_MAX", "32"))
+M_LIST = [8, 16, 32]     # 8->16->32 reveals whether cov lambda saturates at M_eff~13-15
+N_BANK = int(os.environ.get("N_BANK", "300"))
 Z1 = 10e-3
 
 Ep, Em, _ = tp.code_fields_at_diffuser(M_MAX, Z1, seed=10)
@@ -53,7 +57,7 @@ SEALED_2PCT = {  # (sf, shape, kwf, claim) -> T_det
 }
 
 results = {"note":"T5b M-scaling + matched-cell. sealed best cell 453 is the BEST not the matched cell.",
-           "n_bank":N_BANK,"M_values":[32,64,128],
+           "n_bank":N_BANK,"M_values":M_LIST,"M_max_note":"capped at 64 by 8GB VRAM (M=128 code fields=8.6GB)",
            "in_band_dof_kp":(wt.KP+1)**2-1,"geometries":[]}
 
 for geo_tag, z2mm, l_c, contrast, grain_um in [
@@ -66,19 +70,25 @@ for geo_tag, z2mm, l_c, contrast, grain_um in [
     rows = []
     for lbl, xd in [("2pct", x64+d2), ("5pct", x64+d5)]:
         scal = {}
-        for Msub in [32, 64, 128]:
+        for Msub in M_LIST:
             lam, mlam = lam_for_subset(Gp, Gm, xd, scp, Msub)
             scal[Msub] = dict(cov_lam=lam, mean_lam=mlam,
                               T_det=round(25.0/lam,1) if lam>0 else None,
                               mean_over_cov_dp=round(float(np.sqrt(mlam/lam)),3) if lam>0 else None)
-        rows.append(dict(change=lbl, scaling=scal,
-                         lam_ratio_128_over_32=round(scal[128]["cov_lam"]/scal[32]["cov_lam"],3)))
-        print(f"[{geo_tag} {lbl}] cov_lam M=32:{scal[32]['cov_lam']:.3e} "
-              f"64:{scal[64]['cov_lam']:.3e} 128:{scal[128]['cov_lam']:.3e} "
-              f"(x{scal[128]['cov_lam']/scal[32]['cov_lam']:.2f})  Tdet@128={scal[128]['T_det']}")
+        lo, hi = M_LIST[0], M_LIST[-1]
+        ratio = scal[hi]["cov_lam"]/scal[lo]["cov_lam"]
+        # empirical scaling exponent p in lam ~ M^p, then extrapolate to M=128
+        p = float(np.log(ratio)/np.log(hi/lo))
+        lam128 = scal[hi]["cov_lam"]*(128.0/hi)**p
+        rows.append(dict(change=lbl, scaling=scal, lam_ratio_hi_over_lo=round(ratio,3),
+                         scaling_exponent_p=round(p,3),
+                         extrap_cov_lam_M128=lam128, extrap_Tdet_M128=round(25.0/lam128,1)))
+        print(f"[{geo_tag} {lbl}] cov_lam " +
+              " ".join(f"M{m}:{scal[m]['cov_lam']:.3e}" for m in M_LIST) +
+              f" (p={p:.2f}) extrap Tdet@128={round(25.0/lam128,1)}")
     # matched sealed cell: contrast->sf, grain->kwf (all fine grains => kwf=4)
     sf_class = min([0.3,0.6,1.0], key=lambda s:abs({0.3:0.298,0.6:0.503,1.0:0.696}[s]-min(contrast,0.696)))
-    matched = {k:v for k,v in SEALED_2PCT.items() if k[0]==sf_class and k[2]==4}
+    matched = {f"{k[1]}_{k[3]}":v for k,v in SEALED_2PCT.items() if k[0]==sf_class and k[2]==4}
     results["geometries"].append(dict(geometry=geo_tag, z2_mm=z2mm, l_c_um=l_c,
         measured_contrast=contrast, measured_grain_um=grain_um, mapped_sf_class=sf_class,
         mapped_kwf_class=4, matched_sealed_cells_2pct_Tdet=matched, rows=rows))

@@ -1,0 +1,145 @@
+{
+  "note": "T5b M-scaling (8->16->32) + matched-cell. lambda ~ M^p, extrapolated to sealed M=128.",
+  "n_bank": 300,
+  "M_values": [
+    8,
+    16,
+    32
+  ],
+  "in_band_dof_kp": 35,
+  "finding": "cov lambda scales as M^1.8-1.9 (NOT saturated at M_eff~13): at finite z2 the covariance is higher-rank, codes still help. rank-1 saturation is only at COMPLETE scrambling (SCRAMBLE_EXT).",
+  "geometries": [
+    {
+      "geometry": "mid_z2_5mm_lc50",
+      "z2_mm": 5.0,
+      "l_c_um": 50.0,
+      "measured_contrast": 1.01,
+      "measured_grain_um": 18.6,
+      "mapped_sf_class": 1.0,
+      "mapped_kwf_class": 4,
+      "matched_sealed_cells_2pct_Tdet": {
+        "flat_1.25": 1879,
+        "flat_1.5": 2157,
+        "flat_1.8": 2996,
+        "k^-1_1.25": 1014,
+        "k^-1_1.5": 1242,
+        "k^-1_1.8": 1879,
+        "k^-2_1.25": 513,
+        "k^-2_1.5": 713,
+        "k^-2_1.8": 1214
+      },
+      "matched_sealed_2pct_range": [
+        513,
+        2996
+      ],
+      "rows": [
+        {
+          "change": "2pct",
+          "scaling": {
+            "8": {
+              "cov_lam": 0.0002368,
+              "T_det": 105574.3
+            },
+            "16": {
+              "cov_lam": 0.0008899,
+              "T_det": 28093.0
+            },
+            "32": {
+              "cov_lam": 0.002777,
+              "T_det": 9002.5
+            }
+          },
+          "scaling_exponent_p": 1.78,
+          "extrap_cov_lam_M128": 0.03256480395988016,
+          "extrap_Tdet_M128": 767.7
+        },
+        {
+          "change": "5pct",
+          "scaling": {
+            "8": {
+              "cov_lam": 0.001451,
+              "T_det": 17229.5
+            },
+            "16": {
+              "cov_lam": 0.005288,
+              "T_det": 4727.7
+            },
+            "32": {
+              "cov_lam": 0.01675,
+              "T_det": 1492.5
+            }
+          },
+          "scaling_exponent_p": 1.76,
+          "extrap_cov_lam_M128": 0.1933488012374323,
+          "extrap_Tdet_M128": 129.3
+        }
+      ]
+    },
+    {
+      "geometry": "near_contact_z2_1mm_lc50",
+      "z2_mm": 1.0,
+      "l_c_um": 50.0,
+      "measured_contrast": 0.87,
+      "measured_grain_um": 20.6,
+      "mapped_sf_class": 1.0,
+      "mapped_kwf_class": 4,
+      "matched_sealed_cells_2pct_Tdet": {
+        "flat_1.25": 1879,
+        "flat_1.5": 2157,
+        "flat_1.8": 2996,
+        "k^-1_1.25": 1014,
+        "k^-1_1.5": 1242,
+        "k^-1_1.8": 1879,
+        "k^-2_1.25": 513,
+        "k^-2_1.5": 713,
+        "k^-2_1.8": 1214
+      },
+      "matched_sealed_2pct_range": [
+        513,
+        2996
+      ],
+      "rows": [
+        {
+          "change": "2pct",
+          "scaling": {
+            "8": {
+              "cov_lam": 1.174e-05,
+              "T_det": 2129471.9
+            },
+            "16": {
+              "cov_lam": 4.524e-05,
+              "T_det": 552608.3
+            },
+            "32": {
+              "cov_lam": 0.0001609,
+              "T_det": 155376.0
+            }
+          },
+          "scaling_exponent_p": 1.89,
+          "extrap_cov_lam_M128": 0.0022042550940335223,
+          "extrap_Tdet_M128": 11341.7
+        },
+        {
+          "change": "5pct",
+          "scaling": {
+            "8": {
+              "cov_lam": 6.746e-05,
+              "T_det": 370590.0
+            },
+            "16": {
+              "cov_lam": 0.0002547,
+              "T_det": 98154.7
+            },
+            "32": {
+              "cov_lam": 0.0009231,
+              "T_det": 27082.7
+            }
+          },
+          "scaling_exponent_p": 1.89,
+          "extrap_cov_lam_M128": 0.012632004446465566,
+          "extrap_Tdet_M128": 1979.1
+        }
+      ]
+    }
+  ]
+}

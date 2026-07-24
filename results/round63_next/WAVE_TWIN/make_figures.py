@@ -134,4 +134,25 @@ try:
 except Exception as e:
     print("fig5 skip:", e)
 
+# ---------- Fig 6: T5b M-scaling (comparability correction) ----------
+try:
+    t5b = load("T5b_MSCALING.json")
+    fig, ax = plt.subplots(figsize=(6.6, 4.6))
+    Ms = t5b["M_values"]
+    for g in t5b["geometries"]:
+        for r in g["rows"]:
+            lam = [r["scaling"][str(m)]["cov_lam"] for m in Ms]
+            ax.loglog(Ms, lam, 'o-', label=f"{g['geometry'].split('_z2')[0]} {r['change']} (p={r['scaling_exponent_p']})")
+    # reference M^2 and M^1 slopes
+    m0 = np.array(Ms, float)
+    ax.loglog(m0, 3e-6*(m0/m0[0])**2, 'k--', alpha=.4, label='M^2 (naive cov)')
+    ax.loglog(m0, 3e-6*(m0/m0[0])**1, 'k:', alpha=.4, label='M^1 (mean)')
+    ax.set_xlabel("number of codes M"); ax.set_ylabel("per-bank cov noncentrality λ")
+    ax.set_title("T5b: λ ∝ M^1.8 (cov NOT saturated at finite z2)")
+    ax.legend(fontsize=7); ax.grid(alpha=.3, which='both')
+    plt.tight_layout(); plt.savefig(f"{FIG}/fig6_mscaling.png", dpi=130); plt.close()
+    print("fig6 ok")
+except Exception as e:
+    print("fig6 skip:", e)
+
 print("figures done")
