@@ -2,8 +2,8 @@
   "test": "KT6_channel_ratio_ranging",
   "R44_ref": "sec 5.5 / innovation #5 (Channel-Ratio Ranging, 80)",
   "params": {
-    "M": 8,
-    "n_bank": 120,
+    "M": 16,
+    "n_bank": 250,
     "z2_mm": [
       0.05,
       0.1,
@@ -23,7 +23,7 @@
       "developed_2pi"
     ],
     "change": "2pct beyond-band",
-    "wishart_null_T": 60,
+    "wishart_null_T": 125,
     "n_split": 24
   },
   "binding_caveat": "blind lambda_cov must be reported vs the Wishart M^2/T floor; oracle-only is NOT a pass (coordinator).",
@@ -32,337 +32,337 @@
     {
       "z1_mm": 5.0,
       "sigma": "weak_0p3",
-      "near_contact_exponent": 4.076086453022537,
+      "near_contact_exponent": 4.081331184835179,
       "signal_to_floor_near_contact": [
-        0.0046,
-        0.0042,
-        0.0048,
-        0.0045,
-        0.0048
+        0.0055,
+        0.0055,
+        0.0056,
+        0.0054,
+        0.0053
       ],
-      "median_signal_to_floor_near": 0.004567371952940353,
+      "median_signal_to_floor_near": 0.005510263069657078,
       "rows": [
         {
           "z2_mm": 0.05,
-          "lam_cov": 7.748744139380031e-16,
-          "lam_mean": 6.206504375473293e-05,
-          "ratio_cov_over_mean": 1.2484876623951675e-11,
-          "lam_null_wishart_floor": 1.6965432680365772e-13,
-          "signal_to_floor": 0.004567371952940353
+          "lam_cov": 1.7697995411991102e-15,
+          "lam_mean": 0.00015032741910710163,
+          "ratio_cov_over_mean": 1.1772965648656592e-11,
+          "lam_null_wishart_floor": 3.211824043292457e-13,
+          "signal_to_floor": 0.005510263069657078
         },
         {
           "z2_mm": 0.1,
-          "lam_cov": 1.2517175858441194e-14,
-          "lam_mean": 6.253894797861244e-05,
-          "ratio_cov_over_mean": 2.0015008667433797e-10,
-          "lam_null_wishart_floor": 2.988091782160926e-12,
-          "signal_to_floor": 0.0041890198732078545
+          "lam_cov": 2.862386938469254e-14,
+          "lam_mean": 0.00015145389042121263,
+          "ratio_cov_over_mean": 1.8899395258243877e-10,
+          "lam_null_wishart_floor": 5.178098758923e-12,
+          "signal_to_floor": 0.005527872432978868
         },
         {
           "z2_mm": 0.2,
-          "lam_cov": 2.0935485645689723e-13,
-          "lam_mean": 6.336488669591903e-05,
-          "ratio_cov_over_mean": 3.303956929041279e-09,
-          "lam_null_wishart_floor": 4.3657967167120246e-11,
-          "signal_to_floor": 0.00479534137848193
+          "lam_cov": 4.77788090491793e-13,
+          "lam_mean": 0.0001533658350214167,
+          "ratio_cov_over_mean": 3.1153489329945774e-09,
+          "lam_null_wishart_floor": 8.53650984419873e-11,
+          "signal_to_floor": 0.005596995718531149
         },
         {
           "z2_mm": 0.35,
-          "lam_cov": 2.158662550197886e-12,
-          "lam_mean": 6.472034853257669e-05,
-          "ratio_cov_over_mean": 3.335369167722162e-08,
-          "lam_null_wishart_floor": 4.815746238313125e-10,
-          "signal_to_floor": 0.004482508926703806
+          "lam_cov": 4.9118474176760605e-12,
+          "lam_mean": 0.0001549150632117007,
+          "ratio_cov_over_mean": 3.1706712800186045e-08,
+          "lam_null_wishart_floor": 9.144770565463491e-10,
+          "signal_to_floor": 0.005371209023249136
         },
         {
           "z2_mm": 0.5,
-          "lam_cov": 9.850231583539957e-12,
-          "lam_mean": 6.572482969449484e-05,
-          "ratio_cov_over_mean": 1.4987078139762787e-07,
-          "lam_null_wishart_floor": 2.042660589289095e-09,
-          "signal_to_floor": 0.004822255657739068
+          "lam_cov": 2.2256134795695405e-11,
+          "lam_mean": 0.00015543653665006614,
+          "ratio_cov_over_mean": 1.43184705960096e-07,
+          "lam_null_wishart_floor": 4.169923159758841e-09,
+          "signal_to_floor": 0.00533730093889369
         },
         {
           "z2_mm": 1.0,
-          "lam_cov": 1.6669037061628798e-10,
-          "lam_mean": 7.483068844120031e-05,
-          "ratio_cov_over_mean": 2.227566979385312e-06,
-          "lam_null_wishart_floor": 3.479323100770577e-08,
-          "signal_to_floor": 0.004790885059779889
+          "lam_cov": 3.7235730178362217e-10,
+          "lam_mean": 0.00017708688894882,
+          "ratio_cov_over_mean": 2.1026813672876563e-06,
+          "lam_null_wishart_floor": 6.864273308547715e-08,
+          "signal_to_floor": 0.005424569871364903
         },
         {
           "z2_mm": 2.0,
-          "lam_cov": 2.874158703961347e-09,
-          "lam_mean": 0.00010186439286269611,
-          "ratio_cov_over_mean": 2.8215538552666293e-05,
-          "lam_null_wishart_floor": 5.905897778659072e-07,
-          "signal_to_floor": 0.004866590672034832
+          "lam_cov": 6.53996744308001e-09,
+          "lam_mean": 0.0002461176144268555,
+          "ratio_cov_over_mean": 2.6572528985013564e-05,
+          "lam_null_wishart_floor": 1.2602839197956183e-06,
+          "signal_to_floor": 0.005189281034499436
         },
         {
           "z2_mm": 5.0,
-          "lam_cov": 1.0023098990847914e-07,
-          "lam_mean": 0.00017317876184310516,
-          "ratio_cov_over_mean": 0.000578771835770979,
-          "lam_null_wishart_floor": 2.4336070519913147e-05,
-          "signal_to_floor": 0.004118618485530131
+          "lam_cov": 2.3149302783540396e-07,
+          "lam_mean": 0.000416310126398933,
+          "ratio_cov_over_mean": 0.00055605908469681,
+          "lam_null_wishart_floor": 4.3351512694613915e-05,
+          "signal_to_floor": 0.0053399065787193434
         }
       ]
     },
     {
       "z1_mm": 5.0,
       "sigma": "developed_2pi",
-      "near_contact_exponent": 3.953098613311092,
+      "near_contact_exponent": 4.053849885463256,
       "signal_to_floor_near_contact": [
-        0.0044,
-        0.0047,
-        0.0049,
-        0.0044,
-        0.0045
+        0.0056,
+        0.0056,
+        0.0052,
+        0.0052,
+        0.0054
       ],
-      "median_signal_to_floor_near": 0.004492067348902102,
+      "median_signal_to_floor_near": 0.005414719210349155,
       "rows": [
         {
           "z2_mm": 0.05,
-          "lam_cov": 1.4909612567000013e-10,
-          "lam_mean": 6.241116815951654e-05,
-          "ratio_cov_over_mean": 2.388933424366064e-06,
-          "lam_null_wishart_floor": 3.403890059273602e-08,
-          "signal_to_floor": 0.004380168662139975
+          "lam_cov": 3.4185374454436834e-10,
+          "lam_mean": 0.0001482765280876713,
+          "ratio_cov_over_mean": 2.30551489809797e-06,
+          "lam_null_wishart_floor": 6.106124708702912e-08,
+          "signal_to_floor": 0.005598538530618814
         },
         {
           "z2_mm": 0.1,
-          "lam_cov": 2.417270519462678e-09,
-          "lam_mean": 6.34724805150173e-05,
-          "ratio_cov_over_mean": 3.8083756926606376e-05,
-          "lam_null_wishart_floor": 5.11062607007905e-07,
-          "signal_to_floor": 0.0047298911842033635
+          "lam_cov": 5.546074654347452e-09,
+          "lam_mean": 0.00014748351931463064,
+          "ratio_cov_over_mean": 3.760470783529283e-05,
+          "lam_null_wishart_floor": 9.8805949063999e-07,
+          "signal_to_floor": 0.005613097902389588
         },
         {
           "z2_mm": 0.2,
-          "lam_cov": 4.049382895055357e-08,
-          "lam_mean": 6.633176873290264e-05,
-          "ratio_cov_over_mean": 0.0006104741321403564,
-          "lam_null_wishart_floor": 8.31006122926906e-06,
-          "signal_to_floor": 0.0048728677001716085
+          "lam_cov": 9.290964343330316e-08,
+          "lam_mean": 0.00014656178338063079,
+          "ratio_cov_over_mean": 0.0006339281720665925,
+          "lam_null_wishart_floor": 1.8024523309776418e-05,
+          "signal_to_floor": 0.005154624166005511
         },
         {
           "z2_mm": 0.35,
-          "lam_cov": 4.039830870796836e-07,
-          "lam_mean": 7.265722653367304e-05,
-          "ratio_cov_over_mean": 0.005560122596923753,
-          "lam_null_wishart_floor": 9.087772623451623e-05,
-          "signal_to_floor": 0.004445347653584305
+          "lam_cov": 9.227328418534264e-07,
+          "lam_mean": 0.0001467313224431339,
+          "ratio_cov_over_mean": 0.006288588056657323,
+          "lam_null_wishart_floor": 0.00017856044660445437,
+          "signal_to_floor": 0.0051676217180250264
         },
         {
           "z2_mm": 0.5,
-          "lam_cov": 1.6994272029504307e-06,
-          "lam_mean": 8.173650132006492e-05,
-          "ratio_cov_over_mean": 0.020791533470411096,
-          "lam_null_wishart_floor": 0.00037831739173852425,
-          "signal_to_floor": 0.004492067348902102
+          "lam_cov": 3.866368588749107e-06,
+          "lam_mean": 0.000151825707396741,
+          "ratio_cov_over_mean": 0.025465836155439514,
+          "lam_null_wishart_floor": 0.0007140478459823578,
+          "signal_to_floor": 0.005414719210349155
         },
         {
           "z2_mm": 1.0,
-          "lam_cov": 2.3135333855843793e-05,
-          "lam_mean": 0.00012829192459161496,
-          "ratio_cov_over_mean": 0.18033351615457718,
-          "lam_null_wishart_floor": 0.0051718671578298335,
-          "signal_to_floor": 0.0044733039635054365
+          "lam_cov": 5.248783709992163e-05,
+          "lam_mean": 0.0001863127203388016,
+          "ratio_cov_over_mean": 0.2817190206040402,
+          "lam_null_wishart_floor": 0.00971205799553952,
+          "signal_to_floor": 0.005404399059810788
         },
         {
           "z2_mm": 2.0,
-          "lam_cov": 0.00017398815084536325,
-          "lam_mean": 0.00024611904625793823,
-          "ratio_cov_over_mean": 0.7069268042873033,
-          "lam_null_wishart_floor": 0.03990819003983091,
-          "signal_to_floor": 0.004359710392070199
+          "lam_cov": 0.0004111593338288034,
+          "lam_mean": 0.0002728503658587601,
+          "ratio_cov_over_mean": 1.5069040957109743,
+          "lam_null_wishart_floor": 0.07813281789615044,
+          "signal_to_floor": 0.00526231287824909
         },
         {
           "z2_mm": 5.0,
-          "lam_cov": 0.0003557155739528317,
-          "lam_mean": 0.00047685221517546007,
-          "ratio_cov_over_mean": 0.7459660721549641,
-          "lam_null_wishart_floor": 0.1387772232341107,
-          "signal_to_floor": 0.0025632129369871893
+          "lam_cov": 0.0009972869354520813,
+          "lam_mean": 0.00043362560699883426,
+          "ratio_cov_over_mean": 2.299880171640238,
+          "lam_null_wishart_floor": 0.22641663342576668,
+          "signal_to_floor": 0.00440465402370296
         }
       ]
     },
     {
       "z1_mm": 10.0,
       "sigma": "weak_0p3",
-      "near_contact_exponent": 4.015519117684396,
+      "near_contact_exponent": 4.021764474036888,
       "signal_to_floor_near_contact": [
-        0.0048,
-        0.0043,
-        0.0044,
-        0.0041,
-        0.0045
+        0.0051,
+        0.0052,
+        0.0053,
+        0.0056,
+        0.0054
       ],
-      "median_signal_to_floor_near": 0.0043581001266019565,
+      "median_signal_to_floor_near": 0.005253528012020612,
       "rows": [
         {
           "z2_mm": 0.05,
-          "lam_cov": 1.113112814355075e-15,
-          "lam_mean": 0.00016911045425086087,
-          "ratio_cov_over_mean": 6.582164416067782e-12,
-          "lam_null_wishart_floor": 2.3233851292392713e-13,
-          "signal_to_floor": 0.00479090961006337
+          "lam_cov": 2.584275036391346e-15,
+          "lam_mean": 0.00043511686803544895,
+          "ratio_cov_over_mean": 5.939266496514691e-12,
+          "lam_null_wishart_floor": 5.043857741379481e-13,
+          "signal_to_floor": 0.0051236080970129706
         },
         {
           "z2_mm": 0.1,
-          "lam_cov": 1.798859289813018e-14,
-          "lam_mean": 0.00016977780059131918,
-          "ratio_cov_over_mean": 1.0595373974381634e-10,
-          "lam_null_wishart_floor": 4.146792815997026e-12,
-          "signal_to_floor": 0.004337953135429345
+          "lam_cov": 4.1836358049157224e-14,
+          "lam_mean": 0.00043555492461818177,
+          "ratio_cov_over_mean": 9.605300200848839e-11,
+          "lam_null_wishart_floor": 8.078316738979686e-12,
+          "signal_to_floor": 0.005178845965185722
         },
         {
           "z2_mm": 0.2,
-          "lam_cov": 2.9377307164837576e-13,
-          "lam_mean": 0.00017166899996312376,
-          "ratio_cov_over_mean": 1.7112761867983223e-09,
-          "lam_null_wishart_floor": 6.740851818781705e-11,
-          "signal_to_floor": 0.0043581001266019565
+          "lam_cov": 6.835220124948667e-13,
+          "lam_mean": 0.0004376924005513853,
+          "ratio_cov_over_mean": 1.5616492578664749e-09,
+          "lam_null_wishart_floor": 1.301072366856897e-10,
+          "signal_to_floor": 0.005253528012020612
         },
         {
           "z2_mm": 0.35,
-          "lam_cov": 2.824913858497435e-12,
-          "lam_mean": 0.00017400809260603747,
-          "ratio_cov_over_mean": 1.623438206919016e-08,
-          "lam_null_wishart_floor": 6.935952827139141e-10,
-          "signal_to_floor": 0.004072856215867059
+          "lam_cov": 6.5562677017420636e-12,
+          "lam_mean": 0.0004412919352811456,
+          "ratio_cov_over_mean": 1.4856985087581733e-08,
+          "lam_null_wishart_floor": 1.1688008641294947e-09,
+          "signal_to_floor": 0.005609396692759183
         },
         {
           "z2_mm": 0.5,
-          "lam_cov": 1.2018684792954594e-11,
-          "lam_mean": 0.00017613522650532833,
-          "ratio_cov_over_mean": 6.823555418989972e-08,
-          "lam_null_wishart_floor": 2.655970243646338e-09,
-          "signal_to_floor": 0.004525157923627314
+          "lam_cov": 2.7684261619913885e-11,
+          "lam_mean": 0.0004438352971672412,
+          "ratio_cov_over_mean": 6.237507876594637e-08,
+          "lam_null_wishart_floor": 5.104010582204263e-09,
+          "signal_to_floor": 0.0054240212033333825
         },
         {
           "z2_mm": 1.0,
-          "lam_cov": 1.8255036400221026e-10,
-          "lam_mean": 0.00018014694435467254,
-          "ratio_cov_over_mean": 1.0133414399902664e-06,
-          "lam_null_wishart_floor": 4.118554759578675e-08,
-          "signal_to_floor": 0.004432388899956863
+          "lam_cov": 4.214092127301375e-10,
+          "lam_mean": 0.00043941201613171936,
+          "ratio_cov_over_mean": 9.590297881244439e-07,
+          "lam_null_wishart_floor": 7.769182952701692e-08,
+          "signal_to_floor": 0.005424112358991298
         },
         {
           "z2_mm": 2.0,
-          "lam_cov": 2.2094340210927267e-09,
-          "lam_mean": 0.000206378060933559,
-          "ratio_cov_over_mean": 1.0705760152500068e-05,
-          "lam_null_wishart_floor": 4.983658661568539e-07,
-          "signal_to_floor": 0.004433357441051826
+          "lam_cov": 5.107239858745785e-09,
+          "lam_mean": 0.0005151804327417529,
+          "ratio_cov_over_mean": 9.913497357742073e-06,
+          "lam_null_wishart_floor": 9.184458339653605e-07,
+          "signal_to_floor": 0.005560741493807469
         },
         {
           "z2_mm": 5.0,
-          "lam_cov": 9.935620059134092e-08,
-          "lam_mean": 0.00028407824490045,
-          "ratio_cov_over_mean": 0.00034974941719369767,
-          "lam_null_wishart_floor": 2.242389266919597e-05,
-          "signal_to_floor": 0.004430818594125184
+          "lam_cov": 2.2633570195937945e-07,
+          "lam_mean": 0.0007170782415836444,
+          "ratio_cov_over_mean": 0.0003156359917706111,
+          "lam_null_wishart_floor": 4.3956957345381874e-05,
+          "signal_to_floor": 0.005149030224749128
         }
       ]
     },
     {
       "z1_mm": 10.0,
       "sigma": "developed_2pi",
-      "near_contact_exponent": 3.926523016172128,
+      "near_contact_exponent": 3.9885390302446866,
       "signal_to_floor_near_contact": [
-        0.0045,
-        0.0043,
-        0.0045,
-        0.0043,
-        0.0043
+        0.0055,
+        0.0054,
+        0.0054,
+        0.0052,
+        0.0055
       ],
-      "median_signal_to_floor_near": 0.00433092074334704,
+      "median_signal_to_floor_near": 0.005378674785451424,
       "rows": [
         {
           "z2_mm": 0.05,
-          "lam_cov": 2.1409929581247e-10,
-          "lam_mean": 0.00016996852616002405,
-          "ratio_cov_over_mean": 1.2596408326262545e-06,
-          "lam_null_wishart_floor": 4.7856621391245396e-08,
-          "signal_to_floor": 0.004473765376417401
+          "lam_cov": 4.97376140406527e-10,
+          "lam_mean": 0.0004313803004172898,
+          "ratio_cov_over_mean": 1.1529876072815494e-06,
+          "lam_null_wishart_floor": 9.01791196669994e-08,
+          "signal_to_floor": 0.00551542465975679
         },
         {
           "z2_mm": 0.1,
-          "lam_cov": 3.4404018717060754e-09,
-          "lam_mean": 0.0001715563584034904,
-          "ratio_cov_over_mean": 2.0054062138661476e-05,
-          "lam_null_wishart_floor": 8.001427371284322e-07,
-          "signal_to_floor": 0.004299735174817754
+          "lam_cov": 8.019252559222644e-09,
+          "lam_mean": 0.0004280001958972355,
+          "ratio_cov_over_mean": 1.8736562824256505e-05,
+          "lam_null_wishart_floor": 1.4985278363707714e-06,
+          "signal_to_floor": 0.0053514204838824835
         },
         {
           "z2_mm": 0.2,
-          "lam_cov": 5.499233102701925e-08,
-          "lam_mean": 0.00017525341625919828,
-          "ratio_cov_over_mean": 0.00031378749813176863,
-          "lam_null_wishart_floor": 1.2202495020677912e-05,
-          "signal_to_floor": 0.00450664646318898
+          "lam_cov": 1.2835505804438594e-07,
+          "lam_mean": 0.00042230888648845435,
+          "ratio_cov_over_mean": 0.0003039364364592766,
+          "lam_null_wishart_floor": 2.3863695643315102e-05,
+          "signal_to_floor": 0.005378674785451424
         },
         {
           "z2_mm": 0.35,
-          "lam_cov": 5.024645008206543e-07,
-          "lam_mean": 0.0001815136542346574,
-          "ratio_cov_over_mean": 0.002768191202690888,
-          "lam_null_wishart_floor": 0.00011683320697487087,
-          "signal_to_floor": 0.00430069938017474
+          "lam_cov": 1.161968034310407e-06,
+          "lam_mean": 0.00041444001979625965,
+          "ratio_cov_over_mean": 0.0028037061548294375,
+          "lam_null_wishart_floor": 0.00022254570790594813,
+          "signal_to_floor": 0.005221255647857634
         },
         {
           "z2_mm": 0.5,
-          "lam_cov": 1.972182103681069e-06,
-          "lam_mean": 0.00018899446848359615,
-          "ratio_cov_over_mean": 0.01043513135334035,
-          "lam_null_wishart_floor": 0.0004553724763286522,
-          "signal_to_floor": 0.00433092074334704
+          "lam_cov": 4.519235085192474e-06,
+          "lam_mean": 0.0004086294498163609,
+          "ratio_cov_over_mean": 0.011059494334594409,
+          "lam_null_wishart_floor": 0.0008257089685698892,
+          "signal_to_floor": 0.005473157319605835
         },
         {
           "z2_mm": 1.0,
-          "lam_cov": 2.29835627875391e-05,
-          "lam_mean": 0.00022997965479732872,
-          "ratio_cov_over_mean": 0.09993737405942944,
-          "lam_null_wishart_floor": 0.005464540881303298,
-          "signal_to_floor": 0.004205945803457416
+          "lam_cov": 5.2807641131291805e-05,
+          "lam_mean": 0.0004152097935592672,
+          "ratio_cov_over_mean": 0.12718303361443717,
+          "lam_null_wishart_floor": 0.01005563433283114,
+          "signal_to_floor": 0.0052515474790961235
         },
         {
           "z2_mm": 2.0,
-          "lam_cov": 0.00017059960284915304,
-          "lam_mean": 0.0003294113089424856,
-          "ratio_cov_over_mean": 0.5178923680453829,
-          "lam_null_wishart_floor": 0.04080456128802929,
-          "signal_to_floor": 0.004180895406396669
+          "lam_cov": 0.00040668282731894047,
+          "lam_mean": 0.0004459082160735054,
+          "ratio_cov_over_mean": 0.912032594734476,
+          "lam_null_wishart_floor": 0.07573899758984631,
+          "signal_to_floor": 0.005369530100216972
         },
         {
           "z2_mm": 5.0,
-          "lam_cov": 0.0003454989839618156,
-          "lam_mean": 0.0005049708961728716,
-          "ratio_cov_over_mean": 0.6841958350081577,
-          "lam_null_wishart_floor": 0.14050912987796582,
-          "signal_to_floor": 0.00245890771839443
+          "lam_cov": 0.0009982126780861441,
+          "lam_mean": 0.00048645804065410334,
+          "ratio_cov_over_mean": 2.05200160068055,
+          "lam_null_wishart_floor": 0.23997229968547784,
+          "signal_to_floor": 0.004159699596138646
         }
       ]
     }
   ],
   "verdict": {
     "oracle_near_contact_exponents": [
-      4.076,
-      3.953,
-      4.016,
-      3.927
+      4.081,
+      4.054,
+      4.022,
+      3.989
     ],
     "blind_median_signal_to_floor_near": [
-      0.0046,
-      0.0045,
-      0.0044,
-      0.0043
+      0.0055,
+      0.0054,
+      0.0053,
+      0.0054
     ],
-    "worst_signal_to_floor": 0.00433092074334704,
+    "worst_signal_to_floor": 0.005253528012020612,
     "P_oracle_z4_law": "PASS",
     "P_blind_estimable": "ESTIMATOR_KILLED",
     "overall": "ORACLE confirms the near-contact quartic ratio law (exponent ~4); BLIND channel-ratio ranging is ESTIMATOR_KILLED -- lambda_cov sits below the Wishart M^2/T sampling floor near contact (signal/floor << 1), so the ratio is a valid theory relationship but NOT bench-observable via naive blind estimation. Honest per coordinator's binding caveat."
   },
-  "elapsed_s": 525.5
+  "elapsed_s": 2038.1
 }
