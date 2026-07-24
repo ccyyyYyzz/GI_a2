@@ -38,8 +38,9 @@ def main():
 
     payload = {
         "meta": {"venue": "colab_a100", "job": "JOB2_CBT_LAW_PLANE",
-                 "analytic_arm": "float64 deterministic (venue-independent; reproduced bitwise vs local)",
-                 "mc_arm": "colab A100 GPU generator, CRN-paired on-orbit AUC",
+                 "analytic_arm": "float64 (geometry/A_kink bitwise vs local; Chernoff coefficient "
+                                 "matches local to ~1e-3, limited by scipy version 1.13.1 vs 1.10.1)",
+                 "mc_arm": "colab A100 GPU generator, CRN-paired on-orbit AUC (4 corner shards)",
                  "sessions": ["cbt_camp1"]},
         "frozen": analytic["frozen"],
         "config": analytic["config"],

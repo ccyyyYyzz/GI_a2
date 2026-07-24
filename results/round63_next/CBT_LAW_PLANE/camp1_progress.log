@@ -1,0 +1,19 @@
+=== camp1 start 15:10:04 ===
+[cbt_law_plane] mode=analytic device=cuda
+  [analytic] r0_scale=0.50 omega=0.70 | A*=0.1047 A_kink=0.1047 (rel 8.15e-05) | C0=1.406e-05 | 0.3s
+  [analytic] r0_scale=0.50 omega=1.40 | A*=0.4187 A_kink=0.4188 (rel 3.26e-04) | C0=2.249e-04 | 0.2s
+  [analytic] r0_scale=1.00 omega=0.70 | A*=0.2093 A_kink=0.2094 (rel 8.13e-05) | C0=4.492e-05 | 0.3s
+  [analytic] r0_scale=1.00 omega=1.40 | A*=0.8374 A_kink=0.8376 (rel 3.25e-04) | C0=7.187e-04 | 0.2s
+  [analytic] r0_scale=2.00 omega=0.70 | A*=0.4187 A_kink=0.4187 (rel 8.12e-05) | C0=9.373e-05 | 0.2s
+  [analytic] r0_scale=2.00 omega=1.40 | A*=1.6747 A_kink=1.6753 (rel 3.25e-04) | C0=1.500e-03 | 0.2s
+[cbt_law_plane] BARS: B1_median_kink_rel_err=True B2_median_supercritical_C_ratio=True B3_min_supercritical_quartic_R2=True B4_max_subcritical_C_fit_over_C0=True
+[cbt_law_plane] wrote /content/results/round63_next/CBT_LAW_PLANE/CBT_LAW_PLANE_analytic.json (1.6s)
+[cbt_law_plane] mode=mc device=cuda
+[cbt_law_plane] corner 0 (r0=0.5 om=0.7): paired_auc=0.5008 in_band=True dQ_exact=0.00e+00 (72.9s) -> /content/results/round63_next/CBT_LAW_PLANE/CBT_LAW_PLANE_mc_corner0.json
+[cbt_law_plane] mode=mc device=cuda
+[cbt_law_plane] corner 1 (r0=0.5 om=1.4): paired_auc=0.5056 in_band=True dQ_exact=0.00e+00 (72.5s) -> /content/results/round63_next/CBT_LAW_PLANE/CBT_LAW_PLANE_mc_corner1.json
+[cbt_law_plane] mode=mc device=cuda
+[cbt_law_plane] corner 2 (r0=2.0 om=0.7): paired_auc=0.4968 in_band=True dQ_exact=0.00e+00 (72.3s) -> /content/results/round63_next/CBT_LAW_PLANE/CBT_LAW_PLANE_mc_corner2.json
+[cbt_law_plane] mode=mc device=cuda
+[cbt_law_plane] corner 3 (r0=2.0 om=1.4): paired_auc=0.4949 in_band=True dQ_exact=0.00e+00 (72.3s) -> /content/results/round63_next/CBT_LAW_PLANE/CBT_LAW_PLANE_mc_corner3.json
+CAMP1_ALL_DONE 15:15:10

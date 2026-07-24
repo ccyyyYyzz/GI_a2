@@ -1,0 +1,79 @@
+{
+  "frozen": {
+    "description": "Calibration plane of the curvature-tax law; bars preregistered before compute.",
+    "grid": {
+      "chi": [
+        0.25,
+        0.5,
+        0.8,
+        1.0,
+        1.25,
+        2.0,
+        4.0
+      ],
+      "r0_scale": [
+        0.5,
+        1.0,
+        2.0
+      ],
+      "omega": [
+        0.7,
+        1.4
+      ],
+      "base_amp": 0.08,
+      "geom_seed": 460,
+      "n_operating_points": 6,
+      "n_grid_points": 42
+    },
+    "definitions": {
+      "A_star": "s^2 / r0 (critical curvature-resource budget)",
+      "A_traj": "A_star / chi (trajectory budget at grid ratio chi)",
+      "supercritical": "chi > 1  (A_traj < A_star, leaky branch, C_pred > 0)",
+      "subcritical": "chi <= 1 (A_traj >= A_star, cloaked branch, C_pred = 0)",
+      "C_pred": "(||K||_F^2 / 16) * max(s^2 - A_traj r0, 0)^2",
+      "C_fit": "median(|chernoff_star(DeltaQ_capopt)| / t^4) over the deep-jet t grid",
+      "C0": "C_fit of the straight arm (A_traj=0) at the operating point (normaliser)",
+      "A_kink": "vertex of a quadratic fit to the raw-cap coefficient(A) V-shape"
+    },
+    "bars": {
+      "B1_median_kink_rel_err_lt": 0.02,
+      "B2_median_supercritical_C_ratio_in": [
+        0.9,
+        1.1
+      ],
+      "B3_all_supercritical_quartic_R2_gt": 0.99,
+      "B4_all_subcritical_C_fit_over_C0_lt": 0.01,
+      "MC_paired_auc_on_orbit_in": [
+        0.49,
+        0.51
+      ],
+      "MC_B": 4096,
+      "MC_R_records": 3000,
+      "MC_theta": 0.35
+    },
+    "note": "A failed bar is a reported result, not a retry license (preregistration)."
+  },
+  "kind": "mc_corner",
+  "corner": {
+    "corner_idx": 2,
+    "r0_scale": 2.0,
+    "omega": 0.7,
+    "B": 4096,
+    "R_records": 3000,
+    "theta": 0.35,
+    "t_on_orbit": 0.5,
+    "dQ_exact": 0.0,
+    "paired_auc": 0.49677732696694693,
+    "paired_dprime": -0.011424202704088891,
+    "se_dprime": 0.018258014278700663,
+    "unpaired_auc": 0.49700933333333336,
+    "unpaired_auc_ci95": [
+      0.4892659777777778,
+      0.5046277055555555
+    ],
+    "paired_auc_in_band": true,
+    "dprime_within_2sigma_of_0": true,
+    "seed0": 65000,
+    "runtime_sec": 72.3
+  }
+}

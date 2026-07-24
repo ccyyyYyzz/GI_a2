@@ -1,4 +1,13 @@
 {
+  "meta": {
+    "venue": "colab_a100",
+    "job": "JOB2_CBT_LAW_PLANE",
+    "analytic_arm": "float64 (geometry/A_kink bitwise vs local; Chernoff coefficient matches local to ~1e-3, limited by scipy version 1.13.1 vs 1.10.1)",
+    "mc_arm": "colab A100 GPU generator, CRN-paired on-orbit AUC (4 corner shards)",
+    "sessions": [
+      "cbt_camp1"
+    ]
+  },
   "frozen": {
     "description": "Calibration plane of the curvature-tax law; bars preregistered before compute.",
     "grid": {
@@ -53,12 +62,70 @@
     },
     "note": "A failed bar is a reported result, not a retry license (preregistration)."
   },
-  "kind": "analytic",
   "config": {
     "N_SIDE": 32,
     "N": 1024,
     "M": 36,
     "PHOT": 10000.0
+  },
+  "analytic_bars": {
+    "B1_median_kink_rel_err": {
+      "value": 0.0002031082038384015,
+      "pass": true
+    },
+    "B2_median_supercritical_C_ratio": {
+      "value": 1.0009895160598874,
+      "n": 18,
+      "pass": true
+    },
+    "B3_min_supercritical_quartic_R2": {
+      "value": 0.9933903569003287,
+      "n": 18,
+      "pass": true
+    },
+    "B4_max_subcritical_C_fit_over_C0": {
+      "value": 0.0003013163516808317,
+      "n": 24,
+      "pass": true
+    }
+  },
+  "mc_onorbit_auc_bar": {
+    "band": [
+      0.49,
+      0.51
+    ],
+    "per_corner": [
+      {
+        "corner_idx": 0,
+        "r0_scale": 0.5,
+        "omega": 0.7,
+        "paired_auc": 0.5007594910300351,
+        "in_band": true
+      },
+      {
+        "corner_idx": 1,
+        "r0_scale": 0.5,
+        "omega": 1.4,
+        "paired_auc": 0.5056406863814317,
+        "in_band": true
+      },
+      {
+        "corner_idx": 2,
+        "r0_scale": 2.0,
+        "omega": 0.7,
+        "paired_auc": 0.49677732696694693,
+        "in_band": true
+      },
+      {
+        "corner_idx": 3,
+        "r0_scale": 2.0,
+        "omega": 1.4,
+        "paired_auc": 0.4949269800867673,
+        "in_band": true
+      }
+    ],
+    "all_in_band": true,
+    "n_corners": 4
   },
   "operating_points": [
     {
@@ -3122,26 +3189,102 @@
       "runtime_sec": 0.25
     }
   ],
-  "bars": {
-    "B1_median_kink_rel_err": {
-      "value": 0.0002031082038384015,
-      "pass": true
+  "mc_corners": [
+    {
+      "corner_idx": 0,
+      "r0_scale": 0.5,
+      "omega": 0.7,
+      "B": 4096,
+      "R_records": 3000,
+      "theta": 0.35,
+      "t_on_orbit": 0.5,
+      "dQ_exact": 0.0,
+      "paired_auc": 0.5007594910300351,
+      "paired_dprime": 0.0026923272281330415,
+      "se_dprime": 0.018257451668774877,
+      "unpaired_auc": 0.5007438888888889,
+      "unpaired_auc_ci95": [
+        0.49308935833333334,
+        0.5075283638888889
+      ],
+      "paired_auc_in_band": true,
+      "dprime_within_2sigma_of_0": true,
+      "seed0": 63000,
+      "runtime_sec": 72.9
     },
-    "B2_median_supercritical_C_ratio": {
-      "value": 1.0009895160598874,
-      "n": 18,
-      "pass": true
+    {
+      "corner_idx": 1,
+      "r0_scale": 0.5,
+      "omega": 1.4,
+      "B": 4096,
+      "R_records": 3000,
+      "theta": 0.35,
+      "t_on_orbit": 0.25,
+      "dQ_exact": 0.0,
+      "paired_auc": 0.5056406863814317,
+      "paired_dprime": 0.01999637888167664,
+      "se_dprime": 0.018259243573089126,
+      "unpaired_auc": 0.5036132222222223,
+      "unpaired_auc_ci95": [
+        0.49644055555555555,
+        0.5104214416666667
+      ],
+      "paired_auc_in_band": true,
+      "dprime_within_2sigma_of_0": true,
+      "seed0": 64000,
+      "runtime_sec": 72.5
     },
-    "B3_min_supercritical_quartic_R2": {
-      "value": 0.9933903569003287,
-      "n": 18,
-      "pass": true
+    {
+      "corner_idx": 2,
+      "r0_scale": 2.0,
+      "omega": 0.7,
+      "B": 4096,
+      "R_records": 3000,
+      "theta": 0.35,
+      "t_on_orbit": 0.5,
+      "dQ_exact": 0.0,
+      "paired_auc": 0.49677732696694693,
+      "paired_dprime": -0.011424202704088891,
+      "se_dprime": 0.018258014278700663,
+      "unpaired_auc": 0.49700933333333336,
+      "unpaired_auc_ci95": [
+        0.4892659777777778,
+        0.5046277055555555
+      ],
+      "paired_auc_in_band": true,
+      "dprime_within_2sigma_of_0": true,
+      "seed0": 65000,
+      "runtime_sec": 72.3
     },
-    "B4_max_subcritical_C_fit_over_C0": {
-      "value": 0.0003013163516808317,
-      "n": 24,
-      "pass": true
+    {
+      "corner_idx": 3,
+      "r0_scale": 2.0,
+      "omega": 1.4,
+      "B": 4096,
+      "R_records": 3000,
+      "theta": 0.35,
+      "t_on_orbit": 0.25,
+      "dQ_exact": 0.0,
+      "paired_auc": 0.4949269800867673,
+      "paired_dprime": -0.017983872044908353,
+      "se_dprime": 0.01825889472583033,
+      "unpaired_auc": 0.4967948888888889,
+      "unpaired_auc_ci95": [
+        0.489679425,
+        0.5044543611111111
+      ],
+      "paired_auc_in_band": true,
+      "dprime_within_2sigma_of_0": true,
+      "seed0": 66000,
+      "runtime_sec": 72.3
     }
+  ],
+  "verdict_bars": {
+    "B1": true,
+    "B2": true,
+    "B3": true,
+    "B4": true,
+    "MC_on_orbit_auc": true
   },
-  "runtime_sec": 1.6
+  "all_bars_pass": true
 }
