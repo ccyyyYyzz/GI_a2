@@ -1,0 +1,6 @@
+[FOG_QUOTIENT done 1203.2s] overall=PASS  (FOG_QUOTIENT_TEST_FULL.json)
+  BAR1_logF_law                PASS
+  BAR2_amplitude_invariance    PASS
+  BAR3_dc_invisible            PASS
+  BAR4_rates_nontrivial        PASS
+  M_eff=12.15 (OhO_PR=1.47 naive)  KS_p=0.636  dMI=0.0052  best_cap=2.322 bit  achieved_MI=2.321 bit

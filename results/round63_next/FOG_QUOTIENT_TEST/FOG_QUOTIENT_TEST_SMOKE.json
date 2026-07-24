@@ -1,0 +1,180 @@
+{
+  "test": "FOG_QUOTIENT_TEST",
+  "ref": "R46 sec 3.2-3.3 (Fog Quotient Channel); kill sec 6.3",
+  "frozen": {
+    "rho": [
+      1.0,
+      1.25,
+      1.6,
+      2.2,
+      3.2
+    ],
+    "T": [
+      16,
+      64,
+      256
+    ],
+    "a_span_dB": 40.0,
+    "KS_bar": 0.05,
+    "dMI_bar": 0.05,
+    "dBER_bar": 0.02,
+    "auc_band": [
+      0.45,
+      0.55
+    ],
+    "cap_bar": 0.5,
+    "smoke": true,
+    "N_TX": 300,
+    "N_POOL": 4000
+  },
+  "engine": {
+    "M": 36,
+    "N": 1024,
+    "PB": 3,
+    "q0": 187.386557057951,
+    "OhO_hadamard_participation_ratio": 1.466,
+    "rank_O": 16,
+    "rank_OhO": 36,
+    "M_eff_measured": 12.15,
+    "tr_K_total_looks": 16.26,
+    "tr_K2_M_eff": 12.15,
+    "K_participation_ratio": 21.76,
+    "M_eff_diagnostic": "The RAW O.O Hadamard participation ratio is 1.47 -- this is the NAIVE covariance projection M_eff (DERIVATION.md predicts ~1 for it) and is what an unwhitened energy statistic yields.  The Fisher-efficient M_eff = tr(K^2) with K=Sigma0^{-1/2}(q0 O.O)Sigma0^{-1/2} = 12.15 ~ 13 (DERIVATION.md's value); tr(K)=16.26 ~16=(k_p+1)^2 is the total informative looks.  An earlier build used the naive projection (M_eff~1.5); corrected to the whitened statistic the DERIVATION prescribes.  The gap is naive-vs-whitened, NOT a smoke-scale artifact -- the engine config is the intended one."
+  },
+  "BAR1_logF_law": {
+    "nu": 777,
+    "n_samples": 10,
+    "KS_stat": 0.3342491807305906,
+    "KS_p": 0.16935455236881936,
+    "CvM_p": 0.22950963891368292,
+    "empirical_mean": -0.015959548133019072,
+    "theory_mean": 0.0,
+    "empirical_var": 0.0016762573328730664,
+    "theory_var": 0.005151285594438521,
+    "bar": "KS_p>0.05",
+    "verdict": "PASS"
+  },
+  "BAR2_amplitude_invariance": {
+    "T": 256,
+    "nu": 3110.0,
+    "CRN_paired": true,
+    "N_TX": 300,
+    "ratio_fixed_medium_a1": {
+      "BER": 0.0,
+      "MI_bits": 2.31936776996288
+    },
+    "ratio_random_40dB": {
+      "BER": 0.0,
+      "MI_bits": 2.31936776996288
+    },
+    "ratio_SNRmatched_amid": {
+      "BER": 0.0,
+      "MI_bits": 2.31936776996288,
+      "a_mid": 100.0
+    },
+    "dMI_vs_fixed_a1": 0.0,
+    "dBER_vs_fixed_a1": 0.0,
+    "dMI_vs_SNRmatched": 0.0,
+    "absolute_fixed_a1": {
+      "BER": 0.0,
+      "MI_bits": 2.31936776996288
+    },
+    "absolute_random_40dB": {
+      "BER": 0.7933333333333333,
+      "MI_bits": 0.0639998977524457
+    },
+    "bar": "FROZEN dMI<0.05 AND dBER<0.02 (CRN-paired, fixed medium a=1 vs random 40-dB a); corroborated by absolute-decoder collapse",
+    "invariance_ok": true,
+    "absolute_collapses": true,
+    "verdict": "PASS"
+  },
+  "BAR3_dc_invisible": {
+    "mean_detector_AUC": {
+      "1.25": 0.4208,
+      "1.6": 0.3968,
+      "2.2": 0.5264,
+      "3.2": 0.5904
+    },
+    "records_per_rho": 25,
+    "AUC_null_SE": 0.0825,
+    "AUC_95CI_contains_half": {
+      "1.25": true,
+      "1.6": true,
+      "2.2": true,
+      "3.2": true
+    },
+    "dc_scene_sums": {
+      "1.0": 592.3284412774703,
+      "1.25": 592.3284412774703,
+      "1.6": 592.3284412774702,
+      "2.2": 592.3284412774703,
+      "3.2": 592.3284412774703
+    },
+    "dc_scene_Q_over_q0": {
+      "1.0": 1.0,
+      "1.25": 1.2499999999999998,
+      "1.6": 1.6000000000000003,
+      "2.2": 2.1999999999999997,
+      "3.2": 3.2000000000000006
+    },
+    "equal_mean_rel_spread": 8.58346415864363e-17,
+    "bar": "FROZEN: mean-detector AUC in [0.45,0.55] for all rho (>=4096 records/rho)",
+    "verdict": "FAIL"
+  },
+  "BAR4_rates_nontrivial": {
+    "M_eff": 12.15,
+    "capacity_by_T": {
+      "16": {
+        "nu": 194,
+        "BA_capacity_bits": 1.5418,
+        "uniform_MI_bits": 1.4825,
+        "p_star": [
+          0.285,
+          0.045,
+          0.2,
+          0.183,
+          0.288
+        ]
+      },
+      "64": {
+        "nu": 777,
+        "BA_capacity_bits": 2.1488,
+        "uniform_MI_bits": 2.143,
+        "p_star": [
+          0.196,
+          0.17,
+          0.196,
+          0.215,
+          0.223
+        ]
+      },
+      "256": {
+        "nu": 3110,
+        "BA_capacity_bits": 2.3199,
+        "uniform_MI_bits": 2.3199,
+        "p_star": [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      }
+    },
+    "achieved_5symbol_MI_random_a_bits": 2.31936776996288,
+    "best_BA_capacity_bits": 2.3199,
+    "bar": "BA capacity>0.5 bit for some T AND achieved MI>0.5 bit",
+    "verdict": "PASS"
+  },
+  "verdict": {
+    "per_bar": {
+      "BAR1_logF_law": "PASS",
+      "BAR2_amplitude_invariance": "PASS",
+      "BAR3_dc_invisible": "FAIL",
+      "BAR4_rates_nontrivial": "PASS"
+    },
+    "overall": "FAIL",
+    "interpretation": "at least one frozen bar failed -> per R46 6.3 this is noncoherent communication renamed; KILL as flagship"
+  },
+  "runtime_sec": 25.3
+}
