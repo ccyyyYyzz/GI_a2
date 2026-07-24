@@ -80,7 +80,11 @@ asymptotics give the mean delay $E_{\mathrm{delay}}=|\log\alpha|/(k_m\eps^{2m})
 [1+o(1)]$. The exponent $m$ is invariant because reparameterizing $\eta$ leaves
 the nuisance orbit unchanged, a gain gauge absorbed into $\eta$ is quotiented
 automatically, no statistic or Fisher eigenbasis is selected, and physical
-covariation changes $c_m$ but not the definition of $m$.
+covariation changes $c_m$ but not the definition of $m$. The contact order $m$ is
+robust to an unknown nuisance $\eta$: for a truly unknown $\eta$ the fixed-error
+\emph{constant} is a composite-hypothesis quantity (a least-favorable-nuisance /
+GLRT exponent) for which the profiled Chernoff distance is a bound, but the
+exponent $m$ itself is unchanged.
 
 \paragraph*{Gaussian specialization.}
 Let $P_\eps=\mathcal{N}(0,\Sigma_\eps)$ with
@@ -135,7 +139,10 @@ The exact-KL log--log slopes are $2.038$ ($\delta_g$) and $4.000$
 leading coefficients agree with Eqs.~\eqref{eq:s_KL}--\eqref{eq:s_Bhatt} to
 $1.07\%$ ($\delta_g$) and $0.00\%$ ($\delta_o$). The Monte Carlo single-look
 $d'\!\propto\!\eps^{m}$ exponents are $0.95$ and $2.05$; the CUSUM
-($\mathrm{ARL}_0=500$) delay slopes are $-2.16$ and $-3.92$. The mixed direction
+($\mathrm{ARL}_0=500$, thresholds set by the ARL$_0$ approximation
+of~\cite{s_Siegmund}) delay slopes are $-2.16$ and $-3.92$. These two CUSUM slopes
+are two-point confirmations of the densely sampled ($12$-point, bank~A) exact-KL
+contact orders, illustrative rather than independent fits. The mixed direction
 crosses over at $\eps_{\mathrm{cross}}^{\mathrm{pred}}=9.995\times10^{-3}$ versus
 empirical $9.997\times10^{-3}$ (ratio $1.0003$).
 
@@ -415,21 +422,29 @@ every nonzero $\delta$. This is the precise, physically correct boundary between
 the two disorder endpoints of the Letter.
 
 \paragraph*{Minimal prior-art fence.}
-The result is distinct from the head-on prior art.
-Memory-effect and speckle-illumination imaging through scattering---blind
-structured illumination and its superresolution analyses~\cite{s_Mudry,s_Idier}
-and photoacoustic speckle-fluctuation imaging~\cite{s_Chaigne}---\emph{reconstruct}
-an image by exploiting residual correlations; our contribution is the opposite
-regime, where reconstruction rank has collapsed to one and only the observability
-order survives. Quantum-inspired superresolution~\cite{s_Tsang} moves Fisher
-information between optical \emph{measurements} of the same scene; the Rank--Jet
-Separation moves contact order between \emph{statistical layers} of one scalar
-record, with no change of hardware. Speckle-decorrelation and coda-wave change
-detection~\cite{s_Snieder} sense a change in the \emph{medium}; here an exact first-moment
-invariance wall makes the medium a transducer for \emph{scene} change while a
-profiled quotient rejects medium-law events. No claim of prior-art equivalence is
-made, and the novelty is the nuisance-profiled statistical jet order as a
-physical observability class for disordered sensing.
+The result is distinct from the head-on prior art. Memory-effect imaging through
+opaque scattering layers~\cite{s_Bertolotti,s_Katz,s_Freund} \emph{reconstructs}
+a hidden object while residual angular correlations survive; we operate at the
+endpoint where reconstruction rank is one and only the observability order
+survives. Blind structured-illumination and speckle-superresolution
+imaging~\cite{s_Mudry,s_Idier} and photoacoustic speckle-fluctuation
+imaging~\cite{s_Chaigne} likewise \emph{reconstruct} by exploiting residual
+correlations; our contribution is the opposite regime. Quantum-inspired
+superresolution~\cite{s_Tsang} moves Fisher information between optical
+\emph{measurements} of the same scene, and quantum change
+detection~\cite{s_GraceGuha} optimizes quantum-limited discrimination of a
+\emph{known} object change; the Rank--Jet Separation instead moves contact order
+between \emph{statistical layers} of one scalar classical record and classifies a
+\emph{nuisance-profiled} contact order, with no change of hardware.
+Speckle-decorrelation and coda-wave change detection~\cite{s_Snieder} and SAR
+coherent change detection~\cite{s_SAR_CCD} sense inter-pass decorrelation of the
+\emph{medium}; here an exact first-moment invariance wall makes the medium a
+transducer for \emph{scene} change while a profiled quotient rejects medium-law
+events. Mesoscopic universal conductance fluctuations~\cite{s_LeeStone} are the
+disorder-statistics ancestor of the covariance channel but carry no
+detection-order classification. No claim of prior-art equivalence is made, and the
+novelty is the nuisance-profiled statistical jet order as a physical observability
+class for disordered sensing.
 
 \begin{thebibliography}{99}
 \bibitem{s_Mudry} E. Mudry \textit{et al.}, Nat. Photonics \textbf{6}, 312 (2012).
@@ -437,6 +452,13 @@ physical observability class for disordered sensing.
 \bibitem{s_Chaigne} T. Chaigne \textit{et al.}, Optica \textbf{3}, 54 (2016).
 \bibitem{s_Tsang} M. Tsang, R. Nair, and X.-M. Lu, Phys. Rev. X \textbf{6}, 031033 (2016).
 \bibitem{s_Snieder} R. Snieder, A. Gr\^et, H. Douma, and J. Scales, Science \textbf{295}, 2253 (2002).
+\bibitem{s_Bertolotti} J. Bertolotti, E.~G. van Putten, C. Blum, A. Lagendijk, W.~L. Vos, and A.~P. Mosk, Nature \textbf{491}, 232 (2012).
+\bibitem{s_Katz} O. Katz, P. Heidmann, M. Fink, and S. Gigan, Nat. Photonics \textbf{8}, 784 (2014).
+\bibitem{s_Freund} I. Freund, M. Rosenbluh, and S. Feng, Phys. Rev. Lett. \textbf{61}, 2328 (1988).
+\bibitem{s_GraceGuha} M.~R. Grace and S. Guha, Phys. Rev. Lett. \textbf{129}, 180502 (2022).
+\bibitem{s_SAR_CCD} M. Preiss and N.~J.~S. Stacy, \textit{Coherent Change Detection: Theoretical Description and Experimental Results}, DSTO-TR-1851 (2006).
+\bibitem{s_LeeStone} P.~A. Lee and A.~D. Stone, Phys. Rev. Lett. \textbf{55}, 1622 (1985).
+\bibitem{s_Siegmund} D. Siegmund, \textit{Sequential Analysis: Tests and Confidence Intervals} (Springer, New York, 1985).
 \end{thebibliography}
 
 \end{document}

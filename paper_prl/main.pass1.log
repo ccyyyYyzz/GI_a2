@@ -1,0 +1,74 @@
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex)
+ restricted \write18 enabled.
+entering extended mode
+(./main.tex
+LaTeX2e <2023-11-01> patch level 1
+L3 programming layer <2024-02-20>
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/revtex/revtex4-2.cls
+Document Class: revtex4-2 2022/06/05 4.2f (https://journals.aps.org/revtex/ for
+ documentation)
+ltxutil[2022/06/05 4.2f utilities package (portions licensed from W. E. Baxter 
+web at superscript.com)]
+ltxfront[2022/06/05 4.2f frontmatter package (AO,DPC,MD)]
+ltxgrid[2022/06/05 4.2f page grid package (portions licensed from W. E. Baxter 
+web at superscript.com)]
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/revtex/aps4-2.rtx)
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/revtex/aps10pt4-2.rtx)
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/textcase/textcase.sty)
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/url/url.sty)
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/natbib/natbib.sty)
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/revtex/revsymb4-2.sty))
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/graphics/graphicx.sty
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/graphics/keyval.sty)
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/graphics/graphics.sty
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/graphics/trig.sty)
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/graphics-cfg/graphics.cfg)
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/graphics-def/pdftex.def)))
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/amsmath/amsmath.sty
+For additional information on amsmath, use the `?' option.
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/amsmath/amstext.sty
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/amsmath/amsgen.sty))
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/amsmath/amsbsy.sty)
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/amsmath/amsopn.sty))
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/amsfonts/amssymb.sty
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/amsfonts/amsfonts.sty))
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/tools/bm.sty)
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/l3backend/l3backend-pdftex.
+def) (./main.aux)
+(d:/Program Files/texlive/2024/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+)
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.
+sty
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cf
+g)) (d:/Program Files/texlive/2024/texmf-dist/tex/latex/amsfonts/umsa.fd)
+(d:/Program Files/texlive/2024/texmf-dist/tex/latex/amsfonts/umsb.fd) [1{d:/Pro
+gram Files/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2 <./fi
+gures/fig1_hero.pdf>] [3] [4 <./figures/fig2_jet_slopes.pdf> <./figures/fig3_op
+tical_realizations.pdf>] [5]
+No file main.bbl.
+[6] (./main.aux) )<d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/
+amsfonts/cm/cmbx12.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/pu
+blic/amsfonts/cm/cmbx9.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type
+1/public/amsfonts/cm/cmex10.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts
+/type1/public/amsfonts/cm/cmmi10.pfb><d:/Program Files/texlive/2024/texmf-dist/
+fonts/type1/public/amsfonts/cm/cmmi6.pfb><d:/Program Files/texlive/2024/texmf-d
+ist/fonts/type1/public/amsfonts/cm/cmmi7.pfb><d:/Program Files/texlive/2024/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb><d:/Program Files/texlive/2024
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><d:/Program Files/texlive/
+2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb><d:/Program Files/texli
+ve/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><d:/Program Files/te
+xlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb><d:/Program Files
+/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb><d:/Program Fi
+les/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><d:/Progr
+am Files/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb><d:/P
+rogram Files/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb><
+d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.p
+fb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cms
+y9.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm
+/cmti10.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/amsfon
+ts/cm/cmti9.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/am
+sfonts/symbols/msam10.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1
+/public/amsfonts/symbols/msbm10.pfb>
+Output written on main.pdf (6 pages, 385794 bytes).
+Transcript written on main.log.

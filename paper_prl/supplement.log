@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.9.25)  24 JUL 2026 09:11
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.9.25)  24 JUL 2026 09:58
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -315,23 +315,19 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[2]
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[3] [4]
+[2] [3] [4] [5]
 No file supplement.bbl.
-[5] (./supplement.aux)
+[6] (./supplement.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-02-20>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 4810 strings out of 476023
- 67788 string characters out of 5790298
- 1956190 words of memory out of 5000000
- 26884 multiletter control sequences out of 15000+600000
+ 4831 strings out of 476023
+ 68152 string characters out of 5790298
+ 1959190 words of memory out of 5000000
+ 26905 multiletter control sequences out of 15000+600000
  569104 words of font info for 77 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  57i,12n,65p,398b,355s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -359,10 +355,10 @@ ram Files/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb><d:
 0.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/
 cmtt9.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/amsfonts
 /symbols/msbm10.pfb>
-Output written on supplement.pdf (5 pages, 305765 bytes).
+Output written on supplement.pdf (6 pages, 313217 bytes).
 PDF statistics:
- 130 PDF objects out of 1000 (max. 8388607)
- 78 compressed objects within 1 object stream
+ 133 PDF objects out of 1000 (max. 8388607)
+ 80 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

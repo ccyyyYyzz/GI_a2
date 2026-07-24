@@ -177,3 +177,92 @@ These are the only non-automatable blanks. Each is a literal placeholder token i
    memory-effect / SPADE / coda-wave equivalence objections.
 
 Phase 2 timebox (~4 h) met; both documents compile from source with a single `pdflatex ×2` pass each.
+
+---
+
+## Phase 3 — pre-submission fix-pass (R43 §7.3 step 7) — COMPLETE
+
+Both pre-submission reads (`REVIEW_READ1_GENERAL.md` F1–F10; `REVIEW_READ2_HOSTILE.md`
+B1, M1–M5, m1–m7) were adjudicated by the coordinator and every accepted repair applied.
+No new data was generated: figures were re-rendered from
+`figures/_frozen_sources/*.committed.json` via the existing `fig*.py` scripts with
+**label/layout/caption changes only** — plotted data untouched. `CLAIM_SOURCE_MATRIX.md`
+was not modified (coordinator-owned; m1/M4 handled there).
+
+### Edits applied (finding ID → file:line, post-edit)
+
+| ID | Fix | Location |
+|---|---|---|
+| B1 / A1 | Abstract: "sealed bucket-optics test" → "sealed **simulated** single-pixel optical test"; also F2 gloss pass (see below) | `main.tex:31–40` |
+| B1 | "sealed single-pixel optical **experiment**" → "sealed, **fully simulated** single-pixel optical **model**" | `main.tex:89` |
+| B1 / item 3 | "thin-screen **experiment on a true** single-pixel bucket record" → "**simulated** thin-screen **study of the** single-pixel bucket record" | `main.tex:289` |
+| B1 / item 4 | Fig. 3 caption: inserted "**simulated**" before sealed thin-screen detector | `main.tex:272–286` |
+| M1 / item 5 | empty-blind-set headline qualified: "…empty **on the aperture where $G\succ0$ (grain band covering the scene band)**" | `main.tex:171` |
+| M1 / item 6 | "no blind direction for detection **within the informative aperture**" | `main.tex:221–222` |
+| M1 / item 7 | boundaries paragraph: added premise sentence ($G\succ0$ needs grain modulus-squared band to cover scene band; change beyond $2k_{\rm grain}$ ⇒ $u=v=0$, genuinely blind, Suppl. case iii) | `main.tex:184–189` |
+| M2 / item 8 | "mean wall supplies **specificity**" → "mean wall **rejects DC and flux changes**"; noun "specificity" now absent from theory section (only D3 "…not a fully **specific** sentinel" remains, permitted) | `main.tex:223` |
+| M5 / item 12 | Fig. 2 caption: CUSUM slopes flagged as two-point confirmations of the densely sampled exact-KL exponents, not independent fits | `main.tex` (Fig. 2 caption) |
+| m4 / item 13 | End Matter A: added "(so $d=v/2$ …)" reconciling $v=2\delta^\top G\delta$ with $d=\delta^\top G\delta$ | `main.tex:366` |
+| m6 / item 15 (+F10) | "**unique** statistic that **saturates**" → "**attains**"; sentence split; triple name-drop lightened | `main.tex:119–121` |
+| m2 / item 17 | Outlook: Lorden cited for "sequential change detection"; Snieder moved to "disordered and medium-change sensing" | `main.tex` (Outlook) |
+| m3 / item 18 | "measured covariance energy … single direction $Gx$" → "**scene-dependent** covariance energy … **rank-one structure $O\!\circ\!O$**" (body + Fig. 1 caption aligned) | `main.tex:216`, `:55` (Fig.1 cap) |
+| F1 / item 20 | Fig. 1 `figure*` moved to the front matter (after `\maketitle`); now typesets at **top of page 2**, co-visible register with abstract (was p.3) | `main.tex` (front matter) |
+| F2 / item 21 | Abstract gloss pass (see deviations) | `main.tex:31–40` |
+| F3 / item 22 | sealed section: "cells (**medium-parameter grid points**)" gloss added; "banks" already glossed at `:73` ("one independent medium realization"); rot-20%/slope−1 FA + latency-19% **kept** (part of frozen §4.2 robustness sentence) | `main.tex:292` |
+| F4 / item 23 | Fig. 3 caption rewritten to **lead with the physics panel** (complete scramble: image dies, detection lives); `fig3` panel order swapped (physics‖thin-screen‖calibration), data untouched | `main.tex:272–286`, `fig3_optical_realizations.py` |
+| F5 / item 24 | `fig1_hero.py`: row label + banner "quotient jet order" → "**local change order $m$**"; added "$O\!\circ\!O$: code overlaps; $R$: noise floor" gloss in law box; regenerated | `fig1_hero.py` |
+| F6 | body: "exact Gaussian divergences" → "exact Gaussian **statistical (KL and Chernoff)** divergences" (abstract had no char budget for this gloss) | `main.tex:252` |
+| F7 / item 19 | `fig2_jet_slopes.py`: main-panel slope label "2.04" → "**2.038**"; regenerated | `fig2_jet_slopes.py` |
+| F8 / item 25 | Eq. (5) glossed: "$O_{ii}$ the code weight and $\hat{x}(0)$ the scene DC component" | `main.tex:206` |
+| F9 / item 26 | added pointer "—the reduced law is analytic in $Q$ (End Matter A)—" | `main.tex:158–159` |
+| M3 / items 9–10 | Supplement S5 prior-art fence rebuilt: Mudry/Idier re-attributed to **blind-SIM/speckle-SR** (not memory-effect); memory-effect imaging (Bertolotti/Katz/Freund), Grace–Guha quantum change detection, SAR-CCD (Preiss&Stacy), and Lee–Stone/UCF fenced; 6 new bibitems | `supplement.tex:417–433`, `:455–461` |
+| m5 / item 14 | Supplement S2: Siegmund (Springer 1985) cited for ARL₀→threshold; bibitem added | `supplement.tex:143`, `:461` |
+| M5 / item 12 | Supplement S2: CUSUM two-point-confirmation sentence added | `supplement.tex:143–146` |
+| m7 / item 16 | Supplement S1: exponent $m$ robust to unknown nuisance; constant is a composite-hypothesis/least-favorable quantity for which profiled Chernoff is a bound | `supplement.tex:84–89` |
+| item 11 | prior-art bibitems added to **supplement only** (main refs kept lean; no main-text sentence required them) | — |
+| m1, M4 | **NOT applied here** — `CLAIM_SOURCE_MATRIX.md` edits, coordinator-owned (per task) | — |
+
+### Frozen-wording deviations (adjudicated)
+
+R43 §4.1–4.6 frozen sentences were preserved verbatim **except** the following surgical
+edits, all explicitly adjudicated in the fix list. No frozen numerical value or claim was
+altered; the §4.6 validation sentence (KL 2.038/4.000, MC 0.95/2.05, CUSUM −2.16/−3.92) and
+the §4.2 robustness sentence (FA 0.032, latency 19%, 0.052, 0.076) are untouched in the body.
+
+1. **Abstract** (deviates from the R43 §1.3 *seed*, not a §4 frozen sentence): reworded to
+   (a) label the sealed test "**simulated**" [A1]; (b) gloss the jet concept —
+   "first nonzero Chernoff jet…detection-time exponent" → "the lowest order at which a change
+   perturbs the statistics (its jet order) fixes the detection time" [F2]; (c) "nuisance
+   profiling" → "projecting out nuisances" [F2]; (d) **dropped** "amplitude-anchored" and
+   "first-order-" (before "orthogonal") for the 600-char budget [F2, permitted]; (e) "Exact
+   divergences" gloss and explicit T/ε gloss **omitted** — no char budget (priority: sim-label
+   > jet gloss > rest). Final rendered length **598 chars** (≤ 600). "**All results are
+   numerical.**" was **not** added — no char headroom (task: "if chars allow").
+2. **§4.1 lead-in framing** (not the frozen numbers sentence): "experiment on a true
+   single-pixel bucket record" → "simulated … study of the single-pixel bucket record" [B1/3];
+   added "cells (medium-parameter grid points)" gloss [F3].
+3. **Fig. 3 caption** rewritten to lead with physics + "simulated" inserted + D2 capability
+   numbers (77/81, 453, 0.990, 459/1013) **de-duplicated** out of the caption (they remain in
+   the body's frozen §4.1 sentence and on-figure) [F4, item 22].
+4. **Theory sentence** `:223`: "supplies specificity" → "rejects DC and flux changes" [M2].
+5. **§67 / §271 capability framing**: "optical experiment" → "fully simulated optical model" [B1].
+
+### New compile stats (post-fix, `pdflatex ×2` each)
+
+| Check (task item 27) | Result |
+|---|---|
+| Overfull hboxes (both docs) | **0 / 0** — PASS |
+| Underfull hboxes (main) | **0** — PASS |
+| Undefined refs / citations (both docs) | **none** — PASS (7 new supplement bibitems all resolve) |
+| Core ≤ 4 pp | **PASS** — core = pages 1–4 (text p.1–3; Figs 2–3 float to p.4); End Matter starts p.5 |
+| Main total ≤ 6–7 pp | **PASS** — `main.pdf` = **6 pages** |
+| Abstract ≤ 600 chars | **PASS** — 598 (source-rendered) |
+| texcount estimate ≤ 3750 | **PASS** — core ≈ 2.7 k PRL-formula words (core text 1367 + captions 286 + 5 eqns + 3 full-width figs); full-doc texcount Sum = 2639 |
+| Exactly 5 displayed core equations | **PASS** — eq:jet(1), eq:rank(2), eq:Q(3), eq:classes(4), eq:mean(5); End Matter uses inline math only |
+| Fig. 1 on page 1–2 | **PASS** — top of **page 2** |
+| Supplement | 6 pages (was 5; +1 from the extended S5 fence + 6 bibitems), 0 overfull, no undefined |
+
+**Not committed** (per task). All figure PDFs/PNGs regenerated (fig1, fig2, fig3). One
+finding intentionally not fully realized: the abstract's "All results are numerical." clause
+and the divergence/T-ε glosses were dropped for the 600-char limit (priority-ordered, as
+instructed) — the sim-label and jet gloss, the higher-priority items, are in.

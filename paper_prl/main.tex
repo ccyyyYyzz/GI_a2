@@ -31,15 +31,37 @@
 \begin{abstract}
 Strong disorder is expected to erase spatial information. We show that
 reconstruction rank and local change observability are distinct invariants.
-After nuisance profiling, the first nonzero Chernoff jet of a perturbation
-fixes its detection-time exponent. In an amplitude-anchored scrambled channel
+After projecting out nuisances, the lowest order at which a change perturbs
+the statistics (its jet order) fixes the detection time. In a scrambled channel
 the scene Fisher matrix collapses to rank one, yet every nonzero local change
-stays visible: generic directions need $T\!\sim\!\eps^{-2}$, first-order-orthogonal
-ones are curvature-rescued at $T\!\sim\!\eps^{-4}$. Exact divergences, Monte Carlo, sequential detection,
-and a sealed bucket-optics test validate the result.
+stays visible: generic directions need $T\!\sim\!\eps^{-2}$, orthogonal
+ones are curvature-rescued at $T\!\sim\!\eps^{-4}$. Exact divergences, Monte Carlo,
+sequential detection, and a sealed simulated single-pixel optical test validate
+the result.
 \end{abstract}
 
 \maketitle
+
+% ---------------------------------------------------------------------
+% Fig. 1 (hero) placed in the front matter so it typesets co-visible with the
+% abstract (page 1-2), per the general-interest read (ten-second gate).
+% ---------------------------------------------------------------------
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{fig1_hero.pdf}
+\caption{\textbf{Rank collapses; jets survive.} As optical disorder grows from a
+thin multiplicative screen to complete scrambling, the mean-channel spatial
+support contracts $B_p\!\to\!\{0\}$ (DC only) and the reconstruction Fisher rank
+collapses from many modes to one ($99.99\%$ of the scene-dependent covariance
+energy along $O\!\circ\!O$), while the quotient jet order stays finite ($m=1$ or $2$)
+and the local blind set stays empty. At the scrambling endpoint the record
+covariance factors as $\mathrm{Cov}(b)=Q(x)\,(O\!\circ\!O)+R$ with
+$Q=x^{\!\top}Gx$, and the two directional classes $u=2x^{\!\top}G\delta$,
+$v=2\delta^{\!\top}G\delta$ set the contact order. The amplitude-anchor condition
+(icon) is a prerequisite, not a caveat: without it the quotient information
+vanishes.}
+\label{fig:hero}
+\end{figure*}
 
 % ---------------------------------------------------------------------
 % OPENING: the disorder paradox  (0.40 pp)
@@ -64,7 +86,8 @@ physical observability by contact order that survives reparameterization and
 nuisance profiling, applies to any dominated statistical experiment, and is
 realized at its most extreme in complete optical scrambling. We prove a
 Rank--Jet Separation theorem, demonstrate its exact directional classes, and
-falsify it at its own boundaries in a sealed single-pixel optical experiment.
+falsify it at its own boundaries in a sealed, fully simulated single-pixel
+optical model.
 
 % ---------------------------------------------------------------------
 % QUOTIENT INFORMATION JETS  (0.80 pp)
@@ -94,9 +117,8 @@ complexity obeys Eq.~\eqref{eq:jet}; the same profiled
 Kullback--Leibler expansion drives Lorden/CUSUM quickest detection~\cite{Lorden},
 giving a mean delay $\propto\eps^{-2m}$. The quotient jet is a stochastic
 observability order, the statistical counterpart of successive-derivative
-observability rank conditions~\cite{HermannKrener}, and the efficient profiled
-score is the unique statistic that saturates the fluctuation--response
-bound~\cite{Dechant}. The exponent is a property of the physical
+observability rank conditions~\cite{HermannKrener}. The efficient profiled
+score attains the fluctuation--response bound~\cite{Dechant}. The exponent is a property of the physical
 experiment after nuisance quotienting: it assumes no fixed trace, no isotropy,
 and no chosen estimator. Physical covariation changes the coefficient $c_m$; it
 cannot change the definition of $m$. This is the object that survives the
@@ -133,7 +155,8 @@ $G\succ0$) enters the record covariance, so
 %
 The quotient expansion of $Q$ has first variation $u(\delta)=2x^{\!\top}G\delta$
 and curvature $v(\delta)=2\delta^{\!\top}G\delta>0$ for every $\delta\neq0$.
-Because a regular reduced law inherits the contact order of $Q$, every direction
+Because a regular reduced law inherits the contact order of $Q$---the reduced
+law is analytic in $Q$ (End Matter~A)---every direction
 falls into exactly one of two local classes,
 %
 \begin{equation}
@@ -145,7 +168,8 @@ x^{\!\top}G\delta=0 &:\; m=2,\quad \Treq\sim\eps^{-4}.
 \end{equation}
 %
 Hence \emph{the reconstruction Fisher matrix is rank one, yet the local blind set
-is empty}: the first-order-orthogonal directions are not blind but
+is empty on the aperture where $G\succ0$ (grain band covering the scene band)}:
+the first-order-orthogonal directions are not blind but
 curvature-rescued, since $\delta^{\!\top}G\delta>0$. This is the Rank--Jet
 Separation theorem, proved in End Matter~A.
 
@@ -157,28 +181,15 @@ the scene and amplitude derivatives collinear and collapses the quotient
 information to zero, so a wavelength, lag-shape, polarization, or finite
 calibration \emph{anchor} is required. Global sign-definiteness holds only on the
 monotone cone $x,\delta\ge0$ with an entrywise-nonnegative kernel; it is not
-claimed for arbitrary signed changes.
+claimed for arbitrary signed changes. The premise $G\succ0$ requires the grain
+modulus-squared band $\hat{G}=\widehat{|C|^2}$ (supported on
+$|k|\le2k_{\mathrm{grain}}$) to cover the scene band; a change supported wholly
+beyond $2k_{\mathrm{grain}}$ gives $u=v=0$ and is genuinely blind
+(Supplement, equality case~(iii)).
 
 % ---------------------------------------------------------------------
-% SCRAMBLING INVERSION  (0.55 pp)  + Fig 1
+% SCRAMBLING INVERSION  (0.55 pp)   (Fig. 1 floats from the front matter)
 % ---------------------------------------------------------------------
-\begin{figure*}[t]
-\centering
-\includegraphics[width=\textwidth]{fig1_hero.pdf}
-\caption{\textbf{Rank collapses; jets survive.} As optical disorder grows from a
-thin multiplicative screen to complete scrambling, the mean-channel spatial
-support contracts $B_p\!\to\!\{0\}$ (DC only) and the reconstruction Fisher rank
-collapses from many modes to one ($99.99\%$ of the covariance energy in the
-single direction $Gx$), while the quotient jet order stays finite ($m=1$ or $2$)
-and the local blind set stays empty. At the scrambling endpoint the record
-covariance factors as $\mathrm{Cov}(b)=Q(x)\,(O\!\circ\!O)+R$ with
-$Q=x^{\!\top}Gx$, and the two directional classes $u=2x^{\!\top}G\delta$,
-$v=2\delta^{\!\top}G\delta$ set the contact order. The amplitude-anchor condition
-(icon) is a prerequisite, not a caveat: without it the quotient information
-vanishes.}
-\label{fig:hero}
-\end{figure*}
-
 \section*{Scrambling inversion}
 Complete optical scrambling supplies the extreme endpoint. A band-limited
 modulator imprints a code $p_i$ (Fourier support $B_p$) on the illumination;
@@ -192,7 +203,8 @@ channel measures only the scene DC term,
 \label{eq:mean}
 \end{equation}
 %
-and its spatial support is $B_{\mathrm{mean}}=\{0\}$: every non-DC change, in-band
+where $O_{ii}$ is the code weight and $\hat{x}(0)$ the scene DC component; its
+spatial support is $B_{\mathrm{mean}}=\{0\}$: every non-DC change, in-band
 or beyond-band, is exactly invisible to the mean. Numerically the mean response to
 a beyond-band, DC-free change has relative magnitude $6.6\times10^{-19}$.
 
@@ -201,14 +213,15 @@ and the single scene scalar, $\mathrm{Cov}(b_i,b_j)=O_{ij}^2\,Q(x)$ with
 $Q(x)=x^{\!\top}Gx$ and $G$ the modulus-squared grain kernel. The support of $G$
 is enormous---the wavelength-scale grain pierces the modulator band---but the
 scene enters through the one scalar $Q$, so the reconstruction Fisher information
-is rank one and $99.99\%$ of the measured covariance energy lies in the single
-direction $Gx$. Beyond-band imaging dies with the memory
+is rank one and $99.99\%$ of the scene-dependent covariance energy lies along the
+rank-one structure $O\!\circ\!O$. Beyond-band imaging dies with the memory
 effect~\cite{Idier,Chaigne}. Yet by
 Eq.~\eqref{eq:Q} any beyond-band change lifts $Q$ by
 $2x^{\!\top}G\delta+\delta^{\!\top}G\delta$, and the quadratic floor is strictly
-positive for every nonzero $\delta$: there is no blind direction for detection.
-The mean wall supplies specificity; the covariance curvature supplies detection
-(Fig.~\ref{fig:hero}).
+positive for every nonzero $\delta$: there is no blind direction for detection
+within the informative aperture.
+The mean wall rejects DC and flux changes; the covariance curvature supplies
+detection (Fig.~\ref{fig:hero}).
 
 % ---------------------------------------------------------------------
 % DECISIVE TESTS  (0.60 pp)  + Fig 2
@@ -222,7 +235,9 @@ $m=1$) and a first-order-orthogonal direction ($x^{\!\top}G\delta=0$, $m=2$),
 with exact contact orders $2.038$ and $4.000$ and coefficient agreement to
 $1.07\%$ and $0.00\%$ with Eq.~\eqref{eq:classes}. A mixed direction crosses over
 near the predicted $\eps_{\mathrm{cross}}$. Insets: Monte Carlo single-look $d'$
-exponents $0.95$ and $2.05$; CUSUM delay slopes $-2.16$ and $-3.92$; and the
+exponents $0.95$ and $2.05$; CUSUM delay slopes $-2.16$ and $-3.92$ (two-point
+confirmations of the densely sampled exact-KL exponents, not independent fits);
+and the
 nuisance quotient, which is zero under a free amplitude gauge ($J_\theta=0$) and
 restored by a finite anchor ($J_\theta>0$). All sources are the committed
 JET\_TEST artifact.}
@@ -234,7 +249,8 @@ We test the theorem with the exact scrambling generator and no reconstruction,
 on a $32\times32$ grid ($N=1024$, code band $P_B=3$, grain band $K=13$, $M=36$
 codes, $10^4$ photons per bucket). Directions are constructed to be generic,
 exactly $G$-orthogonal, or mixed. Sweeping the amplitude over a decade and
-forming exact Gaussian divergences, Monte Carlo log-likelihood-ratio error, and
+forming exact Gaussian statistical (KL and Chernoff) divergences, Monte Carlo
+log-likelihood-ratio error, and
 CUSUM delay yields the frozen result: exact KL orders were $2.038$ and $4.000$,
 Monte Carlo response exponents were $0.95$ and $2.05$, and CUSUM delay slopes
 were $-2.16$ and $-3.92$; the predicted crossover, nuisance collapse, anchor
@@ -253,26 +269,28 @@ $17$ predeclared checks passed and none of the four kill conditions fired.
 \begin{figure*}[t]
 \centering
 \includegraphics[width=\textwidth]{fig3_optical_realizations.pdf}
-\caption{\textbf{Two optical endpoints and the honest boundary.} \emph{Left:} the
-sealed thin-screen detector meets its $2\%$ beyond-band power endpoint in
-$77/81$ predeclared cells, best cell $453$ banks, Monte Carlo power lower bound
-$0.990$, with a fixed-versus-fresh latency advantage of $459$ versus $1013$
-banks. \emph{Center:} at the frozen $1\%$ alarm threshold, four-class balanced
-accuracy is $0.916$ and in-band false alarms are $0.020$, but medium-amplitude
-and medium-timescale events give false-alarm rates of $0.096$ and $0.084$, and
-robustness is frozen to the $\le10\%$ aperture-rotation domain; these are the
-measured attribution limits, not fine print. \emph{Right:} at the complete-scramble
-endpoint the mean channel is at chance while the covariance duel reaches $d'=4.1$,
-$\mathrm{AUC}=0.997$ for a generic $5\%$ change, with rank-one covariance
-($99.99\%$) and mean null $6.6\times10^{-19}$.}
+\caption{\textbf{Rank collapses, detection survives: two optical endpoints and
+the honest boundary.} \emph{Left (complete scrambling):} the image channel dies---
+the mean channel is at chance---while the detection channel lives: the covariance
+duel reaches $d'=4.1$, $\mathrm{AUC}=0.997$ for a generic $5\%$ change, with
+rank-one covariance ($99.99\%$) and mean null $6.6\times10^{-19}$.
+\emph{Center (thin-screen power):} the simulated sealed thin-screen detector meets
+its $2\%$ beyond-band power endpoint across the predeclared operating map ($\times$
+marks the four slow cells), certifying practical power.
+\emph{Right (calibration boundary):} at the frozen $1\%$ alarm threshold four-class
+balanced accuracy is $0.916$ and in-band false alarms are $0.020$, but
+medium-amplitude and medium-timescale events give false-alarm rates of $0.096$ and
+$0.084$, with robustness frozen to the $\le10\%$ aperture-rotation domain---these
+are the measured attribution limits, not fine print.}
 \label{fig:optics}
 \end{figure*}
 
 \section*{Sealed optical instantiation}
-A preregistered thin-screen experiment on a true single-pixel bucket record
+A preregistered simulated thin-screen study of the single-pixel bucket record
 converts the theorem into a power-certified sentinel. Under the sealed protocol
 (End Matter~C), $2\%$ beyond-band changes were predicted detectable in $77/81$
-cells; the best cell required $453$ banks and achieved a Monte Carlo power lower
+cells (medium-parameter grid points); the best cell required $453$ banks and
+achieved a Monte Carlo power lower
 bound of $0.990$; a repeated code bank retained a latency advantage of $459$
 versus $1013$ banks over fresh covariance codes; and online scoring consumed
 $0.16\%$ of each bank interval. This is a power-certified beyond-band alarm with
@@ -303,8 +321,8 @@ monotone cone ($x\ge0$, $\delta\ge0$, $G$ entrywise nonnegative and $G\succ0$),
 $Q(x+\delta)-Q(x)>0$ for every $\delta\neq0$, so local completeness becomes global
 for physically monotone addition processes such as deposition, coating growth, and
 damage accumulation. The result separates reconstruction dimension from
-observability order and transfers beyond optics to disordered
-sensing~\cite{LeeStone}, sequential change detection~\cite{Snieder}, singular
+observability order and transfers beyond optics to disordered and medium-change
+sensing~\cite{LeeStone,Snieder}, sequential change detection~\cite{Lorden}, singular
 statistical models where finite-sample spectral emergence sets a second
 threshold~\cite{BBP}, and quantum-inspired superresolution~\cite{Tsang}.
 
@@ -345,7 +363,8 @@ are $D(P_\eps\|P_0)=\tfrac12[\tr A-\log\det(I+A)]=z^2\|K\|_F^2/4+O(z^3)$ and, at
 the symmetric Chernoff point $s=\tfrac12$, $C=z^2\|K\|_F^2/16+O(z^3)$, with
 $A=z K$. For the scrambled functional $Q(x)=x^{\!\top}Gx$, $G\succ0$, along
 $x_\eps=x+\eps\delta$ the covariance shift is $z(\eps)=2c\,\eps+d\,\eps^2$ with
-$c=x^{\!\top}G\delta$ and $d=\delta^{\!\top}G\delta>0$. If $c\neq0$ then
+$c=x^{\!\top}G\delta$ and $d=\delta^{\!\top}G\delta>0$ (so $d=v/2$ for the
+curvature $v=2\delta^{\!\top}G\delta$ of the main text). If $c\neq0$ then
 $z=2c\eps+O(\eps^2)$, so $C=c^2\|K\|_F^2\eps^2/4+o(\eps^2)$ and $m=1$. If $c=0$
 then $z=d\eps^2$, so $C=d^2\|K\|_F^2\eps^4/16+o(\eps^4)$ and $m=2$: the ordinary
 score vanishes, but the Hessian of $Q$ is $2G\succ0$, so the law leaves the null

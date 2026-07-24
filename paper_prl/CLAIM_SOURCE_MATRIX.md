@@ -15,7 +15,8 @@ and is NOT filled by regeneration.
 
 | Artifact | Frozen commit | Working-tree state | Extracted copy used by figure scripts |
 |---|---|---|---|
-| `results/round63_next/JET_TEST/JET_TEST.json` | **`1bf29f1`** | ⚠ **MODIFIED** (see GAP-1) | `paper_prl/figures/_frozen_sources/JET_TEST.committed.json` |
+| `results/round63_next/JET_TEST/JET_TEST.json` | **`1bf29f1`** | clean (restored; GAP-1 RESOLVED) | `paper_prl/figures/_frozen_sources/JET_TEST.committed.json` |
+| `results/round63_next/FOG_DMD_PROBE64/CORRECTION_NOTE.md` + `P1_results_CORRECTED.json` | `099ce7f` | clean (== committed) | (End Matter C disclosure 2 numbers) |
 | `results/round63_next/SCRAMBLE_EXT/SCRAMBLE_RESULTS.json` | `ed7a1e0` | clean (== committed) | `paper_prl/figures/_frozen_sources/SCRAMBLE_RESULTS.committed.json` |
 | `results/round63_next/SEALED_DET/CONFIRMATORY_RESULTS.json` | `b37c841` | clean (== committed) | `paper_prl/figures/_frozen_sources/CONFIRMATORY_RESULTS.committed.json` |
 | `results/round63_next/SCRAMBLE_EXT/DERIVATION.md` | `ed7a1e0` | clean | (prose/equations) |
@@ -70,6 +71,7 @@ The `CONFIRMATORY_RESULTS.json` internal **analysis-freeze** commit is `5910277`
 | # | Claim | File | Field / table | Commit |
 |---|---|---|---|---|
 | E1 | post-freeze refactor streamed MC records in GPU-memory chunks; no change to hypotheses, thresholds, bank counts, scenes, estimators, endpoints; altered RNG → different still-blinded realization set | CONFIRMATORY | `D7.attestation`; `freeze_commit`="5910277"; `banks.confirmatory`=12 | b37c841 |
+| E2 | shot-model integrity disclosure (End Matter C disclosure 2): signed-code shot error inflated covariance Fisher "≈1.9×"; witness `f_rec` "0.050 → 0.033" | FOG_DMD_PROBE64 | `CORRECTION_NOTE.md` ("Fisher over-stated ≈ 1.9×"; table row "witness f_rec 0.050 → **0.033**"); `P1_results_CORRECTED.json:f_rec_snr3`=0.03333 | 099ce7f |
 
 ## F. R43 §4.6 / §6.3 — Quotient-jet theorem statement + measured validation
 
@@ -91,7 +93,7 @@ The `CONFIRMATORY_RESULTS.json` internal **analysis-freeze** commit is `5910277`
 | F5 | predicted crossover (ratio 1.000) at `ε_cross` | `bank_A.crossover.eps_cross_pred`=0.009995, `eps_cross_emp`=0.009997, `ratio`=1.0003 | 1bf29f1 |
 | F6 | nuisance collapse `J_θ=0` (amplitude gauge) | `bank_B.single_zero_lag.I_theta_eff`=0.0 (`proportional_lags.I_theta_eff`=0.0) | 1bf29f1 |
 | F7 | anchor restoration `J_θ>0` (finite prior recovers 20%) | `bank_B.amplitude_anchor.frac_recovered`=0.20 (2nd-wavelength 0.018) | 1bf29f1 |
-| F8 | iso-`Q` cancellation → AUC ≈ chance at `ε_*` | `bank_C.cancellation.eps_star`=0.3626, `auc_at_star`=0.4807; local visible either side (auc 0.0001 / 1.0) | 1bf29f1 |
+| F8 | iso-`Q` cancellation → AUC ≈ chance at `ε_*` | `bank_C.cancellation.eps_star`=0.3626, `auc_at_star`=0.4807; local visible either side (auc 0.026 / 1.0; JSON `auc_left`=0.02638) | 1bf29f1 |
 | F9 | monotone-cone corollary (ΔQ>0 all tested) | `bank_C.cone.all_positive`=true; `G_entrywise_nonneg`=true | 1bf29f1 |
 | F10 | no broad in-aperture blind set | `kill_scan.frac_blind`=0.0; `d_min`=0.2544 over 400 dirs | 1bf29f1 |
 | F11 | verdict MOONSHOT_SURVIVES, 17/17 checks, 0/4 kills | `verdict`, `checks` (all true), `kills` (all false) | 1bf29f1 |
@@ -131,7 +133,13 @@ The `CONFIRMATORY_RESULTS.json` internal **analysis-freeze** commit is `5910277`
 
 # GAPS AND DISCREPANCIES (flagged, NOT regenerated)
 
-## GAP-1 — CRITICAL: JET_TEST working tree diverges from the frozen commit
+## GAP-1 — RESOLVED (was CRITICAL): JET_TEST working tree diverged from the frozen commit
+
+**RESOLUTION (coordinator, option (a) executed):** `git checkout` restored
+`results/round63_next/JET_TEST/` to the frozen `1bf29f1` state (working tree verified clean);
+the post-freeze re-run was quarantined to `results/round63_next/JET_TEST_POSTFREEZE_RERUN/`
+(@ `4e235a5`, provenance-only, used nowhere in the Letter). Original narrative retained below
+for the audit trail.
 
 `results/round63_next/JET_TEST/` is **modified in the working tree** (git status `M`) relative
 to the frozen commit **`1bf29f1`** referenced by R43 §Reference and §Decisive-exams. Modified
@@ -184,5 +192,7 @@ prose/equation sources, not numerical claims, and are deferred to Phase 2 per th
 gap in evidence; flagged only so the coordinator knows the proof text is not yet transcribed into
 the manuscript.
 
-**No numerical claim in R43 §4.1–4.6 or the figure specs lacks a committed source.** The only
-integrity issue is GAP-1 (a working-tree divergence resolved by using the frozen commit).
+**No numerical claim in the Letter (R43 §4.1–4.6, figure specs, or End Matter C disclosures)
+lacks a committed source.** Coverage extended to the shot-model disclosure numbers via row E2
+(hostile-read finding M4). GAP-1 is resolved (working tree restored to the frozen commit;
+re-run quarantined).

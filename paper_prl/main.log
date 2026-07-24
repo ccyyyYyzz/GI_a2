@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.9.25)  24 JUL 2026 09:12
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.9.25)  24 JUL 2026 09:58
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -287,31 +287,27 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 37.
 
 (d:/Program Files/texlive/2024/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-) [1{d:/Program Files/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map
-}]
-<figures/fig1_hero.pdf, id=22, 515.04039pt x 255.8358pt>
+)
+<figures/fig1_hero.pdf, id=1, 517.81456pt x 255.8358pt>
 File: figures/fig1_hero.pdf Graphic file (type pdf)
 <use figures/fig1_hero.pdf>
-Package pdftex.def Info: figures/fig1_hero.pdf  used on input line 167.
-(pdftex.def)             Requested size: 510.0pt x 253.33287pt.
-<figures/fig2_jet_slopes.pdf, id=23, 503.57631pt x 225.37198pt>
+Package pdftex.def Info: figures/fig1_hero.pdf  used on input line 51.
+(pdftex.def)             Requested size: 510.0pt x 251.97438pt.
+ [1{d:/Program Files/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
+] [2 <./figures/fig1_hero.pdf>]
+<figures/fig2_jet_slopes.pdf, id=51, 503.57631pt x 225.37198pt>
 File: figures/fig2_jet_slopes.pdf Graphic file (type pdf)
 <use figures/fig2_jet_slopes.pdf>
-Package pdftex.def Info: figures/fig2_jet_slopes.pdf  used on input line 218.
+Package pdftex.def Info: figures/fig2_jet_slopes.pdf  used on input line 231.
 (pdftex.def)             Requested size: 510.0pt x 228.24976pt.
-<figures/fig3_optical_realizations.pdf, id=24, 557.22859pt x 193.77216pt>
+<figures/fig3_optical_realizations.pdf, id=52, 506.15102pt x 192.8625pt>
 File: figures/fig3_optical_realizations.pdf Graphic file (type pdf)
 <use figures/fig3_optical_realizations.pdf>
 Package pdftex.def Info: figures/fig3_optical_realizations.pdf  used on input l
-ine 255.
-(pdftex.def)             Requested size: 510.0pt x 177.35004pt.
-
-Underfull \hbox (badness 1122) in paragraph at lines 272--288
-[]\OT1/cmr/m/n/10 A pre-reg-is-tered thin-screen ex-per-i-ment on a true
- []
-
-[2] [3 <./figures/fig1_hero.pdf>] [4 <./figures/fig2_jet_slopes.pdf> <./figures
-/fig3_optical_realizations.pdf>] [5]
+ine 271.
+(pdftex.def)             Requested size: 510.0pt x 194.33636pt.
+ [3] [4 <./figures/fig2_jet_slopes.pdf> <./figures/fig3_optical_realizations.pd
+f>] [5]
 No file main.bbl.
 [6] (./main.aux)
  ***********
@@ -320,39 +316,40 @@ L3 programming layer <2024-02-20>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 4789 strings out of 476023
- 67794 string characters out of 5790298
- 1954190 words of memory out of 5000000
- 26869 multiletter control sequences out of 15000+600000
+ 4788 strings out of 476023
+ 67783 string characters out of 5790298
+ 1953190 words of memory out of 5000000
+ 26868 multiletter control sequences out of 15000+600000
  568769 words of font info for 75 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 57i,8n,65p,1028b,385s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 57i,8n,65p,1098b,385s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx
 12.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm
 /cmbx9.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmmi10.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/am
-sfonts/cm/cmmi6.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/publi
-c/amsfonts/cm/cmmi7.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/p
-ublic/amsfonts/cm/cmmi9.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/typ
-e1/public/amsfonts/cm/cmr10.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts
-/type1/public/amsfonts/cm/cmr5.pfb><d:/Program Files/texlive/2024/texmf-dist/fo
-nts/type1/public/amsfonts/cm/cmr6.pfb><d:/Program Files/texlive/2024/texmf-dist
-/fonts/type1/public/amsfonts/cm/cmr7.pfb><d:/Program Files/texlive/2024/texmf-d
-ist/fonts/type1/public/amsfonts/cm/cmr9.pfb><d:/Program Files/texlive/2024/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><d:/Program Files/texlive/2024
-/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb><d:/Program Files/texlive/
-2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb><d:/Program Files/texl
-ive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb><d:/Program Files/
-texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb><d:/Program Fi
-les/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb><d:/Progr
-am Files/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb><d:/P
-rogram Files/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10
-.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symb
-ols/msbm10.pfb>
-Output written on main.pdf (6 pages, 375237 bytes).
+s/cm/cmex10.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmmi10.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/publ
+ic/amsfonts/cm/cmmi6.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/
+public/amsfonts/cm/cmmi7.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/ty
+pe1/public/amsfonts/cm/cmmi9.pfb><d:/Program Files/texlive/2024/texmf-dist/font
+s/type1/public/amsfonts/cm/cmr10.pfb><d:/Program Files/texlive/2024/texmf-dist/
+fonts/type1/public/amsfonts/cm/cmr5.pfb><d:/Program Files/texlive/2024/texmf-di
+st/fonts/type1/public/amsfonts/cm/cmr6.pfb><d:/Program Files/texlive/2024/texmf
+-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb><d:/Program Files/texlive/2024/te
+xmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb><d:/Program Files/texlive/2024
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><d:/Program Files/texlive
+/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb><d:/Program Files/tex
+live/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb><d:/Program Files
+/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb><d:/Program F
+iles/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb><d:/Progr
+am Files/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb><d:/
+Program Files/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb>
+<d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/m
+sam10.pfb><d:/Program Files/texlive/2024/texmf-dist/fonts/type1/public/amsfonts
+/symbols/msbm10.pfb>
+Output written on main.pdf (6 pages, 385794 bytes).
 PDF statistics:
- 209 PDF objects out of 1000 (max. 8388607)
- 119 compressed objects within 2 object streams
+ 214 PDF objects out of 1000 (max. 8388607)
+ 122 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  16 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -69,7 +69,7 @@ axM.set_ylabel(r"profiled Chernoff distance  $C_*(\varepsilon;\delta)$")
 axM.set_xlim(4e-4, 0.20)
 axM.set_ylim(3e-15, 6e-3)
 # slope labels (axes-fraction placement to avoid data-range errors)
-axM.text(0.545, 0.80, r"slope $2.04$", color=C_GENERIC, fontsize=7.4, rotation=21,
+axM.text(0.545, 0.80, r"slope $2.038$", color=C_GENERIC, fontsize=7.4, rotation=21,
          transform=axM.transAxes, ha="left", va="bottom")
 axM.text(0.30, 0.235, r"slope $4.00$", color=C_ORTHO, fontsize=7.4, rotation=37,
          transform=axM.transAxes, ha="left", va="bottom")

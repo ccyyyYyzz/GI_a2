@@ -96,8 +96,8 @@ ax.text(XR, Y["rank"] - 0.070, r"rank $1$  ($Gx$)", ha="center", va="top",
 ax.text(XR, Y["rank"] - 0.115, f"{rank1_pct:.2f}% energy in one mode",
         ha="center", va="top", fontsize=6.6, color="0.45")
 
-# ================= ROW 3 : quotient jet order (SURVIVES) =================
-lane_label(Y["jet"], "local change\nquotient jet order")
+# ================= ROW 3 : local change order m (SURVIVES) =================
+lane_label(Y["jet"], "local change\norder $m$")
 
 def slope_glyph(cx, cy, boxed=False):
     w, h = 0.058, 0.058
@@ -131,11 +131,14 @@ cx = bx0 + 0.014
 ax.text(bx0 + bw / 2, by0 + bh - 0.030, "complete-scrambling law",
         ha="center", va="center", fontsize=7.4, fontweight="bold", color=OI["blue"])
 ax.plot([cx, bx0 + bw - 0.014], [by0 + bh - 0.058] * 2, color=OI["blue"], lw=1.0, alpha=0.6)
-ax.text(cx, by0 + bh - 0.10, r"$\mathrm{Cov}(b)=Q(x)\,(O\!\circ\!O)+R$",
+ax.text(cx, by0 + bh - 0.090, r"$\mathrm{Cov}(b)=Q(x)\,(O\!\circ\!O)+R$",
         ha="left", va="center", fontsize=7.6)
-ax.text(cx, by0 + bh - 0.155, r"$Q(x)=x^{\top} G\, x,\quad G>0$",
+ax.text(cx, by0 + bh - 0.125,
+        r"$O\!\circ\!O$: code overlaps;  $R$: noise floor",
+        ha="left", va="center", fontsize=6.0, color="0.4")
+ax.text(cx, by0 + bh - 0.163, r"$Q(x)=x^{\top} G\, x,\quad G>0$",
         ha="left", va="center", fontsize=7.6)
-ax.plot([cx, bx0 + bw - 0.014], [by0 + bh - 0.195] * 2, color="0.7", lw=0.6)
+ax.plot([cx, bx0 + bw - 0.014], [by0 + bh - 0.200] * 2, color="0.7", lw=0.6)
 ax.text(cx, by0 + bh - 0.235, "two directional classes:", ha="left", va="center",
         fontsize=6.6, style="italic", color="0.3")
 ax.text(cx, by0 + bh - 0.295, r"$x^{\top}\!G\delta\neq0\;\Rightarrow\; m{=}1$",
@@ -169,7 +172,7 @@ ax.add_patch(FancyBboxPatch((0.02, 0.02), 0.96, 0.072, boxstyle="round,pad=0.006
              facecolor=OI["blue"], alpha=0.08, edgecolor=OI["blue"], lw=0.9))
 ax.text(0.5, 0.056,
         r"Strong disorder erases $\mathbf{coordinates}$ (support $\to\{0\}$, rank $\to 1$) "
-        r"but not $\mathbf{local\ change\ observability}$: the quotient jet order stays finite.",
+        r"but not $\mathbf{local\ change\ observability}$: the local change order $m$ stays finite.",
         ha="center", va="center", fontsize=7.4, color="0.1")
 
 save(fig, os.path.join(HERE, "fig1_hero"))
