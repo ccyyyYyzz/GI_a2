@@ -73,11 +73,14 @@
     \begin{center}
     \begin{minipage}{0.92\textwidth}
       \noindent\small\textbf{Abstract.} A symmetry of an optical measurement law
-      makes a scene subspace exactly invisible; we turn that blindness into a
-      calibrated, certifiable design variable. A physics mapping assigns each optical
-      symmetry class its wall type---a support wall and a lossless-bucket energy wall,
-      both realized to machine precision (leaks near $10^{-16}$)---with the one
-      controlled breaker that reopens it. A measured certification apparatus turns
+      makes a scene subspace exactly invisible under an idealized band-limited model;
+      on an unfiltered bench that wall becomes a calibrated $\sim\!7\times10^{-3}$
+      residual, suppressed by near-conjugate relay imaging
+      (Section~\ref{sec:transfer}). We turn that blindness into a calibrated,
+      certifiable design variable. A physics mapping assigns each optical symmetry
+      class its wall type---a support wall and a lossless-bucket energy wall, exact to
+      machine precision in the model (leaks near $10^{-16}$)---with the one controlled
+      breaker that reopens it. A measured certification apparatus turns
       ``cannot see'' into a singular spectrum $\bd_d=\sigma_d$: $80$ code dimensions
       are certified blind at a fixed plane, and a frozen scaling gate confirms a
       $1:\sqrt{p}:p$ certifiability ladder for known, blind, and estimated change in a
@@ -206,7 +209,10 @@ measurement law inherits which scene symmetry---and its two machine-precision
 realizations. Indeed, the honest content of Theorem~\ref{thm:noether} is that a
 symmetry of the \emph{wave equation} does not by itself create a wall; a wall appears
 only when the \emph{full measurement law} inherits the induced parameter action. Two
-walls of distinct physical type realize it exactly.
+walls of distinct physical type realize it exactly \emph{in this idealized
+band-limited model}; on an unfiltered bench each becomes the calibrated
+$\sim\!7\times10^{-3}$ residual of Section~\ref{sec:transfer}, suppressed by
+near-conjugate relay imaging.
 
 \paragraph{Support (field) wall.}
 For a bandlimited mean operator $A$, every $h\in\ker A$ generates a translation
@@ -220,9 +226,13 @@ ideal periodic-code detector wall is $2.07\times10^{-15}$ for $k>k_p$.
 A lossless full-aperture bucket measures only the Hilbert-space norm
 $B(E)=\lVert E\rVert_2^2$, so $B(UE)=B(E)$ for every unitary spatial transformation
 $U$. A phase-only object change is one orbit of this wall; the measured null is
-$2.18\times10^{-16}$ at every order and for every $(\eps,z_2)$. This is the
-diagonal subgroup of a much larger \emph{mode-unitary} wall: the energy bucket is
-blind not only to phase screens but to any unitary spatial-mode transformation.
+$2.18\times10^{-16}$ at every order and for every $(\eps,z_2)$---the phase-only
+diagonal subgroup, the only orbit measured here. Within the model assumptions the
+energy bucket is blind to any unitary spatial-mode transformation; the larger
+\emph{mode-unitary} wall and its parity, global-phase, and polarization-$SU(2)$
+siblings (Supplement~S1, Table~S1) are corollaries of Theorem~\ref{thm:noether} that
+we present as falsifiable predictions of the framework, measured here only for the
+phase-only subgroup.
 
 \paragraph{The two controlled breakers.}
 Each wall has exactly one designed breaker. NA clipping replaces the identity

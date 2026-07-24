@@ -121,6 +121,27 @@ DERIVED STATISTICS), `BUILD_STATUS.md`, `figures/fig1_hero.py` (+regenerated pdf
 NOT touched: `paper_prl/`, `results/`, `docs/`, `figures/_frozen_sources/`, the two review reports,
 the adjudication.
 
+### Phase 3b — M6/M7 supplementary adjudication (@`211cdce`) — COMPLETE
+
+M6 and M7 were flagged (not improvised) in Phase 3 and are now ruled ACCEPTED. No new numbers.
+
+- **M6 (exactness scope):** the abstract's "exactly invisible" now reads "exact under an idealized
+  band-limited model; on an unfiltered bench that wall becomes a calibrated $\sim$7e-3 residual,
+  suppressed by near-conjugate relay imaging (§transfer)"; the §walls sentence "Two walls\dots
+  realize it exactly" gets the same model-vs-bench scope pointing to §transfer. Fig 1 "machine zero"
+  left as-is (it correctly labels the numerical-model result).
+- **M7 (wall-table honesty):** supplement Table S1 gains a **Status** column — `measured` for the
+  support wall (6.6e-16) and the phase-only diagonal subgroup (2.18e-16), `predicted (corollary,
+  unmeasured)` for mode-unitary, global-phase, parity, and polarization-$SU(2)$; caption reframed to
+  "falsifiable predictions, not confirmed walls". The §walls universal ("blind to any unitary
+  spatial-mode transformation") is scoped to: proved within the model assumptions, measured only for
+  the phase-only subgroup, the remaining rows presented as falsifiable predictions.
+
+**Recompile (pdflatex, 2×):** `main.pdf` **7 pp**, `supplement.pdf` **6 pp** — 0 undefined refs,
+0 missing citations, 0 overfull hbox. The new 5-column Table S1 fits with no overflow.
+**Files edited:** `main.tex`, `supplement.tex`, `BUILD_STATUS.md` (+ recompiled `main.pdf`,
+`supplement.pdf`).
+
 ---
 
 ## Frozen source provenance (see CLAIM_SOURCE_MATRIX.md for the full map)
