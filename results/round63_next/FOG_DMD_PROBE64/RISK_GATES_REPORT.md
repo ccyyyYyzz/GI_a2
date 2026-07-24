@@ -1,3 +1,8 @@
+> ⚠️ **P1 CRB/f_rec numbers below are shot-bug affected — see `CORRECTION_NOTE.md`.** The P1 section
+> quotes the buggy CRB (witness f_rec 0.05 → corrected 0.033; nat NRMSE 0.312 → corrected 0.443,
+> now also failing). **Verdicts are UNCHANGED and hardened** (P1_FAIL; G1/G2/G3 gates used the
+> empirical model and are unaffected). Quote corrected numbers from `P1_results_CORRECTED.json`.
+
 # Beyond-Modulator-Band Direction — RISK GATES + P1 FISHER PROGNOSIS
 
 **Date:** 2026-07-24 · **Status:** DEV-GRADE gates + prelaunch Fisher kill. No git commit.

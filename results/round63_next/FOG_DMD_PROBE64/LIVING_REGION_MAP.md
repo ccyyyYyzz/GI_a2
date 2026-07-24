@@ -1,3 +1,8 @@
+> 🛑 **SUPERSEDED — do not quote these numbers.** The CRB/f_rec here use a buggy shot term
+> (`clamp(Px)` on zero-mean signed codes ≈ 0 → Fisher inflated ~1.9×; see `CORRECTION_NOTE.md`).
+> Use **`LIVING_REGION_MAP_CORRECTED.md`**. Verdict (REGION_EMPTY) is unchanged and hardened.
+> Kept in place for provenance only.
+
 # LIVING-REGION MAP — where (if anywhere) is the beyond-band method P1-viable?
 
 **Date:** 2026-07-24 · **Engine:** `living_region_map.py` (reuses the P1 exact profiled-Fisher
