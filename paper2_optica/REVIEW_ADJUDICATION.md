@@ -83,3 +83,26 @@ One fix wave implements everything above except the queued TLSG bootstrap.
 Recompile both PDFs to zero-warning standard; update CLAIM_SOURCE_MATRIX.md
 (derived-statistics rows) and BUILD_STATUS.md (phase log). The two review
 reports are evidence — they are NOT edited in response.
+
+## Supplementary rulings (post fix-wave; M6/M7 were omitted from the first
+pass — the implementer correctly refused to improvise and flagged them)
+
+**M6 ("exactly invisible" in abstract vs 6.94e-3 bench residual) — ACCEPTED.**
+The theorem is exact; the offered physical realization is not, and the reader
+must not travel four sections to learn that. FIX: the abstract's exactness
+language gets the referee's scoping ("exact under the idealized band-limited
+model; on an unfiltered bench the wall becomes a calibrated ~7e-3 residual,
+suppressed by near-conjugate relay imaging (§5)"); wherever §1 lets "exact"
+refer to the physical instrument rather than the model, add the same scope.
+Fig 1's "machine zero" stays — it correctly describes the numerical-model
+result it labels.
+
+**M7 (four unmeasured wall-table rows presented as established) — ACCEPTED,
+with a reframe that strengthens the paper.** Table S1 gains an explicit STATUS
+column: "measured" (phase-only diagonal subgroup, null 2.18e-16; support wall
+6.6e-16) vs "predicted (theoretical corollary, unmeasured)" for mode-unitary,
+parity, global-phase, polarization-SU(2). The §1 universal ("blind to any
+unitary spatial-mode transformation") is scoped: proved within the model
+assumptions, measured only for the phase-only subgroup; the remaining rows are
+stated as falsifiable predictions of the framework — which is what they are,
+and a referee-friendly asset when labeled honestly.
