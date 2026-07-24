@@ -1,0 +1,101 @@
+{
+  "test": "QUAD_COMPUTER_TEST",
+  "ref": "R46 sec 4.2-4.3 (Law-Only Quadratic Computer); kill sec 6.4",
+  "frozen": {
+    "d": 24,
+    "L": [
+      1,
+      4,
+      16,
+      64,
+      256,
+      1024
+    ],
+    "n_class": 3000,
+    "L_ident": 100000,
+    "slope_band": [
+      -0.6,
+      -0.4
+    ],
+    "acc_solve": 0.85,
+    "acc_linear_max": 0.62,
+    "collapse_kill": 0.25,
+    "smoke": false
+  },
+  "BAR1_kernel_identity": {
+    "L": 100000,
+    "npairs": 40,
+    "median_diagonal_rel_err": 0.008460201425650907,
+    "frobenius_rel_err": 0.0216,
+    "diag_emp_over_true": 1.0013280677448209,
+    "bar": "median diagonal relative error < 0.05 (Isserlis identity, classical)",
+    "verdict": "PASS"
+  },
+  "BAR2_L_half_convergence": {
+    "L": [
+      1,
+      4,
+      16,
+      64,
+      256,
+      1024,
+      4096
+    ],
+    "gram_rel_error": [
+      4.22319,
+      3.61969,
+      1.55552,
+      0.80358,
+      0.3972,
+      0.19526,
+      0.09712
+    ],
+    "fitted_loglog_slope": -0.477,
+    "theory": -0.5,
+    "bar": "slope in [-0.60,-0.40]",
+    "verdict": "PASS"
+  },
+  "BAR3_quadratic_task": {
+    "L_features": 500,
+    "acc_law_only_random": 0.903,
+    "acc_digital_RF": 0.903,
+    "acc_camera_speckle": 0.903,
+    "acc_best_linear": 0.495,
+    "acc_linear_x": 0.487,
+    "acc_linear_mean": 0.495,
+    "bar": "law-only & digital acc>0.85 ; best linear<0.62 ; |law-digital|<0.05",
+    "solve_ok": true,
+    "linear_fails": true,
+    "matched": true,
+    "verdict": "PASS"
+  },
+  "BAR4_admissible_cone_KILL": {
+    "L_kernels": 2000,
+    "full_quadratic_dim": 300,
+    "random_rank1_cone_rank": 300,
+    "circulant_cone_rank": 13,
+    "collapse_ratio": 0.0433,
+    "circulant_PR": 4.4,
+    "acc_admissible_generic_quadratic": 0.549,
+    "acc_admissible_powerspectrum_task": 0.955,
+    "acc_law_only_random_generic": 0.903,
+    "banks_needed_to_span_cone": 300,
+    "bar": "general claim KILLED if collapse_ratio<0.25 AND admissible fails generic quadratic (<0.62); survives only as power-spectrum computing",
+    "cone_collapses": true,
+    "admissible_fails_generic_task": true,
+    "general_claim_killed": true,
+    "verdict": "KILL_GENERAL"
+  },
+  "verdict": {
+    "per_bar": {
+      "BAR1_kernel_identity": "PASS",
+      "BAR2_L_half_convergence": "PASS",
+      "BAR3_quadratic_task": "PASS",
+      "BAR4_admissible_cone_KILL": "KILL_GENERAL"
+    },
+    "idealized_bars_pass": true,
+    "overall": "KILL_GENERAL_CLAIM",
+    "interpretation": "The idealized random-law quadratic kernel is exact (classical Gaussian moment algebra) and solves quadratic tasks a linear statistic cannot -- but physically admissible circulant/Toeplitz grain kernels collapse the feature cone from d(d+1)/2 to ~d (power-spectrum only) and cannot compute a generic quadratic boundary.  Per R46 6.4 the GENERAL law-only quadratic-computer flagship is KILLED; it survives only as a power-spectrum feature machine, and spanning the full cone would need ~d(d+1)/2 independent banks (cost overwhelms advantage)."
+  },
+  "runtime_sec": 1.4
+}
