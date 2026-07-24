@@ -1,0 +1,229 @@
+{
+  "test": "COHERENCE_CROSSOVER",
+  "label": "R45-NAMED GATE for the memory-effect line (the GATE, not the campaign)",
+  "ref": "R45 sec B5 (Ore vein 5) + Rank-5 kill test",
+  "frozen": {
+    "pass_tol": 0.25,
+    "smoke": false,
+    "bar": "crossover-fitted sqrt(q) within 25% of independent KT4 R"
+  },
+  "config_A_named_gate_reference": {
+    "config": "A_ref_highR",
+    "z2_mm": 5.0,
+    "l_c_um": 50.0,
+    "sigma_phi": 6.283,
+    "illum_frac": 1.0,
+    "n_bank": 300,
+    "scene_dim": 1681,
+    "M_sweep": [
+      8,
+      16,
+      32,
+      64,
+      96,
+      128,
+      192
+    ],
+    "cells": [
+      {
+        "M": 8,
+        "p_codepairs": 36.0,
+        "r_eff_PR": 34.26,
+        "r_eff_count": 36
+      },
+      {
+        "M": 16,
+        "p_codepairs": 136.0,
+        "r_eff_PR": 122.44,
+        "r_eff_count": 136
+      },
+      {
+        "M": 32,
+        "p_codepairs": 528.0,
+        "r_eff_PR": 404.85,
+        "r_eff_count": 528
+      },
+      {
+        "M": 64,
+        "p_codepairs": 2080.0,
+        "r_eff_PR": 924.52,
+        "r_eff_count": 1681
+      },
+      {
+        "M": 96,
+        "p_codepairs": 4656.0,
+        "r_eff_PR": 1077.28,
+        "r_eff_count": 1681
+      },
+      {
+        "M": 128,
+        "p_codepairs": 8256.0,
+        "r_eff_PR": 1135.45,
+        "r_eff_count": 1681
+      },
+      {
+        "M": 192,
+        "p_codepairs": 18528.0,
+        "r_eff_PR": 1189.49,
+        "r_eff_count": 1681
+      }
+    ],
+    "R_KT4_PR": 123.3,
+    "R_KT4_count": 256,
+    "q_fit": 1339.9,
+    "R_fit_sqrt_q": 36.61,
+    "M_star_pred": 51.8,
+    "local_slopes": {
+      "16": 1.837,
+      "32": 1.725,
+      "64": 1.191,
+      "96": 0.377,
+      "128": 0.183,
+      "192": 0.115
+    },
+    "pre_crossover_slope": 1.781,
+    "post_crossover_slope": 0.149,
+    "rel_err_Rfit_vs_KT4": 0.703
+  },
+  "config_B_reduced_R": {
+    "config": "B_reduced_R",
+    "z2_mm": 2.0,
+    "l_c_um": 250.0,
+    "sigma_phi": 0.6,
+    "illum_frac": 1.0,
+    "n_bank": 800,
+    "scene_dim": 1681,
+    "M_sweep": [
+      4,
+      8,
+      12,
+      16,
+      24,
+      32,
+      48,
+      64,
+      96
+    ],
+    "cells": [
+      {
+        "M": 4,
+        "p_codepairs": 10.0,
+        "r_eff_PR": 9.33,
+        "r_eff_count": 10
+      },
+      {
+        "M": 8,
+        "p_codepairs": 36.0,
+        "r_eff_PR": 30.67,
+        "r_eff_count": 36
+      },
+      {
+        "M": 12,
+        "p_codepairs": 78.0,
+        "r_eff_PR": 62.63,
+        "r_eff_count": 78
+      },
+      {
+        "M": 16,
+        "p_codepairs": 136.0,
+        "r_eff_PR": 100.08,
+        "r_eff_count": 136
+      },
+      {
+        "M": 24,
+        "p_codepairs": 300.0,
+        "r_eff_PR": 172.02,
+        "r_eff_count": 300
+      },
+      {
+        "M": 32,
+        "p_codepairs": 528.0,
+        "r_eff_PR": 219.53,
+        "r_eff_count": 528
+      },
+      {
+        "M": 48,
+        "p_codepairs": 1176.0,
+        "r_eff_PR": 257.15,
+        "r_eff_count": 720
+      },
+      {
+        "M": 64,
+        "p_codepairs": 2080.0,
+        "r_eff_PR": 277.25,
+        "r_eff_count": 779
+      },
+      {
+        "M": 96,
+        "p_codepairs": 4656.0,
+        "r_eff_PR": 288.95,
+        "r_eff_count": 816
+      }
+    ],
+    "R_KT4_PR": 18.9,
+    "R_KT4_count": 89,
+    "q_fit": 323.5,
+    "R_fit_sqrt_q": 17.99,
+    "M_star_pred": 25.4,
+    "local_slopes": {
+      "8": 1.717,
+      "12": 1.761,
+      "16": 1.629,
+      "24": 1.336,
+      "32": 0.848,
+      "48": 0.39,
+      "64": 0.262,
+      "96": 0.102
+    },
+    "pre_crossover_slope": 1.611,
+    "post_crossover_slope": 0.182,
+    "rel_err_Rfit_vs_KT4": 0.048
+  },
+  "config_B_calibration": [
+    {
+      "z2mm": 2.0,
+      "l_c": 250.0,
+      "sigma_phi": 0.6,
+      "illum": 1.0,
+      "R": 18.9
+    },
+    {
+      "z2mm": 2.0,
+      "l_c": 400.0,
+      "sigma_phi": 0.5,
+      "illum": 0.5,
+      "R": 2.52
+    },
+    {
+      "z2mm": 1.0,
+      "l_c": 300.0,
+      "sigma_phi": 0.4,
+      "illum": 0.6,
+      "R": 4.18
+    },
+    {
+      "z2mm": 2.0,
+      "l_c": 200.0,
+      "sigma_phi": 0.8,
+      "illum": 0.7,
+      "R": 9.99
+    }
+  ],
+  "verdict": {
+    "decisive_config": "B_reduced_R",
+    "R_KT4": 18.9,
+    "R_fit_sqrt_q": 17.99,
+    "rel_err": 0.048,
+    "pre_crossover_slope": 1.611,
+    "post_crossover_slope": 0.182,
+    "primary_bar": "|sqrt(q_fit)-R_KT4|/R_KT4 < 0.25",
+    "primary_pass": true,
+    "corroborating": {
+      "pre_slope_near_2": false,
+      "post_slope_below_0p8": true
+    },
+    "overall": "PASS",
+    "interpretation": "Coherence-rank spectroscopy VALIDATED: the code-count crossover recovers the independent field coherence rank within 25%% -- the memory-effect line's named gate opens."
+  },
+  "runtime_sec": 861.5
+}

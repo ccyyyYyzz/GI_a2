@@ -1,0 +1,26 @@
+[COHERENCE_CROSSOVER] device=cuda
+ config A (named-gate reference, high-R): z2=5mm l_c=50 developed
+   [A_ref_highR M=  8] p=36  r_eff=34.3 (cnt 36)  [364s]
+   [A_ref_highR M= 16] p=136  r_eff=122.4 (cnt 136)  [364s]
+   [A_ref_highR M= 32] p=528  r_eff=404.9 (cnt 528)  [364s]
+   [A_ref_highR M= 64] p=2080  r_eff=924.5 (cnt 1681)  [364s]
+   [A_ref_highR M= 96] p=4656  r_eff=1077.3 (cnt 1681)  [365s]
+   [A_ref_highR M=128] p=8256  r_eff=1135.5 (cnt 1681)  [365s]
+   [A_ref_highR M=192] p=18528  r_eff=1189.5 (cnt 1681)  [366s]
+ config B: calibrating reduced-R geometry (target R~30)
+   [calib] z2=2.0 l_c=250 sig=0.60 illum=1.00 -> R=18.9 [369s]
+   [calib] z2=2.0 l_c=400 sig=0.50 illum=0.50 -> R=2.5 [372s]
+   [calib] z2=1.0 l_c=300 sig=0.40 illum=0.60 -> R=4.2 [375s]
+   [calib] z2=2.0 l_c=200 sig=0.80 illum=0.70 -> R=10.0 [378s]
+ config B chosen: z2=2.0 l_c=250 sig=0.60 illum=1.00 (R~18.9)
+   [B_reduced_R M=  4] p=10  r_eff=9.3 (cnt 10)  [859s]
+   [B_reduced_R M=  8] p=36  r_eff=30.7 (cnt 36)  [859s]
+   [B_reduced_R M= 12] p=78  r_eff=62.6 (cnt 78)  [859s]
+   [B_reduced_R M= 16] p=136  r_eff=100.1 (cnt 136)  [859s]
+   [B_reduced_R M= 24] p=300  r_eff=172.0 (cnt 300)  [860s]
+   [B_reduced_R M= 32] p=528  r_eff=219.5 (cnt 528)  [860s]
+   [B_reduced_R M= 48] p=1176  r_eff=257.2 (cnt 720)  [860s]
+   [B_reduced_R M= 64] p=2080  r_eff=277.3 (cnt 779)  [861s]
+   [B_reduced_R M= 96] p=4656  r_eff=288.9 (cnt 816)  [862s]
+[COHERENCE_CROSSOVER done 861.5s] overall=PASS
+  config B: R_KT4=18.9  R_fit=sqrt(q)=18.0  rel_err=0.048 (bar<0.25)  pre/post slope=1.611/0.182
