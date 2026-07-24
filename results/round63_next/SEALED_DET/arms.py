@@ -76,6 +76,79 @@ def fresh_cov_fisher(cell_geo, c_unit, n_code_draws=8, x_np=None):
 
 _UC_CODE = torch.tensor(sc.band_modes(1, sc.KP), device=DEV, dtype=DT)   # fixed signed-code Fourier basis
 _D_UC = _UC_CODE.shape[1]
+_U_IN = torch.tensor(sc.U_in_np, device=DEV, dtype=DT)                    # in-band nuisance modes (N,121)
+
+
+def fresh_cov_mc_production(cell_geo, c_unit, eps, T_eff, n_rec, rng0, x_np=None, chunk=8):
+    """PRODUCTION FRESH-COV-OPT (R41 §4.5): fresh code each bank + FULL per-bank nuisance profiling
+    (in-band scene 121 modes + medium amplitude + the exact mean channel) -> the efficient score whose
+    per-bank Fisher is J_B(P_t). The deployable production form (not the dry-run's amplitude-only
+    shortcut). Fully on GPU, chunked over banks. Returns MC d'/AUC (fixed-vs-fresh D4 endpoint)."""
+    gen = torch.Generator(device=DEV); gen.manual_seed(int(rng0))
+    x = torch.tensor(sc.XW_np if x_np is None else np.asarray(x_np, float), device=DEV, dtype=DT)
+    Phi_b = torch.tensor(sc.BETA_np[cell_geo["claim"]], device=DEV, dtype=DT)
+    xn = float(torch.linalg.norm(x).item())
+    c = torch.tensor(c_unit, device=DEV, dtype=DT) * eps * xn
+    delta_px = Phi_b @ c
+    Um_np, kabs = sc.medium_modes(cell_geo["kwf"] * sc.KP)
+    Um = torch.tensor(Um_np, device=DEV, dtype=DT)
+    S = torch.tensor(sc.power_spectrum(kabs, cell_geo["shape"], sc.SIG_EFF[cell_geo["sf"]]),
+                     device=DEV, dtype=DT)
+    dm = Um.shape[1]
+    var_n = (S[None, :] * (Um ** 2)).sum(dim=1)
+    eyeM = torch.eye(M, device=DEV, dtype=DT)
+    d_in = _U_IN.shape[1]
+
+    def one_stream(xh, seed):
+        g = torch.Generator(device=DEV); g.manual_seed(int(seed))
+        total = torch.zeros((), device=DEV, dtype=DT)
+        done = 0
+        while done < T_eff:
+            nb = min(chunk, T_eff - done)
+            P = _fresh_codes(nb, g)                                     # (nb,M,N)
+            Pabs = P.abs()
+            Z = torch.sqrt(S)[None, :] * torch.randn(nb, dm, device=DEV, dtype=DT, generator=g)
+            w = torch.exp(Z @ Um.t() - 0.5 * var_n[None, :])
+            wxh = w * xh[None, :]
+            mu = torch.einsum("bmn,bn->bm", P, wxh)
+            flux = torch.einsum("bmn,n->bm", Pabs, x)
+            Rvar = flux * (flux.mean(dim=1, keepdim=True) / sc.PHOT)
+            shot = torch.randn(nb, M, device=DEV, dtype=DT, generator=g) * torch.sqrt(Rvar)
+            b = mu + shot
+            r = b - torch.einsum("bmn,n->bm", P, x)
+            A = P * x[None, None, :]                                    # (nb,M,N)
+            KA = torch.einsum("nk,bkm->bnm", Um, S[:, None] * torch.einsum("kn,bmn->bkm", Um.t(), A))
+            C = torch.einsum("bmn,bnl->bml", A, KA)                     # (nb,M,M)
+            V = C + torch.diag_embed(Rvar)
+            Vinv = torch.linalg.inv(V + 1e-9 * eyeM[None])
+            # beyond-band derivative along c
+            Bkb = torch.einsum("bmn,bnl->bml", (P * delta_px[None, None, :]), KA)
+            dVb = Bkb + Bkb.transpose(1, 2)                            # (nb,M,M)
+            # in-band derivative stack built ONE mode at a time (avoids the (nb,121,M,N) blow-up):
+            # dV_in,k = (P diag(U_in_k)) KA + transpose
+            dV_eta = torch.empty(nb, d_in + 1, M, M, device=DEV, dtype=DT)
+            for k in range(d_in):
+                Bk = torch.einsum("bmn,bnl->bml", P * _U_IN[:, k][None, None, :], KA)
+                dV_eta[:, k] = Bk + Bk.transpose(1, 2)
+            dV_eta[:, d_in] = C                                       # amplitude direction = C
+            Ge = torch.einsum("bij,bajk->baik", Vinv, dV_eta)         # (nb,122,M,M)
+            Gb = torch.einsum("bij,bjk->bik", Vinv, dVb)
+            Ibe = 0.5 * torch.einsum("bij,bkji->bk", Gb, Ge)          # (nb,122)
+            Iee = 0.5 * torch.einsum("bkij,blji->bkl", Ge, Ge)       # (nb,122,122)
+            Min = torch.einsum("bmn,nk->bmk", P, _U_IN)               # (nb,M,121) mean channel
+            Iee[:, :d_in, :d_in] = Iee[:, :d_in, :d_in] + torch.einsum(
+                "bmk,bmj,bjl->bkl", Min, Vinv, Min)
+            a_eta = -torch.linalg.solve(Iee + 1e-10 * torch.eye(122, device=DEV, dtype=DT)[None], Ibe)
+            dV_eff = dVb + torch.einsum("bk,bkij->bij", a_eta, dV_eta)
+            W = torch.einsum("bml,blk,bkr->bmr", Vinv, dV_eff, Vinv)
+            obs = torch.einsum("bm,bn->bmn", r, r) - V
+            total = total + torch.einsum("bmn,bmn->", obs, W)
+            done += nb
+        return float(total.item())
+
+    t0 = np.array([one_stream(x, int(1e6) + 2 * s) for s in range(n_rec)])
+    t1 = np.array([one_stream(x + delta_px, int(3e6) + 2 * s) for s in range(n_rec)])
+    return _dp_auc(t0, t1)
 
 
 def _fresh_codes(n_banks, gen):

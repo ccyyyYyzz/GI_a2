@@ -334,23 +334,38 @@ def gen_records(cell, n_rec, T_eff, kind="H0", delta_np=None, sf_scale=1.0, tau_
     g = torch.Generator(device=DEV)
     g.manual_seed(int(rng))
 
-    if bank_rho <= 1e-9:
-        # independent banks: fully vectorized, no per-bank loop
-        Z = torch.randn(n_rec, T_eff, dm, device=DEV, dtype=DT, generator=g)
-    else:
-        cf = np.sqrt(1 - bank_rho ** 2)
-        Z = torch.empty(n_rec, T_eff, dm, device=DEV, dtype=DT)
-        Z[:, 0] = torch.randn(n_rec, dm, device=DEV, dtype=DT, generator=g)
-        for t in range(1, T_eff):                 # loops over BANKS only (batched over records)
-            Z[:, t] = bank_rho * Z[:, t - 1] + cf * torch.randn(n_rec, dm, device=DEV, dtype=DT, generator=g)
-    med = (Z * sdS[None, None, :]) @ H.t()        # (n_rec, T_eff, M)
-    shot = torch.randn(n_rec, T_eff, M, device=DEV, dtype=DT, generator=g) * rr[None, None, :]
-    B = mfull[None, None, :] + med + shot
-    Bc = B - B.mean(1, keepdim=True)
-    Scov = torch.einsum("rti,rtj->rij", Bc, Bc) / T_eff
-    Mbar = B.mean(1)
+    # chunk over RECORDS so the peak (chunk, T_eff, max(dm,M)) intermediates fit the 8 GB card
+    # (shared with other jobs). Budget ~0.6 GB of working set per chunk.
+    per_rec_bytes = T_eff * max(dm, M) * 8 * 7
+    rchunk = max(1, min(n_rec, int(0.6e9 / max(per_rec_bytes, 1))))
+    Scov = torch.empty(n_rec, M, M, device=DEV, dtype=DT)
+    Mbar = torch.empty(n_rec, M, device=DEV, dtype=DT)
+    Lag1 = torch.empty(n_rec, M, M, device=DEV, dtype=DT) if want_lag else None
+    cf = np.sqrt(1 - bank_rho ** 2) if bank_rho > 1e-9 else None
+    done = 0
+    while done < n_rec:
+        nb = min(rchunk, n_rec - done)
+        if bank_rho <= 1e-9:
+            Z = torch.randn(nb, T_eff, dm, device=DEV, dtype=DT, generator=g)
+        else:
+            Z = torch.empty(nb, T_eff, dm, device=DEV, dtype=DT)
+            Z[:, 0] = torch.randn(nb, dm, device=DEV, dtype=DT, generator=g)
+            for t in range(1, T_eff):
+                Z[:, t] = bank_rho * Z[:, t - 1] + cf * torch.randn(nb, dm, device=DEV, dtype=DT, generator=g)
+        med = (Z * sdS[None, None, :]) @ H.t()        # (nb, T_eff, M)
+        del Z
+        shot = torch.randn(nb, T_eff, M, device=DEV, dtype=DT, generator=g) * rr[None, None, :]
+        B = mfull[None, None, :] + med + shot
+        del med, shot
+        Bc = B - B.mean(1, keepdim=True)
+        Mbar[done:done + nb] = B.mean(1)
+        del B
+        Scov[done:done + nb] = torch.einsum("rti,rtj->rij", Bc, Bc) / T_eff
+        if want_lag:
+            Lag1[done:done + nb] = torch.einsum("rti,rtj->rij", Bc[:, :-1], Bc[:, 1:]) / (T_eff - 1)
+        del Bc
+        done += nb
     if want_lag:
-        Lag1 = torch.einsum("rti,rtj->rij", Bc[:, :-1], Bc[:, 1:]) / (T_eff - 1)
         return Scov, Mbar, Lag1
     return Scov, Mbar
 

@@ -1,0 +1,30 @@
+=== SEALED CONFIRMATORY RUN (freeze 5910277)  GPU free=6316 MB ===
+loaded+hash-verified: confirmatory 12, specificity 3, mismatch 3
+[GPU gate] free=6323 MB -> proceed: D0
+
+=== D0 (sealed re-verify) ===
+  D0: wall=5.7e-16 two-engine=0.017 shot=0.010 -> PASS
+  [D0: 14.1s]
+[GPU gate] free=5918 MB -> proceed: D1+D2
+
+=== D1 + D2 (primary grid, sealed confirmatory) ===
+  D1/D2 MC over 27 OA cells x eps ...
+Traceback (most recent call last):
+  File "D:\GI_another\results\round63_next\SEALED_DET\run_confirmatory.py", line 448, in <module>
+    main()
+  File "D:\GI_another\results\round63_next\SEALED_DET\run_confirmatory.py", line 416, in main
+    D1, D2 = _timed("D1_D2", lambda: run_D1_D2(conf))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\GI_another\results\round63_next\SEALED_DET\run_confirmatory.py", line 61, in _timed
+    r = fn()
+        ^^^^
+  File "D:\GI_another\results\round63_next\SEALED_DET\run_confirmatory.py", line 416, in <lambda>
+    D1, D2 = _timed("D1_D2", lambda: run_D1_D2(conf))
+                                     ^^^^^^^^^^^^^^^
+  File "D:\GI_another\results\round63_next\SEALED_DET\run_confirmatory.py", line 134, in run_D1_D2
+    Sc0, _ = sc.gen_records(cell, NREC, T_eff, "H0", None, rng=50000 + gi * 13 + int(1e3 * eps))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\GI_another\results\round63_next\SEALED_DET\sealed_common.py", line 346, in gen_records
+    med = (Z * sdS[None, None, :]) @ H.t()        # (n_rec, T_eff, M)
+          ~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~
+torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 1.95 GiB. GPU 0 has a total capacity of 8.00 GiB of which 0 bytes is free. Of the allocated memory 13.64 GiB is allocated by PyTorch, and 48.51 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)

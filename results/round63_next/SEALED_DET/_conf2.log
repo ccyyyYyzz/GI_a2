@@ -1,0 +1,40 @@
+=== SEALED CONFIRMATORY RUN (freeze 5910277)  GPU free=7688 MB ===
+loaded+hash-verified: confirmatory 12, specificity 3, mismatch 3
+[GPU gate] free=7694 MB -> proceed: D0
+
+=== D0 (sealed re-verify) ===
+  D0: wall=5.7e-16 two-engine=0.017 shot=0.010 -> PASS
+  [D0: 14.1s]
+[GPU gate] free=7299 MB -> proceed: D1+D2
+
+=== D1 + D2 (primary grid, sealed confirmatory) ===
+  D1/D2 MC over 27 OA cells x eps ...
+  D1: n=108 median ratio=0.998 [0.909,1.099] -> PASS
+  D2: eps2% analytic 77/81, best T_det=453 banks, MC power LCB=0.990; eps5% 81/81 spread 75/81 worst; eps1% best T_det=1811; eps0.5% max d'=3.76 -> PASS kill=False
+  [D1_D2: 587.1s]
+[GPU gate] free=6771 MB -> proceed: D3
+
+=== D3 (specificity + attribution, sealed) ===
+  D3: TPR=0.988 FA(inband/amp/tau)=0.020/0.096/0.084 bal_acc=0.916 beyond|d'|nontarget=0.02 intended min d'=1.79 -> FAIL kill=False
+  [D3: 10.7s]
+[GPU gate] free=6764 MB -> proceed: D4
+
+=== D4 (fresh-vs-fixed branch, PRODUCTION fresh) ===
+  best: T_mc=453 fixed d'=4.96 fresh(prod) d'=3.34 | lat fix=459 fresh=1013
+  mid: T_mc=600 fixed d'=3.44 fresh(prod) d'=3.17 | lat fix=1271 fresh=1488
+  floor: T_mc=600 fixed d'=3.06 fresh(prod) d'=2.12 | lat fix=1598 fresh=3334
+  D4: median latency ratio fixed/fresh=0.854 -> branch=RETAIN_fixed_concentration
+  [D4: 9324.7s]
+[GPU gate] free=5929 MB -> proceed: D5
+
+=== D5 (mismatch axes, sealed) ===
+  D5: base AUC=1.000; primary axes FAIL @ basis_rotation=0.2
+  [D5: 7.4s]
+
+=== D6 (online feasibility) ===
+  D6: online=0.0203 ms/bank (0.16% of 12.8ms) mem=0.262 MB -> PASS
+  [D6: 0.2s]
+
+=== KILL TREE: node=D5 :: narrow the physical domain or kill robustness wording ===
+bars: D0=PASS, D1=PASS, D2=PASS, D3=FAIL, D4=PASS, D5=FAIL, D6=PASS
+total 2.76 GPU-h (ceiling 6.0)  cost={'D0': 14.1, 'D1_D2': 587.1, 'D3': 10.7, 'D4': 9324.7, 'D5': 7.4, 'D6': 0.2}
