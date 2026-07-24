@@ -1,0 +1,8 @@
+[0s] start cell M=64 p=2080  DEV=cuda N_MC=1000 CHUNK=2 LAM=0.15 SEED=20260724
+[12s] make_cell done B=(2080, 64, 64)
+[12s] Tmax=1600 Tgrid=[4, 5, 8, 13, 19, 29, 43, 65, 97, 145, 217, 323, 482, 719, 1073, 1600]
+[682s] null scores done
+[1517s] alt scores done
+[1554s] Tlam_50_blind=117.94658682363968  Tlam_50_matched=3.0121879285288635
+[1554s] measured local slope vs (64,528)=0.4996  vs (32,528)=0.5208  pred=0.4878
+[1554s] DONE elapsed 1553.9s -> p2080_result.json

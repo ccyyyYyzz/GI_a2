@@ -1,0 +1,337 @@
+{
+  "test": "RANK_LEDGER_TEST",
+  "gate": "CFG-A",
+  "ref": "SYNTHESIS.md rows #4/#1 + GPT R47 ruling Q2.2/Q4.1",
+  "frozen": {
+    "written_before_compute": true,
+    "gate": "CFG-A (Commutant-Fiber Gate) per docs/ROUND63_GPT_ROUND47_RULING_RAW.md Q2.2/Q4.1",
+    "object": "(rho, self-adjoint commutant A_G); rank ledger with distinct rows r_alg/d_base/d_fiber",
+    "formulas": {
+      "r_alg": "(n/2)m^2 + m",
+      "d_base": "nm - n/2 + 1",
+      "d_fiber": "n/2 - 1"
+    },
+    "derivation_agrees_with_GPT_closed_form": true,
+    "predicted": {
+      "Z24_on_R24": {
+        "n": 24,
+        "m": 1,
+        "r_alg": 13,
+        "d_base": 13,
+        "d_fiber": 11
+      },
+      "Z12xI2_on_R24": {
+        "n": 12,
+        "m": 2,
+        "r_alg": 26,
+        "d_base": 19,
+        "d_fiber": 5
+      },
+      "Z8xI3_on_R24": {
+        "n": 8,
+        "m": 3,
+        "r_alg": 39,
+        "d_base": 21,
+        "d_fiber": 3
+      },
+      "free_on_R24": {
+        "n": null,
+        "m": null,
+        "r_alg": 300,
+        "d_base": 24,
+        "d_fiber": 0
+      }
+    },
+    "bars": {
+      "CFG_A_1_r_alg": "13/26/39/300 exact",
+      "CFG_A_2_d_base": "13/19/21/24 exact (rank D Phi_G at generic scene)",
+      "CFG_A_3_d_fiber": "11/5/3/0 exact; constructed phase orbit preserves all responses to floor",
+      "CFG_A_4_transverse": "off-fiber perturbation changes >=1 admissible response",
+      "CFG_A_5_stability": "all integers invariant across SVD-tol interval [1e-06, 1e-07, 1e-08, 1e-09, 1e-10] and seeds [20260724, 11, 2029]",
+      "R2_L_sweep": "independent-reseed accuracy knee at L = r_alg(Z24)=13 (soft companion)"
+    },
+    "L_PROBE": 700,
+    "SV_TOL": 1e-08,
+    "TOL_INTERVAL": [
+      1e-06,
+      1e-07,
+      1e-08,
+      1e-09,
+      1e-10
+    ],
+    "SEEDS": [
+      20260724,
+      11,
+      2029
+    ],
+    "d": 24,
+    "response_floor": 1e-09,
+    "synthesis_reference": {
+      "r_alg": [
+        13,
+        26,
+        39,
+        300
+      ],
+      "d_base": [
+        13,
+        19,
+        21,
+        24
+      ],
+      "d_fiber": [
+        11,
+        5,
+        3,
+        0
+      ]
+    }
+  },
+  "results": {
+    "CFG_A": {
+      "per_family": {
+        "Z24_on_R24": {
+          "predicted": {
+            "n": 24,
+            "m": 1,
+            "r_alg": 13,
+            "d_base": 13,
+            "d_fiber": 11
+          },
+          "r_alg": {
+            "measured": {
+              "20260724": 13,
+              "11": 13,
+              "2029": 13
+            },
+            "tol_stable": true,
+            "exact": true
+          },
+          "d_base": {
+            "measured": {
+              "20260724": 13,
+              "11": 13,
+              "2029": 13
+            },
+            "tol_stable": true,
+            "exact": true
+          },
+          "d_fiber": {
+            "nullity": 11,
+            "constructed_tangent_rank": 11,
+            "max_response_deriv": 1.0577351282875008e-14,
+            "max_response_finite_angle": 7.215557464286826e-15,
+            "exact": true
+          },
+          "transverse": {
+            "max_response_change": 1.2156947785676846,
+            "ok": true
+          }
+        },
+        "Z12xI2_on_R24": {
+          "predicted": {
+            "n": 12,
+            "m": 2,
+            "r_alg": 26,
+            "d_base": 19,
+            "d_fiber": 5
+          },
+          "r_alg": {
+            "measured": {
+              "20260724": 26,
+              "11": 26,
+              "2029": 26
+            },
+            "tol_stable": true,
+            "exact": true
+          },
+          "d_base": {
+            "measured": {
+              "20260724": 19,
+              "11": 19,
+              "2029": 19
+            },
+            "tol_stable": true,
+            "exact": true
+          },
+          "d_fiber": {
+            "nullity": 5,
+            "constructed_tangent_rank": 5,
+            "max_response_deriv": 3.5090128069092186e-15,
+            "max_response_finite_angle": 3.324327922335049e-15,
+            "exact": true
+          },
+          "transverse": {
+            "max_response_change": 1.6401536383959068,
+            "ok": true
+          }
+        },
+        "Z8xI3_on_R24": {
+          "predicted": {
+            "n": 8,
+            "m": 3,
+            "r_alg": 39,
+            "d_base": 21,
+            "d_fiber": 3
+          },
+          "r_alg": {
+            "measured": {
+              "20260724": 39,
+              "11": 39,
+              "2029": 39
+            },
+            "tol_stable": true,
+            "exact": true
+          },
+          "d_base": {
+            "measured": {
+              "20260724": 21,
+              "11": 21,
+              "2029": 21
+            },
+            "tol_stable": true,
+            "exact": true
+          },
+          "d_fiber": {
+            "nullity": 3,
+            "constructed_tangent_rank": 3,
+            "max_response_deriv": 1.5473519529596218e-15,
+            "max_response_finite_angle": 1.9693570310395186e-15,
+            "exact": true
+          },
+          "transverse": {
+            "max_response_change": 1.330576964580104,
+            "ok": true
+          }
+        },
+        "free_on_R24": {
+          "predicted": {
+            "n": null,
+            "m": null,
+            "r_alg": 300,
+            "d_base": 24,
+            "d_fiber": 0
+          },
+          "r_alg": {
+            "measured": {
+              "20260724": 300,
+              "11": 300,
+              "2029": 300
+            },
+            "tol_stable": true,
+            "exact": true
+          },
+          "d_base": {
+            "measured": {
+              "20260724": 24,
+              "11": 24,
+              "2029": 24
+            },
+            "tol_stable": true,
+            "exact": true
+          },
+          "d_fiber": {
+            "nullity": 0,
+            "constructed_tangent_rank": 0,
+            "max_response_deriv": 0.0,
+            "max_response_finite_angle": 0.0,
+            "exact": true
+          },
+          "transverse": {
+            "max_response_change": 1.5720385023338594,
+            "ok": true
+          }
+        }
+      },
+      "item1_r_alg_all_exact": true,
+      "item2_d_base_all_exact": true,
+      "item3_d_fiber_all_exact": true,
+      "item4_transverse_all_ok": true,
+      "item5_stability_all_ok": true,
+      "verdict": "PASS"
+    },
+    "R2_L_sweep_knee": {
+      "L_grid": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "acc_curve": [
+        0.5696666666666667,
+        0.6095416666666668,
+        0.6375000000000001,
+        0.647,
+        0.6979583333333333,
+        0.7284166666666666,
+        0.7820833333333334,
+        0.76925,
+        0.8243333333333335,
+        0.8435,
+        0.8502083333333333,
+        0.8971666666666668,
+        0.9630000000000001,
+        0.963,
+        0.963,
+        0.963,
+        0.963,
+        0.963,
+        0.963,
+        0.963
+      ],
+      "plateau_acc_Lge13": 0.9630000000000001,
+      "knee_L": 13,
+      "predicted_knee": 13,
+      "acc_at_L12": 0.8971666666666668,
+      "acc_at_L13": 0.9630000000000001,
+      "acc_at_L20": 0.963,
+      "verdict": "PASS"
+    },
+    "exploratory_defect_masked_increment": {
+      "n_defects": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "rank": [
+        13,
+        14,
+        15,
+        16,
+        17
+      ],
+      "increment": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "note": "each masked single-site diagonal-gain defect adds +1 admissible dof (breaks Z_24 translation)"
+    }
+  },
+  "verdict": {
+    "CFG_A": "PASS",
+    "R2": "PASS",
+    "overall": "PASS",
+    "note": "strong Noether complementarity holds iff CFG_A==PASS; if only item1 lands use narrower 'commutant-rank selection rule' wording"
+  },
+  "runtime_sec": 9.2
+}

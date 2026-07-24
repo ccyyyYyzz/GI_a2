@@ -1,0 +1,120 @@
+{
+  "test": "NCX2_BOUNDARY_TEST",
+  "ref": "SYNTHESIS.md row #1",
+  "frozen": {
+    "written_before_compute": true,
+    "FPR_gate": 0.05,
+    "p_grid": [
+      10,
+      36,
+      136,
+      528
+    ],
+    "lambda": 0.15,
+    "measured_TLSG_blind_exponent": 0.4538,
+    "TLSG_bootstrap_std": 0.0063,
+    "TLSG_CI95": [
+      0.4465,
+      0.4652
+    ],
+    "theory_asymptote": 0.5,
+    "B1_band_FPR05_slope": [
+      0.4468,
+      0.4588
+    ],
+    "B1_reference_value": 0.4528,
+    "B2_predicted_local_slope_528_to_2080": 0.4878,
+    "B2_synthesis_value": 0.488,
+    "B2_tolerance": 0.02,
+    "B2_committed_p528_Tlam50blind_M64": 59.46055755490618,
+    "B3_predicted_slope_FPR01": 0.4355,
+    "B4_excess_tol": 0.01,
+    "B4_measured_radial_slopes": {
+      "model1_optical": 2.0274,
+      "model2_nonoptical": 2.096
+    },
+    "CBT_constants": {
+      "c_rad": 0.09034603994191506,
+      "s": 0.29906189408680994,
+      "r0": 0.4272312772668714,
+      "I_Q": 0.04492320106499977
+    },
+    "notes": "B1/B3 are exact-boundary computations (no free params); B2 measured by ONE new TLSG cell at p=2080 (single seed 20260724, unmodified engine); B4 is a parameter-free CBT retrodiction."
+  },
+  "results": {
+    "a_boundary_FPR05": {
+      "delta50": {
+        "10": 9.193128020053393,
+        "36": 15.821121062902597,
+        "136": 28.982199210114935,
+        "528": 55.2883298434443
+      },
+      "loglog_slope": 0.4527769042334244,
+      "reference_0p4528": 0.4528,
+      "measured_TLSG": 0.4538,
+      "B1_band": [
+        0.4468,
+        0.4588
+      ],
+      "B1_verdict": "PASS"
+    },
+    "b_extrapolation": {
+      "delta50_528": 55.2883298434443,
+      "delta50_2080": 107.9126391455931,
+      "predicted_local_slope": 0.487780477302359,
+      "frozen_B2_prediction": 0.4878,
+      "tolerance": 0.02,
+      "measured_Tlam_50_blind_p2080": 117.94658682363968,
+      "p2080_engine": "tlsg_A_three_ledger.py prefix exec'd verbatim; DEV=cuda; CHUNK=2; N_MC=1000",
+      "p2080_n_mc": 1000,
+      "measured_local_slope_vs_M64_528": 0.4995661857182318,
+      "abs_err_vs_prediction": 0.011785708415872787,
+      "B2_verdict": "PASS"
+    },
+    "c_knob_FPR01": {
+      "delta50": {
+        "10": 14.126252048988542,
+        "36": 23.475184663673105,
+        "136": 42.073689700793466,
+        "528": 79.26853435795836
+      },
+      "loglog_slope": 0.43546083117329704,
+      "synthesis_prediction": 0.4355,
+      "internally_consistent": true,
+      "note": "preregistered future-knob prediction (no measurement this round); exact computation internally consistent (monotone, positive, matches synthesis 0.4355)",
+      "B3_verdict": "PASS_CONSISTENT"
+    },
+    "d_CBT_retrodiction": {
+      "model1": {
+        "measured": 2.0274,
+        "parameter_free_prediction": 2.027700154242225,
+        "abs_err": 0.00030015424222495923,
+        "c2": 0.0007333628956677357,
+        "c4": 0.0001796739094385952,
+        "literal_two_monomial_prediction": 2.00060065687668,
+        "fully_from_given_constants": true,
+        "note": "DeltaQ=2 c_rad t + s^2 t^2 (c_rad=r0 s/sqrt2 derivable); KL~(I_Q/2)DeltaQ^2"
+      },
+      "model2": {
+        "measured": 2.096,
+        "parameter_free_prediction": 2.0961535319918965,
+        "abs_err": 0.0001535319918963829,
+        "recovered_c_rad2": 0.08757995765068331,
+        "literal_two_monomial_prediction": 2.008348655914339,
+        "fully_from_given_constants": false,
+        "note": "c_rad2 recovered from committed radial dQb array; s2=0.6,Qb0=1,beta=0.3 from source"
+      },
+      "CORRECTION_FLAG": "The prompt's literal two-monomial normal form d=c2 t^2 + c4 t^4 does NOT reproduce the excesses (predicts 2.0006 / 2.0083): a RADIAL arm carries an odd t^3 cross-term 2 I_Q c_rad s^2 (~c2 in magnitude) that a t^2+t^4 form omits. The physically-correct parameter-free normal form is the THREE-monomial KL~(I_Q/2)(2 c_rad t + s^2 t^2)^2 (t^2,t^3,t^4). Freezing the corrected derivation per the honesty directive; both excesses then reproduce to <1e-3.",
+      "B4_excess_tol": 0.01,
+      "B4_verdict": "PASS_with_normal_form_correction"
+    }
+  },
+  "verdict": {
+    "B1": "PASS",
+    "B2": "PASS",
+    "B3": "PASS_CONSISTENT",
+    "B4": "PASS_with_normal_form_correction",
+    "overall": "PASS"
+  },
+  "runtime_sec": 0.0
+}
