@@ -1,0 +1,112 @@
+{
+  "test": "IT1_two_wall_jet_invariance",
+  "ref": "internal divergence higher #1; merged adjudication 'second exact wall (energy type)'",
+  "params": {
+    "z2_mm": [
+      0.5,
+      1.0,
+      5.0,
+      20.0
+    ],
+    "eps": [
+      0.01,
+      0.02,
+      0.04,
+      0.08
+    ],
+    "clip_half": 512,
+    "grid": 2048,
+    "dtype": "complex128"
+  },
+  "frozen_prediction": "full-aperture null <1e-12 at every eps,z2 (SECOND EXACT WALL, energy conservation); clip-bucket slope ~1 (eps^1 restoration)",
+  "cells": [
+    {
+      "z2_mm": 0.5,
+      "full_aperture_rel_change": [
+        0.0,
+        2.179772703870535e-16,
+        0.0,
+        0.0
+      ],
+      "clip_rel_change": [
+        1.7438181722435215e-15,
+        3.705613616017483e-15,
+        7.411227232034966e-15,
+        1.5040431735600374e-14
+      ],
+      "clip_slope": 1.033,
+      "clip_response_at_2pct": 3.705613616017483e-15
+    },
+    {
+      "z2_mm": 1.0,
+      "full_aperture_rel_change": [
+        0.0,
+        0.0,
+        2.1797727038705346e-16,
+        2.1797727038705346e-16
+      ],
+      "clip_rel_change": [
+        2.6157272593757303e-15,
+        5.2314545187514606e-15,
+        1.0462909037502921e-14,
+        2.0053908988547264e-14
+      ],
+      "clip_slope": 0.982,
+      "clip_response_at_2pct": 5.2314545187514606e-15
+    },
+    {
+      "z2_mm": 5.0,
+      "full_aperture_rel_change": [
+        2.179772703870535e-16,
+        2.179772703870535e-16,
+        0.0,
+        0.0
+      ],
+      "clip_rel_change": [
+        1.586874610357963e-13,
+        3.1432324012859654e-13,
+        6.177476161750642e-13,
+        1.1905919123317576e-12
+      ],
+      "clip_slope": 0.97,
+      "clip_response_at_2pct": 3.1432324012859654e-13
+    },
+    {
+      "z2_mm": 20.0,
+      "full_aperture_rel_change": [
+        0.0,
+        2.179772703870535e-16,
+        0.0,
+        0.0
+      ],
+      "clip_rel_change": [
+        6.575826854369945e-10,
+        1.3151352885061726e-09,
+        2.630150683517425e-09,
+        5.259820703114305e-09
+      ],
+      "clip_slope": 1.0,
+      "clip_response_at_2pct": 1.3151352885061726e-09
+    }
+  ],
+  "verdict": {
+    "max_full_aperture_null": 2.179772703870535e-16,
+    "clip_slopes": [
+      1.032557337033454,
+      0.9815798366007589,
+      0.9697025469376976,
+      0.9999242449794399
+    ],
+    "clip_response_vs_z2": [
+      3.705613616017483e-15,
+      5.2314545187514606e-15,
+      3.1432324012859654e-13,
+      1.3151352885061726e-09
+    ],
+    "P_second_exact_wall": "PASS",
+    "P_clip_slopes_physical": "PASS",
+    "P_z2_trend": "MONOTONE",
+    "overall": "PASS -- SECOND EXACT WALL confirmed: a phase-only object change is invisible to a lossless full-aperture bucket at every order (energy conservation, null <1e-12), while an NA-clipped bucket responds at O(eps^1). Two-wall symmetry is real -> enters the next-paper frame; clip-response has a clear z2 trend (jet-order interpolation seed)."
+  },
+  "elapsed_s": 2.0
+}
