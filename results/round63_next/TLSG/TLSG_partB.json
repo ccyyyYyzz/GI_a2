@@ -1,0 +1,38 @@
+{
+  "test": "TLSG_partB_calibration_transfer",
+  "R45_ref": "sec C1.2 bars 3-4, Eq 4.4",
+  "params": {
+    "d_cert": 64,
+    "n_cal": 24,
+    "n_test": 24,
+    "seed": 20260724,
+    "perturb": "fill+-5%, pitch+-3%, relay defocus 0-0.5mm",
+    "conjugate_z1": 0.0
+  },
+  "measured": {
+    "sigma_64_Lhat": 3.414910366696936e-08,
+    "delta_max": 0.01071676950438083,
+    "delta_p95": 0.00905791163054398,
+    "envelope_sigma64_plus_delta": 0.010716803653484496,
+    "calib_d_at_1e4": 80,
+    "calib_d_at_1e5": 80,
+    "fresh_coverage_of_envelope": 1.0,
+    "S64_max_leak_worst_fresh": 1.9918324626277784e-06,
+    "fresh_d_at_1e4_min": 80,
+    "fresh_d_at_1e4_mean": 80.0
+  },
+  "bars": {
+    "bar3_coverage_95pct": {
+      "coverage": 1.0,
+      "threshold": 0.95,
+      "PASS": true
+    },
+    "bar4_64dims_below_1e4_fresh": {
+      "fresh_d_at_1e4_min": 80,
+      "threshold": 64,
+      "PASS": true
+    }
+  },
+  "partB_all_pass": true,
+  "elapsed_s": 101.6
+}
