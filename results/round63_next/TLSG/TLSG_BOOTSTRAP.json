@@ -1,0 +1,171 @@
+{
+  "test": "TLSG_post_gate_bootstrap",
+  "ref": "R45 sec B11.7 arm A; coordinator directive 2026-07-24",
+  "post_gate_robustness": true,
+  "label": "POST-HOC ROBUSTNESS. The frozen TLSG_PASS gate verdict STANDS on the original single-seed run (seed 20260724). This multi-seed bootstrap only attaches confidence intervals to the three ledger p-exponents; it does NOT modify the bars or the gate logic and does NOT change the verdict. Reported whatever it shows.",
+  "runner": "tlsg_A_three_ledger.py (UNMODIFIED; only SEED varied)",
+  "n_mc": 1500,
+  "n_seeds": 10,
+  "seeds": [
+    20260724,
+    11,
+    2029,
+    30303,
+    424242,
+    5555,
+    67891,
+    987654,
+    1357913,
+    24682468
+  ],
+  "theoretical_exponents": {
+    "matched": 0.0,
+    "blind": 0.5,
+    "estimation": 1.0
+  },
+  "frozen_single_seed_exponents": {
+    "matched": -0.004,
+    "blind": 0.444,
+    "estimation": 1.01
+  },
+  "frozen_bar_tol": 0.15,
+  "per_seed": [
+    {
+      "seed": 20260724,
+      "matched": 0.008,
+      "blind": 0.45,
+      "estimation": 1.01,
+      "partA_all_pass": true,
+      "sec": 17.7
+    },
+    {
+      "seed": 11,
+      "matched": 0.009,
+      "blind": 0.455,
+      "estimation": 0.988,
+      "partA_all_pass": true,
+      "sec": 12.4
+    },
+    {
+      "seed": 2029,
+      "matched": -0.02,
+      "blind": 0.455,
+      "estimation": 0.997,
+      "partA_all_pass": true,
+      "sec": 12.4
+    },
+    {
+      "seed": 30303,
+      "matched": -0.019,
+      "blind": 0.448,
+      "estimation": 1.001,
+      "partA_all_pass": true,
+      "sec": 12.7
+    },
+    {
+      "seed": 424242,
+      "matched": -0.018,
+      "blind": 0.446,
+      "estimation": 0.989,
+      "partA_all_pass": true,
+      "sec": 12.4
+    },
+    {
+      "seed": 5555,
+      "matched": 0.013,
+      "blind": 0.458,
+      "estimation": 0.991,
+      "partA_all_pass": true,
+      "sec": 12.4
+    },
+    {
+      "seed": 67891,
+      "matched": -0.051,
+      "blind": 0.467,
+      "estimation": 0.993,
+      "partA_all_pass": true,
+      "sec": 12.4
+    },
+    {
+      "seed": 987654,
+      "matched": 0.007,
+      "blind": 0.451,
+      "estimation": 1.003,
+      "partA_all_pass": true,
+      "sec": 12.4
+    },
+    {
+      "seed": 1357913,
+      "matched": -0.015,
+      "blind": 0.459,
+      "estimation": 0.984,
+      "partA_all_pass": true,
+      "sec": 12.6
+    },
+    {
+      "seed": 24682468,
+      "matched": -0.021,
+      "blind": 0.449,
+      "estimation": 0.999,
+      "partA_all_pass": true,
+      "sec": 12.8
+    }
+  ],
+  "exponent_CIs": {
+    "matched": {
+      "mean": -0.0107,
+      "std": 0.0199,
+      "ci95_pct": [
+        -0.0442,
+        0.0121
+      ],
+      "min": -0.051,
+      "max": 0.013,
+      "n": 10
+    },
+    "blind": {
+      "mean": 0.4538,
+      "std": 0.0063,
+      "ci95_pct": [
+        0.4465,
+        0.4652
+      ],
+      "min": 0.446,
+      "max": 0.467,
+      "n": 10
+    },
+    "estimation": {
+      "mean": 0.9955,
+      "std": 0.0079,
+      "ci95_pct": [
+        0.9849,
+        1.0084
+      ],
+      "min": 0.984,
+      "max": 1.01,
+      "n": 10
+    }
+  },
+  "honest_flags": {
+    "matched": {
+      "CI_contains_theory": true,
+      "CI_within_frozen_bar_band": true,
+      "theory": 0.0,
+      "frozen_single_seed": -0.004
+    },
+    "blind": {
+      "CI_contains_theory": false,
+      "CI_within_frozen_bar_band": true,
+      "theory": 0.5,
+      "frozen_single_seed": 0.444
+    },
+    "estimation": {
+      "CI_contains_theory": true,
+      "CI_within_frozen_bar_band": true,
+      "theory": 1.0,
+      "frozen_single_seed": 1.01
+    }
+  },
+  "all_seeds_partA_pass": true,
+  "runtime_sec": 130.2
+}
