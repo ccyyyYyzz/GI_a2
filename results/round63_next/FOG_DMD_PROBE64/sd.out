@@ -1,0 +1,37 @@
+=== SPECTRAL DUALITY: full J_B spectrum on all 81 corrected cells ===
+  ... sigma_f=0.3 done  [33s]
+  ... sigma_f=0.6 done  [62s]
+  ... sigma_f=1.0 done  [92s]
+
+[self-check] |f_rec_recon - f_rec_map|: max=0.0005 median=0.0003
+[self-check] rel |AM - lam_mean_bar(det map)|: max=0.00e+00 median=0.00e+00
+
+=== COLLAPSE A (estimation: f_rec vs lower-tail mass) ===
+  f_rec vs lower_tail_UNWEIGHTED : R^2=0.085  Spearman=-0.360
+  f_rec vs lower_tail_SCENE(=1-f_rec identity): R^2=1.000  Spearman=-0.998
+  NRMSE_CRB vs tr(J^+)/d (log-log): R^2=1.000  Spearman=+1.000
+  [control] f_rec vs tr(J)/d (should be POOR): R^2=0.036
+
+=== COLLAPSE B (detection: T_det(2%) energy-spread vs tr(J)/d) ===
+  log T_det_avg vs log tr(J)/d : R^2=1.000  slope=-1.000  Spearman=-1.000
+  [control] T_det_avg vs lam_min (should be POOR): R^2=0.580
+  [dual]    T_det_WORST vs lam_min (worst-mode reads tail): R^2=1.000
+  [control] T_det_WORST vs tr(J)/d (should be weaker): R^2=0.580
+
+=== DUALITY INEQUALITY  P=[tr(J)/d][tr(J^+)/d] >= 1 ===
+  cells with P>=1: 81/81   P range [1.05, 2.6]
+  most isotropic: k^-2 kw1 c1.25 sf1.0  P=1.05 eff_rank/d=0.97 f_rec=0.23 Tdet2%=467
+  spikiest:       k^-2 kw4 c1.8 sf0.3  P=2.6 eff_rank/d=0.55 f_rec=0.32 Tdet2%=2340
+
+=== qualitative high-P prediction (Spearman) ===
+  P vs f_rec       = -0.488  (expect <0: spiky -> bad imaging)
+  P vs NRMSE_CRB   = +0.716  (expect >0)
+  P vs T_det(2%)   = +0.505  (ruling expect <0: spiky -> strong detector)
+  eff_rank/d vs f_rec = +0.476  (expect >0: isotropy -> better imaging)
+
+=== SPECTRAL-DUALITY VERDICT: COLLAPSE_LOOSE (estimation R^2=0.09, detection R^2=1.00) ===
+[wrote SPECTRAL_DUALITY.json]  [92s]
+'created' timestamp seems very low; regarding as unix timestamp
+'modified' timestamp seems very low; regarding as unix timestamp
+[wrote duality_collapse_frec/tdet .pdf/.png]  [96s]
+[wrote SPECTRAL_DUALITY.md]  total wall 96s
