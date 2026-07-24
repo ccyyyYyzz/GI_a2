@@ -1,0 +1,52 @@
+{
+  "frozen": {
+    "description": "Conditional-MI certification of orbit-phase privacy; bars preregistered.",
+    "design": {
+      "R_levels_amp_mult": [
+        0.5,
+        1.25,
+        2.25
+      ],
+      "base_amp": 0.08,
+      "omega_speed": 0.7,
+      "geom_seed": 460,
+      "orbit": "great circle scene(R,Omega)=B0+R*(xi0u cosOmega + vu sinOmega); Q exactly constant",
+      "off_orbit": "same-speed ellipse using the radial velocity vru (not G-tangent); Q varies",
+      "record": "Y = <W, sample_cov(banks)>  (efficient matched score, fixed W at mid radius)",
+      "estimator": "binned plug-in MI (bits), R-stratified conditional, shuffle-null debiased",
+      "KO_phase_bins": 6,
+      "KY_Y_bins": 6,
+      "n_shuffle": 300
+    },
+    "bars": {
+      "P1_onorbit_cMI_lt_bit": 0.01,
+      "P1_within_shuffle_null_band": true,
+      "P2_I_R_Y_gt_bit": 0.5,
+      "P3_offorbit_cMI_gt_bit": 0.1,
+      "resolves_bit": 0.05
+    },
+    "note": "A failed bar is a reported result, not a retry license (preregistration)."
+  },
+  "kind": "selftest",
+  "selftest": {
+    "a_radius_only": {
+      "cMI_debiased": -0.0007334096839602781,
+      "cMI_within_band": true,
+      "cMI_null_hi": 0.012838788310191385,
+      "I_R_Y_debiased": 1.4009777398879346
+    },
+    "b_weak_phase": {
+      "cMI_debiased": 0.015273497518219261,
+      "cMI_within_band": false,
+      "cMI_null_hi": 0.012679532186569805,
+      "I_R_Y_debiased": 1.402700930103761
+    },
+    "c_strong_phase": {
+      "cMI_debiased": 0.7555899241168773,
+      "cMI_within_band": false,
+      "cMI_null_hi": 0.011909409832313084,
+      "I_R_Y_debiased": 0.8787521763946199
+    }
+  },
+  "selftest_ok": true
+}
