@@ -1,0 +1,118 @@
+{
+  "test": "TLSG_THREE_LEDGER_SCALING_GATE",
+  "R45_ref": "issue #36, sec B11.7 + sec C1.2 (frozen, preregistered, no repair round)",
+  "arms": {
+    "A": "three-ledger scaling (tlsg_A_three_ledger.py)",
+    "B": "calibration transfer (tlsg_B_calibration_transfer.py)"
+  },
+  "seed": 20260724,
+  "partA_params": {
+    "lambda_": 0.15,
+    "n_mc": 1500,
+    "cells_M_p": [
+      [
+        8,
+        10
+      ],
+      [
+        16,
+        10
+      ],
+      [
+        8,
+        36
+      ],
+      [
+        32,
+        36
+      ],
+      [
+        16,
+        136
+      ],
+      [
+        64,
+        136
+      ],
+      [
+        32,
+        528
+      ],
+      [
+        64,
+        528
+      ]
+    ],
+    "FPR": 0.05,
+    "seed": 20260724
+  },
+  "partB_params": {
+    "d_cert": 64,
+    "n_cal": 24,
+    "n_test": 24,
+    "seed": 20260724,
+    "perturb": "fill+-5%, pitch+-3%, relay defocus 0-0.5mm",
+    "conjugate_z1": 0.0
+  },
+  "bars": [
+    {
+      "bar": 1,
+      "arm": "A/B11.7",
+      "name": "matched-score 50%-power contours collapse vs T*lambda",
+      "frozen": "CV <= 0.20",
+      "measured": "CV = 0.1250",
+      "verdict": "PASS"
+    },
+    {
+      "bar": 2,
+      "arm": "A/B11.7",
+      "name": "blind contours collapse vs T*lambda/sqrt(p) AND fail vs T*lambda",
+      "frozen": "CV_scaled <= 0.25 AND CV_raw > 0.25",
+      "measured": "CV_scaled = 0.1242 ; CV_raw(vs T*lambda) = 0.6283",
+      "verdict": "PASS"
+    },
+    {
+      "bar": 3,
+      "arm": "A/B11.7",
+      "name": "relative estimation risk collapses vs T*lambda/p",
+      "frozen": "CV <= 0.25",
+      "measured": "CV = 0.0348 (mean risk*T*lambda/p = 0.985)",
+      "verdict": "PASS"
+    },
+    {
+      "bar": 4,
+      "arm": "A/B11.7",
+      "name": "fitted p-exponents (matched/blind/estimation)",
+      "frozen": "0+-0.15, 0.5+-0.15, 1+-0.15",
+      "measured": "-0.004 / 0.444 / 1.010",
+      "verdict": "PASS"
+    },
+    {
+      "bar": 5,
+      "arm": "A/B11.7",
+      "name": "KT6 operating point below blind power 0.2 at FPR 0.05 (optimal blind statistic)",
+      "frozen": "blind power < 0.2",
+      "measured": "blind power = 0.0506 (10x=0.0560, 100x=0.1335); p=136, T*lambda=0.0866",
+      "verdict": "PASS"
+    },
+    {
+      "bar": 6,
+      "arm": "B/C1.2",
+      "name": "fresh calibration/test: >=95% simultaneous coverage of sigma_d(Lhat)+delta, no code exceeding",
+      "frozen": "coverage >= 0.95",
+      "measured": "coverage = 1.000 (sigma_64=3.41e-08, delta=1.07e-02, envelope=1.07e-02; worst S64 leak on fresh=1.99e-06)",
+      "verdict": "PASS"
+    },
+    {
+      "bar": 7,
+      "arm": "B/C1.2",
+      "name": "conjugate plane: >=64 code dims certified below 1e-4 on fresh physical-law draws",
+      "frozen": ">= 64 dims",
+      "measured": "fresh d@1e-4 min = 80 (mean 80.0; calibration d@1e-4=80, d@1e-5=80)",
+      "verdict": "PASS"
+    }
+  ],
+  "VERDICT": "TLSG_PASS",
+  "verdict_detail": "ALL 7 frozen bars pass -> Paper-2 Certified-Blindness / Three-Ledger architecture FREEZES.",
+  "timestamp": "2026-07-24"
+}

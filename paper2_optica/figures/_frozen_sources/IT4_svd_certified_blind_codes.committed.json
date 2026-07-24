@@ -1,0 +1,31 @@
+{
+  "test": "IT4_svd_certified_blind_codes",
+  "ref": "internal divergence finer #3 (sledgehammer gate); merged adjudication route 2 (code-space)",
+  "params": {
+    "z1_mm": [
+      0.0,
+      2.0,
+      5.0,
+      10.0
+    ],
+    "n_in": 120,
+    "n_be": 240,
+    "n_blind": 64,
+    "cov_z2_mm": 5.0,
+    "cov_n_bank": 200
+  },
+  "gate": "bottom-64 joint leak <=1e-4 AND lambda within 3x of random = PASS; leak>=1e-3 or lambda drop>3x = KILL",
+  "measured": {
+    "bottom64_joint_leak_max": 0.0004991331772045465,
+    "bottom64_joint_leak_median": 8.590802461831897e-05,
+    "full_rel_leak_min": 1.4251808018964493e-06,
+    "full_rel_leak_max": 0.11253837413313195,
+    "lam_blind": 0.0026371901491955944,
+    "lam_random": 0.003170875364272161,
+    "lam_ratio_rand_over_blind": 1.2023688793314178,
+    "meanleak_blind_codes": 0.00025760887302268137,
+    "meanleak_random_codes": 0.056365251833210714
+  },
+  "verdict": "PARTIAL -- bottom-64 joint leak 4.99e-04 (between 1e-4 and 1e-3); report honestly.",
+  "elapsed_s": 226.5
+}

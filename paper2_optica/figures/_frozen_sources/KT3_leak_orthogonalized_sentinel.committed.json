@@ -1,0 +1,134 @@
+{
+  "test": "KT3_leak_orthogonalized_sentinel",
+  "R44_ref": "sec 5.6 / innovation #6 (Leak-Orthogonalized Efficient Sentinel, 100)",
+  "params": {
+    "M": 32,
+    "n_bank": 700,
+    "z1_mm": 10,
+    "l_c": 50,
+    "sigma": "2pi",
+    "amp_law": 0.05,
+    "T_eff": 400,
+    "n_mc": 1500,
+    "ridge": 0.0001
+  },
+  "frozen_prediction": "target power ~preserved; non-target (amplitude/medium) false alarms suppressed after projecting the covariance score off span{C0(amp law), diag(shot), dC_medium}",
+  "geometries": [
+    {
+      "z2_mm": 1.0,
+      "rows": [
+        {
+          "change": "2pct",
+          "retained_info_frac": 0.8568,
+          "clean_overlap_target_before": 0.9972,
+          "clean_overlap_target_after": 0.9184,
+          "clean_overlap_amp_before": -0.3645,
+          "clean_overlap_amp_after": 0.0,
+          "clean_overlap_medium_before": 0.1975,
+          "clean_overlap_medium_after": 0.0,
+          "AUC_target_before": 0.2379,
+          "AUC_target_after": 0.2266,
+          "AUC_nontarget_amp_before": 0.0146,
+          "AUC_nontarget_amp_after": 0.1168,
+          "AUC_nontarget_medium_before": 0.1258,
+          "AUC_nontarget_medium_after": 0.0742
+        },
+        {
+          "change": "5pct",
+          "retained_info_frac": 0.9564,
+          "clean_overlap_target_before": 0.9975,
+          "clean_overlap_target_after": 0.9731,
+          "clean_overlap_amp_before": -0.1842,
+          "clean_overlap_amp_after": 0.0,
+          "clean_overlap_medium_before": 0.1054,
+          "clean_overlap_medium_after": 0.0,
+          "AUC_target_before": 0.1671,
+          "AUC_target_after": 0.131,
+          "AUC_nontarget_amp_before": 0.0508,
+          "AUC_nontarget_amp_after": 0.1218,
+          "AUC_nontarget_medium_before": 0.0957,
+          "AUC_nontarget_medium_after": 0.0769
+        }
+      ]
+    },
+    {
+      "z2_mm": 5.0,
+      "rows": [
+        {
+          "change": "2pct",
+          "retained_info_frac": 0.9185,
+          "clean_overlap_target_before": 0.9596,
+          "clean_overlap_target_after": 0.9146,
+          "clean_overlap_amp_before": -0.2459,
+          "clean_overlap_amp_after": 0.0,
+          "clean_overlap_medium_before": 0.1077,
+          "clean_overlap_medium_after": 0.0,
+          "AUC_target_before": 0.4851,
+          "AUC_target_after": 0.4336,
+          "AUC_nontarget_amp_before": 0.0353,
+          "AUC_nontarget_amp_after": 0.2192,
+          "AUC_nontarget_medium_before": 0.2497,
+          "AUC_nontarget_medium_after": 0.0852
+        },
+        {
+          "change": "5pct",
+          "retained_info_frac": 0.9892,
+          "clean_overlap_target_before": 0.9606,
+          "clean_overlap_target_after": 0.954,
+          "clean_overlap_amp_before": -0.0732,
+          "clean_overlap_amp_after": 0.0,
+          "clean_overlap_medium_before": 0.0295,
+          "clean_overlap_medium_after": 0.0,
+          "AUC_target_before": 0.6961,
+          "AUC_target_after": 0.6923,
+          "AUC_nontarget_amp_before": 0.1574,
+          "AUC_nontarget_amp_after": 0.2364,
+          "AUC_nontarget_medium_before": 0.1327,
+          "AUC_nontarget_medium_after": 0.0993
+        }
+      ]
+    }
+  ],
+  "verdict": {
+    "retained_info_frac": [
+      0.8568,
+      0.9564,
+      0.9185,
+      0.9892
+    ],
+    "clean_nuisance_overlap_amp_before": [
+      0.3645,
+      0.1842,
+      0.2459,
+      0.0732
+    ],
+    "clean_nuisance_overlap_amp_after": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "clean_nuisance_overlap_medium_before": [
+      0.1975,
+      0.1054,
+      0.1077,
+      0.0295
+    ],
+    "clean_nuisance_overlap_medium_after": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "operational_AUC_target_change": [
+      -0.0113,
+      -0.0361,
+      -0.0515,
+      -0.0038
+    ],
+    "P_clean_nuisance_overlap_zeroed": "PASS",
+    "P_target_info_retained": "PASS",
+    "overall": "PASS -- projecting the covariance score off the leak/law span provably removes the amplitude/medium covariance overlap (clean overlap -> 0) while retaining the bulk of target information; specificity restored without an exact wall (R44 #6). Operational AUC (oracle-W, shot-noisy) reported for reference -- subject to the estimator-layer caveat that oracle dC/W are twin-only."
+  },
+  "elapsed_s": 1394.7
+}

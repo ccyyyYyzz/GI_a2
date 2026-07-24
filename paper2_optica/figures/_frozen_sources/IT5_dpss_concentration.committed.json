@@ -1,0 +1,56 @@
+{
+  "test": "IT5_dpss_concentration",
+  "ref": "internal divergence finer #4",
+  "params": {
+    "M": 12,
+    "z1_mm": [
+      0.0,
+      1.0,
+      5.0,
+      10.0,
+      20.0
+    ],
+    "witness_shells": "12-14",
+    "NW": 4.0
+  },
+  "decision": "DPSS witness leak <=1e-3 uniform => concentration route lives; KILL if DPSS no better than Tukey (alias floor not concentration-limited)",
+  "leak_vs_z1": {
+    "none": {
+      "z1_0": 0.00533171556584071,
+      "z1_1": 0.009919197728272095,
+      "z1_5": 0.03852426711563487,
+      "z1_10": 0.06131849548846613,
+      "z1_20": 0.0830487592695571
+    },
+    "tukey_render+obj": {
+      "z1_0": 0.03988058434257257,
+      "z1_1": 0.03911737332973507,
+      "z1_5": 0.03890505434365172,
+      "z1_10": 0.03766857535101853,
+      "z1_20": 0.033243349782090086
+    },
+    "dpss_render+obj": {
+      "z1_0": 0.00023776221179144737,
+      "z1_1": 0.00023132131378023461,
+      "z1_5": 0.00023123404427531193,
+      "z1_10": 0.00022821752731992374,
+      "z1_20": 0.00020680875905201485
+    }
+  },
+  "combined_single_z1_SVD": {
+    "no_window_d_at_1e4": 80,
+    "no_window_d_at_1e5": 80,
+    "dpss_d_at_1e4": 24,
+    "dpss_d_at_1e5": 9
+  },
+  "verdict": {
+    "dpss_max_witness_leak": 0.00023776221179144737,
+    "tukey_max_witness_leak": 0.03988058434257257,
+    "none_max_witness_leak": 0.0830487592695571,
+    "dpss_improvement_over_none": 349.29,
+    "combined_dpss_subspace_gain": -56,
+    "P_dpss_concentration_lives": "PASS",
+    "overall": "PASS -- DPSS render+object window holds the beyond-2kp witness leak <=1e-3 uniformly in z1 (max 2.38e-04); the hardware concentration route lives and does not grow the certified-blind subspace (single-z1 d@1e-4 80->24)."
+  },
+  "elapsed_s": 10.0
+}

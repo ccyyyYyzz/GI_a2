@@ -1,0 +1,174 @@
+{
+  "test": "KT2_jet_transmutation",
+  "R44_ref": "sec 5.2 / innovation #2 (Jet Transmutation, 125)",
+  "params": {
+    "M": 16,
+    "n_bank": 350,
+    "ridge": 0.0001,
+    "cells_z1z2_mm": [
+      [
+        10.0,
+        1.0
+      ],
+      [
+        10.0,
+        5.0
+      ],
+      [
+        5.0,
+        1.0
+      ],
+      [
+        5.0,
+        5.0
+      ]
+    ],
+    "eps_range": [
+      0.0025118864315095794,
+      0.7079457843841379
+    ],
+    "n_eps": 18
+  },
+  "frozen_prediction": "unprojected slope->2 (leak-dominated m=1); projected covariance-only slope->4 (m=2 restored); generic direction covariance slope stays 2 (control)",
+  "cells": [
+    {
+      "z1_mm": 10.0,
+      "z2_mm": 1.0,
+      "orthogonality_residual_smin_over_smax": 4.797423646080676e-18,
+      "directions": {
+        "orth_firstorder_null": {
+          "A_mean_eps2_coeff": 1.6203120932361978,
+          "B_curv_eps4_coeff": 5.080887335740162,
+          "eps_cross": 0.564715299826351,
+          "cov_only_slope_fit": 4.0,
+          "unproj_total_slope_lowEps": 2.136,
+          "unproj_total_slope_hiEps": 3.06,
+          "mean_lam_at_2pct": 0.0006481248372944792,
+          "cov_lam_at_2pct": 5.817857696919365e-07
+        },
+        "generic": {
+          "A_mean_eps2_coeff": 0.8503398587812535,
+          "B_curv_eps4_coeff": 15.644748654189122,
+          "eps_cross": 0.23313741309376823,
+          "cov_only_slope_fit": 1.576,
+          "unproj_total_slope_lowEps": 1.807,
+          "unproj_total_slope_hiEps": 2.691,
+          "mean_lam_at_2pct": 0.0003401359435125014,
+          "cov_lam_at_2pct": 0.0007957503447309039
+        }
+      }
+    },
+    {
+      "z1_mm": 10.0,
+      "z2_mm": 5.0,
+      "orthogonality_residual_smin_over_smax": 1.4533751430126852e-18,
+      "directions": {
+        "orth_firstorder_null": {
+          "A_mean_eps2_coeff": 1.0644558527511794,
+          "B_curv_eps4_coeff": 97.28005392674791,
+          "eps_cross": 0.10460487522381576,
+          "cov_only_slope_fit": 4.0,
+          "unproj_total_slope_lowEps": 2.2,
+          "unproj_total_slope_hiEps": 3.693,
+          "mean_lam_at_2pct": 0.00042578234110047174,
+          "cov_lam_at_2pct": 1.1139028935228731e-05
+        },
+        "generic": {
+          "A_mean_eps2_coeff": 0.5450093054423609,
+          "B_curv_eps4_coeff": 182.4070724124377,
+          "eps_cross": 0.054661446749815955,
+          "cov_only_slope_fit": 2.284,
+          "unproj_total_slope_lowEps": 2.072,
+          "unproj_total_slope_hiEps": 2.693,
+          "mean_lam_at_2pct": 0.0002180037221769444,
+          "cov_lam_at_2pct": 0.01303705816942735
+        }
+      }
+    },
+    {
+      "z1_mm": 5.0,
+      "z2_mm": 1.0,
+      "orthogonality_residual_smin_over_smax": 5.09391113099999e-18,
+      "directions": {
+        "orth_firstorder_null": {
+          "A_mean_eps2_coeff": 0.6391371586175247,
+          "B_curv_eps4_coeff": 5.161505656738054,
+          "eps_cross": 0.3518915433330017,
+          "cov_only_slope_fit": 4.0,
+          "unproj_total_slope_lowEps": 2.117,
+          "unproj_total_slope_hiEps": 3.286,
+          "mean_lam_at_2pct": 0.0002556548634470099,
+          "cov_lam_at_2pct": 5.910169509470603e-07
+        },
+        "generic": {
+          "A_mean_eps2_coeff": 0.38541626365806975,
+          "B_curv_eps4_coeff": 15.279073291713441,
+          "eps_cross": 0.15882413962664899,
+          "cov_only_slope_fit": 1.576,
+          "unproj_total_slope_lowEps": 1.818,
+          "unproj_total_slope_hiEps": 2.537,
+          "mean_lam_at_2pct": 0.0001541665054632279,
+          "cov_lam_at_2pct": 0.0007842290249758833
+        }
+      }
+    },
+    {
+      "z1_mm": 5.0,
+      "z2_mm": 5.0,
+      "orthogonality_residual_smin_over_smax": 2.963469600179465e-18,
+      "directions": {
+        "orth_firstorder_null": {
+          "A_mean_eps2_coeff": 1.1444604161495024,
+          "B_curv_eps4_coeff": 86.83366278190537,
+          "eps_cross": 0.11480381700862095,
+          "cov_only_slope_fit": 4.0,
+          "unproj_total_slope_lowEps": 2.176,
+          "unproj_total_slope_hiEps": 3.649,
+          "mean_lam_at_2pct": 0.000457784166459801,
+          "cov_lam_at_2pct": 9.942867455726174e-06
+        },
+        "generic": {
+          "A_mean_eps2_coeff": 0.45452231944991084,
+          "B_curv_eps4_coeff": 181.00412012017784,
+          "eps_cross": 0.050111035459925284,
+          "cov_only_slope_fit": 2.285,
+          "unproj_total_slope_lowEps": 2.072,
+          "unproj_total_slope_hiEps": 2.695,
+          "mean_lam_at_2pct": 0.00018180892777996434,
+          "cov_lam_at_2pct": 0.012851964120411112
+        }
+      }
+    }
+  ],
+  "verdict": {
+    "projected_cov_slopes": [
+      4.0,
+      4.0,
+      4.0,
+      4.0
+    ],
+    "unprojected_lowEps_slopes": [
+      2.136,
+      2.2,
+      2.117,
+      2.176
+    ],
+    "generic_cov_slopes": [
+      1.576,
+      2.284,
+      1.576,
+      2.285
+    ],
+    "orthogonality_residuals": [
+      4.797423646080676e-18,
+      1.4533751430126852e-18,
+      5.09391113099999e-18,
+      2.963469600179465e-18
+    ],
+    "P_projected_to_4": "PASS",
+    "P_unprojected_to_2": "PASS",
+    "P_generic_control_stays_2": "PASS",
+    "overall": "PASS -- jet transmutation confirmed: projecting out the measured mean-leak tangent restores the m=2 (slope 4) curvature class; the unprojected total is leak-dominated (slope 2) below eps_cross; a generic direction stays slope 2."
+  },
+  "elapsed_s": 357.9
+}
